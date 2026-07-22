@@ -2,6 +2,7 @@ import sys
 import os
 import subprocess
 import importlib.util
+import shutil
 from typing import Optional, Dict, Any, Tuple, List
 from dataclasses import dataclass
 
@@ -229,21 +230,27 @@ class CypyHook:
             # Step 3: 编译为.pyd
             self._log("Step 3: Compiling to .pyd...")
             
-            # 尝试删除旧的.pyd文件以避免Windows文件锁定问题
-            for root, dirs, files in os.walk(actual_output_dir):
-                for file in files:
-                    if file.endswith(".pyd") or file.endswith(".so"):
-                        old_pyd_path = os.path.join(root, file)
-                        try:
-                            os.remove(old_pyd_path)
-                            self._log(f"Removed old .pyd file: {old_pyd_path}")
-                        except PermissionError:
-                            # 文件被锁定，继续编译（可能会失败，但让用户知道）
-                            self._log(f"Warning: Cannot remove old .pyd file (locked): {old_pyd_path}")
-            
             old_cwd = os.getcwd()
+            temp_build_dir = None
+            
             try:
-                os.chdir(actual_output_dir)
+                # 检查目标.pyd文件是否存在（可能被锁定）
+                target_pyd_name = f"{module_name}.cp{sys.version_info.major}{sys.version_info.minor}-win_amd64.pyd"
+                target_pyd_path = os.path.join(actual_output_dir, target_pyd_name)
+                is_locked = os.path.exists(target_pyd_path)
+                
+                if is_locked:
+                    # 文件被锁定，使用临时目录编译
+                    import tempfile
+                    temp_build_dir = tempfile.mkdtemp()
+                    # 复制setup.py和.pyx文件到临时目录
+                    shutil.copy(os.path.join(old_cwd, actual_output_dir, "setup.py"), temp_build_dir)
+                    shutil.copy(pyx_path, temp_build_dir)
+                    os.chdir(temp_build_dir)
+                    self._log(f"Using temp directory for compilation due to file lock: {temp_build_dir}")
+                else:
+                    os.chdir(actual_output_dir)
+                
                 compile_cmd = [
                     sys.executable, "setup.py", "build_ext", "--inplace"
                 ]
@@ -263,13 +270,23 @@ class CypyHook:
 
                 # Step 4: 查找生成的.pyd文件
                 pyd_files = []
-                for root, dirs, files in os.walk(actual_output_dir):
+                current_dir = os.getcwd()
+                for root, dirs, files in os.walk(current_dir):
                     for file in files:
                         if file.endswith(".pyd") or file.endswith(".so"):
                             pyd_files.append(os.path.join(root, file))
                 
                 if pyd_files:
-                    result.pyd_path = pyd_files[0]
+                    temp_pyd_path = pyd_files[0]
+                    
+                    if is_locked:
+                        # 将新编译的.pyd文件复制到目标位置
+                        shutil.copy(temp_pyd_path, target_pyd_path)
+                        result.pyd_path = target_pyd_path
+                        self._log(f"Copied new .pyd to target location")
+                    else:
+                        result.pyd_path = temp_pyd_path
+                    
                     result.steps.append(f".pyd文件已生成: {result.pyd_path}")
                 else:
                     result.errors.append("未找到生成的.pyd文件")
@@ -277,6 +294,12 @@ class CypyHook:
 
             finally:
                 os.chdir(old_cwd)
+                # 清理临时目录
+                if temp_build_dir and os.path.exists(temp_build_dir):
+                    try:
+                        shutil.rmtree(temp_build_dir)
+                    except:
+                        pass
 
             result.success = True
             return result
@@ -578,17 +601,26 @@ class CypyCacheManager:
     def __init__(self):
         self._manifest_cache = {}
     
-    def _get_cache_dir(self, source_path: str) -> str:
-        """获取源文件对应的缓存目录（__pycache__/cypy/）"""
+    def _get_base_cache_dir(self, source_path: str) -> str:
+        """获取源文件对应的基础缓存目录（__pycache__/cypy/）"""
         source_dir = os.path.dirname(source_path)
         cache_dir = os.path.join(source_dir, "__pycache__", "cypy")
         os.makedirs(cache_dir, exist_ok=True)
         return cache_dir
     
+    def _get_cache_dir(self, source_path: str) -> str:
+        """获取源文件对应的缓存目录（包含哈希子目录）"""
+        base_cache_dir = self._get_base_cache_dir(source_path)
+        file_hash = self._compute_hash(source_path)
+        # 使用哈希的前16位作为子目录名，避免Windows文件锁定问题
+        cache_dir = os.path.join(base_cache_dir, file_hash[:16])
+        os.makedirs(cache_dir, exist_ok=True)
+        return cache_dir
+    
     def _get_manifest_path(self, source_path: str) -> str:
         """获取manifest文件路径"""
-        cache_dir = self._get_cache_dir(source_path)
-        return os.path.join(cache_dir, "manifest.json")
+        base_cache_dir = self._get_base_cache_dir(source_path)
+        return os.path.join(base_cache_dir, "manifest.json")
     
     def _compute_hash(self, source_path: str) -> str:
         """计算文件内容的SHA256哈希"""

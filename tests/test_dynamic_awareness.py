@@ -249,13 +249,17 @@ class TestDynamicImport(unittest.TestCase):
             result1 = cache_test.get_value()
             self.assertEqual(result1, 42)
             
-            # 检查缓存目录是否有.pyd文件
+            # 检查缓存目录是否有.pyd文件（递归查找，支持哈希子目录）
             cache_dir = os.path.join(self.temp_dir, "__pycache__", "cypy")
-            pyd_files = [f for f in os.listdir(cache_dir) if f.endswith(".pyd")]
+            pyd_files = []
+            for root, dirs, files in os.walk(cache_dir):
+                for f in files:
+                    if f.endswith(".pyd"):
+                        pyd_files.append(os.path.join(root, f))
             self.assertTrue(len(pyd_files) > 0)
             
             # 记录.pyd文件修改时间
-            pyd_path = os.path.join(cache_dir, pyd_files[0])
+            pyd_path = pyd_files[0]
             original_mtime = os.path.getmtime(pyd_path)
             
             # 删除模块引用
