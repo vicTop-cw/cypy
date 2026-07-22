@@ -140,8 +140,35 @@ def parse_args(args: Optional[list] = None) -> argparse.Namespace:
     # hook 子命令
     hook_parser = subparsers.add_parser(
         "hook",
-        help="Run Cypy hook for Python integration",
+        help="Cypy hook for Python integration",
     )
+    hook_subparsers = hook_parser.add_subparsers(dest="hook_command", help="Hook commands")
+    
+    # hook install 子命令
+    install_parser = hook_subparsers.add_parser(
+        "install",
+        help="Install Cypy import hook for dynamic code awareness",
+    )
+    
+    # hook uninstall 子命令
+    uninstall_parser = hook_subparsers.add_parser(
+        "uninstall",
+        help="Uninstall Cypy import hook",
+    )
+    
+    # hook status 子命令
+    status_parser = hook_subparsers.add_parser(
+        "status",
+        help="Check if Cypy import hook is installed",
+    )
+    
+    # hook clear-cache 子命令
+    clear_cache_parser = hook_subparsers.add_parser(
+        "clear-cache",
+        help="Clear Cypy compilation cache",
+    )
+    
+    # 原有hook参数（保留兼容）
     hook_parser.add_argument(
         "source",
         nargs="?",
@@ -190,13 +217,38 @@ def main() -> int:
             return 1
         raise
 
-    if not args.source and not hasattr(args, 'eval'):
-        print("Error: No source file provided", file=sys.stderr)
-        return 1
-
     # 根据命令类型执行不同操作
     if args.command == "hook":
-        # 调用hook模块
+        # 处理新的hook子命令
+        if args.hook_command == "install":
+            from cypy_hook.hook import install_hook
+            install_hook()
+            print("✓ Cypy import hook installed successfully")
+            print("  Now you can import .py files with '#!bin cypy' header directly")
+            return 0
+        
+        elif args.hook_command == "uninstall":
+            from cypy_hook.hook import uninstall_hook
+            uninstall_hook()
+            print("✓ Cypy import hook uninstalled successfully")
+            return 0
+        
+        elif args.hook_command == "status":
+            from cypy_hook.hook import is_hook_installed
+            if is_hook_installed():
+                print("✓ Cypy import hook is installed")
+            else:
+                print("✗ Cypy import hook is not installed")
+            return 0
+        
+        elif args.hook_command == "clear-cache":
+            from cypy_hook.hook import CypyCacheManager
+            cache_manager = CypyCacheManager()
+            cache_manager.clear_cache()
+            print("✓ Cypy compilation cache cleared successfully")
+            return 0
+        
+        # 原有hook参数（保留兼容）
         from cypy_hook.hook import CypyHook
         hook = CypyHook()
         
@@ -218,6 +270,10 @@ def main() -> int:
             hook_args.extend(["--eval", args.eval])
         
         return hook.run_cli(hook_args)
+
+    if not args.source and not hasattr(args, 'eval'):
+        print("Error: No source file provided", file=sys.stderr)
+        return 1
 
     elif args.command == "transpile":
         return run_transpile(args)

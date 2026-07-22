@@ -30,7 +30,7 @@ class TestTranspileMode(unittest.TestCase):
         self.assertIsNotNone(result.cython_code)
         self.assertTrue(result.pyx_path.endswith(".pyx"))
         self.assertTrue(os.path.exists(result.pyx_path))
-        self.assertIn("cdef", result.cython_code)
+        self.assertIn("cpdef", result.cython_code)
         self.assertIn("foo", result.cython_code)
 
     def test_transpile_with_struct(self):
@@ -154,10 +154,15 @@ def greet(name: str) -> str:
         self.assertTrue(len(result.steps) > 0)
         self.assertTrue(result.steps[0].startswith("=== Hook集成模式 ==="))
 
-        if result.success:
-            self.assertIsNotNone(module)
-            self.assertTrue(hasattr(module, "greet"))
-            self.assertEqual(module.greet("World"), "Hello, World")
+        # 如果失败，打印错误信息
+        if not result.success:
+            print(f"Errors: {result.errors}")
+            print(f"Steps: {result.steps}")
+        
+        self.assertTrue(result.success, f"Compile failed: {result.errors}")
+        self.assertIsNotNone(module)
+        self.assertTrue(hasattr(module, "greet"))
+        self.assertEqual(module.greet("World"), "Hello, World")
 
     def test_eval_simple(self):
         """测试直接求值代码"""

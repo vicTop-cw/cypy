@@ -63,7 +63,7 @@ class TestTypeSystem(CypyTestBase):
     return a + b
 """
         code = self._assert_parse_success(source)
-        self.assertIn("cdef", code)
+        self.assertIn("cpdef", code)
 
     def test_no_type_annotation(self):
         """测试无类型注解的退化"""
@@ -115,7 +115,7 @@ class TestFunctions(CypyTestBase):
     return a + b
 """
         code = self._assert_parse_success(source)
-        self.assertIn("cdef int add", code)
+        self.assertIn("cpdef int add", code)
 
     def test_untyped_function(self):
         """测试无类型注解的函数"""

@@ -154,10 +154,16 @@ class CypyHook:
             
             if result.success and result.cython_code:
                 os.makedirs(self.output_dir, exist_ok=True)
-                pyx_path = os.path.join(
-                    self.output_dir,
-                    os.path.basename(source_path).replace(".cypy", ".pyx")
-                )
+                # 处理不同的源文件扩展名
+                basename = os.path.basename(source_path)
+                if basename.endswith(".cypy"):
+                    pyx_filename = basename.replace(".cypy", ".pyx")
+                elif basename.endswith(".py"):
+                    pyx_filename = basename.replace(".py", ".pyx")
+                else:
+                    pyx_filename = basename + ".pyx"
+                
+                pyx_path = os.path.join(self.output_dir, pyx_filename)
                 with open(pyx_path, "w", encoding="utf-8") as f:
                     f.write(result.cython_code)
                 result.pyx_path = pyx_path
@@ -171,10 +177,14 @@ class CypyHook:
 
     # ==================== 模式2：一步到位自动处理模式 ====================
 
-    def compile_to_pyd(self, source_path: str) -> CompileResult:
+    def compile_to_pyd(self, source_path: str, output_dir: str = None) -> CompileResult:
         """
         一步到位自动处理模式：转译并编译为.pyd文件
         
+        参数：
+            source_path: 源文件路径
+            output_dir: 输出目录（可选，默认为self.output_dir）
+            
         返回：
             CompileResult: 包含编译结果、文件路径、错误信息和处理步骤
         """
@@ -182,10 +192,18 @@ class CypyHook:
         result.steps.append("=== 一步到位编译模式 ===")
         result.steps.append(f"开始处理文件: {source_path}")
 
+        # 使用参数output_dir或回退到实例属性
+        actual_output_dir = output_dir if output_dir else self.output_dir
+        
         try:
-            # Step 1: 转译
+            # Step 1: 转译（需要临时设置output_dir）
             self._log("Step 1: Transpiling...")
-            pyx_result = self.transpile_file(source_path)
+            old_output_dir = self.output_dir
+            self.output_dir = actual_output_dir
+            try:
+                pyx_result = self.transpile_file(source_path)
+            finally:
+                self.output_dir = old_output_dir
             result.steps.extend(pyx_result.steps)
             
             if not pyx_result.success:
@@ -199,18 +217,33 @@ class CypyHook:
             from cypyc.codegen.setup_generator import SetupGenerator
             setup_generator = SetupGenerator()
             module_name = os.path.basename(pyx_path).replace(".pyx", "")
-            setup_code = setup_generator.generate(module_name, [pyx_path])
+            setup_generator.set_module_name(module_name)
+            setup_generator.add_source(pyx_path)
+            setup_code = setup_generator.generate()
             
-            setup_path = os.path.join(self.output_dir, "setup.py")
+            setup_path = os.path.join(actual_output_dir, "setup.py")
             with open(setup_path, "w", encoding="utf-8") as f:
                 f.write(setup_code)
             result.steps.append(f"setup.py已生成: {setup_path}")
 
             # Step 3: 编译为.pyd
             self._log("Step 3: Compiling to .pyd...")
+            
+            # 尝试删除旧的.pyd文件以避免Windows文件锁定问题
+            for root, dirs, files in os.walk(actual_output_dir):
+                for file in files:
+                    if file.endswith(".pyd") or file.endswith(".so"):
+                        old_pyd_path = os.path.join(root, file)
+                        try:
+                            os.remove(old_pyd_path)
+                            self._log(f"Removed old .pyd file: {old_pyd_path}")
+                        except PermissionError:
+                            # 文件被锁定，继续编译（可能会失败，但让用户知道）
+                            self._log(f"Warning: Cannot remove old .pyd file (locked): {old_pyd_path}")
+            
             old_cwd = os.getcwd()
             try:
-                os.chdir(self.output_dir)
+                os.chdir(actual_output_dir)
                 compile_cmd = [
                     sys.executable, "setup.py", "build_ext", "--inplace"
                 ]
@@ -230,7 +263,7 @@ class CypyHook:
 
                 # Step 4: 查找生成的.pyd文件
                 pyd_files = []
-                for root, dirs, files in os.walk(self.output_dir):
+                for root, dirs, files in os.walk(actual_output_dir):
                     for file in files:
                         if file.endswith(".pyd") or file.endswith(".so"):
                             pyd_files.append(os.path.join(root, file))
@@ -337,9 +370,11 @@ class CypyHook:
         result.steps.append(f"开始编译代码片段，模块名: {module_name}")
 
         try:
-            # Step 1: 创建临时文件
+            # Step 1: 创建临时文件（不使用with块，避免Windows文件锁定问题）
             import tempfile
-            with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_dir = tempfile.mkdtemp()
+            
+            try:
                 source_path = os.path.join(tmp_dir, f"{module_name}.cypy")
                 with open(source_path, "w", encoding="utf-8") as f:
                     f.write(source_code)
@@ -347,15 +382,11 @@ class CypyHook:
                 self._log("Step 1: Created temporary source file")
                 
                 # Step 2: 编译为.pyd
-                old_output_dir = self.output_dir
-                self.output_dir = tmp_dir
-                
-                compile_result = self.compile_to_pyd(source_path)
+                compile_result = self.compile_to_pyd(source_path, output_dir=tmp_dir)
                 result.steps.extend(compile_result.steps)
                 
                 if not compile_result.success or not compile_result.pyd_path:
                     result.errors = compile_result.errors
-                    self.output_dir = old_output_dir
                     return result, None
                 
                 # Step 3: 导入模块
@@ -369,8 +400,16 @@ class CypyHook:
                 result.pyd_path = compile_result.pyd_path
                 result.steps.append("模块导入成功")
                 
-                self.output_dir = old_output_dir
                 return result, module
+                
+            finally:
+                # 尝试清理临时目录，但忽略Windows文件锁定错误
+                try:
+                    import shutil
+                    shutil.rmtree(tmp_dir)
+                except PermissionError:
+                    # .pyd文件被锁定，忽略错误（系统会自动清理临时目录）
+                    pass
 
         except Exception as e:
             result.errors.append(f"Hook集成错误: {e}")
@@ -529,6 +568,262 @@ class CypyHook:
             results = self.compile_directory(parsed_args.source)
             failures = [r for r in results if r is None]
             return 0 if not failures else 1
+
+
+# ==================== 代码动态感知系统 ====================
+
+class CypyCacheManager:
+    """缓存管理器：管理.pyd文件的缓存和变更检测"""
+    
+    def __init__(self):
+        self._manifest_cache = {}
+    
+    def _get_cache_dir(self, source_path: str) -> str:
+        """获取源文件对应的缓存目录（__pycache__/cypy/）"""
+        source_dir = os.path.dirname(source_path)
+        cache_dir = os.path.join(source_dir, "__pycache__", "cypy")
+        os.makedirs(cache_dir, exist_ok=True)
+        return cache_dir
+    
+    def _get_manifest_path(self, source_path: str) -> str:
+        """获取manifest文件路径"""
+        cache_dir = self._get_cache_dir(source_path)
+        return os.path.join(cache_dir, "manifest.json")
+    
+    def _compute_hash(self, source_path: str) -> str:
+        """计算文件内容的SHA256哈希"""
+        import hashlib
+        with open(source_path, "rb") as f:
+            content = f.read()
+        return hashlib.sha256(content).hexdigest()
+    
+    def _load_manifest(self, source_path: str) -> Dict:
+        """加载manifest文件"""
+        manifest_path = self._get_manifest_path(source_path)
+        if os.path.exists(manifest_path):
+            import json
+            try:
+                with open(manifest_path, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except (json.JSONDecodeError, IOError):
+                pass
+        return {}
+    
+    def _save_manifest(self, source_path: str, manifest: Dict) -> None:
+        """保存manifest文件"""
+        manifest_path = self._get_manifest_path(source_path)
+        import json
+        with open(manifest_path, "w", encoding="utf-8") as f:
+            json.dump(manifest, f, indent=2)
+    
+    def is_cypy_file(self, source_path: str) -> bool:
+        """检查文件是否是Cypy文件（首行为#!bin cypy）"""
+        if not os.path.exists(source_path):
+            return False
+        try:
+            with open(source_path, "r", encoding="utf-8") as f:
+                first_line = f.readline().strip()
+            return first_line == "#!bin cypy"
+        except Exception:
+            return False
+    
+    def is_stale(self, source_path: str) -> bool:
+        """检查文件是否过期（需要重新编译）"""
+        if not self.is_cypy_file(source_path):
+            return False
+        
+        manifest = self._load_manifest(source_path)
+        source_key = os.path.abspath(source_path)
+        
+        if source_key not in manifest:
+            return True
+        
+        cached_info = manifest[source_key]
+        current_hash = self._compute_hash(source_path)
+        current_mtime = os.path.getmtime(source_path)
+        
+        # 检查哈希和修改时间
+        if cached_info.get("hash") != current_hash:
+            return True
+        if cached_info.get("mtime", 0) != current_mtime:
+            return True
+        
+        # 检查.pyd文件是否存在
+        pyd_path = cached_info.get("pyd_path")
+        if pyd_path and not os.path.exists(pyd_path):
+            return True
+        
+        return False
+    
+    def get_cached_pyd(self, source_path: str) -> Optional[str]:
+        """获取缓存的.pyd文件路径"""
+        manifest = self._load_manifest(source_path)
+        source_key = os.path.abspath(source_path)
+        
+        if source_key not in manifest:
+            return None
+        
+        pyd_path = manifest[source_key].get("pyd_path")
+        if pyd_path and os.path.exists(pyd_path):
+            return pyd_path
+        
+        return None
+    
+    def cache_pyd(self, source_path: str, pyd_path: str) -> None:
+        """缓存.pyd文件路径和相关信息"""
+        manifest = self._load_manifest(source_path)
+        source_key = os.path.abspath(source_path)
+        
+        manifest[source_key] = {
+            "hash": self._compute_hash(source_path),
+            "mtime": os.path.getmtime(source_path),
+            "pyd_path": pyd_path,
+            "timestamp": os.path.getmtime(pyd_path)
+        }
+        
+        self._save_manifest(source_path, manifest)
+    
+    def clear_cache(self, source_path: str = None) -> None:
+        """清除缓存"""
+        if source_path:
+            # 清除单个文件的缓存
+            manifest = self._load_manifest(source_path)
+            source_key = os.path.abspath(source_path)
+            if source_key in manifest:
+                pyd_path = manifest[source_key].get("pyd_path")
+                if pyd_path and os.path.exists(pyd_path):
+                    os.remove(pyd_path)
+                del manifest[source_key]
+                self._save_manifest(source_path, manifest)
+        else:
+            # 清除所有缓存（遍历所有__pycache__/cypy目录）
+            for root, dirs, files in os.walk(os.getcwd()):
+                if os.path.basename(root) == "cypy" and os.path.dirname(root) == "__pycache__":
+                    for file in files:
+                        if file.endswith(".pyd") or file.endswith(".so") or file == "manifest.json":
+                            os.remove(os.path.join(root, file))
+
+
+class CypyMetaPathFinder:
+    """MetaPathFinder：拦截Python导入并识别Cypy文件"""
+    
+    def __init__(self):
+        self.cache_manager = CypyCacheManager()
+        self.hook = CypyHook()
+    
+    def find_spec(self, fullname, path, target=None):
+        """查找模块规范"""
+        if path is None:
+            path = sys.path
+        
+        parts = fullname.split('.')
+        module_name = parts[-1]
+        
+        for search_path in path:
+            # 构建可能的文件路径
+            py_path = os.path.join(search_path, f"{module_name}.py")
+            
+            if os.path.exists(py_path) and self.cache_manager.is_cypy_file(py_path):
+                # 这是一个Cypy文件，返回自定义Loader
+                return importlib.util.spec_from_loader(
+                    fullname,
+                    CypyLoader(py_path, self.cache_manager, self.hook),
+                    origin=py_path
+                )
+        
+        return None
+
+
+class CypyLoader:
+    """Loader：加载Cypy编译生成的模块"""
+    
+    def __init__(self, source_path: str, cache_manager: CypyCacheManager, hook: CypyHook):
+        self.source_path = source_path
+        self.cache_manager = cache_manager
+        self.hook = hook
+    
+    def create_module(self, spec):
+        """创建模块对象"""
+        return None  # 使用默认行为
+    
+    def exec_module(self, module):
+        """执行模块"""
+        source_path = self.source_path
+        
+        # 检查是否需要编译
+        pyd_path = self.cache_manager.get_cached_pyd(source_path)
+        
+        if pyd_path is None or self.cache_manager.is_stale(source_path):
+            # 需要重新编译
+            cache_dir = self.cache_manager._get_cache_dir(source_path)
+            
+            # 编译为.pyd
+            result = self.hook.compile_to_pyd(source_path, output_dir=cache_dir)
+            
+            if not result.success or not result.pyd_path:
+                error_msg = "\n".join(result.errors)
+                raise CypyImportError(f"Failed to compile Cypy file '{source_path}':\n{error_msg}")
+            
+            pyd_path = result.pyd_path
+            
+            # 缓存.pyd路径
+            self.cache_manager.cache_pyd(source_path, pyd_path)
+        
+        # 导入编译后的.pyd模块
+        module_dir = os.path.dirname(pyd_path)
+        
+        # 添加模块目录到sys.path以便导入依赖
+        if module_dir not in sys.path:
+            sys.path.insert(0, module_dir)
+        
+        try:
+            spec = importlib.util.spec_from_file_location(module.__name__, pyd_path)
+            
+            if spec is None or spec.loader is None:
+                raise CypyImportError(f"Failed to create spec for '{pyd_path}'")
+            
+            compiled_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(compiled_module)
+            
+            # 将编译模块的所有属性复制到目标模块
+            module.__dict__.update(compiled_module.__dict__)
+            
+        finally:
+            # 清理sys.path
+            if module_dir in sys.path:
+                sys.path.remove(module_dir)
+
+
+class CypyImportError(Exception):
+    """Cypy导入错误"""
+    pass
+
+
+# ==================== Hook注册API ====================
+
+_cypy_finder = None
+
+
+def install_hook():
+    """安装Cypy导入钩子"""
+    global _cypy_finder
+    if _cypy_finder is None:
+        _cypy_finder = CypyMetaPathFinder()
+        sys.meta_path.insert(0, _cypy_finder)
+
+
+def uninstall_hook():
+    """卸载Cypy导入钩子"""
+    global _cypy_finder
+    if _cypy_finder is not None and _cypy_finder in sys.meta_path:
+        sys.meta_path.remove(_cypy_finder)
+        _cypy_finder = None
+
+
+def is_hook_installed() -> bool:
+    """检查钩子是否已安装"""
+    global _cypy_finder
+    return _cypy_finder is not None and _cypy_finder in sys.meta_path
 
 
 def main():

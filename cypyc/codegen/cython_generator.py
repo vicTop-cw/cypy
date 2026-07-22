@@ -88,7 +88,7 @@ class CythonGenerator:
                     param_str = f"{self._type_to_str(param.type_annotation)} {param.name}"
                 params.append(param_str)
             
-            self._write(f"cdef{return_type} {node.name}({', '.join(params)}):")
+            self._write(f"cpdef{return_type} {node.name}({', '.join(params)}):")
         else:
             self._write(f"def {node.name}():")
         
