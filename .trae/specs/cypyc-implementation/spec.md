@@ -125,8 +125,8 @@
 - **Then**: 生成 `result = filter(process(data))`
 - **Verification**: `programmatic`
 
-## Open Questions
-- [ ] 解析策略选择：自定义 PEG 解析器 vs 增强型预处理器 + Python ast？
-- [ ] 泛型转译策略：全特化 vs 类型擦除 vs 混合模式？
-- [ ] meta 分派调度器的实现方式：编译期静态分派 vs 运行时动态分派？
-- [ ] 是否需要支持 `cypyc --watch` 热重载功能？
+## Open Questions (已解决)
+- [x] **解析策略选择**: 当前使用自定义词法分析器（手工实现）+ 递归下降解析器，不使用 PLY 或 parsec，因为语法相对简单且自定义实现更灵活、性能更好
+- [x] **泛型转译策略**: 采用混合策略，对于 C 类型参数使用类型特化，对于 Python 对象类型使用类型擦除
+- [x] **meta 分派调度器**: 采用编译期静态分派，在转译时根据类型约束生成特化函数和调度器
+- [x] **`cypyc --watch` 热重载**: 暂不实现，当前 import hook 已经支持开发阶段的实时转译

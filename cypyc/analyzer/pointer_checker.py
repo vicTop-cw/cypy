@@ -65,3 +65,34 @@ class PointerChecker:
         self._visit(node.func)
         for arg in node.args:
             self._visit(arg)
+        
+        if hasattr(node, 'func') and hasattr(node.func, 'id'):
+            func_name = node.func.id
+            if func_name in ('malloc', 'sizeof', 'free', 'addr'):
+                if func_name == 'malloc':
+                    self._check_malloc_call(node)
+                elif func_name == 'sizeof':
+                    self._check_sizeof_call(node)
+                elif func_name == 'addr':
+                    self._check_addr_call(node)
+
+    def _check_malloc_call(self, node: Any) -> None:
+        if not node.args:
+            self.errors.append(f"malloc() requires at least one argument at {node.line}:{node.col}")
+            return
+        
+        arg = node.args[0]
+        if hasattr(arg, 'func') and hasattr(arg.func, 'id') and arg.func.id == 'sizeof':
+            pass
+        else:
+            self.errors.append(f"malloc() argument should be sizeof() at {node.line}:{node.col}")
+
+    def _check_sizeof_call(self, node: Any) -> None:
+        if not node.args:
+            self.errors.append(f"sizeof() requires at least one argument at {node.line}:{node.col}")
+            return
+
+    def _check_addr_call(self, node: Any) -> None:
+        if not node.args:
+            self.errors.append(f"addr() requires at least one argument at {node.line}:{node.col}")
+            return

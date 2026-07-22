@@ -1,5 +1,5 @@
 from typing import Dict, List, Any, Optional
-from cypyc.parser.parser import ASTNode, Module, FuncDef, LetStmt, ReturnStmt, BinOp, UnaryOp, Call, Name, Constant
+from cypyc.parser.parser import ASTNode, Module, FuncDef, LetStmt, ReturnStmt, BinOp, UnaryOp, Call, Name, Constant, PointerType
 
 
 class Type:
@@ -80,9 +80,16 @@ class TypeChecker:
         if node.value:
             value_type = self._visit(node.value)
             if declared_type and value_type and declared_type != value_type:
-                self.errors.append(f"Type mismatch: expected {declared_type}, got {value_type} at {node.line}:{node.col}")
+                # 允许指针类型匹配（void* 可以赋值给 int* 等）
+                if not (declared_type.is_pointer and value_type.is_pointer):
+                    self.errors.append(f"Type mismatch: expected {declared_type}, got {value_type} at {node.line}:{node.col}")
             elif not declared_type and value_type:
-                self.type_map[node.name] = value_type
+                if value_type.is_pointer:
+                    self.errors.append(f"Pointer variable '{node.name}' requires explicit type annotation at {node.line}:{node.col}")
+                else:
+                    self.type_map[node.name] = value_type
+        if declared_type:
+            self.type_map[node.name] = declared_type
 
     def _visit_ReturnStmt(self, node: ReturnStmt) -> Optional[Type]:
         if node.value:
@@ -97,8 +104,16 @@ class TypeChecker:
         left_type = self._visit(node.left)
         right_type = self._visit(node.right)
 
-        if left_type and right_type and left_type != right_type:
-            self.errors.append(f"Type mismatch in binary operation: {left_type} {node.op} {right_type} at {node.line}:{node.col}")
+        if left_type and right_type:
+            # 数值类型可以隐式转换（int + float = float）
+            numeric_types = {'int', 'float', 'double'}
+            if left_type.name in numeric_types and right_type.name in numeric_types:
+                # 允许数值类型混合运算
+                if left_type.name == 'float' or right_type.name == 'float' or right_type.name == 'double':
+                    return Type('float')
+                return Type('int')
+            elif left_type != right_type:
+                self.errors.append(f"Type mismatch in binary operation: {left_type} {node.op} {right_type} at {node.line}:{node.col}")
 
         return left_type
 
@@ -109,12 +124,32 @@ class TypeChecker:
         self._visit(node.func)
         for arg in node.args:
             self._visit(arg)
+        
+        if hasattr(node, 'func') and hasattr(node.func, 'id'):
+            func_name = node.func.id
+            if func_name == 'malloc':
+                return Type("void", is_pointer=True)
+            elif func_name == 'sizeof':
+                return Type("int")
+            elif func_name == 'addr':
+                return Type("void", is_pointer=True)
+        
         return Type("None")
 
     def _visit_Name(self, node: Name) -> Optional[Type]:
         if node.id in self.type_map:
             return self.type_map[node.id]
         return None
+
+    def _visit_Assign(self, node: Any) -> None:
+        self._visit(node.target)
+        if node.value:
+            value_type = self._visit(node.value)
+            if value_type and value_type.is_pointer:
+                if hasattr(node.target, 'id'):
+                    target_name = node.target.id
+                    if target_name not in self.type_map:
+                        self.errors.append(f"Pointer variable '{target_name}' requires explicit type annotation at {node.line}:{node.col}")
 
     def _visit_Constant(self, node: Constant) -> Optional[Type]:
         if isinstance(node.value, int):
@@ -134,4 +169,9 @@ class TypeChecker:
             if node.id in self.type_map:
                 return self.type_map[node.id]
             return Type(node.id)
+        if isinstance(node, PointerType):
+            base_type = self._get_type_from_node(node.base_type)
+            if base_type:
+                return Type(base_type.name, is_pointer=True)
+            return None
         return None

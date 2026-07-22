@@ -660,8 +660,19 @@ class Parser:
     def _parse_defer_stmt(self) -> DeferStmt:
         self._consume(TokenType.DEFER)
         self._require_function_scope("defer", self._current())
-        self._expect(TokenType.COLON)
-        body = self._parse_block()
+        
+        # 支持两种形式：
+        # 1. defer free(ptr)  - 单行形式
+        # 2. defer:          - 块形式
+        #       free(ptr)
+        if self._current().type == TokenType.COLON:
+            self._consume()
+            body = self._parse_block()
+        else:
+            # 单行形式：解析表达式直到换行
+            expr = self._parse_expression()
+            body = [expr]
+        
         return DeferStmt(body, self._current().line, self._current().col)
 
     def _parse_impl_stmt(self) -> ImplStmt:

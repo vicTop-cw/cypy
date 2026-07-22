@@ -51,6 +51,7 @@ class CypyHook:
         from cypyc.parser.parser import Parser
         from cypyc.analyzer.scope_analyzer import ScopeAnalyzer
         from cypyc.analyzer.type_checker import TypeChecker
+        from cypyc.analyzer.pointer_checker import PointerChecker
         from cypyc.analyzer.cycle_detector import CycleDetector
         from cypyc.analyzer.build_block_checker import BuildBlockChecker
 
@@ -80,6 +81,12 @@ class CypyHook:
             type_checker.check(ast)
             if type_checker.errors:
                 errors.extend(type_checker.errors)
+
+            self._log("Step 5.5: Pointer checking...")
+            pointer_checker = PointerChecker()
+            pointer_checker.check(ast)
+            if pointer_checker.errors:
+                errors.extend(pointer_checker.errors)
 
             self._log("Step 6: Cycle detection...")
             cycle_detector = CycleDetector()

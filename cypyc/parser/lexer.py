@@ -157,6 +157,7 @@ class Lexer:
         self.indent_stack = [0]
         self._expect_indent = False  # 标记是否期望下一行增加缩进
         self._in_type_annotation = False  # 标记是否在箭头后的类型注解中
+        self._indent_type = None  # 记录当前使用的缩进类型：'spaces' 或 'tabs'
 
     def _peek(self) -> Optional[str]:
         if self.pos >= len(self.source):
@@ -238,23 +239,41 @@ class Lexer:
             self._skip_comment()
 
         indent = 0
+        has_spaces = False
+        has_tabs = False
         while self._peek() is not None and self._peek() in " \t":
             if self._peek() == "\t":
                 indent += 4
+                has_tabs = True
             else:
                 indent += 1
+                has_spaces = True
             self._advance()
+
+        # 检测混合缩进
+        if has_spaces and has_tabs:
+            raise ValueError(f"Mixed indentation (spaces and tabs) at line {self.line}")
+
+        # 设置缩进类型
+        if indent > 0:
+            current_indent_type = 'tabs' if has_tabs else 'spaces'
+            if self._indent_type is None:
+                self._indent_type = current_indent_type
+            elif self._indent_type != current_indent_type:
+                raise ValueError(f"Inconsistent indentation at line {self.line}: "
+                               f"expected {self._indent_type}, got {current_indent_type}")
 
         # 检查缩进是否是4的倍数（标准缩进规则）
         if indent != 0 and indent % 4 != 0:
             raise ValueError(f"Invalid indentation level {indent} at line {self.line}. "
                            f"Indentation must be a multiple of 4")
         
-        # 如果期望缩进（遇到块关键字后的冒号），下一行的缩进必须大于当前级别
+        # 如果期望缩进（遇到块关键字后的冒号），下一行的缩进必须大于当前级别且增量为4
         if self._expect_indent:
-            if indent <= self.indent_stack[-1]:
+            expected_indent = self.indent_stack[-1] + 4
+            if indent != expected_indent:
                 raise ValueError(f"Expected increased indentation at line {self.line}. "
-                               f"Expected > {self.indent_stack[-1]}, got {indent}")
+                               f"Expected {expected_indent}, got {indent}")
             # 重置期望缩进标记
             self._expect_indent = False
         else:
