@@ -29,10 +29,12 @@ class TypeChecker:
         self.type_map: Dict[str, Type] = {
             "int": Type("int"),
             "float": Type("float"),
-            "str": Type("str"),
+            "double": Type("double"),
             "bool": Type("bool"),
+            "str": Type("str"),
             "None": Type("None"),
         }
+        self.mutable_map: Dict[str, bool] = {}  # 跟踪变量是否可变
         self.current_function_return_type: Optional[Type] = None
         self.errors: List[str] = []
 
@@ -65,6 +67,10 @@ class TypeChecker:
         old_return_type = self.current_function_return_type
         self.current_function_return_type = self._get_type_from_node(node.return_type)
 
+        # 保存旧的类型和可变性映射，进入新作用域
+        old_type_map = self.type_map.copy()
+        old_mutable_map = self.mutable_map.copy()
+
         for param in node.params:
             param_type = self._get_type_from_node(param.type_annotation)
             if param_type:
@@ -73,6 +79,9 @@ class TypeChecker:
         for stmt in node.body:
             self._visit(stmt)
 
+        # 恢复旧的映射，退出作用域
+        self.type_map = old_type_map
+        self.mutable_map = old_mutable_map
         self.current_function_return_type = old_return_type
 
     def _visit_LetStmt(self, node: LetStmt) -> None:
@@ -90,6 +99,8 @@ class TypeChecker:
                     self.type_map[node.name] = value_type
         if declared_type:
             self.type_map[node.name] = declared_type
+        # 跟踪变量可变性（val = 不可变, let = 可变）
+        self.mutable_map[node.name] = node.mutable
 
     def _visit_ReturnStmt(self, node: ReturnStmt) -> Optional[Type]:
         if node.value:
@@ -150,6 +161,11 @@ class TypeChecker:
                     target_name = node.target.id
                     if target_name not in self.type_map:
                         self.errors.append(f"Pointer variable '{target_name}' requires explicit type annotation at {node.line}:{node.col}")
+        # 检查不可变变量的重新赋值
+        if hasattr(node.target, 'id'):
+            target_name = node.target.id
+            if target_name in self.mutable_map and not self.mutable_map[target_name]:
+                self.errors.append(f"Immutable variable '{target_name}' cannot be reassigned at {node.line}:{node.col}")
 
     def _visit_Constant(self, node: Constant) -> Optional[Type]:
         if isinstance(node.value, int):

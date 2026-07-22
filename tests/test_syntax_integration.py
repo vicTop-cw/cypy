@@ -497,6 +497,45 @@ def test():
         code = self._assert_parse_success(source)
 
 
+class TestValLetSemantics(CypyTestBase):
+    """val/let语义测试"""
+
+    def test_val_immutable(self):
+        """测试val声明的变量不可重新赋值"""
+        source = """def test():
+    val x: int = 10
+    x = 20
+"""
+        code, error = self._parse_and_generate(source)
+        self.assertIsNotNone(error, "Immutable variable should not be reassignable")
+        self.assertIn("cannot be reassigned", error)
+
+    def test_let_mutable(self):
+        """测试let声明的变量可以重新赋值"""
+        source = """def test():
+    let x: int = 10
+    x = 20
+"""
+        code = self._assert_parse_success(source)
+
+    def test_val_no_initial_assignment(self):
+        """测试val变量不可重新赋值（无初始值）"""
+        source = """def test():
+    val x: int
+    x = 10
+"""
+        code, error = self._parse_and_generate(source)
+        self.assertIsNotNone(error, "Immutable variable should not be reassignable")
+
+    def test_val_valid_single_assignment(self):
+        """测试val变量的单次赋值是允许的"""
+        source = """def test():
+    val x: int = 10
+    return x
+"""
+        code = self._assert_parse_success(source)
+
+
 class TestMetaSystem(CypyTestBase):
     """Meta系统测试"""
 

@@ -555,7 +555,8 @@ class Parser:
             self._consume()
             value = self._parse_expression()
         self._expect(TokenType.NEWLINE)
-        return LetStmt(name_token.value, type_annotation, value, False, name_token.line, name_token.col)
+        # let 声明的是可变变量
+        return LetStmt(name_token.value, type_annotation, value, True, name_token.line, name_token.col)
 
     def _parse_var_stmt(self) -> LetStmt:
         self._consume(TokenType.VAR)
