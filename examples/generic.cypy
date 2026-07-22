@@ -1,0 +1,17 @@
+type Number = int | float
+
+def add(a: Number, b: Number) -> Number:
+    return a + b
+
+def multiply(a: Number, b: Number) -> Number:
+    return a * b
+
+struct Container[T]:
+    value: T
+
+def get_value[T](container: Container[T]) -> T:
+    return container.value
+
+let result1 = add(10, 20)
+let result2 = add(3.14, 2.71)
+let result3 = multiply(result1, result2)

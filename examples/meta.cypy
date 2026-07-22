@@ -1,0 +1,33 @@
+enum Status:
+    PENDING
+    PROCESSING
+    COMPLETED
+    ERROR
+
+trait Printable:
+    def print(self) -> None:
+        pass
+
+class Document(implements Printable):
+    def __init__(self, title: str):
+        self.title = title
+
+    def print(self) -> None:
+        print(f"Document: {self.title}")
+
+class Report(extends Document):
+    def __init__(self, title: str, pages: int):
+        super().__init__(title)
+        self.pages = pages
+
+    def print(self) -> None:
+        print(f"Report: {self.title} ({self.pages} pages)")
+
+def process_document(doc: Printable) -> None:
+    doc.print()
+
+let doc = Document("Meeting Notes")
+let report = Report("Quarterly Report", 42)
+
+process_document(doc)
+process_document(report)

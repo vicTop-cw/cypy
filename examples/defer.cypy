@@ -1,0 +1,22 @@
+def process_file(filename: str) -> None:
+    let file = open(filename, "r")
+    defer:
+        file.close()
+        print("File closed")
+
+    let content = file.read()
+    print(f"Read {len(content)} bytes")
+
+def transaction() -> None:
+    print("Starting transaction")
+    defer:
+        print("Rolling back transaction")
+
+    print("Performing operations")
+    if False:
+        return
+
+    print("Committing transaction")
+
+process_file("example.txt")
+transaction()
