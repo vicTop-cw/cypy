@@ -672,6 +672,9 @@ class Parser:
             # 单行形式：解析表达式直到换行
             expr = self._parse_expression()
             body = [expr]
+            # 消费换行符
+            if self._current().type == TokenType.NEWLINE:
+                self._consume()
         
         return DeferStmt(body, self._current().line, self._current().col)
 
@@ -791,7 +794,8 @@ class Parser:
         if self._current().type == TokenType.ASSIGN:
             self._consume()
             right_value = self._parse_expression()
-            if isinstance(value, Name):
+            # 允许 Name 和 DerefExpr 作为赋值目标
+            if isinstance(value, (Name, DerefExpr)):
                 if self._current().type == TokenType.NEWLINE:
                     self._consume()
                 return Assign(value, right_value, value.line, value.col)

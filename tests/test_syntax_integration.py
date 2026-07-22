@@ -395,6 +395,81 @@ class TestPointerOperations(CypyTestBase):
         code = self._assert_parse_success(source)
 
 
+class TestBuiltinAPI(CypyTestBase):
+    """内置API代码生成测试"""
+
+    def test_malloc_codegen(self):
+        """测试malloc代码生成"""
+        source = """def test():
+    ptr: int* = malloc(sizeof(int))
+"""
+        code = self._assert_parse_success(source)
+        # sizeof是Cython内置关键字，不需要导入
+        self.assertIn("from libc.stdlib cimport malloc, free", code)
+        self.assertIn("<void*>malloc(sizeof(int))", code)
+
+    def test_free_codegen(self):
+        """测试free代码生成"""
+        source = """def test():
+    ptr: int* = malloc(sizeof(int))
+    free(ptr)
+"""
+        code = self._assert_parse_success(source)
+        self.assertIn("free(ptr)", code)
+
+    def test_addr_codegen(self):
+        """测试addr代码生成"""
+        source = """def test():
+    x: int = 10
+    ptr: int* = addr(x)
+"""
+        code = self._assert_parse_success(source)
+        self.assertIn("&x", code)
+
+    def test_deref_codegen(self):
+        """测试解引用代码生成"""
+        source = """def test():
+    ptr: int* = malloc(sizeof(int))
+    &ptr = 42
+"""
+        code = self._assert_parse_success(source)
+        self.assertIn("ptr[0] = 42", code)
+
+    def test_no_libc_import_without_builtins(self):
+        """测试不使用内置函数时不导入C库"""
+        source = """def test(x: int) -> int:
+    return x + 1
+"""
+        code = self._assert_parse_success(source)
+        self.assertNotIn("from libc.stdlib", code)
+
+    def test_defer_codegen(self):
+        """测试defer语句生成try/finally"""
+        source = """def test():
+    ptr: int* = malloc(sizeof(int))
+    defer free(ptr)
+"""
+        code = self._assert_parse_success(source)
+        self.assertIn("try:", code)
+        self.assertIn("finally:", code)
+        self.assertIn("free(ptr)", code)
+
+    def test_multiple_defer_codegen(self):
+        """测试多个defer语句生成try/finally（按逆序执行）"""
+        source = """def test():
+    x = 1
+    defer print("first")
+    y = 2
+    defer print("second")
+"""
+        code = self._assert_parse_success(source)
+        self.assertIn("try:", code)
+        self.assertIn("finally:", code)
+        # 第二个defer应该在finally块中先执行（逆序）
+        self.assertIn("print(\"second\")", code)
+        self.assertIn("print(\"first\")", code)
+
+
 class TestPipeOperator(CypyTestBase):
     """管道操作符测试"""
 
