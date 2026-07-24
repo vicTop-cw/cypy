@@ -1,0 +1,47 @@
+# 测试内嵌函数、参数检查站和泛型
+# 尖括号 <checker> 用于参数检查站，中括号 [T] 用于泛型
+
+# 语法规则：def <checker>? name [generic]? (params)
+
+# 1. 内嵌函数测试
+def outer(x):
+    def inner(y):
+        return x + y
+    return inner(10)
+
+# 2. 参数检查站测试 - 在函数定义时指定
+def validate_params():
+    print("params validated")
+
+def <validate_params> process_data(a, b):
+    print("processing")
+
+# 3. 调用时指定 checker
+def custom_checker():
+    print("custom check passed")
+
+def compute(x, y):
+    return x * y
+
+# 4. 泛型函数（中括号在函数名之后）
+def identity[T](value: T) -> T:
+    return value
+
+# 5. 混合使用：checker + 泛型
+def log_params():
+    print("logging params")
+
+def <log_params> transform[T](value: T) -> T:
+    return value
+
+# 测试调用
+result1 = outer(5)
+process_data(10, 20)
+result2 = compute<custom_checker>(3, 4)
+result3 = identity[int](42)
+result4 = transform<log_params>[str]("hello")
+
+print(result1)
+print(result2)
+print(result3)
+print(result4)

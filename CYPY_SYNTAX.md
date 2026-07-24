@@ -1000,7 +1000,7 @@ class Point:
 
 ## 5. 新语法构造
 
-> **规则**：`impl`, `struct`, `trait`, `enum` 只能写在模块顶级（层级 0），且不能嵌套。
+> **规则**：`impl`, `struct`, `trait`, `enum`, `macro`, `meta` 只能写在模块顶级（层级 0），且不能嵌套。
 
 ### 5.1 `struct` — 结构体
 
@@ -1156,6 +1156,384 @@ cdef class Circle:
 | **必须为 `cdef class`** | 实现 trait 的类必须是 `cdef class`，以便支持 `cpdef` 方法 |
 | **方法签名必须匹配** | `impl` 中的方法签名必须与 trait 定义完全匹配 |
 | **不能重复实现** | 同一类对同一 trait 只能实现一次 |
+
+### 5.5 `macro` — 宏系统
+
+用于编译期代码生成，参考 lang-zone 设计。
+
+#### 语法
+
+```python
+# 宏定义
+macro twice(input: Tokens) -> Tokens =
+    f```
+        $input + $input
+    ```
+
+# 宏调用
+result = @twice!(x)
+```
+
+#### 反引号代码块
+
+反引号代码块支持三种前缀：
+
+| 前缀 | 说明 | 示例 |
+|------|------|------|
+| 无前缀 | 普通形式，不插值 | ```code``` |
+| `f` | 插值形式，支持 `$()` 和 `$name` | f```$x + 1``` |
+| `r` | 原始形式，不插值、不展开宏 | r```literal``` |
+
+#### 宏插值语法
+
+| 语法 | 说明 | 示例 |
+|------|------|------|
+| `$name` | 简单参数替换 | `$x` → `5` |
+| `$(expr)` | 表达式形式，保持括号 | `$(x + y)` → `(x + y)` |
+| `$$` | 转义为单个 `$` | `$$100` → `$100` |
+
+#### 宏调用语法
+
+| 语法 | 说明 | 示例 |
+|------|------|------|
+| `@name!` | 无参数宏调用 | `@log!` |
+| `@name!(args...)` | 带参数宏调用 | `@add!(1, 2)` |
+
+#### 完整示例
+
+```python
+# 定义日志宏
+macro log(expr: Tokens) -> Tokens =
+    f```
+        print("value: ", $(expr))
+        return $expr
+    ```
+
+# 定义结构体生成宏
+macro create_struct(name: Tokens) -> Tokens =
+    f```
+        struct $name:
+            x: int
+            y: int
+    ```
+
+# 使用宏
+def test():
+    @log!(x + y)
+    @create_struct!(Point)
+    return 0
+```
+
+#### 转译策略
+
+宏在编译期展开，操作 Token 流。`cypyc` 转译器在解析阶段处理宏调用，将其替换为展开后的代码。
+
+### 5.6 `comptime` — 编译期求值
+
+用于在编译时执行表达式并将结果替换为常量。
+
+#### 语法
+
+```python
+# 单行形式：编译期计算表达式
+result: int = comptime: 2 + 3 * 4
+
+# 块形式：编译期执行代码块
+comptime:
+    x = 10
+    y = 20
+    result = x + y
+
+# 作为表达式使用
+value: int = comptime: calculate_constant()
+```
+
+#### 转译策略
+
+`comptime` 代码在 `cypyc` 转译时执行，结果作为常量值嵌入生成的代码中。
+
+```python
+# Cypy 源码
+PI: double = comptime: 3.1415926535
+
+# 转译结果（Cython）
+PI = 3.1415926535
+```
+
+#### 注意事项
+
+| 注意事项 | 说明 |
+|----------|------|
+| **编译期执行** | `comptime` 代码在编译时执行，无法访问运行时变量 |
+| **无副作用** | 避免在 `comptime` 中执行有副作用的操作 |
+| **常量结果** | 求值结果必须是常量，可嵌入代码 |
+
+### 5.7 构建块（Build Blocks）
+
+用于创建闭包无参函数，内部默认 unsafe，允许指针语法。
+
+#### 语法
+
+| 符号 | 名称 | 说明 |
+|------|------|------|
+| `=:` | 变量构建块 | 自动将最后表达式作为返回值赋值给左侧变量 |
+| `~:` | 调用构建块 | 返回元组、命名元组、字典或实现 `BuildParams` trait 的对象 |
+| `*:` | 生成器构建块 | 返回迭代器，`yield` 产生参数包 |
+
+#### 变量构建块 `=:`
+
+```python
+result: int =:
+    x = 10
+    y = 20
+    x + y  # 最后表达式作为返回值
+
+# 转译结果
+result = (lambda: (10, 20, 10 + 20)[-1])()
+```
+
+#### 调用构建块 `~:`
+
+```python
+def create_object():
+    pass
+
+# 使用调用构建块传递参数
+create_object ~:
+    param1 = value1
+    param2 = value2
+```
+
+#### 生成器构建块 `*:`
+
+```python
+def process_items():
+    pass
+
+# 使用生成器构建块产生多个参数包
+process_items *:
+    yield (1, "first")
+    yield (2, "second")
+    yield {"key": "value"}
+```
+
+#### 构建值操作符 `^`
+
+```python
+# 使用 ^ 获取构建值
+builder ~:
+    value = 42
+    
+result = ^builder  # 获取构建块的返回值
+```
+
+### 5.8 Lambda 表达式
+
+用于创建匿名函数。
+
+#### 语法
+
+```python
+# 简单 lambda
+add = lambda x, y: x + y
+
+# 带类型注解的 lambda
+multiply = lambda x: int, y: int: x * y
+
+# 作为参数传递
+result = map(lambda x: x * 2, [1, 2, 3])
+
+# 嵌套 lambda
+outer = lambda x: lambda y: x + y
+```
+
+#### 转译目标
+
+```cython
+# Cypy lambda
+add = lambda x, y: x + y
+
+# 转译结果（Cython）
+add = lambda x, y: x + y
+```
+
+### 5.9 参数检查站（Parameter Checkpoint）
+
+用于在函数定义或调用时指定参数验证函数。
+
+#### 语法
+
+```python
+# 函数定义时指定 checker
+def validate_params():
+    print("params validated")
+
+def <validate_params> process_data(a, b):
+    print("processing")
+
+# 调用时指定 checker
+def custom_checker():
+    print("custom check passed")
+
+result = compute<custom_checker>(3, 4)
+
+# 混合使用：checker + 泛型
+def <log_params> transform[T](value: T) -> T:
+    return value
+
+result = transform<log_params>[str]("hello")
+```
+
+#### 语法规则
+
+```
+def <checker>? name [generic]? (params)
+```
+
+| 位置 | 语法 | 说明 |
+|------|------|------|
+| 函数名前 | `<checker>` | 参数检查站，可选 |
+| 函数名后 | `[T]` | 泛型参数，可选 |
+
+#### 转译策略
+
+```python
+# Cypy 源码
+def <validate_params> process_data(a, b):
+    pass
+
+# 转译结果（Cython）
+cpdef process_data(a, b):
+    validate_params()  # 在函数体开头自动调用
+    pass
+
+# 调用时指定 checker
+result = compute<custom_checker>(3, 4)
+
+# 转译结果
+result = (custom_checker(), compute(3, 4))[1]
+```
+
+### 5.10 SIMD 向量类型（vec）
+
+用于 SIMD 并行计算。
+
+#### 语法
+
+```python
+# 向量类型定义
+v: vec[int; 4]  # 4个int的向量
+
+# 向量字面量
+v1 = vec![1, 2, 3, 4]      # 元素列表形式
+v2 = vec![0; 4]            # 重复形式（4个0）
+v3 = vec![1.0, 2.0, 3.0, 4.0]  # 浮点向量
+
+# 向量操作
+result = v1 + v2  # 逐元素加法
+result = v1 * v2  # 逐元素乘法
+```
+
+#### 向量类型语法
+
+```
+vec[ElementType; Size]
+```
+
+| 参数 | 说明 | 示例 |
+|------|------|------|
+| `ElementType` | 元素类型 | `int`, `float`, `double` |
+| `Size` | 向量大小（必须是编译期常量） | `4`, `8`, `16` |
+
+### 5.11 并发与协程
+
+#### `spawn` — 并发任务
+
+用于在后台执行异步任务。
+
+```python
+def background_task():
+    # 后台执行的任务
+    pass
+
+# 作为语句使用
+spawn background_task()
+
+# 作为表达式使用（获取任务句柄）
+task = spawn background_task()
+
+# 块形式
+spawn:
+    # 任务体
+    process_data()
+```
+
+#### `go` — 轻量级协程
+
+用于创建并启动协程。
+
+```python
+def coroutine_func():
+    # 协程代码
+    pass
+
+# 作为语句使用
+go coroutine_func()
+
+# 作为表达式使用
+task = go coroutine_func()
+
+# 块形式
+go:
+    # 协程体
+    for i in range(10):
+        process(i)
+```
+
+### 5.12 模式匹配（match/case）
+
+用于模式匹配和分支处理。
+
+#### 语法
+
+```python
+match value:
+    case 0:
+        print("zero")
+    case 1 | 2:
+        print("one or two")
+    case x if x > 10:
+        print(f"large: {x}")
+    case _:
+        print("other")
+```
+
+#### 支持的模式
+
+| 模式类型 | 说明 | 示例 |
+|----------|------|------|
+| 常量模式 | 匹配字面量值 | `case 0`, `case "hello"` |
+| 变量模式 | 绑定匹配值到变量 | `case x` |
+| OR 模式 | 匹配多个模式 | `case 1 \| 2 \| 3` |
+| 列表模式 | 匹配列表结构 | `case [a, b, c]` |
+| 元组模式 | 匹配元组结构 | `case (a, b)` |
+| 条件模式 | 添加额外条件 | `case x if x > 0` |
+| 通配符模式 | 匹配任何值 | `case _` |
+
+#### 完整示例
+
+```python
+def process_result(result):
+    match result:
+        case {"status": "success", "data": data}:
+            print(f"Got data: {data}")
+        case {"status": "error", "message": msg}:
+            print(f"Error: {msg}")
+        case None:
+            print("No result")
+        case _:
+            print("Unknown result type")
+```
 
 ---
 
@@ -1313,100 +1691,192 @@ def process_data(size: int) -> int:
     return buffer[0]
 ```
 
-#### 转译策略（延迟调用栈模式）
+### 6.6 `guard` — 守卫表达式
 
-> **关键设计**：收集函数内所有 `defer` 语句，使用 try/finally 块确保清理。采用 LIFO（后进先出）顺序执行。
+用于提前终止函数并隐式返回，避免嵌套条件判断。
 
-**转译流程**：
+#### 语法
 
+```python
+# 单行形式：guard cond else expr（无冒号，隐式返回）
+def process(x: int) -> int:
+    guard x != 0 else 0
+    return x
+
+# 多行形式：guard cond else: 换行块体（有冒号）
+def process(x: int) -> int:
+    guard x != 0 else:
+        print("error: x is zero")
+        0  # 隐式返回
+    return x
+
+# guard let 绑定形式
+def process_optional() -> int:
+    guard let value = get_value() else 0
+    return value
 ```
-1. 解析阶段：收集每个作用域的 defer 语句到 defer_stack
-2. AST 转换阶段：将函数体包装在 try/finally 块中
-3. 代码生成阶段：在 finally 块中按 LIFO 顺序执行所有 defer 语句
+
+#### 转译策略
+
+```python
+# Cypy 源码
+def process(x: int) -> int:
+    guard x != 0 else 0
+    return x
+
+# 转译结果（Cython）
+cpdef int process(int x):
+    if not (x != 0):
+        return 0
+    return x
+
+# guard let 形式
+def process_optional() -> int:
+    guard let value = get_value() else 0
+    return value
+
+# 转译结果
+def process_optional():
+    value = get_value()
+    if not value:
+        return 0
+    return value
+```
+
+#### 注意事项
+
+| 注意事项 | 说明 |
+|----------|------|
+| **只能在函数内部使用** | `guard` 必须在函数作用域内 |
+| **隐式返回** | else 分支的值会被隐式返回，不需要 `return` 关键字 |
+| **无副作用** | else 分支应该是纯表达式或简单语句 |
+
+### 6.7 列表推导式
+
+支持条件过滤的列表生成语法。
+
+#### 语法
+
+```python
+# 简单列表推导式
+squares = [x * x for x in range(10)]
+
+# 带条件的列表推导式
+even_squares = [x * x for x in range(10) if x % 2 == 0]
+
+# 嵌套列表推导式
+matrix = [[i * j for j in range(3)] for i in range(3)]
+
+# 多重条件
+filtered = [x for x in numbers if x > 0 and x < 100]
 ```
 
 #### 转译目标
 
-```python
-# Cypy 语法
-def process_data(size: int) -> int:
-    buffer: int* = malloc(sizeof(int) * size)
-    defer free(buffer)
-    
-    if size > 0:
-        ptr: int* = malloc(sizeof(int))
-        defer free(ptr)
-        &ptr = 100
-        return &ptr
-    
-    return 0
+```cython
+# Cypy 列表推导式
+squares = [x * x for x in range(10)]
 
-# Cython 转译结果
-cpdef int process_data(int size):
-    from libc.stdlib cimport malloc, free, sizeof
-    
-    cdef int* buffer = <int*>malloc(sizeof(int) * size)
-    cdef int* ptr = NULL
-    
-    try:
-        if size > 0:
-            ptr = <int*>malloc(sizeof(int))
-            try:
-                *ptr = 100
-                return *ptr
-            finally:
-                if ptr != NULL:
-                    free(ptr)
-        
-        return 0
-    finally:
-        free(buffer)
+# 转译结果（Cython）
+squares = [x * x for x in range(10)]
 ```
 
-#### 执行顺序（LIFO）
+### 6.8 联合类型
+
+使用 `|` 操作符定义联合类型。
+
+#### 语法
 
 ```python
-def example():
-    defer print("third")
-    defer print("second")
-    defer print("first")
-    print("main")
+# 类型别名形式
+type Number = int | float | double
 
-# 执行顺序：
-# main
-# first
-# second
-# third
+# 函数参数形式
+def process(value: int | str) -> None:
+    pass
+
+# 变量声明形式
+result: int | None = None
+
+# 复杂联合类型
+type Result = Success[str] | Error[int]
 ```
 
-#### defer 规则
-
-| 规则 | 说明 |
-|------|------|
-| **LIFO 执行** | 后声明的 defer 先执行 |
-| **作用域绑定** | defer 绑定到当前作用域，在作用域退出时执行 |
-| **异常安全** | defer 在异常发生时仍会执行 |
-| **条件执行** | defer 仅在其声明代码路径被执行时才会注册 |
-| **指针清理** | 指针变量默认逃逸，必须使用 defer 清理 |
-| **不可取消** | 一旦注册，defer 不能被取消或移除 |
-
-#### 嵌套 defer 示例
+#### 转译策略
 
 ```python
-def nested_defer():
-    outer: int* = malloc(sizeof(int))
-    defer free(outer)
-    &outer = 10
+# Cypy 联合类型
+type Number = int | float | double
+
+# 转译结果（类型擦除）
+Number = object  # 运行时退化为 PyObject
+```
+
+### 6.9 异常处理
+
+完整支持 Python 异常处理语法。
+
+#### 语法
+
+```python
+# 基本 try/except
+try:
+    risky_operation()
+except ValueError as e:
+    print(f"Value error: {e}")
+except Exception as e:
+    print(f"Generic error: {e}")
+
+# try/except/finally
+try:
+    file = open("data.txt")
+    data = file.read()
+except IOError as e:
+    print(f"IO error: {e}")
+finally:
+    file.close()
+
+# try/except/else
+try:
+    result = compute()
+except ValueError:
+    result = 0
+else:
+    print(f"Success: {result}")
+
+# raise 语句
+raise ValueError("Invalid argument")
+raise ValueError("Invalid") from original_exception
+```
+
+### 6.10 上下文管理器
+
+支持 `with` 语句和上下文管理器协议。
+
+#### 语法
+
+```python
+# 单个上下文
+with open("file.txt") as f:
+    content = f.read()
+
+# 多个上下文
+with open("input.txt") as infile, open("output.txt", "w") as outfile:
+    data = infile.read()
+    outfile.write(data)
+
+# 自定义上下文管理器
+class ResourceManager:
+    def __enter__(self):
+        # 获取资源
+        return self
     
-    if True:
-        inner: int* = malloc(sizeof(int))
-        defer free(inner)
-        &inner = 20
-        print("inner block")
-    # inner 在这里被释放
-    
-    print("outer block")
-# outer 在这里被释放
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # 释放资源
+        pass
+
+with ResourceManager() as resource:
+    use(resource)
 ```
 
 #### 高级 defer 特性（可选）

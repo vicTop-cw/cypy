@@ -1,0 +1,31 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Trae IDE configuration
+.trae/
+
+# Build output directories
+output/
+output_bridge/
+*.pyd
+*.so
+*.dll
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# OS specific
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE
+.vscode/
+.idea/

@@ -3,7 +3,8 @@ from cypyc.parser.parser import (
     ASTNode, Module, FuncDef, LetStmt, ReturnStmt, IfStmt, ForStmt, WhileStmt,
     BinOp, UnaryOp, Call, Name, Constant, Attribute, Subscript, StructDef,
     StructField, EnumDef, EnumVariant, DeferStmt, DerefExpr, PointerType,
-    GenericType, TraitDef, ImplStmt, MetaBlock
+    GenericType, TraitDef, ImplStmt, MetaBlock, GuardStmt, ComptimeStmt,
+    BuildBlockExpr
 )
 from cypyc.codegen.type_mapper import TypeMapper
 
@@ -76,12 +77,18 @@ class CythonGenerator:
     def _visit_FuncDef(self, node: FuncDef) -> None:
         has_type_annotation = any(p.type_annotation for p in node.params) or node.return_type
         
+        # 处理 <checker> 参数检查站（定义时的 checker，在函数体开头自动调用）
+        has_checker = node.params_checker is not None
+        
         if has_type_annotation:
             return_type = ""
             if node.return_type:
                 return_type = f" {self._type_to_str(node.return_type)}"
             
             params = []
+            # 定义时的 checker 不作为参数传递，而是在函数体开头自动调用
+            # 调用时的 checker 会作为第一个参数传入（通过 Call.checker 字段）
+            
             for param in node.params:
                 param_str = param.name
                 if param.type_annotation:
@@ -90,7 +97,16 @@ class CythonGenerator:
             
             self._write(f"cpdef{return_type} {node.name}({', '.join(params)}):")
         else:
-            self._write(f"def {node.name}():")
+            params = []
+            # 添加普通参数
+            for param in node.params:
+                params.append(param.name)
+            
+            params_str = ", ".join(params)
+            if params_str:
+                self._write(f"def {node.name}({params_str}):")
+            else:
+                self._write(f"def {node.name}():")
         
         self.indent += 1
         
@@ -103,6 +119,11 @@ class CythonGenerator:
                 defer_stmts.append(stmt)
             else:
                 normal_stmts.append(stmt)
+        
+        # 在函数体开头添加 checker 调用（如果有）
+        if has_checker and node.params_checker:
+            checker_call = f"{node.params_checker}()"
+            self._write(checker_call)
         
         # 检查是否有defer语句
         if defer_stmts:
@@ -137,12 +158,20 @@ class CythonGenerator:
         if node.type_annotation:
             cdef_type = self._type_to_str(node.type_annotation)
             if node.value:
-                self._write(f"cdef {cdef_type} {node.name} = {self._expr_to_str(node.value)}")
+                if isinstance(node.value, ComptimeStmt):
+                    value = self._expr_to_str(node.value.expr)
+                else:
+                    value = self._expr_to_str(node.value)
+                self._write(f"cdef {cdef_type} {node.name} = {value}")
             else:
                 self._write(f"cdef {cdef_type} {node.name}")
         else:
             if node.value:
-                self._write(f"{node.name} = {self._expr_to_str(node.value)}")
+                if isinstance(node.value, ComptimeStmt):
+                    value = self._expr_to_str(node.value.expr)
+                else:
+                    value = self._expr_to_str(node.value)
+                self._write(f"{node.name} = {value}")
             else:
                 self._write(f"{node.name}")
 
@@ -190,7 +219,11 @@ class CythonGenerator:
 
     def _visit_Assign(self, node: Any) -> None:
         target = self._expr_to_str(node.target)
-        value = self._expr_to_str(node.value)
+        if isinstance(node.value, ComptimeStmt):
+            # comptime 在编译时求值，结果作为常量
+            value = self._expr_to_str(node.value.expr)
+        else:
+            value = self._expr_to_str(node.value)
         self._write(f"{target} = {value}")
 
     def _visit_StructDef(self, node: StructDef) -> None:
@@ -222,6 +255,48 @@ class CythonGenerator:
 
     def _visit_EnumVariant(self, node: EnumVariant) -> None:
         pass
+
+    def _visit_GuardStmt(self, node: GuardStmt) -> None:
+        """生成 guard 语句的 Cython 代码"""
+        if node.is_let:
+            # guard let target = expr else value
+            target = self._expr_to_str(node.let_target)
+            value = self._expr_to_str(node.test)
+            orelse = self._expr_to_str(node.orelse)
+            self._write(f"{target} = {value}")
+            self._write(f"if not {target}:")
+            self.indent += 1
+            self._write(f"return {orelse}")
+            self.indent -= 1
+        else:
+            # guard cond else value
+            test = self._expr_to_str(node.test)
+            orelse = self._expr_to_str(node.orelse)
+            self._write(f"if not ({test}):")
+            self.indent += 1
+            self._write(f"return {orelse}")
+            self.indent -= 1
+
+    def _visit_ComptimeStmt(self, node: ComptimeStmt) -> None:
+        """生成 comptime 语句的 Cython 代码"""
+        # comptime 在编译时求值，结果作为常量
+        self._write(f"# comptime: {self._expr_to_str(node.expr)}")
+
+    def _visit_BuildBlockExpr(self, node: BuildBlockExpr) -> None:
+        """生成构建块表达式的 Cython 代码"""
+        if node.block_type == BuildBlockExpr.BUILD_ASSIGN:
+            # =: 变量构建块，最后表达式作为返回值
+            self._write("(")
+            self._write("lambda: (")
+            self.indent += 1
+            for stmt in node.body:
+                if isinstance(stmt, (BinOp, UnaryOp, Call, Name, Constant)):
+                    self._write(self._expr_to_str(stmt) + ",")
+                else:
+                    self._visit(stmt)
+            self.indent -= 1
+            self._write(")[-1]")
+            self._write(")()")
 
     def _visit_TraitDef(self, node: TraitDef) -> None:
         self._write(f"class {node.name}:")
@@ -281,6 +356,12 @@ class CythonGenerator:
                 return f"{func_name}({args})"
         
         args = ", ".join(self._expr_to_str(arg) for arg in node.args)
+        
+        # 如果有调用时的 checker，在调用前调用 checker
+        # 使用逗号表达式：(checker(), func(args))[1] 获取函数调用结果
+        if node.checker:
+            return f"({node.checker}(), {self._expr_to_str(node.func)}({args}))[1]"
+        
         return f"{self._expr_to_str(node.func)}({args})"
 
     def _visit_Name(self, node: Name) -> str:

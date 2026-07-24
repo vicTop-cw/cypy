@@ -48,7 +48,7 @@ def parse_args(args: Optional[list] = None) -> argparse.Namespace:
     # transpile 子命令
     transpile_parser = subparsers.add_parser(
         "transpile",
-        help="Transpile Cypy source to Cython",
+        help="Transpile Cypy source to Cython or C",
     )
     transpile_parser.add_argument(
         "source",
@@ -67,7 +67,12 @@ def parse_args(args: Optional[list] = None) -> argparse.Namespace:
     transpile_parser.add_argument(
         "--emit-code",
         action="store_true",
-        help="Print generated Cython code",
+        help="Print generated code",
+    )
+    transpile_parser.add_argument(
+        "--bridge",
+        action="store_true",
+        help="Use bridge compiler to generate C code instead of Cython",
     )
     # 原有选项（保留兼容）
     transpile_parser.add_argument(
@@ -109,6 +114,11 @@ def parse_args(args: Optional[list] = None) -> argparse.Namespace:
         "-v", "--verbose",
         action="store_true",
         help="Verbose output",
+    )
+    compile_parser.add_argument(
+        "--bridge",
+        action="store_true",
+        help="Use bridge compiler instead of Cython",
     )
 
     # run 子命令
@@ -291,69 +301,127 @@ def main() -> int:
 
 def run_transpile(args):
     """执行转译命令"""
-    from cypy_hook.hook import CypyHook
-    
     print(f"Transpiling {args.source}...")
     print(f"Output directory: {args.output}")
 
-    hook = CypyHook()
-    hook.set_output_dir(args.output)
-    hook.set_verbose(args.verbose)
-    
-    result = hook.transpile_file(args.source)
-    
-    if result.success:
-        print(f"✓ Transpiled successfully")
-        print(f"  Output: {result.pyx_path}")
+    if args.bridge:
+        # 使用bridge编译器
+        from cypyc.codegen.bridge_generator import BridgeCodegenAdapter
         
-        if args.emit_code and result.cython_code:
-            print("\nGenerated Cython code:")
-            print("=" * 60)
-            print(result.cython_code)
-            print("=" * 60)
-        
-        return 0
+        adapter = BridgeCodegenAdapter()
+        try:
+            c_code = adapter.transpile_file(args.source)
+            
+            # 确保输出目录存在
+            os.makedirs(args.output, exist_ok=True)
+            
+            # 保存C代码
+            source_name = os.path.basename(args.source)
+            if source_name.endswith('.cypy'):
+                c_filename = source_name[:-5] + '.c'
+            elif source_name.endswith('.py'):
+                c_filename = source_name[:-3] + '.c'
+            else:
+                c_filename = source_name + '.c'
+            
+            c_path = os.path.join(args.output, c_filename)
+            with open(c_path, 'w', encoding='utf-8') as f:
+                f.write(c_code)
+            
+            print(f"✓ Transpiled successfully (bridge mode)")
+            print(f"  Output: {c_path}")
+            
+            if args.emit_code:
+                print("\nGenerated C code:")
+                print("=" * 60)
+                print(c_code)
+                print("=" * 60)
+            
+            return 0
+        except Exception as e:
+            print(f"✗ Transpile failed (bridge mode):")
+            print(f"  - {str(e)}")
+            return 1
     else:
-        print(f"✗ Transpile failed:")
-        for error in result.errors:
-            print(f"  - {error}")
-        return 1
+        # 使用Cython编译器（原有逻辑）
+        from cypy_hook.hook import CypyHook
+        
+        hook = CypyHook()
+        hook.set_output_dir(args.output)
+        hook.set_verbose(args.verbose)
+        
+        result = hook.transpile_file(args.source)
+        
+        if result.success:
+            print(f"✓ Transpiled successfully")
+            print(f"  Output: {result.pyx_path}")
+            
+            if args.emit_code and result.cython_code:
+                print("\nGenerated Cython code:")
+                print("=" * 60)
+                print(result.cython_code)
+                print("=" * 60)
+            
+            return 0
+        else:
+            print(f"✗ Transpile failed:")
+            for error in result.errors:
+                print(f"  - {error}")
+            return 1
 
 
 def run_compile(args):
     """执行编译命令"""
-    from cypy_hook.hook import CypyHook
-    
     print(f"Compiling {args.source}...")
     print(f"Output directory: {args.output}")
 
-    hook = CypyHook()
-    hook.set_output_dir(args.output)
-    hook.set_verbose(args.verbose)
-    
-    result = hook.compile_to_pyd(args.source)
-    
-    if result.success:
-        print(f"✓ Compiled successfully")
-        print(f"  .pyd file: {result.pyd_path}")
+    if args.bridge:
+        # 使用bridge编译器
+        from cypyc.codegen.bridge_generator import BridgeCodegenAdapter
         
-        if args.verbose:
-            print("\nProcessing steps:")
-            for i, step in enumerate(result.steps, 1):
-                print(f"  {i}. {step}")
-        
-        return 0
+        adapter = BridgeCodegenAdapter()
+        try:
+            pyd_path = adapter.compile_file(args.source, args.output)
+            
+            print(f"✓ Compiled successfully (bridge mode)")
+            print(f"  .pyd file: {pyd_path}")
+            
+            return 0
+        except Exception as e:
+            print(f"✗ Compile failed (bridge mode):")
+            print(f"  - {str(e)}")
+            return 1
     else:
-        print(f"✗ Compile failed:")
-        for error in result.errors:
-            print(f"  - {error}")
+        # 使用Cython编译器（原有逻辑）
+        from cypy_hook.hook import CypyHook
         
-        if args.verbose:
-            print("\nProcessing steps before failure:")
-            for i, step in enumerate(result.steps, 1):
-                print(f"  {i}. {step}")
+        hook = CypyHook()
+        hook.set_output_dir(args.output)
+        hook.set_verbose(args.verbose)
         
-        return 1
+        result = hook.compile_to_pyd(args.source)
+        
+        if result.success:
+            print(f"✓ Compiled successfully")
+            print(f"  .pyd file: {result.pyd_path}")
+            
+            if args.verbose:
+                print("\nProcessing steps:")
+                for i, step in enumerate(result.steps, 1):
+                    print(f"  {i}. {step}")
+            
+            return 0
+        else:
+            print(f"✗ Compile failed:")
+            for error in result.errors:
+                print(f"  - {error}")
+            
+            if args.verbose:
+                print("\nProcessing steps before failure:")
+                for i, step in enumerate(result.steps, 1):
+                    print(f"  {i}. {step}")
+            
+            return 1
 
 
 def run_run(args):

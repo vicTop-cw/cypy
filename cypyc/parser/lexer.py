@@ -97,15 +97,43 @@ class TokenType:
     DISPATCH = "DISPATCH"
     NEVER = "NEVER"
 
+    GUARD = "GUARD"
+    MACRO = "MACRO"
+    COMPTIME = "COMPTIME"
+    SPAWN = "SPAWN"
+    GO = "GO"
+    CASE = "CASE"
+    VEC = "VEC"
+    MATCH = "MATCH"
+    YIELD = "YIELD"
+    ASSERT = "ASSERT"
+    ASYNC = "ASYNC"
+    AWAIT = "AWAIT"
+    TRY = "TRY"
+    EXCEPT = "EXCEPT"
+    FINALLY = "FINALLY"
+    RAISE = "RAISE"
+    WITH = "WITH"
+    LAMBDA = "LAMBDA"
+
+    FAT_ARROW = "FAT_ARROW"  # =>
+    BANG = "BANG"  # !
+    AT = "AT"      # @
+    
+    BACKTICK_BLOCK = "BACKTICK_BLOCK"  # ```...```
+
 
 class Token:
-    def __init__(self, type: str, value: str, line: int, col: int):
+    def __init__(self, type: str, value: str, line: int, col: int, prefix: str = None):
         self.type = type
         self.value = value
         self.line = line
         self.col = col
+        self.prefix = prefix  # 用于三反引号代码块的f/r前缀
 
     def __repr__(self) -> str:
+        if self.prefix:
+            return f"Token({self.type}, {repr(self.value)}, {self.line}:{self.col}, prefix={repr(self.prefix)})"
         return f"Token({self.type}, {repr(self.value)}, {self.line}:{self.col})"
 
 
@@ -147,6 +175,25 @@ class Lexer:
         "subtype": TokenType.SUBTYPE_KW,
         "dispatch": TokenType.DISPATCH,
         "Never": TokenType.NEVER,
+        "guard": TokenType.GUARD,
+        "macro": TokenType.MACRO,
+        "comptime": TokenType.COMPTIME,
+        "spawn": TokenType.SPAWN,
+        "assert": TokenType.ASSERT,
+        "go": TokenType.GO,
+        "case": TokenType.CASE,
+        "vec": TokenType.VEC,
+        "match": TokenType.MATCH,
+        "yield": TokenType.YIELD,
+        "async": TokenType.ASYNC,
+        "await": TokenType.AWAIT,
+        "try": TokenType.TRY,
+        "except": TokenType.EXCEPT,
+        "finally": TokenType.FINALLY,
+        "raise": TokenType.RAISE,
+        "with": TokenType.WITH,
+        "as": TokenType.AS,
+        "lambda": TokenType.LAMBDA,
     }
 
     def __init__(self, source: str):
@@ -163,6 +210,13 @@ class Lexer:
         if self.pos >= len(self.source):
             return None
         return self.source[self.pos]
+
+    def _peek_ahead(self, n: int) -> Optional[str]:
+        """查看当前位置之后第n个字符"""
+        target_pos = self.pos + n
+        if target_pos >= len(self.source):
+            return None
+        return self.source[target_pos]
 
     def _advance(self) -> str:
         char = self.source[self.pos]
@@ -200,6 +254,26 @@ class Lexer:
                 result += char
         return result
 
+    def _tokenize_triple_backtick(self) -> str:
+        """解析三反引号代码字面量"""
+        # 消费开头的三个反引号
+        for _ in range(3):
+            self._advance()
+        
+        result = ""
+        while self._peek() is not None:
+            # 检查是否到达结束的三反引号
+            if self.source[self.pos:self.pos+3] == "```":
+                break
+            char = self._advance()
+            result += char
+        
+        # 消费结束的三个反引号
+        for _ in range(3):
+            self._advance()
+        
+        return result
+
     def _tokenize_number(self) -> Tuple[str, str]:
         result = ""
         has_dot = False
@@ -228,6 +302,13 @@ class Lexer:
             self._peek().isalnum() or self._peek() == "_"
         ):
             result += self._advance()
+        
+        # 检查是否是带!后缀的标识符（转译期辅助）
+        # 如 def name!(...)、@name!、x!
+        # 注意：关键字（如vec）不应该带!后缀，因为vec!是vec + !用于向量字面量
+        if self._peek() == "!" and result not in self.KEYWORDS:
+            result += self._advance()
+        
         return result
 
     def _handle_newline(self) -> Iterator[Token]:
@@ -319,9 +400,100 @@ class Lexer:
                 yield Token(TokenType.STRING, value, self.line, self.col - len(value) - 2)
                 continue
 
+            if char == "`":
+                # 检查是否是三反引号（用于宏代码捕获）
+                if self.source[self.pos:self.pos+2] == "``":
+                    # 三反引号代码块 - 解析为BACKTICK_BLOCK
+                    start_line = self.line
+                    start_col = self.col
+                    self._advance()  # 第一个 `
+                    self._advance()  # 第二个 `
+                    self._advance()  # 第三个 `
+                    
+                    # 读取反引号块内容
+                    content = ""
+                    while self.pos < len(self.source):
+                        if self.source[self.pos:self.pos+3] == "```":
+                            # 找到结束的三反引号
+                            self._advance()  # 第一个 `
+                            self._advance()  # 第二个 `
+                            self._advance()  # 第三个 `
+                            break
+                        content += self._advance()
+                    
+                    # 移除首尾换行符（符合 lang-zone 规范）
+                    content = content.strip("\n")
+                    
+                    # 规范化缩进（textwrap.dedent 类似行为）
+                    lines = content.split("\n")
+                    if lines:
+                        # 计算最小缩进
+                        min_indent = None
+                        for line in lines:
+                            if line.strip():
+                                indent = len(line) - len(line.lstrip())
+                                if min_indent is None or indent < min_indent:
+                                    min_indent = indent
+                        # 移除最小缩进
+                        if min_indent and min_indent > 0:
+                            lines = [line[min_indent:] if len(line) >= min_indent else line for line in lines]
+                        content = "\n".join(lines)
+                    
+                    yield Token(TokenType.BACKTICK_BLOCK, content, start_line, start_col)
+                    continue
+                else:
+                    # 单个反引号作为普通字符处理
+                    self._advance()
+                    yield Token(TokenType.IDENTIFIER, "`", self.line, self.col - 1)
+                    continue
+            
             if char.isdigit():
                 token_type, value = self._tokenize_number()
                 yield Token(token_type, value, self.line, self.col - len(value))
+                continue
+
+            # 检查 f 或 r 前缀后是否紧跟三反引号（必须在标识符解析之前）
+            # char 是当前字符，self.pos 指向当前字符位置，所以检查后面三个字符
+            if char in ('f', 'r') and self.source[self.pos+1:self.pos+4] == "```":
+                # f``` 或 r``` 形式
+                prefix = char
+                start_line = self.line
+                start_col = self.col
+                self._advance()  # 消费 f/r
+                self._advance()  # 第一个 `
+                self._advance()  # 第二个 `
+                self._advance()  # 第三个 `
+                
+                # 读取反引号块内容
+                content = ""
+                while self.pos < len(self.source):
+                    if self.source[self.pos:self.pos+3] == "```":
+                        # 找到结束的三反引号
+                        self._advance()  # 第一个 `
+                        self._advance()  # 第二个 `
+                        self._advance()  # 第三个 `
+                        break
+                    content += self._advance()
+                
+                # 移除首尾换行符（符合 lang-zone 规范）
+                content = content.strip("\n")
+                
+                # 规范化缩进（textwrap.dedent 类似行为）
+                lines = content.split("\n")
+                if lines:
+                    # 计算最小缩进
+                    min_indent = None
+                    for line in lines:
+                        if line.strip():
+                            indent = len(line) - len(line.lstrip())
+                            if min_indent is None or indent < min_indent:
+                                min_indent = indent
+                    # 移除最小缩进
+                    if min_indent and min_indent > 0:
+                        lines = [line[min_indent:] if len(line) >= min_indent else line for line in lines]
+                    content = "\n".join(lines)
+                
+                yield Token(TokenType.BACKTICK_BLOCK, content, start_line, start_col, prefix=prefix)
                 continue
 
             if char.isalpha() or char == "_":
@@ -361,7 +533,7 @@ class Lexer:
 
             if char == "*":
                 # 构建块符号 *: 要求前面有空白（前后必须留白）
-                prev_char = self.source[self.pos - 2] if self.pos >= 2 else ""
+                prev_char = self.source[self.pos - 1] if self.pos >= 1 else ""
                 has_prev_whitespace = prev_char in (" ", "\t", "\n", "(")
                 
                 self._advance()
@@ -400,11 +572,24 @@ class Lexer:
                     yield Token(TokenType.DIV, "/", self.line, self.col - 1)
                 continue
 
+            if char == "%":
+                self._advance()
+                if self._peek() == "=":
+                    self._advance()
+                    yield Token(TokenType.MOD_ASSIGN, "%=", self.line, self.col - 2)
+                else:
+                    yield Token(TokenType.MOD, "%", self.line, self.col - 1)
+                continue
+
             if char == "=":
                 self._advance()
                 if self._peek() == "=":
                     self._advance()
                     yield Token(TokenType.EQ, "==", self.line, self.col - 2)
+                elif self._peek() == ">":
+                    # 处理 => 符号
+                    self._advance()
+                    yield Token(TokenType.FAT_ARROW, "=>", self.line, self.col - 2)
                 elif self._peek() == ":":
                     # 检查符号后是否有换行（构建块符号必须后换行）
                     self._advance()
@@ -417,7 +602,15 @@ class Lexer:
                         yield Token(TokenType.ASSIGN, "=", self.line, self.col - 2)
                         yield Token(TokenType.COLON, ":", self.line, self.col - 1)
                 else:
+                    # 检查 = 后是否有换行（如 macro name = ... 或赋值语句）
+                    if self._peek() == "\n":
+                        self._expect_indent = True
                     yield Token(TokenType.ASSIGN, "=", self.line, self.col - 1)
+                continue
+
+            if char == "@":
+                self._advance()
+                yield Token(TokenType.AT, "@", self.line, self.col - 1)
                 continue
 
             if char == "!":
@@ -426,7 +619,8 @@ class Lexer:
                     self._advance()
                     yield Token(TokenType.NE, "!=", self.line, self.col - 2)
                 else:
-                    yield Token(TokenType.NOT, "!", self.line, self.col - 1)
+                    # BANG 用于宏调用 @name! 和宏模板 def name!
+                    yield Token(TokenType.BANG, "!", self.line, self.col - 1)
                 continue
 
             if char == "<":
@@ -552,6 +746,38 @@ class Lexer:
                 self._advance()
                 yield Token(TokenType.BUILD_VALUE, "^", self.line, self.col - 1)
                 continue
+
+            if char == "`":
+                # 检查是否是三反引号
+                if self._peek() == "`" and self._peek_ahead(2) == "`":
+                    # 三反引号代码块
+                    self._advance()  # 第二个 `
+                    self._advance()  # 第三个 `
+                    start_line = self.line
+                    start_col = self.col
+                    
+                    # 读取反引号块内容
+                    content = ""
+                    while self.pos < len(self.source):
+                        if (self._peek() == "`" and 
+                            self._peek_ahead(1) == "`" and 
+                            self._peek_ahead(2) == "`"):
+                            # 找到结束的三反引号
+                            self._advance()  # 第一个 `
+                            self._advance()  # 第二个 `
+                            self._advance()  # 第三个 `
+                            break
+                        content += self._advance()
+                    
+                    # 移除首尾换行符（符合 lang-zone 规范）
+                    content = content.strip("\n")
+                    yield Token(TokenType.BACKTICK_BLOCK, content, start_line, start_col)
+                    continue
+                else:
+                    # 单个反引号，作为普通字符处理
+                    self._advance()
+                    yield Token(TokenType.IDENTIFIER, "`", self.line, self.col - 1)
+                    continue
 
             self._advance()
 
