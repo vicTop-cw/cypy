@@ -1,0 +1,11 @@
+
+# 数组操作集成示例
+def sum_array(arr: list[int]) -> int:
+    total: int = 0
+    for item in arr:
+        total += item
+    return total
+
+def main() -> int:
+    numbers = [1, 2, 3, 4, 5]
+    return sum_array(numbers)

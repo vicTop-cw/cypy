@@ -1,0 +1,15 @@
+
+# 作用域示例
+module_level: str = "global"
+
+def outer() -> int:
+    outer_var: int = 10
+    
+    def inner() -> int:
+        inner_var: int = 20
+        return outer_var + inner_var
+    
+    return inner()
+
+def main() -> int:
+    return outer()

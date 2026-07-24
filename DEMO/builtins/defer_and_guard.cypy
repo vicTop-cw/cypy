@@ -1,0 +1,54 @@
+# defer 和 guard 语法示例
+# defer: 延迟清理，类似 Go 的 defer
+# guard: 守卫表达式，提前终止函数
+
+def process_file(filename: str) -> int:
+    """使用 defer 确保资源正确释放"""
+    file = open(filename, "r")
+    defer file.close()  # 函数退出时自动执行
+    
+    content = file.read()
+    print(f"File content length: {len(content)}")
+    
+    return len(content)
+
+def validate_input(value: int) -> int:
+    """使用 guard 进行参数验证"""
+    # 单行形式：条件不满足时返回默认值
+    guard value > 0 else -1
+    
+    # 多行形式：条件不满足时执行多个语句
+    guard value < 100 else:
+        print("Error: value exceeds maximum")
+        -1  # 隐式返回
+    
+    return value * 2
+
+def safe_divide(a: float, b: float) -> float:
+    """使用 guard 和 defer 的组合"""
+    guard b != 0 else:
+        print("Error: division by zero")
+        0.0
+    
+    result = a / b
+    print(f"Result: {result}")
+    
+    return result
+
+def main() -> int:
+    # 使用 defer
+    try:
+        process_file("example.txt")
+    except FileNotFoundError:
+        print("File not found, skipping...")
+    
+    # 使用 guard
+    print(f"validate_input(10) = {validate_input(10)}")
+    print(f"validate_input(-5) = {validate_input(-5)}")
+    print(f"validate_input(200) = {validate_input(200)}")
+    
+    # 使用 guard 进行除法
+    print(f"safe_divide(10, 2) = {safe_divide(10, 2)}")
+    print(f"safe_divide(10, 0) = {safe_divide(10, 0)}")
+    
+    return 0

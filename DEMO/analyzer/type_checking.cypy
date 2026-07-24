@@ -1,0 +1,51 @@
+# 类型检查示例
+# Cypy 在编译时进行静态类型检查
+
+def add(a: int, b: int) -> int:
+    return a + b
+
+def to_float(value: int) -> float:
+    return value as float
+
+def process_numbers(numbers: list[int]) -> int:
+    total: int = 0
+    for n in numbers:
+        total += n
+    return total
+
+struct Point:
+    x: float
+    y: float
+    
+    def distance(self, other: Point) -> float:
+        dx = self.x - other.x
+        dy = self.y - other.y
+        return (dx * dx + dy * dy) ** 0.5
+
+def main() -> int:
+    # 类型注解的变量
+    x: int = 10
+    y: float = 3.14
+    
+    # 类型转换
+    z: float = x as float
+    w: int = y as int
+    
+    print(f"x={x}, y={y}, z={z}, w={w}")
+    
+    # 函数调用类型检查
+    result = add(5, 3)
+    print(f"add(5, 3) = {result}")
+    
+    # 结构体类型检查
+    p1 = Point {x: 0.0, y: 0.0}
+    p2 = Point {x: 3.0, y: 4.0}
+    dist = p1.distance(p2)
+    print(f"Distance between points: {dist}")
+    
+    # 列表类型检查
+    nums: list[int] = [1, 2, 3, 4, 5]
+    sum_nums = process_numbers(nums)
+    print(f"Sum of numbers: {sum_nums}")
+    
+    return 0

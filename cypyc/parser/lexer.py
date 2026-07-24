@@ -115,6 +115,8 @@ class TokenType:
     RAISE = "RAISE"
     WITH = "WITH"
     LAMBDA = "LAMBDA"
+    IMPLICIT = "IMPLICIT"
+    NO_STRATEGY = "NO_STRATEGY"
 
     FAT_ARROW = "FAT_ARROW"  # =>
     BANG = "BANG"  # !
@@ -194,6 +196,8 @@ class Lexer:
         "with": TokenType.WITH,
         "as": TokenType.AS,
         "lambda": TokenType.LAMBDA,
+        "implicit": TokenType.IMPLICIT,
+        "no_strategy": TokenType.NO_STRATEGY,
     }
 
     def __init__(self, source: str):
@@ -205,6 +209,7 @@ class Lexer:
         self._expect_indent = False  # 标记是否期望下一行增加缩进
         self._in_type_annotation = False  # 标记是否在箭头后的类型注解中
         self._indent_type = None  # 记录当前使用的缩进类型：'spaces' 或 'tabs'
+        self._in_backtick_block = False  # 标记是否在反引号代码块内部
 
     def _peek(self) -> Optional[str]:
         if self.pos >= len(self.source):
@@ -237,8 +242,13 @@ class Lexer:
             while self._peek() is not None and self._peek() != "\n":
                 self._advance()
 
-    def _tokenize_string(self) -> str:
-        quote = self._advance()
+    def _tokenize_string(self, quote: str = None, consume_quote: bool = True) -> str:
+        if quote is None:
+            quote = self._advance()
+        elif consume_quote:
+            # quote 已经指定，消费它
+            self._advance()
+        # 如果 consume_quote=False，quote 已经被消费了，不需要再消费
         result = ""
         escaped = False
         while self._peek() is not None:
@@ -344,6 +354,14 @@ class Lexer:
                 raise ValueError(f"Inconsistent indentation at line {self.line}: "
                                f"expected {self._indent_type}, got {current_indent_type}")
 
+        # 在反引号代码块内部，跳过缩进检查
+        if self._in_backtick_block:
+            if self._peek() is not None and self._peek() != "#":
+                yield Token(TokenType.NEWLINE, "", self.line, self.col)
+            elif self._peek() is None:
+                yield Token(TokenType.NEWLINE, "", self.line, self.col)
+            return
+        
         # 检查缩进是否是4的倍数（标准缩进规则）
         if indent != 0 and indent % 4 != 0:
             raise ValueError(f"Invalid indentation level {indent} at line {self.line}. "
@@ -396,8 +414,18 @@ class Lexer:
                 continue
 
             if char == '"' or char == "'":
+                # 检查是否是 f-string
+                is_fstring = False
+                if char == '"' and self.source[self.pos-1] == 'f':
+                    is_fstring = True
+                elif char == "'" and self.source[self.pos-1] == 'f':
+                    is_fstring = True
+                
                 value = self._tokenize_string()
-                yield Token(TokenType.STRING, value, self.line, self.col - len(value) - 2)
+                if is_fstring:
+                    yield Token(TokenType.STRING, value, self.line, self.col - len(value) - 3, prefix='f')
+                else:
+                    yield Token(TokenType.STRING, value, self.line, self.col - len(value) - 2)
                 continue
 
             if char == "`":
@@ -410,6 +438,9 @@ class Lexer:
                     self._advance()  # 第二个 `
                     self._advance()  # 第三个 `
                     
+                    # 设置在反引号代码块内部的标志
+                    self._in_backtick_block = True
+                    
                     # 读取反引号块内容
                     content = ""
                     while self.pos < len(self.source):
@@ -421,13 +452,16 @@ class Lexer:
                             break
                         content += self._advance()
                     
+                    # 重置反引号代码块标志
+                    self._in_backtick_block = False
+                    
                     # 移除首尾换行符（符合 lang-zone 规范）
                     content = content.strip("\n")
                     
                     # 规范化缩进（textwrap.dedent 类似行为）
                     lines = content.split("\n")
                     if lines:
-                        # 计算最小缩进
+                        # 计算最小缩进（跳过空行）
                         min_indent = None
                         for line in lines:
                             if line.strip():
@@ -437,6 +471,9 @@ class Lexer:
                         # 移除最小缩进
                         if min_indent and min_indent > 0:
                             lines = [line[min_indent:] if len(line) >= min_indent else line for line in lines]
+                        # 移除末尾的空行
+                        while lines and not lines[-1].strip():
+                            lines.pop()
                         content = "\n".join(lines)
                     
                     yield Token(TokenType.BACKTICK_BLOCK, content, start_line, start_col)
@@ -464,6 +501,9 @@ class Lexer:
                 self._advance()  # 第二个 `
                 self._advance()  # 第三个 `
                 
+                # 设置在反引号代码块内部的标志
+                self._in_backtick_block = True
+                
                 # 读取反引号块内容
                 content = ""
                 while self.pos < len(self.source):
@@ -475,13 +515,16 @@ class Lexer:
                         break
                     content += self._advance()
                 
+                # 重置反引号代码块标志
+                self._in_backtick_block = False
+                
                 # 移除首尾换行符（符合 lang-zone 规范）
                 content = content.strip("\n")
                 
                 # 规范化缩进（textwrap.dedent 类似行为）
                 lines = content.split("\n")
                 if lines:
-                    # 计算最小缩进
+                    # 计算最小缩进（跳过空行）
                     min_indent = None
                     for line in lines:
                         if line.strip():
@@ -491,12 +534,24 @@ class Lexer:
                     # 移除最小缩进
                     if min_indent and min_indent > 0:
                         lines = [line[min_indent:] if len(line) >= min_indent else line for line in lines]
+                    # 移除末尾的空行
+                    while lines and not lines[-1].strip():
+                        lines.pop()
                     content = "\n".join(lines)
                 
                 yield Token(TokenType.BACKTICK_BLOCK, content, start_line, start_col, prefix=prefix)
                 continue
 
             if char.isalpha() or char == "_":
+                # 检查是否是 f-string 前缀
+                if char == 'f' and self._peek_ahead(1) in ('"', "'"):
+                    # f-string - 消费 f，然后处理字符串
+                    self._advance()  # 消费 f
+                    quote = self._peek()
+                    value = self._tokenize_string(quote, consume_quote=True)  # 传递引号并消费它
+                    yield Token(TokenType.STRING, value, self.line, self.col - len(value) - 2, prefix='f')
+                    continue
+                
                 value = self._tokenize_identifier()
                 token_type = self.KEYWORDS.get(value, TokenType.IDENTIFIER)
                 yield Token(token_type, value, self.line, self.col - len(value))

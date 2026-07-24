@@ -1,0 +1,74 @@
+# 指针操作示例
+# Cypy 使用 & 进行解引用，addr() 进行取地址
+
+def allocate_and_use(size: int) -> int:
+    """分配和使用指针"""
+    # 分配内存
+    buffer: int* = malloc(sizeof(int) * size)
+    defer free(buffer)  # 确保释放
+    
+    # 填充数据
+    for i in range(size):
+        buffer[i] = i * 2
+    
+    # 计算总和
+    total: int = 0
+    for i in range(size):
+        total += buffer[i]
+    
+    return total
+
+def pointer_arithmetic() -> int:
+    """指针算术运算"""
+    arr: int* = malloc(sizeof(int) * 5)
+    defer free(arr)
+    
+    # 直接数组访问
+    arr[0] = 10
+    arr[1] = 20
+    arr[2] = 30
+    arr[3] = 40
+    arr[4] = 50
+    
+    # 指针解引用
+    first: int = &arr  # 获取第一个元素的值
+    last: int = &arr[4]  # 获取最后一个元素的值
+    
+    print(f"First element: {first}")
+    print(f"Last element: {last}")
+    
+    return first + last
+
+def struct_pointer() -> int:
+    """结构体指针操作"""
+    struct Point:
+        x: int
+        y: int
+    
+    # 分配结构体指针
+    p: Point* = malloc(sizeof(Point))
+    defer free(p)
+    
+    # 设置字段（自动解引用）
+    p.x = 100
+    p.y = 200
+    
+    # 读取字段
+    print(f"Point: ({p.x}, {p.y})")
+    
+    return p.x + p.y
+
+def main() -> int:
+    # 分配和使用指针
+    sum_result = allocate_and_use(5)
+    print(f"Sum of allocated buffer: {sum_result}")
+    
+    # 指针算术
+    ptr_sum = pointer_arithmetic()
+    print(f"Pointer sum: {ptr_sum}")
+    
+    # 结构体指针
+    struct_sum = struct_pointer()
+    print(f"Struct sum: {struct_sum}")
+    
+    return 0

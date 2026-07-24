@@ -1,0 +1,66 @@
+# 泛型语法示例
+# Cypy 支持泛型结构体、泛型函数和类型约束
+
+# 泛型结构体
+struct Pair[T, U]:
+    first: T
+    second: U
+
+# 泛型函数
+def identity[T](value: T) -> T:
+    return value
+
+def make_pair[T, U](first: T, second: U) -> Pair[T, U]:
+    return Pair[T, U] {first: first, second: second}
+
+def process_list[T](items: list[T]) -> int:
+    """处理泛型列表"""
+    return len(items)
+
+# 类型约束
+def sum_numbers[T: int | float](values: list[T]) -> T:
+    """求和，只接受数值类型"""
+    total: T = 0
+    for v in values:
+        total += v
+    return total
+
+# 泛型结构体使用
+struct Container[T]:
+    items: list[T]
+    size: int
+    
+    def add(self, item: T) -> None:
+        self.items.append(item)
+        self.size += 1
+    
+    def get(self, index: int) -> T:
+        return self.items[index]
+
+def main() -> int:
+    # 泛型函数
+    int_id = identity[int](42)
+    str_id = identity[str]("hello")
+    print(f"int identity: {int_id}")
+    print(f"str identity: {str_id}")
+    
+    # 泛型结构体
+    pair1 = make_pair(1, "one")
+    pair2 = make_pair(3.14, True)
+    print(f"Pair[int, str]: ({pair1.first}, {pair1.second})")
+    print(f"Pair[float, bool]: ({pair2.first}, {pair2.second})")
+    
+    # 泛型容器
+    container = Container[int] {items: [], size: 0}
+    container.add(10)
+    container.add(20)
+    container.add(30)
+    print(f"Container size: {container.size}")
+    print(f"Container item at index 1: {container.get(1)}")
+    
+    # 类型约束
+    nums: list[int] = [1, 2, 3, 4, 5]
+    total = sum_numbers(nums)
+    print(f"Sum of numbers: {total}")
+    
+    return 0

@@ -325,7 +325,19 @@ class CypyHook:
         """
         try:
             module_dir = os.path.dirname(pyd_path)
-            module_name = os.path.basename(pyd_path).replace(".pyd", "").replace(".so", "")
+            
+            # 正确提取模块名
+            # .pyd文件名格式: {module_name}.cp{py_version}-{platform}.pyd
+            basename = os.path.basename(pyd_path)
+            # 去掉扩展名
+            name_without_ext = basename.replace(".pyd", "").replace(".so", "")
+            # 提取真正的模块名（去掉.cpXX-win_amd64等后缀）
+            import re
+            match = re.match(r'^([a-zA-Z_][a-zA-Z0-9_]*)(\.cp\d+-\w+)?$', name_without_ext)
+            if match:
+                module_name = match.group(1)
+            else:
+                module_name = name_without_ext
             
             # 添加模块目录到sys.path
             if module_dir not in sys.path:

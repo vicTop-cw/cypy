@@ -282,6 +282,11 @@ class CCodeGenerator:
         func = self._expr_to_str(node.func)
         args = ", ".join(self._expr_to_str(arg) for arg in node.args)
         
+        # 处理调用时的 checker（func<checker>(args)）
+        checker = getattr(node, 'checker', None)
+        if checker:
+            return f"({checker}(), {func}({args}))"
+        
         # 特殊处理标准库函数
         if hasattr(node.func, 'id'):
             if node.func.id == 'malloc':
@@ -1024,6 +1029,12 @@ class CCodeGenerator:
             self._write()
             self._write(f"{return_type} {func_name}({params_str}) {{")
             self.indent += 1
+            
+            # 在函数体开头添加 checker 调用（如果有）
+            params_checker = getattr(node, 'params_checker', None)
+            if params_checker:
+                self._write(f"{params_checker}();")
+                self._write()
             
             # 生成普通语句（处理return时插入defer代码）
             for stmt in normal_stmts:

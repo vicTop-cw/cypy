@@ -3,7 +3,7 @@
 import pytest
 from cypyc.parser.lexer import Lexer
 from cypyc.parser.parser import Parser
-from cypyc.parser.macro_expand import expand_macros
+from cypyc.parser.macro_expander import expand_macros
 from cypy_bridge.compiler import CCodeGenerator
 
 

@@ -1,0 +1,45 @@
+# Cython cdef class 生成示例
+# 当结构体包含方法时，Cypy 会生成 cdef class
+
+# 简单结构体 -> cdef struct
+struct Color:
+    r: int
+    g: int
+    b: int
+
+# 带方法的结构体 -> cdef class
+struct Shape:
+    x: float
+    y: float
+    
+    def move(self, dx: float, dy: float) -> None:
+        self.x += dx
+        self.y += dy
+    
+    def position(self) -> str:
+        return f"({self.x}, {self.y})"
+
+# 继承示例
+struct Circle(Shape):
+    radius: float
+    
+    def area(self) -> float:
+        return 3.14159 * self.radius * self.radius
+
+def main() -> int:
+    # 使用简单结构体
+    c = Color {r: 255, g: 0, b: 0}
+    print(f"Color: RGB({c.r}, {c.g}, {c.b})")
+    
+    # 使用带方法的结构体（cdef class）
+    shape = Shape {x: 10.0, y: 20.0}
+    shape.move(5.0, 5.0)
+    print(f"Shape position: {shape.position()}")
+    
+    # 使用继承的结构体
+    circle = Circle {x: 0.0, y: 0.0, radius: 5.0}
+    circle.move(3.0, 4.0)
+    print(f"Circle position: {circle.position()}")
+    print(f"Circle area: {circle.area()}")
+    
+    return 0

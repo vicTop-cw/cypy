@@ -1,0 +1,13 @@
+
+# 结构体代码生成示例
+struct Rectangle:
+    width: float
+    height: float
+    
+    def area(self) -> float:
+        return self.width * self.height
+
+def main() -> int:
+    rect = Rectangle {width: 10.0, height: 5.0}
+    print(rect.area())
+    return 0

@@ -1,0 +1,29 @@
+# 结构体定义与方法示例
+# Cypy 支持结构体字段和方法的混合定义
+
+# 简单结构体（只有字段）
+struct Point:
+    x: float
+    y: float
+
+# 带方法的结构体（生成 cdef class）
+struct Rectangle:
+    width: float
+    height: float
+    
+    def area(self) -> float:
+        return self.width * self.height
+    
+    def perimeter(self) -> float:
+        return 2 * (self.width + self.height)
+
+def main() -> int:
+    # 使用结构体字面量语法
+    p = Point {x: 10.0, y: 20.0}
+    rect = Rectangle {width: 5.0, height: 3.0}
+    
+    print(f"Point: ({p.x}, {p.y})")
+    print(f"Rectangle area: {rect.area()}")
+    print(f"Rectangle perimeter: {rect.perimeter()}")
+    
+    return 0

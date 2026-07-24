@@ -1,0 +1,7 @@
+
+# 类型转换示例
+def convert_values() -> float:
+    a: int = 10
+    b: float = a as float
+    c: int = b as int
+    return (a + c) as float

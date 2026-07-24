@@ -40,6 +40,26 @@ class ScopeAnalyzer:
         self.root_scope = Scope(kind="module")
         self.current_scope = self.root_scope
         self.errors: List[str] = []
+        # 注册内置类型和函数
+        self._register_builtins()
+    
+    def _register_builtins(self):
+        """注册内置类型和函数到根作用域"""
+        builtins = [
+            ('int', 'type'),
+            ('float', 'type'),
+            ('double', 'type'),
+            ('bool', 'type'),
+            ('str', 'type'),
+            ('None', 'type'),
+            ('print', 'function'),
+            ('len', 'function'),
+            ('malloc', 'function'),
+            ('sizeof', 'function'),
+            ('addr', 'function'),
+        ]
+        for name, kind in builtins:
+            self.root_scope.add_symbol(name, kind, None)
 
     def analyze(self, node: ASTNode) -> Scope:
         self._visit(node)
@@ -112,6 +132,36 @@ class ScopeAnalyzer:
         symbol = self.current_scope.lookup(node.id)
         if symbol is None:
             self.errors.append(f"Undefined name '{node.id}' at {node.line}:{node.col}")
+
+    def _visit_Assign(self, node: Any) -> None:
+        # 先访问 value，确保右边的表达式先被检查
+        if node.value:
+            self._visit(node.value)
+        # 然后注册变量（如果是新变量）
+        if hasattr(node.target, 'id'):
+            target_name = node.target.id
+            if target_name not in self.current_scope.symbols:
+                # 检查父作用域中是否存在同名变量
+                if self.current_scope.parent and self.current_scope.parent.lookup(target_name):
+                    # 如果父作用域存在，说明是赋值给外部变量，不需要在当前作用域注册
+                    pass
+                else:
+                    # 新变量，注册到当前作用域
+                    self.current_scope.add_symbol(target_name, "variable", node)
+
+    def _visit_ForStmt(self, node: Any) -> None:
+        """处理 for 循环，注册循环变量到作用域"""
+        # 先访问迭代对象
+        self._visit(node.iter)
+        
+        # 注册循环变量
+        if hasattr(node.target, 'id'):
+            target_name = node.target.id
+            self.current_scope.add_symbol(target_name, "variable", node)
+        
+        # 访问循环体
+        for stmt in node.body:
+            self._visit(stmt)
 
     def _visit_Call(self, node: Any) -> None:
         self._visit(node.func)

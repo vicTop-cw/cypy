@@ -4,18 +4,27 @@ from cypyc.parser.parser import (
     BinOp, UnaryOp, Call, Name, Constant, Attribute, Subscript, StructDef,
     StructField, EnumDef, EnumVariant, DeferStmt, DerefExpr, PointerType,
     GenericType, TraitDef, ImplStmt, MetaBlock, GuardStmt, ComptimeStmt,
-    BuildBlockExpr
+    BuildBlockExpr, CastExpr, ClassDef, Import, FromImport
 )
 from cypyc.codegen.type_mapper import TypeMapper
 
 
+import os
+import time
+import platform
+
 class CythonGenerator:
-    def __init__(self):
+    def __init__(self, source_file: str = None):
         self.indent = 0
         self.output = []
         self.type_mapper = TypeMapper()
         self.in_cdef_context = False
         self.needs_libc_import = False  # 是否需要导入C标准库
+        self.source_file = source_file  # 源文件路径
+        # 模块符号收集
+        self.public_symbols = []
+        self.private_symbols = []
+        self.imported_modules = []
 
     def generate(self, node: ASTNode) -> str:
         self.output = []
@@ -71,8 +80,107 @@ class CythonGenerator:
             self._write("from libc.stdlib cimport malloc, free")
             self._write("")
         
+        # 第一遍：收集模块信息
+        self._collect_module_info(node)
+        
+        # 生成模块级魔法属性
+        self._generate_module_magic_attrs()
+        
+        # 第二遍：生成代码
         for stmt in node.body:
             self._visit(stmt)
+    
+    def _collect_module_info(self, node: Module) -> None:
+        """收集模块级符号和导入信息"""
+        for stmt in node.body:
+            if isinstance(stmt, FuncDef):
+                name = stmt.name
+                if name.startswith('_'):
+                    self.private_symbols.append(name)
+                else:
+                    self.public_symbols.append(name)
+            elif isinstance(stmt, StructDef):
+                name = stmt.name
+                if name.startswith('_'):
+                    self.private_symbols.append(name)
+                else:
+                    self.public_symbols.append(name)
+            elif isinstance(stmt, ClassDef):
+                name = stmt.name
+                if name.startswith('_'):
+                    self.private_symbols.append(name)
+                else:
+                    self.public_symbols.append(name)
+            elif isinstance(stmt, EnumDef):
+                name = stmt.name
+                if name.startswith('_'):
+                    self.private_symbols.append(name)
+                else:
+                    self.public_symbols.append(name)
+            elif isinstance(stmt, TraitDef):
+                name = stmt.name
+                if name.startswith('_'):
+                    self.private_symbols.append(name)
+                else:
+                    self.public_symbols.append(name)
+            elif isinstance(stmt, Import):
+                module_name = stmt.module
+                if module_name not in self.imported_modules:
+                    self.imported_modules.append(module_name)
+            elif isinstance(stmt, FromImport):
+                module_name = stmt.module
+                if module_name not in self.imported_modules:
+                    self.imported_modules.append(module_name)
+    
+    def _generate_module_magic_attrs(self) -> None:
+        """生成模块级魔法属性"""
+        # 获取模块名（从文件名提取）
+        module_name = "unknown"
+        if self.source_file:
+            module_name = os.path.splitext(os.path.basename(self.source_file))[0]
+        
+        # 文件路径
+        file_path = self.source_file or ""
+        
+        # 包信息
+        package_name = ""
+        path_value = "None"
+        if self.source_file:
+            dir_name = os.path.dirname(self.source_file)
+            init_file = os.path.join(dir_name, "__init__.py")
+            if os.path.exists(init_file):
+                package_name = os.path.basename(dir_name)
+                path_value = f"['{dir_name}']"
+        
+        # 编译时间
+        compile_time = time.strftime("%Y-%m-%dT%H:%M:%S")
+        
+        # 目标平台
+        target_platform = f"{platform.machine()}-{platform.system().lower()}"
+        
+        # 生成魔法属性
+        self._write(f"__name__ = \"{module_name}\"")
+        self._write(f"__file__ = \"{file_path}\"")
+        self._write(f"__package__ = \"{package_name}\"")
+        self._write(f"__path__ = {path_value}")
+        self._write(f"__compile_time__ = \"{compile_time}\"")
+        self._write(f"__target__ = \"{target_platform}\"")
+        self._write(f"__profile__ = \"debug\"")
+        
+        # __all__：公开API列表（不含_前缀，包含魔法方法）
+        all_list = [s for s in self.public_symbols if not s.startswith('_') or (s.startswith('__') and s.endswith('__'))]
+        all_str = ', '.join(f'"{s}"' for s in all_list)
+        self._write(f"__all__ = [{all_str}]")
+        
+        # __private__：私有符号列表（_前缀）
+        private_str = ', '.join(f'"{s}"' for s in self.private_symbols if s.startswith('_') and not (s.startswith('__') and s.endswith('__')))
+        self._write(f"__private__ = [{private_str}]")
+        
+        # __deps__：依赖模块列表
+        deps_str = ', '.join(f'"{s}"' for s in self.imported_modules)
+        self._write(f"__deps__ = [{deps_str}]")
+        
+        self._write("")
 
     def _visit_FuncDef(self, node: FuncDef) -> None:
         has_type_annotation = any(p.type_annotation for p in node.params) or node.return_type
@@ -227,13 +335,28 @@ class CythonGenerator:
         self._write(f"{target} = {value}")
 
     def _visit_StructDef(self, node: StructDef) -> None:
-        self._write(f"cdef struct {node.name}:")
-        self.indent += 1
-        for field in node.fields:
-            if isinstance(field, StructField):
-                field_type = self._type_to_str(field.type_annotation) if field.type_annotation else "object"
-                self._write(f"cdef {field_type} {field.name}")
-        self.indent -= 1
+        # 如果结构体有方法，使用 cdef class，否则使用 cdef struct
+        if hasattr(node, 'methods') and node.methods:
+            self._write(f"cdef class {node.name}:")
+            self.indent += 1
+            # 生成字段 - cdef class 需要 cdef 前缀
+            for field in node.fields:
+                if isinstance(field, StructField):
+                    field_type = self._type_to_str(field.type_annotation) if field.type_annotation else "object"
+                    self._write(f"cdef {field_type} {field.name}")
+            # 生成方法
+            for method in node.methods:
+                self._visit(method)
+            self.indent -= 1
+        else:
+            self._write(f"cdef struct {node.name}:")
+            self.indent += 1
+            # 生成字段 - cdef struct 不需要 cdef 前缀
+            for field in node.fields:
+                if isinstance(field, StructField):
+                    field_type = self._type_to_str(field.type_annotation) if field.type_annotation else "object"
+                    self._write(f"{field_type} {field.name}")
+            self.indent -= 1
         self._write("")
 
     def _visit_StructField(self, node: StructField) -> None:
@@ -297,6 +420,32 @@ class CythonGenerator:
             self.indent -= 1
             self._write(")[-1]")
             self._write(")()")
+        elif node.block_type == BuildBlockExpr.BUILD_CALL:
+            # ~: 调用构建块，生成无参函数并立即调用
+            self._write("(")
+            self._write("lambda: (")
+            self.indent += 1
+            for stmt in node.body:
+                if isinstance(stmt, (BinOp, UnaryOp, Call, Name, Constant)):
+                    self._write(self._expr_to_str(stmt) + ",")
+                else:
+                    self._visit(stmt)
+            self.indent -= 1
+            self._write(")[-1]")
+            self._write(")()")
+        elif node.block_type == BuildBlockExpr.BUILD_GEN:
+            # *: 生成器构建块，生成生成器函数
+            self._write("(")
+            self._write("lambda: (")
+            self.indent += 1
+            for stmt in node.body:
+                if isinstance(stmt, (BinOp, UnaryOp, Call, Name, Constant)):
+                    self._write(self._expr_to_str(stmt) + ",")
+                else:
+                    self._visit(stmt)
+            self.indent -= 1
+            self._write(")[-1]")
+            self._write(")()")
 
     def _visit_TraitDef(self, node: TraitDef) -> None:
         self._write(f"class {node.name}:")
@@ -335,6 +484,26 @@ class CythonGenerator:
     def _visit_DerefExpr(self, node: DerefExpr) -> str:
         return f"{self._expr_to_str(node.operand)}[0]"
 
+    def _visit_CastExpr(self, node: CastExpr) -> str:
+        """生成类型转换表达式的 Cython 代码"""
+        value_str = self._expr_to_str(node.value)
+        target_type_str = self._type_to_str(node.target_type)
+        
+        # 检查是否需要调用 __cast__ 或 __try_cast__
+        # 对于基本类型，使用 Cython 的类型转换语法
+        basic_types = {'int', 'float', 'double', 'bool', 'str'}
+        
+        if hasattr(node.value, 'kind') and node.value.kind == 'Name':
+            # 如果是变量名，检查是否有 __cast__ 方法
+            var_name = node.value.id
+            # 在实际实现中，这里应该查询类型系统来确定是否有 __cast__ 方法
+            # 简化实现：对于自定义类型，生成 __cast__ 调用
+            if target_type_str not in basic_types:
+                return f"{value_str}.__cast__[{target_type_str}]()"
+        
+        # 基本类型转换：使用 Cython 的类型转换语法
+        return f"<{target_type_str}>{value_str}"
+
     def _visit_Call(self, node: Call) -> str:
         if hasattr(node.func, 'id'):
             func_name = node.func.id
@@ -370,7 +539,21 @@ class CythonGenerator:
     def _visit_Constant(self, node: Constant) -> str:
         if isinstance(node.value, str):
             return f'"{node.value}"'
+        if isinstance(node.value, list):
+            # 列表字面量：递归访问每个元素
+            elements = []
+            for item in node.value:
+                if isinstance(item, ASTNode):
+                    elements.append(self._expr_to_str(item))
+                else:
+                    elements.append(repr(item))
+            return f"[{', '.join(elements)}]"
         return repr(node.value)
+
+    def _visit_StructLiteral(self, node: Any) -> str:
+        """生成结构体字面量的 Cython 代码 - StructName {field1: value1, field2: value2}"""
+        fields_str = ", ".join(f"{name}={self._expr_to_str(value)}" for name, value in node.fields)
+        return f"{node.struct_name}({fields_str})"
 
     def _visit_Attribute(self, node: Any) -> str:
         return f"{self._expr_to_str(node.value)}.{node.attr}"
@@ -393,6 +576,8 @@ class CythonGenerator:
             return self._visit_UnaryOp(node)
         if isinstance(node, DerefExpr):
             return self._visit_DerefExpr(node)
+        if isinstance(node, CastExpr):
+            return self._visit_CastExpr(node)
         if isinstance(node, Call):
             return self._visit_Call(node)
         if isinstance(node, Name):
@@ -403,6 +588,20 @@ class CythonGenerator:
             return self._visit_Attribute(node)
         if isinstance(node, Subscript):
             return self._visit_Subscript(node)
+        if hasattr(node, "kind") and node.kind == "StructLiteral":
+            return self._visit_StructLiteral(node)
+        if hasattr(node, "kind") and node.kind == "BuildBlockExpr":
+            # 构建块表达式需要特殊处理，直接调用 _visit_BuildBlockExpr
+            old_output = self.output
+            self.output = []
+            old_indent = self.indent
+            self.indent = 0
+            try:
+                self._visit_BuildBlockExpr(node)
+                return "".join(self.output)
+            finally:
+                self.output = old_output
+                self.indent = old_indent
         if hasattr(node, "id"):
             return node.id
         return str(node)

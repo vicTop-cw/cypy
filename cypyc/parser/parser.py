@@ -1,4 +1,4 @@
-from typing import Iterator, List, Optional, Any
+from typing import Iterator, List, Optional, Any, Tuple
 from .lexer import Token, TokenType
 
 
@@ -33,19 +33,22 @@ class FromImport(ASTNode):
 
 
 class StructDef(ASTNode):
-    def __init__(self, name: str, fields: List[Any], generic_params: List[str] = None, line: int = 0, col: int = 0):
+    def __init__(self, name: str, fields: List[Any], generic_params: List[str] = None, is_implicit: bool = False, line: int = 0, col: int = 0, methods: List[Any] = None):
         super().__init__("StructDef", line, col)
         self.name = name
         self.fields = fields
         self.generic_params = generic_params or []
+        self.is_implicit = is_implicit
+        self.methods = methods or []
 
 
 class StructField(ASTNode):
-    def __init__(self, name: str, type_annotation: Optional[Any], mutable: bool = False, line: int = 0, col: int = 0):
+    def __init__(self, name: str, type_annotation: Optional[Any], mutable: bool = False, default_value: Optional[Any] = None, line: int = 0, col: int = 0):
         super().__init__("StructField", line, col)
         self.name = name
         self.type_annotation = type_annotation
         self.mutable = mutable
+        self.default_value = default_value
 
 
 class EnumDef(ASTNode):
@@ -83,12 +86,14 @@ class FuncDef(ASTNode):
 
 
 class Param(ASTNode):
-    def __init__(self, name: str, type_annotation: Optional[Any], is_mut: bool = False, is_ref: bool = False, line: int = 0, col: int = 0):
+    def __init__(self, name: str, type_annotation: Optional[Any], default_value: Any = None, is_mut: bool = False, is_ref: bool = False, is_implicit: bool = False, line: int = 0, col: int = 0):
         super().__init__("Param", line, col)
         self.name = name
         self.type_annotation = type_annotation
+        self.default_value = default_value
         self.is_mut = is_mut
         self.is_ref = is_ref
+        self.is_implicit = is_implicit
 
 
 class ClassDef(ASTNode):
@@ -335,6 +340,14 @@ class DerefExpr(ASTNode):
         self.operand = operand
 
 
+class CastExpr(ASTNode):
+    """类型转换表达式 - expr as Type"""
+    def __init__(self, value: Any, target_type: Any, line: int = 0, col: int = 0):
+        super().__init__("CastExpr", line, col)
+        self.value = value          # 要转换的值
+        self.target_type = target_type  # 目标类型
+
+
 class GenericType(ASTNode):
     def __init__(self, name: str, args: List[Any], line: int = 0, col: int = 0):
         super().__init__("GenericType", line, col)
@@ -419,6 +432,14 @@ class MacroCall(ASTNode):
         super().__init__("MacroCall", line, col)
         self.name = name
         self.args = args
+
+
+class StructLiteral(ASTNode):
+    """结构体字面量 - StructName {field1: value1, field2: value2}"""
+    def __init__(self, struct_name: str, fields: List[Tuple[str, Any]], line: int = 0, col: int = 0):
+        super().__init__("StructLiteral", line, col)
+        self.struct_name = struct_name  # 结构体名称
+        self.fields = fields             # 字段列表 [(name, value), ...]
 
 
 class ComptimeStmt(ASTNode):
@@ -591,6 +612,15 @@ class Parser:
             return self._parse_func_def(decorators)
         if token.type == TokenType.CLASS:
             return self._parse_class_def()
+        if token.type == TokenType.IMPLICIT:
+            # implicit struct/class 或 implicit 变量声明
+            self._consume()  # consume IMPLICIT
+            next_token = self._current()
+            if next_token.type in (TokenType.STRUCT, TokenType.CLASS):
+                return self._parse_struct_def(is_implicit=True)
+            else:
+                # implicit 变量声明：implicit name: Type = value
+                return self._parse_typed_var()
         if token.type == TokenType.STRUCT:
             return self._parse_struct_def()
         if token.type == TokenType.ENUM:
@@ -725,18 +755,26 @@ class Parser:
             while True:
                 is_mut = False
                 is_ref = False
+                is_implicit = False
                 if self._current().type == TokenType.MUT:
                     is_mut = True
                     self._consume()
                 if self._current().type == TokenType.REF:
                     is_ref = True
                     self._consume()
+                if self._current().type == TokenType.IMPLICIT:
+                    is_implicit = True
+                    self._consume()
                 name_token = self._consume(TokenType.IDENTIFIER)
                 type_annotation = None
+                default_value = None
                 if self._current().type == TokenType.COLON:
                     self._consume()
                     type_annotation = self._parse_type()
-                params.append(Param(name_token.value, type_annotation, is_mut, is_ref, name_token.line, name_token.col))
+                if self._current().type == TokenType.ASSIGN:
+                    self._consume()
+                    default_value = self._parse_expression()
+                params.append(Param(name_token.value, type_annotation, default_value, is_mut, is_ref, is_implicit, name_token.line, name_token.col))
                 if self._current().type != TokenType.COMMA:
                     break
                 self._consume()
@@ -758,7 +796,11 @@ class Parser:
         self._pop_scope()
         return ClassDef(name_token.value, bases, body, name_token.line, name_token.col)
 
-    def _parse_struct_def(self) -> StructDef:
+    def _parse_struct_def(self, is_implicit: bool = False) -> StructDef:
+        if not is_implicit and self._current().type == TokenType.IMPLICIT:
+            self._consume()
+            is_implicit = True
+        
         self._consume(TokenType.STRUCT)
         name_token = self._consume(TokenType.IDENTIFIER)
         self._require_module_level("struct", name_token)
@@ -777,21 +819,37 @@ class Parser:
         self._expect(TokenType.COLON)
         self._expect(TokenType.INDENT)
         fields = []
+        methods = []
         while self._current().type not in (TokenType.DEDENT, TokenType.EOF):
             if self._current().type == TokenType.NEWLINE:
                 self._consume()
                 continue
+            # 如果是 DEF，解析为方法
+            if self._current().type == TokenType.DEF:
+                method = self._parse_func_def()
+                methods.append(method)
+                continue
+            # 否则解析为字段
             field_name_token = self._consume(TokenType.IDENTIFIER)
             type_annotation = None
+            default_value = None
             if self._current().type == TokenType.COLON:
                 self._consume()
                 type_annotation = self._parse_type()
-            fields.append(StructField(field_name_token.value, type_annotation, False, field_name_token.line, field_name_token.col))
+                # 检查是否有默认值
+                if self._current().type == TokenType.ASSIGN:
+                    self._consume()
+                    default_value = self._parse_expression()
+            elif self._current().type == TokenType.ASSIGN:
+                # 没有类型注解但有默认值
+                self._consume()
+                default_value = self._parse_expression()
+            fields.append(StructField(field_name_token.value, type_annotation, False, default_value, field_name_token.line, field_name_token.col))
             if self._current().type == TokenType.NEWLINE:
                 self._consume()
         if self._current().type == TokenType.DEDENT:
             self._consume()
-        return StructDef(name_token.value, fields, generic_params, name_token.line, name_token.col)
+        return StructDef(name_token.value, fields, generic_params, is_implicit, name_token.line, name_token.col, methods)
 
     def _parse_enum_def(self) -> EnumDef:
         self._consume(TokenType.ENUM)
@@ -961,7 +1019,14 @@ class Parser:
 
     def _parse_decorator(self) -> Decorator:
         self._consume(TokenType.AT)
-        name = self._parse_expression()
+        
+        # 特殊处理 @no_strategy 装饰器（关键字作为装饰器）
+        if self._current().type == TokenType.NO_STRATEGY:
+            name_token = self._consume()
+            name = Name(name_token.value, name_token.line, name_token.col)
+        else:
+            name = self._parse_expression()
+        
         args = []
         
         # 如果 name 是 Call 节点，参数已经在 Call 节点的 args 中
@@ -1425,7 +1490,8 @@ class Parser:
             op = compound_ops[self._current().type]
             self._consume()
             right_value = self._parse_expression()
-            if isinstance(value, Name):
+            # 支持 Name 和 Attribute 作为复合赋值目标
+            if isinstance(value, (Name, Attribute)):
                 if self._current().type == TokenType.NEWLINE:
                     self._consume()
                 return Assign(value, BinOp(value, op, right_value), value.line, value.col)
@@ -1437,6 +1503,22 @@ class Parser:
                 return Assign(value, build_block, value.line, value.col)
             else:
                 raise ValueError(f"Left side of =: must be a variable name at {self._current().line}:{self._current().col}")
+        # 处理调用构建块 ~:
+        if self._current().type == TokenType.BUILD_CALL:
+            self._consume()
+            if isinstance(value, Name):
+                build_block = self._parse_build_block(BuildBlockExpr.BUILD_CALL)
+                return Assign(value, build_block, value.line, value.col)
+            else:
+                raise ValueError(f"Left side of ~: must be a variable name at {self._current().line}:{self._current().col}")
+        # 处理生成器构建块 *:
+        if self._current().type == TokenType.BUILD_GEN:
+            self._consume()
+            if isinstance(value, Name):
+                build_block = self._parse_build_block(BuildBlockExpr.BUILD_GEN)
+                return Assign(value, build_block, value.line, value.col)
+            else:
+                raise ValueError(f"Left side of *: must be a variable name at {self._current().line}:{self._current().col}")
         if self._current().type == TokenType.NEWLINE:
             self._consume()
         return ExprStmt(value, value.line, value.col)
@@ -1566,7 +1648,7 @@ class Parser:
             token = self._consume()
             operand = self._parse_unary_expr()
             return AwaitExpr(operand, token.line, token.col)
-        return self._parse_power_expr()
+        return self._parse_cast_expr()
 
     def _parse_power_expr(self) -> ASTNode:
         base = self._parse_call()
@@ -1578,6 +1660,15 @@ class Parser:
             op = self._consume().value
             exp = self._parse_unary_expr()
             base = BinOp(base, op, exp)
+        return base
+
+    def _parse_cast_expr(self) -> ASTNode:
+        """解析类型转换表达式 - expr as Type"""
+        base = self._parse_power_expr()
+        while self._current().type == TokenType.AS:
+            self._consume()  # consume AS
+            target_type = self._parse_type()
+            base = CastExpr(base, target_type, base.line, base.col)
         return base
 
     def _parse_call(self) -> ASTNode:
@@ -1641,14 +1732,35 @@ class Parser:
                 break
             elif self._current().type == TokenType.BUILD_CALL:
                 # 处理调用构建块 ~:
+                # 如果 func 是简单的 Name，让上层 _parse_expr_stmt 处理为赋值
+                if hasattr(func, 'kind') and func.kind == "Name":
+                    break
                 self._consume()
                 build_block = self._parse_build_block(BuildBlockExpr.BUILD_CALL)
                 return Call(func, [build_block])
             elif self._current().type == TokenType.BUILD_GEN:
                 # 处理生成器调用构建块 *:
+                # 如果 func 是简单的 Name，让上层 _parse_expr_stmt 处理为赋值
+                if hasattr(func, 'kind') and func.kind == "Name":
+                    break
                 self._consume()
                 build_block = self._parse_build_block(BuildBlockExpr.BUILD_GEN)
                 return Call(func, [build_block])
+            elif self._current().type == TokenType.LBRACE and hasattr(func, 'kind') and func.kind == "Name":
+                # 处理结构体字面量 StructName {field: value, ...}
+                self._consume()
+                fields = []
+                if self._current().type != TokenType.RBRACE:
+                    while True:
+                        field_name = self._expect(TokenType.IDENTIFIER).value
+                        self._expect(TokenType.COLON)
+                        field_value = self._parse_expression()
+                        fields.append((field_name, field_value))
+                        if self._current().type != TokenType.COMMA:
+                            break
+                        self._consume()
+                self._expect(TokenType.RBRACE)
+                return StructLiteral(func.id, fields, func.line, func.col)
             else:
                 break
         
