@@ -100,8 +100,19 @@ class ScopeAnalyzer:
         func_scope = self.current_scope.create_child("function")
         self.current_scope = func_scope
 
+        # 注册泛型参数作为类型别名
+        for param in getattr(node, 'generic_params', []):
+            func_scope.add_symbol(param, "type", node)
+
+        # 在注册泛型参数之后访问返回类型（可能引用泛型参数）
+        if hasattr(node, 'return_type') and node.return_type:
+            self._visit(node.return_type)
+
         for param in node.params:
             func_scope.add_symbol(param.name, "parameter", param)
+            # 访问参数的类型注解
+            if hasattr(param, 'type_annotation') and param.type_annotation:
+                self._visit(param.type_annotation)
 
         for stmt in node.body:
             self._visit(stmt)

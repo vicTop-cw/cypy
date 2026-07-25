@@ -48,6 +48,8 @@ class TypeChecker:
         self.struct_defs: Dict[str, StructDef] = {}
         # 类定义注册表
         self.class_defs: Dict[str, ClassDef] = {}
+        # 函数定义注册表（用于泛型函数类型推断）
+        self.func_defs: Dict[str, FuncDef] = {}
         # 策略栈（用于递归防护）
         self.active_strategies: List[str] = []
         self.strategy_depth: int = 0
@@ -120,6 +122,11 @@ class TypeChecker:
                 # 注册类类型到类型映射
                 self.type_map[stmt.name] = Type(stmt.name)
             elif isinstance(stmt, FuncDef):
+                # 注册函数定义（用于泛型函数类型推断）
+                self.func_defs[stmt.name] = stmt
+                # 在处理返回类型之前，先注册泛型参数作为类型
+                for param in getattr(stmt, 'generic_params', []):
+                    self.type_map[param] = Type(param)
                 # 注册函数名到类型映射（函数类型用返回类型表示）
                 return_type = self._get_type_from_node(stmt.return_type)
                 if return_type:
@@ -137,16 +144,22 @@ class TypeChecker:
 
     def _visit_FuncDef(self, node: FuncDef) -> None:
         old_return_type = self.current_function_return_type
+        
+        # 保存旧的类型和可变性映射，进入新作用域
+        old_type_map = self.type_map.copy()
+        old_mutable_map = self.mutable_map.copy()
+
+        # 注册泛型参数作为类型（在处理返回类型之前）
+        for param in getattr(node, 'generic_params', []):
+            self.type_map[param] = Type(param)
+
+        # 现在可以处理返回类型了
         return_type = self._get_type_from_node(node.return_type)
         self.current_function_return_type = return_type
 
         # 在保存旧映射之前，将函数名注册到全局作用域
         if return_type:
-            self.type_map[node.name] = return_type
-
-        # 保存旧的类型和可变性映射，进入新作用域
-        old_type_map = self.type_map.copy()
-        old_mutable_map = self.mutable_map.copy()
+            old_type_map[node.name] = return_type
 
         for param in node.params:
             param_type = self._get_type_from_node(param.type_annotation)
@@ -256,6 +269,50 @@ class TypeChecker:
         # 如果 func 是简单名称
         if hasattr(node.func, 'id'):
             func_name = node.func.id
+            
+            # 检查是否是泛型函数调用（需要推断类型参数）
+            if func_name in self.func_defs:
+                func_def = self.func_defs[func_name]
+                generic_params = getattr(func_def, 'generic_params', [])
+                generic_constraints = getattr(func_def, 'generic_constraints', {})
+                
+                if generic_params:
+                    # 推断泛型参数类型
+                    inferred_types = {}
+                    arg_types = [self._visit(arg) for arg in node.args]
+                    
+                    # 根据参数类型推断泛型参数
+                    for i, param in enumerate(func_def.params):
+                        if i < len(arg_types) and arg_types[i]:
+                            param_type_name = getattr(param.type_annotation, 'id', None)
+                            if param_type_name in generic_params:
+                                inferred_types[param_type_name] = arg_types[i]
+                    
+                    # 检查泛型参数约束
+                    for param, inferred_type in inferred_types.items():
+                        if param in generic_constraints:
+                            constraint_type_ast = generic_constraints[param]
+                            constraint_type_name = getattr(constraint_type_ast, 'id', None)
+                            if constraint_type_name and inferred_type.name != constraint_type_name:
+                                line = node.line if hasattr(node, 'line') else 0
+                                col = node.col if hasattr(node, 'col') else 0
+                                self.errors.append(f"Generic constraint violation: type '{inferred_type.name}' does not satisfy constraint '{constraint_type_name}' for parameter '{param}' at {line}:{col}")
+                    
+                    # 返回推断后的函数返回类型
+                    if func_def.return_type:
+                        return_type = self._get_type_from_node(func_def.return_type)
+                        # 更新返回类型的泛型参数
+                        if return_type and return_type.generic_params:
+                            updated_generic = []
+                            for gp in return_type.generic_params:
+                                if gp.name in inferred_types:
+                                    updated_generic.append(inferred_types[gp.name])
+                                else:
+                                    updated_generic.append(gp)
+                            return_type.generic_params = updated_generic
+                        return return_type
+                    return Type("None")
+            
             # 先检查是否是用户定义的函数
             if func_name in self.type_map:
                 return self.type_map[func_name]
@@ -749,29 +806,33 @@ class TypeChecker:
             self._visit(stmt)
         
         # 访问 except 块，注册异常变量
-        for except_clause in getattr(node, 'except_clauses', []):
+        # TryStmt.handlers 是 (type, name, body) 元组列表
+        for handler in getattr(node, 'handlers', []):
+            except_type_ast, except_var_name, except_body = handler
+            
             # 检查异常类型
-            if except_clause.type:
-                except_type = self._visit(except_clause.type)
+            if except_type_ast:
+                except_type = self._visit(except_type_ast)
                 # 检查异常类型是否有效
                 if except_type and except_type.name != "Exception":
                     # 允许自定义异常类型
                     pass
+            else:
+                except_type = Type("Exception")
             
             # 注册异常变量（如果有）
-            except_var_name = getattr(except_clause, 'name', None)
             if except_var_name:
-                self.type_map[except_var_name] = except_type or Type("Exception")
+                self.type_map[except_var_name] = except_type
             
             # 访问 except 块中的语句
-            for stmt in except_clause.body:
+            for stmt in except_body:
                 self._visit(stmt)
             
             # 移除异常变量（仅在 except 块内有效）
             if except_var_name and except_var_name in self.type_map:
                 del self.type_map[except_var_name]
         
-        # 访问 finally 块
-        if hasattr(node, 'finally_body') and node.finally_body:
-            for stmt in node.finally_body:
+        # 访问 finally 块（orelse）
+        if hasattr(node, 'orelse') and node.orelse:
+            for stmt in node.orelse:
                 self._visit(stmt)
