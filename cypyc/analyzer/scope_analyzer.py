@@ -122,14 +122,29 @@ class ScopeAnalyzer:
         struct_scope = self.current_scope.create_child("struct")
         self.current_scope = struct_scope
 
+        # 注册泛型参数作为类型别名
+        for param in node.generic_params:
+            struct_scope.add_symbol(param, "type", node)
+
         for field in node.fields:
             struct_scope.add_symbol(field.name, "field", field)
+            # 显式访问字段的类型注解（在结构体作用域内）
+            if hasattr(field, 'type_annotation') and field.type_annotation:
+                self._visit(field.type_annotation)
 
         self.current_scope = struct_scope.parent
 
     def _visit_EnumDef(self, node: Any) -> None:
         """处理枚举定义"""
         self.current_scope.add_symbol(node.name, "enum", node)
+
+    def _visit_TypeAlias(self, node: Any) -> None:
+        """处理类型别名定义"""
+        self.current_scope.add_symbol(node.name, "type", node)
+        # 注册泛型参数作为类型别名
+        if hasattr(node, 'generic_params') and node.generic_params:
+            for param in node.generic_params:
+                self.current_scope.add_symbol(param, "type", node)
 
     def _visit_LetStmt(self, node: LetStmt) -> None:
         if node.name in self.current_scope.symbols:

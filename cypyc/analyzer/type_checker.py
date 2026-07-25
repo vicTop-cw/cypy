@@ -266,6 +266,19 @@ class TypeChecker:
             elif func_name == 'sizeof':
                 return Type("int")
             elif func_name == 'addr':
+                # addr() 只能接受原生类型或指针类型，不能接受 Python 对象
+                if node.args:
+                    arg_type = self._visit(node.args[0])
+                    if arg_type:
+                        # 允许的类型：原生类型（int, float, double, bool）和指针类型
+                        allowed_types = ['int', 'float', 'double', 'bool']
+                        if arg_type.is_pointer or arg_type.name in allowed_types:
+                            return Type("void", is_pointer=True)
+                        else:
+                            # 使用函数名的位置作为错误位置
+                            line = node.func.line if hasattr(node.func, 'line') else node.line
+                            col = node.func.col if hasattr(node.func, 'col') else node.col
+                            self.errors.append(f"addr() cannot take address of {arg_type.name} at {line}:{col}")
                 return Type("void", is_pointer=True)
             # 内置类型转换函数
             elif func_name in ['int', 'float', 'double', 'str', 'bool']:
@@ -309,9 +322,20 @@ class TypeChecker:
 
     def _visit_StructDef(self, node: Any) -> None:
         """处理结构体定义，为方法中的 self 设置类型"""
+        # 保存当前类型映射（用于恢复）
+        old_type_map = self.type_map.copy()
+        
+        # 注册泛型参数作为类型
+        for param in getattr(node, 'generic_params', []):
+            self.type_map[param] = Type(param)
+        
         # 访问字段
         for field in node.fields:
             self._visit(field)
+        
+        # 恢复类型映射
+        self.type_map = old_type_map
+        
         # 访问方法，设置 self 类型为结构体类型
         struct_type = Type(node.name)
         for method in getattr(node, 'methods', []):
@@ -327,6 +351,22 @@ class TypeChecker:
     def _visit_EnumDef(self, node: Any) -> None:
         """处理枚举定义，注册枚举类型"""
         self.type_map[node.name] = Type(node.name)
+
+    def _visit_TypeAlias(self, node: Any) -> None:
+        """处理类型别名定义"""
+        # 保存当前类型映射（用于恢复）
+        old_type_map = self.type_map.copy()
+        
+        # 注册泛型参数作为类型
+        for param in getattr(node, 'generic_params', []):
+            self.type_map[param] = Type(param)
+        
+        # 访问目标类型
+        if hasattr(node, 'target') and node.target:
+            self._visit(node.target)
+        
+        # 恢复类型映射
+        self.type_map = old_type_map
 
     def _visit_StructLiteral(self, node: Any) -> Optional[Type]:
         """处理结构体字面量，返回结构体类型"""
