@@ -73,18 +73,14 @@ class BuildBlockChecker:
     
     def _visit_DerefExpr(self, node: DerefExpr) -> None:
         """访问解引用表达式 - 指针语法"""
-        if not self._in_build_block:
-            self.errors.append(
-                f"Pointer dereference (*) is only allowed inside build blocks at {node.line}:{node.col}"
-            )
+        # 移除解引用只能在构建块内部使用的限制
+        # 解引用可以在任何地方使用
         self._visit(node.operand)
     
     def _visit_PointerType(self, node: PointerType) -> None:
         """访问指针类型 - 指针语法"""
-        if not self._in_build_block:
-            self.errors.append(
-                f"Pointer type is only allowed inside build blocks at {node.line}:{node.col}"
-            )
+        # 移除指针类型只能在构建块内部使用的限制
+        # 指针类型可以在任何地方使用
         self._visit(node.base_type)
     
     def _visit_BuildValueExpr(self, node: BuildValueExpr) -> None:

@@ -27,6 +27,8 @@ class TokenType:
     GT = "GT"
     GE = "GE"
     SUBTYPE = "SUBTYPE"
+    LSHIFT = "LSHIFT"  # <<
+    RSHIFT = "RSHIFT"  # >>
 
     ASSIGN = "ASSIGN"
     PLUS_ASSIGN = "PLUS_ASSIGN"
@@ -69,6 +71,7 @@ class TokenType:
     RETURN = "RETURN"
     DEF = "DEF"
     CLASS = "CLASS"
+    CDEF = "CDEF"
     STRUCT = "STRUCT"
     ENUM = "ENUM"
     TRAIT = "TRAIT"
@@ -117,10 +120,13 @@ class TokenType:
     LAMBDA = "LAMBDA"
     IMPLICIT = "IMPLICIT"
     NO_STRATEGY = "NO_STRATEGY"
+    OWNED = "OWNED"
+    SUITE = "SUITE"
+    TEST = "TEST"
+    DEL = "DEL"
 
     FAT_ARROW = "FAT_ARROW"  # =>
     BANG = "BANG"  # !
-    AT = "AT"      # @
     
     BACKTICK_BLOCK = "BACKTICK_BLOCK"  # ```...```
 
@@ -150,6 +156,7 @@ class Lexer:
         "continue": TokenType.CONTINUE,
         "return": TokenType.RETURN,
         "def": TokenType.DEF,
+        "cdef": TokenType.CDEF,
         "class": TokenType.CLASS,
         "struct": TokenType.STRUCT,
         "enum": TokenType.ENUM,
@@ -171,6 +178,8 @@ class Lexer:
         "mut": TokenType.MUT,
         "is": TokenType.IS,
         "in": TokenType.IN,
+        "and": TokenType.AND,
+        "or": TokenType.OR,
         "meta": TokenType.META,
         "constraint": TokenType.CONSTRAINT,
         "abstract": TokenType.ABSTRACT,
@@ -198,6 +207,13 @@ class Lexer:
         "lambda": TokenType.LAMBDA,
         "implicit": TokenType.IMPLICIT,
         "no_strategy": TokenType.NO_STRATEGY,
+        "owned": TokenType.OWNED,
+        "suite": TokenType.SUITE,
+        "test": TokenType.TEST,
+        "del": TokenType.DEL,
+        "in": TokenType.IN,
+        "is": TokenType.IS,
+        "not": TokenType.NOT,
     }
 
     def __init__(self, source: str):
@@ -210,6 +226,7 @@ class Lexer:
         self._in_type_annotation = False  # 标记是否在箭头后的类型注解中
         self._indent_type = None  # 记录当前使用的缩进类型：'spaces' 或 'tabs'
         self._in_backtick_block = False  # 标记是否在反引号代码块内部
+        self._prev_token_was_block_start = False  # 标记前一个token是否是块起始
 
     def _peek(self) -> Optional[str]:
         if self.pos >= len(self.source):
@@ -254,7 +271,22 @@ class Lexer:
         while self._peek() is not None:
             char = self._advance()
             if escaped:
-                result += char
+                # 处理转义序列
+                if char == 't':
+                    result += '\t'
+                elif char == 'n':
+                    result += '\n'
+                elif char == 'r':
+                    result += '\r'
+                elif char == '\\':
+                    result += '\\'
+                elif char == '"':
+                    result += '"'
+                elif char == "'":
+                    result += "'"
+                else:
+                    # 其他转义序列直接保留
+                    result += '\\' + char
                 escaped = False
             elif char == "\\":
                 escaped = True
@@ -288,8 +320,39 @@ class Lexer:
         result = ""
         has_dot = False
         has_exp = False
+        
+        # 检查是否是 0x/0X（十六进制）或 0o/0O（八进制）或 0b/0B（二进制）
+        if self._peek() == '0':
+            self._advance()
+            result = '0'
+            next_char = self._peek()
+            if next_char in ('x', 'X'):
+                # 十六进制
+                self._advance()
+                result += next_char
+                while self._peek() is not None and (
+                    self._peek().isdigit() or self._peek().lower() in 'abcdef'
+                ):
+                    result += self._advance()
+                return TokenType.INTEGER, result
+            elif next_char in ('o', 'O'):
+                # 八进制
+                self._advance()
+                result += next_char
+                while self._peek() is not None and self._peek() in '01234567':
+                    result += self._advance()
+                return TokenType.INTEGER, result
+            elif next_char in ('b', 'B'):
+                # 二进制
+                self._advance()
+                result += next_char
+                while self._peek() is not None and self._peek() in '01':
+                    result += self._advance()
+                return TokenType.INTEGER, result
+            # 否则继续处理普通数字
+        
         while self._peek() is not None and (
-            self._peek().isdigit() or self._peek() in ".eE"
+            self._peek().isdigit() or self._peek() in ".eE_"
         ):
             char = self._peek()
             if char == ".":
@@ -301,6 +364,15 @@ class Lexer:
                     break
                 has_exp = True
                 has_dot = True
+                result += self._advance()
+                # 科学计数法中 e 后面可以有可选的正负号
+                if self._peek() in "+-":
+                    result += self._advance()
+                continue
+            elif char == "_":
+                # 数字下划线分隔符，跳过不添加到结果
+                self._advance()
+                continue
             result += self._advance()
         if has_dot:
             return TokenType.FLOAT, result
@@ -416,10 +488,10 @@ class Lexer:
             if char == '"' or char == "'":
                 # 检查是否是 f-string
                 is_fstring = False
-                if char == '"' and self.source[self.pos-1] == 'f':
-                    is_fstring = True
-                elif char == "'" and self.source[self.pos-1] == 'f':
-                    is_fstring = True
+                if self.pos >= 1 and self.source[self.pos-1] == 'f':
+                    # f 前面必须是空白字符或行首才是 f-string
+                    if self.pos == 1 or self.source[self.pos-2] in (' ', '\t', '\n', '\r', '(', '[', '{', '=', ',', '+', '-', '*', '/', '%', '^', '&', '|', '~', '<', '>', '!', '?', ':'):
+                        is_fstring = True
                 
                 value = self._tokenize_string()
                 if is_fstring:
@@ -686,6 +758,9 @@ class Lexer:
                 elif self._peek() == ":":
                     self._advance()
                     yield Token(TokenType.SUBTYPE, "<:", self.line, self.col - 2)
+                elif self._peek() == "<":
+                    self._advance()
+                    yield Token(TokenType.LSHIFT, "<<", self.line, self.col - 2)
                 else:
                     yield Token(TokenType.LT, "<", self.line, self.col - 1)
                 continue
@@ -695,6 +770,9 @@ class Lexer:
                 if self._peek() == "=":
                     self._advance()
                     yield Token(TokenType.GE, ">=", self.line, self.col - 2)
+                elif self._peek() == ">":
+                    self._advance()
+                    yield Token(TokenType.RSHIFT, ">>", self.line, self.col - 2)
                 else:
                     yield Token(TokenType.GT, ">", self.line, self.col - 1)
                 continue
@@ -775,11 +853,6 @@ class Lexer:
                 yield Token(TokenType.RBRACE, "}", self.line, self.col - 1)
                 continue
 
-            if char == "@":
-                self._advance()
-                yield Token(TokenType.AT, "@", self.line, self.col - 1)
-                continue
-
             if char == "~":
                 self._advance()
                 if self._peek() == ":":
@@ -801,38 +874,6 @@ class Lexer:
                 self._advance()
                 yield Token(TokenType.BUILD_VALUE, "^", self.line, self.col - 1)
                 continue
-
-            if char == "`":
-                # 检查是否是三反引号
-                if self._peek() == "`" and self._peek_ahead(2) == "`":
-                    # 三反引号代码块
-                    self._advance()  # 第二个 `
-                    self._advance()  # 第三个 `
-                    start_line = self.line
-                    start_col = self.col
-                    
-                    # 读取反引号块内容
-                    content = ""
-                    while self.pos < len(self.source):
-                        if (self._peek() == "`" and 
-                            self._peek_ahead(1) == "`" and 
-                            self._peek_ahead(2) == "`"):
-                            # 找到结束的三反引号
-                            self._advance()  # 第一个 `
-                            self._advance()  # 第二个 `
-                            self._advance()  # 第三个 `
-                            break
-                        content += self._advance()
-                    
-                    # 移除首尾换行符（符合 lang-zone 规范）
-                    content = content.strip("\n")
-                    yield Token(TokenType.BACKTICK_BLOCK, content, start_line, start_col)
-                    continue
-                else:
-                    # 单个反引号，作为普通字符处理
-                    self._advance()
-                    yield Token(TokenType.IDENTIFIER, "`", self.line, self.col - 1)
-                    continue
 
             self._advance()
 

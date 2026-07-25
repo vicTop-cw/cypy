@@ -52,11 +52,18 @@ class ScopeAnalyzer:
             ('bool', 'type'),
             ('str', 'type'),
             ('None', 'type'),
+            ('Exception', 'type'),
             ('print', 'function'),
             ('len', 'function'),
             ('malloc', 'function'),
+            ('free', 'function'),
             ('sizeof', 'function'),
             ('addr', 'function'),
+            ('ord', 'function'),
+            ('range', 'function'),
+            ('True', 'constant'),
+            ('False', 'constant'),
+            ('_', 'wildcard'),
         ]
         for name, kind in builtins:
             self.root_scope.add_symbol(name, kind, None)
@@ -120,6 +127,10 @@ class ScopeAnalyzer:
 
         self.current_scope = struct_scope.parent
 
+    def _visit_EnumDef(self, node: Any) -> None:
+        """处理枚举定义"""
+        self.current_scope.add_symbol(node.name, "enum", node)
+
     def _visit_LetStmt(self, node: LetStmt) -> None:
         if node.name in self.current_scope.symbols:
             self.errors.append(f"Variable '{node.name}' already declared in this scope at {node.line}:{node.col}")
@@ -163,7 +174,66 @@ class ScopeAnalyzer:
         for stmt in node.body:
             self._visit(stmt)
 
+    def _visit_WhileStmt(self, node: Any) -> None:
+        """处理 while 循环，访问条件和循环体"""
+        # 先访问条件表达式
+        self._visit(node.test)
+        
+        # 访问循环体
+        for stmt in node.body:
+            self._visit(stmt)
+
     def _visit_Call(self, node: Any) -> None:
         self._visit(node.func)
         for arg in node.args:
             self._visit(arg)
+
+    def _visit_MatchStmt(self, node: Any) -> None:
+        """处理 match 语句"""
+        self._visit(node.subject)
+        for case in node.cases:
+            # 访问 pattern（包含变量绑定）
+            if hasattr(case, 'pattern') and case.pattern:
+                pattern = case.pattern
+                # 如果 pattern 是字典（case pattern if condition），获取真正的 pattern
+                if isinstance(pattern, dict) and 'pattern' in pattern:
+                    pattern = pattern['pattern']
+                # 如果 pattern 是列表（元组/列表模式），递归访问每个元素
+                if isinstance(pattern, list):
+                    for p in pattern:
+                        if hasattr(p, 'kind'):
+                            self._visit(p)
+                else:
+                    self._visit(pattern)
+            if hasattr(case, 'condition') and case.condition:
+                self._visit(case.condition)
+            for stmt in case.body:
+                self._visit(stmt)
+
+    def _visit_GuardStmt(self, node: Any) -> None:
+        """处理 guard 语句"""
+        # GuardStmt 使用 test 字段而非 condition
+        if hasattr(node, 'test') and node.test:
+            self._visit(node.test)
+        if hasattr(node, 'orelse') and node.orelse:
+            # orelse 可能是表达式或语句列表（多行形式）
+            if isinstance(node.orelse, list):
+                for stmt in node.orelse:
+                    if hasattr(stmt, 'kind'):
+                        self._visit(stmt)
+            else:
+                self._visit(node.orelse)
+
+    def _visit_DeferStmt(self, node: Any) -> None:
+        """处理 defer 语句"""
+        for stmt in node.body:
+            self._visit(stmt)
+
+    def _visit_Pattern(self, node: Any) -> None:
+        """处理模式绑定（match case 中的变量绑定）"""
+        self.current_scope.add_symbol(node.name, "variable", node)
+
+    def _visit_Subscript(self, node: Any) -> None:
+        """处理下标访问"""
+        self._visit(node.value)
+        self._visit(node.slice)

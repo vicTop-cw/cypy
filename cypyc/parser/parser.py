@@ -73,7 +73,7 @@ class TraitDef(ASTNode):
 
 
 class FuncDef(ASTNode):
-    def __init__(self, name: str, params: List[Any], return_type: Optional[Any], body: List[ASTNode], generic_params: List[str] = None, decorators: List[Any] = None, is_async: bool = False, params_checker: Optional[str] = None, line: int = 0, col: int = 0):
+    def __init__(self, name: str, params: List[Any], return_type: Optional[Any], body: List[ASTNode], generic_params: List[str] = None, decorators: List[Any] = None, is_async: bool = False, params_checker: Optional[str] = None, is_test: bool = False, line: int = 0, col: int = 0):
         super().__init__("FuncDef", line, col)
         self.name = name
         self.params = params
@@ -83,6 +83,7 @@ class FuncDef(ASTNode):
         self.decorators = decorators or []
         self.is_async = is_async
         self.params_checker = params_checker  # <checker> 参数检查站名称
+        self.is_test = is_test
 
 
 class Param(ASTNode):
@@ -97,11 +98,12 @@ class Param(ASTNode):
 
 
 class ClassDef(ASTNode):
-    def __init__(self, name: str, bases: List[Any], body: List[ASTNode], line: int = 0, col: int = 0):
+    def __init__(self, name: str, bases: List[Any], body: List[ASTNode], line: int = 0, col: int = 0, is_cdef: bool = False):
         super().__init__("ClassDef", line, col)
         self.name = name
         self.bases = bases
         self.body = body
+        self.is_cdef = is_cdef
 
 
 class TypeAlias(ASTNode):
@@ -144,9 +146,10 @@ class ReturnStmt(ASTNode):
 
 
 class YieldStmt(ASTNode):
-    def __init__(self, value: Optional[Any], line: int = 0, col: int = 0):
+    def __init__(self, value: Optional[Any], is_from: bool = False, line: int = 0, col: int = 0):
         super().__init__("YieldStmt", line, col)
         self.value = value
+        self.is_from = is_from
 
 
 class AwaitExpr(ASTNode):
@@ -218,6 +221,12 @@ class BreakStmt(ASTNode):
 class ContinueStmt(ASTNode):
     def __init__(self, line: int = 0, col: int = 0):
         super().__init__("ContinueStmt", line, col)
+
+
+class DelStmt(ASTNode):
+    def __init__(self, targets: List[ASTNode], line: int = 0, col: int = 0):
+        super().__init__("DelStmt", line, col)
+        self.targets = targets
 
 
 class ExprStmt(ASTNode):
@@ -314,6 +323,13 @@ class Name(ASTNode):
         self.id = id
 
 
+class Pattern(ASTNode):
+    """模式绑定 - 在 match case 中绑定变量"""
+    def __init__(self, name: str, line: int = 0, col: int = 0):
+        super().__init__("Pattern", line, col)
+        self.name = name
+
+
 class PipeExpr(ASTNode):
     """管道表达式 - x |> f 等同于 f(x)"""
     def __init__(self, value: Any, function: Any, line: int = 0, col: int = 0):
@@ -323,9 +339,10 @@ class PipeExpr(ASTNode):
 
 
 class Constant(ASTNode):
-    def __init__(self, value: Any, line: int = 0, col: int = 0):
+    def __init__(self, value: Any, line: int = 0, col: int = 0, prefix: str = None):
         super().__init__("Constant", line, col)
         self.value = value
+        self.prefix = prefix
 
 
 class PointerType(ASTNode):
@@ -610,6 +627,13 @@ class Parser:
                 raise ValueError(f"Unexpected token {self._current().type} after async at {self._current().line}:{self._current().col}")
         if token.type == TokenType.DEF:
             return self._parse_func_def(decorators)
+        if token.type == TokenType.CDEF:
+            self._consume()
+            if self._current().type == TokenType.CLASS:
+                return self._parse_class_def(is_cdef=True)
+            else:
+                # cdef 变量声明：cdef int x = 10
+                return self._parse_typed_var()
         if token.type == TokenType.CLASS:
             return self._parse_class_def()
         if token.type == TokenType.IMPLICIT:
@@ -635,6 +659,10 @@ class Parser:
             return self._parse_var_stmt()
         if token.type == TokenType.VAL:
             return self._parse_val_stmt()
+        if token.type == TokenType.TEST:
+            # test def 语法：测试函数
+            self._consume()
+            return self._parse_func_def(is_test=True)
         if token.type == TokenType.IDENTIFIER:
             peek_token = self._peek()
             if peek_token and peek_token.type == TokenType.COLON:
@@ -653,6 +681,8 @@ class Parser:
             return self._parse_while_stmt()
         if token.type == TokenType.BREAK:
             return self._parse_break_stmt()
+        if token.type == TokenType.DEL:
+            return self._parse_del_stmt()
         if token.type == TokenType.CONTINUE:
             return self._parse_continue_stmt()
         if token.type == TokenType.DEFER:
@@ -713,7 +743,7 @@ class Parser:
 
         return self._parse_expr_stmt()
 
-    def _parse_func_def(self, decorators: List[Any] = None, is_async: bool = False) -> FuncDef:
+    def _parse_func_def(self, decorators: List[Any] = None, is_async: bool = False, is_test: bool = False) -> FuncDef:
         self._consume(TokenType.DEF)
         
         # <checker> 参数检查站（可选，在函数名之前）
@@ -724,7 +754,11 @@ class Parser:
             self._expect(TokenType.GT)  # consume >
             params_checker = checker_name
         
-        name_token = self._consume(TokenType.IDENTIFIER)
+        # 函数名可以是 IDENTIFIER 或 TEST（允许使用 test 作为函数名）
+        if self._current().type == TokenType.TEST:
+            name_token = self._consume(TokenType.TEST)
+        else:
+            name_token = self._consume(TokenType.IDENTIFIER)
         
         # [generic] 泛型参数（可选，在函数名之后）
         generic_params = []
@@ -747,7 +781,7 @@ class Parser:
         self._push_scope("func")
         body = self._parse_block()
         self._pop_scope()
-        return FuncDef(name_token.value, params, return_type, body, generic_params, decorators, is_async, params_checker, name_token.line, name_token.col)
+        return FuncDef(name_token.value, params, return_type, body, generic_params, decorators, is_async, params_checker, is_test, name_token.line, name_token.col)
 
     def _parse_params(self) -> List[Param]:
         params = []
@@ -780,11 +814,20 @@ class Parser:
                 self._consume()
         return params
 
-    def _parse_class_def(self) -> ClassDef:
+    def _parse_class_def(self, is_cdef: bool = False) -> ClassDef:
         self._consume(TokenType.CLASS)
         name_token = self._consume(TokenType.IDENTIFIER)
         bases = []
-        if self._current().type == TokenType.EXTENDS:
+        # 支持 Python 风格的 class Name(Parent): 语法
+        if self._current().type == TokenType.LPAREN:
+            self._consume()
+            while self._current().type != TokenType.RPAREN:
+                bases.append(self._parse_type())
+                if self._current().type == TokenType.COMMA:
+                    self._consume()
+            self._consume()
+        # 支持 Cypy 风格的 class Name extends Parent: 语法
+        elif self._current().type == TokenType.EXTENDS:
             self._consume()
             bases = self._parse_type_list()
         if self._current().type == TokenType.IMPLEMENTS:
@@ -794,7 +837,7 @@ class Parser:
         self._push_scope("class")
         body = self._parse_block()
         self._pop_scope()
-        return ClassDef(name_token.value, bases, body, name_token.line, name_token.col)
+        return ClassDef(name_token.value, bases, body, name_token.line, name_token.col, is_cdef=is_cdef)
 
     def _parse_struct_def(self, is_implicit: bool = False) -> StructDef:
         if not is_implicit and self._current().type == TokenType.IMPLICIT:
@@ -803,7 +846,8 @@ class Parser:
         
         self._consume(TokenType.STRUCT)
         name_token = self._consume(TokenType.IDENTIFIER)
-        self._require_module_level("struct", name_token)
+        # 允许在函数内部定义结构体
+        # self._require_module_level("struct", name_token)
         
         generic_params = []
         if self._current().type == TokenType.LBRACKET:
@@ -829,7 +873,11 @@ class Parser:
                 method = self._parse_func_def()
                 methods.append(method)
                 continue
-            # 否则解析为字段
+            # 否则解析为字段（支持 let 关键字）
+            is_let = False
+            if self._current().type == TokenType.LET:
+                self._consume()
+                is_let = True
             field_name_token = self._consume(TokenType.IDENTIFIER)
             type_annotation = None
             default_value = None
@@ -940,7 +988,7 @@ class Parser:
             self._consume()
         return LetStmt(name_token.value, type_annotation, value, False, name_token.line, name_token.col)
 
-    def _parse_typed_var(self) -> LetStmt:
+    def _parse_typed_var(self, mutable: bool = True) -> LetStmt:
         name_token = self._consume(TokenType.IDENTIFIER)
         self._consume(TokenType.COLON)
         type_annotation = self._parse_type()
@@ -950,7 +998,7 @@ class Parser:
             value = self._parse_expression()
         if self._current().type == TokenType.NEWLINE:
             self._consume()
-        return LetStmt(name_token.value, type_annotation, value, True, name_token.line, name_token.col)
+        return LetStmt(name_token.value, type_annotation, value, mutable, name_token.line, name_token.col)
 
     def _parse_return_stmt(self) -> ReturnStmt:
         self._consume(TokenType.RETURN)
@@ -964,11 +1012,16 @@ class Parser:
     def _parse_yield_stmt(self) -> YieldStmt:
         self._consume(TokenType.YIELD)
         value = None
-        if self._current().type not in (TokenType.NEWLINE, TokenType.DEDENT, TokenType.EOF):
+        is_from = False
+        if self._current().type == TokenType.FROM:
+            self._consume()
+            is_from = True
+            value = self._parse_expression()
+        elif self._current().type not in (TokenType.NEWLINE, TokenType.DEDENT, TokenType.EOF):
             value = self._parse_expression()
         if self._current().type == TokenType.NEWLINE:
             self._consume()
-        return YieldStmt(value, self._current().line, self._current().col)
+        return YieldStmt(value, is_from, self._current().line, self._current().col)
 
     def _parse_assert_stmt(self) -> AssertStmt:
         self._consume(TokenType.ASSERT)
@@ -1110,18 +1163,41 @@ class Parser:
         # 常量模式：字面量
         if token.type == TokenType.INTEGER:
             self._consume()
-            return Constant(int(token.value), token.line, token.col)
+            # 使用 base 0 自动识别进制（0x=十六进制, 0b=二进制, 0o=八进制）
+            return Constant(int(token.value, 0), token.line, token.col)
         if token.type == TokenType.FLOAT:
             self._consume()
             return Constant(float(token.value), token.line, token.col)
         if token.type == TokenType.STRING:
             self._consume()
+            # 保留字符串的前缀（如 f-string 的 'f'）
+            prefix = getattr(token, 'prefix', None)
+            if prefix == 'f':
+                return Constant(token.value, token.line, token.col, prefix='f')
             return Constant(token.value, token.line, token.col)
         
-        # 变量模式：标识符
+        # 变量模式：标识符（模式绑定）
         if token.type == TokenType.IDENTIFIER:
             self._consume()
-            return Name(token.value, token.line, token.col)
+            # 如果后面跟着 .，说明是限定名（如 Color.Red），解析为属性访问
+            if self._current().type == TokenType.DOT:
+                attr_expr = Attribute(
+                    value=Name(token.value, token.line, token.col),
+                    attr=None,
+                    line=token.line,
+                    col=token.col
+                )
+                while self._current().type == TokenType.DOT:
+                    self._consume()
+                    attr_name = self._consume(TokenType.IDENTIFIER).value
+                    attr_expr = Attribute(
+                        value=attr_expr,
+                        attr=attr_name,
+                        line=token.line,
+                        col=token.col
+                    )
+                return attr_expr
+            return Pattern(token.value, token.line, token.col)
         
         # 列表模式：[pattern1, pattern2, ...]
         if token.type == TokenType.LBRACKET:
@@ -1185,7 +1261,8 @@ class Parser:
 
     def _parse_for_stmt(self) -> ForStmt:
         self._consume(TokenType.FOR)
-        target = self._parse_expression()
+        # 使用 _parse_bitwise_or() 来解析目标，避免 IN 运算符的干扰
+        target = self._parse_bitwise_or()
         self._expect(TokenType.IN)
         iter = self._parse_expression()
         self._expect(TokenType.COLON)
@@ -1208,6 +1285,19 @@ class Parser:
         if self._current().type == TokenType.NEWLINE:
             self._consume()
         return BreakStmt()
+
+    def _parse_del_stmt(self) -> DelStmt:
+        self._consume(TokenType.DEL)
+        targets = []
+        while True:
+            targets.append(self._parse_expression())
+            if self._current().type == TokenType.COMMA:
+                self._consume()
+            else:
+                break
+        if self._current().type == TokenType.NEWLINE:
+            self._consume()
+        return DelStmt(targets)
 
     def _parse_continue_stmt(self) -> ContinueStmt:
         self._consume(TokenType.CONTINUE)
@@ -1475,6 +1565,17 @@ class Parser:
             right_value = self._parse_expression()
             # 允许 Name 和 DerefExpr 作为赋值目标
             if isinstance(value, (Name, DerefExpr)):
+                # 处理赋值右边的构建块语法：x = func ~: block
+                if self._current().type == TokenType.BUILD_CALL:
+                    self._consume()
+                    build_block = self._parse_build_block(BuildBlockExpr.BUILD_CALL)
+                    # x = func ~: block 转换为 x = func(build_block)
+                    return Assign(value, Call(right_value, [build_block]), value.line, value.col)
+                elif self._current().type == TokenType.BUILD_GEN:
+                    self._consume()
+                    build_block = self._parse_build_block(BuildBlockExpr.BUILD_GEN)
+                    # x = func *: block 转换为 x = func(build_block)
+                    return Assign(value, Call(right_value, [build_block]), value.line, value.col)
                 # 消费换行符或INDENT（Lexer会在换行后输出INDENT）
                 if self._current().type in (TokenType.NEWLINE, TokenType.INDENT):
                     self._consume()
@@ -1491,11 +1592,11 @@ class Parser:
             self._consume()
             right_value = self._parse_expression()
             # 支持 Name 和 Attribute 作为复合赋值目标
-            if isinstance(value, (Name, Attribute)):
+            if isinstance(value, (Name, Attribute, Subscript)):
                 if self._current().type == TokenType.NEWLINE:
                     self._consume()
                 return Assign(value, BinOp(value, op, right_value), value.line, value.col)
-        # 处理变量构建块 =:
+        # 处理变量构建块 =:（独立语句形式）
         if self._current().type == TokenType.BUILD_ASSIGN:
             self._consume()
             if isinstance(value, Name):
@@ -1503,7 +1604,7 @@ class Parser:
                 return Assign(value, build_block, value.line, value.col)
             else:
                 raise ValueError(f"Left side of =: must be a variable name at {self._current().line}:{self._current().col}")
-        # 处理调用构建块 ~:
+        # 处理调用构建块 ~:（独立语句形式）
         if self._current().type == TokenType.BUILD_CALL:
             self._consume()
             if isinstance(value, Name):
@@ -1511,7 +1612,7 @@ class Parser:
                 return Assign(value, build_block, value.line, value.col)
             else:
                 raise ValueError(f"Left side of ~: must be a variable name at {self._current().line}:{self._current().col}")
-        # 处理生成器构建块 *:
+        # 处理生成器构建块 *:（独立语句形式）
         if self._current().type == TokenType.BUILD_GEN:
             self._consume()
             if isinstance(value, Name):
@@ -1569,7 +1670,7 @@ class Parser:
 
     def _parse_comparison(self) -> ASTNode:
         left = self._parse_bitwise_or()
-        while self._current().type in (TokenType.EQ, TokenType.NE, TokenType.LT, TokenType.LE, TokenType.GT, TokenType.GE):
+        while self._current().type in (TokenType.EQ, TokenType.NE, TokenType.LT, TokenType.LE, TokenType.GT, TokenType.GE, TokenType.IN, TokenType.IS):
             op = self._consume().value
             right = self._parse_bitwise_or()
             left = BinOp(left, op, right)
@@ -1593,20 +1694,23 @@ class Parser:
 
     def _parse_shift_expr(self) -> ASTNode:
         left = self._parse_additive_expr()
-        # 处理位移操作符（暂时省略，使用比较表达式代替）
+        while self._current().type in (TokenType.LSHIFT, TokenType.RSHIFT):
+            op = self._consume().value
+            right = self._parse_additive_expr()
+            left = BinOp(left, op, right)
         return left
 
     def _parse_comparison_expr(self) -> ASTNode:
-        """解析比较表达式（==, !=, <, >, <=, >=）"""
+        """解析比较表达式（==, !=, <, >, <=, >=, in, is）"""
         left = self._parse_shift_expr()
-        while self._current().type in (TokenType.EQ, TokenType.NE, TokenType.LT, TokenType.GT, TokenType.LE, TokenType.GE):
+        while self._current().type in (TokenType.EQ, TokenType.NE, TokenType.LT, TokenType.GT, TokenType.LE, TokenType.GE, TokenType.IN, TokenType.IS):
             op = self._consume().value
             right = self._parse_shift_expr()
             left = BinOp(left, op, right)
         return left
 
     def _parse_pipeline_expr(self) -> ASTNode:
-        left = self._parse_comparison_expr()
+        left = self._parse_or_expr()
         while self._current().type == TokenType.PIPE_GT:
             self._consume()
             right = self._parse_call()
@@ -1640,7 +1744,8 @@ class Parser:
             op = self._consume().value
             operand = self._parse_unary_expr()
             return UnaryOp(op, operand)
-        if self._current().type == TokenType.DEREF:
+        # 支持 DEREF 和 MUL 作为解引用运算符
+        if self._current().type in (TokenType.DEREF, TokenType.MUL):
             self._consume()
             operand = self._parse_unary_expr()
             return DerefExpr(operand)
@@ -1770,12 +1875,17 @@ class Parser:
         token = self._current()
         if token.type == TokenType.INTEGER:
             self._consume()
-            return Constant(int(token.value), token.line, token.col)
+            # 使用 base 0 自动识别进制（0x=十六进制, 0b=二进制, 0o=八进制）
+            return Constant(int(token.value, 0), token.line, token.col)
         if token.type == TokenType.FLOAT:
             self._consume()
             return Constant(float(token.value), token.line, token.col)
         if token.type == TokenType.STRING:
             self._consume()
+            # 保留字符串的前缀（如 f-string 的 'f'）
+            prefix = getattr(token, 'prefix', None)
+            if prefix == 'f':
+                return Constant(token.value, token.line, token.col, prefix='f')
             return Constant(token.value, token.line, token.col)
         if token.type == TokenType.LAMBDA:
             return self._parse_lambda()
@@ -1960,15 +2070,19 @@ class Parser:
         return LambdaExpr(params, body, self._current().line, self._current().col)
     
     def _parse_param_for_lambda(self) -> Param:
-        """解析lambda参数（暂时不支持类型注解）"""
+        """解析lambda参数（不支持类型注解，避免与lambda体的COLON冲突）"""
         is_mut = False
         is_ref = False
-        name_token = self._consume(TokenType.IDENTIFIER)
+        # 支持 TEST 作为参数名（test 被识别为关键字）
+        if self._current().type == TokenType.TEST:
+            name_token = self._consume(TokenType.TEST)
+        else:
+            name_token = self._consume(TokenType.IDENTIFIER)
         
-        type_annotation = None
-        # 不解析类型注解，避免将lambda体的COLON误认为类型注解的COLON
+        # 不解析类型注解，因为 COLON 会与 lambda 体的 COLON 冲突
+        # lambda 参数的类型注解应该在函数签名中定义
         
-        return Param(name_token.value, type_annotation, is_mut, is_ref, name_token.line, name_token.col)
+        return Param(name_token.value, None, None, is_mut, is_ref, False, name_token.line, name_token.col)
 
     def _parse_type(self) -> ASTNode:
         base = self._parse_type_element()

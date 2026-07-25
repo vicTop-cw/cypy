@@ -2308,8 +2308,10 @@ class CCodeGenerator:
                     return f"{subject} == {'1' if value else '0'}"
                 else:
                     return f"{subject} == {value}"
-            elif pattern.kind == "Name":
-                if pattern.id == "_":
+            elif pattern.kind in ("Name", "Pattern"):
+                # 获取名称（Pattern 使用 name，Name 使用 id）
+                var_name = pattern.name if hasattr(pattern, 'name') else pattern.id
+                if var_name == "_":
                     # 通配符模式：始终为真
                     return "1"
                 else:
@@ -2384,10 +2386,13 @@ class CCodeGenerator:
             
             self.indent += 1
             
-            # 处理变量模式的绑定
-            if hasattr(pattern, 'kind') and pattern.kind == "Name" and pattern.id != "_":
-                # 绑定变量
-                self._write(f"void* {pattern.id} = {subject_var};")
+            # 处理变量模式的绑定（支持 Pattern 和 Name 两种类型）
+            if hasattr(pattern, 'kind') and pattern.kind in ("Pattern", "Name"):
+                # 获取名称（Pattern 使用 name，Name 使用 id）
+                var_name = pattern.name if hasattr(pattern, 'name') else pattern.id
+                if var_name != "_":
+                    # 绑定变量
+                    self._write(f"void* {var_name} = {subject_var};")
             
             # 生成 case 体
             for stmt in case_clause.body:

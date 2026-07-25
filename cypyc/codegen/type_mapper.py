@@ -14,6 +14,7 @@ class TypeMapper:
             "set": "set",
             "tuple": "tuple",
             "Never": "NoReturn",
+            "double": "double",
         }
 
         self.cypy_to_c: Dict[str, str] = {
@@ -23,7 +24,11 @@ class TypeMapper:
             "bool": "bint",
             "None": "void*",
             "Never": "void",
+            "double": "double",
         }
+        
+        # 数值类型集合，用于类型检查和隐式转换
+        self.numeric_types = {"int", "float", "double"}
 
     def to_cython(self, cypy_type: str) -> str:
         return self.cypy_to_cython.get(cypy_type, cypy_type)

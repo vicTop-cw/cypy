@@ -25,6 +25,8 @@ class CythonGenerator:
         self.public_symbols = []
         self.private_symbols = []
         self.imported_modules = []
+        # 当前结构体名称（用于方法生成时添加self参数）
+        self._current_struct_name = None
 
     def generate(self, node: ASTNode) -> str:
         self.output = []
@@ -47,6 +49,26 @@ class CythonGenerator:
                     for item in value:
                         if isinstance(item, ASTNode):
                             self._detect_libc_usage(item)
+    
+    def _check_is_generator(self, stmts: List[Any]) -> bool:
+        """递归检查语句列表中是否包含 yield 语句"""
+        for stmt in stmts:
+            if hasattr(stmt, 'kind') and stmt.kind == 'YieldStmt':
+                return True
+            # 递归检查嵌套语句
+            if hasattr(stmt, 'body') and isinstance(stmt.body, list):
+                if self._check_is_generator(stmt.body):
+                    return True
+            # 检查 elif 和 else 分支
+            if hasattr(stmt, 'orelse'):
+                orelse = stmt.orelse
+                if isinstance(orelse, list):
+                    if self._check_is_generator(orelse):
+                        return True
+                elif hasattr(orelse, 'body') and isinstance(orelse.body, list):
+                    if self._check_is_generator(orelse.body):
+                        return True
+        return False
 
     def _visit(self, node: ASTNode) -> None:
         method = f"_visit_{node.kind}"
@@ -182,18 +204,45 @@ class CythonGenerator:
         
         self._write("")
 
+    def _visit_Decorator(self, node: Any) -> None:
+        """生成装饰器的 Cython 代码"""
+        decorator_str = f"@{self._expr_to_str(node.name)}"
+        if node.args:
+            args_str = ", ".join(self._expr_to_str(arg) for arg in node.args)
+            decorator_str += f"({args_str})"
+        self._write(decorator_str)
+
     def _visit_FuncDef(self, node: FuncDef) -> None:
+        # 生成装饰器
+        if hasattr(node, 'decorators') and node.decorators:
+            for decorator in node.decorators:
+                self._visit_Decorator(decorator)
+        
         has_type_annotation = any(p.type_annotation for p in node.params) or node.return_type
         
         # 处理 <checker> 参数检查站（定义时的 checker，在函数体开头自动调用）
         has_checker = node.params_checker is not None
         
-        if has_type_annotation:
+        # 检查是否是结构体方法（如果是，需要添加 self 参数）
+        is_struct_method = getattr(node, 'is_struct_method', False)
+        
+        # 检查方法是否已经有 self 参数
+        has_self = node.params and node.params[0].name == 'self'
+        
+        # 检查是否是生成器函数（包含 yield 语句）
+        # Cython 中 cpdef 函数不能包含 yield，必须使用 def
+        is_generator = self._check_is_generator(node.body)
+        
+        if has_type_annotation and not is_generator:
             return_type = ""
             if node.return_type:
                 return_type = f" {self._type_to_str(node.return_type)}"
             
             params = []
+            # 结构体方法自动添加 self 参数（如果还没有）
+            if is_struct_method and not has_self:
+                params.append(f"{self._current_struct_name} self")
+            
             # 定义时的 checker 不作为参数传递，而是在函数体开头自动调用
             # 调用时的 checker 会作为第一个参数传入（通过 Call.checker 字段）
             
@@ -206,6 +255,10 @@ class CythonGenerator:
             self._write(f"cpdef{return_type} {node.name}({', '.join(params)}):")
         else:
             params = []
+            # 结构体方法自动添加 self 参数（如果还没有）
+            if is_struct_method and not has_self:
+                params.append("self")
+            
             # 添加普通参数
             for param in node.params:
                 params.append(param.name)
@@ -322,6 +375,65 @@ class CythonGenerator:
     def _visit_ContinueStmt(self, node: Any) -> None:
         self._write("continue")
 
+    def _visit_MatchStmt(self, node: Any) -> None:
+        """生成 match/case 语句的 Cython 代码"""
+        self._write(f"match {self._expr_to_str(node.subject)}:")
+        self.indent += 1
+        for case in node.cases:
+            pattern_str = self._pattern_to_str(case.pattern)
+            self._write(f"case {pattern_str}:")
+            self.indent += 1
+            for stmt in case.body:
+                self._visit(stmt)
+            self.indent -= 1
+        if node.orelse:
+            self._write("else:")
+            self.indent += 1
+            for stmt in node.orelse:
+                self._visit(stmt)
+            self.indent -= 1
+        self.indent -= 1
+    
+    def _pattern_to_str(self, pattern: Any) -> str:
+        """将模式转换为字符串表示"""
+        if isinstance(pattern, list):
+            # 元组或列表模式：(pattern1, pattern2) 或 [pattern1, pattern2]
+            pattern_strs = []
+            for p in pattern:
+                pattern_strs.append(self._pattern_to_str(p))
+            return f"({', '.join(pattern_strs)})"
+        if isinstance(pattern, dict) and "or" in pattern:
+            # OR 模式：pattern1 | pattern2
+            pattern_strs = []
+            for p in pattern["or"]:
+                pattern_strs.append(self._pattern_to_str(p))
+            return " | ".join(pattern_strs)
+        if hasattr(pattern, 'kind') and pattern.kind == "Pattern":
+            # 变量模式
+            return pattern.name
+        # 默认使用表达式转换
+        return self._expr_to_str(pattern)
+
+    def _visit_WithStmt(self, node: Any) -> None:
+        """生成 with 语句的 Cython 代码"""
+        items_str = []
+        for item in node.items:
+            expr = self._expr_to_str(item[0])
+            if item[1]:
+                items_str.append(f"{expr} as {item[1].id}")
+            else:
+                items_str.append(expr)
+        self._write(f"with {', '.join(items_str)}:")
+        self.indent += 1
+        for stmt in node.body:
+            self._visit(stmt)
+        self.indent -= 1
+
+    def _visit_DelStmt(self, node: Any) -> None:
+        """生成 del 语句的 Cython 代码"""
+        targets_str = ", ".join(self._expr_to_str(target) for target in node.targets)
+        self._write(f"del {targets_str}")
+
     def _visit_ExprStmt(self, node: Any) -> None:
         self._write(self._expr_to_str(node.value))
 
@@ -337,6 +449,8 @@ class CythonGenerator:
     def _visit_StructDef(self, node: StructDef) -> None:
         # 如果结构体有方法，使用 cdef class，否则使用 cdef struct
         if hasattr(node, 'methods') and node.methods:
+            # 设置当前结构体名称，用于方法生成时添加 self 参数
+            self._current_struct_name = node.name
             self._write(f"cdef class {node.name}:")
             self.indent += 1
             # 生成字段 - cdef class 需要 cdef 前缀
@@ -344,10 +458,33 @@ class CythonGenerator:
                 if isinstance(field, StructField):
                     field_type = self._type_to_str(field.type_annotation) if field.type_annotation else "object"
                     self._write(f"cdef {field_type} {field.name}")
-            # 生成方法
+            
+            # 生成 __init__ 方法用于初始化字段
+            init_params = []
+            init_body = []
+            for field in node.fields:
+                if isinstance(field, StructField):
+                    param_name = field.name
+                    if field.default_value is not None:
+                        init_params.append(f"{param_name}={self._expr_to_str(field.default_value)}")
+                        init_body.append(f"self.{param_name} = {param_name}")
+                    else:
+                        init_params.append(param_name)
+                        init_body.append(f"self.{param_name} = {param_name}")
+            
+            self._write(f"def __init__(self{', ' + ', '.join(init_params) if init_params else ''}):")
+            self.indent += 1
+            for line in init_body:
+                self._write(line)
+            self.indent -= 1
+            
+            # 生成方法 - 标记为结构体方法
             for method in node.methods:
+                method.is_struct_method = True
                 self._visit(method)
             self.indent -= 1
+            # 清除当前结构体名称
+            self._current_struct_name = None
         else:
             self._write(f"cdef struct {node.name}:")
             self.indent += 1
@@ -360,7 +497,12 @@ class CythonGenerator:
         self._write("")
 
     def _visit_StructField(self, node: StructField) -> None:
-        pass
+        """生成结构体字段的 Cython 代码"""
+        field_type = self._type_to_str(node.type_annotation) if node.type_annotation else "object"
+        if node.default_value is not None:
+            self._write(f"{field_type} {node.name} = {self._expr_to_str(node.default_value)}")
+        else:
+            self._write(f"{field_type} {node.name}")
 
     def _visit_EnumDef(self, node: EnumDef) -> None:
         self._write("from enum import IntEnum")
@@ -377,7 +519,11 @@ class CythonGenerator:
         self._write("")
 
     def _visit_EnumVariant(self, node: EnumVariant) -> None:
-        pass
+        """生成枚举变体的 Cython 代码"""
+        if node.value is not None:
+            self._write(f"{node.name} = {self._expr_to_str(node.value)}")
+        else:
+            self._write(f"{node.name}")
 
     def _visit_GuardStmt(self, node: GuardStmt) -> None:
         """生成 guard 语句的 Cython 代码"""
@@ -385,19 +531,29 @@ class CythonGenerator:
             # guard let target = expr else value
             target = self._expr_to_str(node.let_target)
             value = self._expr_to_str(node.test)
-            orelse = self._expr_to_str(node.orelse)
             self._write(f"{target} = {value}")
             self._write(f"if not {target}:")
             self.indent += 1
-            self._write(f"return {orelse}")
+            # orelse 可能是表达式或语句列表（多行形式）
+            if isinstance(node.orelse, list):
+                for stmt in node.orelse:
+                    if hasattr(stmt, 'kind'):
+                        self._visit(stmt)
+            else:
+                self._write(f"return {self._expr_to_str(node.orelse)}")
             self.indent -= 1
         else:
             # guard cond else value
             test = self._expr_to_str(node.test)
-            orelse = self._expr_to_str(node.orelse)
             self._write(f"if not ({test}):")
             self.indent += 1
-            self._write(f"return {orelse}")
+            # orelse 可能是表达式或语句列表（多行形式）
+            if isinstance(node.orelse, list):
+                for stmt in node.orelse:
+                    if hasattr(stmt, 'kind'):
+                        self._visit(stmt)
+            else:
+                self._write(f"return {self._expr_to_str(node.orelse)}")
             self.indent -= 1
 
     def _visit_ComptimeStmt(self, node: ComptimeStmt) -> None:
@@ -413,9 +569,14 @@ class CythonGenerator:
             self._write("lambda: (")
             self.indent += 1
             for stmt in node.body:
-                if isinstance(stmt, (BinOp, UnaryOp, Call, Name, Constant)):
+                stmt_kind = getattr(stmt, 'kind', None)
+                if stmt_kind == 'ReturnStmt':
+                    # return 语句直接生成
+                    self._visit(stmt)
+                elif isinstance(stmt, (BinOp, UnaryOp, Call, Name, Constant)):
                     self._write(self._expr_to_str(stmt) + ",")
                 else:
+                    # 其他语句正常访问
                     self._visit(stmt)
             self.indent -= 1
             self._write(")[-1]")
@@ -426,7 +587,11 @@ class CythonGenerator:
             self._write("lambda: (")
             self.indent += 1
             for stmt in node.body:
-                if isinstance(stmt, (BinOp, UnaryOp, Call, Name, Constant)):
+                stmt_kind = getattr(stmt, 'kind', None)
+                if stmt_kind == 'ReturnStmt':
+                    # return 语句直接生成
+                    self._visit(stmt)
+                elif isinstance(stmt, (BinOp, UnaryOp, Call, Name, Constant)):
                     self._write(self._expr_to_str(stmt) + ",")
                 else:
                     self._visit(stmt)
@@ -434,18 +599,21 @@ class CythonGenerator:
             self._write(")[-1]")
             self._write(")()")
         elif node.block_type == BuildBlockExpr.BUILD_GEN:
-            # *: 生成器构建块，生成生成器函数
+            # *: 生成器构建块，生成生成器表达式
             self._write("(")
-            self._write("lambda: (")
+            self._write("(x for x in (")
             self.indent += 1
             for stmt in node.body:
-                if isinstance(stmt, (BinOp, UnaryOp, Call, Name, Constant)):
+                stmt_kind = getattr(stmt, 'kind', None)
+                if stmt_kind == 'ReturnStmt':
+                    self._visit(stmt)
+                elif isinstance(stmt, (BinOp, UnaryOp, Call, Name, Constant)):
                     self._write(self._expr_to_str(stmt) + ",")
                 else:
                     self._visit(stmt)
             self.indent -= 1
-            self._write(")[-1]")
-            self._write(")()")
+            self._write("))")
+            self._write(")")
 
     def _visit_TraitDef(self, node: TraitDef) -> None:
         self._write(f"class {node.name}:")
@@ -473,7 +641,97 @@ class CythonGenerator:
         self._write("")
 
     def _visit_MetaBlock(self, node: MetaBlock) -> None:
-        pass
+        """生成元编程块的 Cython 代码"""
+        self._write(f"# meta block: {node.name}")
+        self.indent += 1
+        for stmt in node.body:
+            self._visit(stmt)
+        self.indent -= 1
+        self._write("")
+
+    def _visit_LambdaExpr(self, node: Any) -> str:
+        """生成 lambda 表达式的 Cython 代码"""
+        params = []
+        for param in node.params:
+            if param.type_annotation:
+                params.append(f"{param.name}: {self._type_to_str(param.type_annotation)}")
+            else:
+                params.append(param.name)
+        params_str = ", ".join(params)
+        return f"lambda {params_str}: {self._expr_to_str(node.body)}"
+
+    def _visit_TryStmt(self, node: Any) -> None:
+        """生成 try/except/finally 语句的 Cython 代码"""
+        self._write("try:")
+        self.indent += 1
+        for stmt in node.body:
+            self._visit(stmt)
+        self.indent -= 1
+        
+        # 处理 except 子句
+        for except_clause in getattr(node, 'except_clauses', []):
+            except_type = self._type_to_str(except_clause.type) if except_clause.type else ""
+            except_var = f" as {except_clause.name}" if getattr(except_clause, 'name', None) else ""
+            self._write(f"except {except_type}{except_var}:")
+            self.indent += 1
+            for stmt in except_clause.body:
+                self._visit(stmt)
+            self.indent -= 1
+        
+        # 处理 finally 子句
+        if hasattr(node, 'finally_body') and node.finally_body:
+            self._write("finally:")
+            self.indent += 1
+            for stmt in node.finally_body:
+                self._visit(stmt)
+            self.indent -= 1
+
+    def _visit_RaiseStmt(self, node: Any) -> None:
+        """生成 raise 语句的 Cython 代码"""
+        if node.exc:
+            self._write(f"raise {self._expr_to_str(node.exc)}")
+        else:
+            self._write("raise")
+
+    def _visit_AssertStmt(self, node: Any) -> None:
+        """生成 assert 语句的 Cython 代码"""
+        if node.msg:
+            self._write(f"assert {self._expr_to_str(node.test)}, {self._expr_to_str(node.msg)}")
+        else:
+            self._write(f"assert {self._expr_to_str(node.test)}")
+
+    def _visit_YieldStmt(self, node: Any) -> None:
+        """生成 yield 语句的 Cython 代码"""
+        if node.is_from and node.value:
+            self._write(f"yield from {self._expr_to_str(node.value)}")
+        elif node.value:
+            self._write(f"yield {self._expr_to_str(node.value)}")
+        else:
+            self._write("yield")
+
+    def _visit_SpawnStmt(self, node: Any) -> None:
+        """生成 spawn 语句的 Cython 代码"""
+        if hasattr(node, 'expr') and node.expr:
+            # 使用 Python threading 模块实现并发
+            self._write(f"import threading")
+            self._write(f"threading.Thread(target=lambda: {self._expr_to_str(node.expr)}).start()")
+
+    def _visit_GoStmt(self, node: Any) -> None:
+        """生成 go 语句的 Cython 代码"""
+        if hasattr(node, 'expr') and node.expr:
+            # 使用 Python threading 模块实现协程
+            self._write(f"import threading")
+            self._write(f"threading.Thread(target=lambda: {self._expr_to_str(node.expr)}).start()")
+
+    def _visit_Pattern(self, node: Any) -> str:
+        """生成模式绑定的 Cython 代码"""
+        return node.name
+
+    def _visit_TypeAlias(self, node: Any) -> None:
+        """生成类型别名的 Cython 代码"""
+        target_type = self._type_to_str(node.target)
+        self._write(f"{node.name} = {target_type}")
+        self._write("")
 
     def _visit_BinOp(self, node: BinOp) -> str:
         return f"{self._expr_to_str(node.left)} {node.op} {self._expr_to_str(node.right)}"
@@ -538,7 +796,12 @@ class CythonGenerator:
 
     def _visit_Constant(self, node: Constant) -> str:
         if isinstance(node.value, str):
-            return f'"{node.value}"'
+            # 检查是否是 f-string
+            prefix = getattr(node, 'prefix', None)
+            if prefix == 'f':
+                return f'f{repr(node.value)}'
+            # 使用 repr() 正确处理转义字符
+            return repr(node.value)
         if isinstance(node.value, list):
             # 列表字面量：递归访问每个元素
             elements = []
@@ -602,6 +865,10 @@ class CythonGenerator:
             finally:
                 self.output = old_output
                 self.indent = old_indent
+        if hasattr(node, "kind") and node.kind == "LambdaExpr":
+            return self._visit_LambdaExpr(node)
+        if hasattr(node, "kind") and node.kind == "Pattern":
+            return self._visit_Pattern(node)
         if hasattr(node, "id"):
             return node.id
         return str(node)

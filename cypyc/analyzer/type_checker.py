@@ -124,6 +124,11 @@ class TypeChecker:
                 return_type = self._get_type_from_node(stmt.return_type)
                 if return_type:
                     self.type_map[stmt.name] = return_type
+            elif hasattr(stmt, 'kind') and stmt.kind == 'TypeAlias':
+                # 注册类型别名
+                target_type = self._get_type_from_node(stmt.target)
+                if target_type:
+                    self.type_map[stmt.name] = target_type
         
         # 第二遍：检查所有语句（包括函数体）
         self.collecting = False
@@ -147,6 +152,9 @@ class TypeChecker:
             param_type = self._get_type_from_node(param.type_annotation)
             if param_type:
                 self.type_map[param.name] = param_type
+            else:
+                # 即使没有类型注解，也注册为 object 类型，确保参数在作用域中可见
+                self.type_map[param.name] = Type("object")
 
         for stmt in node.body:
             self._visit(stmt)
@@ -179,6 +187,9 @@ class TypeChecker:
                             self.type_map[node.name] = declared_type
                         else:
                             self.errors.append(f"Type mismatch: expected {declared_type}, got {value_type} at {node.line}:{node.col}")
+                    elif value_type.name == 'None':
+                        # None 可以赋值给任何类型（与 Python 行为一致）
+                        self.type_map[node.name] = declared_type
                     else:
                         self.errors.append(f"Type mismatch: expected {declared_type}, got {value_type} at {node.line}:{node.col}")
             elif not declared_type and value_type:
@@ -214,6 +225,14 @@ class TypeChecker:
         right_type = self._visit(node.right)
 
         if left_type and right_type:
+            # 处理 'in' 操作符（成员检测）
+            if node.op == 'in':
+                return Type('bool')
+            
+            # 处理 'is' 操作符（身份检测）
+            if node.op == 'is':
+                return Type('bool')
+            
             # 数值类型可以隐式转换（int + float = float）
             numeric_types = {'int', 'float', 'double'}
             if left_type.name in numeric_types and right_type.name in numeric_types:
@@ -230,11 +249,12 @@ class TypeChecker:
         return self._visit(node.operand)
 
     def _visit_Call(self, node: Call) -> Optional[Type]:
-        self._visit(node.func)
+        func_type = self._visit(node.func)
         for arg in node.args:
             self._visit(arg)
         
-        if hasattr(node, 'func') and hasattr(node.func, 'id'):
+        # 如果 func 是简单名称
+        if hasattr(node.func, 'id'):
             func_name = node.func.id
             # 先检查是否是用户定义的函数
             if func_name in self.type_map:
@@ -255,6 +275,13 @@ class TypeChecker:
                 return Type("None")
             elif func_name == 'len':
                 return Type("int")
+            # range() 返回可迭代的整数序列
+            elif func_name == 'range':
+                return Type("list", generic_params=[Type("int")])
+        
+        # 如果 func 是属性访问（方法调用），返回属性类型
+        if func_type:
+            return func_type
         
         return Type("None")
 
@@ -262,9 +289,12 @@ class TypeChecker:
         if node.id in self.type_map:
             return self.type_map[node.id]
         # 检查是否是内置类型、常量和内置函数
-        builtin_types = ['int', 'float', 'double', 'bool', 'str', 'None']
+        builtin_types = ['int', 'float', 'double', 'bool', 'str', 'None', 'Exception']
         builtin_constants = ['True', 'False']
-        builtin_functions = ['print', 'len', 'malloc', 'sizeof', 'addr']
+        builtin_functions = ['print', 'len', 'malloc', 'free', 'sizeof', 'addr', 'ord', 'range']
+        # 通配符 _ 在 match case 中不报错
+        if node.id == '_':
+            return Type("object")
         if node.id in builtin_types:
             return Type(node.id)
         if node.id in builtin_constants:
@@ -293,6 +323,10 @@ class TypeChecker:
             self._visit(method)
             self.type_map = old_type_map
             self.mutable_map = old_mutable_map
+
+    def _visit_EnumDef(self, node: Any) -> None:
+        """处理枚举定义，注册枚举类型"""
+        self.type_map[node.name] = Type(node.name)
 
     def _visit_StructLiteral(self, node: Any) -> Optional[Type]:
         """处理结构体字面量，返回结构体类型"""
@@ -324,6 +358,14 @@ class TypeChecker:
             for field in struct_def.fields:
                 if field.name == node.attr:
                     return self._visit(field.type_annotation)
+        # 检查类定义
+        if value_type and value_type.name in self.class_defs:
+            class_def = self.class_defs[value_type.name]
+            for body_stmt in class_def.body:
+                if isinstance(body_stmt, LetStmt) and body_stmt.name == node.attr:
+                    return self._visit(body_stmt.type_annotation)
+                elif isinstance(body_stmt, FuncDef) and body_stmt.name == node.attr:
+                    return self._get_type_from_node(body_stmt.return_type)
         return None
 
     def _visit_Assign(self, node: Any) -> Optional[Type]:
@@ -342,9 +384,13 @@ class TypeChecker:
                 if value_type and target_type != value_type:
                     # 允许数值类型的隐式转换（int → float）
                     numeric_types = {'int', 'float', 'double'}
-                    if not (target_type.name in numeric_types and 
+                    # 允许 void* 隐式转换为任何其他指针类型
+                    is_void_ptr_conversion = (value_type.name == 'void' and value_type.is_pointer and 
+                                             target_type.is_pointer)
+                    if not ((target_type.name in numeric_types and 
                             value_type.name in numeric_types and
-                            (value_type.name == 'int' and target_type.name == 'float')):
+                            (value_type.name == 'int' and target_type.name == 'float')) or 
+                            is_void_ptr_conversion):
                         self.errors.append(f"Type mismatch in assignment: expected {target_type}, got {value_type} at {node.line}:{node.col}")
             else:
                 # 变量不存在，添加到作用域
@@ -374,6 +420,9 @@ class TypeChecker:
                 # 泛型列表，获取元素类型
                 element_type = iter_type.generic_params[0]
                 self.type_map[target_name] = element_type
+            elif iter_type and iter_type.name == 'int':
+                # 如果迭代对象是返回 int 的生成器，循环变量也是 int
+                self.type_map[target_name] = Type('int')
             else:
                 # 默认类型为 object
                 self.type_map[target_name] = Type('object')
@@ -384,6 +433,29 @@ class TypeChecker:
         # 访问循环体
         for stmt in node.body:
             self._visit(stmt)
+
+    def _visit_WhileStmt(self, node: Any) -> None:
+        """处理 while 循环"""
+        # 访问条件表达式
+        self._visit(node.test)
+        
+        # 访问循环体
+        for stmt in node.body:
+            self._visit(stmt)
+
+    def _visit_IfStmt(self, node: Any) -> None:
+        """处理 if 语句"""
+        # 访问条件表达式
+        self._visit(node.test)
+        
+        # 访问 if 分支
+        for stmt in node.body:
+            self._visit(stmt)
+        
+        # 访问 elif/else 分支（elif 作为嵌套 IfStmt 在 orelse 中）
+        if hasattr(node, 'orelse') and node.orelse:
+            for stmt in node.orelse:
+                self._visit(stmt)
 
     def _visit_CastExpr(self, node: CastExpr) -> Optional[Type]:
         """处理类型转换表达式"""
@@ -431,21 +503,32 @@ class TypeChecker:
                 element_types = []
                 for item in node.value:
                     if isinstance(item, int):
-                        element_types.append("int")
+                        element_types.append(Type("int"))
                     elif isinstance(item, float):
-                        element_types.append("float")
+                        element_types.append(Type("float"))
                     elif isinstance(item, str):
-                        element_types.append("str")
+                        element_types.append(Type("str"))
                     elif isinstance(item, bool):
-                        element_types.append("bool")
+                        element_types.append(Type("bool"))
+                    elif isinstance(item, ASTNode):
+                        # 递归访问 ASTNode 元素，获取其完整类型
+                        item_type = self._visit(item)
+                        if item_type:
+                            element_types.append(item_type)
+                        else:
+                            element_types.append(Type("object"))
                     else:
-                        element_types.append("object")
+                        element_types.append(Type("object"))
                 # 使用最具体的类型
-                if all(t == "int" for t in element_types):
+                if all(t.name == "int" and not t.generic_params for t in element_types):
                     return Type("list", generic_params=[Type("int")])
-                elif all(t in ("int", "float") for t in element_types):
+                elif all(t.name in ("int", "float") and not t.generic_params for t in element_types):
                     return Type("list", generic_params=[Type("float")])
+                elif len(element_types) > 0 and all(t == element_types[0] for t in element_types):
+                    # 所有元素类型相同（包括嵌套泛型类型）
+                    return Type("list", generic_params=[element_types[0]])
                 else:
+                    # 混合类型或无法统一，使用 object
                     return Type("list", generic_params=[Type("object")])
             else:
                 # 空列表，默认 object
@@ -473,3 +556,68 @@ class TypeChecker:
                     generic_params.append(arg_type)
             return Type(node.name, generic_params=generic_params)
         return None
+
+    def _visit_MatchStmt(self, node: Any) -> None:
+        """处理 match 语句"""
+        # 访问匹配表达式
+        self._visit(node.subject)
+        
+        # 访问各个 case 分支
+        for case in node.cases:
+            # 访问 pattern（包含变量绑定）
+            if hasattr(case, 'pattern') and case.pattern:
+                pattern = case.pattern
+                # 如果 pattern 是字典（case pattern if condition），获取真正的 pattern
+                if isinstance(pattern, dict) and 'pattern' in pattern:
+                    pattern = pattern['pattern']
+                # 如果 pattern 是列表（元组/列表模式），递归访问每个元素
+                if isinstance(pattern, list):
+                    for p in pattern:
+                        if hasattr(p, 'kind'):
+                            self._visit(p)
+                else:
+                    self._visit(pattern)
+            # 访问 case 条件（如果有）
+            if hasattr(case, 'condition') and case.condition:
+                self._visit(case.condition)
+            # 访问 case 体
+            for stmt in case.body:
+                self._visit(stmt)
+
+    def _visit_GuardStmt(self, node: Any) -> None:
+        """处理 guard 语句"""
+        # 访问条件表达式（GuardStmt 使用 test 字段而非 condition）
+        if hasattr(node, 'test') and node.test:
+            self._visit(node.test)
+        
+        # 访问 else 分支（如果有）
+        if hasattr(node, 'orelse') and node.orelse:
+            # orelse 可能是表达式或语句列表（多行形式）
+            if isinstance(node.orelse, list):
+                for stmt in node.orelse:
+                    if hasattr(stmt, 'kind'):
+                        self._visit(stmt)
+            else:
+                self._visit(node.orelse)
+
+    def _visit_DeferStmt(self, node: Any) -> None:
+        """处理 defer 语句"""
+        # 访问 defer 块中的语句
+        for stmt in node.body:
+            self._visit(stmt)
+
+    def _visit_Pattern(self, node: Any) -> None:
+        """处理模式绑定（match case 中的变量绑定）"""
+        # 在类型检查阶段，模式绑定会创建新的变量绑定
+        # 默认类型为 Any（由具体匹配值决定）
+        self.type_map[node.name] = Type("int")  # 暂定为 int，实际由匹配值决定
+
+    def _visit_Subscript(self, node: Any) -> Optional[Type]:
+        """处理下标访问"""
+        base_type = self._visit(node.value)
+        # 访问下标表达式
+        self._visit(node.slice)
+        # 返回基类型的元素类型（如果是列表）
+        if base_type and base_type.name == "list" and base_type.generic_params:
+            return base_type.generic_params[0]
+        return base_type
