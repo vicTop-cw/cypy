@@ -291,6 +291,12 @@ class TypeChecker:
             # range() 返回可迭代的整数序列
             elif func_name == 'range':
                 return Type("list", generic_params=[Type("int")])
+            elif func_name == 'type':
+                # type(expr) 返回表达式的类型
+                if node.args:
+                    arg_type = self._visit(node.args[0])
+                    return arg_type
+                return Type("None")
         
         # 如果 func 是属性访问（方法调用），返回属性类型
         if func_type:
@@ -304,7 +310,7 @@ class TypeChecker:
         # 检查是否是内置类型、常量和内置函数
         builtin_types = ['int', 'float', 'double', 'bool', 'str', 'None', 'Exception']
         builtin_constants = ['True', 'False']
-        builtin_functions = ['print', 'len', 'malloc', 'free', 'sizeof', 'addr', 'ord', 'range']
+        builtin_functions = ['print', 'len', 'malloc', 'free', 'sizeof', 'addr', 'ord', 'range', 'type']
         # 通配符 _ 在 match case 中不报错
         if node.id == '_':
             return Type("object")
@@ -369,8 +375,48 @@ class TypeChecker:
         self.type_map = old_type_map
 
     def _visit_StructLiteral(self, node: Any) -> Optional[Type]:
-        """处理结构体字面量，返回结构体类型"""
-        return Type(node.struct_name)
+        """处理结构体字面量，返回结构体类型（支持泛型类型推断和约束检查）"""
+        struct_name = node.struct_name
+        
+        # 检查是否是泛型结构体
+        if struct_name in self.struct_defs:
+            struct_def = self.struct_defs[struct_name]
+            generic_params = getattr(struct_def, 'generic_params', [])
+            generic_constraints = getattr(struct_def, 'generic_constraints', {})
+            
+            if generic_params:
+                # 推断泛型参数类型
+                inferred_types = {}
+                for field_name, field_value in node.fields:
+                    # 找到对应的字段定义
+                    for field_def in struct_def.fields:
+                        if field_def.name == field_name:
+                            field_type_name = getattr(field_def.type_annotation, 'id', None)
+                            if field_type_name in generic_params:
+                                # 访问字段值获取类型
+                                value_type = self._visit(field_value)
+                                if value_type:
+                                    inferred_types[field_type_name] = value_type
+                            break
+                
+                # 检查泛型参数约束
+                for param, inferred_type in inferred_types.items():
+                    if param in generic_constraints:
+                        constraint_type_ast = generic_constraints[param]
+                        constraint_type_name = getattr(constraint_type_ast, 'id', None)
+                        if constraint_type_name and inferred_type.name != constraint_type_name:
+                            line = node.line if hasattr(node, 'line') else 0
+                            col = node.col if hasattr(node, 'col') else 0
+                            self.errors.append(f"Generic constraint violation: type '{inferred_type.name}' does not satisfy constraint '{constraint_type_name}' for parameter '{param}' at {line}:{col}")
+                
+                # 构建泛型参数列表
+                generic_args = []
+                for param in generic_params:
+                    generic_args.append(inferred_types.get(param, Type(param)))
+                
+                return Type(struct_name, generic_params=generic_args)
+        
+        return Type(struct_name)
 
     def _visit_ExprStmt(self, node: Any) -> Optional[Type]:
         """处理表达式语句，返回表达式类型"""
@@ -391,13 +437,36 @@ class TypeChecker:
         return result_type
 
     def _visit_Attribute(self, node: Any) -> Optional[Type]:
-        """处理属性访问，返回属性类型"""
+        """处理属性访问，返回属性类型（支持泛型参数）"""
         value_type = self._visit(node.value)
         if value_type and value_type.name in self.struct_defs:
             struct_def = self.struct_defs[value_type.name]
+            
+            # 保存当前类型映射（用于恢复）
+            old_type_map = self.type_map.copy()
+            
+            # 注册泛型参数作为类型
+            for param in getattr(struct_def, 'generic_params', []):
+                self.type_map[param] = Type(param)
+            
+            # 如果结构体类型有泛型参数，使用具体的泛型参数替换类型变量
+            if value_type.generic_params:
+                generic_params = getattr(struct_def, 'generic_params', [])
+                for i, param in enumerate(generic_params):
+                    if i < len(value_type.generic_params):
+                        self.type_map[param] = value_type.generic_params[i]
+            
+            # 访问字段类型注解
+            result_type = None
             for field in struct_def.fields:
                 if field.name == node.attr:
-                    return self._visit(field.type_annotation)
+                    result_type = self._visit(field.type_annotation)
+                    break
+            
+            # 恢复类型映射
+            self.type_map = old_type_map
+            
+            return result_type
         # 检查类定义
         if value_type and value_type.name in self.class_defs:
             class_def = self.class_defs[value_type.name]
@@ -661,3 +730,48 @@ class TypeChecker:
         if base_type and base_type.name == "list" and base_type.generic_params:
             return base_type.generic_params[0]
         return base_type
+
+    def _visit_RaiseStmt(self, node: Any) -> None:
+        """处理 raise 语句，检查异常类型"""
+        if node.exc:
+            exc_type = self._visit(node.exc)
+            # 检查异常类型是否有效（必须是 Exception 或其子类）
+            if exc_type and exc_type.name != "Exception":
+                # 允许自定义异常类型，但建议是 Exception 的子类
+                pass
+        if node.cause:
+            self._visit(node.cause)
+
+    def _visit_TryStmt(self, node: Any) -> None:
+        """处理 try/except/finally 语句"""
+        # 访问 try 块
+        for stmt in node.body:
+            self._visit(stmt)
+        
+        # 访问 except 块，注册异常变量
+        for except_clause in getattr(node, 'except_clauses', []):
+            # 检查异常类型
+            if except_clause.type:
+                except_type = self._visit(except_clause.type)
+                # 检查异常类型是否有效
+                if except_type and except_type.name != "Exception":
+                    # 允许自定义异常类型
+                    pass
+            
+            # 注册异常变量（如果有）
+            except_var_name = getattr(except_clause, 'name', None)
+            if except_var_name:
+                self.type_map[except_var_name] = except_type or Type("Exception")
+            
+            # 访问 except 块中的语句
+            for stmt in except_clause.body:
+                self._visit(stmt)
+            
+            # 移除异常变量（仅在 except 块内有效）
+            if except_var_name and except_var_name in self.type_map:
+                del self.type_map[except_var_name]
+        
+        # 访问 finally 块
+        if hasattr(node, 'finally_body') and node.finally_body:
+            for stmt in node.finally_body:
+                self._visit(stmt)

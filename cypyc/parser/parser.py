@@ -1,4 +1,4 @@
-from typing import Iterator, List, Optional, Any, Tuple
+from typing import Iterator, List, Optional, Any, Tuple, Dict
 from .lexer import Token, TokenType
 
 
@@ -33,11 +33,12 @@ class FromImport(ASTNode):
 
 
 class StructDef(ASTNode):
-    def __init__(self, name: str, fields: List[Any], generic_params: List[str] = None, is_implicit: bool = False, line: int = 0, col: int = 0, methods: List[Any] = None):
+    def __init__(self, name: str, fields: List[Any], generic_params: List[str] = None, generic_constraints: Dict[str, Any] = None, is_implicit: bool = False, line: int = 0, col: int = 0, methods: List[Any] = None):
         super().__init__("StructDef", line, col)
         self.name = name
         self.fields = fields
         self.generic_params = generic_params or []
+        self.generic_constraints = generic_constraints or {}
         self.is_implicit = is_implicit
         self.methods = methods or []
 
@@ -850,12 +851,19 @@ class Parser:
         # self._require_module_level("struct", name_token)
         
         generic_params = []
+        generic_constraints = {}
         if self._current().type == TokenType.LBRACKET:
             self._consume()
             if self._current().type == TokenType.RBRACKET:
                 raise ValueError(f"Generic parameter list cannot be empty at {name_token.line}:{name_token.col}")
             while self._current().type != TokenType.RBRACKET:
-                generic_params.append(self._consume(TokenType.IDENTIFIER).value)
+                param_name = self._consume(TokenType.IDENTIFIER).value
+                generic_params.append(param_name)
+                # 检查是否有约束
+                if self._current().type == TokenType.COLON:
+                    self._consume()
+                    constraint_type = self._parse_type()
+                    generic_constraints[param_name] = constraint_type
                 if self._current().type == TokenType.COMMA:
                     self._consume()
             self._consume()
@@ -897,7 +905,7 @@ class Parser:
                 self._consume()
         if self._current().type == TokenType.DEDENT:
             self._consume()
-        return StructDef(name_token.value, fields, generic_params, is_implicit, name_token.line, name_token.col, methods)
+        return StructDef(name_token.value, fields, generic_params, generic_constraints, is_implicit, name_token.line, name_token.col, methods)
 
     def _parse_enum_def(self) -> EnumDef:
         self._consume(TokenType.ENUM)
@@ -1883,6 +1891,10 @@ class Parser:
         if token.type == TokenType.FLOAT:
             self._consume()
             return Constant(float(token.value), token.line, token.col)
+        # 支持 type(expr) 作为一等类型表达式
+        if token.type == TokenType.TYPE:
+            self._consume()
+            return Name("type", token.line, token.col)
         if token.type == TokenType.STRING:
             self._consume()
             # 保留字符串的前缀（如 f-string 的 'f'）

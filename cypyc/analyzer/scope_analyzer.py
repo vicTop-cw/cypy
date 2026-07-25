@@ -61,6 +61,7 @@ class ScopeAnalyzer:
             ('addr', 'function'),
             ('ord', 'function'),
             ('range', 'function'),
+            ('type', 'function'),
             ('True', 'constant'),
             ('False', 'constant'),
             ('_', 'wildcard'),
