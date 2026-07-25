@@ -1545,6 +1545,9 @@ class Parser:
         generic_params = []
         if self._current().type == TokenType.LBRACKET:
             self._consume()
+            # 检查空泛型参数列表
+            if self._current().type == TokenType.RBRACKET:
+                raise ValueError(f"Generic parameter list cannot be empty at {name_token.line}:{name_token.col}")
             while self._current().type != TokenType.RBRACKET:
                 generic_params.append(self._consume(TokenType.IDENTIFIER).value)
                 if self._current().type == TokenType.COMMA:
