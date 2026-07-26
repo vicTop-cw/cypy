@@ -171,19 +171,40 @@ def slow_function():
 
 ## 测试函数
 
-### `@test` 装饰器
+### 测试套件与测试用例
+
+参照 lang-zone/hermes 的测试框架设计，Cypy 提供了简洁的测试语法：
 
 ```python
-@test
-def test_add():
-    assert add(2, 3) == 5
-    assert add(-1, 1) == 0
+suite MathTests:
+    test add_positive_numbers:
+        assert add(2, 3) == 5
+        assert add(-1, 1) == 0
+    
+    test divide_by_non_zero:
+        assert divide(10, 2) == 5
+    
+    test divide_by_zero_raises:
+        with pytest.raises(ZeroDivisionError):
+            divide(10, 0)
+    
+    setup:
+        # 套件级初始化
+        print("Setting up MathTests")
+    
+    teardown:
+        # 套件级清理
+        print("Cleaning up MathTests")
+```
 
-@test
-def test_divide():
-    assert divide(10, 2) == 5
-    with pytest.raises(ZeroDivisionError):
-        divide(10, 0)
+### 独立测试用例
+
+```python
+test simple_add:
+    assert 1 + 1 == 2
+
+test string_concat:
+    assert "hello" + " " + "world" == "hello world"
 ```
 
 ## 函数特性
@@ -197,4 +218,4 @@ def test_divide():
 | **异步函数** | 支持 `async/await` |
 | **生成器** | 支持 `yield` 语法 |
 | **装饰器** | 支持 `@python`、`@staticmethod`、`@classmethod` 等 |
-| **测试装饰器** | `@test` 标记测试函数 |
+| **测试语法** | 支持 `suite` 和 `test` 关键字定义测试套件和测试用例 |
