@@ -1,5 +1,81 @@
 from typing import Iterator, List, Optional, Any, Tuple, Dict
+import hashlib
+import os
 from .lexer import Token, TokenType
+
+
+# AST缓存全局实例
+class ASTCache:
+    """AST解析结果缓存 - 避免重复解析相同的源代码"""
+    
+    def __init__(self):
+        self._cache: Dict[str, Any] = {}  # hash -> (ast, timestamp)
+        self._source_map: Dict[str, str] = {}  # source_path -> hash
+        self._max_size = 100  # 最大缓存条目数
+    
+    def _compute_hash(self, source: str) -> str:
+        """计算源代码的SHA256哈希"""
+        return hashlib.sha256(source.encode()).hexdigest()
+    
+    def get(self, source: str, source_path: str = "") -> Optional[Any]:
+        """获取缓存的AST"""
+        source_hash = self._compute_hash(source)
+        
+        # 如果有路径，检查路径对应的哈希是否一致
+        if source_path and source_path in self._source_map:
+            if self._source_map[source_path] != source_hash:
+                return None
+        
+        if source_hash in self._cache:
+            ast, _ = self._cache[source_hash]
+            return ast
+        
+        return None
+    
+    def set(self, source: str, ast: Any, source_path: str = "") -> None:
+        """设置缓存的AST"""
+        source_hash = self._compute_hash(source)
+        
+        # 如果缓存已满，移除最旧的条目
+        if len(self._cache) >= self._max_size:
+            # 找到最早的条目
+            oldest_key = min(self._cache.keys(), key=lambda k: self._cache[k][1])
+            del self._cache[oldest_key]
+        
+        self._cache[source_hash] = (ast, os.times()[4])
+        
+        if source_path:
+            self._source_map[source_path] = source_hash
+    
+    def invalidate(self, source_path: str) -> None:
+        """使指定路径的缓存失效"""
+        if source_path in self._source_map:
+            source_hash = self._source_map[source_path]
+            if source_hash in self._cache:
+                del self._cache[source_hash]
+            del self._source_map[source_path]
+    
+    def clear(self) -> None:
+        """清空所有缓存"""
+        self._cache.clear()
+        self._source_map.clear()
+    
+    def get_stats(self) -> Dict[str, Any]:
+        """获取缓存统计信息"""
+        return {
+            'cache_size': len(self._cache),
+            'max_size': self._max_size,
+            'source_count': len(self._source_map),
+        }
+
+
+# 全局AST缓存实例
+_global_ast_cache = ASTCache()
+
+
+def get_ast_cache() -> ASTCache:
+    """获取全局AST缓存实例"""
+    return _global_ast_cache
 
 
 class ASTNode:
@@ -157,12 +233,13 @@ class TypeAlias(ASTNode):
 
 
 class LetStmt(ASTNode):
-    def __init__(self, name: str, type_annotation: Optional[Any], value: Optional[Any], mutable: bool = False, line: int = 0, col: int = 0):
+    def __init__(self, name: str, type_annotation: Optional[Any], value: Optional[Any], mutable: bool = False, is_const: bool = False, line: int = 0, col: int = 0):
         super().__init__("LetStmt", line, col)
         self.name = name
         self.type_annotation = type_annotation
         self.value = value
         self.mutable = mutable
+        self.is_const = is_const
 
 
 class DeferStmt(ASTNode):
@@ -176,6 +253,7 @@ class GuardStmt(ASTNode):
     def __init__(self, test: Any, orelse: Any, is_let: bool = False, let_target: Any = None, line: int = 0, col: int = 0):
         super().__init__("GuardStmt", line, col)
         self.test = test           # 条件表达式
+        self.condition = test      # 条件表达式（别名，用于兼容其他模块）
         self.orelse = orelse       # else 分支（表达式或块）
         self.is_let = is_let       # 是否是 guard let 形式
         self.let_target = let_target  # guard let 的绑定目标
@@ -703,8 +781,8 @@ class Parser:
             return self._parse_let_stmt()
         if token.type == TokenType.VAR:
             return self._parse_var_stmt()
-        if token.type == TokenType.VAL:
-            return self._parse_val_stmt()
+        if token.type == TokenType.CONST:
+            return self._parse_const_stmt()
         if token.type == TokenType.TEST:
             # test name: 语法：测试用例（参照 lang-zone/hermes）
             return self._parse_test_stmt()
@@ -796,6 +874,7 @@ class Parser:
         return self._parse_expr_stmt()
 
     def _parse_func_def(self, decorators: List[Any] = None, is_async: bool = False, is_test: bool = False) -> FuncDef:
+        # 函数定义统一使用 def 关键字
         self._consume(TokenType.DEF)
         
         # <checker> 参数检查站（可选，在函数名之前）
@@ -1105,8 +1184,8 @@ class Parser:
             pass
         else:
             self._expect(TokenType.NEWLINE)
-        # let 声明的是可变变量
-        return LetStmt(name_token.value, type_annotation, value, True, name_token.line, name_token.col)
+        # let 声明的是不可变变量
+        return LetStmt(name_token.value, type_annotation, value, False, name_token.line, name_token.col)
 
     def _parse_var_stmt(self) -> LetStmt:
         self._consume(TokenType.VAR)
@@ -1129,8 +1208,9 @@ class Parser:
             self._expect(TokenType.NEWLINE)
         return LetStmt(name_token.value, type_annotation, value, True, name_token.line, name_token.col)
 
-    def _parse_val_stmt(self) -> LetStmt:
-        self._consume(TokenType.VAL)
+    def _parse_const_stmt(self) -> LetStmt:
+        """解析 const 声明 - 编译期常量，值在编译时展开"""
+        self._consume(TokenType.CONST)
         name_token = self._consume(TokenType.IDENTIFIER)
         type_annotation = None
         if self._current().type == TokenType.COLON:
@@ -1142,7 +1222,8 @@ class Parser:
             value = self._parse_expression()
         if self._current().type == TokenType.NEWLINE:
             self._consume()
-        return LetStmt(name_token.value, type_annotation, value, False, name_token.line, name_token.col)
+        # const 声明的是编译期常量（不可变）
+        return LetStmt(name_token.value, type_annotation, value, False, is_const=True, line=name_token.line, col=name_token.col)
 
     def _parse_typed_var(self, mutable: bool = True) -> LetStmt:
         name_token = self._consume(TokenType.IDENTIFIER)
@@ -1154,7 +1235,7 @@ class Parser:
             value = self._parse_expression()
         if self._current().type == TokenType.NEWLINE:
             self._consume()
-        return LetStmt(name_token.value, type_annotation, value, mutable, name_token.line, name_token.col)
+        return LetStmt(name_token.value, type_annotation, value, mutable, is_const=False, line=name_token.line, col=name_token.col)
 
     def _parse_return_stmt(self) -> ReturnStmt:
         self._consume(TokenType.RETURN)

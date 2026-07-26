@@ -1,5 +1,5 @@
 from typing import Dict, List, Set, Any
-from cypyc.parser.parser import ASTNode, Module, FuncDef, ClassDef, StructDef, LetStmt, Name
+from cypyc.parser.parser import ASTNode, Module, FuncDef, ClassDef, StructDef, LetStmt, Name, ExceptionDef
 
 
 class Symbol:
@@ -42,6 +42,8 @@ class ScopeAnalyzer:
         self.errors: List[str] = []
         # 注册内置类型和函数
         self._register_builtins()
+        # 是否在 meta block 中（meta block 中允许前向引用）
+        self.in_meta_block = False
     
     def _register_builtins(self):
         """注册内置类型和函数到根作用域"""
@@ -53,6 +55,7 @@ class ScopeAnalyzer:
             ('str', 'type'),
             ('None', 'type'),
             ('Exception', 'type'),
+            ('list', 'type'),
             ('print', 'function'),
             ('len', 'function'),
             ('malloc', 'function'),
@@ -65,6 +68,8 @@ class ScopeAnalyzer:
             ('True', 'constant'),
             ('False', 'constant'),
             ('_', 'wildcard'),
+            ('__name__', 'variable'),
+            ('__main__', 'constant'),
         ]
         for name, kind in builtins:
             self.root_scope.add_symbol(name, kind, None)
@@ -96,6 +101,20 @@ class ScopeAnalyzer:
             self._visit(stmt)
 
     def _visit_FuncDef(self, node: FuncDef) -> None:
+        # 检查是否有 @python 装饰器
+        has_python_decorator = False
+        if hasattr(node, 'decorators') and node.decorators:
+            for decorator in node.decorators:
+                decorator_name = getattr(decorator.name, 'id', str(decorator.name))
+                if decorator_name == 'python':
+                    has_python_decorator = True
+                    break
+        
+        # 如果是 @python 装饰的函数，只注册函数名，跳过函数体分析
+        if has_python_decorator:
+            self.current_scope.add_symbol(node.name, "function", node)
+            return
+        
         self.current_scope.add_symbol(node.name, "function", node)
         func_scope = self.current_scope.create_child("function")
         self.current_scope = func_scope
@@ -107,6 +126,16 @@ class ScopeAnalyzer:
         # 在注册泛型参数之后访问返回类型（可能引用泛型参数）
         if hasattr(node, 'return_type') and node.return_type:
             self._visit(node.return_type)
+
+        # 检查是否是类方法（当前作用域是 class）
+        is_class_method = self.current_scope.parent and self.current_scope.parent.kind == "class"
+        
+        # 类方法自动注册 self 参数（如果方法还没有第一个参数是 self）
+        has_self_param = node.params and node.params[0].name == 'self'
+        if is_class_method and not has_self_param:
+            from cypyc.parser.parser import Param
+            self_param = Param('self', None, line=0, col=0)
+            func_scope.add_symbol('self', "parameter", self_param)
 
         for param in node.params:
             func_scope.add_symbol(param.name, "parameter", param)
@@ -130,6 +159,11 @@ class ScopeAnalyzer:
         self.current_scope = class_scope.parent
 
     def _visit_StructDef(self, node: StructDef) -> None:
+        # 检查结构体是否在模块顶级定义
+        if self.current_scope.kind != "module":
+            self.errors.append(f"Struct '{node.name}' can only be defined at module level (line {node.line}, col {node.col})")
+            return
+        
         self.current_scope.add_symbol(node.name, "struct", node)
         struct_scope = self.current_scope.create_child("struct")
         self.current_scope = struct_scope
@@ -148,7 +182,26 @@ class ScopeAnalyzer:
 
     def _visit_EnumDef(self, node: Any) -> None:
         """处理枚举定义"""
+        # 检查枚举是否在模块顶级定义
+        if self.current_scope.kind != "module":
+            self.errors.append(f"Enum '{node.name}' can only be defined at module level (line {node.line}, col {node.col})")
+            return
+        
         self.current_scope.add_symbol(node.name, "enum", node)
+
+    def _visit_ExceptionDef(self, node: ExceptionDef) -> None:
+        """处理异常类型定义"""
+        self.current_scope.add_symbol(node.name, "exception", node)
+        # 创建异常作用域
+        exc_scope = self.current_scope.create_child("exception")
+        self.current_scope = exc_scope
+        # 注册字段
+        for field in node.fields:
+            if hasattr(field, 'name'):
+                exc_scope.add_symbol(field.name, "field", field)
+                if hasattr(field, 'type_annotation') and field.type_annotation:
+                    self._visit(field.type_annotation)
+        self.current_scope = exc_scope.parent
 
     def _visit_TypeAlias(self, node: Any) -> None:
         """处理类型别名定义"""
@@ -167,6 +220,9 @@ class ScopeAnalyzer:
             self._visit(node.value)
 
     def _visit_Name(self, node: Name) -> None:
+        # meta block 中允许前向引用，不检查名称是否定义
+        if self.in_meta_block:
+            return
         symbol = self.current_scope.lookup(node.id)
         if symbol is None:
             self.errors.append(f"Undefined name '{node.id}' at {node.line}:{node.col}")
@@ -213,7 +269,12 @@ class ScopeAnalyzer:
     def _visit_Call(self, node: Any) -> None:
         self._visit(node.func)
         for arg in node.args:
-            self._visit(arg)
+            if isinstance(arg, tuple) and len(arg) == 2:
+                # 关键字参数：(name, value)
+                self._visit(arg[1])
+            else:
+                # 位置参数
+                self._visit(arg)
 
     def _visit_MatchStmt(self, node: Any) -> None:
         """处理 match 语句"""
@@ -264,3 +325,21 @@ class ScopeAnalyzer:
         """处理下标访问"""
         self._visit(node.value)
         self._visit(node.slice)
+
+    def _visit_FromImport(self, node: Any) -> None:
+        """处理 from module import names 语句，注册导入的名称到当前作用域"""
+        for name in getattr(node, 'names', []):
+            self.current_scope.add_symbol(name, "function", None)
+    
+    def _visit_Import(self, node: Any) -> None:
+        """处理 import module 语句，注册模块名称到当前作用域"""
+        module_name = getattr(node, 'module', '')
+        if module_name:
+            self.current_scope.add_symbol(module_name, "module", None)
+    
+    def _visit_MetaBlock(self, node: Any) -> None:
+        """处理 meta block，允许前向引用"""
+        self.in_meta_block = True
+        for stmt in node.body:
+            self._visit(stmt)
+        self.in_meta_block = False

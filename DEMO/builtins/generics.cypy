@@ -11,7 +11,10 @@ def identity[T](value: T) -> T:
     return value
 
 def make_pair[T, U](first: T, second: U) -> Pair[T, U]:
-    return Pair[T, U] {first: first, second: second}
+    result: Pair[T, U]
+    result.first = first
+    result.second = second
+    return result
 
 def process_list[T](items: list[T]) -> int:
     """处理泛型列表"""
@@ -51,7 +54,9 @@ def main() -> int:
     print(f"Pair[float, bool]: ({pair2.first}, {pair2.second})")
     
     # 泛型容器
-    container = Container[int] {items: [], size: 0}
+    container: Container[int]
+    container.items = []
+    container.size = 0
     container.add(10)
     container.add(20)
     container.add(30)

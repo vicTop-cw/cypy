@@ -2,10 +2,10 @@
 
 ## 函数定义
 
-### 基本语法
+Cypy 使用 `def` 关键字定义函数，类型注解是可选的：
 
 ```python
-# 简单函数
+# 带类型注解的函数
 def greet(name: str) -> str:
     return f"Hello, {name}"
 
@@ -16,9 +16,45 @@ def log(message: str) -> None:
 # 带默认参数的函数
 def repeat(s: str, times: int = 3) -> str:
     return s * times
+
+# 动态类型函数（无类型注解）
+def add(x, y):
+    return x + y
 ```
 
-### 可变参数
+## 类型注解规则
+
+### 有注解 vs 无注解
+
+```python
+# 有类型注解：使用静态类型
+def add(x: int, y: int) -> int:
+    return x + y
+
+# 无类型注解：参数和返回值退化为 PyObject
+def dynamic_add(x, y):
+    return x + y
+```
+
+**规则：**
+- **有注解**：使用指定的静态类型
+- **无注解**：类型退化为 `PyObject`，支持动态类型
+
+### 代码生成差异
+
+```python
+# 无类型注解 → 生成普通 def
+def add(x, y):
+    return x + y
+# 生成: def add(x, y):
+
+# 有类型注解 → 生成 cpdef（Cython 优化）
+def add(x: int, y: int) -> int:
+    return x + y
+# 生成: cpdef int add(int x, int y):
+```
+
+## 可变参数
 
 ```python
 # 可变位置参数
@@ -211,7 +247,7 @@ test string_concat:
 
 | 特性 | 说明 |
 |------|------|
-| **类型注解** | 参数和返回值支持类型注解 |
+| **类型注解** | 参数和返回值支持类型注解，无注解退化为 PyObject |
 | **默认参数** | 支持默认参数值 |
 | **可变参数** | 支持 `*args` 和 `**kwargs` |
 | **高阶函数** | 函数可以作为参数或返回值 |

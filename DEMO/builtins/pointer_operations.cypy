@@ -1,6 +1,11 @@
 # 指针操作示例
 # Cypy 使用 & 进行解引用，addr() 进行取地址
 
+# 结构体必须定义在模块级别
+struct Point:
+    x: int
+    y: int
+
 def allocate_and_use(size: int) -> int:
     """分配和使用指针"""
     # 分配内存
@@ -41,10 +46,6 @@ def pointer_arithmetic() -> int:
 
 def struct_pointer() -> int:
     """结构体指针操作"""
-    struct Point:
-        x: int
-        y: int
-    
     # 分配结构体指针
     p: Point* = malloc(sizeof(Point))
     defer free(p)

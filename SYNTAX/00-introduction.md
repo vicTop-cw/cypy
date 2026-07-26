@@ -54,10 +54,11 @@ Cypy（Cython + Python Syntactic Sugar）是一种基于 Python 语法体系的�
 8. **宏系统** - 编译期代码生成，支持宏模板和宏展开
 9. **增量编译** - 仅重新编译修改的模块，基于 AST 差异和依赖图分析
 10. **热重载** - 不中断应用运行更新代码，代理模块模式解决 Windows 文件锁定
-11. **`@python` 装饰器** - 无缝回退到 CPython 执行，跳过类型检查
-12. **渐进式类型** - 无注解变量为 `object` 类型，有注解变量保持静态检查
-13. **守卫策略** - 支持 `__guarded_pred__` 和 `__guarded_action__` 兜底机制
-14. **隐式类型转换** - 通过 `__implicit_copy__` 和 `__implicit_into__` 实现
+11. **`def`/`fn` 双轨函数系统** - `def` 保持 Python 兼容性（动态模式），`fn` 强制静态类型检查和优化代码生成（严格模式）
+12. **`@python` 装饰器** - 无缝回退到 CPython 执行，跳过类型检查
+13. **渐进式类型** - 无注解变量为 `object` 类型，有注解变量保持静态检查
+14. **守卫策略** - 支持 `__guarded_pred__` 和 `__guarded_action__` 兜底机制
+15. **隐式类型转换** - 通过 `__implicit_copy__` 和 `__implicit_into__` 实现
 
 ## 文件扩展名
 

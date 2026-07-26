@@ -35,6 +35,11 @@ class CypyProxyModule:
     代理模块模式：创建一个稳定的Python模块作为代理，
     将所有属性访问委托给实际的.pyd模块。当需要热重载时，
     只需更新代理内部的.pyd引用，而不需要卸载模块本身。
+    
+    优化特性：
+    - 属性缓存机制：减少重复属性访问的开销
+    - 支持更多类型的状态保存：函数、类、实例等
+    - 模块重新导入逻辑优化：避免重复导入
     """
     
     def __init__(self, module_name: str):
@@ -42,41 +47,89 @@ class CypyProxyModule:
         self._module_name = module_name
         self._actual_module = None
         self._state_cache: Dict[str, Any] = {}
+        self._attr_cache: Dict[str, Any] = {}
+        self._cache_enabled = True
     
     def _set_actual_module(self, actual_module):
         """设置实际的.pyd模块"""
-        # 保存当前状态
+        # 保存当前状态（支持更多类型）
         if self._actual_module is not None:
-            for name in dir(self._actual_module):
-                if not name.startswith('_'):
-                    try:
-                        value = getattr(self._actual_module, name)
-                        if isinstance(value, (int, float, str, bool, tuple, list, dict, set)):
-                            self._state_cache[name] = value
-                    except Exception:
-                        pass
+            self._save_state()
         
         self._actual_module = actual_module
         
         # 恢复状态
-        for name, value in self._state_cache.items():
-            if hasattr(self._actual_module, name):
-                try:
-                    setattr(self._actual_module, name, value)
-                except Exception:
-                    pass
+        self._restore_state()
+        
+        # 清空属性缓存（新模块需要重新缓存）
+        self._attr_cache.clear()
     
     def _get_actual_module(self):
         """获取实际的.pyd模块"""
         return self._actual_module
     
+    def _save_state(self):
+        """保存模块状态（支持更多类型）"""
+        if self._actual_module is None:
+            return
+        
+        for name in dir(self._actual_module):
+            if not name.startswith('_'):
+                try:
+                    value = getattr(self._actual_module, name)
+                    # 保存多种类型：基本类型、函数、类、实例
+                    if isinstance(value, (int, float, str, bool, tuple, list, dict, set)):
+                        self._state_cache[name] = value
+                    elif callable(value) and not isinstance(value, type):
+                        # 保存函数和方法引用
+                        self._state_cache[name] = value
+                    elif isinstance(value, type):
+                        # 保存类定义（但不保存类的实例）
+                        self._state_cache[name] = value
+                except Exception:
+                    pass
+    
+    def _restore_state(self):
+        """恢复模块状态"""
+        if self._actual_module is None:
+            return
+        
+        for name, value in self._state_cache.items():
+            if hasattr(self._actual_module, name):
+                try:
+                    current_value = getattr(self._actual_module, name)
+                    # 只恢复非函数/非类的状态（函数和类应该使用新的定义）
+                    if not callable(current_value) and not isinstance(current_value, type):
+                        setattr(self._actual_module, name, value)
+                except Exception:
+                    pass
+    
+    def _enable_cache(self, enable: bool = True):
+        """启用/禁用属性缓存"""
+        self._cache_enabled = enable
+        if not enable:
+            self._attr_cache.clear()
+    
     def __getattr__(self, name):
-        """委托属性访问给实际模块"""
+        """委托属性访问给实际模块（带缓存）"""
         if name.startswith('_'):
             return object.__getattribute__(self, name)
         if self._actual_module is None:
             raise AttributeError(f"Module '{self._module_name}' not loaded")
-        return getattr(self._actual_module, name)
+        
+        # 使用属性缓存
+        if self._cache_enabled and name in self._attr_cache:
+            return self._attr_cache[name]
+        
+        value = getattr(self._actual_module, name)
+        
+        # 缓存非动态属性
+        if self._cache_enabled:
+            # 不缓存函数和方法（它们应该从新模块获取）
+            if not callable(value) or isinstance(value, type):
+                self._attr_cache[name] = value
+        
+        return value
     
     def __setattr__(self, name, value):
         """委托属性设置给实际模块"""
@@ -84,6 +137,9 @@ class CypyProxyModule:
             object.__setattr__(self, name, value)
         elif self._actual_module is not None:
             setattr(self._actual_module, name, value)
+            # 清除该属性的缓存
+            if name in self._attr_cache:
+                del self._attr_cache[name]
         else:
             # 如果模块尚未加载，保存到状态缓存
             self._state_cache[name] = value
@@ -93,6 +149,14 @@ class CypyProxyModule:
         if self._actual_module is not None:
             return dir(self._actual_module)
         return list(self._state_cache.keys())
+    
+    def __call__(self, *args, **kwargs):
+        """支持模块级调用（如果实际模块支持）"""
+        if self._actual_module is None:
+            raise AttributeError(f"Module '{self._module_name}' not loaded")
+        if callable(self._actual_module):
+            return self._actual_module(*args, **kwargs)
+        raise TypeError(f"Module '{self._module_name}' is not callable")
 
 
 class HotReloadEngine:

@@ -93,9 +93,9 @@ class TestEnumBoundary(TestBoundaryFramework):
         # enum 应该允许空体或 pass
         print(f"enum 空体测试: {'错误' if error else '通过'}")
     
-    def test_enum_error_invalid_value(self):
+    def test_enum_error_inletid_letue(self):
         """错误写法：enum 变体值无效"""
-        source = "enum Color:\n    RED = \"invalid\"\n"
+        source = "enum Color:\n    RED = \"inletid\"\n"
         result, error = self._parse_code(source)
         # 应该能解析，因为 enum 值可以是任意表达式
     
@@ -150,14 +150,14 @@ class TestImplBoundary(TestBoundaryFramework):
         self.assertIsNotNone(error)
 
 
-# ==================== let/var/val 测试 ====================
+# ==================== let/var/let 测试 ====================
 
 class TestLetVarValBoundary(TestBoundaryFramework):
-    def test_val_error_reassignment(self):
-        """错误写法：val 变量重新赋值"""
-        source = "def foo():\n    val x: int = 10\n    x = 20\n"
+    def test_let_error_reassignment(self):
+        """错误写法：let 变量重新赋值"""
+        source = "def foo():\n    let x: int = 10\n    x = 20\n"
         result, error = self._parse_code(source)
-        # 当前解析器可能不检查 val 的不可变性
+        # 当前解析器可能不检查 let 的不可变性
     
     def test_var_scope_global(self):
         """作用域边界：全局作用域使用 var"""
@@ -227,13 +227,13 @@ class TestGenericBoundary(TestBoundaryFramework):
     
     def test_generic_error_unsupported_type(self):
         """正确但无映射：不支持的泛型类型参数"""
-        source = "struct Pair[CustomType]:\n    value: CustomType\n"
+        source = "struct Pair[CustomType]:\n    letue: CustomType\n"
         result, error = self._parse_code(source)
         self.assertIsNone(error)
     
     def test_generic_scope_inside_struct(self):
         """作用域边界：struct 内定义泛型"""
-        source = "struct Outer:\n    struct Inner[T]:\n        value: T\n"
+        source = "struct Outer:\n    struct Inner[T]:\n        letue: T\n"
         _, error = self._parse_code(source)
         self.assertIsNotNone(error)
 
@@ -247,9 +247,9 @@ class TestMetaBoundary(TestBoundaryFramework):
         _, error = self._parse_code(source)
         self.assertIsNotNone(error)
     
-    def test_meta_error_invalid_syntax(self):
+    def test_meta_error_inletid_syntax(self):
         """错误写法：meta 块内无效语法"""
-        source = "meta:\n    invalid_syntax\n"
+        source = "meta:\n    inletid_syntax\n"
         _, error = self._parse_code(source)
         self.assertIsNotNone(error)
     
@@ -301,9 +301,9 @@ class TestPipelineBoundary(TestBoundaryFramework):
 # ==================== 类型注解测试 ====================
 
 class TestTypeAnnotationBoundary(TestBoundaryFramework):
-    def test_annotation_error_invalid_type(self):
+    def test_annotation_error_inletid_type(self):
         """错误写法：无效类型名称"""
-        source = "x: InvalidType = 10\n"
+        source = "x: InletidType = 10\n"
         result, error = self._parse_code(source)
         self.assertIsNone(error)  # 解析器接受任何标识符作为类型
     
@@ -319,6 +319,149 @@ class TestTypeAnnotationBoundary(TestBoundaryFramework):
         _, error = self._parse_code(source)
         self.assertIsNotNone(error)
 
+
+# ==================== 常量声明边界测试 ====================
+
+class TestConstBoundary(TestBoundaryFramework):
+    def test_const_basic(self):
+        """正确写法：基本常量声明"""
+        source = """const PI: float = 3.14159
+const MAX_SIZE: int = 100
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_const_with_expression(self):
+        """正确写法：常量表达式"""
+        source = """const HALF_PI: float = 3.14159 / 2
+const DOUBLE_MAX: int = 100 * 2
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_const_reassignment(self):
+        """错误写法：常量重新赋值"""
+        source = """const PI: float = 3.14159
+PI = 3.14
+"""
+        _, error = self._parse_code(source)
+        # 常量不应被重新赋值
+    
+    def test_const_in_function(self):
+        """错误写法：函数内声明常量"""
+        source = """def test():
+    const LOCAL: int = 10
+"""
+        _, error = self._parse_code(source)
+        # 常量应在模块级别声明
+    
+    def test_const_no_initial_value(self):
+        """错误写法：常量无初始值"""
+        source = """const EMPTY: int
+"""
+        _, error = self._parse_code(source)
+        # 常量必须有初始值
+
+# ==================== 类型转换边界测试 ====================
+
+class TestTypeCastBoundary(TestBoundaryFramework):
+    def test_cast_basic_types(self):
+        """正确写法：基本类型之间的转换"""
+        source = """def test():
+    x: int = 10
+    y: float = x as float
+    z: int = y as int
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_cast_invalid_target_type(self):
+        """错误写法：无效的目标类型"""
+        source = """def test():
+    x: int = 10
+    y: InvalidType = x as InvalidType
+"""
+        _, error = self._parse_code(source)
+        # 无效类型可能在代码生成阶段处理
+    
+    def test_cast_custom_type_no_cast_method(self):
+        """错误写法：自定义类型没有 __cast__ 方法"""
+        source = """struct Custom:
+    value: int
+
+def test():
+    c: Custom
+    d: AnotherType = c as AnotherType
+"""
+        _, error = self._parse_code(source)
+        # 自定义类型转换需要 __cast__ 方法
+    
+    def test_cast_nested(self):
+        """正确写法：嵌套类型转换"""
+        source = """def test():
+    x: int = 10
+    y: float = (x as float) as float
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_cast_with_expression(self):
+        """正确写法：表达式的类型转换"""
+        source = """def test():
+    x: int = 10
+    y: float = (x + 5) as float
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+
+# ==================== 指针操作边界测试 ====================
+
+class TestPointerBoundary(TestBoundaryFramework):
+    def test_pointer_valid_c_type(self):
+        """正确写法：C类型指针声明"""
+        source = """def test():
+    x: int = 10
+    ptr: int* = addr(x)
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_pointer_invalid_python_type(self):
+        """错误写法：Python对象类型指针声明"""
+        source = """def test():
+    s: str = 'hello'
+    ptr: str* = addr(s)
+"""
+        _, error = self._parse_code(source)
+        # 类型检查器应该阻止指向Python对象的指针
+    
+    def test_addr_on_python_obj(self):
+        """错误写法：对Python对象取地址"""
+        source = """def test():
+    s: str = 'hello'
+    ptr: int* = addr(s)
+"""
+        _, error = self._parse_code(source)
+        # 指针检查器应该阻止对Python对象取地址
+    
+    def test_addr_on_valid_c_type(self):
+        """正确写法：对C类型取地址"""
+        source = """def test():
+    x: int = 10
+    ptr: int* = addr(x)
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_pointer_scope_inside_loop(self):
+        """作用域边界：循环内声明指针"""
+        source = """def test():
+    for i in range(10):
+        x: int = i
+        ptr: int* = addr(x)
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
 
 # ==================== 作用域层级系统测试 ====================
 

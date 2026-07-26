@@ -108,10 +108,17 @@ class BuildBlockChecker:
         """访问函数调用"""
         self._visit(node.func)
         for arg in node.args:
-            self._visit(arg)
+            if isinstance(arg, tuple) and len(arg) == 2:
+                # 关键字参数：(name, value)
+                self._visit(arg[1])
+            else:
+                # 位置参数
+                self._visit(arg)
         
         # 检查调用构建块的参数类型
         for arg in node.args:
+            if isinstance(arg, tuple) and len(arg) == 2:
+                arg = arg[1]
             if isinstance(arg, BuildBlockExpr):
                 if arg.block_type == BuildBlockExpr.BUILD_CALL:
                     self._check_build_call_return_type(arg)

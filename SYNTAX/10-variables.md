@@ -1,42 +1,137 @@
 # 变量声明
 
-## 基本声明
+## 三种变量声明形式
 
-### `val` 不可变变量
+Cypy 提供三种变量声明方式，分别对应不同的可变性和编译期处理：
+
+### 1. `x = value` - 可变变量（默认）
 
 ```python
-# val 声明不可变变量（不能重新赋值）
-val name: str = "Alice"
-val age: int = 30
+# 可变变量，等同于 mut x = value
+counter: int = 0
+counter += 1  # ✅ 允许重新赋值
+
+name = "Alice"  # 无类型注解，类型为 PyObject
+name = 42       # ✅ 允许改变类型
+```
+
+**特性：**
+- 默认可变，可以重新赋值
+- 等同于 `mut x = value`（`mut` 关键字可选）
+- 无类型注解时，类型退化为 `PyObject`
+
+### 2. `let x = value` - 不可变变量
+
+```python
+# 不可变变量，声明后不能重新赋值
+let pi: float = 3.14159
+let MAX_USERS: int = 1000
 
 # 尝试重新赋值会报错
-# name = "Bob"  # ❌ 错误：val 变量不可重新赋值
+# pi = 3.14  # ❌ 错误：let 变量不可重新赋值
 ```
 
-### `let` 可变变量
+**特性：**
+- 声明后不可重新赋值（语义检查）
+- 适合常量值和不需要修改的变量
+- 编译器可进行更多优化
+
+### 3. `const x = value` - 编译期常量
 
 ```python
-# let 声明可变变量（可以重新赋值）
-let score: int = 0
-score = 100  # ✅ 允许
-
-let temperature: float = 25.0
-temperature = 30.5  # ✅ 允许
+# 编译期常量，值在编译时展开到.pyd
+const PI: float = 3.14159
+const MAX_SIZE: int = 1000
+const GREETING: str = "Hello, Cypy!"
 ```
 
-## 可变与不可变
+**特性：**
+- 值在编译期计算并展开
+- 生成到 `.pyd` 文件中，运行时不可修改
+- 适合真正的常量值（数学常数、配置参数等）
+- 使用 `cdef readonly` 确保不可修改
 
-### 选择建议
+## 选择建议
 
 ```python
-# 优先使用 val（不可变）
-val PI: float = 3.14159
-val MAX_USERS: int = 1000
+# 优先使用 const（编译期常量）
+const PI: float = 3.14159
+const MAX_RETRY: int = 3
 
-# 需要修改时使用 let
-let count: int = 0
-count += 1  # 需要可变
+# 不需要修改的变量使用 let
+let userName: str = "Alice"
+let age: int = 30
+
+# 需要修改的变量使用默认赋值
+count: int = 0
+count += 1
 ```
+
+## 类型注解
+
+### 有注解 vs 无注解
+
+```python
+# 有类型注解：使用静态类型
+let x: int = 10          # int 类型
+let name: str = "Bob"    # str 类型
+let flag: bool = True    # bool 类型
+
+# 无类型注解：退化为 PyObject（动态类型）
+x = 10          # PyObject
+name = "Bob"    # PyObject
+name = 42       # ✅ 允许改变类型
+```
+
+**规则：**
+- **有注解**：使用指定的静态类型
+- **无注解**：类型退化为 `PyObject`，支持动态类型
+
+## 变量作用域
+
+### 块级作用域
+
+```python
+def example():
+    x = 10  # 函数作用域
+    
+    if True:
+        let y = 20  # 块级作用域
+        print(x, y)  # ✅ 10, 20
+    
+    # print(y)  # ❌ y 不在作用域内
+    
+    return x
+```
+
+### 模块级全局变量
+
+Cypy 支持模块级全局变量，在函数内部修改全局变量时**无需显式 `global` 声明**：
+
+```python
+# 模块级全局变量
+counter: int = 0
+
+def increment() -> int:
+    # Cypy 自动识别并添加 global 声明
+    counter += 1
+    return counter
+
+def reset() -> None:
+    counter = 0
+
+# 使用全局变量
+increment()  # 1
+increment()  # 2
+print(counter)  # 2
+reset()
+print(counter)  # 0
+```
+
+**全局变量特性：**
+- **自动 global 声明**：编译器自动检测函数内对模块级变量的修改，并添加 `global` 声明
+- **Python 兼容性**：生成的代码与 Python 的全局变量行为一致
+- **类型注解支持**：全局变量可以有类型注解，也可以没有
 
 ## 隐式变量
 
@@ -54,79 +149,27 @@ def process(data: str, implicit ctx: Context):
 process("hello")  # ctx 自动传入
 ```
 
-## 变量作用域
-
-### 块级作用域
-
-```python
-def example():
-    val x: int = 10  # 函数作用域
-    
-    if True:
-        let y: int = 20  # 块级作用域
-        print(x, y)  # ✅ 10, 20
-    
-    # print(y)  # ❌ y 不在作用域内
-    
-    return x
-```
-
-### 全局变量
-
-```python
-# 模块级全局变量
-val GLOBAL_CONFIG: dict[str, bool] = {"debug": True}
-
-def update_config():
-    # 修改全局变量
-    GLOBAL_CONFIG["debug"] = False
-
-def use_global():
-    print(GLOBAL_CONFIG["debug"])
-```
-
-## 类型推断
-
-### 自动推断
-
-```python
-# 从字面量推断类型
-val x = 10          # int
-val name = "Bob"    # str
-val flag = True     # bool
-
-# 从表达式推断类型
-val sum = 1 + 2     # int
-val greeting = "Hello, " + "World"  # str
-
-# 无注解变量退化为 PyObject
-let dynamic = 42
-dynamic = "hello"  # ✅ 允许
-```
-
 ## 变量命名规则
 
 ### 标识符规则
 
 ```python
 # 有效命名
-val userName: str = "Alice"      # 驼峰命名
-val user_name: str = "Bob"       # 蛇形命名
-val MAX_SIZE: int = 1000         # 常量大写
+userName: str = "Alice"      # 驼峰命名
+user_name: str = "Bob"       # 蛇形命名
+MAX_SIZE: int = 1000         # 常量大写
 
 # 无效命名（会报错）
-# val 1name: str = "Test"    # 不能以数字开头
-# val my-name: str = "Test"  # 不能包含连字符
-# val class: str = "Test"    # 不能使用关键字
+# 1name: str = "Test"    # 不能以数字开头
+# my-name: str = "Test"  # 不能包含连字符
+# class: str = "Test"    # 不能使用关键字
 ```
 
-## 变量特性
+## 变量特性总结
 
-| 特性 | 说明 |
-|------|------|
-| **val** | 不可变变量，声明后不能重新赋值 |
-| **let** | 可变变量，可以重新赋值 |
-| **implicit** | 隐式变量，可作为函数的隐式参数 |
-| **类型推断** | 无注解时从上下文推断类型 |
-| **渐进式类型** | 有注解使用静态类型，无注解退化为 PyObject |
-| **块级作用域** | 变量在声明的块内有效 |
+| 声明形式 | 可变性 | 类型处理 | 编译期处理 |
+|---------|-------|---------|-----------|
+| `x = value` | 可变 | 有注解用静态类型，无注解退化为 PyObject | 运行时赋值 |
+| `let x = value` | 不可变 | 有注解用静态类型，无注解退化为 PyObject | 运行时赋值（只读） |
+| `const x = value` | 编译期常量 | 有注解用静态类型，无注解退化为 PyObject | 编译期展开到.pyd |
+| `implicit x = value` | 可变 | 有注解用静态类型，无注解退化为 PyObject | 运行时赋值（隐式上下文） |

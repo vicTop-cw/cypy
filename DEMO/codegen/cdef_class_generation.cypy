@@ -19,8 +19,9 @@ struct Shape:
     def position(self) -> str:
         return f"({self.x}, {self.y})"
 
-# 继承示例
-struct Circle(Shape):
+# 组合示例（当前版本不支持结构体继承）
+struct Circle:
+    center: Shape
     radius: float
     
     def area(self) -> float:
@@ -36,10 +37,11 @@ def main() -> int:
     shape.move(5.0, 5.0)
     print(f"Shape position: {shape.position()}")
     
-    # 使用继承的结构体
-    circle = Circle {x: 0.0, y: 0.0, radius: 5.0}
-    circle.move(3.0, 4.0)
-    print(f"Circle position: {circle.position()}")
+    # 使用组合的结构体
+    center = Shape {x: 0.0, y: 0.0}
+    circle = Circle {center: center, radius: 5.0}
+    circle.center.move(3.0, 4.0)
+    print(f"Circle position: {circle.center.position()}")
     print(f"Circle area: {circle.area()}")
     
     return 0

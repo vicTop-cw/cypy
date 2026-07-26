@@ -26,16 +26,16 @@ def test_guarded_pred_method():
     """测试 __guarded_pred__ 守卫条件方法"""
     code = """
 class SafeConvertible:
-    value: int
+    letue: int
     
     def __guarded_pred__[bool](self) -> bool:
-        return self.value > 0
+        return self.letue > 0
     
     def __guarded_action__[bool](self) -> bool:
         return True
 
-val s = SafeConvertible()
-val b: bool = s  # 应该检查 __guarded_pred__
+let s = SafeConvertible()
+let b: bool = s  # 应该检查 __guarded_pred__
 """
     cython_code = parse_and_generate(code)
     assert '__guarded_pred__' in cython_code
@@ -46,17 +46,17 @@ def test_guarded_action_method():
     """测试 __guarded_action__ 守卫动作方法"""
     code = """
 class RangeChecker:
-    def __init__(self, value: int):
-        self.value = value
+    def __init__(self, letue: int):
+        self.letue = letue
     
     def __guarded_pred__[float](self) -> bool:
-        return self.value >= 0 and self.value <= 100
+        return self.letue >= 0 and self.letue <= 100
     
     def __guarded_action__[float](self) -> float:
-        return float(self.value) / 100.0
+        return float(self.letue) / 100.0
 
-val rc = RangeChecker(50)
-val ratio: float = rc  # 应该调用 __guarded_action__
+let rc = RangeChecker(50)
+let ratio: float = rc  # 应该调用 __guarded_action__
 """
     cython_code = parse_and_generate(code)
     assert '__guarded_pred__' in cython_code

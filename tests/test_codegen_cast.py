@@ -25,8 +25,8 @@ def parse_and_generate(code: str) -> str:
 def test_cast_expr_basic():
     """测试基本类型转换：int as float"""
     code = """
-val x: int = 42
-val y: float = x as float
+let x: int = 42
+let y: float = x as float
 """
     cython_code = parse_and_generate(code)
     assert "<float>x" in cython_code or "x as float" in cython_code
@@ -43,8 +43,8 @@ class Rational:
     def __cast__[float](self) -> float:
         return self.num / self.den
 
-val r = Rational(3, 4)
-val f: float = r as float
+let r = Rational(3, 4)
+let f: float = r as float
 """
     cython_code = parse_and_generate(code)
     assert "__cast__" in cython_code
@@ -53,8 +53,8 @@ val f: float = r as float
 def test_cast_expr_nested():
     """测试嵌套类型转换"""
     code = """
-val x: int = 100
-val y: float = (x as float) * 2.5
+let x: int = 100
+let y: float = (x as float) * 2.5
 """
     cython_code = parse_and_generate(code)
     assert "<float>x" in cython_code or "x as float" in cython_code
@@ -64,16 +64,16 @@ def test_try_cast_method():
     """测试 __try_cast__ 方法定义"""
     code = """
 class SafeInt:
-    def __init__(self, value: int):
-        self.value = value
+    def __init__(self, letue: int):
+        self.letue = letue
     
     def __try_cast__[bool](self) -> bool:
-        if self.value != 0:
+        if self.letue != 0:
             return True
         return False
 
-val s = SafeInt(42)
-val b: bool = s as bool
+let s = SafeInt(42)
+let b: bool = s as bool
 """
     cython_code = parse_and_generate(code)
     assert "__try_cast__" in cython_code
@@ -82,9 +82,9 @@ val b: bool = s as bool
 def test_cast_chain():
     """测试类型转换链"""
     code = """
-val x: int = 42
-val y: float = x as float
-val z: int = y as int
+let x: int = 42
+let y: float = x as float
+let z: int = y as int
 """
     cython_code = parse_and_generate(code)
     # 应该生成两次类型转换

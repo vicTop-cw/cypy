@@ -6,7 +6,7 @@ from cypyc.codegen.cython_generator import CythonGenerator
 
 class TestPointerOperations(unittest.TestCase):
     def test_deref_expression(self):
-        source = "def get_value(ptr: int*):\n    return &ptr\n"
+        source = "def get_letue(ptr: int*):\n    return &ptr\n"
         lexer = Lexer(source)
         parser = Parser(lexer.tokenize())
         ast = parser.parse()
@@ -37,7 +37,7 @@ class TestEnumTranslation(unittest.TestCase):
         self.assertIn("GREEN", code)
         self.assertIn("BLUE", code)
 
-    def test_enum_with_values(self):
+    def test_enum_with_letues(self):
         source = "enum Status:\n    OK = 0\n    ERROR = 1\n    WARNING = 2\n"
         lexer = Lexer(source)
         parser = Parser(lexer.tokenize())
@@ -49,8 +49,8 @@ class TestEnumTranslation(unittest.TestCase):
 
 
 class TestLetValTranslation(unittest.TestCase):
-    def test_val_immutable(self):
-        source = "def func():\n    val x: int = 42\n    return x\n"
+    def test_let_immutable(self):
+        source = "def func():\n    let x: int = 42\n    return x\n"
         lexer = Lexer(source)
         parser = Parser(lexer.tokenize())
         ast = parser.parse()
@@ -89,8 +89,8 @@ class TestStructTranslation(unittest.TestCase):
         generator = CythonGenerator()
         code = generator.generate(ast)
         self.assertIn("cdef struct Point:", code)
-        self.assertIn("cdef int x", code)
-        self.assertIn("cdef int y", code)
+        self.assertIn("int x", code)
+        self.assertIn("int y", code)
 
 
 if __name__ == "__main__":

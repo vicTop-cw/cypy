@@ -1,5 +1,5 @@
 from typing import Dict, List, Any, Optional
-from cypyc.parser.parser import ASTNode, Module, FuncDef, LetStmt, ReturnStmt, BinOp, UnaryOp, Call, Name, Constant, PointerType, CastExpr, StructDef, ClassDef
+from cypyc.parser.parser import ASTNode, Module, FuncDef, LetStmt, ReturnStmt, BinOp, UnaryOp, Call, Name, Constant, PointerType, CastExpr, StructDef, ClassDef, TraitDef, ExceptionDef
 
 
 class Type:
@@ -48,8 +48,14 @@ class TypeChecker:
         self.struct_defs: Dict[str, StructDef] = {}
         # 类定义注册表
         self.class_defs: Dict[str, ClassDef] = {}
+        # 是否在 meta block 中（meta block 中允许前向引用）
+        self.in_meta_block = False
         # 函数定义注册表（用于泛型函数类型推断）
         self.func_defs: Dict[str, FuncDef] = {}
+        # Trait 定义注册表（用于泛型约束检查）
+        self.trait_defs: Dict[str, Any] = {}
+        # Trait 实现注册表（用于检查类型是否实现了 trait）
+        self.trait_impls: Dict[str, List[str]] = {}  # {trait_name: [type_name1, type_name2, ...]}
         # 策略栈（用于递归防护）
         self.active_strategies: List[str] = []
         self.strategy_depth: int = 0
@@ -131,6 +137,34 @@ class TypeChecker:
                 return_type = self._get_type_from_node(stmt.return_type)
                 if return_type:
                     self.type_map[stmt.name] = return_type
+                else:
+                    # 检查是否有 @python 装饰器，如果有但没有返回类型，使用 object 类型
+                    has_python_decorator = False
+                    if hasattr(stmt, 'decorators') and stmt.decorators:
+                        for decorator in stmt.decorators:
+                            decorator_name = getattr(decorator.name, 'id', str(decorator.name))
+                            if decorator_name == 'python':
+                                has_python_decorator = True
+                                break
+                    if has_python_decorator:
+                        self.type_map[stmt.name] = Type("object")
+            elif isinstance(stmt, TraitDef):
+                # 注册 trait 定义
+                self.trait_defs[stmt.name] = stmt
+                # 初始化 trait 实现列表
+                if stmt.name not in self.trait_impls:
+                    self.trait_impls[stmt.name] = []
+            elif isinstance(stmt, ExceptionDef):
+                # 注册异常类型定义
+                self.type_map[stmt.name] = Type(stmt.name)
+            elif hasattr(stmt, 'kind') and stmt.kind == 'ImplStmt':
+                # 注册 trait 实现
+                trait_name = stmt.trait_name
+                for_type_name = getattr(stmt.for_type, 'id', str(stmt.for_type))
+                if trait_name not in self.trait_impls:
+                    self.trait_impls[trait_name] = []
+                if for_type_name not in self.trait_impls[trait_name]:
+                    self.trait_impls[trait_name].append(for_type_name)
             elif hasattr(stmt, 'kind') and stmt.kind == 'TypeAlias':
                 # 注册类型别名
                 target_type = self._get_type_from_node(stmt.target)
@@ -143,6 +177,25 @@ class TypeChecker:
             self._visit(stmt)
 
     def _visit_FuncDef(self, node: FuncDef) -> None:
+        # 检查是否有 @python 装饰器
+        has_python_decorator = False
+        if hasattr(node, 'decorators') and node.decorators:
+            for decorator in node.decorators:
+                decorator_name = getattr(decorator.name, 'id', str(decorator.name))
+                if decorator_name == 'python':
+                    has_python_decorator = True
+                    break
+        
+        # 如果是 @python 装饰的函数，跳过类型检查（允许 Python 动态特性）
+        if has_python_decorator:
+            # 只注册函数名到类型映射，不检查函数体
+            return_type = self._get_type_from_node(node.return_type)
+            if return_type:
+                self.type_map[node.name] = return_type
+            else:
+                self.type_map[node.name] = Type("object")
+            return
+        
         old_return_type = self.current_function_return_type
         
         # 保存旧的类型和可变性映射，进入新作用域
@@ -206,10 +259,9 @@ class TypeChecker:
                     else:
                         self.errors.append(f"Type mismatch: expected {declared_type}, got {value_type} at {node.line}:{node.col}")
             elif not declared_type and value_type:
-                if value_type.is_pointer:
-                    self.errors.append(f"Pointer variable '{node.name}' requires explicit type annotation at {node.line}:{node.col}")
-                else:
-                    self.type_map[node.name] = value_type
+                # 渐进式类型：未标注类型的变量使用 object 类型
+                # 即使有初始值，也不推断类型
+                self.type_map[node.name] = Type("object")
         if declared_type and node.name not in self.type_map:
             self.type_map[node.name] = declared_type
         # 跟踪变量可变性（val = 不可变, let = 可变）
@@ -222,6 +274,9 @@ class TypeChecker:
                 # 允许数值类型的隐式转换（int → float）
                 numeric_types = {'int', 'float', 'double'}
                 target_name = self.current_function_return_type.name
+                # 允许 object 类型转换为任意类型（用于 @python 装饰器函数的返回值）
+                if value_type.name == 'object':
+                    return value_type
                 if not (target_name in numeric_types and 
                         value_type.name in numeric_types and
                         (value_type.name == 'int' and target_name == 'float')):
@@ -246,6 +301,10 @@ class TypeChecker:
             if node.op == 'is':
                 return Type('bool')
             
+            # 渐进式类型：允许 object 类型参与任何操作（动态行为）
+            if left_type.name == 'object' or right_type.name == 'object':
+                return Type('object')
+            
             # 数值类型可以隐式转换（int + float = float）
             numeric_types = {'int', 'float', 'double'}
             if left_type.name in numeric_types and right_type.name in numeric_types:
@@ -263,8 +322,14 @@ class TypeChecker:
 
     def _visit_Call(self, node: Call) -> Optional[Type]:
         func_type = self._visit(node.func)
+        # 处理参数：支持位置参数和关键字参数
         for arg in node.args:
-            self._visit(arg)
+            if isinstance(arg, tuple) and len(arg) == 2:
+                # 关键字参数：(name, value)
+                self._visit(arg[1])
+            else:
+                # 位置参数
+                self._visit(arg)
         
         # 如果 func 是简单名称
         if hasattr(node.func, 'id'):
@@ -279,7 +344,13 @@ class TypeChecker:
                 if generic_params:
                     # 推断泛型参数类型
                     inferred_types = {}
-                    arg_types = [self._visit(arg) for arg in node.args]
+                    # 提取参数类型（忽略关键字参数名称）
+                    arg_types = []
+                    for arg in node.args:
+                        if isinstance(arg, tuple) and len(arg) == 2:
+                            arg_types.append(self._visit(arg[1]))
+                        else:
+                            arg_types.append(self._visit(arg))
                     
                     # 根据参数类型推断泛型参数
                     for i, param in enumerate(func_def.params):
@@ -292,15 +363,44 @@ class TypeChecker:
                     for param, inferred_type in inferred_types.items():
                         if param in generic_constraints:
                             constraint_type_ast = generic_constraints[param]
-                            constraint_type_name = getattr(constraint_type_ast, 'id', None)
-                            if constraint_type_name and inferred_type.name != constraint_type_name:
-                                line = node.line if hasattr(node, 'line') else 0
-                                col = node.col if hasattr(node, 'col') else 0
-                                self.errors.append(f"Generic constraint violation: type '{inferred_type.name}' does not satisfy constraint '{constraint_type_name}' for parameter '{param}' at {line}:{col}")
+                            # 获取约束类型名称列表（支持联合类型和 trait）
+                            constraint_type_names = []
+                            is_trait_constraint = False
+                            
+                            if hasattr(constraint_type_ast, 'kind') and constraint_type_ast.kind == 'UnionType':
+                                # 联合类型：int | float
+                                for t in constraint_type_ast.types:
+                                    constraint_type_names.append(getattr(t, 'id', str(t)))
+                            else:
+                                # 单一类型或 trait
+                                constraint_name = getattr(constraint_type_ast, 'id', str(constraint_type_ast))
+                                constraint_type_names.append(constraint_name)
+                                # 检查是否是 trait 约束
+                                if constraint_name in self.trait_defs:
+                                    is_trait_constraint = True
+                            
+                            # 检查推断类型是否满足约束
+                            if is_trait_constraint:
+                                # trait 约束：检查类型是否实现了该 trait
+                                trait_name = constraint_type_names[0]
+                                if inferred_type.name not in self.trait_impls.get(trait_name, []):
+                                    line = node.line if hasattr(node, 'line') else 0
+                                    col = node.col if hasattr(node, 'col') else 0
+                                    self.errors.append(f"Generic constraint violation: type '{inferred_type.name}' does not implement trait '{trait_name}' for parameter '{param}' at {line}:{col}")
+                            else:
+                                # 类型约束：检查推断类型是否在允许的类型列表中
+                                if inferred_type.name not in constraint_type_names:
+                                    line = node.line if hasattr(node, 'line') else 0
+                                    col = node.col if hasattr(node, 'col') else 0
+                                    constraint_str = ' | '.join(constraint_type_names)
+                                    self.errors.append(f"Generic constraint violation: type '{inferred_type.name}' does not satisfy constraint '{constraint_str}' for parameter '{param}' at {line}:{col}")
                     
                     # 返回推断后的函数返回类型
                     if func_def.return_type:
                         return_type = self._get_type_from_node(func_def.return_type)
+                        # 如果返回类型是泛型参数本身（如 T），直接返回推断的类型
+                        if return_type and return_type.name in inferred_types:
+                            return inferred_types[return_type.name]
                         # 更新返回类型的泛型参数
                         if return_type and return_type.generic_params:
                             updated_generic = []
@@ -365,18 +465,25 @@ class TypeChecker:
         if node.id in self.type_map:
             return self.type_map[node.id]
         # 检查是否是内置类型、常量和内置函数
-        builtin_types = ['int', 'float', 'double', 'bool', 'str', 'None', 'Exception']
-        builtin_constants = ['True', 'False']
+        builtin_types = ['int', 'float', 'double', 'bool', 'str', 'None', 'Exception', 'list']
+        builtin_constants = ['True', 'False', '__main__']
         builtin_functions = ['print', 'len', 'malloc', 'free', 'sizeof', 'addr', 'ord', 'range', 'type']
+        # 模块级魔法变量
+        module_magic = ['__name__']
         # 通配符 _ 在 match case 中不报错
         if node.id == '_':
             return Type("object")
         if node.id in builtin_types:
             return Type(node.id)
         if node.id in builtin_constants:
-            return Type("bool")
+            return Type("bool" if node.id in ['True', 'False'] else "str")
         if node.id in builtin_functions:
             return Type("None")
+        if node.id in module_magic:
+            return Type("str")
+        # meta block 中允许前向引用
+        if self.in_meta_block:
+            return Type("object")
         # 收集阶段不报错（允许前向引用）
         if self.collecting:
             return None
@@ -545,6 +652,10 @@ class TypeChecker:
             target_name = node.target.id
             
             if target_name in self.type_map:
+                # 检查变量是否不可变（let 声明的变量）
+                if target_name in self.mutable_map and not self.mutable_map[target_name]:
+                    self.errors.append(f"Immutable variable '{target_name}' cannot be reassigned at {node.line}:{node.col}")
+                
                 # 变量已存在，检查类型兼容性
                 target_type = self.type_map[target_name]
                 if value_type and target_type != value_type:
@@ -560,12 +671,9 @@ class TypeChecker:
                         self.errors.append(f"Type mismatch in assignment: expected {target_type}, got {value_type} at {node.line}:{node.col}")
             else:
                 # 变量不存在，添加到作用域
-                if value_type:
-                    if value_type.is_pointer:
-                        self.errors.append(f"Pointer variable '{target_name}' requires explicit type annotation at {node.line}:{node.col}")
-                    else:
-                        self.type_map[target_name] = value_type
-                        self.mutable_map[target_name] = True
+                # 渐进式类型：未标注类型的变量使用 object 类型
+                self.type_map[target_name] = Type("object")
+                self.mutable_map[target_name] = True
         
         # 检查不可变变量的重新赋值
         if hasattr(node.target, 'id'):
@@ -633,6 +741,14 @@ class TypeChecker:
         if not target_type:
             target_type = Type(node.target_type.id) if hasattr(node.target_type, 'id') else Type(str(node.target_type))
         
+        # 定义基本类型集合
+        basic_types = {'int', 'float', 'double', 'bool', 'str', 'long', 'char'}
+        
+        # 对于基本类型，允许显式转换
+        if value_type:
+            if value_type.name in basic_types and target_type.name in basic_types:
+                return target_type
+        
         # 检查是否有 __cast__ 或 __try_cast__ 方法
         if value_type and value_type.name in self.magic_methods:
             magic_map = self.magic_methods[value_type.name]
@@ -646,11 +762,10 @@ class TypeChecker:
                 # 类型转换有效，返回目标类型
                 return target_type
         
-        # 对于基本类型，允许隐式转换
-        if value_type:
-            numeric_types = {'int', 'float', 'double'}
-            if value_type.name in numeric_types and target_type.name in numeric_types:
-                return target_type
+        # 对于自定义类型，如果没有 __cast__ 方法，报告错误
+        if value_type and value_type.name not in basic_types and target_type.name not in basic_types:
+            self.errors.append(f"Cannot cast from '{value_type.name}' to '{target_type.name}': no __cast__ method defined at {node.line}:{node.col}")
+            return None
         
         return target_type
 
@@ -711,6 +826,11 @@ class TypeChecker:
         if isinstance(node, PointerType):
             base_type = self._get_type_from_node(node.base_type)
             if base_type:
+                # 检查基础类型是否为Python对象类型
+                python_types = {'str', 'list', 'dict', 'tuple', 'object', 'set'}
+                if base_type.name in python_types:
+                    self.errors.append(f"Cannot declare pointer to Python object type '{base_type.name}' at {node.line}:{node.col}")
+                    return None
                 return Type(base_type.name, is_pointer=True)
             return None
         if hasattr(node, 'kind') and node.kind == 'GenericType':
@@ -787,6 +907,38 @@ class TypeChecker:
         if base_type and base_type.name == "list" and base_type.generic_params:
             return base_type.generic_params[0]
         return base_type
+
+    def _visit_ExceptionDef(self, node: ExceptionDef) -> None:
+        """处理异常类型定义"""
+        # 检查父类型是否有效
+        if node.base_type:
+            base_type = self._get_type_from_node(node.base_type)
+            if not base_type:
+                self.errors.append(f"Undefined base exception type '{node.base_type}' at {node.line}:{node.col}")
+        # 检查字段类型
+        for field in node.fields:
+            if hasattr(field, 'name') and hasattr(field, 'type_annotation') and field.type_annotation:
+                field_type = self._get_type_from_node(field.type_annotation)
+                if not field_type:
+                    self.errors.append(f"Undefined type for field '{field.name}' in exception '{node.name}' at {field.line}:{field.col}")
+
+    def _visit_FromImport(self, node: Any) -> None:
+        """处理 from module import names 语句，注册导入的名称到类型映射"""
+        for name in getattr(node, 'names', []):
+            self.type_map[name] = Type("object")
+    
+    def _visit_Import(self, node: Any) -> None:
+        """处理 import module 语句，注册模块名称到类型映射"""
+        module_name = getattr(node, 'module', '')
+        if module_name:
+            self.type_map[module_name] = Type("object")
+    
+    def _visit_MetaBlock(self, node: Any) -> None:
+        """处理 meta block，允许前向引用"""
+        self.in_meta_block = True
+        for stmt in node.body:
+            self._visit(stmt)
+        self.in_meta_block = False
 
     def _visit_RaiseStmt(self, node: Any) -> None:
         """处理 raise 语句，检查异常类型"""

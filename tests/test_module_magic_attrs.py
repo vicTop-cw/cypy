@@ -63,7 +63,7 @@ class _PrivateClass:
 def test_module_compile_attrs():
     """测试编译环境属性：__compile_time__/__target__/__profile__"""
     code = """
-val x: int = 42
+let x: int = 42
 """
     cython_code = parse_and_generate(code, "test_module.cy")
     assert '__compile_time__' in cython_code

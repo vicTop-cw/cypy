@@ -32,6 +32,7 @@ cypy-hook = "cypy_hook.hook:main"
 [project.dependencies]
 Cython = ">=3.0.0"
 setuptools = ">=60.0"
+watchdog = ">=3.0.0"
 
 [project.optional-dependencies]
 dev = [

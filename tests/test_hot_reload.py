@@ -360,6 +360,250 @@ class TestDependencyCascade(unittest.TestCase):
         self.assertEqual(proxy_test.get_value(), 100)
 
 
+class TestHotReloadEndToEnd(unittest.TestCase):
+    """端到端热重载测试"""
+    
+    def setUp(self):
+        self.temp_dir = tempfile.mkdtemp()
+        self.output_dir = tempfile.mkdtemp()
+        
+        # 添加临时目录到sys.path
+        if self.output_dir not in sys.path:
+            sys.path.insert(0, self.output_dir)
+    
+    def tearDown(self):
+        # 清理导入的模块
+        modules_to_remove = [name for name in sys.modules if name.startswith('e2e_')]
+        for mod_name in modules_to_remove:
+            if mod_name in sys.modules:
+                del sys.modules[mod_name]
+        
+        # 清理sys.path
+        if self.output_dir in sys.path:
+            sys.path.remove(self.output_dir)
+        
+        # 清理临时目录
+        try:
+            shutil.rmtree(self.temp_dir)
+            shutil.rmtree(self.output_dir)
+        except PermissionError:
+            pass
+    
+    def test_hot_reload_function_modification(self):
+        """测试修改函数实现"""
+        from cypy_hook.hook import CypyHook
+        from cypyc.incremental import HotReloadEngine
+        
+        # 创建Cypy文件
+        cypy_file = os.path.join(self.temp_dir, "e2e_function.cypy")
+        with open(cypy_file, "w", encoding="utf-8") as f:
+            f.write("def greet(name: str) -> str:\n")
+            f.write("    return f'Hello, {name}!'\n")
+        
+        # 创建hook和引擎
+        hook = CypyHook()
+        hook.set_output_dir(self.output_dir)
+        
+        engine = HotReloadEngine(hook)
+        
+        # 第一次编译
+        result1 = engine._compile_and_reload_module(cypy_file)
+        self.assertTrue(result1.success)
+        
+        # 使用模块
+        import e2e_function
+        self.assertEqual(e2e_function.greet("World"), "Hello, World!")
+        
+        # 修改函数实现
+        time.sleep(0.1)
+        with open(cypy_file, "w", encoding="utf-8") as f:
+            f.write("def greet(name: str) -> str:\n")
+            f.write("    return f'Hi, {name} from Cypy!'\n")
+        
+        # 第二次编译
+        result2 = engine._compile_and_reload_module(cypy_file)
+        self.assertTrue(result2.success)
+        
+        # 验证新实现生效
+        self.assertEqual(e2e_function.greet("World"), "Hi, World from Cypy!")
+    
+    def test_hot_reload_struct_field_modification(self):
+        """测试修改结构体字段"""
+        from cypy_hook.hook import CypyHook
+        from cypyc.incremental import HotReloadEngine
+        
+        # 创建Cypy文件（使用冒号语法）
+        cypy_file = os.path.join(self.temp_dir, "e2e_struct.cypy")
+        with open(cypy_file, "w", encoding="utf-8") as f:
+            f.write("struct Point:\n")
+            f.write("    x: int\n")
+            f.write("    y: int\n")
+            f.write("def create_point(x: int, y: int) -> Point:\n")
+            f.write("    return Point(x=x, y=y)\n")
+        
+        # 创建hook和引擎
+        hook = CypyHook()
+        hook.set_output_dir(self.output_dir)
+        
+        engine = HotReloadEngine(hook)
+        
+        # 第一次编译
+        result1 = engine._compile_and_reload_module(cypy_file)
+        self.assertTrue(result1.success)
+        
+        # 修改结构体添加新字段
+        time.sleep(0.1)
+        with open(cypy_file, "w", encoding="utf-8") as f:
+            f.write("struct Point:\n")
+            f.write("    x: int\n")
+            f.write("    y: int\n")
+            f.write("    z: int\n")
+            f.write("def create_point(x: int, y: int, z: int = 0) -> Point:\n")
+            f.write("    return Point(x=x, y=y, z=z)\n")
+        
+        # 第二次编译
+        result2 = engine._compile_and_reload_module(cypy_file)
+        self.assertTrue(result2.success)
+    
+    def test_hot_reload_enum_value_modification(self):
+        """测试修改枚举值"""
+        from cypy_hook.hook import CypyHook
+        from cypyc.incremental import HotReloadEngine
+        
+        # 创建Cypy文件（使用冒号语法，枚举值需要缩进）
+        cypy_file = os.path.join(self.temp_dir, "e2e_enum.cypy")
+        with open(cypy_file, "w", encoding="utf-8") as f:
+            f.write("enum Color:\n")
+            f.write("    RED\n")
+            f.write("    GREEN\n")
+            f.write("def get_color_name(c: Color) -> str:\n")
+            f.write("    return str(c)\n")
+        
+        # 创建hook和引擎
+        hook = CypyHook()
+        hook.set_output_dir(self.output_dir)
+        
+        engine = HotReloadEngine(hook)
+        
+        # 第一次编译
+        result1 = engine._compile_and_reload_module(cypy_file)
+        self.assertTrue(result1.success)
+        
+        # 修改枚举添加新值
+        time.sleep(0.1)
+        with open(cypy_file, "w", encoding="utf-8") as f:
+            f.write("enum Color:\n")
+            f.write("    RED\n")
+            f.write("    GREEN\n")
+            f.write("    BLUE\n")
+            f.write("def get_color_name(c: Color) -> str:\n")
+            f.write("    return str(c)\n")
+        
+        # 第二次编译
+        result2 = engine._compile_and_reload_module(cypy_file)
+        self.assertTrue(result2.success)
+    
+    def test_hot_reload_global_state_preservation(self):
+        """测试全局变量状态保持"""
+        from cypy_hook.hook import CypyHook
+        from cypyc.incremental import HotReloadEngine
+        
+        # 创建Cypy文件（Cypy不需要global关键字）
+        cypy_file = os.path.join(self.temp_dir, "e2e_state.cypy")
+        with open(cypy_file, "w", encoding="utf-8") as f:
+            f.write("counter: int = 0\n")
+            f.write("def increment() -> int:\n")
+            f.write("    counter += 1\n")
+            f.write("    return counter\n")
+        
+        # 创建hook和引擎
+        hook = CypyHook()
+        hook.set_output_dir(self.output_dir)
+        
+        engine = HotReloadEngine(hook)
+        
+        # 第一次编译
+        result1 = engine._compile_and_reload_module(cypy_file)
+        self.assertTrue(result1.success)
+        
+        # 使用模块，修改状态
+        import e2e_state
+        self.assertEqual(e2e_state.increment(), 1)
+        self.assertEqual(e2e_state.increment(), 2)
+        self.assertEqual(e2e_state.counter, 2)
+        
+        # 修改函数实现（添加新函数）
+        time.sleep(0.1)
+        with open(cypy_file, "w", encoding="utf-8") as f:
+            f.write("counter: int = 0\n")
+            f.write("def increment() -> int:\n")
+            f.write("    counter += 1\n")
+            f.write("    return counter\n")
+            f.write("def decrement() -> int:\n")
+            f.write("    counter -= 1\n")
+            f.write("    return counter\n")
+        
+        # 第二次编译
+        result2 = engine._compile_and_reload_module(cypy_file)
+        self.assertTrue(result2.success)
+        
+        # 验证新函数可用
+        self.assertTrue(hasattr(e2e_state, 'decrement'))
+    
+    def test_hot_reload_dependency_cascade(self):
+        """测试依赖级联重编译"""
+        from cypy_hook.hook import CypyHook
+        from cypyc.incremental import HotReloadEngine
+        
+        # 创建基础模块
+        base_file = os.path.join(self.temp_dir, "e2e_base.cypy")
+        with open(base_file, "w", encoding="utf-8") as f:
+            f.write("def get_constant() -> int:\n")
+            f.write("    return 42\n")
+        
+        # 创建依赖模块
+        dep_file = os.path.join(self.temp_dir, "e2e_dep.cypy")
+        with open(dep_file, "w", encoding="utf-8") as f:
+            f.write("from e2e_base import get_constant\n")
+            f.write("def use_constant() -> int:\n")
+            f.write("    return get_constant() * 2\n")
+        
+        # 创建hook和引擎
+        hook = CypyHook()
+        hook.set_output_dir(self.output_dir)
+        
+        engine = HotReloadEngine(hook)
+        
+        # 编译基础模块
+        result_base = engine._compile_and_reload_module(base_file)
+        self.assertTrue(result_base.success)
+        
+        # 编译依赖模块
+        result_dep = engine._compile_and_reload_module(dep_file)
+        self.assertTrue(result_dep.success)
+        
+        # 使用依赖模块
+        import e2e_dep
+        self.assertEqual(e2e_dep.use_constant(), 84)
+        
+        # 修改基础模块
+        time.sleep(0.1)
+        with open(base_file, "w", encoding="utf-8") as f:
+            f.write("def get_constant() -> int:\n")
+            f.write("    return 100\n")
+        
+        # 重新编译基础模块
+        result_base2 = engine._compile_and_reload_module(base_file)
+        self.assertTrue(result_base2.success)
+        
+        # 重新编译依赖模块
+        result_dep2 = engine._compile_and_reload_module(dep_file)
+        self.assertTrue(result_dep2.success)
+        
+        # 验证新值生效
+        self.assertEqual(e2e_dep.use_constant(), 200)
+
+
 class TestCLIWatch(unittest.TestCase):
     """CLI watch命令测试"""
     

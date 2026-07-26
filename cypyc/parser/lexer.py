@@ -84,7 +84,6 @@ class TokenType:
     TYPE = "TYPE"
     VAR = "VAR"
     LET = "LET"
-    VAL = "VAL"
     CONST = "CONST"
     DEFER = "DEFER"
     POINTER = "POINTER"
@@ -174,7 +173,6 @@ class Lexer:
         "type": TokenType.TYPE,
         "var": TokenType.VAR,
         "let": TokenType.LET,
-        "val": TokenType.VAL,
         "const": TokenType.CONST,
         "defer": TokenType.DEFER,
         "pointer": TokenType.POINTER,

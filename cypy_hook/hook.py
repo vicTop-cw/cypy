@@ -30,6 +30,14 @@ class CypyHook:
         self.output_dir = ""
         self.verbose = False
         self._compiler = None
+        self._incremental_compiler = None
+    
+    def _get_incremental_compiler(self):
+        """懒加载增量编译器"""
+        if self._incremental_compiler is None:
+            from cypyc.incremental import IncrementalCompiler
+            self._incremental_compiler = IncrementalCompiler()
+        return self._incremental_compiler
 
     def set_source_dir(self, path: str) -> None:
         self.source_dir = path
@@ -142,7 +150,7 @@ class CypyHook:
             result.errors.append(f"转译错误: {e}")
             return result
 
-    def transpile_file(self, source_path: str) -> CompileResult:
+    def transpile_file(self, source_path: str, incremental: bool = True) -> CompileResult:
         """转译单个文件"""
         result = CompileResult(success=False)
         result.steps.append(f"开始转译文件: {source_path}")
@@ -151,6 +159,45 @@ class CypyHook:
             with open(source_path, "r", encoding="utf-8") as f:
                 source = f.read()
 
+            # 增量编译检查
+            if incremental:
+                incremental_compiler = self._get_incremental_compiler()
+                
+                # 先解析获取AST
+                from cypyc.parser.preprocessor import Preprocessor
+                from cypyc.parser.lexer import Lexer
+                from cypyc.parser.parser import Parser
+                
+                preprocessor = Preprocessor()
+                processed_source = preprocessor.process(source)
+                
+                lexer = Lexer(processed_source)
+                tokens = list(lexer.tokenize())
+                
+                parser = Parser(tokens)
+                ast = parser.parse()
+                
+                # 分析增量编译结果
+                inc_result = incremental_compiler.analyze_changes(source_path, ast)
+                
+                if inc_result.cache_hit:
+                    self._log(f"增量编译: 缓存命中，跳过编译")
+                    result.steps.append("增量编译: 缓存命中，使用缓存结果")
+                    
+                    # 检查缓存的.pyd文件是否存在
+                    cache_manager = CypyCacheManager()
+                    cached_pyd = cache_manager.get_cached_pyd(source_path)
+                    if cached_pyd and os.path.exists(cached_pyd):
+                        result.success = True
+                        result.steps.append("增量编译: 缓存的.pyd文件有效")
+                        # 设置pyd_path以便上层compile_to_pyd可以使用
+                        result.pyd_path = cached_pyd
+                        return result
+                
+                self._log(f"增量编译: 需要重新编译，受影响定义: {inc_result.affected_definitions}")
+                result.steps.append(f"增量编译: 受影响定义数: {len(inc_result.affected_definitions)}")
+            
+            # 执行正常转译
             result = self.transpile(source)
             
             if result.success and result.cython_code:
@@ -170,6 +217,11 @@ class CypyHook:
                 result.pyx_path = pyx_path
                 result.steps.append(f"Cython文件已生成: {pyx_path}")
 
+                # 更新增量编译缓存
+                if incremental:
+                    incremental_compiler = self._get_incremental_compiler()
+                    incremental_compiler.update_cache(source_path, ast, result.cython_code)
+
             return result
 
         except Exception as e:
@@ -178,13 +230,14 @@ class CypyHook:
 
     # ==================== 模式2：一步到位自动处理模式 ====================
 
-    def compile_to_pyd(self, source_path: str, output_dir: str = None) -> CompileResult:
+    def compile_to_pyd(self, source_path: str, output_dir: str = None, force_recompile: bool = False) -> CompileResult:
         """
         一步到位自动处理模式：转译并编译为.pyd文件
         
         参数：
             source_path: 源文件路径
             output_dir: 输出目录（可选，默认为self.output_dir）
+            force_recompile: 是否强制重新编译（跳过增量编译缓存）
             
         返回：
             CompileResult: 包含编译结果、文件路径、错误信息和处理步骤
@@ -202,7 +255,7 @@ class CypyHook:
             old_output_dir = self.output_dir
             self.output_dir = actual_output_dir
             try:
-                pyx_result = self.transpile_file(source_path)
+                pyx_result = self.transpile_file(source_path, incremental=not force_recompile)
             finally:
                 self.output_dir = old_output_dir
             result.steps.extend(pyx_result.steps)
@@ -210,8 +263,18 @@ class CypyHook:
             if not pyx_result.success:
                 result.errors = pyx_result.errors
                 return result
+            
+            # 如果缓存命中，直接返回已有的.pyd路径
+            if pyx_result.pyd_path:
+                result.pyd_path = pyx_result.pyd_path
+                result.success = True
+                result.steps.append(f"使用缓存的.pyd文件: {result.pyd_path}")
+                return result
 
             pyx_path = pyx_result.pyx_path
+            if not pyx_path:
+                result.errors.append("未生成.pyx文件")
+                return result
             
             # Step 2: 生成setup.py
             self._log("Step 2: Generating setup.py...")
@@ -389,13 +452,14 @@ class CypyHook:
 
     # ==================== 模式3：Hook集成模式 ====================
 
-    def compile_and_import(self, source_code: str, module_name: str = "cypy_module") -> Tuple[CompileResult, Any]:
+    def compile_and_import(self, source_code: str, module_name: str = "cypy_module", incremental: bool = True) -> Tuple[CompileResult, Any]:
         """
         Hook集成模式：编译cypy代码并返回可导入的模块
         
         参数：
             source_code: Cypy源代码
             module_name: 模块名称
+            incremental: 是否使用增量编译
         
         返回：
             Tuple[CompileResult, Any]: 编译结果和模块对象
@@ -416,8 +480,8 @@ class CypyHook:
                 
                 self._log("Step 1: Created temporary source file")
                 
-                # Step 2: 编译为.pyd
-                compile_result = self.compile_to_pyd(source_path, output_dir=tmp_dir)
+                # Step 2: 编译为.pyd（支持增量编译）
+                compile_result = self.compile_to_pyd(source_path, output_dir=tmp_dir, force_recompile=not incremental)
                 result.steps.extend(compile_result.steps)
                 
                 if not compile_result.success or not compile_result.pyd_path:
