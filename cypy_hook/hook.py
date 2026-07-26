@@ -159,11 +159,32 @@ class CypyHook:
             with open(source_path, "r", encoding="utf-8") as f:
                 source = f.read()
 
+            ast = None
             # 增量编译检查
             if incremental:
                 incremental_compiler = self._get_incremental_compiler()
                 
-                # 先解析获取AST
+                # 先快速检查缓存有效性（不需要解析AST）
+                cached_entry = incremental_compiler.check_cache_validity(source_path)
+                
+                if cached_entry:
+                    self._log(f"增量编译: 缓存命中，跳过编译")
+                    result.steps.append("增量编译: 缓存命中，使用缓存结果")
+                    
+                    # 检查缓存的.pyd文件是否存在
+                    cache_manager = CypyCacheManager()
+                    cached_pyd = cache_manager.get_cached_pyd(source_path)
+                    if cached_pyd and os.path.exists(cached_pyd):
+                        result.success = True
+                        result.steps.append("增量编译: 缓存的.pyd文件有效")
+                        # 设置pyd_path以便上层compile_to_pyd可以使用
+                        result.pyd_path = cached_pyd
+                        return result
+                
+                # 需要重新编译，解析AST
+                self._log("增量编译: 缓存未命中，开始解析")
+                result.steps.append("增量编译: 缓存未命中，开始解析")
+                
                 from cypyc.parser.preprocessor import Preprocessor
                 from cypyc.parser.lexer import Lexer
                 from cypyc.parser.parser import Parser
@@ -179,26 +200,17 @@ class CypyHook:
                 
                 # 分析增量编译结果
                 inc_result = incremental_compiler.analyze_changes(source_path, ast)
-                
-                if inc_result.cache_hit:
-                    self._log(f"增量编译: 缓存命中，跳过编译")
-                    result.steps.append("增量编译: 缓存命中，使用缓存结果")
-                    
-                    # 检查缓存的.pyd文件是否存在
-                    cache_manager = CypyCacheManager()
-                    cached_pyd = cache_manager.get_cached_pyd(source_path)
-                    if cached_pyd and os.path.exists(cached_pyd):
-                        result.success = True
-                        result.steps.append("增量编译: 缓存的.pyd文件有效")
-                        # 设置pyd_path以便上层compile_to_pyd可以使用
-                        result.pyd_path = cached_pyd
-                        return result
-                
                 self._log(f"增量编译: 需要重新编译，受影响定义: {inc_result.affected_definitions}")
                 result.steps.append(f"增量编译: 受影响定义数: {len(inc_result.affected_definitions)}")
             
             # 执行正常转译
-            result = self.transpile(source)
+            transpile_result = self.transpile(source)
+            
+            # 合并结果（避免覆盖result对象）
+            result.success = transpile_result.success
+            result.cython_code = transpile_result.cython_code
+            result.errors = transpile_result.errors
+            result.steps.extend(transpile_result.steps)
             
             if result.success and result.cython_code:
                 os.makedirs(self.output_dir, exist_ok=True)
@@ -218,7 +230,7 @@ class CypyHook:
                 result.steps.append(f"Cython文件已生成: {pyx_path}")
 
                 # 更新增量编译缓存
-                if incremental:
+                if incremental and ast:
                     incremental_compiler = self._get_incremental_compiler()
                     incremental_compiler.update_cache(source_path, ast, result.cython_code)
 

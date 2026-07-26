@@ -196,9 +196,44 @@ class IncrementalCompiler:
         with open(cache_path, 'w', encoding='utf-8') as f:
             json.dump(cache_data, f, indent=2)
     
+    def check_cache_validity(self, source_path: str) -> Optional[CompilationCacheEntry]:
+        """快速检查文件缓存是否有效（不需要解析AST）
+        
+        返回：
+            如果缓存有效，返回缓存条目；否则返回None
+        """
+        # 加载旧缓存
+        old_cache = self._load_cache(source_path)
+        
+        if not old_cache:
+            return None
+        
+        # 获取当前文件状态（不需要解析AST）
+        current_file_hash = self._compute_file_hash(source_path)
+        current_mtime = os.path.getmtime(source_path)
+        
+        # 检查文件哈希是否匹配
+        if old_cache.file_hash != current_file_hash:
+            return None
+        
+        # 检查文件修改时间是否匹配
+        if abs(old_cache.file_mtime - current_mtime) > 1e-9:
+            return None
+        
+        # 检查.pyd文件是否存在
+        if old_cache.pyd_path and not os.path.exists(old_cache.pyd_path):
+            return None
+        
+        # 检查依赖模块是否发生变化
+        if self._check_imported_modules_changed(old_cache.imported_modules):
+            return None
+        
+        # 缓存完全有效
+        return old_cache
+    
     def analyze_changes(self, source_path: str, new_ast: ASTNode) -> IncrementalResult:
         """分析源代码变更，返回增量编译结果"""
-        # 加载旧缓存
+        # 先快速检查缓存有效性（不需要AST）
         old_cache = self._load_cache(source_path)
         
         # 获取当前文件状态

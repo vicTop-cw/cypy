@@ -34,6 +34,8 @@ class CythonGenerator:
         self.enum_defs: Dict[str, EnumDef] = {}  # {enum_name: EnumDef node}
         # 模块级变量注册表（用于在函数中添加global声明）
         self.module_vars: Set[str] = set()
+        # 用户自定义的魔法属性（避免重复生成）
+        self.user_defined_magic_attrs: Set[str] = set()
 
     def generate(self, node: ASTNode) -> str:
         self.output = []
@@ -166,6 +168,9 @@ class CythonGenerator:
             elif isinstance(stmt, LetStmt):
                 name = stmt.name
                 self.module_vars.add(name)  # 注册模块级变量
+                # 检查是否是用户自定义的魔法属性
+                if name in ('__all__', '__private__', '__deps__'):
+                    self.user_defined_magic_attrs.add(name)
             elif isinstance(stmt, TraitDef):
                 name = stmt.name
                 if name.startswith('_'):
@@ -207,7 +212,7 @@ class CythonGenerator:
         # 目标平台
         target_platform = f"{platform.machine()}-{platform.system().lower()}"
         
-        # 生成魔法属性
+        # 生成魔法属性（始终生成这些基础属性）
         self._write(f"__name__ = \"{module_name}\"")
         self._write(f"__file__ = \"{file_path}\"")
         self._write(f"__package__ = \"{package_name}\"")
@@ -217,17 +222,23 @@ class CythonGenerator:
         self._write(f"__profile__ = \"debug\"")
         
         # __all__：公开API列表（不含_前缀，包含魔法方法）
-        all_list = [s for s in self.public_symbols if not s.startswith('_') or (s.startswith('__') and s.endswith('__'))]
-        all_str = ', '.join(f'"{s}"' for s in all_list)
-        self._write(f"__all__ = [{all_str}]")
+        # 仅在用户未自定义时自动生成
+        if '__all__' not in self.user_defined_magic_attrs:
+            all_list = [s for s in self.public_symbols if not s.startswith('_') or (s.startswith('__') and s.endswith('__'))]
+            all_str = ', '.join(f'"{s}"' for s in all_list)
+            self._write(f"__all__ = [{all_str}]")
         
         # __private__：私有符号列表（_前缀）
-        private_str = ', '.join(f'"{s}"' for s in self.private_symbols if s.startswith('_') and not (s.startswith('__') and s.endswith('__')))
-        self._write(f"__private__ = [{private_str}]")
+        # 仅在用户未自定义时自动生成
+        if '__private__' not in self.user_defined_magic_attrs:
+            private_str = ', '.join(f'"{s}"' for s in self.private_symbols if s.startswith('_') and not (s.startswith('__') and s.endswith('__')))
+            self._write(f"__private__ = [{private_str}]")
         
         # __deps__：依赖模块列表
-        deps_str = ', '.join(f'"{s}"' for s in self.imported_modules)
-        self._write(f"__deps__ = [{deps_str}]")
+        # 仅在用户未自定义时自动生成
+        if '__deps__' not in self.user_defined_magic_attrs:
+            deps_str = ', '.join(f'"{s}"' for s in self.imported_modules)
+            self._write(f"__deps__ = [{deps_str}]")
         
         self._write("")
 
