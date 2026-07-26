@@ -1,0 +1,232 @@
+"""依赖图构建器 - 追踪定义之间的依赖关系"""
+
+from typing import Dict, Set, List, Optional
+from cypyc.parser.parser import ASTNode, FuncDef, StructDef, EnumDef, TypeAlias, ExceptionDef, TraitDef
+
+
+class DependencyGraph:
+    """定义级别的依赖图"""
+    
+    def __init__(self):
+        # 依赖映射: definition_name -> set(dependent_definition_names)
+        self._dependencies: Dict[str, Set[str]] = {}
+        # 反向依赖映射: definition_name -> set(definitions_that_depend_on_it)
+        self._reverse_dependencies: Dict[str, Set[str]] = {}
+        # 定义类型映射: definition_name -> definition_type
+        self._definition_types: Dict[str, str] = {}
+    
+    def _extract_identifier_usage(self, node: ASTNode) -> Set[str]:
+        """从AST节点中提取所有标识符使用"""
+        identifiers = set()
+        
+        if isinstance(node, ASTNode):
+            # 遍历所有属性
+            for attr_name in dir(node):
+                if attr_name.startswith('_'):
+                    continue
+                
+                attr_value = getattr(node, attr_name)
+                
+                # 如果是Identifier节点
+                if hasattr(attr_value, 'kind') and attr_value.kind == 'Identifier':
+                    if hasattr(attr_value, 'id'):
+                        identifiers.add(attr_value.id)
+                
+                # 如果是列表或元组，递归处理
+                elif isinstance(attr_value, (list, tuple)):
+                    for item in attr_value:
+                        identifiers.update(self._extract_identifier_usage(item))
+                
+                # 如果是ASTNode，递归处理
+                elif isinstance(attr_value, ASTNode):
+                    identifiers.update(self._extract_identifier_usage(attr_value))
+        
+        return identifiers
+    
+    def _analyze_definition_dependencies(self, definition: ASTNode) -> Set[str]:
+        """分析单个定义的依赖关系"""
+        dependencies = set()
+        
+        if isinstance(definition, FuncDef):
+            # 函数体中的标识符使用
+            body_usage = self._extract_identifier_usage(definition)
+            
+            # 参数类型注解中的依赖
+            for param in definition.params:
+                if hasattr(param, 'type_annotation'):
+                    dependencies.update(self._extract_identifier_usage(param.type_annotation))
+            
+            # 返回类型中的依赖
+            if definition.return_type:
+                dependencies.update(self._extract_identifier_usage(definition.return_type))
+            
+            # 泛型参数约束中的依赖
+            for constraint in definition.generic_constraints.values():
+                dependencies.update(self._extract_identifier_usage(constraint))
+            
+            # 合并并排除函数自身名称和泛型参数
+            dependencies = (dependencies | body_usage) - {definition.name} - set(definition.generic_params)
+        
+        elif isinstance(definition, StructDef):
+            # 字段类型注解中的依赖
+            for field in definition.fields:
+                if hasattr(field, 'type_annotation'):
+                    dependencies.update(self._extract_identifier_usage(field.type_annotation))
+            
+            # 泛型参数约束中的依赖
+            for constraint in definition.generic_constraints.values():
+                dependencies.update(self._extract_identifier_usage(constraint))
+            
+            # 方法中的依赖
+            for method in definition.methods:
+                dependencies.update(self._analyze_definition_dependencies(method))
+            
+            # 排除结构体自身名称和泛型参数
+            dependencies -= {definition.name} - set(definition.generic_params)
+        
+        elif isinstance(definition, EnumDef):
+            # 变体值中的依赖
+            for variant in definition.variants:
+                if variant.value:
+                    dependencies.update(self._extract_identifier_usage(variant.value))
+            
+            # 排除枚举自身名称
+            dependencies -= {definition.name}
+        
+        elif isinstance(definition, TypeAlias):
+            # 目标类型中的依赖
+            if hasattr(definition, 'target'):
+                dependencies.update(self._extract_identifier_usage(definition.target))
+            
+            # 泛型参数约束中的依赖
+            if hasattr(definition, 'generic_constraints'):
+                for constraint in definition.generic_constraints.values():
+                    dependencies.update(self._extract_identifier_usage(constraint))
+            
+            # 排除类型别名自身名称和泛型参数
+            generic_params = getattr(definition, 'generic_params', [])
+            dependencies -= {definition.name} - set(generic_params)
+        
+        elif isinstance(definition, ExceptionDef):
+            # 基础类型中的依赖
+            if definition.base_type:
+                dependencies.update(self._extract_identifier_usage(definition.base_type))
+            
+            # 字段类型注解中的依赖
+            for field in definition.fields:
+                if hasattr(field, 'type_annotation'):
+                    dependencies.update(self._extract_identifier_usage(field.type_annotation))
+            
+            # 排除异常自身名称
+            dependencies -= {definition.name}
+        
+        elif isinstance(definition, TraitDef):
+            # 方法中的依赖
+            for method in definition.methods:
+                dependencies.update(self._analyze_definition_dependencies(method))
+            
+            # 排除trait自身名称
+            dependencies -= {definition.name}
+        
+        return dependencies
+    
+    def build_from_ast(self, ast: ASTNode) -> None:
+        """从AST构建依赖图"""
+        # 清空现有图
+        self._dependencies.clear()
+        self._reverse_dependencies.clear()
+        self._definition_types.clear()
+        
+        if not hasattr(ast, 'body'):
+            return
+        
+        # 第一步：收集所有顶层定义
+        definitions: Dict[str, ASTNode] = {}
+        
+        for stmt in ast.body:
+            if isinstance(stmt, (FuncDef, StructDef, EnumDef, TypeAlias, ExceptionDef, TraitDef)):
+                definitions[stmt.name] = stmt
+                # 记录定义类型
+                self._definition_types[stmt.name] = stmt.kind
+        
+        # 第二步：分析每个定义的依赖关系
+        for name, definition in definitions.items():
+            dependencies = self._analyze_definition_dependencies(definition)
+            
+            # 过滤掉未定义的标识符（可能是内置类型或外部导入）
+            valid_dependencies = dependencies & definitions.keys()
+            
+            self._dependencies[name] = valid_dependencies
+            
+            # 更新反向依赖
+            for dep_name in valid_dependencies:
+                if dep_name not in self._reverse_dependencies:
+                    self._reverse_dependencies[dep_name] = set()
+                self._reverse_dependencies[dep_name].add(name)
+    
+    def get_dependencies(self, definition_name: str) -> Set[str]:
+        """获取指定定义直接依赖的定义名称"""
+        return self._dependencies.get(definition_name, set())
+    
+    def get_dependents(self, definition_name: str) -> Set[str]:
+        """获取直接依赖于指定定义的定义名称"""
+        return self._reverse_dependencies.get(definition_name, set())
+    
+    def get_transitive_dependents(self, definition_name: str) -> Set[str]:
+        """获取传递依赖于指定定义的所有定义名称（包括间接依赖）"""
+        visited = set()
+        result = set()
+        queue = [definition_name]
+        
+        while queue:
+            current = queue.pop(0)
+            
+            if current in visited:
+                continue
+            
+            visited.add(current)
+            
+            # 获取直接依赖于当前定义的定义
+            dependents = self.get_dependents(current)
+            
+            for dependent in dependents:
+                if dependent not in result:
+                    result.add(dependent)
+                    queue.append(dependent)
+        
+        return result
+    
+    def get_affected_definitions(self, changed_definitions: Set[str]) -> Set[str]:
+        """获取所有受变更影响的定义（包括传递依赖）"""
+        affected = set(changed_definitions)
+        
+        for changed_name in changed_definitions:
+            affected.update(self.get_transitive_dependents(changed_name))
+        
+        return affected
+    
+    def get_all_definitions(self) -> Set[str]:
+        """获取所有定义名称"""
+        return set(self._dependencies.keys())
+    
+    def get_definition_type(self, name: str) -> Optional[str]:
+        """获取定义类型"""
+        return self._definition_types.get(name)
+    
+    def is_empty(self) -> bool:
+        """检查依赖图是否为空"""
+        return len(self._dependencies) == 0
+    
+    def clear(self) -> None:
+        """清空依赖图"""
+        self._dependencies.clear()
+        self._reverse_dependencies.clear()
+        self._definition_types.clear()
+    
+    def __repr__(self) -> str:
+        """返回依赖图的字符串表示"""
+        lines = ["DependencyGraph:"]
+        for name, deps in sorted(self._dependencies.items()):
+            deps_str = ", ".join(sorted(deps)) if deps else "(none)"
+            lines.append(f"  {name} -> [{deps_str}]")
+        return "\n".join(lines)
