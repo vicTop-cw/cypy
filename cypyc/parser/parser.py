@@ -33,7 +33,7 @@ class FromImport(ASTNode):
 
 
 class StructDef(ASTNode):
-    def __init__(self, name: str, fields: List[Any], generic_params: List[str] = None, generic_constraints: Dict[str, Any] = None, is_implicit: bool = False, line: int = 0, col: int = 0, methods: List[Any] = None):
+    def __init__(self, name: str, fields: List[Any], generic_params: List[str] = None, generic_constraints: Dict[str, Any] = None, is_implicit: bool = False, line: int = 0, col: int = 0, methods: List[Any] = None, decorators: List[Any] = None):
         super().__init__("StructDef", line, col)
         self.name = name
         self.fields = fields
@@ -41,6 +41,7 @@ class StructDef(ASTNode):
         self.generic_constraints = generic_constraints or {}
         self.is_implicit = is_implicit
         self.methods = methods or []
+        self.decorators = decorators or []
 
 
 class StructField(ASTNode):
@@ -71,6 +72,45 @@ class TraitDef(ASTNode):
         super().__init__("TraitDef", line, col)
         self.name = name
         self.methods = methods
+
+
+class ExceptionDef(ASTNode):
+    """自定义异常类型定义"""
+    def __init__(self, name: str, base_type: Optional[Any] = None, fields: List[Any] = None, line: int = 0, col: int = 0):
+        super().__init__("ExceptionDef", line, col)
+        self.name = name
+        self.base_type = base_type  # 父异常类型，默认为 Exception
+        self.fields = fields or []
+
+
+class SuiteDef(ASTNode):
+    """测试套件定义 - 参照 lang-zone/hermes 设计"""
+    def __init__(self, name: str, body: List[ASTNode], line: int = 0, col: int = 0):
+        super().__init__("SuiteDef", line, col)
+        self.name = name
+        self.body = body
+
+
+class TestDef(ASTNode):
+    """测试用例定义 - 参照 lang-zone/hermes 设计"""
+    def __init__(self, name: str, body: List[ASTNode], line: int = 0, col: int = 0):
+        super().__init__("TestDef", line, col)
+        self.name = name
+        self.body = body
+
+
+class SetupStmt(ASTNode):
+    """测试套件初始化块"""
+    def __init__(self, body: List[ASTNode], line: int = 0, col: int = 0):
+        super().__init__("SetupStmt", line, col)
+        self.body = body
+
+
+class TeardownStmt(ASTNode):
+    """测试套件清理块"""
+    def __init__(self, body: List[ASTNode], line: int = 0, col: int = 0):
+        super().__init__("TeardownStmt", line, col)
+        self.body = body
 
 
 class FuncDef(ASTNode):
@@ -648,13 +688,17 @@ class Parser:
                 # implicit 变量声明：implicit name: Type = value
                 return self._parse_typed_var()
         if token.type == TokenType.STRUCT:
-            return self._parse_struct_def()
+            return self._parse_struct_def(decorators=decorators)
         if token.type == TokenType.ENUM:
             return self._parse_enum_def()
         if token.type == TokenType.TRAIT:
             return self._parse_trait_def()
+        if token.type == TokenType.EXCEPTION:
+            return self._parse_exception_def()
         if token.type == TokenType.IMPL:
             return self._parse_impl_stmt()
+        if token.type == TokenType.SUITE:
+            return self._parse_suite_stmt()
         if token.type == TokenType.LET:
             return self._parse_let_stmt()
         if token.type == TokenType.VAR:
@@ -662,9 +706,12 @@ class Parser:
         if token.type == TokenType.VAL:
             return self._parse_val_stmt()
         if token.type == TokenType.TEST:
-            # test def 语法：测试函数
-            self._consume()
-            return self._parse_func_def(is_test=True)
+            # test name: 语法：测试用例（参照 lang-zone/hermes）
+            return self._parse_test_stmt()
+        if token.type == TokenType.SETUP:
+            return self._parse_setup_stmt()
+        if token.type == TokenType.TEARDOWN:
+            return self._parse_teardown_stmt()
         if token.type == TokenType.IDENTIFIER:
             peek_token = self._peek()
             if peek_token and peek_token.type == TokenType.COLON:
@@ -685,6 +732,9 @@ class Parser:
             return self._parse_break_stmt()
         if token.type == TokenType.DEL:
             return self._parse_del_stmt()
+        if token.type == TokenType.PASS:
+            self._consume()
+            return ASTNode("PassStmt", self._current().line, self._current().col)
         if token.type == TokenType.CONTINUE:
             return self._parse_continue_stmt()
         if token.type == TokenType.DEFER:
@@ -850,15 +900,14 @@ class Parser:
         self._pop_scope()
         return ClassDef(name_token.value, bases, body, name_token.line, name_token.col, is_cdef=is_cdef)
 
-    def _parse_struct_def(self, is_implicit: bool = False) -> StructDef:
+    def _parse_struct_def(self, is_implicit: bool = False, decorators: List[Any] = None) -> StructDef:
         if not is_implicit and self._current().type == TokenType.IMPLICIT:
             self._consume()
             is_implicit = True
         
         self._consume(TokenType.STRUCT)
         name_token = self._consume(TokenType.IDENTIFIER)
-        # 允许在函数内部定义结构体
-        # self._require_module_level("struct", name_token)
+        self._require_module_level("struct", name_token)
         
         generic_params = []
         generic_constraints = {}
@@ -891,6 +940,10 @@ class Parser:
                 method = self._parse_func_def()
                 methods.append(method)
                 continue
+            # 跳过 pass 语句
+            if self._current().type == TokenType.PASS:
+                self._consume()
+                continue
             # 否则解析为字段（支持 let 关键字）
             is_let = False
             if self._current().type == TokenType.LET:
@@ -915,7 +968,7 @@ class Parser:
                 self._consume()
         if self._current().type == TokenType.DEDENT:
             self._consume()
-        return StructDef(name_token.value, fields, generic_params, generic_constraints, is_implicit, name_token.line, name_token.col, methods)
+        return StructDef(name_token.value, fields, generic_params, generic_constraints, is_implicit, name_token.line, name_token.col, methods, decorators)
 
     def _parse_enum_def(self) -> EnumDef:
         self._consume(TokenType.ENUM)
@@ -947,6 +1000,91 @@ class Parser:
         self._expect(TokenType.COLON)
         methods = self._parse_block()
         return TraitDef(name_token.value, methods, name_token.line, name_token.col)
+
+    def _parse_exception_def(self) -> ExceptionDef:
+        """解析异常类型定义"""
+        self._consume(TokenType.EXCEPTION)
+        name_token = self._consume(TokenType.IDENTIFIER)
+        self._require_module_level("exception", name_token)
+        
+        self._expect(TokenType.COLON)
+        
+        # 检查是否有父类型（exception MyError: BaseException:）
+        base_type = None
+        if self._current().type not in (TokenType.NEWLINE, TokenType.INDENT):
+            # 尝试解析类型
+            base_type = self._parse_type()
+            # 如果解析了类型，后面应该还有一个冒号
+            if base_type:
+                self._expect(TokenType.COLON)
+        
+        fields = self._parse_block()
+        
+        return ExceptionDef(name_token.value, base_type, fields, name_token.line, name_token.col)
+
+    def _parse_suite_stmt(self) -> SuiteDef:
+        """解析测试套件定义 - 参照 lang-zone/hermes 设计
+        
+        语法:
+            suite SuiteName:
+                test test_name:
+                    assert ...
+                setup:
+                    ...
+                teardown:
+                    ...
+        """
+        self._consume(TokenType.SUITE)
+        name_token = self._consume(TokenType.IDENTIFIER)
+        self._require_module_level("suite", name_token)
+        
+        self._expect(TokenType.COLON)
+        
+        self._push_scope("suite")
+        body = self._parse_block()
+        self._pop_scope()
+        
+        return SuiteDef(name_token.value, body, name_token.line, name_token.col)
+
+    def _parse_test_stmt(self) -> TestDef:
+        """解析测试用例定义 - 参照 lang-zone/hermes 设计
+        
+        语法:
+            test test_name:
+                assert ...
+        """
+        self._consume(TokenType.TEST)
+        name_token = self._consume(TokenType.IDENTIFIER)
+        
+        self._expect(TokenType.COLON)
+        
+        body = self._parse_block()
+        
+        return TestDef(name_token.value, body, name_token.line, name_token.col)
+
+    def _parse_setup_stmt(self) -> SetupStmt:
+        """解析测试套件初始化块"""
+        token = self._consume(TokenType.SETUP)
+        line = token.line
+        col = token.col
+        
+        self._expect(TokenType.COLON)
+        
+        body = self._parse_block()
+        
+        return SetupStmt(body, line, col)
+
+    def _parse_teardown_stmt(self) -> TeardownStmt:
+        """解析测试套件清理块"""
+        token = self._consume(TokenType.TEARDOWN)
+        line = token.line
+        col = token.col
+        
+        self._expect(TokenType.COLON)
+        
+        body = self._parse_block()
+        
+        return TeardownStmt(body, line, col)
 
     def _parse_let_stmt(self) -> LetStmt:
         self._consume(TokenType.LET)
@@ -1091,8 +1229,8 @@ class Parser:
     def _parse_decorator(self) -> Decorator:
         self._consume(TokenType.AT)
         
-        # 特殊处理 @no_strategy 装饰器（关键字作为装饰器）
-        if self._current().type == TokenType.NO_STRATEGY:
+        # 特殊处理关键字作为装饰器
+        if self._current().type in (TokenType.NO_STRATEGY, TokenType.TEST):
             name_token = self._consume()
             name = Name(name_token.value, name_token.line, name_token.col)
         else:
@@ -1834,14 +1972,26 @@ class Parser:
                 # 处理函数调用
                 self._consume()
                 args = []
+                kwargs = []
                 if self._current().type != TokenType.RPAREN:
                     while True:
-                        args.append(self._parse_expression())
+                        # 检查是否是关键字参数
+                        if self._current().type == TokenType.IDENTIFIER and self._peek_ahead(1) == TokenType.ASSIGN:
+                            # 关键字参数：name=value
+                            kw_name = self._consume().value
+                            self._consume()  # consume ASSIGN
+                            kw_value = self._parse_expression()
+                            kwargs.append((kw_name, kw_value))
+                        else:
+                            # 普通位置参数
+                            args.append(self._parse_expression())
                         if self._current().type != TokenType.COMMA:
                             break
                         self._consume()
                 self._expect(TokenType.RPAREN)
-                func = Call(func, args, checker_name_for_call)
+                # 将关键字参数转换为命名参数形式
+                all_args = args + kwargs
+                func = Call(func, all_args, checker_name_for_call)
             elif self._current().type == TokenType.LBRACKET:
                 # 处理索引访问
                 self._consume()

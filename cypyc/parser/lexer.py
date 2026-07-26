@@ -116,6 +116,7 @@ class TokenType:
     EXCEPT = "EXCEPT"
     FINALLY = "FINALLY"
     RAISE = "RAISE"
+    EXCEPTION = "EXCEPTION"
     WITH = "WITH"
     LAMBDA = "LAMBDA"
     IMPLICIT = "IMPLICIT"
@@ -123,7 +124,10 @@ class TokenType:
     OWNED = "OWNED"
     SUITE = "SUITE"
     TEST = "TEST"
+    SETUP = "SETUP"
+    TEARDOWN = "TEARDOWN"
     DEL = "DEL"
+    PASS = "PASS"
 
     FAT_ARROW = "FAT_ARROW"  # =>
     BANG = "BANG"  # !
@@ -202,6 +206,7 @@ class Lexer:
         "except": TokenType.EXCEPT,
         "finally": TokenType.FINALLY,
         "raise": TokenType.RAISE,
+        "exception": TokenType.EXCEPTION,
         "with": TokenType.WITH,
         "as": TokenType.AS,
         "lambda": TokenType.LAMBDA,
@@ -210,10 +215,13 @@ class Lexer:
         "owned": TokenType.OWNED,
         "suite": TokenType.SUITE,
         "test": TokenType.TEST,
+        "setup": TokenType.SETUP,
+        "teardown": TokenType.TEARDOWN,
         "del": TokenType.DEL,
         "in": TokenType.IN,
         "is": TokenType.IS,
         "not": TokenType.NOT,
+        "pass": TokenType.PASS,
     }
 
     def __init__(self, source: str):
