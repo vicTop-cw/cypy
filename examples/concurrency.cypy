@@ -1,0 +1,80 @@
+# 并发示例
+# 演示 Cypy 的并发特性
+
+import asyncio
+
+# go 关键字 - 生成协程
+print("=== go 关键字 (协程) ===")
+
+async def fetch_data(url: str) -> str:
+    print(f"Fetching {url}...")
+    await asyncio.sleep(1)
+    return f"Data from {url}"
+
+# 使用 go 启动协程
+let task1 = go fetch_data("https://api.example.com/data1")
+let task2 = go fetch_data("https://api.example.com/data2")
+
+# 等待协程完成
+let result1 = await task1
+let result2 = await task2
+
+print(f"Result 1: {result1}")
+print(f"Result 2: {result2}")
+
+# spawn 关键字 - 生成线程
+print("\n=== spawn 关键字 (线程) ===")
+
+import time
+
+def heavy_computation(n: int) -> int:
+    print(f"Starting computation with {n}...")
+    time.sleep(2)
+    total: int = 0
+    for i in range(n):
+        total += i
+    return total
+
+# 使用 spawn 启动线程
+let thread1 = spawn heavy_computation(1000000)
+let thread2 = spawn heavy_computation(2000000)
+
+# 等待线程完成
+let result3 = thread1.join()
+let result4 = thread2.join()
+
+print(f"Thread 1 result: {result3}")
+print(f"Thread 2 result: {result4}")
+
+# 并发任务组合
+print("\n=== 并发任务组合 ===")
+
+async def main():
+    # 并行执行多个协程
+    let tasks = [
+        go fetch_data("https://api.example.com/a"),
+        go fetch_data("https://api.example.com/b"),
+        go fetch_data("https://api.example.com/c")
+    ]
+    
+    # 等待所有协程完成
+    let results = await asyncio.gather(*tasks)
+    
+    for i, result in enumerate(results):
+        print(f"Task {i+1}: {result}")
+
+# 运行主协程
+asyncio.run(main())
+
+# 使用 spawn 处理 CPU 密集型任务
+print("\n=== CPU 密集型任务 ===")
+
+def fibonacci(n: int) -> int:
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+let fib_task = spawn fibonacci(35)
+print("Calculating Fibonacci(35)...")
+let fib_result = fib_task.join()
+print(f"Fibonacci(35) = {fib_result}")

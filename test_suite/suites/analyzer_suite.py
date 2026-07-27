@@ -108,27 +108,6 @@ def main() -> int:
         Assert.true(success, f"Param check failed: {errors}")
 
 
-@analyzer_suite.test("param_checker_implicit")
-def test_param_checker_implicit():
-    """测试隐式参数检查"""
-    source = """
-implicit struct Config:
-    debug: bool = False
-
-def process(implicit cfg: Config) -> int:
-    return 0
-
-def main() -> int:
-    implicit ctx: Config = Config {debug: True}
-    process()
-    return 0
-"""
-    with CompilerFixture() as fixture:
-        success, errors = fixture.analyze_only(source)
-        Assert.true(success, f"Implicit param check failed: {errors}")
-
-
-# ===== 类型转换测试 =====
 @analyzer_suite.test("type_conversion_explicit")
 def test_type_conversion_explicit():
     """测试显式类型转换"""

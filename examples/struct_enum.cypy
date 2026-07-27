@@ -1,0 +1,99 @@
+# 结构体和枚举示例
+# 演示 Cypy 的 struct 和 enum 定义
+
+# 结构体定义
+struct Point:
+    x: int
+    y: int
+    
+    def __init__(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
+    
+    def __add__(self, other: Point) -> Point:
+        return Point(x=self.x + other.x, y=self.y + other.y)
+    
+    def __str__(self) -> str:
+        return f"({self.x}, {self.y})"
+
+let p1: Point = Point(x=1, y=2)
+let p2: Point = Point(x=3, y=4)
+let p3: Point = p1 + p2
+
+print(f"p1: {p1}")
+print(f"p2: {p2}")
+print(f"p1 + p2: {p3}")
+
+# 嵌套结构体
+struct Rectangle:
+    origin: Point
+    width: int
+    height: int
+    
+    def area(self) -> int:
+        return self.width * self.height
+
+let rect: Rectangle = Rectangle(
+    origin=Point(x=0, y=0),
+    width=10,
+    height=5
+)
+print(f"Rectangle area: {rect.area()}")
+
+# 枚举定义
+enum Color:
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+
+let c: Color = Color.RED
+print(f"Color: {c}")
+print(f"Color value: {c.value}")
+
+# 使用枚举作为函数参数
+def get_color_name(color: Color) -> str:
+    match color:
+        case Color.RED:
+            return "Red"
+        case Color.GREEN:
+            return "Green"
+        case Color.BLUE:
+            return "Blue"
+
+print(f"Color name: {get_color_name(Color.GREEN)}")
+
+# 带字符串值的枚举
+enum Status:
+    PENDING = "pending"
+    COMPLETED = "completed"
+    FAILED = "failed"
+
+let status: Status = Status.COMPLETED
+print(f"Status: {status}")
+
+# 使用 let 声明不可变变量
+let immutable_point: Point = Point(x=10, y=20)
+print(f"Immutable point: {immutable_point}")
+
+# 使用 var 声明可变变量
+var mutable_point: Point = Point(x=5, y=5)
+mutable_point.x = 15
+print(f"Mutable point after update: {mutable_point}")
+
+# 结构体方法
+struct Circle:
+    center: Point
+    radius: float
+    
+    def circumference(self) -> float:
+        return 2 * 3.14159 * self.radius
+    
+    def contains(self, point: Point) -> bool:
+        dx: float = point.x - self.center.x
+        dy: float = point.y - self.center.y
+        return (dx ** 2 + dy ** 2) <= (self.radius ** 2)
+
+let circle: Circle = Circle(center=Point(x=0, y=0), radius=5)
+print(f"Circumference: {circle.circumference()}")
+print(f"Contains (3, 4): {circle.contains(Point(x=3, y=4))}")
+print(f"Contains (6, 0): {circle.contains(Point(x=6, y=0))}")

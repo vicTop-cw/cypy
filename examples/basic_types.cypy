@@ -1,0 +1,62 @@
+# 基础类型示例
+# 演示 Cypy 的基本类型系统
+
+# 基本数值类型
+let a: int = 42
+let b: float = 3.14
+let c: double = 2.71828
+let d: bool = True
+
+print(f"int: {a}")
+print(f"float: {b}")
+print(f"double: {c}")
+print(f"bool: {d}")
+
+# 数值类型转换
+let e: int = cast(int, b)  # 显式转换
+let f: float = a  # 隐式转换 (int -> float)
+let g: bool = 1  # 隐式转换 (int -> bool)
+
+print(f"cast(float to int): {e}")
+print(f"implicit(int to float): {f}")
+print(f"implicit(int to bool): {g}")
+
+# 字符串类型
+let name: str = "Cypy"
+let greeting: str = f"Hello, {name}!"
+let raw_str: str = r"Raw\nstring"
+
+print(greeting)
+print(raw_str)
+
+# 数组类型
+let arr: array[int, 5] = array(1, 2, 3, 4, 5)
+print(f"array: {arr}")
+
+# 列表类型
+let numbers: list[int] = [1, 2, 3, 4, 5]
+let mixed: list[object] = [1, "two", 3.0]
+
+print(f"list[int]: {numbers}")
+print(f"list[object]: {mixed}")
+
+# 元组类型
+let point: tuple[int, int] = (10, 20)
+let data: tuple[str, int, float] = ("test", 42, 3.14)
+
+print(f"point: {point}")
+print(f"data: {data}")
+
+# 字典类型
+let person: dict[str, object] = {
+    "name": "Alice",
+    "age": 30,
+    "city": "New York"
+}
+
+print(f"person: {person}")
+print(f"name: {person['name']}")
+
+# 类型推断
+let inferred = 42  # 无注解，退化为 object 类型
+print(f"inferred type: {type(inferred)}")

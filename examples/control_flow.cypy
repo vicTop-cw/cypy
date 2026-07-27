@@ -1,0 +1,80 @@
+# 控制流示例
+# 演示 Cypy 的控制流语句
+
+# if-else 语句
+let score: int = 85
+
+if score >= 90:
+    print("Excellent!")
+elif score >= 80:
+    print("Good!")
+elif score >= 60:
+    print("Pass!")
+else:
+    print("Fail!")
+
+# 三元表达式
+let grade: str = "A" if score >= 90 else "B"
+print(f"Grade: {grade}")
+
+# for 循环
+print("\nFor loop:")
+for i in range(5):
+    print(f"  i = {i}")
+
+# 带步长的 range
+print("\nFor loop with step:")
+for i in range(0, 10, 2):
+    print(f"  i = {i}")
+
+# 列表遍历
+let fruits: list[str] = ["apple", "banana", "cherry"]
+print("\nList iteration:")
+for fruit in fruits:
+    print(f"  fruit: {fruit}")
+
+# enumerate
+print("\nEnumerate:")
+for index, fruit in enumerate(fruits):
+    print(f"  {index}: {fruit}")
+
+# while 循环
+print("\nWhile loop:")
+let count: int = 0
+while count < 5:
+    print(f"  count = {count}")
+    count += 1
+
+# break 和 continue
+print("\nBreak and continue:")
+for i in range(10):
+    if i == 3:
+        continue  # 跳过 3
+    if i == 7:
+        break  # 在 7 处退出
+    print(f"  i = {i}")
+
+# match 语句
+print("\nMatch statement:")
+let x: int = 2
+match x:
+    case 1:
+        print("One")
+    case 2:
+        print("Two")
+    case 3:
+        print("Three")
+    case _:
+        print("Other")
+
+# match 带条件
+let point: tuple[int, int] = (0, 5)
+match point:
+    case (0, 0):
+        print("Origin")
+    case (x, 0):
+        print(f"On x-axis: ({x}, 0)")
+    case (0, y):
+        print(f"On y-axis: (0, {y})")
+    case (x, y):
+        print(f"Point: ({x}, {y})")

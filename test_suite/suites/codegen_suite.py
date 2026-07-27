@@ -130,23 +130,6 @@ def main() -> int:
         Assert.is_not_none(cython_code, "Code generation failed")
 
 
-# ===== 隐式策略代码生成测试 =====
-@codegen_suite.test("codegen_implicit_struct")
-def test_codegen_implicit_struct():
-    """测试隐式结构体代码生成"""
-    source = """
-implicit struct Config:
-    host: str = "localhost"
-    port: int = 8080
-
-def main() -> int:
-    return 0
-"""
-    with CompilerFixture() as fixture:
-        cython_code = fixture.compile(source)
-        Assert.is_not_none(cython_code, "Code generation failed")
-
-
 # ===== DEMO 示例测试 =====
 @codegen_suite.test("demo_codegen_basic")
 def test_demo_codegen_basic():

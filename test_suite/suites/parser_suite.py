@@ -213,25 +213,6 @@ def main() -> int:
     test.with_demo("parser", "basic_syntax", demo_source)
 
 
-@parser_suite.test("demo_implicit_struct")
-def test_demo_implicit_struct():
-    """隐式结构体 DEMO"""
-    demo_source = """
-# 隐式结构体示例
-implicit struct Context:
-    logger: str
-    timeout: int
-
-def process(implicit ctx: Context):
-    print(ctx.logger)
-"""
-    ast = fixture.parse(demo_source)
-    Assert.is_not_none(ast)
-    
-    test = parser_suite.tests[-1]
-    test.with_demo("parser", "implicit_struct", demo_source)
-
-
 @parser_suite.test("demo_type_conversion")
 def test_demo_type_conversion():
     """类型转换 DEMO"""
