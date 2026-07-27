@@ -93,13 +93,15 @@ let squares = [x ** 2 for x in range(10) if x % 2 == 0]
 
 - [SYNTAX/00-introduction.md](SYNTAX/00-introduction.md) - Introduction
 - [SYNTAX/01-basic-types.md](SYNTAX/01-basic-types.md) - Basic Types
-- [SYNTAX/02-variables.md](SYNTAX/02-variables.md) - Variables
+- [SYNTAX/02-type-annotations.md](SYNTAX/02-type-annotations.md) - Type Annotations
 - [SYNTAX/03-type-conversion.md](SYNTAX/03-type-conversion.md) - Type Conversion
-- [SYNTAX/04-functions.md](SYNTAX/04-functions.md) - Functions
 - [SYNTAX/05-struct.md](SYNTAX/05-struct.md) - Structs
-- [SYNTAX/06-trait.md](SYNTAX/06-trait.md) - Traits
-- [SYNTAX/12-operators.md](SYNTAX/12-operators.md) - Operators
+- [SYNTAX/06-enum.md](SYNTAX/06-enum.md) - Enums
 - [SYNTAX/06d-builtin-magic-traits.md](SYNTAX/06d-builtin-magic-traits.md) - Magic Traits
+- [SYNTAX/07-trait-impl.md](SYNTAX/07-trait-impl.md) - Traits & Implementations
+- [SYNTAX/09-functions.md](SYNTAX/09-functions.md) - Functions
+- [SYNTAX/10-variables.md](SYNTAX/10-variables.md) - Variables
+- [SYNTAX/12-operators.md](SYNTAX/12-operators.md) - Operators
 - [SYNTAX/20-concurrency.md](SYNTAX/20-concurrency.md) - Concurrency
 
 See [CYPY_SYNTAX.md](CYPY_SYNTAX.md) for full language specification.

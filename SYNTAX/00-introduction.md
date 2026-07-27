@@ -99,11 +99,13 @@ SYNTAX/
 ├── 04-pointer-types.md         # 指针类型
 ├── 05-struct.md                # 结构体
 ├── 06-enum.md                  # 枚举
+├── 06d-builtin-magic-traits.md # 内置魔法特质
 ├── 07-trait-impl.md            # 特质与实现
 ├── 08-class.md                 # 类定义
 ├── 09-functions.md             # 函数
 ├── 10-variables.md             # 变量声明
 ├── 11-generics.md              # 泛型系统
+├── 12-operators.md             # 操作符
 ├── 12-type-alias.md            # 类型别名
 ├── 13-build-blocks.md          # 构建块语法
 ├── 14-syntax-sugar.md          # 语法糖
