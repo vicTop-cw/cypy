@@ -1,5 +1,5 @@
 from typing import Dict, List, Set, Any
-from cypyc.parser.parser import ASTNode, Module, FuncDef, ClassDef, StructDef, LetStmt, Name, ExceptionDef
+from cypyc.parser.parser import ASTNode, Module, FuncDef, ClassDef, StructDef, LetStmt, Name, ExceptionDef, GoStmt, SpawnStmt
 
 
 class Symbol:
@@ -247,6 +247,37 @@ class ScopeAnalyzer:
             self.current_scope.add_symbol(node.name, "variable", node)
         if node.value:
             self._visit(node.value)
+
+    def _visit_GoStmt(self, node: GoStmt) -> None:
+        """处理 go 语句 - 轻量级协程"""
+        if hasattr(node, 'body') and node.body:
+            # 块形式：go: body...
+            # 创建新作用域，因为块体是独立的执行上下文
+            go_scope = self.current_scope.create_child("go")
+            self.current_scope = go_scope
+            for stmt in node.body:
+                self._visit(stmt)
+            self.current_scope = go_scope.parent
+        elif hasattr(node, 'target') and node.target:
+            # 调用形式：go func(args) 或表达式形式：go expr
+            self._visit(node.target)
+            for arg in getattr(node, 'args', []):
+                self._visit(arg)
+
+    def _visit_SpawnStmt(self, node: SpawnStmt) -> None:
+        """处理 spawn 语句 - 重量级线程"""
+        if hasattr(node, 'body') and node.body:
+            # 块形式：spawn: body...
+            spawn_scope = self.current_scope.create_child("spawn")
+            self.current_scope = spawn_scope
+            for stmt in node.body:
+                self._visit(stmt)
+            self.current_scope = spawn_scope.parent
+        elif hasattr(node, 'target') and node.target:
+            # 调用形式：spawn func(args) 或表达式形式：spawn expr
+            self._visit(node.target)
+            for arg in getattr(node, 'args', []):
+                self._visit(arg)
 
     def _visit_Name(self, node: Name) -> None:
         # meta block 中允许前向引用，不检查名称是否定义

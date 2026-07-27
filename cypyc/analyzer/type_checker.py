@@ -147,8 +147,8 @@ class TypeChecker:
                             if decorator_name == 'python':
                                 has_python_decorator = True
                                 break
-                    if has_python_decorator:
-                        self.type_map[stmt.name] = Type("object")
+                    # 所有函数都必须注册到 type_map，确保后续引用时能找到
+                    self.type_map[stmt.name] = Type("object")
             elif isinstance(stmt, TraitDef):
                 # 注册 trait 定义
                 self.trait_defs[stmt.name] = stmt
@@ -273,6 +273,9 @@ class TypeChecker:
                 self.type_map[node.name] = Type("object")
         if declared_type and node.name not in self.type_map:
             self.type_map[node.name] = declared_type
+        # 兜底：如果变量名还没有被注册（例如值是 GoStmt/SpawnStmt 等无返回类型的语句），注册为 object 类型
+        if node.name not in self.type_map:
+            self.type_map[node.name] = Type("object")
         # 跟踪变量可变性（let = 不可变, var = 可变）
         self.mutable_map[node.name] = node.mutable
 

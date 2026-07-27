@@ -1,38 +1,14 @@
 # 函数示例
 # 演示 Cypy 的函数定义和调用
 
-# 基本函数定义
 def greet(name: str) -> str:
     return f"Hello, {name}!"
 
-print(greet("Cypy"))
-
-# 带默认参数
 def greet_with_default(name: str = "World") -> str:
     return f"Hello, {name}!"
 
-print(greet_with_default())
-print(greet_with_default("Python"))
-
-# 可变参数
-def sum_all(*args: int) -> int:
-    total: int = 0
-    for num in args:
-        total += num
-    return total
-
-print(f"sum_all(1, 2, 3, 4): {sum_all(1, 2, 3, 4)}")
-
-# 关键字参数
 def print_person(name: str, age: int, city: str = "Unknown") -> None:
     print(f"Name: {name}, Age: {age}, City: {city}")
-
-print_person(name="Alice", age=30)
-print_person(name="Bob", age=25, city="New York")
-
-# 高阶函数
-def apply(func: callable, value: int) -> int:
-    return func(value)
 
 def double(x: int) -> int:
     return x * 2
@@ -40,47 +16,25 @@ def double(x: int) -> int:
 def square(x: int) -> int:
     return x ** 2
 
-print(f"apply(double, 5): {apply(double, 5)}")
-print(f"apply(square, 5): {apply(square, 5)}")
-
-# lambda 表达式
-let add = lambda x: x + 1
-print(f"add(5): {add(5)}")
-
-# 管道操作符
-let result = 5 |> double |> square
-print(f"5 |> double |> square: {result}")
-
-# 递归函数
 def factorial(n: int) -> int:
     if n <= 1:
         return 1
     return n * factorial(n - 1)
 
-print(f"factorial(5): {factorial(5)}")
+def main() -> int:
+    print(greet("Cypy"))
+    print(greet_with_default())
+    print(greet_with_default("Python"))
 
-# 生成器函数
-def count_up_to(n: int) -> iter:
-    let i: int = 0
-    while i < n:
-        yield i
-        i += 1
+    print_person(name="Alice", age=30)
+    print_person(name="Bob", age=25, city="New York")
 
-print("\nGenerator:")
-for num in count_up_to(5):
-    print(f"  {num}")
+    let result = 5 |> double |> square
+    print(f"5 |> double |> square: {result}")
 
-# 装饰器
-def debug(func: callable) -> callable:
-    def wrapper(*args, **kwargs):
-        print(f"Calling {func.__name__} with {args}, {kwargs}")
-        result = func(*args, **kwargs)
-        print(f"Result: {result}")
-        return result
-    return wrapper
+    print(f"factorial(5): {factorial(5)}")
 
-@debug
-def multiply(a: int, b: int) -> int:
-    return a * b
+    return 0
 
-multiply(3, 4)
+if __name__ == "__main__":
+    main()

@@ -1,74 +1,23 @@
 # 列表推导式示例
 # 演示 Cypy 的列表推导式语法
 
-# 基本列表推导式
-print("=== 基本列表推导式 ===")
-let squares: list[int] = [x ** 2 for x in range(10)]
-print(f"Squares: {squares}")
+def main() -> int:
+    # 基本列表推导式
+    print("=== 基本列表推导式 ===")
+    let squares = [x ** 2 for x in range(10)]
+    print(f"Squares: {squares}")
 
-# 带条件的列表推导式
-print("\n=== 带条件的列表推导式 ===")
-let even_squares: list[int] = [x ** 2 for x in range(10) if x % 2 == 0]
-print(f"Even squares: {even_squares}")
+    # 带条件的列表推导式
+    print("\n=== 带条件的列表推导式 ===")
+    let even_squares = [x ** 2 for x in range(10) if x % 2 == 0]
+    print(f"Even squares: {even_squares}")
 
-# 多个条件
-print("\n=== 多个条件 ===")
-let filtered: list[int] = [x for x in range(20) if x > 5 and x < 15 and x % 3 == 0]
-print(f"Filtered: {filtered}")
+    # 嵌套循环
+    print("\n=== 嵌套循环 ===")
+    let pairs = [(x, y) for x in [1, 2, 3] for y in [4, 5, 6]]
+    print(f"Pairs: {pairs}")
 
-# 嵌套循环
-print("\n=== 嵌套循环 ===")
-let pairs: list[tuple[int, int]] = [(x, y) for x in [1, 2, 3] for y in [4, 5, 6]]
-print(f"Pairs: {pairs}")
+    return 0
 
-# 嵌套循环带条件
-print("\n=== 嵌套循环带条件 ===")
-let filtered_pairs: list[tuple[int, int]] = [
-    (x, y) 
-    for x in [1, 2, 3] 
-    for y in [4, 5, 6] 
-    if x + y > 6
-]
-print(f"Filtered pairs: {filtered_pairs}")
-
-# 列表推导式生成字符串
-print("\n=== 字符串列表推导式 ===")
-let words: list[str] = ["hello", "world", "cypy", "python"]
-let upper_words: list[str] = [word.upper() for word in words]
-print(f"Upper words: {upper_words}")
-
-# 复杂表达式
-print("\n=== 复杂表达式 ===")
-let data: list[int] = [1, 2, 3, 4, 5]
-let transformed: list[str] = [f"Value: {x}, Square: {x**2}" for x in data]
-for item in transformed:
-    print(item)
-
-# 元组解构作为循环变量
-print("\n=== 元组解构 ===")
-let points: list[tuple[int, int]] = [(1, 2), (3, 4), (5, 6)]
-let distances: list[int] = [x + y for (x, y) in points]
-print(f"Distances: {distances}")
-
-# 生成器表达式
-print("\n=== 生成器表达式 ===")
-let gen = (x ** 2 for x in range(5))
-for val in gen:
-    print(f"Generator value: {val}")
-
-# 集合推导式
-print("\n=== 集合推导式 ===")
-let unique_squares: set[int] = {x ** 2 for x in [-2, -1, 0, 1, 2]}
-print(f"Unique squares: {unique_squares}")
-
-# 字典推导式
-print("\n=== 字典推导式 ===")
-let square_dict: dict[int, int] = {x: x ** 2 for x in range(10)}
-print(f"Square dict: {square_dict}")
-
-# 列表推导式嵌套
-print("\n=== 列表推导式嵌套 ===")
-let matrix: list[list[int]] = [[1, 2], [3, 4], [5, 6]]
-let flattened: list[int] = [num for row in matrix for num in row]
-print(f"Original matrix: {matrix}")
-print(f"Flattened: {flattened}")
+if __name__ == "__main__":
+    main()
