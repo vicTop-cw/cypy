@@ -29,6 +29,8 @@ class TokenType:
     SUBTYPE = "SUBTYPE"
     LSHIFT = "LSHIFT"  # <<
     RSHIFT = "RSHIFT"  # >>
+    LSHIFT_ASSIGN = "LSHIFT_ASSIGN"  # <<=
+    RSHIFT_ASSIGN = "RSHIFT_ASSIGN"  # >>=
 
     ASSIGN = "ASSIGN"
     PLUS_ASSIGN = "PLUS_ASSIGN"
@@ -118,7 +120,6 @@ class TokenType:
     EXCEPTION = "EXCEPTION"
     WITH = "WITH"
     LAMBDA = "LAMBDA"
-    IMPLICIT = "IMPLICIT"
     NO_STRATEGY = "NO_STRATEGY"
     OWNED = "OWNED"
     SUITE = "SUITE"
@@ -207,7 +208,6 @@ class Lexer:
         "exception": TokenType.EXCEPTION,
         "with": TokenType.WITH,
         "lambda": TokenType.LAMBDA,
-        "implicit": TokenType.IMPLICIT,
         "no_strategy": TokenType.NO_STRATEGY,
         "owned": TokenType.OWNED,
         "suite": TokenType.SUITE,
@@ -489,16 +489,20 @@ class Lexer:
                 continue
 
             if char == '"' or char == "'":
-                # 检查是否是 f-string
-                is_fstring = False
-                if self.pos >= 1 and self.source[self.pos-1] == 'f':
-                    # f 前面必须是空白字符或行首才是 f-string
+                # 检查是否是 f-string (支持 f, F, rf, fr, RF, FR)
+                prefix = ''
+                # 检查前一个字符
+                if self.pos >= 1 and self.source[self.pos-1] in ('f', 'F'):
+                    # f/F 前面必须是空白字符或行首才是 f-string
                     if self.pos == 1 or self.source[self.pos-2] in (' ', '\t', '\n', '\r', '(', '[', '{', '=', ',', '+', '-', '*', '/', '%', '^', '&', '|', '~', '<', '>', '!', '?', ':'):
-                        is_fstring = True
+                        prefix = self.source[self.pos-1]
+                        # 检查是否是 rf/fr 组合
+                        if self.pos >= 2 and self.source[self.pos-2] in ('r', 'R'):
+                            prefix = self.source[self.pos-2] + prefix
                 
                 value = self._tokenize_string()
-                if is_fstring:
-                    yield Token(TokenType.STRING, value, self.line, self.col - len(value) - 3, prefix='f')
+                if prefix:
+                    yield Token(TokenType.STRING, value, self.line, self.col - len(value) - len(prefix) - 2, prefix=prefix)
                 else:
                     yield Token(TokenType.STRING, value, self.line, self.col - len(value) - 2)
                 continue
@@ -618,13 +622,19 @@ class Lexer:
                 continue
 
             if char.isalpha() or char == "_":
-                # 检查是否是 f-string 前缀
-                if char == 'f' and self._peek_ahead(1) in ('"', "'"):
-                    # f-string - 消费 f，然后处理字符串
-                    self._advance()  # 消费 f
+                # 检查是否是 f-string 前缀 (支持 f, F, rf, fr)
+                if char in ('f', 'F', 'r', 'R') and self._peek_ahead(1) in ('"', "'", 'f', 'F'):
+                    prefix_chars = char
+                    # 检查组合前缀 (rf, fr)
+                    if self._peek_ahead(1) in ('f', 'F'):
+                        prefix_chars += self._peek_ahead(1)
+                        self._advance()  # 消费第一个字符
+                        self._advance()  # 消费第二个字符 (f/F)
+                    else:
+                        self._advance()  # 消费单个前缀字符
                     quote = self._peek()
-                    value = self._tokenize_string(quote, consume_quote=True)  # 传递引号并消费它
-                    yield Token(TokenType.STRING, value, self.line, self.col - len(value) - 2, prefix='f')
+                    value = self._tokenize_string(quote, consume_quote=True)
+                    yield Token(TokenType.STRING, value, self.line, self.col - len(value) - len(prefix_chars), prefix=prefix_chars)
                     continue
                 
                 value = self._tokenize_identifier()
@@ -763,7 +773,11 @@ class Lexer:
                     yield Token(TokenType.SUBTYPE, "<:", self.line, self.col - 2)
                 elif self._peek() == "<":
                     self._advance()
-                    yield Token(TokenType.LSHIFT, "<<", self.line, self.col - 2)
+                    if self._peek() == "=":
+                        self._advance()
+                        yield Token(TokenType.LSHIFT_ASSIGN, "<<=", self.line, self.col - 3)
+                    else:
+                        yield Token(TokenType.LSHIFT, "<<", self.line, self.col - 2)
                 else:
                     yield Token(TokenType.LT, "<", self.line, self.col - 1)
                 continue
@@ -775,7 +789,11 @@ class Lexer:
                     yield Token(TokenType.GE, ">=", self.line, self.col - 2)
                 elif self._peek() == ">":
                     self._advance()
-                    yield Token(TokenType.RSHIFT, ">>", self.line, self.col - 2)
+                    if self._peek() == "=":
+                        self._advance()
+                        yield Token(TokenType.RSHIFT_ASSIGN, ">>=", self.line, self.col - 3)
+                    else:
+                        yield Token(TokenType.RSHIFT, ">>", self.line, self.col - 2)
                 else:
                     yield Token(TokenType.GT, ">", self.line, self.col - 1)
                 continue

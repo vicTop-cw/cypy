@@ -28,11 +28,11 @@ maybe_value: object = None
 
 ```python
 # 有注解的变量 - 静态类型检查
-val x: int = 10
+let x: int = 10
 x = "hello"  # ❌ 类型错误
 
 # 无注解的变量 - 退化为 PyObject
-let dynamic = 42
+dynamic = 42
 dynamic = "hello"  # ✅ 允许，运行时动态类型
 ```
 

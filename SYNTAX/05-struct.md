@@ -67,24 +67,6 @@ let cfg: Config = Config(debug=True, timeout=30)
 cfg.debug = False  # ✅ 允许修改
 ```
 
-## 隐式结构体
-
-### `implicit struct` 语法
-
-```python
-implicit struct Context:
-    timestamp: float
-    user_id: int
-
-# 隐式结构体可以作为隐式参数
-def log(message: str, implicit ctx: Context):
-    print(f"[{ctx.timestamp}] {ctx.user_id}: {message}")
-
-# 设置隐式上下文
-implicit ctx: Context = Context(timestamp=1234567890.0, user_id=1)
-log("Hello")  # 自动传入 ctx
-```
-
 ## 结构体字面量
 
 ### 简洁初始化
@@ -111,5 +93,4 @@ let cfg: Config = Config {
 | **静态类型** | 所有字段必须有类型注解 |
 | **方法支持** | 可以定义方法，`self` 指向结构体实例 |
 | **@value** | 自动生成 `__eq__`、`__hash__`、`__repr__`、`__copy__` |
-| **隐式声明** | `implicit struct` 支持隐式参数传递 |
 | **字面量语法** | `Struct {field: value}` 简洁初始化 |

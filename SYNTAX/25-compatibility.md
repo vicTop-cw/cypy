@@ -4,8 +4,10 @@
 
 ### 语法兼容
 
+Cypy 支持大部分 Python 语法，但存在一些限制：
+
 ```python
-# 任何合法的 Python 代码都是合法的 Cypy 代码
+# 大部分 Python 代码可以直接编译
 def python_function(x, y):
     return x + y
 
@@ -16,6 +18,15 @@ def fstring_example(name: str) -> str:
 def type_hints_example(x: int) -> str:
     return str(x)
 ```
+
+### 兼容性限制
+
+| 限制 | 说明 |
+|------|------|
+| **缩进要求** | 缩进必须是 4 的倍数（推荐 4 空格） |
+| **类型注解** | 有注解变量使用静态类型，无注解退化为 `object` |
+| **未实现特性** | `fn` 关键字、SIMD 优化等尚未实现 |
+| **动态特性** | `eval()`、`exec()` 等需要 `@python` 装饰器 |
 
 ### 标准库兼容
 
@@ -39,11 +50,11 @@ def read_config(path: str) -> dict[str, object]:
 
 ```python
 # 有注解的变量 - 静态类型检查
-val x: int = 10
+let x: int = 10
 x = "hello"  # ❌ 编译时类型错误
 
 # 无注解的变量 - 退化为 PyObject
-let dynamic = 42
+dynamic = 42
 dynamic = "hello"  # ✅ 允许，运行时动态类型
 
 # 函数参数
@@ -153,7 +164,7 @@ struct Point:
 
 | 特性 | 说明 |
 |------|------|
-| **Python 超集** | 任何合法 Python 代码都是合法 Cypy 代码 |
+| **Python 部分兼容** | 大部分 Python 语法可用，存在缩进等限制 |
 | **渐进式类型** | 有注解使用静态类型，无注解退化为 PyObject |
 | **@python 装饰器** | 跳过类型检查，回退到 CPython |
 | **标准库兼容** | 可以导入和使用 Python 标准库 |

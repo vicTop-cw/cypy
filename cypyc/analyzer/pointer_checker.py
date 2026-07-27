@@ -92,15 +92,19 @@ class PointerChecker:
         if node.type_annotation:
             self._visit(node.type_annotation)
         
-        # 注册变量类型到当前作用域
+        # 注册变量类型到当前作用域或模块级别
+        if node.type_annotation:
+            type_name = str(node.type_annotation)
+        else:
+            # 没有类型注解，默认视为 object 类型
+            type_name = "object"
+        
         if self.scope_type_stack:
             current_scope = self.scope_type_stack[-1]
-            if node.type_annotation:
-                type_name = str(node.type_annotation)
-                current_scope[node.name] = type_name
-            else:
-                # 没有类型注解，默认视为 object 类型
-                current_scope[node.name] = "object"
+            current_scope[node.name] = type_name
+        else:
+            # 模块级变量，注册到 module_type_map
+            self.module_type_map[node.name] = type_name
         
         if node.value:
             self._visit(node.value)

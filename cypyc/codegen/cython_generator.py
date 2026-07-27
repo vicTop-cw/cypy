@@ -5,7 +5,7 @@ from cypyc.parser.parser import (
     StructField, EnumDef, EnumVariant, DeferStmt, DerefExpr, PointerType,
     GenericType, TraitDef, ImplStmt, MetaBlock, GuardStmt, ComptimeStmt,
     BuildBlockExpr, CastExpr, ClassDef, Import, FromImport, ExceptionDef,
-    SuiteDef, TestDef, SetupStmt, TeardownStmt
+    SuiteDef, TestDef, SetupStmt, TeardownStmt, ListComp
 )
 from cypyc.codegen.type_mapper import TypeMapper
 
@@ -802,6 +802,38 @@ class CythonGenerator:
             self._write("))")
             self._write(")")
 
+    def _visit_ListComp(self, node: ListComp) -> None:
+        """生成列表推导式的 Cython 代码"""
+        # 元素表达式
+        elt_str = self._expr_to_str(node.elt)
+        
+        # 生成器部分
+        gen_parts = []
+        for target, iter_expr, if_exprs in node.generators:
+            if isinstance(target, tuple):
+                target_str = ", ".join(target)
+            else:
+                target_str = target
+            
+            iter_str = self._expr_to_str(iter_expr)
+            gen_part = f"for {target_str} in {iter_str}"
+            
+            # 添加 if 条件
+            if if_exprs:
+                if isinstance(if_exprs, list):
+                    for if_expr in if_exprs:
+                        if_str = self._expr_to_str(if_expr)
+                        gen_part += f" if {if_str}"
+                else:
+                    if_str = self._expr_to_str(if_exprs)
+                    gen_part += f" if {if_str}"
+            
+            gen_parts.append(gen_part)
+        
+        # 组合成列表推导式
+        gen_str = " ".join(gen_parts)
+        self._write(f"[{elt_str} {gen_str}]")
+
     def _visit_TraitDef(self, node: TraitDef) -> None:
         self._write(f"class {node.name}:")
         self.indent += 1
@@ -916,14 +948,14 @@ class CythonGenerator:
             self._write(f"threading.Thread(target={self._expr_to_str(node.target)}, args=({args_str})).start()")
 
     def _visit_GoStmt(self, node: Any) -> None:
-        """生成 go 语句的 Cython 代码"""
-        # 确保导入 threading 模块（只导入一次）
-        if 'threading' not in self.output:
-            self._write("import threading")
+        """生成 go 语句的 Cython 代码 - 使用 asyncio 协程"""
+        # 确保导入 asyncio 模块（只导入一次）
+        if 'import asyncio' not in self.output:
+            self._write("import asyncio")
         
         if hasattr(node, 'body') and node.body:
             # 块形式：go: body...
-            self._write("threading.Thread(target=lambda: (")
+            self._write("asyncio.create_task((async lambda: (")
             self.indent += 1
             for stmt in node.body:
                 if isinstance(stmt, (Call, BinOp, UnaryOp, Name, Constant)):
@@ -931,11 +963,11 @@ class CythonGenerator:
                 else:
                     self._visit(stmt)
             self.indent -= 1
-            self._write(")).start()")
+            self._write("))())")
         elif hasattr(node, 'target') and node.target:
             # 调用形式：go func(args)
             args_str = ", ".join(self._expr_to_str(arg) for arg in getattr(node, 'args', []))
-            self._write(f"threading.Thread(target={self._expr_to_str(node.target)}, args=({args_str})).start()")
+            self._write(f"asyncio.create_task({self._expr_to_str(node.target)}({args_str}))")
 
     def _visit_Pattern(self, node: Any) -> str:
         """生成模式绑定的 Cython 代码"""
@@ -1178,6 +1210,18 @@ class CythonGenerator:
             self.indent = 0
             try:
                 self._visit_BuildBlockExpr(node)
+                return "".join(self.output)
+            finally:
+                self.output = old_output
+                self.indent = old_indent
+        if isinstance(node, ListComp):
+            # 列表推导式需要特殊处理，直接调用 _visit_ListComp
+            old_output = self.output
+            self.output = []
+            old_indent = self.indent
+            self.indent = 0
+            try:
+                self._visit_ListComp(node)
                 return "".join(self.output)
             finally:
                 self.output = old_output

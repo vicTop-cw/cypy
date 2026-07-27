@@ -87,36 +87,6 @@ def test_parse_cast_with_arithmetic():
 
 
 # ===== 隐式策略语法测试 =====
-@parser_suite.test("parse_implicit_struct")
-def test_parse_implicit_struct():
-    """测试解析隐式结构体"""
-    source = """
-implicit struct Config:
-    host: str
-    port: int
-"""
-    ast = fixture.parse(source)
-    Assert.is_not_none(ast)
-    Assert.equal(len(ast.body), 1)
-    Assert.equal(ast.body[0].kind, "StructDef")
-    Assert.true(ast.body[0].is_implicit)
-
-
-@parser_suite.test("parse_implicit_parameter")
-def test_parse_implicit_parameter():
-    """测试解析隐式参数"""
-    source = """
-def greet(name: str, implicit lang: str = "en") -> str:
-    return f"Hello, {name}"
-"""
-    ast = fixture.parse(source)
-    Assert.is_not_none(ast)
-    Assert.equal(len(ast.body), 1)
-    func_def = ast.body[0]
-    Assert.equal(func_def.kind, "FuncDef")
-    Assert.true(func_def.params[1].is_implicit)
-
-
 # ===== 构建块语法测试 =====
 @parser_suite.test("parse_build_assign")
 def test_parse_build_assign():

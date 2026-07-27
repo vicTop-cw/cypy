@@ -143,21 +143,24 @@ def abort() -> Never:
 
 ## 类型推断
 
-Cypy 支持类型推断，在某些情况下可以省略类型注解：
+Cypy 采用渐进式类型系统，有注解的变量使用静态类型，无注解的变量退化为 `object` 类型：
 
 ```python
-# 从字面量推断类型
-x = 10          # 推断为 int
-name = "Bob"    # 推断为 str
-flag = True     # 推断为 bool
+# 有注解变量 - 使用静态类型
+x: int = 10       # int 类型，编译时检查
+name: str = "Bob" # str 类型，编译时检查
 
-# 从上下文推断类型
+# 无注解变量 - 退化为 object 类型
+dynamic = 42      # object 类型，运行时动态
+dynamic = "hello" # ✅ 允许重新赋值为其他类型
+
+# 函数返回类型推断
 def add(a: int, b: int):
     return a + b  # 推断返回类型为 int
 
-# 无注解变量退化为 PyObject
-dynamic = 42    # PyObject，可重新赋值为其他类型
-dynamic = "hello"  # ✅ 允许
+# 列表字面量类型推断
+numbers = [1, 2, 3]  # object 类型（无注解）
+items: list[int] = [1, 2, 3]  # list[int] 类型
 ```
 
 ## 类型检查规则
@@ -165,6 +168,8 @@ dynamic = "hello"  # ✅ 允许
 | 规则 | 说明 |
 |------|------|
 | **有注解** | 变量使用静态类型，编译时检查类型一致性 |
-| **无注解** | 变量退化为 PyObject，运行时动态类型 |
+| **无注解** | 变量退化为 `object` 类型，运行时动态类型 |
 | **函数参数** | 有注解的参数进行类型检查，无注解的参数接受任意类型 |
 | **函数返回** | 有注解的返回值进行类型检查，无注解时从返回语句推断 |
+| **数值转换** | 支持 `bool` → `int` → `float` → `double` 的隐式向上转换 |
+| **泛型兼容** | `list[int]` 可以赋值给 `list[object]`（向上转换） |

@@ -1,4 +1,4 @@
-"""测试隐式策略体系"""
+"""测试隐式策略体系（魔法方法）"""
 import pytest
 from cypyc.parser.lexer import Lexer
 from cypyc.parser.parser import Parser
@@ -20,55 +20,6 @@ def parse_and_generate(code: str) -> str:
     # 代码生成
     generator = CythonGenerator()
     return generator.generate(ast)
-
-
-def test_implicit_struct():
-    """测试隐式结构体定义"""
-    code = """
-implicit struct Config:
-    debug: bool
-    timeout: int
-"""
-    lexer = Lexer(code)
-    tokens = list(lexer.tokenize())
-    parser = Parser(tokens)
-    ast = parser.parse()
-    
-    # 查找结构体定义
-    struct_def = None
-    for stmt in ast.body:
-        if hasattr(stmt, 'name') and stmt.name == 'Config':
-            struct_def = stmt
-            break
-    
-    assert struct_def is not None
-    assert hasattr(struct_def, 'is_implicit')
-    assert struct_def.is_implicit == True
-
-
-def test_implicit_param():
-    """测试隐式参数"""
-    code = """
-def greet(name: str, implicit greeting: str = "Hello"):
-    return f"{greeting}, {name}"
-"""
-    lexer = Lexer(code)
-    tokens = list(lexer.tokenize())
-    parser = Parser(tokens)
-    ast = parser.parse()
-    
-    # 查找函数定义
-    func_def = None
-    for stmt in ast.body:
-        if hasattr(stmt, 'name') and stmt.name == 'greet':
-            func_def = stmt
-            break
-    
-    assert func_def is not None
-    # 检查第二个参数是否是隐式参数
-    assert len(func_def.params) == 2
-    assert func_def.params[1].name == 'greeting'
-    assert func_def.params[1].is_implicit == True
 
 
 def test_implicit_copy_method():

@@ -1856,8 +1856,16 @@ class CCodeGenerator:
             
             # 可选的if条件
             if if_expr:
-                # 将if条件中的循环变量引用替换为C变量
-                if_str = self._expr_to_str(if_expr).replace(target, f"_val_{target}")
+                # if_expr 可能是单个表达式或表达式列表（支持多个 if 条件）
+                if isinstance(if_expr, list):
+                    # 多个 if 条件用 AND 连接
+                    if_str_parts = []
+                    for expr in if_expr:
+                        if_str_parts.append(self._expr_to_str(expr).replace(target, f"_val_{target}"))
+                    if_str = " && ".join(if_str_parts)
+                else:
+                    # 将if条件中的循环变量引用替换为C变量
+                    if_str = self._expr_to_str(if_expr).replace(target, f"_val_{target}")
                 self._write(f"if ({if_str}) {{")
                 self.indent += 1
             

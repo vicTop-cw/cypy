@@ -80,8 +80,9 @@ class TypeChecker:
         if self.strategy_depth > 0:
             self.strategy_depth -= 1
 
-    def check(self, node: ASTNode) -> None:
+    def check(self, node: ASTNode) -> Dict[str, 'Type']:
         self._visit(node)
+        return self.type_map
 
     def _visit(self, node: ASTNode) -> Optional[Type]:
         method = f"_visit_{node.kind}"
@@ -241,18 +242,23 @@ class TypeChecker:
                 # 允许指针类型匹配（void* 可以赋值给 int* 等）
                 if declared_type.is_pointer and value_type.is_pointer:
                     self.type_map[node.name] = declared_type
-                # 允许数值类型的隐式转换（int → float）
+                # 允许泛型类型的向上转换（list[int] → list[object]）
+                elif declared_type.name == value_type.name and declared_type.generic_params and value_type.generic_params:
+                    # 检查元素类型是否可以向上转换
+                    if self._is_generic_subtype(value_type, declared_type):
+                        self.type_map[node.name] = declared_type
+                    else:
+                        self.errors.append(f"Type mismatch: expected {declared_type}, got {value_type} at {node.line}:{node.col}")
+                # 允许数值类型的隐式转换：bool → int → float → double
                 else:
-                    numeric_types = {'int', 'float', 'double'}
+                    numeric_types = {'bool', 'int', 'float', 'double'}
                     if declared_type.name in numeric_types and value_type.name in numeric_types:
-                        if value_type.name == 'int' and declared_type.name == 'float':
-                            # int 可以隐式转换为 float
-                            self.type_map[node.name] = declared_type
-                        elif value_type.name == 'int' and declared_type.name == 'double':
-                            # int 可以隐式转换为 double
-                            self.type_map[node.name] = declared_type
-                        elif value_type.name == 'float' and declared_type.name == 'double':
-                            # float 可以隐式转换为 double
+                        # bool → int → float → double 的链式转换
+                        type_order = ['bool', 'int', 'float', 'double']
+                        value_idx = type_order.index(value_type.name)
+                        target_idx = type_order.index(declared_type.name)
+                        if value_idx <= target_idx:
+                            # 允许向上转换
                             self.type_map[node.name] = declared_type
                         else:
                             self.errors.append(f"Type mismatch: expected {declared_type}, got {value_type} at {node.line}:{node.col}")
@@ -267,24 +273,28 @@ class TypeChecker:
                 self.type_map[node.name] = Type("object")
         if declared_type and node.name not in self.type_map:
             self.type_map[node.name] = declared_type
-        # 跟踪变量可变性（val = 不可变, let = 可变）
+        # 跟踪变量可变性（let = 不可变, var = 可变）
         self.mutable_map[node.name] = node.mutable
 
     def _visit_ReturnStmt(self, node: ReturnStmt) -> Optional[Type]:
         if node.value:
             value_type = self._visit(node.value)
             if self.current_function_return_type and value_type:
-                # 允许数值类型的隐式转换（int → float）
-                numeric_types = {'int', 'float', 'double'}
-                target_name = self.current_function_return_type.name
                 # 允许 object 类型转换为任意类型（用于 @python 装饰器函数的返回值）
                 if value_type.name == 'object':
                     return value_type
-                if not (target_name in numeric_types and 
-                        value_type.name in numeric_types and
-                        (value_type.name == 'int' and target_name == 'float')):
-                    if self.current_function_return_type != value_type:
+                # 允许数值类型的隐式转换：bool → int → float → double
+                numeric_types = {'bool', 'int', 'float', 'double'}
+                target_name = self.current_function_return_type.name
+                if target_name in numeric_types and value_type.name in numeric_types:
+                    type_order = ['bool', 'int', 'float', 'double']
+                    value_idx = type_order.index(value_type.name)
+                    target_idx = type_order.index(target_name)
+                    if value_idx > target_idx:
+                        # 向下转换需要显式转换
                         self.errors.append(f"Return type mismatch: expected {self.current_function_return_type}, got {value_type} at {node.line}:{node.col}")
+                elif self.current_function_return_type != value_type:
+                    self.errors.append(f"Return type mismatch: expected {self.current_function_return_type}, got {value_type} at {node.line}:{node.col}")
             return value_type
         # 无返回值，检查是否是 void 返回类型
         if self.current_function_return_type and self.current_function_return_type.name != 'None':
@@ -308,13 +318,15 @@ class TypeChecker:
             if left_type.name == 'object' or right_type.name == 'object':
                 return Type('object')
             
-            # 数值类型可以隐式转换（int + float = float）
-            numeric_types = {'int', 'float', 'double'}
+            # 数值类型可以隐式转换（bool → int → float → double）
+            numeric_types = {'bool', 'int', 'float', 'double'}
             if left_type.name in numeric_types and right_type.name in numeric_types:
-                # 允许数值类型混合运算
-                if left_type.name == 'float' or right_type.name == 'float' or right_type.name == 'double':
-                    return Type('float')
-                return Type('int')
+                # 运算结果取两个操作数中更高的类型
+                type_order = ['bool', 'int', 'float', 'double']
+                left_idx = type_order.index(left_type.name)
+                right_idx = type_order.index(right_type.name)
+                result_type = type_order[max(left_idx, right_idx)]
+                return Type(result_type)
             elif left_type != right_type:
                 self.errors.append(f"Type mismatch in binary operation: {left_type} {node.op} {right_type} at {node.line}:{node.col}")
 
@@ -649,27 +661,27 @@ class TypeChecker:
         value_type = None
         if node.value:
             value_type = self._visit(node.value)
-        
+
         # 处理赋值目标
         if hasattr(node.target, 'id'):
             target_name = node.target.id
-            
+
+            # 检查变量是否不可变（let 声明的变量）
+            if target_name in self.mutable_map and not self.mutable_map[target_name]:
+                self.errors.append(f"Cannot reassign to let variable '{target_name}' - let variables cannot be reassigned at {node.line}:{node.col}")
+
             if target_name in self.type_map:
-                # 检查变量是否不可变（let 声明的变量）
-                if target_name in self.mutable_map and not self.mutable_map[target_name]:
-                    self.errors.append(f"Immutable variable '{target_name}' cannot be reassigned at {node.line}:{node.col}")
-                
                 # 变量已存在，检查类型兼容性
                 target_type = self.type_map[target_name]
                 if value_type and target_type != value_type:
                     # 允许数值类型的隐式转换（int → float）
                     numeric_types = {'int', 'float', 'double'}
                     # 允许 void* 隐式转换为任何其他指针类型
-                    is_void_ptr_conversion = (value_type.name == 'void' and value_type.is_pointer and 
+                    is_void_ptr_conversion = (value_type.name == 'void' and value_type.is_pointer and
                                              target_type.is_pointer)
-                    if not ((target_type.name in numeric_types and 
+                    if not ((target_type.name in numeric_types and
                             value_type.name in numeric_types and
-                            (value_type.name == 'int' and target_type.name == 'float')) or 
+                            (value_type.name == 'int' and target_type.name == 'float')) or
                             is_void_ptr_conversion):
                         self.errors.append(f"Type mismatch in assignment: expected {target_type}, got {value_type} at {node.line}:{node.col}")
             else:
@@ -677,13 +689,7 @@ class TypeChecker:
                 # 渐进式类型：未标注类型的变量使用 object 类型
                 self.type_map[target_name] = Type("object")
                 self.mutable_map[target_name] = True
-        
-        # 检查不可变变量的重新赋值
-        if hasattr(node.target, 'id'):
-            target_name = node.target.id
-            if target_name in self.mutable_map and not self.mutable_map[target_name]:
-                self.errors.append(f"Immutable variable '{target_name}' cannot be reassigned at {node.line}:{node.col}")
-        
+
         return value_type
 
     def _visit_ForStmt(self, node: Any) -> None:
@@ -771,6 +777,31 @@ class TypeChecker:
             return None
         
         return target_type
+
+    def _is_generic_subtype(self, subtype: Type, supertype: Type) -> bool:
+        """检查泛型类型是否是另一个泛型类型的子类型（如 list[int] 是 list[object] 的子类型）"""
+        if subtype.name != supertype.name:
+            return False
+        if len(subtype.generic_params) != len(supertype.generic_params):
+            return False
+        
+        for sub_param, super_param in zip(subtype.generic_params, supertype.generic_params):
+            # object 是所有类型的父类型
+            if super_param.name == 'object':
+                continue
+            # 相同类型
+            if sub_param == super_param:
+                continue
+            # 数值类型向上转换
+            numeric_types = {'bool', 'int', 'float', 'double'}
+            if sub_param.name in numeric_types and super_param.name in numeric_types:
+                type_order = ['bool', 'int', 'float', 'double']
+                sub_idx = type_order.index(sub_param.name)
+                super_idx = type_order.index(super_param.name)
+                if sub_idx <= super_idx:
+                    continue
+            return False
+        return True
 
     def _visit_Constant(self, node: Constant) -> Optional[Type]:
         if isinstance(node.value, int):

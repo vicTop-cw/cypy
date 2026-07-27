@@ -189,6 +189,35 @@ class ScopeAnalyzer:
         
         self.current_scope.add_symbol(node.name, "enum", node)
 
+    def _visit_TraitDef(self, node: Any) -> None:
+        """处理 trait 定义，确保只能在模块顶级定义"""
+        if self.current_scope.kind != "module":
+            self.errors.append(f"Trait '{node.name}' can only be defined at module level (line {node.line}, col {node.col})")
+            return
+        
+        self.current_scope.add_symbol(node.name, "trait", node)
+
+    def _visit_ImplStmt(self, node: Any) -> None:
+        """处理 impl 实现，确保只能在模块顶级定义"""
+        if self.current_scope.kind != "module":
+            self.errors.append(f"impl for '{node.for_type}' can only be defined at module level (line {node.line}, col {node.col})")
+            return
+        
+        # 访问 trait 名称和实现类型
+        self._visit(node.for_type)
+
+    def _visit_MetaBlock(self, node: Any) -> None:
+        """处理 meta 块，确保只能在模块顶级定义"""
+        if self.current_scope.kind != "module":
+            self.errors.append(f"meta block can only be defined at module level (line {node.line}, col {node.col})")
+            return
+        
+        # 设置在 meta block 中标志
+        self.in_meta_block = True
+        for stmt in node.body:
+            self._visit(stmt)
+        self.in_meta_block = False
+
     def _visit_ExceptionDef(self, node: ExceptionDef) -> None:
         """处理异常类型定义"""
         self.current_scope.add_symbol(node.name, "exception", node)

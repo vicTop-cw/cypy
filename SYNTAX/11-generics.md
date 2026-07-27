@@ -10,8 +10,8 @@ def identity[T](x: T) -> T:
     return x
 
 # 使用泛型函数
-val num: int = identity[int](42)
-val name: str = identity[str]("Alice")
+let num: int = identity[int](42)
+let name: str = identity[str]("Alice")
 ```
 
 ### 多类型参数
@@ -33,10 +33,10 @@ def get_first[T](items: list[T]) -> T:
     return items[0]
 
 let numbers: list[int] = [1, 2, 3]
-val first_num: int = get_first(numbers)  # 自动推断 T=int
+let first_num: int = get_first(numbers)  # 自动推断 T=int
 
 let names: list[str] = ["Alice", "Bob"]
-val first_name: str = get_first(names)  # 自动推断 T=str
+let first_name: str = get_first(names)  # 自动推断 T=str
 ```
 
 ## 泛型特质
@@ -78,9 +78,9 @@ impl Container[T] for List[T]:
 def process[T: int | float](value: T) -> T:
     return value
 
-val result1: int = process[int](42)     # ✅
-val result2: float = process[float](3.14)  # ✅
-# val result3: str = process[str]("hello")  # ❌ 类型约束不满足
+let result1: int = process[int](42)     # ✅
+let result2: float = process[float](3.14)  # ✅
+# let result3: str = process[str]("hello")  # ❌ 类型约束不满足
 ```
 
 ### 特质约束

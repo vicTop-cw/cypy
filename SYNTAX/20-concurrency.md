@@ -4,35 +4,42 @@
 
 ### `spawn` 和 `go` 关键字
 
-Cypy 提供了 `spawn` 和 `go` 两个关键字用于并发编程。**注意**：当前版本中，`spawn` 和 `go` 都生成 `threading.Thread` 代码，两者语义相同。
+Cypy 提供了 `spawn` 和 `go` 两个关键字用于并发编程：
+
+| 关键字 | 当前实现 | 用途 |
+|--------|----------|------|
+| `spawn` | 生成 `threading.Thread` | 创建线程，立即启动 |
+| `go` | 生成 `asyncio.create_task` | 创建异步协程，需要 asyncio 事件循环 |
 
 ```python
-# spawn 语句 - 块形式
+# spawn 语句 - 块形式（线程）
 spawn:
-    print("Running in spawn")
+    print("Running in thread")
     # 执行任务
 
-# go 语句 - 块形式
+# go 语句 - 块形式（协程）
 go:
-    print("Running in go")
+    print("Running in coroutine")
     # 执行任务
 
 # spawn 语句 - 调用形式
 def worker():
     print("Worker running")
 
-spawn worker()
-go worker()
+spawn worker()  # 创建线程
+
+# go 语句 - 调用形式
+async def async_worker():
+    print("Async worker running")
+
+go async_worker()  # 创建协程
 ```
 
-### 当前实现说明
+### 使用注意
 
-| 关键字 | 当前实现 | 文档描述 |
-|--------|----------|----------|
-| `spawn` | 生成 `threading.Thread` | 创建线程 |
-| `go` | 生成 `threading.Thread` | 创建轻量级协程（当前未实现） |
-
-**注意**：`go` 关键字的轻量级协程（协程池复用）功能是未来的规划特性，当前版本与 `spawn` 行为相同。
+- `spawn` 创建的线程在后台运行，与主线程并行执行
+- `go` 创建的协程需要在 asyncio 事件循环中运行（如在 `asyncio.run()` 内）
+- `go` 适用于 I/O 密集型任务，`spawn` 适用于 CPU 密集型任务
 
 ## 线程
 

@@ -87,13 +87,13 @@ class CypyHook:
 
             self._log("Step 5: Type checking...")
             type_checker = TypeChecker()
-            type_checker.check(ast)
+            type_map = type_checker.check(ast)
             if type_checker.errors:
                 errors.extend(type_checker.errors)
 
             self._log("Step 5.5: Pointer checking...")
             pointer_checker = PointerChecker()
-            pointer_checker.check(ast)
+            pointer_checker.check(ast, type_map)
             if pointer_checker.errors:
                 errors.extend(pointer_checker.errors)
 

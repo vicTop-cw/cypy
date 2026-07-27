@@ -21,9 +21,9 @@ items: list[int] = (1, 2, 3) as list[int]
 
 ```python
 # 使用内置函数
-val x: float = float(42)
-val y: int = int(3.99)
-val z: str = str(True)
+let x: float = float(42)
+let y: int = int(3.99)
+let z: str = str(True)
 ```
 
 ## 隐式转换
@@ -49,25 +49,6 @@ struct Fahrenheit:
 let c: Celsius = Celsius(temp=0)
 let f: Fahrenheit = c  # 通过 __implicit_into__ 转换
 let t: float = c       # 通过 __implicit_copy__ 转换
-```
-
-### 隐式参数
-
-```python
-trait Logger:
-    def log(message: str) -> None:
-
-impl ConsoleLogger:
-    def log(message: str) -> None:
-        print(message)
-
-# 隐式参数标记
-def process(data: str, implicit logger: Logger):
-    logger.log(f"Processing: {data}")
-
-# 调用时无需传递隐式参数
-let logger: ConsoleLogger = ConsoleLogger()
-process("hello")  # logger 自动传入
 ```
 
 ## 魔法方法

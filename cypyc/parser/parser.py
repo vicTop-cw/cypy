@@ -109,13 +109,12 @@ class FromImport(ASTNode):
 
 
 class StructDef(ASTNode):
-    def __init__(self, name: str, fields: List[Any], generic_params: List[str] = None, generic_constraints: Dict[str, Any] = None, is_implicit: bool = False, line: int = 0, col: int = 0, methods: List[Any] = None, decorators: List[Any] = None):
+    def __init__(self, name: str, fields: List[Any], generic_params: List[str] = None, generic_constraints: Dict[str, Any] = None, line: int = 0, col: int = 0, methods: List[Any] = None, decorators: List[Any] = None):
         super().__init__("StructDef", line, col)
         self.name = name
         self.fields = fields
         self.generic_params = generic_params or []
         self.generic_constraints = generic_constraints or {}
-        self.is_implicit = is_implicit
         self.methods = methods or []
         self.decorators = decorators or []
 
@@ -205,14 +204,13 @@ class FuncDef(ASTNode):
 
 
 class Param(ASTNode):
-    def __init__(self, name: str, type_annotation: Optional[Any], default_value: Any = None, is_mut: bool = False, is_ref: bool = False, is_implicit: bool = False, line: int = 0, col: int = 0):
+    def __init__(self, name: str, type_annotation: Optional[Any], default_value: Any = None, is_mut: bool = False, is_ref: bool = False, line: int = 0, col: int = 0):
         super().__init__("Param", line, col)
         self.name = name
         self.type_annotation = type_annotation
         self.default_value = default_value
         self.is_mut = is_mut
         self.is_ref = is_ref
-        self.is_implicit = is_implicit
 
 
 class ClassDef(ASTNode):
@@ -756,15 +754,6 @@ class Parser:
                 return self._parse_typed_var()
         if token.type == TokenType.CLASS:
             return self._parse_class_def()
-        if token.type == TokenType.IMPLICIT:
-            # implicit struct/class 或 implicit 变量声明
-            self._consume()  # consume IMPLICIT
-            next_token = self._current()
-            if next_token.type in (TokenType.STRUCT, TokenType.CLASS):
-                return self._parse_struct_def(is_implicit=True)
-            else:
-                # implicit 变量声明：implicit name: Type = value
-                return self._parse_typed_var()
         if token.type == TokenType.STRUCT:
             return self._parse_struct_def(decorators=decorators)
         if token.type == TokenType.ENUM:
@@ -929,15 +918,11 @@ class Parser:
             while True:
                 is_mut = False
                 is_ref = False
-                is_implicit = False
                 if self._current().type == TokenType.MUT:
                     is_mut = True
                     self._consume()
                 if self._current().type == TokenType.REF:
                     is_ref = True
-                    self._consume()
-                if self._current().type == TokenType.IMPLICIT:
-                    is_implicit = True
                     self._consume()
                 name_token = self._consume(TokenType.IDENTIFIER)
                 type_annotation = None
@@ -948,7 +933,7 @@ class Parser:
                 if self._current().type == TokenType.ASSIGN:
                     self._consume()
                     default_value = self._parse_expression()
-                params.append(Param(name_token.value, type_annotation, default_value, is_mut, is_ref, is_implicit, name_token.line, name_token.col))
+                params.append(Param(name_token.value, type_annotation, default_value, is_mut, is_ref, name_token.line, name_token.col))
                 if self._current().type != TokenType.COMMA:
                     break
                 self._consume()
@@ -979,11 +964,7 @@ class Parser:
         self._pop_scope()
         return ClassDef(name_token.value, bases, body, name_token.line, name_token.col, is_cdef=is_cdef)
 
-    def _parse_struct_def(self, is_implicit: bool = False, decorators: List[Any] = None) -> StructDef:
-        if not is_implicit and self._current().type == TokenType.IMPLICIT:
-            self._consume()
-            is_implicit = True
-        
+    def _parse_struct_def(self, decorators: List[Any] = None) -> StructDef:
         self._consume(TokenType.STRUCT)
         name_token = self._consume(TokenType.IDENTIFIER)
         self._require_module_level("struct", name_token)
@@ -1047,7 +1028,7 @@ class Parser:
                 self._consume()
         if self._current().type == TokenType.DEDENT:
             self._consume()
-        return StructDef(name_token.value, fields, generic_params, generic_constraints, is_implicit, name_token.line, name_token.col, methods, decorators)
+        return StructDef(name_token.value, fields, generic_params, generic_constraints, name_token.line, name_token.col, methods, decorators)
 
     def _parse_enum_def(self) -> EnumDef:
         self._consume(TokenType.ENUM)
@@ -1185,7 +1166,7 @@ class Parser:
         else:
             self._expect(TokenType.NEWLINE)
         # let 声明的是不可变变量
-        return LetStmt(name_token.value, type_annotation, value, False, name_token.line, name_token.col)
+        return LetStmt(name_token.value, type_annotation, value, False, False, name_token.line, name_token.col)
 
     def _parse_var_stmt(self) -> LetStmt:
         self._consume(TokenType.VAR)
@@ -1206,7 +1187,7 @@ class Parser:
             pass
         else:
             self._expect(TokenType.NEWLINE)
-        return LetStmt(name_token.value, type_annotation, value, True, name_token.line, name_token.col)
+        return LetStmt(name_token.value, type_annotation, value, True, False, name_token.line, name_token.col)
 
     def _parse_const_stmt(self) -> LetStmt:
         """解析 const 声明 - 编译期常量，值在编译时展开"""
@@ -1407,10 +1388,10 @@ class Parser:
             return Constant(float(token.value), token.line, token.col)
         if token.type == TokenType.STRING:
             self._consume()
-            # 保留字符串的前缀（如 f-string 的 'f'）
+            # 保留字符串的前缀（如 f-string 的 'f', 'F', 'rf', 'fr'）
             prefix = getattr(token, 'prefix', None)
-            if prefix == 'f':
-                return Constant(token.value, token.line, token.col, prefix='f')
+            if prefix:
+                return Constant(token.value, token.line, token.col, prefix=prefix)
             return Constant(token.value, token.line, token.col)
         
         # 变量模式：标识符（模式绑定）
@@ -1820,12 +1801,14 @@ class Parser:
                 if self._current().type in (TokenType.NEWLINE, TokenType.INDENT):
                     self._consume()
                 return Assign(value, right_value, value.line, value.col)
-        # 处理复合赋值 (+=, -=, *=, /=)
+        # 处理复合赋值 (+=, -=, *=, /=, <<=, >>=)
         compound_ops = {
             TokenType.PLUS_ASSIGN: "+",
             TokenType.MINUS_ASSIGN: "-",
             TokenType.MUL_ASSIGN: "*",
             TokenType.DIV_ASSIGN: "/",
+            TokenType.LSHIFT_ASSIGN: "<<",
+            TokenType.RSHIFT_ASSIGN: ">>",
         }
         if self._current().type in compound_ops:
             op = compound_ops[self._current().type]
@@ -2138,10 +2121,10 @@ class Parser:
             return Name("type", token.line, token.col)
         if token.type == TokenType.STRING:
             self._consume()
-            # 保留字符串的前缀（如 f-string 的 'f'）
+            # 保留字符串的前缀（如 f-string 的 'f', 'F', 'rf', 'fr'）
             prefix = getattr(token, 'prefix', None)
-            if prefix == 'f':
-                return Constant(token.value, token.line, token.col, prefix='f')
+            if prefix:
+                return Constant(token.value, token.line, token.col, prefix=prefix)
             return Constant(token.value, token.line, token.col)
         if token.type == TokenType.LAMBDA:
             return self._parse_lambda()
@@ -2194,18 +2177,31 @@ class Parser:
                     generators = []
                     while self._current().type == TokenType.FOR:
                         self._consume()
-                        # 解析循环变量
-                        target = self._consume(TokenType.IDENTIFIER).value
+                        # 解析循环变量（支持标识符或元组解构）
+                        if self._current().type == TokenType.LPAREN:
+                            # 元组解构：(x, y)
+                            self._consume()
+                            target_elements = []
+                            while self._current().type != TokenType.RPAREN:
+                                target_elements.append(self._consume(TokenType.IDENTIFIER).value)
+                                if self._current().type == TokenType.COMMA:
+                                    self._consume()
+                            self._consume()  # consume RPAREN
+                            target = tuple(target_elements)
+                        else:
+                            # 简单标识符
+                            target = self._consume(TokenType.IDENTIFIER).value
+                        
                         self._expect(TokenType.IN)
                         iter_expr = self._parse_expression()
                         
-                        # 可选的if条件
-                        if_expr = None
-                        if self._current().type == TokenType.IF:
+                        # 支持多个 if 条件
+                        if_exprs = []
+                        while self._current().type == TokenType.IF:
                             self._consume()
-                            if_expr = self._parse_expression()
+                            if_exprs.append(self._parse_expression())
                         
-                        generators.append((target, iter_expr, if_expr))
+                        generators.append((target, iter_expr, if_exprs))
                     
                     self._expect(TokenType.RBRACKET)
                     return ListComp(first_expr, generators, token.line, token.col)
@@ -2338,7 +2334,7 @@ class Parser:
         # 不解析类型注解，因为 COLON 会与 lambda 体的 COLON 冲突
         # lambda 参数的类型注解应该在函数签名中定义
         
-        return Param(name_token.value, None, None, is_mut, is_ref, False, name_token.line, name_token.col)
+        return Param(name_token.value, None, None, is_mut, is_ref, name_token.line, name_token.col)
 
     def _parse_type(self) -> ASTNode:
         base = self._parse_type_element()
