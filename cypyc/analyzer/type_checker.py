@@ -1,5 +1,5 @@
 from typing import Dict, List, Any, Optional
-from cypyc.parser.parser import ASTNode, Module, FuncDef, LetStmt, ReturnStmt, BinOp, UnaryOp, Call, Name, Constant, PointerType, CastExpr, StructDef, ClassDef, TraitDef, ExceptionDef
+from cypyc.parser.parser import ASTNode, Module, FuncDef, LetStmt, ReturnStmt, BinOp, UnaryOp, Call, Name, Constant, PointerType, CastExpr, StructDef, ClassDef, TraitDef, ExceptionDef, EnumDef
 
 
 class Type:
@@ -170,6 +170,9 @@ class TypeChecker:
                 target_type = self._get_type_from_node(stmt.target)
                 if target_type:
                     self.type_map[stmt.name] = target_type
+            elif isinstance(stmt, EnumDef):
+                # 注册枚举类型
+                self.type_map[stmt.name] = Type(stmt.name)
         
         # 第二遍：检查所有语句（包括函数体）
         self.collecting = False

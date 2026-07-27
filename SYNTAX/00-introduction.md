@@ -8,7 +8,7 @@ Cypy（Cython + Python Syntactic Sugar）是一种基于 Python 语法体系的�
 
 | 原则 | 说明 |
 |------|------|
-| **Python 超集** | 任何合法的 Python 代码都是合法的 Cypy 代码 |
+| **部分语法兼容** | 支持大部分 Python 语法，但存在一些限制（如缩进必须是4的倍数） |
 | **渐进式类型** | 有注解的变量使用静态类型，无注解的变量退化为 PyObject |
 | **编译时检查** | `cypyc` 转译器提前发现类型错误 |
 | **Cython 后端** | 最终编译目标为 Cython，生成高性能 C 代码 |
@@ -54,8 +54,8 @@ Cypy（Cython + Python Syntactic Sugar）是一种基于 Python 语法体系的�
 8. **宏系统** - 编译期代码生成，支持宏模板和宏展开
 9. **增量编译** - 仅重新编译修改的模块，基于 AST 差异和依赖图分析
 10. **热重载** - 不中断应用运行更新代码，代理模块模式解决 Windows 文件锁定
-11. **`def`/`fn` 双轨函数系统** - `def` 保持 Python 兼容性（动态模式），`fn` 强制静态类型检查和优化代码生成（严格模式）
-12. **`@python` 装饰器** - 无缝回退到 CPython 执行，跳过类型检查
+11. **`def` 函数系统** - 统一使用 `def` 关键字，有类型注解时生成优化代码（cpdef），无注解时退化为 PyObject（def）
+12. **`@python` 装饰器** - 跳过类型检查，仍生成 Cython 代码（非纯 CPython 回退）
 13. **渐进式类型** - 无注解变量为 `object` 类型，有注解变量保持静态检查
 14. **守卫策略** - 支持 `__guarded_pred__` 和 `__guarded_action__` 兜底机制
 15. **隐式类型转换** - 通过 `__implicit_copy__` 和 `__implicit_into__` 实现

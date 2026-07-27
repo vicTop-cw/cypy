@@ -1,5 +1,39 @@
 # 并发
 
+## Cypy 并发关键字
+
+### `spawn` 和 `go` 关键字
+
+Cypy 提供了 `spawn` 和 `go` 两个关键字用于并发编程。**注意**：当前版本中，`spawn` 和 `go` 都生成 `threading.Thread` 代码，两者语义相同。
+
+```python
+# spawn 语句 - 块形式
+spawn:
+    print("Running in spawn")
+    # 执行任务
+
+# go 语句 - 块形式
+go:
+    print("Running in go")
+    # 执行任务
+
+# spawn 语句 - 调用形式
+def worker():
+    print("Worker running")
+
+spawn worker()
+go worker()
+```
+
+### 当前实现说明
+
+| 关键字 | 当前实现 | 文档描述 |
+|--------|----------|----------|
+| `spawn` | 生成 `threading.Thread` | 创建线程 |
+| `go` | 生成 `threading.Thread` | 创建轻量级协程（当前未实现） |
+
+**注意**：`go` 关键字的轻量级协程（协程池复用）功能是未来的规划特性，当前版本与 `spawn` 行为相同。
+
 ## 线程
 
 ### 基本线程

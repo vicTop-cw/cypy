@@ -206,7 +206,6 @@ class Lexer:
         "raise": TokenType.RAISE,
         "exception": TokenType.EXCEPTION,
         "with": TokenType.WITH,
-        "as": TokenType.AS,
         "lambda": TokenType.LAMBDA,
         "implicit": TokenType.IMPLICIT,
         "no_strategy": TokenType.NO_STRATEGY,
@@ -216,8 +215,6 @@ class Lexer:
         "setup": TokenType.SETUP,
         "teardown": TokenType.TEARDOWN,
         "del": TokenType.DEL,
-        "in": TokenType.IN,
-        "is": TokenType.IS,
         "not": TokenType.NOT,
         "pass": TokenType.PASS,
     }
