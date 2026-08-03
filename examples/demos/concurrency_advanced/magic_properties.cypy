@@ -1,0 +1,162 @@
+# 魔法属性（Magic Properties）示例
+# 演示 Cypy 的模块级魔法属性、@value 自动方法、类型转换魔法方法等
+
+def demo_module_magic_attrs() -> int:
+    """演示模块级魔法属性"""
+    print("=== 模块级魔法属性 ===")
+    
+    print(f"  __name__ = {__name__}")
+    print(f"  __file__ = {__file__}")
+    print(f"  __package__ = {__package__}")
+    print(f"  __compile_time__ = {__compile_time__}")
+    print(f"  __target__ = {__target__}")
+    print(f"  __profile__ = {__profile__}")
+    
+    return 0
+
+@value
+struct Point:
+    x: int
+    y: int
+
+@value
+struct Color:
+    r: int
+    g: int
+    b: int
+
+struct Temperature:
+    value: float
+    
+    def __cast__(self, target_type: type) -> object:
+        if target_type == float:
+            return self.value
+        if target_type == int:
+            return int(self.value)
+        raise TypeError(f"Cannot cast Temperature to {target_type}")
+    
+    def __try_cast__(self, target_type: type) -> tuple<bool, object>:
+        if target_type in (int, float):
+            return (True, self.__cast__(target_type))
+        return (False, None)
+
+struct Celsius:
+    temp: float
+    
+    def __implicit_copy__(self) -> Celsius:
+        return Celsius(temp=self.temp)
+    
+    def __implicit_into__(self) -> Fahrenheit:
+        return Fahrenheit(temp=self.temp * 9.0 / 5.0 + 32.0)
+
+struct Fahrenheit:
+    temp: float
+
+struct GuardedNumber:
+    value: float
+    
+    def __guarded_pred__(self, target_type: type) -> bool:
+        return target_type in (int, float)
+    
+    def __guarded_action__(self, target_type: type) -> object:
+        if target_type == int:
+            return int(self.value)
+        return self.value
+
+def demo_value_struct() -> int:
+    """演示 @value 自动生成方法"""
+    print("=== @value 自动方法 ===")
+    
+    let p1 = Point(x=10, y=20)
+    let p2 = Point(x=10, y=20)
+    let p3 = Point(x=5, y=15)
+    
+    print(f"  Point p1 = ({p1.x}, {p1.y})")
+    print(f"  Point p2 = ({p2.x}, {p2.y})")
+    print(f"  p1 == p2 (auto __eq__): {p1 == p2}")
+    print(f"  p1 == p3 (auto __eq__): {p1 == p3}")
+    print(f"  hash(p1) (auto __hash__): {hash(p1)}")
+    print(f"  repr(p1) (auto __repr__): {repr(p1)}")
+    
+    let c1 = Color(r=255, g=0, b=0)
+    let c2 = Color(r=255, g=0, b=0)
+    print(f"  Color c1 == c2: {c1 == c2}")
+    print(f"  hash(c1): {hash(c1)}")
+    
+    return 0
+
+def demo_cast_and_try_cast() -> int:
+    """演示 __cast__ 和 __try_cast__"""
+    print("=== __cast__ 和 __try_cast__ ===")
+    
+    let temp = Temperature(value=36.6)
+    print(f"  Temperature: {temp.value}")
+    
+    let f = temp.__cast__(float)
+    print(f"  cast to float: {f}")
+    
+    let i = temp.__cast__(int)
+    print(f"  cast to int: {i}")
+    
+    let (success, result) = temp.__try_cast__(int)
+    print(f"  try_cast to int: success={success}, result={result}")
+    
+    let (ok, val) = temp.__try_cast__(str)
+    print(f"  try_cast to str: success={ok}, result={val}")
+    
+    return 0
+
+def demo_implicit_copy_and_into() -> int:
+    """演示 __implicit_copy__ 和 __implicit_into__"""
+    print("=== __implicit_copy__ 和 __implicit_into__ ===")
+    
+    let c = Celsius(temp=0.0)
+    print(f"  Celsius: {c.temp}°C")
+    
+    let copied = c.__implicit_copy__()
+    print(f"  __implicit_copy__: {copied.temp}°C")
+    
+    let f = c.__implicit_into__()
+    print(f"  __implicit_into__ Fahrenheit: {f.temp}°F")
+    
+    let boiling = Celsius(temp=100.0)
+    let boiling_f = boiling.__implicit_into__()
+    print(f"  100°C = {boiling_f.temp}°F")
+    
+    return 0
+
+def demo_guarded_pred_and_action() -> int:
+    """演示 __guarded_pred__ 和 __guarded_action__"""
+    print("=== __guarded_pred__ 和 __guarded_action__ ===")
+    
+    let num = GuardedNumber(value=42.5)
+    print(f"  GuardedNumber: {num.value}")
+    
+    let can_cast_int = num.__guarded_pred__(int)
+    print(f"  can cast to int: {can_cast_int}")
+    
+    let can_cast_str = num.__guarded_pred__(str)
+    print(f"  can cast to str: {can_cast_str}")
+    
+    let int_val = num.__guarded_action__(int)
+    print(f"  guarded action to int: {int_val}")
+    
+    let float_val = num.__guarded_action__(float)
+    print(f"  guarded action to float: {float_val}")
+    
+    return 0
+
+def main() -> int:
+    print("====== 魔法属性演示 ======")
+    
+    demo_module_magic_attrs()
+    demo_value_struct()
+    demo_cast_and_try_cast()
+    demo_implicit_copy_and_into()
+    demo_guarded_pred_and_action()
+    
+    print("====== 魔法属性演示完成 ======")
+    return 0
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,298 @@
+# 构建块语法完整示例
+# 演示 Cypy 的 =:, ~:, *:, ^: 构建块语法
+
+# ============================================================
+# 1. 变量构建块 (=:)
+# ============================================================
+
+def variable_build_block_basic() -> int:
+    result =:
+        x = 10
+        y = 20
+        x + y
+    return result
+
+
+def variable_build_block_string() -> str:
+    greeting =:
+        name = "Alice"
+        f"你好, {name}"
+    return greeting
+
+
+def variable_build_block_with_types() -> int:
+    result =:
+        let x: int = 5
+        let y: int = 3
+        x * y + 2
+    return result
+
+
+def variable_build_block_multi_step() -> str:
+    result =:
+        let a: int = 100
+        let b: int = 50
+        let c: int = a + b
+        f"计算结果: {c}"
+    return result
+
+
+def variable_build_block_conditional() -> str:
+    x = 10
+    result =:
+        if x > 0:
+            return "正数"
+        elif x < 0:
+            return "负数"
+        else:
+            return "零"
+    return result
+
+
+# ============================================================
+# 2. 调用构建块 (~:)
+# ============================================================
+
+def create_user(name: str, age: int) -> str:
+    return f"用户: {name}, 年龄: {age}"
+
+
+def call_build_block_demo() -> str:
+    user = create_user ~:
+        name = "Alice"
+        age = 30
+    return user
+
+
+def create_config(debug: bool, timeout: int) -> str:
+    return f"配置: 调试={debug}, 超时={timeout}s"
+
+
+def call_build_block_config() -> str:
+    config = create_config ~:
+        debug = True
+        timeout = 60
+    return config
+
+
+def build_with_lambda() -> int:
+    result = (lambda x -> x * 10) ~:
+        5
+    return result
+
+
+def call_build_block_chained() -> str:
+    def wrap(text: str, prefix: str) -> str:
+        return f"{prefix}: {text}"
+
+    result = wrap ~:
+        text = "世界"
+        prefix = "你好"
+    return result
+
+
+# ============================================================
+# 3. 生成器构建块 (*:)
+# ============================================================
+
+def process_items(items: list) -> int:
+    count: int = 0
+    for item in items:
+        count += 1
+    return count
+
+
+def generator_build_block_demo() -> int:
+    count = process_items *:
+        yield (1, "第一项")
+        yield (2, "第二项")
+        yield (3, "第三项")
+    return count
+
+
+def collect_results() -> list<int>:
+    results: list<int> = []
+    for value in range(5):
+        results.append(value)
+    return results
+
+
+def generator_with_yield() -> list<int>:
+    items = collect_results *:
+        for i in range(5):
+            yield i
+    return items
+
+
+def countdown(n: int) -> list:
+    results: list = []
+    while n > 0:
+        results.append(n)
+        n -= 1
+    return results
+
+
+def generator_countdown() -> list:
+    items = countdown(5) *:
+        yield
+    return items
+
+
+# ============================================================
+# 4. 索引构建块 (^:)
+# ============================================================
+
+def get_last_score(scores: dict<str, list<int>>, player: str) -> int:
+    result = scores ^:
+        player
+    return result
+
+
+def index_build_block_demo() -> int:
+    scores = dict([("Alice", [85, 90, 78]), ("Bob", [92, 88, 95])])
+
+    last_score = scores ^:
+        "Alice"
+    return last_score
+
+
+def index_build_block_loop() -> list:
+    data = dict([("key1", ["a", "b", "c"]), ("key2", ["x", "y", "z"])])
+
+    results: list = []
+    for key in ["key1", "key2"]:
+        value = data ^:
+            key
+        results.append(value)
+    return results
+
+
+def nested_index_build_block() -> str:
+    nested = dict([("level1", dict([("deep", [100, 200, 300])]))])
+
+    result = nested ^:
+        "level1"
+    return str(result)
+
+
+# ============================================================
+# 5. Early Return 和 Guard 在构建块中
+# ============================================================
+
+def build_block_with_early_return(x: int) -> str:
+    result =:
+        if x < 0:
+            return "负数"
+        if x == 0:
+            return "零"
+        if x > 100:
+            return "超大数"
+        f"正常范围: {x}"
+    return result
+
+
+def build_block_with_guard(input_text: str) -> str:
+    result =:
+        guard input_text else "空输入"
+        guard len(input_text) > 3 else "输入过短"
+        f"有效输入: {input_text}"
+    return result
+
+
+def call_build_block_with_guard() -> str:
+    def process(value: int) -> str:
+        guard value > 0 else "非正数"
+        return f"处理值: {value}"
+
+    result = process ~:
+        42
+    return result
+
+
+def variable_build_block_complex() -> str:
+    result =:
+        let name: str = "Alice"
+        let age: int = 30
+
+        guard age >= 18 else "未成年"
+
+        if name == "":
+            return "无名用户"
+
+        f"用户 {name}, {age} 岁"
+    return result
+
+
+# ============================================================
+# 6. 构建块组合使用
+# ============================================================
+
+def combined_build_blocks() -> str:
+    var_result =:
+        let x: int = 10
+        let y: int = 20
+        x + y
+
+    call_result = create_user ~:
+        name = "Bob"
+        age = 25
+
+    return f"变量构建块: {var_result}, 调用构建块: {call_result}"
+
+
+def pipeline_with_build_blocks() -> int:
+    values =:
+        let a: int = 5
+        let b: int = 3
+        a * b
+
+    result = values |> (lambda x -> x + 10)
+    return result
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=" * 50)
+    print("构建块语法完整示例")
+    print("=" * 50)
+
+    print("\n-- 变量构建块 (=:) --")
+    print(f"  variable_build_block_basic: {variable_build_block_basic()}")
+    print(f"  variable_build_block_string: {variable_build_block_string()}")
+    print(f"  variable_build_block_with_types: {variable_build_block_with_types()}")
+    print(f"  variable_build_block_multi_step: {variable_build_block_multi_step()}")
+    print(f"  variable_build_block_conditional: {variable_build_block_conditional()}")
+
+    print("\n-- 调用构建块 (~:) --")
+    print(f"  call_build_block_demo: {call_build_block_demo()}")
+    print(f"  call_build_block_config: {call_build_block_config()}")
+    print(f"  build_with_lambda: {build_with_lambda()}")
+    print(f"  call_build_block_chained: {call_build_block_chained()}")
+
+    print("\n-- 生成器构建块 (*:) --")
+    print(f"  generator_build_block_demo: {generator_build_block_demo()}")
+    print(f"  generator_with_yield: {generator_with_yield()}")
+    print(f"  generator_countdown: {generator_countdown()}")
+
+    print("\n-- 索引构建块 (^:) --")
+    print(f"  index_build_block_demo: {index_build_block_demo()}")
+    print(f"  index_build_block_loop: {index_build_block_loop()}")
+    print(f"  nested_index_build_block: {nested_index_build_block()}")
+
+    print("\n-- Early Return & Guard --")
+    print(f"  build_block_with_early_return(-5): {build_block_with_early_return(-5)}")
+    print(f"  build_block_with_early_return(50): {build_block_with_early_return(50)}")
+    print(f"  build_block_with_guard('hello'): {build_block_with_guard('hello')}")
+    print(f"  build_block_with_guard('a'): {build_block_with_guard('a')}")
+    print(f"  call_build_block_with_guard: {call_build_block_with_guard()}")
+    print(f"  variable_build_block_complex: {variable_build_block_complex()}")
+
+    print("\n-- 构建块组合 --")
+    print(f"  combined_build_blocks: {combined_build_blocks()}")
+    print(f"  pipeline_with_build_blocks: {pipeline_with_build_blocks()}")
+
+    print("\n" + "=" * 50)
+    print("所有构建块语法示例运行完毕")

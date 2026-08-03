@@ -1,4 +1,4 @@
-"""测试联合类型解析"""
+﻿"""测试联合类型解析"""
 
 import pytest
 from cypyc.parser.lexer import Lexer
@@ -58,7 +58,7 @@ def test_union_type_in_function():
 
 def test_union_type_with_generic():
     """测试联合类型与泛型组合"""
-    source = '''type Maybe[T] = T | None'''
+    source = '''type Maybe<T> = T | None'''
     
     lexer = Lexer(source)
     tokens = list(lexer.tokenize())

@@ -1,0 +1,268 @@
+# 边界值示例
+# 演示各种边界条件：空集合、单元素、零值、负数、极大值
+
+# ============================================================
+# 1. 空集合边界
+# ============================================================
+
+def handle_empty_list() -> int:
+    let empty: list<int> = []
+    guard len(empty) == 0 else return -1
+    return 0
+
+def handle_empty_dict() -> int:
+    let empty: dict<str, int> = {}
+    guard len(empty) == 0 else return -1
+    return 0
+
+def handle_empty_string() -> int:
+    let s: str = ""
+    guard len(s) == 0 else return -1
+    return 0
+
+def handle_empty_tuple() -> int:
+    let t: tuple = ()
+    return 0
+
+
+# ============================================================
+# 2. 单元素集合
+# ============================================================
+
+def single_element_list() -> int:
+    let single: list<int> = [42]
+    guard len(single) == 1 else return -1
+    return single[0]
+
+def single_element_dict() -> str:
+    let single: dict<str, int> = {"key": 100}
+    guard len(single) == 1 else return "error"
+    return "ok"
+
+
+# ============================================================
+# 3. 零值与负数边界
+# ============================================================
+
+def zero_division_safe(a: int, b: int) -> int:
+    guard b != 0 else return 0
+    return a / b
+
+def negative_index(items: list<int>) -> int:
+    guard len(items) > 0 else return -1
+    return items[-1]
+
+def negative_range() -> list<int>:
+    let result: list<int> = []
+    for i in range(-5, 0):
+        result.append(i)
+    return result
+
+
+# ============================================================
+# 4. 极大值与溢出
+# ============================================================
+
+def large_numbers() -> int:
+    let big: int = 1000000000
+    let bigger: int = big * 2
+    return bigger
+
+def max_int_operations() -> int:
+    let x: int = 2147483647
+    guard x > 0 else return -1
+    return x
+
+def very_long_string() -> int:
+    let s: str = "a" * 1000
+    return len(s)
+
+
+# ============================================================
+# 5. 嵌套空集合
+# ============================================================
+
+def nested_empty() -> int:
+    let nested: list<list<int>> = [[], [], []]
+    let count: int = 0
+    for inner in nested:
+        guard len(inner) == 0 else return -1
+        count += 1
+    return count
+
+
+# ============================================================
+# 6. 边界条件循环
+# ============================================================
+
+def loop_zero_times() -> int:
+    let count: int = 0
+    for i in range(0):
+        count += 1
+    return count
+
+def loop_once() -> int:
+    let count: int = 0
+    for i in range(1):
+        count += 1
+    return count
+
+def while_false_initially() -> int:
+    let x: int = 10
+    let count: int = 0
+    while x < 5:
+        count += 1
+        x -= 1
+    return count
+
+
+# ============================================================
+# 7. 递归边界
+# ============================================================
+
+def factorial(n: int) -> int:
+    guard n > 0 else return 1
+    return n * factorial(n - 1)
+
+def fibonacci(n: int) -> int:
+    guard n > 1 else return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+def countdown(n: int) -> list<int>:
+    let result: list<int> = []
+    guard n > 0 else return result
+    result.append(n)
+    let rest = countdown(n - 1)
+    for x in rest:
+        result.append(x)
+    return result
+
+
+# ============================================================
+# 8. 类型转换边界
+# ============================================================
+
+def int_to_float_boundary() -> float:
+    let i: int = 42
+    let f: float = float(i)
+    return f
+
+def float_to_int_truncation() -> int:
+    let f: float = 3.99
+    let i: int = int(f)
+    return i
+
+def string_to_int_boundary() -> int:
+    let s: str = "123"
+    let i: int = int(s)
+    return i
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Boundary Values Demo ===")
+
+    print("--- empty collections ---")
+    print(f"empty list: {handle_empty_list()}")
+    print(f"empty dict: {handle_empty_dict()}")
+    print(f"empty string: {handle_empty_string()}")
+    print(f"empty tuple: {handle_empty_tuple()}")
+
+    print("--- single element ---")
+    print(f"single list: {single_element_list()}")
+    print(f"single dict: {single_element_dict()}")
+
+    print("--- zero and negative ---")
+    print(f"0/5: {zero_division_safe(0, 5)}")
+    print(f"5/0: {zero_division_safe(5, 0)}")
+    print(f"negative index: {negative_index([1, 2, 3])}")
+    print(f"negative range: {negative_range()}")
+
+    print("--- large numbers ---")
+    print(f"large: {large_numbers()}")
+    print(f"max int: {max_int_operations()}")
+    print(f"long string len: {very_long_string()}")
+
+    print("--- nested empty ---")
+    print(f"nested empty: {nested_empty()}")
+
+    print("--- loop boundaries ---")
+    print(f"loop zero: {loop_zero_times()}")
+    print(f"loop once: {loop_once()}")
+    print(f"while false: {while_false_initially()}")
+
+    print("--- recursion ---")
+    print(f"factorial(0): {factorial(0)}")
+    print(f"factorial(5): {factorial(5)}")
+    print(f"fibonacci(0): {fibonacci(0)}")
+    print(f"fibonacci(10): {fibonacci(10)}")
+    print(f"countdown(5): {countdown(5)}")
+
+    print("--- type conversion ---")
+    print(f"int to float: {int_to_float_boundary()}")
+    print(f"float to int: {float_to_int_truncation()}")
+    print(f"str to int: {string_to_int_boundary()}")
+
+
+suite BoundaryValuesTests:
+    test empty_list:
+        assert handle_empty_list() == 0
+
+    test empty_dict:
+        assert handle_empty_dict() == 0
+
+    test empty_string:
+        assert handle_empty_string() == 0
+
+    test single_list:
+        assert single_element_list() == 42
+
+    test zero_division:
+        assert zero_division_safe(5, 0) == 0
+        assert zero_division_safe(0, 5) == 0
+
+    test negative_index:
+        assert negative_index([1, 2, 3]) == 3
+
+    test negative_range:
+        let r = negative_range()
+        assert len(r) == 5
+        assert r[0] == -5
+
+    test nested_empty:
+        assert nested_empty() == 3
+
+    test loop_zero:
+        assert loop_zero_times() == 0
+
+    test loop_once:
+        assert loop_once() == 1
+
+    test while_false:
+        assert while_false_initially() == 0
+
+    test factorial_zero:
+        assert factorial(0) == 1
+
+    test factorial_five:
+        assert factorial(5) == 120
+
+    test fib_zero:
+        assert fibonacci(0) == 0
+
+    test fib_ten:
+        assert fibonacci(10) == 55
+
+    test countdown:
+        let r = countdown(3)
+        assert r[0] == 3
+        assert len(r) == 3
+
+    test float_truncation:
+        assert float_to_int_truncation() == 3
+
+    test str_to_int:
+        assert string_to_int_boundary() == 123

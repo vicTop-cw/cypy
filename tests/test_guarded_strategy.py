@@ -26,12 +26,12 @@ def test_guarded_pred_method():
     """测试 __guarded_pred__ 守卫条件方法"""
     code = """
 class SafeConvertible:
-    letue: int
-    
-    def __guarded_pred__[bool](self) -> bool:
-        return self.letue > 0
-    
-    def __guarded_action__[bool](self) -> bool:
+    value: int
+
+    def __guarded_pred__<bool>(self) -> bool:
+        return self.value > 0
+
+    def __guarded_action__<bool>(self) -> bool:
         return True
 
 let s = SafeConvertible()
@@ -46,14 +46,14 @@ def test_guarded_action_method():
     """测试 __guarded_action__ 守卫动作方法"""
     code = """
 class RangeChecker:
-    def __init__(self, letue: int):
-        self.letue = letue
-    
-    def __guarded_pred__[float](self) -> bool:
-        return self.letue >= 0 and self.letue <= 100
-    
-    def __guarded_action__[float](self) -> float:
-        return float(self.letue) / 100.0
+    def __init__(self, value: int):
+        self.value = value
+
+    def __guarded_pred__<float>(self) -> bool:
+        return self.value >= 0 and self.value <= 100
+
+    def __guarded_action__<float>(self) -> float:
+        return float(self.value) / 100.0
 
 let rc = RangeChecker(50)
 let ratio: float = rc  # 应该调用 __guarded_action__

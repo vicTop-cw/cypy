@@ -1,0 +1,210 @@
+def demo_int_literals() -> int:
+    let a: int = 42
+    let b: int = -10
+    let c: int = 0
+    let d: int = 1_000_000
+    return a + b + c
+
+def demo_float_literals() -> float:
+    let pi: float = 3.14159
+    let e: float = 2.71828
+    let zero: float = 0.0
+    return pi + e
+
+def demo_str_literals() -> str:
+    let name: str = "Cypy"
+    let greeting: str = f"Hello, {name}!"
+    let raw: str = r"Raw\nstring"
+    return name
+
+def demo_bool_literals() -> bool:
+    let t: bool = True
+    let f: bool = False
+    let and_result: bool = True and False
+    let or_result: bool = True or False
+    return t
+
+def demo_list_type() -> list<int>:
+    let numbers: list<int> = [1, 2, 3, 4, 5]
+    let names: list<str> = ["Alice", "Bob", "Charlie"]
+    let nested: list<list<int>> = [[1, 2], [3, 4]]
+    let empty: list<int> = list()
+    return numbers
+
+def demo_dict_type() -> dict<str, int>:
+    let scores: dict<str, int> = dict()
+    scores["math"] = 95
+    scores["english"] = 87
+    scores["science"] = 92
+    return scores
+
+def demo_set_type() -> set<int>:
+    let unique: set<int> = set()
+    unique.add(1)
+    unique.add(2)
+    unique.add(3)
+    unique.add(3)
+    unique.add(2)
+    return unique
+
+def demo_tuple_type() -> tuple<str, int, float>:
+    let point: tuple<int, int> = (10, 20)
+    let data: tuple<str, int, float> = ("test", 42, 3.14)
+    let single: tuple<int> = (42,)
+    return data
+
+def demo_never_type() -> str:
+    let x: Never = None
+    return "unreachable"
+
+def demo_type_inference() -> str:
+    let annotated: int = 42
+    let unannotated = 42
+    let inferred_str = "hello"
+    let inferred_float = 3.14
+    let inferred_bool = True
+    return str(annotated)
+
+def demo_container_inference() -> list<int>:
+    let numbers = [1, 2, 3]
+    let typed_numbers: list<int> = [1, 2, 3]
+    return typed_numbers
+
+def main() -> int:
+    print("=== Basic Types Demo ===")
+
+    let int_result = demo_int_literals()
+    print(f"int literals: {int_result}")
+
+    let float_result = demo_float_literals()
+    print(f"float literals: {float_result}")
+
+    let str_result = demo_str_literals()
+    print(f"str literals: {str_result}")
+
+    let bool_result = demo_bool_literals()
+    print(f"bool literals: {bool_result}")
+
+    print("=== Container Types ===")
+
+    let list_result = demo_list_type()
+    print(f"list type: {list_result}")
+
+    let dict_result = demo_dict_type()
+    print(f"dict type: {dict_result}")
+
+    let set_result = demo_set_type()
+    print(f"set type: {set_result}")
+
+    let tuple_result = demo_tuple_type()
+    print(f"tuple type: {tuple_result}")
+
+    print("=== Type Inference ===")
+
+    let infer_result = demo_type_inference()
+    print(f"type inference: {infer_result}")
+
+    let container_infer = demo_container_inference()
+    print(f"container inference: {container_infer}")
+
+    return 0
+
+if __name__ == "__main__":
+    main()
+
+suite IntTypeTests:
+    test int_literals_correct:
+        let result = demo_int_literals()
+        assert result == 32
+
+    test int_zero:
+        let a: int = 0
+        assert a == 0
+
+    test int_negative:
+        let a: int = -100
+        assert a == -100
+
+suite FloatTypeTests:
+    test float_literals_correct:
+        let result = demo_float_literals()
+        assert result > 5.8
+
+    test float_zero:
+        let f: float = 0.0
+        assert f == 0.0
+
+suite StrTypeTests:
+    test str_literal:
+        let result = demo_str_literals()
+        assert result == "Cypy"
+
+    test f_string:
+        let name: str = "Test"
+        let msg = f"Hello, {name}!"
+        assert msg == "Hello, Test!"
+
+suite BoolTypeTests:
+    test bool_literals:
+        let t: bool = True
+        let f: bool = False
+        assert t == True
+        assert f == False
+
+    test bool_and:
+        assert (True and False) == False
+        assert (True and True) == True
+
+    test bool_or:
+        assert (True or False) == True
+
+suite ListTypeTests:
+    test list_creation:
+        let result = demo_list_type()
+        assert len(result) == 5
+        assert result[0] == 1
+        assert result[4] == 5
+
+    test list_empty:
+        let empty: list<int> = list()
+        assert len(empty) == 0
+
+    test list_nested:
+        let nested: list<list<int>> = [[1, 2], [3, 4]]
+        assert len(nested) == 2
+
+suite DictTypeTests:
+    test dict_creation:
+        let result = demo_dict_type()
+        assert result["math"] == 95
+
+suite SetTypeTests:
+    test set_creation:
+        let result = demo_set_type()
+        assert len(result) == 3
+
+suite TupleTypeTests:
+    test tuple_creation:
+        let result = demo_tuple_type()
+        assert result[0] == "test"
+        assert result[1] == 42
+
+    test tuple_element_access:
+        let point: tuple<int, int> = (10, 20)
+        assert point[0] == 10
+        assert point[1] == 20
+
+suite TypeInferenceTests:
+    test annotated_vs_unannotated:
+        let annotated: int = 42
+        let unannotated = 42
+        assert annotated == 42
+        assert unannotated == 42
+
+    test inferred_string:
+        let s = "hello"
+        assert s == "hello"
+
+    test container_inference:
+        let result = demo_container_inference()
+        assert len(result) == 3

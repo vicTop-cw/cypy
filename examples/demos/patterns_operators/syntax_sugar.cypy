@@ -1,0 +1,336 @@
+# 语法糖完整示例
+# 演示 Cypy 的 name~、defer、列表推导式、解包、F-string 等语法糖
+
+# ============================================================
+# 1. name~ 命名参数语法糖
+# ============================================================
+
+def make_point(x: float, y: float, z: float) -> str:
+    return f"({x}, {y}, {z})"
+
+
+def named_param_sugar_basic() -> str:
+    x = 1.0
+    y = 2.0
+    z = 3.0
+    return make_point(x~, y~, z~)
+
+
+def named_param_sugar_mixed() -> str:
+    a = 10
+    b = 20
+    c = 30
+    return make_point(a, b, c~)
+
+
+def named_param_sugar_with_prefix() -> str:
+    x_coord = 5.0
+    y_coord = 10.0
+    z_coord = 15.0
+    return make_point(x_coord~, y_coord~, z_coord~)
+
+
+def add_values(a: int, b: int, c: int) -> int:
+    return a + b + c
+
+
+def named_param_add() -> int:
+    x = 100
+    y = 200
+    z = 300
+    return add_values(x~, y~, z~)
+
+
+class Calculator:
+    value: float
+
+    def add(self, x: float) -> float:
+        self.value += x
+        return self.value
+
+    def multiply(self, x: float) -> float:
+        self.value *= x
+        return self.value
+
+
+def named_param_method() -> float:
+    calc = Calculator(value=0.0)
+    amount = 42.0
+    result = calc.add(amount~)
+    return result
+
+
+# ============================================================
+# 2. defer 语句
+# ============================================================
+
+def defer_basic() -> str:
+    result = "开始"
+    defer:
+        result = result + " → 清理"
+    result = result + " → 处理"
+    return result
+
+
+def defer_multiple() -> str:
+    order: list<str> = []
+
+    defer:
+        order.append("第三清理")
+    defer:
+        order.append("第二清理")
+    defer:
+        order.append("第一清理")
+
+    order.append("主逻辑")
+    return str(order)
+
+
+def defer_with_error() -> str:
+    messages: list<str> = []
+
+    defer:
+        messages.append("defer 执行")
+
+    messages.append("函数开始")
+    messages.append("函数结束")
+
+    return str(messages)
+
+
+def defer_resource_cleanup() -> str:
+    log: list<str> = []
+
+    defer:
+        log.append("关闭文件")
+    defer:
+        log.append("释放锁")
+
+    log.append("获取锁")
+    log.append("打开文件")
+    log.append("处理数据")
+
+    return str(log)
+
+
+# ============================================================
+# 3. 列表推导式
+# ============================================================
+
+def list_comprehension_basic() -> list<int>:
+    return [x ** 2 for x in range(10)]
+
+
+def list_comprehension_with_condition() -> list<int>:
+    return [x ** 2 for x in range(10) if x % 2 == 0]
+
+
+def list_comprehension_nested() -> list<tuple<int, int>>:
+    return [(x, y) for x in [1, 2, 3] for y in [4, 5, 6]]
+
+
+def list_comprehension_multiple_conditions() -> list<int>:
+    return [x for x in range(20) if x % 2 == 0 if x % 3 == 0]
+
+
+def list_comprehension_string() -> list<str>:
+    words = ["hello", "world", "foo", "bar", "baz"]
+    return [w.upper() for w in words if len(w) > 3]
+
+
+def list_comprehension_dict() -> dict<str, int>:
+    words = ["apple", "banana", "cherry"]
+    return dict([(w, len(w)) for w in words])
+
+
+def list_comprehension_set() -> set<int>:
+    numbers = [1, 2, 2, 3, 3, 3, 4, 4, 5]
+    return set([x * 2 for x in numbers])
+
+
+# ============================================================
+# 4. 元组/列表解包
+# ============================================================
+
+def tuple_unpacking() -> str:
+    (x, y, z) = (10, 20, 30)
+    return f"x={x}, y={y}, z={z}"
+
+
+def tuple_unpacking_ignore() -> str:
+    (_, result, _) = (10, 42, 30)
+    return f"结果: {result}"
+
+
+def list_unpacking() -> str:
+    [a, b, c] = [100, 200, 300]
+    return f"a={a}, b={b}, c={c}"
+
+
+def list_unpacking_rest() -> str:
+    [first, *rest] = [1, 2, 3, 4, 5]
+    return f"首: {first}, 其余: {rest}"
+
+
+def nested_unpacking() -> str:
+    ((x, y), z) = ((1, 2), 3)
+    return f"x={x}, y={y}, z={z}"
+
+
+def dict_unpacking() -> str:
+    person = dict(name="Alice", age=30)
+    merged = dict(verbose=False, name=person["name"], age=person["age"])
+    return str(merged)
+
+
+def unpacking_in_match() -> str:
+    data = (1, 2, 3)
+    match data:
+        case (a, b, c):
+            return f"a={a}, b={b}, c={c}"
+        case _:
+            return "不匹配"
+    return ""
+
+
+# ============================================================
+# 5. F-string 格式化
+# ============================================================
+
+def fstring_basic() -> str:
+    name = "世界"
+    return f"你好, {name}!"
+
+
+def fstring_expression() -> str:
+    x = 10
+    y = 20
+    return f"{x} + {y} = {x + y}"
+
+
+def fstring_formatting() -> str:
+    pi = 3.14159265
+    return f"π ≈ {pi:.4f}"
+
+
+def fstring_multiline() -> str:
+    name = "Alice"
+    age = 30
+    score = 95.5
+    return f"姓名: {name}\n年龄: {age}\n分数: {score:.1f}"
+
+
+def fstring_with_logic() -> str:
+    x = 42
+    return f"数字 {x} 是 {'偶数' if x % 2 == 0 else '奇数'}"
+
+
+def fstring_calling() -> str:
+    def greet(name: str) -> str:
+        return f"你好, {name}"
+
+    return f"{greet('世界')}!"
+
+
+def fstring_width_alignment() -> str:
+    name = "Alice"
+    age = 30
+    return f"|{name:>10}|{age:>5}|"
+
+
+# ============================================================
+# 6. 综合语法糖示例
+# ============================================================
+
+def combined_sugar_demo() -> str:
+    def format_user(name: str, age: int) -> str:
+        return f"{name} ({age} 岁)"
+
+    users = [("Alice", 30), ("Bob", 25), ("Charlie", 35)]
+
+    results = [format_user(name~, age~) for (name, age) in users]
+    return str(results)
+
+
+def pipeline_with_sugar() -> str:
+    def greet(name: str) -> str:
+        return f"你好, {name}!"
+
+    def emphasize(text: str) -> str:
+        return text.upper()
+
+    names = ["alice", "bob", "charlie"]
+    results = [n |> greet |> emphasize for n in names]
+    return str(results)
+
+
+def guard_with_defer() -> str:
+    cleanup_log: list<str> = []
+
+    defer:
+        cleanup_log.append("清理完成")
+
+    data = "hello"
+    guard data else "空数据"
+
+    cleanup_log.append(f"处理: {data}")
+    return str(cleanup_log)
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=" * 50)
+    print("语法糖完整示例")
+    print("=" * 50)
+
+    print("\n-- name~ 命名参数糖 --")
+    print(f"  named_param_sugar_basic: {named_param_sugar_basic()}")
+    print(f"  named_param_sugar_mixed: {named_param_sugar_mixed()}")
+    print(f"  named_param_sugar_with_prefix: {named_param_sugar_with_prefix()}")
+    print(f"  named_param_add: {named_param_add()}")
+    print(f"  named_param_method: {named_param_method()}")
+
+    print("\n-- defer 语句 --")
+    print(f"  defer_basic: {defer_basic()}")
+    print(f"  defer_multiple: {defer_multiple()}")
+    print(f"  defer_with_error: {defer_with_error()}")
+    print(f"  defer_resource_cleanup: {defer_resource_cleanup()}")
+
+    print("\n-- 列表推导式 --")
+    print(f"  list_comprehension_basic: {list_comprehension_basic()}")
+    print(f"  list_comprehension_with_condition: {list_comprehension_with_condition()}")
+    print(f"  list_comprehension_nested: {list_comprehension_nested()}")
+    print(f"  list_comprehension_multiple_conditions: {list_comprehension_multiple_conditions()}")
+    print(f"  list_comprehension_string: {list_comprehension_string()}")
+    print(f"  list_comprehension_dict: {list_comprehension_dict()}")
+    print(f"  list_comprehension_set: {list_comprehension_set()}")
+
+    print("\n-- 元组/列表解包 --")
+    print(f"  tuple_unpacking: {tuple_unpacking()}")
+    print(f"  tuple_unpacking_ignore: {tuple_unpacking_ignore()}")
+    print(f"  list_unpacking: {list_unpacking()}")
+    print(f"  list_unpacking_rest: {list_unpacking_rest()}")
+    print(f"  nested_unpacking: {nested_unpacking()}")
+    print(f"  dict_unpacking: {dict_unpacking()}")
+    print(f"  unpacking_in_match: {unpacking_in_match()}")
+
+    print("\n-- F-string 格式化 --")
+    print(f"  fstring_basic: {fstring_basic()}")
+    print(f"  fstring_expression: {fstring_expression()}")
+    print(f"  fstring_formatting: {fstring_formatting()}")
+    print(f"  fstring_multiline:")
+    print(fstring_multiline())
+    print(f"  fstring_with_logic: {fstring_with_logic()}")
+    print(f"  fstring_calling: {fstring_calling()}")
+    print(f"  fstring_width_alignment: {fstring_width_alignment()}")
+
+    print("\n-- 综合示例 --")
+    print(f"  combined_sugar_demo: {combined_sugar_demo()}")
+    print(f"  pipeline_with_sugar: {pipeline_with_sugar()}")
+    print(f"  guard_with_defer: {guard_with_defer()}")
+
+    print("\n" + "=" * 50)
+    print("所有语法糖示例运行完毕")

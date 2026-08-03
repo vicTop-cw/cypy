@@ -1,0 +1,123 @@
+#!bin cypy
+# ============================================================
+# trait_basic.cypy — Trait 基础示例
+# 演示 Cypy 的 trait 系统核心特性
+# ============================================================
+
+# === 1. 基本 Trait 定义 ===
+# 定义一个只包含方法签名的 trait
+trait Printable:
+    def print_info(self) -> None
+
+# 定义另一个简单 trait
+trait Serializable:
+    def to_json(self) -> str
+    def from_json(self, data: str) -> Self
+
+# === 2. 带默认实现的 Trait ===
+# Trait 可以提供方法的默认实现，实现该 trait 的类型可以直接使用
+trait Comparable<T>:
+    def compare(self, other: T) -> int
+
+    def equals(self, other: T) -> bool:
+        return self.compare(other) == 0
+
+    def less_than(self, other: T) -> bool:
+        return self.compare(other) < 0
+
+    def greater_than(self, other: T) -> bool:
+        return self.compare(other) > 0
+
+# === 3. 泛型 Trait ===
+# trait 支持泛型参数，类似于 Rust 的 trait<T>
+trait Container<T>:
+    def add(self, item: T) -> None
+    def remove(self, item: T) -> bool
+    def contains(self, item: T) -> bool
+    def size(self) -> int
+
+trait Iterable<T>:
+    def __iter__(self) -> Iterator
+    def next(self) -> T
+
+# === 4. 在结构体内部实现 Trait ===
+# 结构体可以在定义时直接实现 trait 的方法
+struct Person:
+    name: str
+    age: int
+
+    def print_info(self) -> None:
+        print(f"Person: {self.name}, age {self.age}")
+
+    def to_json(self) -> str:
+        return f'{{"name": "{self.name}", "age": {self.age}}}'
+
+    def from_json(self, data: str) -> Person:
+        return Person(name="", age=0)
+
+# 使用 impl 关键字声明实现
+impl Printable for Person:
+    pass
+
+impl Serializable for Person:
+    pass
+
+# === 5. 外部实现（Struct 外部实现 Trait）===
+# Point 结构体本身没有 print_info 方法
+struct Point:
+    x: float
+    y: float
+
+# 在外部通过 impl 为 Point 添加 Printable 实现
+impl Printable for Point:
+    def print_info(self) -> None:
+        print(f"Point: ({self.x}, {self.y})")
+
+# 外部实现 Serializable
+impl Serializable for Point:
+    def to_json(self) -> str:
+        return f'{{"x": {self.x}, "y": {self.y}}}'
+
+    def from_json(self, data: str) -> Point:
+        return Point(x=0.0, y=0.0)
+
+# === 6. 实现泛型 Trait ===
+struct ListBox<T>:
+    items: list<T>
+
+    def add(self, item: T) -> None:
+        self.items.append(item)
+
+    def remove(self, item: T) -> bool:
+        if item in self.items:
+            self.items.remove(item)
+            return True
+        return False
+
+    def contains(self, item: T) -> bool:
+        return item in self.items
+
+    def size(self) -> int:
+        return len(self.items)
+
+# 实现泛型 Container<T>
+impl Container<T> for ListBox<T>:
+    pass
+
+# === 7. 使用示例 ===
+def demo() -> None:
+    let person: Person = Person(name="Alice", age=30)
+    person.print_info()
+
+    let point: Point = Point(x=1.5, y=2.5)
+    point.print_info()
+
+    let box: ListBox<int> = ListBox<int>(items=[])
+    box.add(1)
+    box.add(2)
+    box.add(3)
+    print(f"Size: {box.size()}")
+    print(f"Contains 2: {box.contains(2)}")
+
+    let json_str: str = person.to_json()
+    print(f"JSON: {json_str}")

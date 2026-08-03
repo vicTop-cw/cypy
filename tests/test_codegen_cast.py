@@ -40,7 +40,7 @@ class Rational:
         self.num = num
         self.den = den
     
-    def __cast__[float](self) -> float:
+    def __cast__<float>(self) -> float:
         return self.num / self.den
 
 let r = Rational(3, 4)
@@ -64,11 +64,11 @@ def test_try_cast_method():
     """测试 __try_cast__ 方法定义"""
     code = """
 class SafeInt:
-    def __init__(self, letue: int):
-        self.letue = letue
-    
-    def __try_cast__[bool](self) -> bool:
-        if self.letue != 0:
+    def __init__(self, value: int):
+        self.value = value
+
+    def __try_cast__<bool>(self) -> bool:
+        if self.value != 0:
             return True
         return False
 

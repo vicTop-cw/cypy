@@ -1,4 +1,4 @@
-"""综合测试用例 - 测试多个新特性的组合使用"""
+﻿"""综合测试用例 - 测试多个新特性的组合使用"""
 
 from cypyc.parser.parser import Parser
 from cypyc.parser.lexer import Lexer
@@ -60,7 +60,7 @@ def handle_value(x):
 def test_integration_generic_and_decorator():
     """测试泛型函数和装饰器的组合"""
     source = '''@test
-def test_container[T]():
+def test_container<T>():
     guard True else None
     assert 1 + 1 == 2
     return None'''
@@ -142,7 +142,7 @@ def test_integration_comptime_and_type():
     """测试 comptime 和类型别名的组合"""
     source = '''type Size = int
 
-struct Buffer[T]:
+struct Buffer<T>:
     data: int
 
 @test

@@ -1,0 +1,317 @@
+# Cypy 枚举 (Enum) 完整示例
+# 演示 enum 的核心特性：简单枚举、带值枚举、枚举方法、带数据枚举、模式匹配
+
+# ============================================================
+# 1. 简单枚举（无值）
+# ============================================================
+
+enum Direction:
+    NORTH
+    SOUTH
+    EAST
+    WEST
+
+
+enum Status:
+    PENDING
+    RUNNING
+    COMPLETED
+    FAILED
+    CANCELLED
+
+
+def describe_direction(dir: Direction) -> str:
+    match dir:
+        case Direction.NORTH:
+            return "向北"
+        case Direction.SOUTH:
+            return "向南"
+        case Direction.EAST:
+            return "向东"
+        case Direction.WEST:
+            return "向西"
+        case _:
+            return "未知方向"
+
+
+# ============================================================
+# 2. 带值枚举
+# ============================================================
+
+enum Priority:
+    LOW = 1
+    MEDIUM = 2
+    HIGH = 3
+    CRITICAL = 4
+
+
+enum HttpStatus:
+    OK = 200
+    CREATED = 201
+    BAD_REQUEST = 400
+    NOT_FOUND = 404
+    INTERNAL_ERROR = 500
+
+
+enum LogLevel:
+    DEBUG = "debug"
+    INFO = "info"
+    WARNING = "warning"
+    ERROR = "error"
+    CRITICAL = "critical"
+
+
+# ============================================================
+# 3. 枚举方法
+# ============================================================
+
+enum Operation:
+    ADD
+    SUBTRACT
+    MULTIPLY
+    DIVIDE
+
+
+def operation_symbol(op: Operation) -> str:
+    match op:
+        case Operation.ADD:
+            return "+"
+        case Operation.SUBTRACT:
+            return "-"
+        case Operation.MULTIPLY:
+            return "*"
+        case Operation.DIVIDE:
+            return "/"
+        case _:
+            return "?"
+
+def operation_apply(op: Operation, a: float, b: float) -> float:
+    match op:
+        case Operation.ADD:
+            return a + b
+        case Operation.SUBTRACT:
+            return a - b
+        case Operation.MULTIPLY:
+            return a * b
+        case Operation.DIVIDE:
+            guard b != 0 else:
+                raise ZeroDivisionError("Division by zero")
+            return a / b
+        case _:
+            raise ValueError("Unknown operation")
+
+def operation_precedence(op: Operation) -> int:
+    match op:
+        case Operation.ADD | Operation.SUBTRACT:
+            return 1
+        case Operation.MULTIPLY | Operation.DIVIDE:
+            return 2
+        case _:
+            return 0
+
+
+# ============================================================
+# 4. 带数据的枚举（数据通过额外参数传递）
+# ============================================================
+
+enum Shape:
+    CIRCLE
+    RECTANGLE
+    TRIANGLE
+    LINE
+
+
+enum NetworkResponse:
+    SUCCESS
+    ERROR
+    TIMEOUT
+
+
+def area(shape: Shape, dims: tuple) -> float:
+    match shape:
+        case Shape.CIRCLE:
+            let r: float = dims[0]
+            return 3.14159 * r * r
+        case Shape.RECTANGLE:
+            let w: float = dims[0]
+            let h: float = dims[1]
+            return w * h
+        case Shape.TRIANGLE:
+            let b: float = dims[0]
+            let h2: float = dims[1]
+            return 0.5 * b * h2
+        case Shape.LINE:
+            return 0.0
+        case _:
+            return 0.0
+
+
+def describe_response(resp: NetworkResponse, data: str = "", code: int = 0, message: str = "") -> str:
+    match resp:
+        case NetworkResponse.SUCCESS:
+            return f"成功: {data}"
+        case NetworkResponse.ERROR:
+            return f"错误 [{code}]: {message}"
+        case NetworkResponse.TIMEOUT:
+            return "请求超时"
+        case _:
+            return "未知响应"
+
+
+# ============================================================
+# 5. 模式匹配与枚举
+# ============================================================
+
+enum Result:
+    OK
+    ERR
+    EMPTY
+
+
+def unwrap_or_default(result: Result, value: str = "", message: str = "", default: str = "") -> str:
+    match result:
+        case Result.OK:
+            return value
+        case Result.ERR:
+            print(f"警告: {message}")
+            return default
+        case Result.EMPTY:
+            return default
+        case _:
+            return default
+
+
+def classify_priority(p: Priority) -> str:
+    match p:
+        case Priority.LOW:
+            return "低优先级"
+        case Priority.MEDIUM:
+            return "中优先级"
+        case Priority.HIGH:
+            return "高优先级"
+        case Priority.CRITICAL:
+            return "紧急优先级"
+        case _:
+            return "未知"
+
+
+# ============================================================
+# 6. 枚举遍历与成员检查
+# ============================================================
+
+enum Color:
+    RED
+    GREEN
+    BLUE
+    YELLOW
+    PURPLE
+
+
+def list_colors() -> str:
+    let parts: list<str> = []
+    for color in Color:
+        parts.append(color.name)
+    return ", ".join(parts)
+
+
+# ============================================================
+# 7. match 表达式（返回值形式）
+# ============================================================
+
+def status_label(status: Status) -> str:
+    return match status:
+        case Status.PENDING: "待处理"
+        case Status.RUNNING: "运行中"
+        case Status.COMPLETED: "已完成"
+        case Status.FAILED: "失败"
+        case Status.CANCELLED: "已取消"
+        case _: "未知"
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Cypy 枚举示例 ===\n")
+
+    # 1. 简单枚举
+    print("--- 1. 简单枚举 ---")
+    let dir: Direction = Direction.NORTH
+    print(f"方向: {dir}")
+    print(f"描述: {describe_direction(dir)}")
+    print(f"方向名称: {dir.name}")
+
+    let status: Status = Status.RUNNING
+    print(f"状态: {status} -> {status_label(status)}")
+
+    # 2. 带值枚举
+    print("\n--- 2. 带值枚举 ---")
+    let p: Priority = Priority.HIGH
+    print(f"优先级: {p} (值={int(p)})")
+    let http: HttpStatus = HttpStatus.NOT_FOUND
+    print(f"HTTP {int(http)}: {http.name}")
+    let log: LogLevel = LogLevel.ERROR
+    print(f"日志级别: {log.name} (值={int(log)})")
+
+    # 3. 枚举方法
+    print("\n--- 3. 枚举方法 ---")
+    let op: Operation = Operation.MULTIPLY
+    print(f"运算符: {operation_symbol(op)}")
+    print(f"3 {operation_symbol(op)} 4 = {operation_apply(op, 3, 4)}")
+    print(f"优先级: {operation_precedence(op)}")
+
+    let add_op: Operation = Operation.ADD
+    print(f"10 {operation_symbol(add_op)} 5 = {operation_apply(add_op, 10, 5)}")
+
+    # 测试除零错误
+    let div_op: Operation = Operation.DIVIDE
+    try:
+        operation_apply(div_op, 10, 0)
+    except ZeroDivisionError as e:
+        print(f"除零捕获: {e}")
+
+    # 4. 带数据枚举
+    print("\n--- 4. 带数据枚举 ---")
+    let circle: Shape = Shape.CIRCLE
+    let rect: Shape = Shape.RECTANGLE
+    let triangle: Shape = Shape.TRIANGLE
+    let line: Shape = Shape.LINE
+
+    print(f"圆面积: {area(circle, (5.0,)):.2f}")
+    print(f"矩形面积: {area(rect, (4.0, 6.0)):.2f}")
+    print(f"三角形面积: {area(triangle, (3.0, 8.0)):.2f}")
+    print(f"线面积: {area(line, (0.0, 0.0, 3.0, 4.0)):.2f}")
+
+    let ok_resp: NetworkResponse = NetworkResponse.SUCCESS
+    let err_resp: NetworkResponse = NetworkResponse.ERROR
+    let timeout_resp: NetworkResponse = NetworkResponse.TIMEOUT
+    print(f"{describe_response(ok_resp, data='Hello')}")
+    print(f"{describe_response(err_resp, code=404, message='Not Found')}")
+    print(f"{describe_response(timeout_resp)}")
+
+    # 5. 模式匹配
+    print("\n--- 5. 模式匹配 ---")
+    let ok_result: Result = Result.OK
+    let err_result: Result = Result.ERR
+    let empty_result: Result = Result.EMPTY
+
+    print(f"unwrap OK: {unwrap_or_default(ok_result, value='data.json', default='默认')}")
+    print(f"unwrap ERR: {unwrap_or_default(err_result, message='文件不存在', default='默认')}")
+    print(f"unwrap EMPTY: {unwrap_or_default(empty_result, default='默认')}")
+
+    print(f"Priority LOW: {classify_priority(Priority.LOW)}")
+    print(f"Priority CRITICAL: {classify_priority(Priority.CRITICAL)}")
+
+    # 6. 枚举遍历
+    print("\n--- 6. 枚举遍历 ---")
+    print(f"所有颜色: {list_colors()}")
+    for color in Color:
+        print(f"  - {color.name}")
+
+    # 7. match 表达式
+    print("\n--- 7. match 表达式 ---")
+    print(f"PENDING 标签: {status_label(Status.PENDING)}")
+    print(f"FAILED 标签: {status_label(Status.FAILED)}")
+
+    print("\n=== 所有枚举示例完成 ===")

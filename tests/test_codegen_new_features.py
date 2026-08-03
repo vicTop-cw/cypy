@@ -1,4 +1,4 @@
-"""测试新增特性的代码生成"""
+﻿"""测试新增特性的代码生成"""
 
 from cypyc.parser.parser import Parser
 from cypyc.parser.lexer import Lexer
@@ -92,7 +92,7 @@ def test_match_with_variable_pattern_codegen():
 
 def test_struct_with_generic_codegen():
     """测试带泛型参数的结构体代码生成"""
-    source = '''struct Container[T]:
+    source = '''struct Container<T>:
     data: int'''
 
     lexer = Lexer(source)

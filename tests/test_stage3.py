@@ -6,7 +6,7 @@ from cypyc.codegen.cython_generator import CythonGenerator
 
 class TestGenericTypes(unittest.TestCase):
     def test_generic_struct(self):
-        source = "struct Pair[T, U]:\n    first: T\n    second: U\n"
+        source = "struct Pair<T, U>:\n    first: T\n    second: U\n"
         lexer = Lexer(source)
         parser = Parser(lexer.tokenize())
         ast = parser.parse()
@@ -15,7 +15,7 @@ class TestGenericTypes(unittest.TestCase):
         self.assertIn("struct Pair", code)
 
     def test_generic_function(self):
-        source = "def identity[T](value: T) -> T:\n    return value\n"
+        source = "def identity<T>(value: T) -> T:\n    return value\n"
         lexer = Lexer(source)
         parser = Parser(lexer.tokenize())
         ast = parser.parse()
@@ -24,7 +24,7 @@ class TestGenericTypes(unittest.TestCase):
         self.assertIn("identity", code)
 
     def test_generic_type_usage(self):
-        source = "def create_pair():\n    p: Pair[int, str]\n    return p\n"
+        source = "def create_pair():\n    p: Pair<int, str>\n    return p\n"
         lexer = Lexer(source)
         parser = Parser(lexer.tokenize())
         ast = parser.parse()
@@ -41,8 +41,8 @@ class TestTraitImplementation(unittest.TestCase):
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("class Drawable:", code)
-        self.assertIn("def draw(self) -> None:", code)
+        self.assertIn("cdef class Drawable", code)
+        self.assertIn("cpdef None draw", code)
 
     def test_trait_with_multiple_methods(self):
         source = "trait Shape:\n    def area() -> float:\n        pass\n    def perimeter() -> float:\n        pass\n"
@@ -51,8 +51,8 @@ class TestTraitImplementation(unittest.TestCase):
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("def area(self) -> float:", code)
-        self.assertIn("def perimeter(self) -> float:", code)
+        self.assertIn("cpdef float area", code)
+        self.assertIn("cpdef float perimeter", code)
 
 
 class TestImplBlock(unittest.TestCase):
@@ -63,8 +63,8 @@ class TestImplBlock(unittest.TestCase):
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("# impl Shape for Circle", code)
-        self.assertIn("def area(self) -> float:", code)
+        self.assertIn("_Shape__Circle", code)
+        self.assertIn("cpdef float area", code)
 
 
 if __name__ == "__main__":

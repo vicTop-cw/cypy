@@ -1,0 +1,38 @@
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+
+def farewell(name: str) -> str:
+    return f"Goodbye, {name}!"
+
+def main() -> int:
+    let message = greet("World")
+    print(message)
+
+    let bye = farewell("World")
+    print(bye)
+
+    let name: str = "Cypy"
+    let custom = greet(name)
+    print(custom)
+
+    return 0
+
+if __name__ == "__main__":
+    main()
+
+suite HelloTests:
+    test greet_returns_hello_world:
+        let result = greet("World")
+        assert result == "Hello, World!"
+
+    test greet_with_empty_string:
+        let result = greet("")
+        assert result == "Hello, !"
+
+    test farewell_returns_goodbye:
+        let result = farewell("Alice")
+        assert result == "Goodbye, Alice!"
+
+    test main_returns_zero:
+        let result = main()
+        assert result == 0

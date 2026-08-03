@@ -1,0 +1,145 @@
+# Async/Await 异步编程示例
+# 演示 Cypy 的异步函数、await 表达式、Task 创建和收集
+
+import asyncio
+
+async def fetch_url(url: str) -> str:
+    """异步获取 URL 数据"""
+    print(f"  Fetching: {url}")
+    await asyncio.sleep(0.3)
+    return f"<data from {url}>"
+
+async def process_data(data: str) -> str:
+    """异步处理数据"""
+    print(f"  Processing: {data[:20]}...")
+    await asyncio.sleep(0.1)
+    return f"<processed: {data}>"
+
+async def demo_simple_async() -> int:
+    """演示基本 async/await"""
+    print("=== 基本 async/await ===")
+    
+    async def greet(name: str) -> str:
+        await asyncio.sleep(0.1)
+        return f"Hello, {name}!"
+    
+    let greeting = await greet("Cypy")
+    print(f"  Greeting: {greeting}")
+    return 0
+
+async def demo_async_chain() -> int:
+    """演示异步链式调用"""
+    print("=== 异步链式调用 ===")
+    
+    let raw = await fetch_url("https://api.example.com/raw")
+    let processed = await process_data(raw)
+    print(f"  Final result: {processed}")
+    return 0
+
+async def demo_task_creation() -> int:
+    """演示 Task 创建"""
+    print("=== Task 创建 ===")
+    
+    let task1 = asyncio.create_task(fetch_url("https://api.example.com/task1"))
+    let task2 = asyncio.create_task(fetch_url("https://api.example.com/task2"))
+    let task3 = asyncio.create_task(fetch_url("https://api.example.com/task3"))
+    
+    print("  三个 Task 已创建，等待完成...")
+    
+    let r1 = await task1
+    let r2 = await task2
+    let r3 = await task3
+    
+    print(f"  Task1: {r1}")
+    print(f"  Task2: {r2}")
+    print(f"  Task3: {r3}")
+    return 0
+
+async def demo_task_gather() -> int:
+    """演示 asyncio.gather 收集多个任务"""
+    print("=== Task gather 收集 ===")
+    
+    let urls: list<str> = ["https://api.example.com/a", "https://api.example.com/b", "https://api.example.com/c", "https://api.example.com/d", "https://api.example.com/e"]
+    
+    let tasks: list = []
+    for url in urls:
+        tasks.append(fetch_url(url))
+    
+    let results = await asyncio.gather(*tasks)
+    
+    for i in range(len(results)):
+        print(f"  Result[{i}]: {results[i]}")
+    
+    return 0
+
+class FileResource:
+    """上下文管理器 - 模拟文件资源"""
+    
+    def __enter__(self):
+        print("  [FileResource] 打开资源")
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print("  [FileResource] 关闭资源")
+        if exc_type != None:
+            print(f"  [FileResource] 异常: {exc_val}")
+        return False
+    
+    def read(self) -> str:
+        return "file content"
+
+async def demo_async_context_manager() -> int:
+    """演示上下文管理器与异步配合使用"""
+    print("=== 上下文管理器与异步 ===")
+    
+    with FileResource() as resource:
+        let content = resource.read()
+        print(f"  读取内容: {content}")
+    
+    print("  资源已安全释放")
+    
+    async def async_within_context() -> str:
+        print("  在上下文内执行异步操作")
+        await asyncio.sleep(0.1)
+        return "async_result"
+    
+    let result = await async_within_context()
+    print(f"  异步结果: {result}")
+    
+    return 0
+
+async def demo_concurrent_with_errors() -> int:
+    """演示并发任务中的错误处理"""
+    print("=== 并发错误处理 ===")
+    
+    async def risky_task(name: str, fail: bool) -> str:
+        await asyncio.sleep(0.1)
+        if fail:
+            raise RuntimeError(f"Task {name} failed!")
+        return f"{name}-ok"
+    
+    let tasks = [risky_task("A", False), risky_task("B", True), risky_task("C", False)]
+    
+    try:
+        let results = await asyncio.gather(*tasks)
+        print(f"  Results: {results}")
+    except RuntimeError as e:
+        print(f"  捕获到错误: {e}")
+    
+    return 0
+
+def main() -> int:
+    print("====== Async/Await 演示 ======")
+    
+    asyncio.run(demo_simple_async())
+    asyncio.run(demo_async_chain())
+    asyncio.run(demo_task_creation())
+    asyncio.run(demo_task_gather())
+    asyncio.run(demo_async_context_manager())
+    asyncio.run(demo_concurrent_with_errors())
+    
+    print("====== 所有异步演示完成 ======")
+    return 0
+
+if __name__ == "__main__":
+    main()

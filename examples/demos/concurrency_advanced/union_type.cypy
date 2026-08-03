@@ -1,0 +1,97 @@
+# 联合类型（Union Type）示例
+# 演示 Cypy 的联合类型系统
+
+type Number = int | float
+type OptionalStr = str | None
+type MultiResult = int | float | str | bool
+
+def basic_union(a: int | float, b: int | float) -> Number:
+    """基本联合类型参数和返回值"""
+    return a + b
+
+def union_with_none(name: str | None) -> str:
+    """联合类型与 None 配合使用"""
+    if name is None:
+        return "Unknown"
+    return f"Hello, {name}"
+
+def type_narrowing(value: int | str) -> str:
+    """使用 isinstance 进行类型收窄"""
+    if isinstance(value, int):
+        # value 在此处收窄为 int
+        return f"Integer: {value * 2}"
+    else:
+        # value 在此处收窄为 str
+        return f"String: {value.upper()}"
+
+def multiple_type_union(value: int | float | str | bool) -> str:
+    """多类型联合"""
+    if isinstance(value, int):
+        return f"int: {value}"
+    elif isinstance(value, float):
+        return f"float: {value:.2f}"
+    elif isinstance(value, str):
+        return f"str: {value}"
+    else:
+        return f"bool: {value}"
+
+def find_user(user_id: int) -> str | None:
+    """返回 str | None 的函数"""
+    let users: list<str> = ["Alice", "Bob", "Charlie"]
+    if user_id >= 0 and user_id < len(users):
+        return users[user_id]
+    return None
+
+def process_mixed_data(data: list<int | str>) -> list<str>:
+    """处理包含多种类型的列表"""
+    let result: list<str> = []
+    for item in data:
+        if isinstance(item, int):
+            result.append(f"Number: {item}")
+        else:
+            result.append(f"Text: {item}")
+    return result
+
+def main() -> int:
+    print("====== 联合类型演示 ======")
+    
+    print("--- 基本联合类型 ---")
+    let x: Number = 42
+    let y: Number = 3.14
+    print(f"  x + y = {basic_union(x, y)}")
+    print(f"  int + float = {basic_union(10, 2.5)}")
+    
+    print("--- Union with None ---")
+    print(f"  union_with_none('Alice') = {union_with_none('Alice')}")
+    print(f"  union_with_none(None) = {union_with_none(None)}")
+    
+    print("--- 类型收窄 ---")
+    print(f"  type_narrowing(42) = {type_narrowing(42)}")
+    print(f"  type_narrowing('hello') = {type_narrowing('hello')}")
+    
+    print("--- 多类型联合 ---")
+    print(f"  multiple_type_union(42) = {multiple_type_union(42)}")
+    print(f"  multiple_type_union(3.14) = {multiple_type_union(3.14)}")
+    print(f"  multiple_type_union('test') = {multiple_type_union('test')}")
+    print(f"  multiple_type_union(True) = {multiple_type_union(True)}")
+    
+    print("--- 联合类型别名 ---")
+    let maybe_name: OptionalStr = find_user(1)
+    if maybe_name != None:
+        print(f"  Found user: {maybe_name}")
+    
+    let not_found: OptionalStr = find_user(99)
+    if not_found is None:
+        print("  User not found (None)")
+    
+    print("--- 处理混合数据 ---")
+    let mixed: list<int | str> = [1, "hello", 2, "world", 3]
+    let processed = process_mixed_data(mixed)
+    for item in processed:
+        print(f"  {item}")
+    
+    print("====== 联合类型演示完成 ======")
+    return 0
+
+if __name__ == "__main__":
+    main()

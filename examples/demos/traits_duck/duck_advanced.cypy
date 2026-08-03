@@ -1,0 +1,263 @@
+#!bin cypy
+# ============================================================
+# duck_advanced.cypy — 高级鸭子类型示例
+# 演示泛型 duck、组合约束、Self 返回类型、一元操作符、多 meta 块
+# ============================================================
+
+# === 1. 泛型 Duck 约束 ===
+# duck 约束支持类型参数，类似于泛型 trait
+meta:
+    # 泛型容器约束：T 为容器内元素类型
+    duck Container<T>:
+        add(self, item: T) -> None
+        remove(self, item: T) -> bool
+        __contains__(self, item: T) -> bool
+        __len__(self) -> int
+
+    # 泛型索引约束：支持按索引访问
+    duck Indexable<T>:
+        __getitem__(self, index: int) -> T
+        __setitem__(self, index: int, value: T) -> None
+
+    # 多类型参数约束
+    duck Mapping<K, V>:
+        get(self, key: K) -> V
+        set(self, key: K, value: V) -> None
+        keys(self) -> list<K>
+
+    # 泛型可迭代约束
+    duck Iterable<T>:
+        __iter__(self) -> Iterator
+        next(self) -> T
+
+# === 2. Self 返回类型 ===
+# Self 表示返回类型为约束类型本身
+# 常用于方法链式调用和算术运算
+meta:
+    # 数值约束：所有算术操作返回 Self
+    duck Numeric:
+        a + b -> Self
+        a - b -> Self
+        a * b -> Self
+        a / b -> Self
+
+    # 链式调用约束：方法返回 Self 支持链式
+    duck Chainable:
+        chain(self) -> Self
+        flush(self) -> Self
+
+    # 可克隆约束：返回 Self 的 clone 方法
+    duck Cloneable:
+        clone(self) -> Self
+
+    # 可逆约束
+    duck Reversible:
+        reversed(self) -> Self
+
+# === 3. 一元操作符约束 ===
+# duck 支持一元操作符约束，如 -a、!a
+meta:
+    # 一元负号约束
+    duck Negatable:
+        -a -> Self
+
+    # 一元取反约束
+    duck Invertible:
+        invert(self) -> Self
+
+    # 一元逻辑取反
+    duck LogicalNot:
+        logical_not(self) -> bool
+
+    # 综合一元约束
+    duck Signed:
+        -a -> Self
+        positive(self) -> Self
+
+# === 4. 组合约束（引用其他 Duck）===
+# duck 约束可以通过引用其他 duck 实现组合和继承
+meta:
+    # 基础比较约束
+    duck Comparable:
+        a < b -> bool
+        a > b -> bool
+        a <= b -> bool
+        a >= b -> bool
+        a == b -> bool
+        a != b -> bool
+
+    # 有序约束：继承 Comparable 并添加三路比较
+    duck Ordered:
+        Comparable
+        compare(self, other) -> int
+
+    # 可排序容器：组合 Comparable + Container
+    # 容器元素必须可比较，容器本身是 Container
+    duck SortableContainer<T>:
+        Comparable
+        Container<T>
+
+    # 序列约束：组合 Container + Indexable + Iterable
+    duck Sequence<T>:
+        Container<T>
+        Indexable<T>
+        Iterable<T>
+
+    # 完整集合约束
+    duck FullCollection<T>:
+        Sequence<T>
+        Cloneable
+        Sized
+
+    # 可映射约束
+    duck Mappable<K, V>:
+        Mapping<K, V>
+        Iterable<V>
+
+# === 5. 多 Meta 块组织 ===
+# 可以使用多个 meta 块分组定义约束
+
+meta:
+    # 基础操作约束组
+    duck Equatable:
+        a == b -> bool
+        a != b -> bool
+
+    duck LessThanComparable:
+        a < b -> bool
+
+    duck GreaterThanComparable:
+        a > b -> bool
+
+# 继续定义更多约束
+meta:
+    # 文件操作约束组
+    duck FileLike:
+        read(self) -> str
+        write(self, data: str) -> None
+        close(self) -> None
+
+    duck Seekable:
+        seek(self, position: int) -> None
+        tell(self) -> int
+
+    duck BufferedReader:
+        FileLike
+        Seekable
+        read_line(self) -> str
+
+# === 6. 使用高级约束的函数 ===
+
+# 使用泛型 Container<T>
+def process_container<T: Container<int>>(container: T) -> None:
+    """处理存储整数的容器"""
+    container.add(42)
+    if 42 in container:
+        container.remove(42)
+
+def find_in_container<T: Container<U>, U: Comparable>(container: T, target: U) -> bool:
+    """在可比较的容器中查找目标"""
+    return target in container
+
+# 使用 SortableContainer 组合约束
+def sort_container<T: SortableContainer<U>, U: Comparable>(container: T) -> T:
+    """对可排序容器进行排序"""
+    return container
+
+def max_in_container<T: Container<U>, U: Comparable>(container: T) -> U:
+    """在容器中查找最大值"""
+    return U()
+
+# 使用 Sequence 组合约束
+def get_first<T: Sequence<U>, U>(seq: T) -> U:
+    """获取序列第一个元素"""
+    return seq[0]
+
+def slice_sequence<T: Sequence<U>, U>(seq: T, start: int, end: int) -> list<U>:
+    """切片操作"""
+    return []
+
+# 使用 Numeric + Self 返回类型
+def double<T: Numeric>(value: T) -> T:
+    """将数值翻倍"""
+    return value + value
+
+def cube<T: Numeric>(value: T) -> T:
+    """计算立方"""
+    return value * value * value
+
+# 使用 Negatable 一元操作符
+def absolute_value<T: Negatable>(value: T) -> T:
+    """计算绝对值（需要支持一元负号）"""
+    if value < 0:
+        return -value
+    return value
+
+# === 7. 综合示例 ===
+struct IntContainer:
+    items: list<int>
+
+    def add(self, item: int) -> None:
+        self.items.append(item)
+
+    def remove(self, item: int) -> bool:
+        if item in self.items:
+            self.items.remove(item)
+            return True
+        return False
+
+    def __contains__(self, item: int) -> bool:
+        return item in self.items
+
+    def __len__(self) -> int:
+        return len(self.items)
+
+struct ComplexNum:
+    real: float
+    imag: float
+
+    def __add__(self, other: ComplexNum) -> ComplexNum:
+        return ComplexNum(real=self.real + other.real, imag=self.imag + other.imag)
+
+    def __mul__(self, other: ComplexNum) -> ComplexNum:
+        return ComplexNum(real=self.real * other.real - self.imag * other.imag, imag=self.real * other.imag + self.imag * other.real)
+
+struct Temperature:
+    celsius: float
+
+    def __neg__(self) -> Temperature:
+        return Temperature(celsius=-self.celsius)
+
+struct Score:
+    value: int
+
+    def __lt__(self, other: Score) -> bool:
+        return self.value < other.value
+
+    def __gt__(self, other: Score) -> bool:
+        return self.value > other.value
+
+    def __eq__(self, other: Score) -> bool:
+        return self.value == other.value
+
+def demo() -> None:
+    # Container<int> 泛型约束
+    let ic: IntContainer = IntContainer(items=[])
+    process_container<IntContainer>(ic)
+
+    # Numeric + Self 示例
+    let c1: ComplexNum = ComplexNum(real=1.0, imag=2.0)
+    let c2: ComplexNum = ComplexNum(real=3.0, imag=4.0)
+    let c3: ComplexNum = double<ComplexNum>(c1)
+    print(f"Doubled: ({c3.real}, {c3.imag})")
+
+    # 一元操作符约束示例
+    let t: Temperature = Temperature(celsius=25.0)
+    let neg_t: Temperature = -t
+    print(f"Negated temperature: {neg_t.celsius}C")
+
+    # Comparable 组合约束示例
+    let s1: Score = Score(value=85)
+    let s2: Score = Score(value=92)
+    let better: Score = find_max<Score>(s1, s2)
+    print(f"Better score: {better.value}")

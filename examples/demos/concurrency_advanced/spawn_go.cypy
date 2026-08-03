@@ -1,0 +1,123 @@
+# spawn 和 go 并发示例
+# 演示 Cypy 的并发原语：spawn（线程）和 go（协程）
+
+import asyncio
+import time
+
+def cpu_worker(name: str, duration: float) -> str:
+    """CPU 密集型工作者函数"""
+    print(f"[Thread] Worker {name} started")
+    time.sleep(duration)
+    print(f"[Thread] Worker {name} finished")
+    return f"{name}-done"
+
+async def io_worker(name: str, duration: float) -> str:
+    """I/O 密集型异步工作者函数"""
+    print(f"[Coroutine] Worker {name} started")
+    await asyncio.sleep(duration)
+    print(f"[Coroutine] Worker {name} finished")
+    return f"{name}-done"
+
+def demo_spawn_block() -> int:
+    """演示 spawn 块形式 - 创建线程"""
+    print("=== spawn 块形式（线程）===")
+    
+    spawn:
+        print("  spawn block: 执行后台任务 A")
+        time.sleep(0.5)
+        print("  spawn block: 任务 A 完成")
+    
+    spawn:
+        print("  spawn block: 执行后台任务 B")
+        time.sleep(0.3)
+        print("  spawn block: 任务 B 完成")
+    
+    time.sleep(0.6)
+    print("  spawn 块形式演示结束")
+    return 0
+
+def demo_spawn_call() -> int:
+    """演示 spawn 调用形式 - 调用函数创建线程"""
+    print("=== spawn 调用形式 ===")
+    
+    spawn cpu_worker("Alpha", 0.4)
+    spawn cpu_worker("Beta", 0.3)
+    spawn cpu_worker("Gamma", 0.5)
+    
+    time.sleep(0.6)
+    print("  spawn 调用形式演示结束")
+    return 0
+
+async def demo_go_block() -> int:
+    """演示 go 块形式 - 创建协程"""
+    print("=== go 块形式（协程）===")
+    
+    go:
+        print("  go block: 执行异步任务 X")
+        await asyncio.sleep(0.3)
+        print("  go block: 任务 X 完成")
+    
+    go:
+        print("  go block: 执行异步任务 Y")
+        await asyncio.sleep(0.2)
+        print("  go block: 任务 Y 完成")
+    
+    await asyncio.sleep(0.5)
+    print("  go 块形式演示结束")
+    return 0
+
+async def demo_go_call() -> int:
+    """演示 go 调用形式 - 调用异步函数创建协程"""
+    print("=== go 调用形式 ===")
+    
+    let task1 = go io_worker("Task-1", 0.3)
+    let task2 = go io_worker("Task-2", 0.4)
+    let task3 = go io_worker("Task-3", 0.2)
+    
+    let result1 = await task1
+    let result2 = await task2
+    let result3 = await task3
+    
+    print(f"  Results: {result1}, {result2}, {result3}")
+    print("  go 调用形式演示结束")
+    return 0
+
+async def demo_multiple_concurrent() -> int:
+    """演示多任务并发执行"""
+    print("=== 多任务并发 ===")
+    
+    let results: list<str> = []
+    
+    async def download(url: str) -> str:
+        print(f"  Downloading {url}...")
+        await asyncio.sleep(0.2)
+        return f"Content from {url}"
+    
+    let t1 = go download("api.example.com/data1")
+    let t2 = go download("api.example.com/data2")
+    let t3 = go download("api.example.com/data3")
+    let t4 = go download("api.example.com/data4")
+    
+    results.append(await t1)
+    results.append(await t2)
+    results.append(await t3)
+    results.append(await t4)
+    
+    print(f"  下载完成: {results}")
+    return 0
+
+def main() -> int:
+    print("====== spawn/go 并发演示 ======")
+    
+    demo_spawn_block()
+    demo_spawn_call()
+    
+    asyncio.run(demo_go_block())
+    asyncio.run(demo_go_call())
+    asyncio.run(demo_multiple_concurrent())
+    
+    print("====== 所有并发演示完成 ======")
+    return 0
+
+if __name__ == "__main__":
+    main()

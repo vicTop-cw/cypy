@@ -1,4 +1,4 @@
-"""测试 @test 装饰器和 assert 语句解析"""
+﻿"""测试 @test 装饰器和 assert 语句解析"""
 
 from cypyc.parser.parser import Parser
 from cypyc.parser.lexer import Lexer
@@ -104,7 +104,7 @@ def test_fast():
 def test_decorator_on_function_with_generic():
     """测试带泛型参数的函数上的装饰器"""
     source = '''@test
-def test_generic[T]():
+def test_generic<T>():
     assert True'''
 
     lexer = Lexer(source)

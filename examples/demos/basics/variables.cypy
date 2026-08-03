@@ -1,0 +1,99 @@
+MODULE_LEVEL_CONST: str = "Cypy Variables Demo"
+
+counter: int = 0
+
+def increment() -> int:
+    counter += 1
+    return counter
+
+def reset_counter() -> None:
+    counter = 0
+
+def demo_mutable() -> int:
+    x: int = 10
+    x = 20
+    x += 5
+    return x
+
+def demo_immutable() -> str:
+    let name: str = "Cypy"
+    let greeting = f"Hello, {name}!"
+    return greeting
+
+def demo_const() -> int:
+    const MAX_SIZE: int = 1000
+    const PI: float = 3.14159
+    const GREETING: str = "Hello from const!"
+
+    let area: float = PI * 10.0
+    let result: int = MAX_SIZE
+    return result
+
+def demo_no_annotation() -> str:
+    dynamic = 42
+    dynamic = "now a string"
+    dynamic = 3.14
+    return str(dynamic)
+
+def demo_type_annotated() -> int:
+    let x: int = 10
+    let y: str = "hello"
+    let z: bool = True
+    let f: float = 3.14
+    return x
+
+def main() -> int:
+    print(MODULE_LEVEL_CONST)
+
+    print(f"counter: {counter}")
+    increment()
+    increment()
+    print(f"after 2 increments: {counter}")
+    reset_counter()
+    print(f"after reset: {counter}")
+
+    let mut_result = demo_mutable()
+    print(f"mutable demo: {mut_result}")
+
+    let imm_result = demo_immutable()
+    print(f"immutable demo: {imm_result}")
+
+    let const_result = demo_const()
+    print(f"const demo: {const_result}")
+
+    let dyn_result = demo_no_annotation()
+    print(f"no annotation demo: {dyn_result}")
+
+    return 0
+
+if __name__ == "__main__":
+    main()
+
+suite VariableTests:
+    test mutable_variable_can_be_reassigned:
+        let result = demo_mutable()
+        assert result == 35
+
+    test immutable_variable_holds_value:
+        let result = demo_immutable()
+        assert result == "Hello, Cypy!"
+
+    test const_is_accessible:
+        let result = demo_const()
+        assert result == 1000
+
+    test global_counter_increments:
+        reset_counter()
+        assert counter == 0
+        increment()
+        assert counter == 1
+        increment()
+        assert counter == 2
+
+    test type_annotation_preserved:
+        let result = demo_type_annotated()
+        assert result == 10
+
+    test no_annotation_dynamic:
+        let result = demo_no_annotation()
+        assert result == "3.14"

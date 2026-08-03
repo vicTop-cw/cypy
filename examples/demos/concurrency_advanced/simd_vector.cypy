@@ -1,0 +1,161 @@
+# SIMD 向量类型示例
+# 演示 Cypy 的 SIMD 向量类型声明、字面量和运算
+
+import math
+
+def vec_sum(v: list) -> int:
+    """计算向量元素之和"""
+    let total = 0
+    for x in v:
+        total = total + x
+    return total
+
+def vec_dot(a: list, b: list) -> float:
+    """计算两个向量的点积"""
+    let result = 0.0
+    for i in range(len(a)):
+        result = result + a[i] * b[i]
+    return result
+
+def vec_length(v: list) -> float:
+    """计算向量长度"""
+    let sum_sq = 0.0
+    for x in v:
+        sum_sq = sum_sq + x * x
+    return math.sqrt(sum_sq)
+
+def demo_vec_type_declaration() -> int:
+    """演示 Vec 类型声明"""
+    print("=== Vec 类型声明 ===")
+    
+    let v1: vec[int; 4] = vec![1, 2, 3, 4]
+    print(f"  vec[int; 4]: {v1}, sum={vec_sum(v1)}")
+    
+    let v2: vec[float; 4] = vec![1.0, 2.0, 3.0, 4.0]
+    print(f"  vec[float; 4]: {v2}")
+    
+    let v3: vec[int; 2] = vec![10, 20]
+    print(f"  vec[int; 2]: {v3}")
+    
+    let v4: vec[float; 3] = vec![1.5, 2.5, 3.5]
+    print(f"  vec[float; 3]: {v4}")
+    
+    return 0
+
+def demo_vec_literal() -> int:
+    """演示 Vec 字面量"""
+    print("=== Vec 字面量 ===")
+    
+    let a = vec![1, 2, 3, 4]
+    print(f"  vec![1, 2, 3, 4] = {a}")
+    
+    let b = vec![10.5, 20.5, 30.5]
+    print(f"  vec![10.5, 20.5, 30.5] = {b}")
+    
+    let c = vec![100, 200]
+    print(f"  vec![100, 200] = {c}")
+    
+    let d = vec![1, 2, 3, 4, 5, 6, 7, 8]
+    print(f"  vec![1..8] (size=8) = {d}")
+    
+    return 0
+
+def demo_vec_repeat() -> int:
+    """演示 Vec 重复值形式"""
+    print("=== Vec 重复值形式 ===")
+    
+    let zeros = vec![0; 4]
+    print(f"  vec![0; 4] = {zeros}")
+    
+    let ones = vec![1; 8]
+    print(f"  vec![1; 8] = {ones}")
+    
+    let fives = vec![5; 4]
+    print(f"  vec![5; 4] = {fives}, sum={vec_sum(fives)}")
+    
+    let point = vec![0.0; 3]
+    print(f"  vec![0.0; 3] = {point}")
+    
+    let repeated = vec![42; 2]
+    print(f"  vec![42; 2] = {repeated}")
+    
+    return 0
+
+def demo_vector_operations() -> int:
+    """演示向量运算"""
+    print("=== 向量运算 ===")
+    
+    let a = vec![1, 2, 3, 4]
+    let b = vec![5, 6, 7, 8]
+    
+    print(f"  a = {a}")
+    print(f"  b = {b}")
+    
+    let added: list = []
+    for i in range(len(a)):
+        added.append(a[i] + b[i])
+    print(f"  a + b = {added}")
+    
+    let subtracted: list = []
+    for i in range(len(a)):
+        subtracted.append(a[i] - b[i])
+    print(f"  a - b = {subtracted}")
+    
+    let multiplied: list = []
+    for i in range(len(a)):
+        multiplied.append(a[i] * b[i])
+    print(f"  a * b (element-wise) = {multiplied}")
+    
+    let scaled: list = []
+    for x in a:
+        scaled.append(x * 3)
+    print(f"  a * 3 (scalar) = {scaled}")
+    
+    let dot_product = vec_dot(a, b)
+    print(f"  dot(a, b) = {dot_product}")
+    
+    let length_a = vec_length([float(x) for x in a])
+    print(f"  |a| = {length_a:.4f}")
+    
+    return 0
+
+def demo_vec_math_operations() -> int:
+    """演示向量数学运算"""
+    print("=== 向量数学运算 ===")
+    
+    let v1 = vec![3.0, 4.0]
+    let v2 = vec![1.0, 2.0]
+    
+    print(f"  v1 = {v1}")
+    print(f"  v2 = {v2}")
+    
+    let dot = vec_dot(v1, v2)
+    print(f"  dot(v1, v2) = {dot}")
+    
+    let len_v1 = vec_length(v1)
+    print(f"  |v1| = {len_v1:.4f}")
+    
+    let len_v2 = vec_length(v2)
+    print(f"  |v2| = {len_v2:.4f}")
+    
+    let normalized: list = []
+    for x in v1:
+        normalized.append(x / len_v1)
+    print(f"  normalized(v1) = {normalized}")
+    
+    return 0
+
+def main() -> int:
+    print("====== SIMD 向量类型演示 ======")
+    
+    demo_vec_type_declaration()
+    demo_vec_literal()
+    demo_vec_repeat()
+    demo_vector_operations()
+    demo_vec_math_operations()
+    
+    print("====== SIMD 向量演示完成 ======")
+    return 0
+
+if __name__ == "__main__":
+    main()

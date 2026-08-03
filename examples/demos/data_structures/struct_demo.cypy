@@ -1,0 +1,216 @@
+# Cypy 结构体 (Struct) 完整示例
+# 演示 struct 的核心特性：字段、方法、@value 装饰器、字面量语法、@python 方法、let/mut 字段
+
+# ============================================================
+# 1. 基础 Struct：带字段和方法
+# ============================================================
+
+struct Point:
+    x: int
+    y: int
+
+    def distance_to(self, other: Point) -> float:
+        let dx: float = float(self.x - other.x)
+        let dy: float = float(self.y - other.y)
+        return (dx ** 2 + dy ** 2) ** 0.5
+
+    def translate(self, dx: int, dy: int) -> Point:
+        return Point(x=self.x + dx, y=self.y + dy)
+
+    def __repr__(self) -> str:
+        return f"Point({self.x}, {self.y})"
+
+
+# ============================================================
+# 2. @value 装饰器：自动生成 __eq__, __hash__, __repr__, __copy__
+# ============================================================
+
+@value
+struct Config:
+    debug: bool
+    timeout: int
+    retries: int
+
+    def with_timeout(self, t: int) -> Config:
+        return Config(debug=self.debug, timeout=t, retries=self.retries)
+
+
+# @value 自动生成以下方法：
+#   __eq__  - 基于字段值的结构相等比较
+#   __hash__ - 基于字段的哈希值（可作为 dict key 或 set 元素）
+#   __repr__ - 可读的字符串表示
+#   __copy__ - 浅拷贝
+
+
+# ============================================================
+# 3. Struct 字面量语法：使用 Name {field: value} 初始化
+# ============================================================
+
+struct ServerConfig:
+    host: str
+    port: int
+    debug: bool
+    max_connections: int
+
+
+def create_server() -> ServerConfig:
+    let cfg: ServerConfig = ServerConfig(host="localhost", port=8080, debug=True, max_connections=100)
+    return cfg
+
+
+# ============================================================
+# 4. @python 方法：回退到 CPython，跳过类型检查
+# ============================================================
+
+struct PythonicWrapper:
+    value: str
+
+    def legacy_process(self, multiplier: int) -> str:
+        result = self.value * multiplier
+        return result.upper()
+
+    def dynamic_field_access(self, field: str) -> object:
+        return getattr(self, field, None)
+
+
+# ============================================================
+# 5. let / mut 字段：不可变与可变字段
+# ============================================================
+
+struct ImmutableRecord:
+    id: int
+    name: str
+
+    def __repr__(self) -> str:
+        return f"Record(id={self.id}, name='{self.name}')"
+
+
+struct MutableCounter:
+    count: int
+
+    def increment(self) -> None:
+        self.count = self.count + 1
+
+    def decrement(self) -> None:
+        guard self.count > 0 else:
+            raise ValueError("Counter cannot go negative")
+        self.count = self.count - 1
+
+    def reset(self) -> None:
+        self.count = 0
+
+
+# ============================================================
+# 6. 嵌套 Struct 与组合
+# ============================================================
+
+struct BoundingBox:
+    top_left: Point
+    bottom_right: Point
+
+    def width(self) -> int:
+        return self.bottom_right.x - self.top_left.x
+
+    def height(self) -> int:
+        return self.bottom_right.y - self.top_left.y
+
+    def area(self) -> int:
+        return self.width() * self.height()
+
+    def contains(self, point: Point) -> bool:
+        let in_x: bool = point.x >= self.top_left.x and point.x <= self.bottom_right.x
+        let in_y: bool = point.y >= self.top_left.y and point.y <= self.bottom_right.y
+        return in_x and in_y
+
+
+# ============================================================
+# 7. Struct 作为函数参数与返回值
+# ============================================================
+
+def midpoint(a: Point, b: Point) -> Point:
+    let mx: int = (a.x + b.x) // 2
+    let my: int = (a.y + b.y) // 2
+    return Point(x=mx, y=my)
+
+def create_origin() -> Point:
+    return Point(x=0, y=0)
+
+
+# ============================================================
+# 8. 主入口：运行所有示例
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Cypy 结构体示例 ===\n")
+
+    # 1. 基础结构体
+    print("--- 1. 基础 Struct ---")
+    let p1: Point = Point(x=3, y=4)
+    let p2: Point = Point(x=7, y=1)
+    print(f"p1: {p1}")
+    print(f"p2: {p2}")
+    print(f"距离: {p1.distance_to(p2):.2f}")
+    print(f"平移: {p1.translate(10, 20)}")
+
+    # 2. @value 装饰器
+    print("\n--- 2. @value 装饰器 ---")
+    let cfg1: Config = Config(debug=True, timeout=30, retries=3)
+    let cfg2: Config = Config(debug=True, timeout=30, retries=3)
+    let cfg3: Config = Config(debug=False, timeout=60, retries=5)
+    print(f"cfg1 == cfg2 (结构相等): {cfg1 == cfg2}")
+    print(f"cfg1 == cfg3: {cfg1 == cfg3}")
+    print(f"hash(cfg1): {hash(cfg1)}")
+    print(f"repr(cfg1): {repr(cfg1)}")
+    let cfg_copy: Config = cfg1  # 自动 __copy__
+    print(f"cfg_copy: {cfg_copy}")
+    let cfg_updated: Config = cfg1.with_timeout(90)
+    print(f"cfg_updated: {cfg_updated}")
+    let config_map: dict<Config, str> = dict([(cfg1, "primary"), (cfg3, "secondary")])
+    print(f"dict 查找: {config_map[cfg1]}")
+
+    # 3. 字面量语法
+    print("\n--- 3. Struct 字面量 ---")
+    let server: ServerConfig = create_server()
+    print(f"Server: {server.host}:{server.port}")
+    print(f"Debug: {server.debug}, MaxConn: {server.max_connections}")
+
+    # 使用字面量语法直接创建
+    let quick_cfg: ServerConfig = ServerConfig(host="0.0.0.0", port=9090, debug=False, max_connections=500)
+    print(f"Quick cfg: {quick_cfg}")
+
+    # 4. @python 方法
+    print("\n--- 4. @python 方法 ---")
+    let wrapper: PythonicWrapper = PythonicWrapper(value="hello")
+    print(f"legacy_process: {wrapper.legacy_process(3)}")
+    print(f"dynamic_field: {wrapper.dynamic_field_access('value')}")
+
+    # 5. let / mut 字段
+    print("\n--- 5. let / mut 字段 ---")
+    let record: ImmutableRecord = ImmutableRecord(id=1, name="Alice")
+    print(f"Record: {record}")
+
+    let counter: MutableCounter = MutableCounter(count=0)
+    counter.increment()
+    counter.increment()
+    counter.increment()
+    print(f"Counter after 3 increments: {counter.count}")
+    counter.decrement()
+    print(f"Counter after 1 decrement: {counter.count}")
+    counter.reset()
+    print(f"Counter after reset: {counter.count}")
+
+    # 6. 嵌套与组合
+    print("\n--- 6. 嵌套 Struct ---")
+    let box: BoundingBox = BoundingBox(top_left=Point(x=0, y=0), bottom_right=Point(x=100, y=50))
+    print(f"BoundingBox: {box.width()}x{box.height()}, 面积={box.area()}")
+    print(f"包含 (50,25): {box.contains(Point(x=50, y=25))}")
+    print(f"包含 (200,200): {box.contains(Point(x=200, y=200))}")
+
+    # 7. 函数参数与返回值
+    print("\n--- 7. 函数参数与返回值 ---")
+    let origin: Point = create_origin()
+    let mid: Point = midpoint(Point(x=0, y=0), Point(x=10, y=10))
+    print(f"原点: {origin}")
+    print(f"中点: {mid}")
+
+    print("\n=== 所有结构体示例完成 ===")

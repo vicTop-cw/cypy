@@ -1,0 +1,175 @@
+#!bin cypy
+# ============================================================
+# trait_advanced.cypy — 高级 Trait 示例
+# 演示 Trait 继承、类型注解、多重实现、TypeClass
+# ============================================================
+
+# === 1. Trait 继承 ===
+# 基础 trait
+trait Readable:
+    def read(self) -> str
+
+trait Writable:
+    def write(self, data: str) -> None
+
+# 通过 extends 实现 trait 组合继承
+# ReadWrite 继承 Readable 和 Writable
+trait ReadWrite extends Readable, Writable:
+    pass
+
+# 另一个继承示例
+trait Loggable:
+    def log(self, message: str) -> None
+
+trait Persistable extends ReadWrite, Loggable:
+    def save(self) -> bool
+    def load(self) -> bool
+
+# === 2. 实现继承的 Trait ===
+struct SimpleFile:
+    path: str
+
+    def read(self) -> str:
+        return f"Reading from {self.path}"
+
+    def write(self, data: str) -> None:
+        print(f"Writing '{data}' to {self.path}")
+
+    def log(self, message: str) -> None:
+        print(f"[LOG] {self.path}: {message}")
+
+    def save(self) -> bool:
+        return True
+
+    def load(self) -> bool:
+        return True
+
+# SimpleFile 实现了 Persistable（自动获得 ReadWrite、Readable、Writable、Loggable）
+impl Persistable for SimpleFile:
+    pass
+
+# === 3. Trait 作为类型注解 ===
+# 函数参数可以使用 trait 作为类型，实现多态
+def process_readable(source: Readable) -> str:
+    return source.read()
+
+def process_writable(target: Writable, data: str) -> None:
+    target.write(data)
+
+# 返回值也可以使用 trait 类型
+def get_logger() -> Loggable:
+    let file: SimpleFile = SimpleFile(path="/dev/log")
+    return file
+
+# === 4. 多 Trait 实现 ===
+# 同一个结构体可以实现多个不同的 trait
+
+struct AdvancedPoint:
+    x: float
+    y: float
+    label: str
+
+    # Printable 实现
+    def print_info(self) -> None:
+        print(f"Point '{self.label}': ({self.x}, {self.y})")
+
+    # Serializable 实现
+    def to_json(self) -> str:
+        return f'{{"x": {self.x}, "y": {self.y}, "label": "{self.label}"}}'
+
+    # Readable 实现
+    def read(self) -> str:
+        return f"Point data: {self.x}, {self.y}"
+
+    # Writable 实现
+    def write(self, data: str) -> None:
+        print(f"Writing to point {self.label}: {data}")
+
+impl Printable for AdvancedPoint:
+    pass
+
+impl Serializable for AdvancedPoint:
+    pass
+
+impl Readable for AdvancedPoint:
+    pass
+
+impl Writable for AdvancedPoint:
+    pass
+
+# === 5. TypeClass 定义 ===
+# TypeClass 是对标 Rust trait / Scala Type Class 的高级特性
+# 通过 typeclass 关键字定义，提供更强的类型约束能力
+
+# 基础 TypeClass
+typeclass Show:
+    def show(self) -> str
+
+# 带泛型的 TypeClass
+typeclass Eq<T>:
+    def eq(self, other: T) -> bool
+
+# 带多参数的 TypeClass
+typeclass Functor<T>:
+    def map(self, func: callable) -> Functor<T>
+
+# === 6. TypeClass 实现 ===
+# 使用 impl typeclass 语法实现 TypeClass
+
+struct Color:
+    r: int
+    g: int
+    b: int
+
+# 实现 Show TypeClass
+impl typeclass Show for Color:
+    def show(self) -> str:
+        return f"rgb({self.r}, {self.g}, {self.b})"
+
+# 实现 Eq TypeClass
+impl typeclass Eq<Color> for Color:
+    def eq(self, other: Color) -> bool:
+        return self.r == other.r and self.g == other.g and self.b == other.b
+
+# === 7. 泛型 TypeClass 实现 ===
+struct Wrapper<T>:
+    value: T
+
+impl typeclass Show for Wrapper<T>:
+    def show(self) -> str:
+        return f"Wrapper({self.value})"
+
+impl typeclass Eq for Wrapper<T>:
+    def eq(self, other: Wrapper<T>) -> bool:
+        return self.value == other.value
+
+# === 8. TypeClass 在函数中使用 ===
+def display_showable<T: Show>(obj: T) -> str:
+    return obj.show()
+
+def check_equal<T: Eq<U>, U>(a: T, b: U) -> bool:
+    return a.eq(b)
+
+# === 9. 完整示例 ===
+def demo() -> None:
+    let file: SimpleFile = SimpleFile(path="/tmp/test.txt")
+    file.write("hello world")
+    let content: str = file.read()
+    print(f"Read: {content}")
+
+    let point: AdvancedPoint = AdvancedPoint(x=3.0, y=4.0, label="P1")
+    point.print_info()
+    let json: str = point.to_json()
+    print(f"JSON: {json}")
+
+    let color: Color = Color(r=255, g=128, b=0)
+    let color_str: str = display_showable<Color>(color)
+    print(f"Color: {color_str}")
+
+    let c1: Color = Color(r=255, g=0, b=0)
+    let c2: Color = Color(r=255, g=0, b=0)
+    let equal: bool = check_equal(c1, c2)
+    print(f"Colors equal: {equal}")
+
+    let logger: Loggable = get_logger()
+    logger.log("System started")

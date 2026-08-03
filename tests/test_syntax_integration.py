@@ -72,7 +72,7 @@ class TestTypeSystem(CypyTestBase):
 """
         code = self._assert_parse_success(source)
 
-    def test_inletid_pointer_no_annotation(self):
+    def test_invalid_pointer_no_annotation(self):
         """测试指针无类型注解（当前实现允许，malloc返回void*可赋值给object）"""
         source = """def bad_ptr():
     ptr = malloc(sizeof(int))
@@ -124,7 +124,7 @@ class TestFunctions(CypyTestBase):
 """
         code = self._assert_parse_success(source)
 
-    def test_inletid_function_definition(self):
+    def test_invalid_function_definition(self):
         """测试不完整的函数定义（异常输入）"""
         source = """def incomplete(
 """
@@ -170,7 +170,7 @@ class TestEnum(CypyTestBase):
 """
         code = self._assert_parse_success(source)
 
-    def test_enum_without_letues(self):
+    def test_enum_without_values(self):
         """测试无值枚举"""
         source = """enum Direction:
     NORTH
@@ -178,7 +178,7 @@ class TestEnum(CypyTestBase):
 """
         code = self._assert_parse_success(source)
 
-    def test_single_letue_enum(self):
+    def test_single_value_enum(self):
         """测试单值枚举（边界值）"""
         source = """enum Status:
     OK
@@ -478,8 +478,8 @@ class TestPipeOperator(CypyTestBase):
         source = """def process(data: int) -> int:
     return data * 2
 
-def filter(letue: int) -> int:
-    return letue + 1
+def filter(value: int) -> int:
+    return value + 1
 
 def test():
     result = 5 |> process |> filter
@@ -539,24 +539,30 @@ class TestValLetSemantics(CypyTestBase):
 class TestMetaSystem(CypyTestBase):
     """Meta系统测试"""
 
-    def test_meta_constraint(self):
-        """测试meta约束定义"""
+    def test_meta_duck_constraint(self):
+        """测试meta duck约束定义"""
         source = """meta:
-    constraint Number = int | float
+    duck Number:
+        a + b -> Self
 """
         code = self._assert_parse_success(source)
 
-    def test_meta_subtype(self):
-        """测试meta子类型声明"""
+    def test_meta_duck_reference(self):
+        """测试meta duck引用约束"""
         source = """meta:
-    subtype Dog <: Animal
+    duck Animal:
+        name: str
+    duck Dog:
+        Animal
+        bark(self) -> str
 """
         code = self._assert_parse_success(source)
 
-    def test_meta_dispatch(self):
-        """测试meta分派声明"""
+    def test_meta_duck_method(self):
+        """测试meta duck方法约束"""
         source = """meta:
-    dispatch meet(a: Dog, b: Cat) -> str
+    duck Greeter:
+        greet(self) -> str
 """
         code = self._assert_parse_success(source)
 

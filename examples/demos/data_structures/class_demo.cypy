@@ -1,0 +1,355 @@
+# Cypy 类 (Class) 完整示例
+# 演示 class 的核心特性：Python 兼容、继承、静态方法、类方法、魔术方法、属性装饰器
+
+# ============================================================
+# 1. Python 兼容的 Class
+# ============================================================
+
+class Person:
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
+
+    def greet(self) -> str:
+        return f"你好，我是 {self.name}，今年 {self.age} 岁"
+
+    def __repr__(self) -> str:
+        return f"Person(name='{self.name}', age={self.age})"
+
+
+# ============================================================
+# 2. 单继承
+# ============================================================
+
+class Employee(Person):
+    def __init__(self, name: str, age: int, department: str, salary: float):
+        super().__init__(name, age)
+        self.department = department
+        self.salary = salary
+
+    def greet(self) -> str:
+        let base_greeting: str = super().greet()
+        return f"{base_greeting}，在 {self.department} 部门工作"
+
+    def annual_bonus(self, rate: float) -> float:
+        return self.salary * rate
+
+    def __repr__(self) -> str:
+        return f"Employee(name='{self.name}', age={self.age}, dept='{self.department}')"
+
+
+class Student(Person):
+    def __init__(self, name: str, age: int, school: str, grade: str):
+        super().__init__(name, age)
+        self.school = school
+        self.grade = grade
+
+    def greet(self) -> str:
+        return f"我是 {self.name}，在 {self.school} 读 {self.grade}"
+
+
+# ============================================================
+# 3. 多重继承
+# ============================================================
+
+class Swimmable:
+    def swim(self) -> str:
+        return "正在游泳..."
+
+class Flyable:
+    def fly(self) -> str:
+        return "正在飞行..."
+
+class Runnable:
+    def run(self) -> str:
+        return "正在奔跑..."
+
+
+class Duck(Person, Swimmable, Flyable):
+    def __init__(self, name: str):
+        super().__init__(name, 2)
+
+    def speak(self) -> str:
+        return "嘎嘎嘎！"
+
+
+class SuperHero(Person, Runnable, Flyable):
+    def __init__(self, name: str, alias: str):
+        super().__init__(name, 30)
+        self.alias = alias
+
+    def greet(self) -> str:
+        return f"我是 {self.alias}！"
+
+    def save_day(self) -> str:
+        return f"{self.run()} {self.fly()} 拯救世界！"
+
+
+# ============================================================
+# 4. 静态方法与类方法
+# ============================================================
+
+class MathUtils:
+    PI: float = 3.141592653589793
+    instances: int = 0
+
+    def __init__(self):
+        MathUtils.instances += 1
+
+    @staticmethod
+    def sqrt(x: float) -> float:
+        return x ** 0.5
+
+    @staticmethod
+    def is_even(n: int) -> bool:
+        return n % 2 == 0
+
+    @staticmethod
+    def clamp(value: float, min_val: float, max_val: float) -> float:
+        if value < min_val:
+            return min_val
+        if value > max_val:
+            return max_val
+        return value
+
+    @classmethod
+    def from_string(cls, s: str) -> MathUtils:
+        let instance: MathUtils = cls()
+        return instance
+
+    @classmethod
+    def create_default(cls) -> MathUtils:
+        return cls()
+
+
+class Counter:
+    total_count: int = 0
+
+    def __init__(self, initial: int = 0):
+        self.value = initial
+        Counter.total_count += 1
+
+    def increment(self) -> None:
+        self.value += 1
+
+    def decrement(self) -> None:
+        self.value -= 1
+
+    @classmethod
+    def from_string(cls, s: str) -> Counter:
+        let val: int = int(s.strip())
+        return cls(initial=val)
+
+    @staticmethod
+    def get_total() -> int:
+        return Counter.total_count
+
+
+# ============================================================
+# 5. 魔术方法（Magic Methods）
+# ============================================================
+
+class Vector:
+    def __init__(self, x: float, y: float):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other: Vector) -> Vector:
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __sub__(self, other: Vector) -> Vector:
+        return Vector(self.x - other.x, self.y - other.y)
+
+    def __mul__(self, scalar: float) -> Vector:
+        return Vector(self.x * scalar, self.y * scalar)
+
+    def __rmul__(self, scalar: float) -> Vector:
+        return self.__mul__(scalar)
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Vector):
+            return False
+        return self.x == other.x and self.y == other.y
+
+    def __repr__(self) -> str:
+        return f"Vector({self.x}, {self.y})"
+
+    def __hash__(self) -> int:
+        return hash((self.x, self.y))
+
+    def magnitude(self) -> float:
+        return (self.x ** 2 + self.y ** 2) ** 0.5
+
+
+class Money:
+    def __init__(self, amount: float, currency: str = "CNY"):
+        self.amount = amount
+        self.currency = currency
+
+    def __add__(self, other: Money) -> Money:
+        guard self.currency == other.currency else:
+            raise ValueError("货币单位不一致")
+        return Money(self.amount + other.amount, self.currency)
+
+    def __sub__(self, other: Money) -> Money:
+        guard self.currency == other.currency else:
+            raise ValueError("货币单位不一致")
+        return Money(self.amount - other.amount, self.currency)
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Money):
+            return False
+        return self.amount == other.amount and self.currency == other.currency
+
+    def __lt__(self, other: Money) -> bool:
+        guard self.currency == other.currency else:
+            raise ValueError("货币单位不一致")
+        return self.amount < other.amount
+
+    def __repr__(self) -> str:
+        return f"{self.amount:.2f} {self.currency}"
+
+
+# ============================================================
+# 6. @property 装饰器
+# ============================================================
+
+class Circle:
+    def __init__(self, radius: float):
+        self._radius = radius
+
+    @property
+    def radius(self) -> float:
+        return self._radius
+
+    @radius.setter
+    def radius(self, value: float):
+        guard value > 0 else:
+            raise ValueError("半径必须为正数")
+        self._radius = value
+
+    @property
+    def area(self) -> float:
+        return 3.14159 * self._radius ** 2
+
+    @property
+    def circumference(self) -> float:
+        return 2 * 3.14159 * self._radius
+
+
+class Temperature:
+    def __init__(self, celsius: float):
+        self._celsius = celsius
+
+    @property
+    def celsius(self) -> float:
+        return self._celsius
+
+    @celsius.setter
+    def celsius(self, value: float):
+        self._celsius = value
+
+    @property
+    def fahrenheit(self) -> float:
+        return self._celsius * 9.0 / 5.0 + 32.0
+
+    @fahrenheit.setter
+    def fahrenheit(self, value: float):
+        self._celsius = (value - 32.0) * 5.0 / 9.0
+
+    @property
+    def kelvin(self) -> float:
+        return self._celsius + 273.15
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Cypy 类示例 ===\n")
+
+    # 1. 基础 Class
+    print("--- 1. 基础 Class ---")
+    let person: Person = Person(name="Alice", age=28)
+    print(f"{person.greet()}")
+    print(f"repr: {repr(person)}")
+
+    # 2. 单继承
+    print("\n--- 2. 单继承 ---")
+    let emp: Employee = Employee(name="Bob", age=32, department="工程部", salary=15000.0)
+    print(f"{emp.greet()}")
+    print(f"年终奖 (20%): {emp.annual_bonus(0.2)}")
+    print(f"repr: {repr(emp)}")
+
+    let stu: Student = Student(name="Charlie", age=20, school="清华大学", grade="大三")
+    print(f"{stu.greet()}")
+
+    # 3. 多重继承
+    print("\n--- 3. 多重继承 ---")
+    let donald: Duck = Duck(name="唐纳德")
+    print(f"{donald.speak()}")
+    print(f"{donald.swim()}")
+    print(f"{donald.fly()}")
+
+    let hero: SuperHero = SuperHero(name="张小明", alias="闪电侠")
+    print(f"{hero.greet()}")
+    print(f"{hero.save_day()}")
+
+    # 4. 静态方法与类方法
+    print("\n--- 4. 静态方法与类方法 ---")
+    print(f"sqrt(16) = {MathUtils.sqrt(16)}")
+    print(f"is_even(7) = {MathUtils.is_even(7)}")
+    print(f"clamp(150, 0, 100) = {MathUtils.clamp(150, 0, 100)}")
+    print(f"clamp(-5, 0, 100) = {MathUtils.clamp(-5, 0, 100)}")
+
+    let c1: Counter = Counter(10)
+    let c2: Counter = Counter.from_string("25")
+    c1.increment()
+    c1.increment()
+    c2.decrement()
+    print(f"Counter c1: {c1.value}")
+    print(f"Counter c2: {c2.value}")
+    print(f"Counter total: {Counter.get_total()}")
+
+    # 5. 魔术方法
+    print("\n--- 5. 魔术方法 ---")
+    let v1: Vector = Vector(3.0, 4.0)
+    let v2: Vector = Vector(1.0, 2.0)
+    let v3: Vector = v1 + v2
+    let v4: Vector = v1 - v2
+    let v5: Vector = v1 * 3.0
+    let v6: Vector = 3.0 * v1
+    print(f"v1: {v1}, magnitude: {v1.magnitude():.2f}")
+    print(f"v1 + v2 = {v3}")
+    print(f"v1 - v2 = {v4}")
+    print(f"v1 * 3 = {v5}")
+    print(f"3 * v1 = {v6}")
+    print(f"v1 == v2: {v1 == v2}")
+    print(f"v1 == Vector(3, 4): {v1 == Vector(3.0, 4.0)}")
+
+    let m1: Money = Money(100.0, "CNY")
+    let m2: Money = Money(50.0, "CNY")
+    let m3: Money = m1 + m2
+    print(f"m1: {m1}")
+    print(f"m1 + m2 = {m3}")
+    print(f"m1 - m2 = {m1 - m2}")
+    print(f"m1 > m2: {m1 > m2}")
+    print(f"m1 == Money(100): {m1 == Money(100.0)}")
+
+    # 6. @property
+    print("\n--- 6. @property ---")
+    let circle: Circle = Circle(radius=5.0)
+    print(f"Radius: {circle.radius}")
+    print(f"Area: {circle.area:.2f}")
+    print(f"Circumference: {circle.circumference:.2f}")
+    circle.radius = 10.0
+    print(f"After radius update: {circle.radius}")
+    print(f"New area: {circle.area:.2f}")
+
+    let temp: Temperature = Temperature(celsius=25.0)
+    print(f"Temperature: {temp.celsius}°C = {temp.fahrenheit:.1f}°F = {temp.kelvin:.2f}K")
+    temp.fahrenheit = 77.0
+    print(f"After setting 77°F: {temp.celsius}°C = {temp.fahrenheit:.1f}°F")
+
+    print("\n=== 所有类示例完成 ===")

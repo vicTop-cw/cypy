@@ -407,7 +407,7 @@ def main() -> int:
     def test_lambda_basic(self):
         """测试Lambda表达式基础功能"""
         code = '''def test_lambda_basic() -> int:
-    let func = lambda x, y: x + y
+    let func = lambda x, y -> x + y
     return func(3, 5)'''
         module = self._compile_and_import(code, 'test_lambda_basic')
         self.assertTrue(module.test_lambda_basic() is not None)
@@ -415,7 +415,7 @@ def main() -> int:
     def test_lambda_single_arg(self):
         """测试单参数Lambda表达式"""
         code = '''def test_lambda_single() -> int:
-    let square = lambda x: x * x
+    let square = lambda x -> x * x
     return square(4)'''
         module = self._compile_and_import(code, 'test_lambda_single')
         self.assertTrue(module.test_lambda_single() is not None)

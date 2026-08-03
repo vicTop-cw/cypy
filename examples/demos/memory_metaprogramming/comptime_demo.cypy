@@ -1,0 +1,169 @@
+#!bin cypy
+# 编译期求值示例
+# 演示 Cypy 的 comptime 表达式、const 常量和编译期计算
+
+# === 1. const 编译期常量 ===
+
+const MAX_SIZE: int = 1024
+const PI: float = 3.141592653589793
+const DEBUG: bool = True
+const BUFFER_SIZE: int = 4096
+const GOLDEN_RATIO: float = 1.618033988749895
+const MAX_RETRIES: int = 3
+const DEFAULT_TIMEOUT: int = 30
+
+# === 2. 使用编译期常量 ===
+
+def use_compile_time_constants() -> int:
+    print(f"MAX_SIZE = {MAX_SIZE}")
+    print(f"PI = {PI}")
+    print(f"DEBUG = {DEBUG}")
+    print(f"BUFFER_SIZE = {BUFFER_SIZE}")
+
+    circumference: float = 2.0 * PI * 5.0
+    print(f"半径为 5 的圆周长 = {circumference}")
+
+    return 0
+
+# === 3. comptime 表达式形式 ===
+
+def comptime_expression_demo() -> int:
+    let cache_size: int = comptime: 256 * 1024
+    print(f"cache_size (comptime) = {cache_size}")
+
+    let multiplier: float = comptime: 3.14159 * 2.0
+    print(f"multiplier (comptime) = {multiplier}")
+
+    let config_enabled: bool = comptime: True and True
+    print(f"config_enabled (comptime) = {config_enabled}")
+
+    return 0
+
+# === 4. 条件编译 ===
+
+def conditional_compilation_demo() -> int:
+    if DEBUG:
+        print("[DEBUG] 调试模式已启用")
+        print("[DEBUG] MAX_SIZE = " + str(MAX_SIZE))
+    else:
+        print("[PRODUCTION] 生产模式")
+
+    if MAX_SIZE > 512:
+        print("MAX_SIZE 超过 512，使用大块缓冲区")
+    else:
+        print("MAX_SIZE 较小，使用小块缓冲区")
+
+    return 0
+
+# === 5. 编译期常量用于数组大小 ===
+
+def const_for_array_size() -> int:
+    let buffer: *int = malloc(sizeof(int) * BUFFER_SIZE)
+    defer:
+        free(buffer)
+
+    for i in range(100):
+        let p: *int = buffer + i
+        &p = i * i
+
+    print(f"使用 BUFFER_SIZE={BUFFER_SIZE} 分配缓冲区")
+    print(f"已使用前 100 个位置存储平方值")
+
+    return 0
+
+# === 6. 编译期函数桩 ===
+
+comptime def compute_max(a: int, b: int) -> int:
+    if a > b:
+        return a
+    return b
+
+comptime def format_config(name: str, value: int) -> str:
+    return f"[{name}] = {value}"
+
+def comptime_function_stubs() -> int:
+    print("编译期函数已定义：compute_max, format_config")
+    print("这些函数可在 meta 块中被调用")
+    return 0
+
+# === 7. 编译期元信息 ===
+
+const VERSION: str = "1.0.0"
+const BUILD_DATE: str = "2026-07-31"
+const MODULE_NAME: str = "comptime_demo"
+
+def meta_information_demo() -> int:
+    print(f"模块: {MODULE_NAME}")
+    print(f"版本: {VERSION}")
+    print(f"构建日期: {BUILD_DATE}")
+    return 0
+
+# === 8. 编译期配置管理 ===
+
+const DATABASE_HOST: str = "localhost"
+const DATABASE_PORT: int = 5432
+const DATABASE_NAME: str = "myapp"
+const CONNECTION_TIMEOUT: int = DEFAULT_TIMEOUT
+
+def database_config_demo() -> int:
+    print(f"数据库配置: {DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}")
+    print(f"连接超时: {CONNECTION_TIMEOUT}s")
+    return 0
+
+# === 9. 编译期与运行时对比 ===
+
+def comptime_vs_runtime() -> int:
+    const FIXED_VALUE: int = 100
+
+    x: int = 100
+    let runtime_value: int = x * 2
+
+    print(f"编译期常量 FIXED_VALUE = {FIXED_VALUE}")
+    print(f"运行时计算 runtime_value = {runtime_value}")
+    print(f"编译期常量在编译时确定，运行时变量在运行时计算")
+
+    return 0
+
+# === 10. 结合 meta 块使用 comptime ===
+
+meta:
+    const META_GENERATED: str = "generated_in_meta"
+
+    def _compile_time_info() -> str:
+        return f"Module compiled at {BUILD_DATE}"
+
+def meta_comptime_demo() -> int:
+    print(f"meta 块生成的常量: {META_GENERATED}")
+    return 0
+
+# === 主函数 ===
+
+def main() -> int:
+    print("=== 编译期常量 ===")
+    use_compile_time_constants()
+
+    print("\n=== comptime 表达式 ===")
+    comptime_expression_demo()
+
+    print("\n=== 条件编译 ===")
+    conditional_compilation_demo()
+
+    print("\n=== const 用于数组大小 ===")
+    const_for_array_size()
+
+    print("\n=== 编译期函数桩 ===")
+    comptime_function_stubs()
+
+    print("\n=== 元信息 ===")
+    meta_information_demo()
+
+    print("\n=== 数据库配置 ===")
+    database_config_demo()
+
+    print("\n=== 编译期 vs 运行时 ===")
+    comptime_vs_runtime()
+
+    print("\n=== meta 块中的 comptime ===")
+    meta_comptime_demo()
+
+    return 0

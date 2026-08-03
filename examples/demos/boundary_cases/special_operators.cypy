@@ -1,0 +1,289 @@
+# 特殊符号与操作符边界示例
+# 演示所有操作符、特殊符号、运算符优先级和组合
+
+# ============================================================
+# 1. 算术操作符
+# ============================================================
+
+def arithmetic_ops(a: int, b: int) -> tuple<int, int, int, int, int>:
+    let add: int = a + b
+    let sub: int = a - b
+    let mul: int = a * b
+    let div: int = a / b
+    let mod: int = a % b
+    return (add, sub, mul, div, mod)
+
+def power_op(base: int, exp: int) -> int:
+    return base ** exp
+
+def floor_div(a: int, b: int) -> int:
+    return a // b
+
+
+# ============================================================
+# 2. 比较操作符
+# ============================================================
+
+def comparison_ops(a: int, b: int) -> tuple<bool, bool, bool, bool, bool, bool>:
+    let eq: bool = a == b
+    let ne: bool = a != b
+    let lt: bool = a < b
+    let le: bool = a <= b
+    let gt: bool = a > b
+    let ge: bool = a >= b
+    return (eq, ne, lt, le, gt, ge)
+
+
+# ============================================================
+# 3. 逻辑操作符
+# ============================================================
+
+def logical_ops(a: bool, b: bool) -> tuple<bool, bool, bool>:
+    let and_result: bool = a and b
+    let or_result: bool = a or b
+    let not_result: bool = not a
+    return (and_result, or_result, not_result)
+
+def short_circuit_and(x: int) -> bool:
+    return x > 0 and x < 100
+
+def short_circuit_or(x: int) -> bool:
+    return x < 0 or x > 100
+
+
+# ============================================================
+# 4. 位操作符（注意：& 与取址运算符冲突，此处用函数形式）
+# ============================================================
+
+def bitwise_or(a: int, b: int) -> int:
+    return a | b
+
+def bitwise_xor(a: int, b: int) -> int:
+    return a ^ b
+
+def shift_left(a: int) -> int:
+    return a << 2
+
+def shift_right(a: int) -> int:
+    return a >> 2
+
+
+# ============================================================
+# 5. 复合赋值操作符
+# ============================================================
+
+def compound_assignment() -> int:
+    let x: int = 10
+    x += 5
+    x -= 3
+    x *= 2
+    x = x // 3
+    x = x % 7
+    return x
+
+
+# ============================================================
+# 6. 一元操作符
+# ============================================================
+
+def unary_ops(x: int) -> tuple<int, int, bool>:
+    let neg: int = -x
+    let pos: int = +x
+    let neg_bool: bool = not (x > 0)
+    return (neg, pos, neg_bool)
+
+
+# ============================================================
+# 7. 运算符优先级
+# ============================================================
+
+def precedence_test() -> int:
+    let r1: int = 2 + 3 * 4
+    let r2: int = (2 + 3) * 4
+    let r3: int = 2 ** 3 ** 2
+    let r4: int = -2 ** 2
+    let r5: int = 10 - 5 - 3
+    return r1 + r2 + r3 + r4 + r5
+
+
+# ============================================================
+# 8. 管道操作符
+# ============================================================
+
+def double(x: int) -> int:
+    return x * 2
+
+def increment(x: int) -> int:
+    return x + 1
+
+def pipe_chain(x: int) -> int:
+    return x |> double |> increment |> double
+
+
+# ============================================================
+# 9. 成员与身份操作符
+# ============================================================
+
+def membership_ops() -> tuple<bool, bool, bool>:
+    let nums: list<int> = [1, 2, 3, 4, 5]
+    let in_result: bool = 3 in nums
+    let not_in_result: bool = not (6 in nums)
+    let a: int = 5
+    let b: int = 5
+    let is_result: bool = a is b
+    return (in_result, not_in_result, is_result)
+
+
+# ============================================================
+# 10. 三元条件表达式
+# ============================================================
+
+def ternary_expr(x: int) -> str:
+    if x > 0:
+        return "positive"
+    else:
+        return "non-positive"
+
+def nested_ternary(x: int) -> str:
+    if x > 0:
+        return "positive"
+    elif x == 0:
+        return "zero"
+    else:
+        return "negative"
+
+
+# ============================================================
+# 11. 解构与星号
+# ============================================================
+
+def unpacking_demo() -> tuple<int, int, int>:
+    let items: list<int> = [1, 2, 3, 4, 5]
+    let first: int = items[0]
+    let second: int = items[1]
+    let third: int = items[2]
+    return (first, second, third)
+
+def swap_values(a: int, b: int) -> tuple<int, int>:
+    return (b, a)
+
+
+# ============================================================
+# 12. f-string 特殊符号
+# ============================================================
+
+def fstring_special() -> str:
+    let name: str = "Alice"
+    let age: int = 30
+    let pi: float = 3.14159
+    return f"{name} is {age}, pi={pi:.2f}, hex={age:#x}"
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Special Operators Demo ===")
+
+    print("--- arithmetic ---")
+    print(f"arith(17, 5): {arithmetic_ops(17, 5)}")
+    print(f"power(2, 10): {power_op(2, 10)}")
+    print(f"floor(17, 5): {floor_div(17, 5)}")
+
+    print("--- comparison ---")
+    print(f"compare(5, 10): {comparison_ops(5, 10)}")
+
+    print("--- logical ---")
+    print(f"logical(True, False): {logical_ops(True, False)}")
+    print(f"short_and(50): {short_circuit_and(50)}")
+
+    print("--- bitwise ---")
+    print(f"or(12, 10): {bitwise_or(12, 10)}")
+    print(f"xor(12, 10): {bitwise_xor(12, 10)}")
+    print(f"shift_left(16): {shift_left(16)}")
+    print(f"shift_right(16): {shift_right(16)}")
+
+    print("--- compound assignment ---")
+    print(f"result: {compound_assignment()}")
+
+    print("--- unary ---")
+    print(f"unary(5): {unary_ops(5)}")
+
+    print("--- precedence ---")
+    print(f"precedence: {precedence_test()}")
+
+    print("--- pipe ---")
+    print(f"pipe(5): {pipe_chain(5)}")
+
+    print("--- membership ---")
+    print(f"membership: {membership_ops()}")
+
+    print("--- ternary ---")
+    print(f"ternary(5): {ternary_expr(5)}")
+    print(f"ternary(-3): {ternary_expr(-3)}")
+    print(f"nested(0): {nested_ternary(0)}")
+
+    print("--- unpacking ---")
+    print(f"unpack: {unpacking_demo()}")
+    print(f"swap(3,7): {swap_values(3, 7)}")
+
+    print("--- fstring ---")
+    print(f"fstring: {fstring_special()}")
+
+
+suite SpecialOperatorsTests:
+    test arithmetic:
+        let r = arithmetic_ops(17, 5)
+        assert r[0] == 22
+        assert r[1] == 12
+        assert r[2] == 85
+
+    test power:
+        assert power_op(2, 10) == 1024
+
+    test comparison:
+        let r = comparison_ops(5, 10)
+        assert r[2] == True
+
+    test logical:
+        let r = logical_ops(True, False)
+        assert r[0] == False
+        assert r[1] == True
+
+    test bitwise_or:
+        assert bitwise_or(12, 10) == 14
+
+    test bitwise_xor:
+        assert bitwise_xor(12, 10) == 6
+
+    test shift_left:
+        assert shift_left(16) == 64
+
+    test shift_right:
+        assert shift_right(16) == 4
+
+    test compound:
+        assert compound_assignment() >= 0
+
+    test pipe:
+        assert pipe_chain(5) == 22
+
+    test membership:
+        let r = membership_ops()
+        assert r[0] == True
+        assert r[1] == True
+
+    test ternary_positive:
+        assert ternary_expr(5) == "positive"
+
+    test ternary_negative:
+        assert ternary_expr(-3) == "non-positive"
+
+    test nested_ternary_zero:
+        assert nested_ternary(0) == "zero"
+
+    test swap:
+        let r = swap_values(3, 7)
+        assert r[0] == 7
+        assert r[1] == 3

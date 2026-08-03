@@ -86,7 +86,7 @@ def test_module_magic_methods_in_all():
     """测试魔法方法在 __all__ 中"""
     code = """
 class MyClass:
-    def __cast__[float](self) -> float:
+    def __cast__<float>(self) -> float:
         return 0.0
     
     def _private_method(self):

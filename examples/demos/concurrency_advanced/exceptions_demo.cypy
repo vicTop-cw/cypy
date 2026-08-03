@@ -1,0 +1,214 @@
+# 异常处理（Exception Handling）示例
+# 演示 Cypy 的 try-except、多异常处理、自定义异常和 re-raise
+
+class ValidationError(Exception):
+    """验证错误类型"""
+    def __init__(self, field: str, message: str):
+        self.field = field
+        self.message = message
+        super().__init__(f"ValidationError: {field} - {message}")
+
+class DatabaseError(Exception):
+    """数据库错误类型"""
+    pass
+
+class InsufficientFundsError(Exception):
+    """余额不足错误"""
+    def __init__(self, balance: float, required: float):
+        self.balance = balance
+        self.required = required
+        super().__init__(f"InsufficientFunds: balance={balance:.2f}, required={required:.2f}")
+
+def demo_basic_try_except() -> int:
+    """演示基本 try-except"""
+    print("=== 基本 try-except ===")
+    
+    try:
+        let result = 10 / 0
+        print(f"  Result: {result}")
+    except ZeroDivisionError:
+        print("  捕获到 ZeroDivisionError: 除数不能为零")
+    
+    try:
+        let value = int("not_a_number")
+        print(f"  Value: {value}")
+    except ValueError as e:
+        print(f"  捕获到 ValueError: {e}")
+    
+    return 0
+
+def demo_multiple_exceptions() -> int:
+    """演示多异常处理"""
+    print("=== 多异常处理 ===")
+    
+    def load_config(path: str) -> dict:
+        if not path:
+            raise FileNotFoundError(f"Config file not found: {path}")
+        if path == "restricted":
+            raise PermissionError(f"No permission to access: {path}")
+        if path == "corrupt":
+            raise ValueError(f"Config file is corrupt: {path}")
+        return "config_loaded"
+    
+    try:
+        load_config("")
+    except FileNotFoundError as e:
+        print(f"  FileNotFoundError: {e}")
+    except PermissionError as e:
+        print(f"  PermissionError: {e}")
+    except Exception as e:
+        print(f"  其他异常: {e}")
+    
+    try:
+        load_config("restricted")
+    except FileNotFoundError as e:
+        print(f"  FileNotFoundError: {e}")
+    except PermissionError as e:
+        print(f"  PermissionError: {e}")
+    except Exception as e:
+        print(f"  其他异常: {e}")
+    
+    try:
+        load_config("corrupt")
+    except FileNotFoundError as e:
+        print(f"  FileNotFoundError: {e}")
+    except PermissionError as e:
+        print(f"  PermissionError: {e}")
+    except ValueError as e:
+        print(f"  ValueError: {e}")
+    except Exception as e:
+        print(f"  其他异常: {e}")
+    
+    return 0
+
+def demo_try_except_finally() -> int:
+    """演示 try-except-finally 结构"""
+    print("=== try-except-finally ===")
+    
+    let file = None
+    try:
+        file = "opened_file.txt"
+        print(f"  打开文件: {file}")
+        raise IOError("读取文件时出错")
+    except IOError as e:
+        print(f"  捕获 IOError: {e}")
+    finally:
+        if file != None:
+            print(f"  finally: 关闭文件 {file}")
+            file = None
+        print("  finally: 清理工作完成")
+    
+    return 0
+
+def demo_custom_exceptions() -> int:
+    """演示自定义异常类型"""
+    print("=== 自定义异常类型 ===")
+    
+    def validate_user(has_name: bool, has_age: bool, age: int) -> None:
+        if not has_name:
+            raise ValidationError(field="name", message="用户名为必填项")
+        if not has_age:
+            raise ValidationError(field="age", message="年龄为必填项")
+        if age < 0:
+            raise ValidationError(field="age", message="年龄不能为负数")
+    
+    try:
+        validate_user(False, True, 0)
+    except ValidationError as e:
+        print(f"  验证失败: {e.field} - {e.message}")
+    
+    try:
+        validate_user(True, True, -5)
+    except ValidationError as e:
+        print(f"  验证失败: {e.field} - {e.message}")
+    
+    try:
+        validate_user(True, True, 25)
+        print("  用户验证通过")
+    except ValidationError as e:
+        print(f"  验证失败: {e.field} - {e.message}")
+    
+    def withdraw(balance: float, amount: float) -> float:
+        if amount > balance:
+            raise InsufficientFundsError(balance=balance, required=amount)
+        return balance - amount
+    
+    try:
+        withdraw(100.0, 200.0)
+    except InsufficientFundsError as e:
+        print(f"  余额不足: 可用={e.balance}, 需要={e.required}")
+    
+    return 0
+
+def demo_raise_and_reraise() -> int:
+    """演示 raise 和 re-raise"""
+    print("=== raise 和 re-raise ===")
+    
+    def process_payment(amount: float) -> str:
+        if amount <= 0:
+            raise ValueError("支付金额必须为正数")
+        if amount > 1000000:
+            raise OverflowError("支付金额超出限制")
+        return f"Payment of {amount:.2f} processed"
+    
+    try:
+        process_payment(-50.0)
+    except ValueError as e:
+        print(f"  捕获 ValueError: {e}")
+        try:
+            raise
+        except ValueError as re_raised:
+            print(f"  re-raised 并再次捕获: {re_raised}")
+    
+    def safe_divide(a: float, b: float) -> float:
+        try:
+            return a / b
+        except ZeroDivisionError:
+            print("  除零错误，重新抛出")
+            raise
+    
+    try:
+        safe_divide(10.0, 0.0)
+    except ZeroDivisionError:
+        print("  重新抛出的异常已在外层捕获")
+    
+    return 0
+
+def demo_exception_chain() -> int:
+    """演示异常链"""
+    print("=== 异常链 ===")
+    
+    def read_file(path: str) -> str:
+        if path == "missing":
+            raise FileNotFoundError(f"文件不存在: {path}")
+        return "file content"
+    
+    def process_data(path: str) -> str:
+        try:
+            return read_file(path)
+        except FileNotFoundError as e:
+            raise RuntimeError(f"无法处理数据文件: {path}") from e
+    
+    try:
+        process_data("missing")
+    except RuntimeError as e:
+        print(f"  捕获到 RuntimeError: {e}")
+        print(f"  原始异常: {e.__cause__}")
+    
+    return 0
+
+def main() -> int:
+    print("====== 异常处理演示 ======")
+    
+    demo_basic_try_except()
+    demo_multiple_exceptions()
+    demo_try_except_finally()
+    demo_custom_exceptions()
+    demo_raise_and_reraise()
+    demo_exception_chain()
+    
+    print("====== 异常处理演示完成 ======")
+    return 0
+
+if __name__ == "__main__":
+    main()

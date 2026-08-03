@@ -1,0 +1,422 @@
+# 模式匹配完整示例
+# 演示 Cypy 的 match-case 模式匹配所有特性
+
+# ============================================================
+# 1. 字面量模式
+# ============================================================
+
+def literal_patterns() -> str:
+    status = "active"
+
+    match status:
+        case "active":
+            return "用户活跃"
+        case "inactive":
+            return "用户不活跃"
+        case "pending":
+            return "用户待处理"
+        case _:
+            return "未知状态"
+
+    return ""
+
+
+def numeric_literal_patterns() -> str:
+    code = 200
+
+    match code:
+        case 200:
+            return "OK"
+        case 301:
+            return "已重定向"
+        case 404:
+            return "未找到"
+        case 500:
+            return "服务器错误"
+        case _:
+            return "未知状态码"
+
+
+# ============================================================
+# 2. 变量模式
+# ============================================================
+
+def variable_patterns() -> str:
+    point = (10, 20)
+
+    match point:
+        case (x, 0):
+            return f"在 x 轴上, x = {x}"
+        case (0, y):
+            return f"在 y 轴上, y = {y}"
+        case (x, y):
+            return f"点坐标 ({x}, {y})"
+
+    return ""
+
+
+def wildcard_pattern(x: int) -> str:
+    match x:
+        case 0:
+            return "零"
+        case 1:
+            return "一"
+        case _:
+            return "其他数字"
+
+
+# ============================================================
+# 3. 元组模式
+# ============================================================
+
+def tuple_patterns() -> str:
+    data = ("user", 42, "admin")
+
+    match data:
+        case ("user", uid, role):
+            return f"用户 {uid}, 角色 {role}"
+        case ("system", code, message):
+            return f"系统消息: {code} - {message}"
+        case (kind, _, _):
+            return f"类型: {kind}"
+
+    return ""
+
+
+def nested_tuple_patterns() -> str:
+    data = ((1, 2), (3, 4))
+
+    match data:
+        case ((a, b), (c, d)):
+            return f"嵌套元组: ({a},{b}), ({c},{d})"
+
+    return ""
+
+
+# ============================================================
+# 4. 列表模式 (带 *rest)
+# ============================================================
+
+def list_patterns() -> str:
+    items = [1, 2, 3, 4, 5]
+
+    match items:
+        case []:
+            return "空列表"
+        case [first]:
+            return f"单元素: {first}"
+        case [first, second]:
+            return f"两元素: {first}, {second}"
+        case [first, *rest]:
+            return f"首元素: {first}, 其余: {rest}"
+
+    return ""
+
+
+def list_rest_patterns() -> str:
+    items = [10, 20, 30, 40, 50]
+
+    match items:
+        case [first, *middle, last]:
+            return f"首: {first}, 中: {middle}, 尾: {last}"
+        case [a, b, *rest]:
+            return f"前两: {a}, {b}, 其余: {rest}"
+
+    return ""
+
+
+# ============================================================
+# 5. 字典模式
+# ============================================================
+
+def dict_patterns() -> str:
+    config = dict(debug=True, timeout=30, port=8080)
+
+    match config:
+        case {"debug": True}:
+            return "调试模式已启用"
+        case {"debug": False, "timeout": t}:
+            return f"生产模式, 超时: {t}s"
+        case {"timeout": t} if t > 60:
+            return f"长超时: {t}s"
+        case _:
+            return "默认配置"
+
+    return ""
+
+
+def partial_dict_patterns() -> str:
+    person = dict(name="Alice", age=30, city="Beijing")
+
+    match person:
+        case {"name": n, "age": a}:
+            return f"{n}, {a} 岁"
+        case {"name": n}:
+            return f"姓名: {n}"
+
+    return ""
+
+
+# ============================================================
+# 6. 结构体模式
+# ============================================================
+
+struct Point:
+    x: int
+    y: int
+
+
+def struct_patterns() -> str:
+    p = Point(x=10, y=20)
+
+    match p:
+        case Point(0, 0):
+            return "原点"
+        case Point(x, 0):
+            return f"在 x 轴上: {x}"
+        case Point(0, y):
+            return f"在 y 轴上: {y}"
+        case Point(x, y):
+            return f"点 ({x}, {y})"
+
+    return ""
+
+
+struct User:
+    name: str
+    age: int
+    role: str
+
+
+def struct_with_guard() -> str:
+    user = User(name="Alice", age=30, role="admin")
+
+    match user:
+        case User(n, a) if a >= 18:
+            return f"{n}, {a} 岁, 成年"
+        case User(n, _, "admin"):
+            return f"管理员: {n}"
+        case User(n, a):
+            return f"{n}, {a} 岁"
+
+    return ""
+
+
+# ============================================================
+# 7. 范围模式 (1..10)
+# ============================================================
+
+def range_patterns() -> str:
+    score = 75
+
+    match score:
+        case 0..60:
+            return "不及格"
+        case 60..70:
+            return "及格"
+        case 70..80:
+            return "良好"
+        case 80..90:
+            return "优秀"
+        case 90..100:
+            return "完美"
+        case _:
+            return "无效分数"
+
+    return ""
+
+
+def float_range_patterns() -> str:
+    temp = 25.5
+
+    match temp:
+        case 0..20:
+            return "寒冷"
+        case 20..30:
+            return "舒适"
+        case 30..40:
+            return "炎热"
+        case _:
+            return "极端温度"
+
+    return ""
+
+
+# ============================================================
+# 8. OR 模式 (case 0 | 1 | 2)
+# ============================================================
+
+def or_patterns() -> str:
+    value = 1
+
+    match value:
+        case 0 | 1 | 2:
+            return "小数字"
+        case 3 | 4 | 5:
+            return "中数字"
+        case 6 | 7 | 8 | 9:
+            return "大数字"
+        case _:
+            return "超大数字"
+
+    return ""
+
+
+def or_with_literals() -> str:
+    day = "Mon"
+
+    match day:
+        case "Mon" | "Tue" | "Wed" | "Thu" | "Fri":
+            return "工作日"
+        case "Sat" | "Sun":
+            return "周末"
+        case _:
+            return "非法日期"
+
+    return ""
+
+
+# ============================================================
+# 9. Guard 模式 (case (x, y) if x > y)
+# ============================================================
+
+def guard_patterns() -> str:
+    point = (3, 4)
+
+    match point:
+        case (x, y) if x == y:
+            return f"对角线: ({x}, {y})"
+        case (x, y) if x > y:
+            return f"x > y: ({x}, {y})"
+        case (x, y) if x < y:
+            return f"x < y: ({x}, {y})"
+        case (x, y):
+            return f"相等: ({x}, {y})"
+
+    return ""
+
+
+def guard_with_range() -> str:
+    value = 8
+
+    match value:
+        case 1..10 if value % 2 == 0:
+            return "1-10 之间的偶数"
+        case 1..10 if value % 2 == 1:
+            return "1-10 之间的奇数"
+        case _:
+            return "超出范围"
+
+    return ""
+
+
+def guard_positive_only() -> str:
+    x = -5
+
+    match x:
+        case x if x > 0:
+            return "正数"
+        case x if x < 0:
+            return "负数"
+        case 0:
+            return "零"
+
+    return ""
+
+
+# ============================================================
+# 10. Match 表达式
+# ============================================================
+
+def classify(x: int) -> str:
+    return match x:
+        case 1..10: "小数"
+        case 10..100: "中数"
+        case _: "大数"
+
+
+def status_text(code: int) -> str:
+    return match code:
+        case 200: "OK"
+        case 301: "重定向"
+        case 404: "未找到"
+        case 500: "服务器错误"
+        case _: "未知"
+
+
+def describe_point(p: Point) -> str:
+    return match p:
+        case Point(0, 0): "原点"
+        case Point(x, y) if x == y: "对角线点"
+        case Point(x, 0): f"X 轴上: {x}"
+        case Point(0, y): f"Y 轴上: {y}"
+        case Point(x, y): f"普通点 ({x}, {y})"
+
+
+def match_in_assignment() -> str:
+    status_code = 404
+    result = match status_code:
+        case 200: "OK"
+        case 404: "Not Found"
+        case 500: "Server Error"
+        case _: "Unknown"
+    return result
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=" * 50)
+    print("模式匹配完整示例")
+    print("=" * 50)
+
+    print("\n-- 字面量模式 --")
+    print(f"  literal_patterns: {literal_patterns()}")
+    print(f"  numeric_literal_patterns: {numeric_literal_patterns()}")
+
+    print("\n-- 变量模式 --")
+    print(f"  variable_patterns: {variable_patterns()}")
+    print(f"  wildcard_pattern(0): {wildcard_pattern(0)}")
+    print(f"  wildcard_pattern(42): {wildcard_pattern(42)}")
+
+    print("\n-- 元组模式 --")
+    print(f"  tuple_patterns: {tuple_patterns()}")
+    print(f"  nested_tuple_patterns: {nested_tuple_patterns()}")
+
+    print("\n-- 列表模式 --")
+    print(f"  list_patterns: {list_patterns()}")
+    print(f"  list_rest_patterns: {list_rest_patterns()}")
+
+    print("\n-- 字典模式 --")
+    print(f"  dict_patterns: {dict_patterns()}")
+    print(f"  partial_dict_patterns: {partial_dict_patterns()}")
+
+    print("\n-- 结构体模式 --")
+    print(f"  struct_patterns: {struct_patterns()}")
+    print(f"  struct_with_guard: {struct_with_guard()}")
+
+    print("\n-- 范围模式 --")
+    print(f"  range_patterns: {range_patterns()}")
+    print(f"  float_range_patterns: {float_range_patterns()}")
+
+    print("\n-- OR 模式 --")
+    print(f"  or_patterns: {or_patterns()}")
+    print(f"  or_with_literals: {or_with_literals()}")
+
+    print("\n-- Guard 模式 --")
+    print(f"  guard_patterns: {guard_patterns()}")
+    print(f"  guard_with_range: {guard_with_range()}")
+    print(f"  guard_positive_only: {guard_positive_only()}")
+
+    print("\n-- Match 表达式 --")
+    print(f"  classify(5): {classify(5)}")
+    print(f"  classify(50): {classify(50)}")
+    print(f"  classify(500): {classify(500)}")
+    print(f"  status_text(404): {status_text(404)}")
+    print(f"  describe_point(Point(3,3)): {describe_point(Point(x=3, y=3))}")
+    print(f"  match_in_assignment: {match_in_assignment()}")
+
+    print("\n" + "=" * 50)
+    print("所有模式匹配示例运行完毕")

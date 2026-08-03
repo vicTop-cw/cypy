@@ -1,0 +1,345 @@
+# 高级提取器模式示例
+# 演示 Cypy 的 __unapply__, __unapply_seq__, __unwarp__, __match_args__ 提取器
+
+# ============================================================
+# 1. __unapply__ 提取器模式
+# ============================================================
+
+struct Email:
+    address: str
+
+    def __unapply__(self) -> tuple<str, str> | None:
+        if "@" in self.address:
+            parts = self.address.split("@")
+            return (parts[0], parts[1])
+        return None
+
+
+def email_extractor_demo() -> str:
+    email = Email(address="admin@example.com")
+
+    match email:
+        case Email(user, domain):
+            return f"用户: {user}, 域名: {domain}"
+        case _:
+            return "无效邮箱"
+
+    return ""
+
+
+def email_extractor_with_guard() -> str:
+    email = Email(address="root@system.io")
+
+    match email:
+        case Email(user, domain) if len(user) > 3:
+            return f"长用户名: {user}@{domain}"
+        case Email(user, domain):
+            return f"{user}@{domain}"
+        case _:
+            return "无效邮箱"
+
+    return ""
+
+
+def email_extractor_or_pattern() -> str:
+    email = Email(address="admin@example.com")
+
+    match email:
+        case Email("admin", _) | Email("root", _):
+            return "管理员邮箱"
+        case Email(user, domain):
+            return f"普通用户: {user}@{domain}"
+        case _:
+            return "无效邮箱"
+
+    return ""
+
+
+# ============================================================
+# 2. __unapply_seq__ 序列提取器
+# ============================================================
+
+struct Numbers:
+    values: list<int>
+
+    def __unapply_seq__(self) -> tuple<int> | None:
+        if self.values:
+            return tuple(self.values)
+        return None
+
+
+def seq_extractor_demo() -> str:
+    nums = Numbers(values=[10, 20, 30, 40, 50])
+
+    match nums:
+        case Numbers(x, y):
+            return f"前两个: {x}, {y}"
+        case Numbers(x):
+            return f"单元素: {x}"
+        case Numbers():
+            return "空序列"
+        case _:
+            return "不匹配"
+
+    return ""
+
+
+def seq_extractor_pattern() -> str:
+    nums = Numbers(values=[1, 2, 3, 4, 5])
+
+    match nums:
+        case Numbers(first, second, third):
+            return f"前三个: {first}, {second}, {third}"
+        case _:
+            return "不匹配"
+
+    return ""
+
+
+# ============================================================
+# 3. __unwarp__ 解包模式
+# ============================================================
+
+struct Wrapper<T>:
+    value: T
+
+    def __unwarp__(self) -> T:
+        return self.value
+
+
+def unwrap_demo() -> str:
+    wrapped = Wrapper(value=42)
+
+    match wrapped:
+        case Wrapper(x):
+            return f"解包值: {x}"
+        case _:
+            return "不匹配"
+
+    return ""
+
+
+def unwrap_with_type() -> str:
+    wrapped_str = Wrapper(value="hello")
+
+    match wrapped_str:
+        case Wrapper(s):
+            return f"解包字符串: {s}"
+        case _:
+            return "不匹配"
+
+    return ""
+
+
+def unwrap_nested() -> str:
+    inner = Wrapper(value=99)
+    outer = Wrapper(value=inner)
+
+    match outer:
+        case Wrapper(Wrapper(x)):
+            return f"嵌套解包: {x}"
+        case Wrapper(x):
+            return f"单层解包: {x}"
+        case _:
+            return "不匹配"
+
+    return ""
+
+
+# ============================================================
+# 4. __match_args__ 标准位置提取
+# ============================================================
+
+struct Point2D:
+    x: int
+    y: int
+
+    def __match_args__(self) -> tuple<int, int>:
+        return (self.x, self.y)
+
+
+def match_args_demo() -> str:
+    p = Point2D(x=5, y=10)
+
+    match p:
+        case Point2D(0, 0):
+            return "原点"
+        case Point2D(x, 0):
+            return f"X 轴上, x={x}"
+        case Point2D(0, y):
+            return f"Y 轴上, y={y}"
+        case Point2D(x, y):
+            return f"点 ({x}, {y})"
+
+    return ""
+
+
+struct Student:
+    name: str
+    age: int
+    grade: str
+
+    def __match_args__(self) -> tuple<str, int, str>:
+        return (self.name, self.age, self.grade)
+
+
+def match_args_student() -> str:
+    student = Student(name="Alice", age=20, grade="A")
+
+    match student:
+        case Student(name, age, grade) if age >= 18:
+            return f"{name}, {age} 岁, 年级 {grade} (成年)"
+        case Student(name, age, grade):
+            return f"{name}, {age} 岁, 年级 {grade}"
+
+    return ""
+
+
+# ============================================================
+# 5. 嵌套提取器模式
+# ============================================================
+
+struct Circle:
+    center: Point2D
+    radius: float
+
+    def __unapply__(self) -> tuple<Point2D, float> | None:
+        return (self.center, self.radius)
+
+
+def nested_extractor_demo() -> str:
+    circle = Circle(center=Point2D(x=3, y=4), radius=5.0)
+
+    match circle:
+        case Circle(Point2D(cx, cy), r):
+            return f"圆心 ({cx}, {cy}), 半径 {r}"
+        case _:
+            return "不匹配"
+
+    return ""
+
+
+def deeply_nested_extractor() -> str:
+    circle = Circle(center=Point2D(x=0, y=0), radius=10.0)
+
+    match circle:
+        case Circle(Point2D(0, 0), r):
+            return f"圆心在原点, 半径 {r}"
+        case Circle(Point2D(x, y), r) if x == y:
+            return f"圆心在对角线上 ({x}, {y}), 半径 {r}"
+        case _:
+            return "其他圆"
+
+    return ""
+
+
+# ============================================================
+# 6. 提取器模式组合
+# ============================================================
+
+def extractor_with_as_binding() -> str:
+    email = Email(address="test@example.com")
+
+    match email:
+        case Email(user, domain) as e:
+            return f"邮箱对象 {e.address}, 用户 {user}, 域名 {domain}"
+
+    return ""
+
+
+def extractor_in_match_expression() -> str:
+    emails = [Email(address="admin@sys.com"), Email(address="root@core.io"), Email(address="user@test.com")]
+
+    results = []
+    for email in emails:
+        result = match email:
+            case Email("admin", domain): f"管理员@{domain}"
+            case Email("root", domain): f"根用户@{domain}"
+            case Email(user, domain): f"{user}@{domain}"
+            case _: "无效"
+        results.append(result)
+
+    return str(results)
+
+
+# ============================================================
+# 7. 提取器优先级演示
+# ============================================================
+
+struct MixedExtractor:
+    data: str
+
+    def __unapply__(self) -> tuple<str> | None:
+        if self.data.startswith("unapply:"):
+            return (self.data,)
+        return None
+
+    def __unwarp__(self) -> str:
+        return self.data
+
+
+def priority_demo() -> str:
+    obj = MixedExtractor(data="unapply:hello")
+
+    match obj:
+        case MixedExtractor(x):
+            return f"__unapply__ 匹配: {x}"
+        case _:
+            return "未匹配"
+
+    return ""
+
+
+def unwarp_fallback_demo() -> str:
+    obj = MixedExtractor(data="plain_value")
+
+    match obj:
+        case MixedExtractor(x):
+            return f"匹配结果: {x}"
+        case _:
+            return "未匹配"
+
+    return ""
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=" * 50)
+    print("高级提取器模式示例")
+    print("=" * 50)
+
+    print("\n-- __unapply__ 提取器 --")
+    print(f"  email_extractor_demo: {email_extractor_demo()}")
+    print(f"  email_extractor_with_guard: {email_extractor_with_guard()}")
+    print(f"  email_extractor_or_pattern: {email_extractor_or_pattern()}")
+
+    print("\n-- __unapply_seq__ 序列提取器 --")
+    print(f"  seq_extractor_demo: {seq_extractor_demo()}")
+    print(f"  seq_extractor_pattern: {seq_extractor_pattern()}")
+
+    print("\n-- __unwarp__ 解包模式 --")
+    print(f"  unwrap_demo: {unwrap_demo()}")
+    print(f"  unwrap_with_type: {unwrap_with_type()}")
+    print(f"  unwrap_nested: {unwrap_nested()}")
+
+    print("\n-- __match_args__ 标准位置 --")
+    print(f"  match_args_demo: {match_args_demo()}")
+    print(f"  match_args_student: {match_args_student()}")
+
+    print("\n-- 嵌套提取器 --")
+    print(f"  nested_extractor_demo: {nested_extractor_demo()}")
+    print(f"  deeply_nested_extractor: {deeply_nested_extractor()}")
+
+    print("\n-- 提取器组合 --")
+    print(f"  extractor_with_as_binding: {extractor_with_as_binding()}")
+    print(f"  extractor_in_match_expression: {extractor_in_match_expression()}")
+
+    print("\n-- 提取器优先级 --")
+    print(f"  priority_demo: {priority_demo()}")
+    print(f"  unwarp_fallback_demo: {unwarp_fallback_demo()}")
+
+    print("\n" + "=" * 50)
+    print("所有提取器模式示例运行完毕")

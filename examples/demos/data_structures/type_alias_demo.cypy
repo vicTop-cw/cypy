@@ -1,0 +1,257 @@
+# Cypy 类型别名 (Type Alias) 完整示例
+# 演示 type alias 的核心特性：简单别名、泛型别名、联合类型别名、在函数签名中的使用
+
+# ============================================================
+# 1. 简单类型别名
+# ============================================================
+
+type Point = tuple<int, int>
+type Matrix = list<list<float>>
+type Callback = Callable[[int], str]
+type UserID = int
+type UserName = str
+type Timestamp = int
+
+
+# 使用类型别名
+let origin: Point = (0, 0)
+let p1: Point = (3, 4)
+let p2: Point = (7, 1)
+
+let identity: Matrix = [[1.0, 0.0], [0.0, 1.0]]
+let rotation: Matrix = [[0.0, -1.0], [1.0, 0.0]]
+
+let uid: UserID = 1001
+let uname: UserName = "Alice"
+let ts: Timestamp = 1700000000
+
+
+# ============================================================
+# 2. 泛型类型别名
+# ============================================================
+
+type Result<T> = tuple<bool, T>
+type Optional<T> = T | None
+type Pair<A, B> = tuple<A, B>
+type ListOrSet<T> = list<T> | set<T>
+
+
+# 使用泛型类型别名
+let success: Result<int> = (True, 42)
+let failure: Result<str> = (False, "操作失败")
+
+let maybe_num: int | None = None
+let maybe_str: str | None = "存在的字符串"
+
+let coord: Pair<int, int> = (10, 20)
+let mixed: Pair<str, float> = ("pi", 3.14)
+
+let numbers_list: ListOrSet<int> = [1, 2, 3, 4, 5]
+let numbers_set: ListOrSet<int> = set([10, 20, 30])
+
+
+# ============================================================
+# 3. 联合类型别名
+# ============================================================
+
+type Numeric = int | float
+type StrOrInt = str | int
+type NumberLike = int | float | str
+type DatabaseValue = int | float | str | bool | None
+
+
+# 使用联合类型别名
+let age: Numeric = 25
+let height: Numeric = 5.9
+let name_or_id: StrOrInt = "Alice"
+let count: StrOrInt = 42
+
+let val1: DatabaseValue = 42
+let val2: DatabaseValue = 3.14
+let val3: DatabaseValue = "hello"
+let val4: DatabaseValue = True
+let val5: DatabaseValue = None
+
+
+# ============================================================
+# 4. 在函数签名中使用类型别名
+# ============================================================
+
+def compute_distance(a: Point, b: Point) -> float:
+    let dx: float = float(b[0] - a[0])
+    let dy: float = float(b[1] - a[1])
+    return (dx ** 2 + dy ** 2) ** 0.5
+
+def transform_matrix(m: Matrix) -> Matrix:
+    let result: Matrix = []
+    for row in m:
+        let new_row: list<float> = []
+        for val in row:
+            new_row.append(val * 2.0)
+        result.append(new_row)
+    return result
+
+def handle_result(r: Result<int>) -> str:
+    match r:
+        case (True, value):
+            return f"成功: {value}"
+        case (False, msg):
+            return f"失败: {msg}"
+        case _:
+            return "未知结果"
+
+def safe_divide(a: float, b: float) -> float | None:
+    guard b != 0 else return None
+    return a / b
+
+def process_numeric(value: Numeric) -> Numeric:
+    if isinstance(value, int):
+        return value * 2
+    else:
+        return value * 2.0
+
+def format_value(value: DatabaseValue) -> str:
+    match value:
+        case None:
+            return "NULL"
+        case True | False:
+            return str(value)
+        case int(n):
+            return f"int:{n}"
+        case float(f):
+            return f"float:{f}"
+        case str(s):
+            return f"str:'{s}'"
+        case _:
+            return "unknown"
+
+
+# ============================================================
+# 5. 类型别名与结构体、枚举结合
+# ============================================================
+
+type UserKey = UserID
+
+struct User:
+    id: UserKey
+    name: UserName
+    age: int
+
+    def __repr__(self) -> str:
+        return f"User(id={self.id}, name='{self.name}', age={self.age})"
+
+
+enum OrderStatus:
+    PENDING
+    SHIPPED
+    DELIVERED
+    CANCELLED
+
+type OrderInfo = tuple<User, OrderStatus>
+
+
+# ============================================================
+# 6. 复杂类型别名组合
+# ============================================================
+
+type Vector3 = tuple<float, float, float>
+type Vector2 = tuple<float, float>
+
+type Transform2D = tuple<Matrix, Vector2>
+type Transform3D = tuple<Matrix, Vector3>
+
+type MaybeVector = Vector3 | None
+
+
+def magnitude3(v: Vector3) -> float:
+    return (v[0] ** 2 + v[1] ** 2 + v[2] ** 2) ** 0.5
+
+def normalize3(v: Vector3) -> Vector3:
+    let mag: float = magnitude3(v)
+    guard mag > 0 else return (0.0, 0.0, 0.0)
+    return (v[0] / mag, v[1] / mag, v[2] / mag)
+
+def apply_transform(transform: Transform2D, point: Vector2) -> Vector2:
+    let matrix: Matrix = transform[0]
+    let offset: Vector2 = transform[1]
+    let x: float = matrix[0][0] * point[0] + matrix[0][1] * point[1] + offset[0]
+    let y: float = matrix[1][0] * point[0] + matrix[1][1] * point[1] + offset[1]
+    return (x, y)
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Cypy 类型别名示例 ===\n")
+
+    # 1. 简单类型别名
+    print("--- 1. 简单类型别名 ---")
+    print(f"origin: {origin}")
+    print(f"p1: {p1}, p2: {p2}")
+    print(f"identity matrix: {identity}")
+    print(f"uid: {uid}, uname: {uname}, ts: {ts}")
+
+    # 2. 泛型类型别名
+    print("\n--- 2. 泛型类型别名 ---")
+    print(f"success: {success}")
+    print(f"failure: {failure}")
+    print(f"maybe_num: {maybe_num}")
+    print(f"maybe_str: {maybe_str}")
+    print(f"coord: {coord}")
+    print(f"mixed: {mixed}")
+    print(f"numbers_list: {numbers_list}")
+    print(f"numbers_set: {numbers_set}")
+
+    # 3. 联合类型别名
+    print("\n--- 3. 联合类型别名 ---")
+    print(f"age: {age}")
+    print(f"height: {height}")
+    print(f"name_or_id: {name_or_id}")
+    print(f"count: {count}")
+    print(f"DatabaseValues: {format_value(val1)}, {format_value(val2)}, {format_value(val3)}, {format_value(val4)}, {format_value(val5)}")
+
+    # 4. 函数签名中的使用
+    print("\n--- 4. 函数签名 ---")
+    print(f"distance({p1}, {p2}) = {compute_distance(p1, p2):.2f}")
+
+    let doubled: Matrix = transform_matrix(identity)
+    print(f"transformed matrix: {doubled}")
+
+    print(f"handle_result(success): {handle_result(success)}")
+    print(f"handle_result(failure): {handle_result(failure)}")
+
+    let div1: float | None = safe_divide(10.0, 3.0)
+    let div2: float | None = safe_divide(10.0, 0.0)
+    print(f"safe_divide(10, 3): {div1}")
+    print(f"safe_divide(10, 0): {div2}")
+
+    print(f"process_numeric(25): {process_numeric(25)}")
+    print(f"process_numeric(5.9): {process_numeric(5.9)}")
+
+    # 5. 与结构体、枚举结合
+    print("\n--- 5. 与结构体/枚举结合 ---")
+    let user: User = User(id=1001, name="Alice", age=28)
+    print(f"user: {user}")
+    let order: OrderInfo = (user, OrderStatus.SHIPPED)
+    print(f"order: {order[0].name} - {order[1].name}")
+
+    # 6. 复杂组合
+    print("\n--- 6. 复杂类型组合 ---")
+    let v: Vector3 = (3.0, 4.0, 0.0)
+    print(f"Vector3: {v}, magnitude: {magnitude3(v):.2f}")
+    let nv: Vector3 = normalize3(v)
+    print(f"Normalized: ({nv[0]:.4f}, {nv[1]:.4f}, {nv[2]:.4f})")
+
+    let transform: Transform2D = (identity, (10.0, 20.0))
+    let point: Vector2 = (5.0, 5.0)
+    let transformed: Vector2 = apply_transform(transform, point)
+    print(f"Transform {point} -> ({transformed[0]:.2f}, {transformed[1]:.2f})")
+
+    let maybe_v: MaybeVector = None
+    print(f"MaybeVector (None): {maybe_v}")
+    let maybe_v2: MaybeVector = (1.0, 2.0, 3.0)
+    print(f"MaybeVector (Some): {maybe_v2}")
+
+    print("\n=== 所有类型别名示例完成 ===")

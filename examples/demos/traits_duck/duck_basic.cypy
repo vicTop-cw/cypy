@@ -1,0 +1,148 @@
+#!bin cypy
+# ============================================================
+# duck_basic.cypy — 鸭子类型（Duck Typing）基础示例
+# 演示 duck 约束系统的核心特性
+# duck 约束定义在 meta: 块中，参考 Nim concept 设计
+# ============================================================
+
+# === 1. 操作符约束 ===
+# duck 约束通过表达式约束定义类型必须支持的操作
+meta:
+    # 可比较约束：类型必须支持所有比较操作符
+    duck Comparable:
+        a < b -> bool
+        a > b -> bool
+        a <= b -> bool
+        a >= b -> bool
+        a == b -> bool
+        a != b -> bool
+
+    # 数值约束：类型必须支持算术运算
+    # Self 表示返回类型为约束类型本身
+    duck Numeric:
+        a + b -> Self
+        a - b -> Self
+        a * b -> Self
+        a / b -> Self
+
+# === 2. 属性约束 ===
+# 约束类型必须具有指定名称和类型的属性
+meta:
+    # 命名约束：类型必须有 name: str 属性
+    duck Named:
+        name: str
+
+    # 大小约束：类型必须有 size: int 属性
+    duck Sized:
+        size: int
+
+    # 标识符约束：类型必须同时具有 id 和 name 属性
+    duck Identified:
+        id: int
+        name: str
+
+    # 有值约束：类型必须有 value 属性
+    duck Valued:
+        value: float
+
+# === 3. 方法约束 ===
+# 约束类型必须支持指定的方法签名
+meta:
+    # 可迭代约束：类型必须支持 __iter__ 方法
+    duck Iterable:
+        __iter__(self) -> Iterator
+
+    # 泛型容器约束：类型必须支持添加、删除和包含检查
+    duck SimpleContainer:
+        add(self, item: int) -> None
+        remove(self, item: int) -> bool
+        __contains__(self, item: int) -> bool
+        __len__(self) -> int
+
+    # 索引约束：类型必须支持索引访问
+    duck Indexable:
+        __getitem__(self, index: int) -> int
+        __setitem__(self, index: int, value: int) -> None
+
+# === 4. 使用 Duck 约束的泛型函数 ===
+# 函数参数可以使用 duck 约束进行类型约束
+
+# 使用 Comparable 约束：T 必须支持比较操作
+def sort<T: Comparable>(items: list<T>) -> list<T>:
+    """对可比较的列表进行排序"""
+    return sorted(items, key=lambda x -> x)
+
+def find_max<T: Comparable>(a: T, b: T) -> T:
+    """返回两个值中较大的"""
+    if a > b:
+        return a
+    return b
+
+def find_min<T: Comparable>(a: T, b: T) -> T:
+    """返回两个值中较小的"""
+    if a < b:
+        return a
+    return b
+
+# 使用 Numeric 约束：T 必须支持算术运算
+def add_values<T: Numeric>(a: T, b: T) -> T:
+    """对两个数值类型求和"""
+    return a + b
+
+def distance<T: Numeric>(a: T, b: T) -> T:
+    """计算两点差的绝对值"""
+    diff: T = a - b
+    return diff * diff
+
+# 使用 Named 约束：T 必须有 name 属性
+def display_name<T: Named>(obj: T) -> None:
+    """显示任何有 name 属性的对象"""
+    print(obj.name)
+
+def rename<T: Named>(obj: T, new_name: str) -> None:
+    """重命名任何有 name 属性的对象"""
+    obj.name = new_name
+
+# 使用 Sized 约束：T 必须有 size 属性
+def resize<T: Sized>(obj: T, new_size: int) -> None:
+    """调整任何有 size 属性的对象"""
+    obj.size = new_size
+
+#使用 Iterable 约束
+def collect<T: Iterable>(obj: T) -> list:
+    """从可迭代对象收集所有元素"""
+    result: list = []
+    for item in obj:
+        result.append(item)
+    return result
+
+# === 5. 综合示例 ===
+struct NamedItem:
+    name: str
+    value: int
+
+struct SizedBox:
+    size: int
+    items: list
+
+def demo() -> None:
+    # Comparable 约束示例
+    let a: int = 10
+    let b: int = 20
+    let max_val: int = find_max<int>(a, b)
+    print(f"Max: {max_val}")
+
+    # Numeric 约束示例
+    let x: float = 3.14
+    let y: float = 2.71
+    let sum: float = add_values<float>(x, y)
+    print(f"Sum: {sum}")
+
+    # Named 约束示例
+    let item: NamedItem = NamedItem(name="test", value=42)
+    display_name<NamedItem>(item)
+
+    # Sized 约束示例
+    let box: SizedBox = SizedBox(size=10, items=[])
+    resize<SizedBox>(box, 20)
+    print(f"New size: {box.size}")

@@ -1,0 +1,292 @@
+def demo_if_elif_else(score: int) -> str:
+    if score >= 90:
+        return "Excellent"
+    elif score >= 80:
+        return "Good"
+    elif score >= 60:
+        return "Pass"
+    else:
+        return "Fail"
+
+def demo_for_range() -> list<int>:
+    let result: list<int> = list()
+    for i in range(5):
+        result.append(i)
+    return result
+
+def demo_for_range_step() -> list<int>:
+    let result: list<int> = list()
+    for i in range(0, 10, 2):
+        result.append(i)
+    return result
+
+def demo_for_iterate() -> int:
+    let numbers: list<int> = [10, 20, 30, 40, 50]
+    total: int = 0
+    for num in numbers:
+        total += num
+    return total
+
+def demo_while_loop() -> int:
+    count: int = 0
+    sum: int = 0
+    while count < 5:
+        sum += count
+        count += 1
+    return sum
+
+def demo_break_continue() -> list<int>:
+    let result: list<int> = list()
+    for i in range(10):
+        if i == 3:
+            continue
+        if i == 7:
+            break
+        result.append(i)
+    return result
+
+def demo_guard_single_line(value: int) -> int:
+    guard value > 0 else -1
+    return value * 2
+
+def demo_guard_multi_line(value: int) -> int:
+    guard value < 100 else:
+        print("Error: value exceeds maximum")
+        -1
+    return value * 2
+
+def demo_guard_else_return(value: int) -> str:
+    guard value >= 0 else return "Negative value"
+    guard value < 100 else return "Value too large"
+    return "ok"
+
+def demo_loop_guard_break(items: list<int>) -> int:
+    let count: int = 0
+    for item in items:
+        guard item > 0 else break
+        count += 1
+    return count
+
+def demo_loop_guard_continue(items: list<int>) -> int:
+    let total: int = 0
+    for item in items:
+        guard item > 0 else continue
+        total += item
+    return total
+
+def demo_loop_guard_return(data: list<int>) -> str:
+    for value in data:
+        guard value >= 0 else return "Invalid data"
+        guard value < 100 else break
+    return "ok"
+
+def demo_defer_single() -> str:
+    let result: str = ""
+    defer:
+        result = "cleaned"
+    result = "main logic"
+    return result
+
+def demo_defer_multiple() -> list<str>:
+    let order: list<str> = []
+    defer:
+        order.append("first")
+    defer:
+        order.append("second")
+    defer:
+        order.append("third")
+    order.append("main")
+    return order
+
+def demo_defer_with_return(x: int) -> int:
+    let cleanup: int = 0
+    defer:
+        cleanup = 1
+    let result: int = x * 2
+    return result
+
+def demo_while_with_guard(limit: int) -> int:
+    let i: int = 0
+    let sum: int = 0
+    while i < limit:
+        guard i < 10 else break
+        sum += i
+        i += 1
+    return sum
+
+def main() -> int:
+    print("=== Control Flow Demo ===")
+
+    print("--- if-elif-else ---")
+    print(f"95: {demo_if_elif_else(95)}")
+    print(f"85: {demo_if_elif_else(85)}")
+    print(f"65: {demo_if_elif_else(65)}")
+    print(f"50: {demo_if_elif_else(50)}")
+
+    print("--- for loop ---")
+    print(f"range(5): {demo_for_range()}")
+    print(f"range(0,10,2): {demo_for_range_step()}")
+    print(f"iterate: {demo_for_iterate()}")
+
+    print("--- while loop ---")
+    print(f"while sum: {demo_while_loop()}")
+
+    print("--- break/continue ---")
+    print(f"break/continue: {demo_break_continue()}")
+
+    print("--- guard statements ---")
+    print(f"guard single (5): {demo_guard_single_line(5)}")
+    print(f"guard single (-1): {demo_guard_single_line(-1)}")
+    print(f"guard multi (10): {demo_guard_multi_line(10)}")
+    print(f"guard multi (200): {demo_guard_multi_line(200)}")
+    print(f"guard return (-5): {demo_guard_else_return(-5)}")
+    print(f"guard return (50): {demo_guard_else_return(50)}")
+    print(f"guard return (150): {demo_guard_else_return(150)}")
+
+    print("--- loop guards ---")
+    print(f"loop guard break: {demo_loop_guard_break([1, 2, -1, 4, 5])}")
+    print(f"loop guard continue: {demo_loop_guard_continue([1, -2, 3, -4, 5])}")
+    print(f"loop guard return: {demo_loop_guard_return([10, 20, 30])}")
+    print(f"loop guard return (neg): {demo_loop_guard_return([10, -5, 30])}")
+
+    print("--- defer statements ---")
+    print(f"defer single: {demo_defer_single()}")
+    print(f"defer multiple: {demo_defer_multiple()}")
+    print(f"defer with return: {demo_defer_with_return(42)}")
+
+    return 0
+
+if __name__ == "__main__":
+    main()
+
+suite IfElifElseTests:
+    test excellent_score:
+        assert demo_if_elif_else(95) == "Excellent"
+
+    test good_score:
+        assert demo_if_elif_else(85) == "Good"
+
+    test pass_score:
+        assert demo_if_elif_else(65) == "Pass"
+
+    test fail_score:
+        assert demo_if_elif_else(50) == "Fail"
+
+    test boundary_ninety:
+        assert demo_if_elif_else(90) == "Excellent"
+
+    test boundary_eighty:
+        assert demo_if_elif_else(80) == "Good"
+
+    test boundary_sixty:
+        assert demo_if_elif_else(60) == "Pass"
+
+suite ForLoopTests:
+    test range_basic:
+        let result = demo_for_range()
+        assert len(result) == 5
+        assert result[0] == 0
+        assert result[4] == 4
+
+    test range_with_step:
+        let result = demo_for_range_step()
+        assert len(result) == 5
+        assert result[0] == 0
+        assert result[2] == 4
+
+    test iterate_list:
+        let result = demo_for_iterate()
+        assert result == 150
+
+suite WhileLoopTests:
+    test while_sum:
+        let result = demo_while_loop()
+        assert result == 10
+
+suite BreakContinueTests:
+    test skip_three:
+        let result = demo_break_continue()
+        assert not (3 in result)
+
+    test break_at_seven:
+        let result = demo_break_continue()
+        assert not (7 in result)
+        assert 6 in result
+
+    test result_order:
+        let result = demo_break_continue()
+        assert result[0] == 0
+        assert result[-1] == 6
+
+suite GuardTests:
+    test guard_single_valid:
+        assert demo_guard_single_line(5) == 10
+
+    test guard_single_invalid:
+        assert demo_guard_single_line(-1) == -1
+
+    test guard_single_zero:
+        assert demo_guard_single_line(0) == -1
+
+    test guard_multi_valid:
+        assert demo_guard_multi_line(10) == 20
+
+    test guard_multi_exceeds:
+        assert demo_guard_multi_line(200) == -1
+
+    test guard_negative:
+        assert demo_guard_else_return(-5) == "Negative value"
+
+    test guard_valid:
+        assert demo_guard_else_return(50) == "ok"
+
+    test guard_too_large:
+        assert demo_guard_else_return(150) == "Value too large"
+
+suite LoopGuardTests:
+    test loop_guard_break_stops_at_negative:
+        let result = demo_loop_guard_break([1, 2, -1, 4, 5])
+        assert result == 2
+
+    test loop_guard_break_all_positive:
+        let result = demo_loop_guard_break([1, 2, 3, 4, 5])
+        assert result == 5
+
+    test loop_guard_continue_skips_negative:
+        let result = demo_loop_guard_continue([1, -2, 3, -4, 5])
+        assert result == 9
+
+    test loop_guard_return_valid:
+        let result = demo_loop_guard_return([10, 20, 30])
+        assert result == "ok"
+
+    test loop_guard_return_negative:
+        let result = demo_loop_guard_return([10, -5, 30])
+        assert result == "Invalid data"
+
+    test loop_guard_break_at_limit:
+        let result = demo_loop_guard_return([10, 20, 150])
+        assert result == "ok"
+
+suite DeferTests:
+    test defer_single_works:
+        let result = demo_defer_single()
+        assert result == "main logic"
+
+    test defer_multiple_in_order:
+        let result = demo_defer_multiple()
+        assert len(result) == 4
+        assert result[0] == "main"
+
+    test defer_with_return_value:
+        let result = demo_defer_with_return(42)
+        assert result == 84
+
+suite WhileGuardTests:
+    test while_guard_basic:
+        let result = demo_while_with_guard(5)
+        assert result == 10
+
+    test while_guard_limit:
+        let result = demo_while_with_guard(20)
+        assert result == 45

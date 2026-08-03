@@ -1,0 +1,228 @@
+#!bin cypy
+# Meta 块示例
+# 演示 Cypy 的 meta 块结构、鸭子类型约束和模块级元声明
+
+# === 1. Meta 块基本结构 ===
+
+meta:
+    __generated_at__ = "2026-07-31"
+    __module_version__ = "1.0.0"
+
+    def _compile_info() -> str:
+        return f"Compiled at {__generated_at__}, v{__module_version__}"
+
+def meta_basic_structure_demo() -> int:
+    print(f"模块生成时间: {__generated_at__}")
+    print(f"模块版本: {__module_version__}")
+    return 0
+
+# === 2. Duck 约束在 meta 块中 ===
+
+meta:
+    duck Comparable:
+        a < b -> bool
+        a > b -> bool
+        a <= b -> bool
+        a >= b -> bool
+        a == b -> bool
+        a != b -> bool
+
+    duck Numeric:
+        a + b -> Self
+        a - b -> Self
+        a * b -> Self
+        a / b -> Self
+        -a -> Self
+
+    duck Sized:
+        size: int
+
+def duck_constraints_demo() -> int:
+    print("已定义的 duck 约束:")
+    print("  - Comparable: 支持比较操作符")
+    print("  - Numeric: 支持算术运算")
+    print("  - Sized: 具有 size 属性")
+    return 0
+
+# === 3. 使用 Duck 约束的泛型函数 ===
+
+def find_max<T: Comparable>(a: T, b: T) -> T:
+    if a > b:
+        return a
+    return b
+
+def find_min<T: Comparable>(a: T, b: T) -> T:
+    if a < b:
+        return a
+    return b
+
+def add_values<T: Numeric>(a: T, b: T) -> T:
+    return a + b
+
+def use_duck_constraints_demo() -> int:
+    print(f"find_max(3, 7) = {find_max(3, 7)}")
+    print(f"find_max('apple', 'banana') = {find_max('apple', 'banana')}")
+    print(f"find_min(3, 7) = {find_min(3, 7)}")
+    print(f"add_values(10, 20) = {add_values(10, 20)}")
+    print(f"add_values(1.5, 2.5) = {add_values(1.5, 2.5)}")
+    return 0
+
+# === 4. 多个 meta 块 ===
+
+meta:
+    duck Named:
+        name: str
+
+    duck Identified:
+        id: int
+        name: str
+
+meta:
+    duck Container<T>:
+        add(self, item: T) -> None
+        remove(self, item: T) -> bool
+        __contains__(self, item: T) -> bool
+        __len__(self) -> int
+
+    duck Indexable<T>:
+        __getitem__(self, index: int) -> T
+        __setitem__(self, index: int, value: T) -> None
+
+def multiple_meta_blocks_demo() -> int:
+    print("已定义的 duck 约束（续）:")
+    print("  - Named: 具有 name 属性")
+    print("  - Identified: 具有 id 和 name 属性")
+    print("  - Container<T>: 容器操作")
+    print("  - Indexable<T>: 索引操作")
+    return 0
+
+# === 5. 模块级 meta 声明 ===
+
+meta:
+    MODULE_ID = "meta_blocks_demo"
+    AUTHOR = "Cypy Team"
+    IS_LIBRARY = True
+
+    def get_module_info() -> dict:
+        return {"id": MODULE_ID, "author": AUTHOR, "is_library": IS_LIBRARY}
+
+def module_level_meta_demo() -> int:
+    info = get_module_info()
+    print(f"模块 ID: {info['id']}")
+    print(f"作者: {info['author']}")
+    print(f"是否为库: {info['is_library']}")
+    return 0
+
+# === 6. Duck 约束组合 ===
+
+meta:
+    duck Ordered:
+        Comparable
+        a <=> b -> int
+
+    duck SortableContainer<T>:
+        Comparable
+        Container<T>
+
+def duck_composition_demo() -> int:
+    print("组合 duck 约束:")
+    print("  - Ordered: 继承 Comparable + 飞船操作符")
+    print("  - SortableContainer<T>: 继承 Comparable + Container<T>")
+    return 0
+
+# === 7. Meta 块中的条件生成 ===
+
+meta:
+    HAS_ADVANCED_FEATURES = True
+
+    if HAS_ADVANCED_FEATURES:
+        ADVANCED_CONFIG = {"parallel": True, "cache_size": 256, "precision": "high"}
+
+def conditional_meta_demo() -> int:
+    print(f"高级功能配置: {ADVANCED_CONFIG}")
+    return 0
+
+# === 8. 使用 meta 块生成测试结构 ===
+
+meta:
+    TEST_CASES = [("add", 1, 2, 3), ("subtract", 5, 3, 2), ("multiply", 4, 3, 12)]
+
+    def run_test_case(tc: tuple) -> bool:
+        name = tc[0]
+        a = tc[1]
+        b = tc[2]
+        expected = tc[3]
+        return True
+
+def generated_test_demo() -> int:
+    print(f"已生成 {len(TEST_CASES)} 个测试用例:")
+    for tc in TEST_CASES:
+        print(f"  {tc[0]}({tc[1]}, {tc[2]}) = {tc[3]}")
+    return 0
+
+# === 9. Duck 约束用于结构体 ===
+
+struct SimpleContainer:
+    items: list<int>
+
+    def add(self, item: int) -> None:
+        self.items.append(item)
+
+    def remove(self, item: int) -> bool:
+        if item in self.items:
+            self.items.remove(item)
+            return True
+        return False
+
+    def __contains__(self, item: int) -> bool:
+        return item in self.items
+
+    def __len__(self) -> int:
+        return len(self.items)
+
+def struct_duck_demo() -> int:
+    container: SimpleContainer = SimpleContainer(items=[])
+    container.add(10)
+    container.add(20)
+    container.add(30)
+
+    print(f"容器大小: {len(container)}")
+    print(f"包含 20: {20 in container}")
+    print(f"包含 99: {99 in container}")
+
+    container.remove(20)
+    print(f"移除 20 后大小: {len(container)}")
+
+    return 0
+
+# === 主函数 ===
+
+def main() -> int:
+    print("=== Meta 块基本结构 ===")
+    meta_basic_structure_demo()
+
+    print("\n=== Duck 约束定义 ===")
+    duck_constraints_demo()
+
+    print("\n=== 使用 Duck 约束 ===")
+    use_duck_constraints_demo()
+
+    print("\n=== 多个 Meta 块 ===")
+    multiple_meta_blocks_demo()
+
+    print("\n=== 模块级 Meta 声明 ===")
+    module_level_meta_demo()
+
+    print("\n=== Duck 约束组合 ===")
+    duck_composition_demo()
+
+    print("\n=== 条件生成 ===")
+    conditional_meta_demo()
+
+    print("\n=== 生成测试 ===")
+    generated_test_demo()
+
+    print("\n=== 结构体实现 Duck 约束 ===")
+    struct_duck_demo()
+
+    return 0

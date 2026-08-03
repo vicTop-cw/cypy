@@ -1,0 +1,198 @@
+#!bin cypy
+# defer 语句示例
+# 演示 Cypy 的 defer 资源清理机制，支持 LIFO 顺序执行
+
+# === 1. 基本 defer 资源清理 ===
+
+def basic_defer_demo() -> int:
+    print("打开资源...")
+
+    defer:
+        print("清理资源：关闭文件句柄")
+
+    print("使用资源...")
+    print("资源使用完毕")
+
+    return 0
+
+# === 2. 多个 defer（LIFO 顺序） ===
+
+def multiple_defers_demo() -> int:
+    print("=== 多个 defer (LIFO 顺序) ===")
+
+    defer:
+        print("第 1 个清理操作（最后执行）")
+
+    defer:
+        print("第 2 个清理操作")
+
+    defer:
+        print("第 3 个清理操作（最先执行）")
+
+    print("主逻辑执行中...")
+    print("主逻辑结束")
+
+    return 0
+
+# === 3. 带提前返回的 defer ===
+
+def defer_with_early_return(value: int) -> int:
+    defer:
+        print(f"defer 执行：value={value}")
+
+    if value < 0:
+        print("提前返回（defer 仍会执行）")
+        return -1
+
+    print("正常路径")
+    return value * 2
+
+# === 4. 错误处理中的 defer ===
+
+def defer_in_error_handling() -> int:
+    print("打开数据库连接...")
+
+    defer:
+        print("defer: 关闭数据库连接")
+
+    try:
+        print("执行数据库操作...")
+        let result = 10 / 0
+    except ZeroDivisionError:
+        print("捕获到除零错误")
+        print("defer 确保连接已关闭")
+
+    return 0
+
+# === 5. 指针清理与 defer ===
+
+def pointer_cleanup_with_defer() -> int:
+    let buffer: *int = malloc(sizeof(int) * 10)
+
+    defer:
+        free(buffer)
+        print("defer: 已释放 buffer 内存")
+
+    for i in range(10):
+        let p: *int = buffer + i
+        &p = i * 3
+
+    total: int = 0
+    for i in range(10):
+        let p: *int = buffer + i
+        total += &p
+
+    print(f"指针数据总和: {total}")
+    return total
+
+# === 6. 嵌套 defer ===
+
+def nested_defer_demo() -> int:
+    print("外层函数开始")
+
+    defer:
+        print("外层 defer 执行")
+
+    print("进入内层块")
+
+    if True:
+        defer:
+            print("内层 defer 执行（先于外层）")
+
+        print("内层块逻辑")
+
+    print("外层函数结束")
+    return 0
+
+# === 7. 守卫语句配合 defer ===
+
+def guard_with_defer(value: int) -> int:
+    let resource: *int = malloc(sizeof(int))
+
+    defer:
+        free(resource)
+        print("defer: 释放资源")
+
+    guard value > 0 else:
+        print("guard: value 必须大于 0")
+        return -1
+
+    &resource = value * value
+    print(f"resource = {&resource}")
+
+    return &resource
+
+# === 8. 复杂清理场景 ===
+
+def complex_cleanup_demo() -> int:
+    let file_buf: *char = malloc(256)
+    let temp_buf: *int = malloc(sizeof(int) * 8)
+
+    defer:
+        free(temp_buf)
+        print("defer 2: 释放 temp_buf")
+
+    defer:
+        free(file_buf)
+        print("defer 1: 释放 file_buf")
+
+    print("使用 file_buf 和 temp_buf...")
+
+    for i in range(8):
+        let p: *int = temp_buf + i
+        &p = i
+
+    print(f"temp_buf 初始化完成")
+
+    return 0
+
+# === 9. 循环中的 defer ===
+
+def defer_in_loop_demo() -> int:
+    print("循环中使用 defer（每次迭代都会触发清理）")
+
+    for i in range(3):
+        let buf: *int = malloc(sizeof(int) * 2)
+        defer:
+            free(buf)
+            print(f"  迭代 {i}: defer 释放 buf")
+
+        let p0: *int = buf
+        &p0 = i * 10
+        print(f"  迭代 {i}: buf[0] = {&p0}")
+
+    return 0
+
+# === 主函数 ===
+
+def main() -> int:
+    print("=== 基本 defer ===")
+    basic_defer_demo()
+
+    print("\n=== 多个 defer (LIFO) ===")
+    multiple_defers_demo()
+
+    print("\n=== 提前返回的 defer ===")
+    defer_with_early_return(-5)
+    defer_with_early_return(10)
+
+    print("\n=== 错误处理中的 defer ===")
+    defer_in_error_handling()
+
+    print("\n=== 指针清理与 defer ===")
+    pointer_cleanup_with_defer()
+
+    print("\n=== 嵌套 defer ===")
+    nested_defer_demo()
+
+    print("\n=== 守卫配合 defer ===")
+    guard_with_defer(5)
+    guard_with_defer(-1)
+
+    print("\n=== 复杂清理场景 ===")
+    complex_cleanup_demo()
+
+    print("\n=== 循环中的 defer ===")
+    defer_in_loop_demo()
+
+    return 0

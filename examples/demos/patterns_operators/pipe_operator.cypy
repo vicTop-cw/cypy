@@ -1,0 +1,240 @@
+# 管道操作符完整示例
+# 演示 Cypy 的 |> 管道操作符所有用法
+
+# ============================================================
+# 1. 基础管道
+# ============================================================
+
+def double(x: int) -> int:
+    return x * 2
+
+
+def add_one(x: int) -> int:
+    return x + 1
+
+
+def square(x: int) -> int:
+    return x ** 2
+
+
+def basic_pipe_demo() -> int:
+    result = 5 |> double |> add_one
+    return result
+
+
+def basic_pipe_compare() -> str:
+    traditional = add_one(double(5))
+    piped = 5 |> double |> add_one
+    return f"传统: {traditional}, 管道: {piped}"
+
+
+# ============================================================
+# 2. 链式管道
+# ============================================================
+
+def chained_pipe_demo() -> int:
+    result = 5 |> double |> add_one |> square
+    return result
+
+
+def multi_step_pipeline(x: int) -> int:
+    result = x |> double |> add_one |> square |> add_one
+    return result
+
+
+def pipe_with_multiple_values() -> tuple<int, int, int>:
+    r1 = 10 |> double
+    r2 = 20 |> square
+    r3 = 5 |> add_one |> double
+    return (r1, r2, r3)
+
+
+# ============================================================
+# 3. 管道与 Lambda
+# ============================================================
+
+def pipe_with_lambda() -> int:
+    result = 5 |> (lambda x -> x * 3) |> (lambda x -> x + 10)
+    return result
+
+
+def pipe_with_named_lambda() -> int:
+    increment = lambda x -> x + 1
+    triple = lambda x -> x * 3
+    result = 10 |> increment |> triple
+    return result
+
+
+def pipe_complex_lambda() -> str:
+    result = 42 |> (lambda x -> x * 2) |> (lambda x -> f"结果: {x}")
+    return result
+
+
+# ============================================================
+# 4. 管道与数据处理
+# ============================================================
+
+def filter_even(items: list<int>) -> list<int>:
+    result: list<int> = []
+    for n in items:
+        if n % 2 == 0:
+            result.append(n)
+    return result
+
+
+def map_square(items: list<int>) -> list<int>:
+    result: list<int> = []
+    for n in items:
+        result.append(n ** 2)
+    return result
+
+
+def sum_list(items: list<int>) -> int:
+    total: int = 0
+    for n in items:
+        total += n
+    return total
+
+
+def data_pipeline_demo() -> int:
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = numbers |> filter_even |> map_square |> sum_list
+    return result
+
+
+def string_pipeline() -> str:
+    text = "  Hello World  "
+    result = text |> str.strip |> str.upper
+    return result
+
+
+def list_transform_pipeline() -> list<int>:
+    numbers = [1, 2, 3, 4, 5]
+    result = numbers |> filter_even |> map_square
+    return result
+
+
+# ============================================================
+# 5. 管道与条件处理
+# ============================================================
+
+def is_positive(x: int) -> bool:
+    return x > 0
+
+
+def to_string(x: int) -> str:
+    return str(x)
+
+
+def conditional_pipeline(x: int) -> str:
+    result = x |> add_one |> double
+    return to_string(result)
+
+
+def pipeline_with_guard(x: int) -> str:
+    result = x |> add_one
+    guard result > 0 else "结果非正"
+    return f"结果: {result}"
+
+
+# ============================================================
+# 6. 管道与自定义函数
+# ============================================================
+
+def greet(name: str) -> str:
+    return f"你好, {name}"
+
+
+def exclaim(text: str) -> str:
+    return text + "!"
+
+
+def repeat(text: str, times: int) -> str:
+    return text * times
+
+
+def string_pipeline_demo() -> str:
+    result = "World" |> greet |> exclaim
+    return result
+
+
+def multi_string_pipeline() -> str:
+    result = "Hi" |> greet |> exclaim |> (lambda s -> s + " :)")
+    return result
+
+
+# ============================================================
+# 7. 实际应用场景
+# ============================================================
+
+def process_data_pipeline() -> str:
+    data = [10, 25, 30, 45, 50, 60, 75, 80, 95, 100]
+
+    result = data |> filter_even |> map_square |> sum_list
+
+    return f"处理结果: {result}"
+
+
+def compute_statistics() -> tuple<int, int, int>:
+    scores = [55, 72, 88, 45, 91, 63, 78, 95, 50, 82]
+
+    total = scores |> sum_list
+    even_sum = scores |> filter_even |> sum_list
+    squared_sum = scores |> map_square |> sum_list
+
+    return (total, even_sum, squared_sum)
+
+
+def build_report() -> str:
+    data = [1, 2, 3, 4, 5]
+
+    processed = data |> (lambda x -> [n * 2 for n in x]) |> (lambda x -> [n + 1 for n in x]) |> sum_list
+
+    return f"报告数据: {processed}"
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=" * 50)
+    print("管道操作符完整示例")
+    print("=" * 50)
+
+    print("\n-- 基础管道 --")
+    print(f"  basic_pipe_demo (5 |> double |> add_one): {basic_pipe_demo()}")
+    print(f"  basic_pipe_compare: {basic_pipe_compare()}")
+
+    print("\n-- 链式管道 --")
+    print(f"  chained_pipe_demo (5 |> double |> add_one |> square): {chained_pipe_demo()}")
+    print(f"  multi_step_pipeline(3): {multi_step_pipeline(3)}")
+    pipe_result = pipe_with_multiple_values()
+    print(f"  pipe_with_multiple_values: {pipe_result}")
+
+    print("\n-- 管道与 Lambda --")
+    print(f"  pipe_with_lambda: {pipe_with_lambda()}")
+    print(f"  pipe_with_named_lambda: {pipe_with_named_lambda()}")
+    print(f"  pipe_complex_lambda: {pipe_complex_lambda()}")
+
+    print("\n-- 管道与数据处理 --")
+    print(f"  data_pipeline_demo: {data_pipeline_demo()}")
+    print(f"  string_pipeline: {string_pipeline()}")
+    print(f"  list_transform_pipeline: {list_transform_pipeline()}")
+
+    print("\n-- 管道与条件 --")
+    print(f"  conditional_pipeline(10): {conditional_pipeline(10)}")
+    print(f"  pipeline_with_guard(5): {pipeline_with_guard(5)}")
+
+    print("\n-- 管道与字符串 --")
+    print(f"  string_pipeline_demo: {string_pipeline_demo()}")
+    print(f"  multi_string_pipeline: {multi_string_pipeline()}")
+
+    print("\n-- 实际应用 --")
+    print(f"  process_data_pipeline: {process_data_pipeline()}")
+    stats = compute_statistics()
+    print(f"  compute_statistics: {stats}")
+    print(f"  build_report: {build_report()}")
+
+    print("\n" + "=" * 50)
+    print("所有管道操作符示例运行完毕")

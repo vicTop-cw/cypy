@@ -79,12 +79,12 @@ class TestHookIntegration(unittest.TestCase):
         self.assertIsNotNone(result)
         self.assertTrue(os.path.exists(result))
 
-    def test_hook_compile_with_let_let(self):
+    def test_hook_compile_with_let_mut(self):
         from cypy_hook.hook import CypyHook
 
-        source_path = os.path.join(self.temp_dir, "let_let_test.cypy")
+        source_path = os.path.join(self.temp_dir, "let_mut_test.cypy")
         with open(source_path, "w", encoding="utf-8") as f:
-            f.write("def test():\n    let x: int = 10\n    var y: int = 20\n    return x + y\n")
+            f.write("def test():\n    let x: int = 10\n    mut y: int = 20\n    return x + y\n")
 
         hook = CypyHook()
         hook.set_output_dir(self.temp_dir)
@@ -98,7 +98,7 @@ class TestHookIntegration(unittest.TestCase):
 
         source_path = os.path.join(self.temp_dir, "meta_test.cypy")
         with open(source_path, "w", encoding="utf-8") as f:
-            f.write("struct Dog:\n    pass\n\nstruct Cat:\n    pass\n\nmeta:\n    constraint Pet = Dog | Cat\n")
+            f.write("meta:\n    duck Pet:\n        name: str\n        age: int\n")
 
         hook = CypyHook()
         hook.set_output_dir(self.temp_dir)

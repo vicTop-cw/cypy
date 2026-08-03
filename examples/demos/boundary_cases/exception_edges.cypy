@@ -1,0 +1,306 @@
+# 异常处理边界示例
+# 演示异常处理的边界情况：嵌套try、异常链、re-raise、自定义异常
+
+# ============================================================
+# 1. 嵌套 try-except
+# ============================================================
+
+def nested_try_except() -> str:
+    try:
+        try:
+            raise ValueError("inner error")
+        except KeyError:
+            return "caught KeyError (unexpected)"
+        except ValueError as e:
+            return f"caught inner: {e}"
+    except Exception as e:
+        return f"caught outer: {e}"
+
+
+# ============================================================
+# 2. 多个 except 分支
+# ============================================================
+
+def multi_except(value: int) -> str:
+    try:
+        if value < 0:
+            raise ValueError("negative")
+        elif value == 0:
+            raise ZeroDivisionError("zero")
+        elif value > 100:
+            raise OverflowError("too large")
+        return "ok"
+    except ValueError as e:
+        return f"ValueError: {e}"
+    except ZeroDivisionError as e:
+        return f"ZeroDivisionError: {e}"
+    except OverflowError as e:
+        return f"OverflowError: {e}"
+    except Exception as e:
+        return f"Exception: {e}"
+
+
+# ============================================================
+# 3. finally 与 return 交互
+# ============================================================
+
+def finally_with_return() -> str:
+    try:
+        return "from try"
+    finally:
+        print("finally executed before return")
+
+def finally_with_exception() -> str:
+    try:
+        try:
+            raise RuntimeError("test")
+        finally:
+            print("finally runs even with exception")
+    except RuntimeError as e:
+        return f"caught: {e}"
+
+
+# ============================================================
+# 4. raise 和 re-raise
+# ============================================================
+
+def reraise_demo() -> str:
+    def inner():
+        try:
+            raise ValueError("original")
+        except ValueError:
+            raise
+
+    try:
+        inner()
+    except ValueError as e:
+        return f"reraised caught: {e}"
+
+def raise_without_arg() -> str:
+    def helper():
+        try:
+            raise KeyError("test")
+        except KeyError:
+            raise
+
+    try:
+        helper()
+    except KeyError as e:
+        return f"caught: {e}"
+
+
+# ============================================================
+# 5. 异常链 (raise from)
+# ============================================================
+
+def exception_chain() -> str:
+    def read_data():
+        raise FileNotFoundError("file not found")
+
+    def process():
+        try:
+            read_data()
+        except FileNotFoundError as e:
+            raise RuntimeError("processing failed") from e
+
+    try:
+        process()
+    except RuntimeError as e:
+        return f"RuntimeError: {e}"
+
+
+# ============================================================
+# 6. 自定义异常继承
+# ============================================================
+
+class AppError(Exception):
+    """应用基础异常"""
+    pass
+
+class NetworkError(AppError):
+    """网络错误"""
+    pass
+
+class TimeoutError(NetworkError):
+    """超时错误"""
+    pass
+
+def custom_exception_hierarchy() -> str:
+    def connect():
+        raise TimeoutError("connection timed out")
+
+    try:
+        connect()
+    except TimeoutError as e:
+        return f"TimeoutError: {e}"
+    except NetworkError as e:
+        return f"NetworkError: {e}"
+    except AppError as e:
+        return f"AppError: {e}"
+
+
+# ============================================================
+# 7. 异常中的 guard 语句
+# ============================================================
+
+def guard_in_try(x: int) -> int:
+    try:
+        guard x > 0 else return 0
+        guard x < 100 else return -1
+        return x * 2
+    except Exception:
+        return -2
+
+
+# ============================================================
+# 8. 异常与 defer 组合
+# ============================================================
+
+def defer_with_exception() -> list<str>:
+    let log: list<str> = []
+    defer:
+        log.append("deferred cleanup")
+    try:
+        log.append("before error")
+        raise ValueError("test error")
+        log.append("after error (unreachable)")
+    except ValueError:
+        log.append("error handled")
+    return log
+
+
+# ============================================================
+# 9. 空异常处理
+# ============================================================
+
+def empty_try_pass() -> int:
+    try:
+        pass
+    except Exception:
+        pass
+    finally:
+        pass
+    return 0
+
+def bare_except() -> str:
+    try:
+        raise ValueError("test")
+    except:
+        return "caught bare"
+
+
+# ============================================================
+# 10. 异常中的嵌套循环
+# ============================================================
+
+def exception_in_loop() -> list<int>:
+    let results: list<int> = []
+    for i in range(5):
+        try:
+            if i == 2:
+                raise ValueError("skip 2")
+            results.append(i)
+        except ValueError:
+            results.append(-1)
+    return results
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Exception Edge Cases Demo ===")
+
+    print("--- nested try ---")
+    print(f"nested: {nested_try_except()}")
+
+    print("--- multi except ---")
+    print(f"multi(-5): {multi_except(-5)}")
+    print(f"multi(0): {multi_except(0)}")
+    print(f"multi(50): {multi_except(50)}")
+    print(f"multi(200): {multi_except(200)}")
+
+    print("--- finally ---")
+    print(f"finally return: {finally_with_return()}")
+    print(f"finally exception: {finally_with_exception()}")
+
+    print("--- reraise ---")
+    print(f"reraise: {reraise_demo()}")
+    print(f"raise without arg: {raise_without_arg()}")
+
+    print("--- exception chain ---")
+    print(f"chain: {exception_chain()}")
+
+    print("--- custom hierarchy ---")
+    print(f"custom: {custom_exception_hierarchy()}")
+
+    print("--- guard in try ---")
+    print(f"guard(5): {guard_in_try(5)}")
+    print(f"guard(0): {guard_in_try(0)}")
+    print(f"guard(200): {guard_in_try(200)}")
+
+    print("--- defer + exception ---")
+    print(f"defer log: {defer_with_exception()}")
+
+    print("--- empty handlers ---")
+    print(f"empty: {empty_try_pass()}")
+    print(f"bare except: {bare_except()}")
+
+    print("--- exception in loop ---")
+    print(f"loop: {exception_in_loop()}")
+
+
+suite ExceptionEdgeTests:
+    test nested_try:
+        assert "caught inner" in nested_try_except()
+
+    test multi_negative:
+        assert "ValueError" in multi_except(-5)
+
+    test multi_zero:
+        assert "ZeroDivisionError" in multi_except(0)
+
+    test multi_large:
+        assert "OverflowError" in multi_except(200)
+
+    test multi_ok:
+        assert multi_except(50) == "ok"
+
+    test finally_return:
+        assert finally_with_return() == "from try"
+
+    test finally_exception:
+        assert "caught" in finally_with_exception()
+
+    test reraise:
+        assert "reraised" in reraise_demo()
+
+    test exception_chain:
+        assert "RuntimeError" in exception_chain()
+
+    test custom_hierarchy:
+        assert "TimeoutError" in custom_exception_hierarchy()
+
+    test guard_in_try_valid:
+        assert guard_in_try(5) == 10
+
+    test guard_in_try_zero:
+        assert guard_in_try(0) == 0
+
+    test defer_with_exception:
+        let log = defer_with_exception()
+        assert "before error" in log
+        assert "error handled" in log
+
+    test empty_handlers:
+        assert empty_try_pass() == 0
+
+    test bare_except:
+        assert bare_except() == "caught bare"
+
+    test exception_in_loop:
+        let r = exception_in_loop()
+        assert r[0] == 0
+        assert r[2] == -1
+        assert r[4] == 4

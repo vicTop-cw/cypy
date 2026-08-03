@@ -1,0 +1,196 @@
+#!bin cypy
+# 指针类型示例
+# 演示 Cypy 的指针声明、解引用、指针算术、类型转换和空指针检查
+
+# === 1. 指针声明 ===
+
+def pointer_declaration_demo() -> int:
+    x: int = 42
+    let ptr: *int = addr(x)
+
+    print(f"x = {x}")
+    print(f"ptr = {ptr}")
+    print(f"&ptr = {&ptr}")
+
+    return 0
+
+# === 2. 解引用操作 ===
+
+def dereference_demo() -> int:
+    x: int = 100
+    let ptr: *int = addr(x)
+
+    let value: int = &ptr
+    print(f"通过指针读取: {value}")
+
+    &ptr = 200
+    print(f"通过指针修改后 x = {x}")
+
+    return 0
+
+# === 3. 指针指向结构体 ===
+
+struct Point3D:
+    x: float
+    y: float
+    z: float
+
+def struct_pointer_demo() -> int:
+    let p: Point3D = Point3D(x=1.0, y=2.0, z=3.0)
+    let pptr: *Point3D = addr(p)
+
+    print(f"Point3D: ({pptr.x}, {pptr.y}, {pptr.z})")
+
+    pptr.x = 10.0
+    pptr.y = 20.0
+    pptr.z = 30.0
+    print(f"修改后: ({p.x}, {p.y}, {p.z})")
+
+    return 0
+
+# === 4. 指针算术 ===
+
+def pointer_arithmetic_demo() -> int:
+    let arr: list<int> = [10, 20, 30, 40, 50]
+    let arr_ptr: *int = addr(arr[0])
+
+    print(f"arr[0] = {&arr_ptr}")
+
+    let ptr1: *int = arr_ptr + 1
+    print(f"arr[1] 通过指针 = {&ptr1}")
+
+    let ptr2: *int = arr_ptr + 2
+    print(f"arr[2] 通过指针 = {&ptr2}")
+
+    for i in range(5):
+        let p: *int = arr_ptr + i
+        print(f"  arr[{i}] = {&p}")
+
+    return 0
+
+# === 5. 动态内存分配与指针 ===
+
+def dynamic_allocation_demo() -> int:
+    let buffer: *int = malloc(sizeof(int) * 5)
+    defer:
+        free(buffer)
+
+    for i in range(5):
+        let p: *int = buffer + i
+        &p = i * i
+
+    total: int = 0
+    for i in range(5):
+        let p: *int = buffer + i
+        total += &p
+
+    print(f"平方和 = {total}")
+    return total
+
+# === 6. 指针类型转换 ===
+
+def pointer_type_conversion_demo() -> int:
+    let raw_ptr: *void = malloc(64)
+    defer:
+        free(raw_ptr)
+
+    let int_ptr: *int = raw_ptr as *int
+    for i in range(4):
+        let p: *int = int_ptr + i
+        &p = i + 1
+
+    for i in range(4):
+        let p: *int = int_ptr + i
+        print(f"  int_ptr[{i}] = {&p}")
+
+    let float_ptr: *float = raw_ptr as *float
+    print(f"float_ptr 地址 = {float_ptr}")
+
+    return 0
+
+# === 7. NULL 指针检查 ===
+
+def null_pointer_check(ptr: *int) -> int:
+    if ptr == null:
+        print("指针为空，返回默认值 0")
+        return 0
+    return &ptr
+
+def null_safety_demo() -> int:
+    let safe_val = null_pointer_check(null)
+    print(f"空指针安全值: {safe_val}")
+
+    x: int = 99
+    let valid_ptr: *int = addr(x)
+    let safe_val2 = null_pointer_check(valid_ptr)
+    print(f"有效指针安全值: {safe_val2}")
+
+    return 0
+
+# === 8. 指针作为函数参数 ===
+
+def swap_ptrs(a: *int, b: *int) -> None:
+    let temp: int = &a
+    &a = &b
+    &b = temp
+
+def pointer_param_demo() -> int:
+    x: int = 10
+    y: int = 20
+    print(f"交换前: x={x}, y={y}")
+
+    swap_ptrs(addr(x), addr(y))
+    print(f"交换后: x={x}, y={y}")
+
+    return 0
+
+# === 9. 指针数组 ===
+
+def pointer_array_demo() -> int:
+    let size: int = 3
+    let data: *int = malloc(sizeof(int) * size)
+    defer:
+        free(data)
+
+    names: list<str> = ["Alice", "Bob", "Charlie"]
+    for i in range(size):
+        let p: *int = data + i
+        &p = i * 100 + 1
+
+    for i in range(size):
+        let p: *int = data + i
+        print(f"  [{i}] {names[i]}: id={&p}")
+
+    return 0
+
+# === 主函数 ===
+
+def main() -> int:
+    print("=== 指针声明 ===")
+    pointer_declaration_demo()
+
+    print("=== 解引用操作 ===")
+    dereference_demo()
+
+    print("=== 结构体指针 ===")
+    struct_pointer_demo()
+
+    print("=== 指针算术 ===")
+    pointer_arithmetic_demo()
+
+    print("=== 动态内存分配 ===")
+    dynamic_allocation_demo()
+
+    print("=== 指针类型转换 ===")
+    pointer_type_conversion_demo()
+
+    print("=== NULL 指针检查 ===")
+    null_safety_demo()
+
+    print("=== 指针参数 ===")
+    pointer_param_demo()
+
+    print("=== 指针数组 ===")
+    pointer_array_demo()
+
+    return 0

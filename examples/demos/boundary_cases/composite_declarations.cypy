@@ -1,0 +1,322 @@
+# 复合声明与作用域边界示例
+# 演示复杂声明、作用域、类型推断的组合边界
+
+# ============================================================
+# 1. let/mut/const 三种声明组合
+# ============================================================
+
+const MAX_SIZE: int = 100
+const PI: float = 3.14159
+const APP_NAME: str = "CypyDemo"
+
+def declaration_types() -> tuple<int, int, str>:
+    let immutable_val: int = 42
+    mut mutable_val: int = 10
+    mutable_val = 20
+    mutable_val += 5
+    return (immutable_val, mutable_val, APP_NAME)
+
+
+# ============================================================
+# 2. 作用域边界
+# ============================================================
+
+let global_var: int = 1000
+
+def shadow_global() -> int:
+    let global_var: int = 10
+    return global_var
+
+def use_global() -> int:
+    return global_var
+
+def block_scope() -> int:
+    let x: int = 1
+    if True:
+        let x: int = 2
+        if True:
+            let x: int = 3
+            return x
+        return x
+    return x
+
+
+# ============================================================
+# 3. 函数参数边界
+# ============================================================
+
+def default_params(a: int = 10, b: str = "default") -> str:
+    return f"{a}-{b}"
+
+def keyword_args(name: str, age: int) -> str:
+    return f"{name}:{age}"
+
+def varargs_func(args: list<int>) -> int:
+    let count: int = 0
+    for a in args:
+        count += 1
+    return count
+
+def kwargs_func(keys: list<str>) -> int:
+    let count: int = 0
+    for k in keys:
+        count += 1
+    return count
+
+
+# ============================================================
+# 4. 复杂返回类型
+# ============================================================
+
+def return_tuple() -> tuple<int, str, bool>:
+    return (42, "hello", True)
+
+def return_list_of_tuples() -> list<tuple<int, int>>:
+    let result: list<tuple<int, int>> = []
+    for i in range(5):
+        result.append((i, i * i))
+    return result
+
+def return_nested_function():
+    def multiplier(factor: int) -> int:
+        return factor * 3
+    return multiplier
+
+
+# ============================================================
+# 5. 类型推断边界
+# ============================================================
+
+def inferred_int() -> int:
+    let x = 42
+    return x
+
+def inferred_float() -> float:
+    let x = 3.14
+    return x
+
+def inferred_string() -> str:
+    let x = "hello"
+    return x
+
+def inferred_list() -> list<int>:
+    let x = [1, 2, 3]
+    return x
+
+def inferred_dict() -> dict<str, int>:
+    let x = {"a": 1, "b": 2}
+    return x
+
+
+# ============================================================
+# 6. 复杂泛型声明
+# ============================================================
+
+struct Pair<A, B>:
+    first: A
+    second: B
+
+    def swap(self) -> Pair<B, A>:
+        return Pair(first=self.second, second=self.first)
+
+def use_generic_pair() -> tuple<int, str>:
+    let p: Pair<int, str> = Pair(first=42, second="answer")
+    let swapped: Pair<str, int> = p.swap()
+    return (swapped.first, swapped.second)
+
+
+# ============================================================
+# 7. 嵌套 lambda 与闭包
+# ============================================================
+
+def make_adder(n: int):
+    return lambda x -> x + n
+
+def make_multiplier(n: int):
+    def multiply(x: int) -> int:
+        return x * n
+    return multiply
+
+def compose():
+    let add5 = make_adder(5)
+    let mul3 = make_multiplier(3)
+    return lambda x -> mul3(add5(x))
+
+
+# ============================================================
+# 8. 模式匹配 + 解构组合
+# ============================================================
+
+def match_destructure(value) -> str:
+    match value:
+        case (a, b):
+            return f"pair: {a}, {b}"
+        case [x, y, z]:
+            return f"triple: {x}, {y}, {z}"
+        case {"key": v}:
+            return f"dict with key: {v}"
+        case int(n) if n > 0:
+            return f"positive int: {n}"
+        case str(s):
+            return f"string: {s}"
+        case None:
+            return "none"
+        case _:
+            return "other"
+
+
+# ============================================================
+# 9. 字符串处理边界
+# ============================================================
+
+def string_operations() -> str:
+    let parts: list<str> = ["hello", "world"]
+    let joined: str = " ".join(parts)
+    let upper: str = joined.upper()
+    let lower: str = joined.lower()
+    let sliced: str = joined[0]
+    return f"{upper}|{lower}|{sliced}"
+
+def string_escape() -> str:
+    return "tab:\there\nnewline:done"
+
+
+# ============================================================
+# 10. 集合推导式
+# ============================================================
+
+def list_comprehension() -> list<int>:
+    return [x * x for x in range(10)]
+
+def filtered_comprehension() -> list<int>:
+    return [x for x in range(20) if x % 3 == 0]
+
+def nested_comprehension() -> list<list<int>>:
+    return [[i * j for j in range(3)] for i in range(3)]
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Composite Declarations Demo ===")
+
+    print("--- declarations ---")
+    print(f"decls: {declaration_types()}")
+
+    print("--- scope ---")
+    print(f"shadow: {shadow_global()}")
+    print(f"use global: {use_global()}")
+    print(f"block scope: {block_scope()}")
+
+    print("--- params ---")
+    print(f"default: {default_params()}")
+    print(f"default(99): {default_params(99)}")
+    print(f"keyword: {keyword_args(name='Alice', age=30)}")
+    print(f"varargs: {varargs_func([1, 2, 3, 4, 5])}")
+
+    print("--- return types ---")
+    print(f"tuple: {return_tuple()}")
+    print(f"list of tuples: {return_list_of_tuples()}")
+    let fn = return_nested_function()
+    print(f"nested fn(10): {fn(10)}")
+
+    print("--- inference ---")
+    print(f"int: {inferred_int()}")
+    print(f"float: {inferred_float()}")
+    print(f"string: {inferred_string()}")
+
+    print("--- generics ---")
+    print(f"pair swap: {use_generic_pair()}")
+
+    print("--- closures ---")
+    let add5 = make_adder(5)
+    print(f"add5(10): {add5(10)}")
+    let composed = compose()
+    print(f"composed(10): {composed(10)}")
+
+    print("--- match destructure ---")
+    print(f"tuple: {match_destructure((1, 2))}")
+    print(f"list: {match_destructure([1, 2, 3])}")
+    print(f"dict: {match_destructure({'key': 'value'})}")
+    print(f"int: {match_destructure(42)}")
+    print(f"str: {match_destructure('hello')}")
+    print(f"none: {match_destructure(None)}")
+
+    print("--- strings ---")
+    print(f"ops: {string_operations()}")
+    print(f"escape: {repr(string_escape())}")
+
+    print("--- comprehensions ---")
+    print(f"list comp: {list_comprehension()}")
+    print(f"filtered: {filtered_comprehension()}")
+    print(f"nested: {nested_comprehension()}")
+
+
+suite CompositeDeclarationsTests:
+    test declaration_types:
+        let r = declaration_types()
+        assert r[0] == 42
+        assert r[1] == 25
+        assert r[2] == "CypyDemo"
+
+    test shadow_global:
+        assert shadow_global() == 10
+
+    test use_global:
+        assert use_global() == 1000
+
+    test block_scope:
+        assert block_scope() == 3
+
+    test default_params:
+        assert default_params() == "10-default"
+
+    test varargs:
+        assert varargs_func([1, 2, 3]) == 3
+
+    test return_tuple:
+        let r = return_tuple()
+        assert r[0] == 42
+        assert r[2] == True
+
+    test inferred_int:
+        assert inferred_int() == 42
+
+    test inferred_float:
+        assert inferred_float() == 3.14
+
+    test use_generic_pair:
+        let r = use_generic_pair()
+        assert r[0] == "answer"
+        assert r[1] == 42
+
+    test make_adder:
+        let add5 = make_adder(5)
+        assert add5(10) == 15
+
+    test compose:
+        let f = compose()
+        assert f(10) == 45
+
+    test match_tuple:
+        assert "pair" in match_destructure((1, 2))
+
+    test match_positive_int:
+        assert "positive" in match_destructure(42)
+
+    test match_none:
+        assert match_destructure(None) == "none"
+
+    test list_comprehension:
+        let r = list_comprehension()
+        assert len(r) == 10
+        assert r[0] == 0
+        assert r[9] == 81
+
+    test filtered_comprehension:
+        let r = filtered_comprehension()
+        assert 0 in r
+        assert 3 in r
+        assert not (1 in r)

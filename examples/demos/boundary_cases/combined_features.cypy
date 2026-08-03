@@ -1,0 +1,259 @@
+# 组合特性边界示例
+# 演示多种语法特性的组合使用：泛型+trait+模式匹配+duck 约束
+
+# ============================================================
+# 1. 泛型结构体 + trait 实现
+# ============================================================
+
+trait Comparable:
+    def compare(self, other) -> int
+
+trait Summable:
+    def sum_total(self) -> int
+
+struct Number:
+    value: int
+
+    def compare(self, other: Number) -> int:
+        if self.value < other.value:
+            return -1
+        elif self.value > other.value:
+            return 1
+        return 0
+
+    def sum_total(self) -> int:
+        return self.value
+
+impl Comparable for Number:
+    pass
+
+impl Summable for Number:
+    pass
+
+
+# ============================================================
+# 2. 泛型容器 + duck 约束
+# ============================================================
+
+meta:
+    duck Numeric:
+        __add__(self, other) -> self
+        __mul__(self, other) -> self
+
+    duck Container<T>:
+        add(self, item: T) -> None
+        get(self, index: int) -> T
+        len(self) -> int
+
+struct Stack<T>:
+    items: list<T>
+
+    def push(self, item: T) -> None:
+        self.items.append(item)
+
+    def pop(self) -> T:
+        guard len(self.items) > 0 else return self.items[0]
+        return self.items.pop()
+
+    def get(self, index: int) -> T:
+        return self.items[index]
+
+    def add(self, item: T) -> None:
+        self.push(item)
+
+    def len(self) -> int:
+        return len(self.items)
+
+
+# ============================================================
+# 3. 枚举 + 模式匹配 + guard
+# ============================================================
+
+enum Result:
+    Ok
+    Err
+
+def handle_result(r: Result, value: int, msg: str) -> str:
+    match r:
+        case Result.Ok:
+            guard value > 0 else return "ok but zero/negative"
+            return f"success: {value}"
+        case Result.Err:
+            guard len(msg) > 0 else return "error with empty message"
+            return f"error: {msg}"
+        case _:
+            return "unknown"
+
+
+# ============================================================
+# 4. 类型别名 + 联合类型 + 函数签名
+# ============================================================
+
+type IntOrStr = int | str
+type NumberList = list<int>
+type Callback = Callable[[int], str]
+
+def process_input(input: IntOrStr) -> IntOrStr:
+    match input:
+        case int(n):
+            return n * 2
+        case str(s):
+            return f"processed: {s}"
+        case _:
+            return 0
+
+def sum_list(nums: NumberList) -> int:
+    let total: int = 0
+    for n in nums:
+        total += n
+    return total
+
+
+# ============================================================
+# 5. 类继承 + 魔法方法 + 属性
+# ============================================================
+
+class Animal:
+    def __init__(self, name: str):
+        self.name = name
+
+    def __repr__(self) -> str:
+        return f"Animal({self.name})"
+
+    def speak(self) -> str:
+        return "..."
+
+class Dog(Animal):
+    def __init__(self, name: str, breed: str):
+        super().__init__(name)
+        self.breed = breed
+
+    def __repr__(self) -> str:
+        return f"Dog({self.name}, {self.breed})"
+
+    def speak(self) -> str:
+        return "Woof!"
+
+    @property
+    def info(self) -> str:
+        return f"{self.name} is a {self.breed}"
+
+
+# ============================================================
+# 6. defer + 异常处理组合
+# ============================================================
+
+def safe_operation(x: int) -> int:
+    let cleanup_log: list<str> = []
+    defer:
+        cleanup_log.append("cleanup done")
+    try:
+        guard x > 0 else return 0
+        let result: int = 100 / x
+        return result
+    except ZeroDivisionError:
+        return -1
+    except Exception:
+        return -2
+
+
+# ============================================================
+# 7. 嵌套泛型 + 复杂返回类型
+# ============================================================
+
+def partition<T>(items: list<T>, pred) -> tuple<list<T>, list<T>>:
+    let passed: list<T> = []
+    let failed: list<T> = []
+    for item in items:
+        if pred(item):
+            passed.append(item)
+        else:
+            failed.append(item)
+    return (passed, failed)
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Combined Features Demo ===")
+
+    print("--- generic struct + trait ---")
+    let n1: Number = Number(value=10)
+    let n2: Number = Number(value=20)
+    print(f"compare: {n1.compare(n2)}")
+    print(f"sum: {n1.sum_total()}")
+
+    print("--- generic container ---")
+    let stack: Stack<int> = Stack(items=[])
+    stack.push(1)
+    stack.push(2)
+    stack.push(3)
+    print(f"stack len: {stack.len()}")
+    print(f"stack pop: {stack.pop()}")
+
+    print("--- enum + match + guard ---")
+    let ok: Result = Result.Ok
+    let err: Result = Result.Err
+    print(f"handle ok: {handle_result(ok, 42, '')}")
+    print(f"handle err: {handle_result(err, 0, 'failed')}")
+
+    print("--- type alias + union ---")
+    print(f"process int: {process_input(5)}")
+    print(f"process str: {process_input('hello')}")
+
+    print("--- class inheritance + magic ---")
+    let dog: Dog = Dog(name="Buddy", breed="Labrador")
+    print(f"dog: {dog}")
+    print(f"dog speaks: {dog.speak()}")
+    print(f"dog info: {dog.info}")
+
+    print("--- defer + exception ---")
+    print(f"safe_op(5): {safe_operation(5)}")
+    print(f"safe_op(0): {safe_operation(0)}")
+    print(f"safe_op(-1): {safe_operation(-1)}")
+
+    print("--- generic partition ---")
+    let nums: list<int> = [1, 2, 3, 4, 5, 6]
+    let result = partition(nums, lambda x -> x % 2 == 0)
+    print(f"evens: {result[0]}, odds: {result[1]}")
+
+
+suite CombinedFeaturesTests:
+    test number_compare:
+        let a = Number(value=10)
+        let b = Number(value=20)
+        assert a.compare(b) == -1
+
+    test number_sum:
+        let n = Number(value=42)
+        assert n.sum_total() == 42
+
+    test stack_operations:
+        let s: Stack<int> = Stack(items=[])
+        s.push(10)
+        s.push(20)
+        assert s.len() == 2
+        assert s.pop() == 20
+
+    test handle_ok_result:
+        let ok = Result.Ok
+        assert handle_result(ok, 42, "") == "success: 42"
+
+    test process_int:
+        assert process_input(5) == 10
+
+    test process_str:
+        let result = process_input("hello")
+        assert "processed" in result
+
+    test safe_op_valid:
+        assert safe_operation(5) == 20
+
+    test safe_op_zero:
+        assert safe_operation(0) == 0
+
+    test dog_speak:
+        let d = Dog(name="Rex", breed="GS")
+        assert d.speak() == "Woof!"

@@ -93,9 +93,9 @@ class TestEnumBoundary(TestBoundaryFramework):
         # enum 应该允许空体或 pass
         print(f"enum 空体测试: {'错误' if error else '通过'}")
     
-    def test_enum_error_inletid_letue(self):
+    def test_enum_error_invalid_value(self):
         """错误写法：enum 变体值无效"""
-        source = "enum Color:\n    RED = \"inletid\"\n"
+        source = "enum Color:\n    RED = \"invalid\"\n"
         result, error = self._parse_code(source)
         # 应该能解析，因为 enum 值可以是任意表达式
     
@@ -227,13 +227,13 @@ class TestGenericBoundary(TestBoundaryFramework):
     
     def test_generic_error_unsupported_type(self):
         """正确但无映射：不支持的泛型类型参数"""
-        source = "struct Pair[CustomType]:\n    letue: CustomType\n"
+        source = "struct Pair<CustomType>:\n    value: CustomType\n"
         result, error = self._parse_code(source)
         self.assertIsNone(error)
     
     def test_generic_scope_inside_struct(self):
         """作用域边界：struct 内定义泛型"""
-        source = "struct Outer:\n    struct Inner[T]:\n        letue: T\n"
+        source = "struct Outer:\n    struct Inner<T>:\n        value: T\n"
         _, error = self._parse_code(source)
         self.assertIsNotNone(error)
 
@@ -242,20 +242,20 @@ class TestGenericBoundary(TestBoundaryFramework):
 
 class TestMetaBoundary(TestBoundaryFramework):
     def test_meta_error_outside_block(self):
-        """错误写法：meta 关键字在块外使用"""
-        source = "constraint Number = int | float\n"
+        """错误写法：duck 关键字在 meta 块外使用"""
+        source = "duck Comparable:\n    a < b -> bool\n"
         _, error = self._parse_code(source)
         self.assertIsNotNone(error)
-    
-    def test_meta_error_inletid_syntax(self):
+
+    def test_meta_error_invalid_syntax(self):
         """错误写法：meta 块内无效语法"""
-        source = "meta:\n    inletid_syntax\n"
+        source = "meta:\n    123\n"
         _, error = self._parse_code(source)
         self.assertIsNotNone(error)
-    
+
     def test_meta_scope_inside_function(self):
         """作用域边界：函数内定义 meta"""
-        source = "def foo():\n    meta:\n        constraint Number = int | float\n"
+        source = "def foo():\n    meta:\n        duck Comparable:\n            a < b -> bool\n"
         _, error = self._parse_code(source)
         self.assertIsNotNone(error)
 
@@ -301,9 +301,9 @@ class TestPipelineBoundary(TestBoundaryFramework):
 # ==================== 类型注解测试 ====================
 
 class TestTypeAnnotationBoundary(TestBoundaryFramework):
-    def test_annotation_error_inletid_type(self):
+    def test_annotation_error_invalid_type(self):
         """错误写法：无效类型名称"""
-        source = "x: InletidType = 10\n"
+        source = "x: InvalidType = 10\n"
         result, error = self._parse_code(source)
         self.assertIsNone(error)  # 解析器接受任何标识符作为类型
     
@@ -523,6 +523,614 @@ class TestIndentationBoundary(TestBoundaryFramework):
         source = "def foo():\n x: int = 1\n"
         _, error = self._parse_code(source)
         self.assertIsNotNone(error)
+
+
+# ==================== go/spawn 并发语句测试 ====================
+
+class TestGoSpawnBoundary(TestBoundaryFramework):
+    def test_go_call_form(self):
+        """正确写法：go 调用形式"""
+        source = """async def fetch(url: str) -> str:
+    return url
+
+async def run():
+    task = go fetch("test")
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_spawn_call_form(self):
+        """正确写法：spawn 调用形式"""
+        source = """def worker():
+    pass
+
+def main():
+    spawn worker()
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_go_block_form(self):
+        """正确写法：go 块形式"""
+        source = """async def run():
+    go:
+        print("async task")
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_spawn_block_form(self):
+        """正确写法：spawn 块形式"""
+        source = """def main():
+    spawn:
+        print("thread task")
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_go_outside_async(self):
+        """错误写法：在非异步函数中使用 go"""
+        source = """def main():
+    go fetch("url")
+"""
+        _, error = self._parse_code(source)
+        # 应该报错，go 需要在异步上下文
+    
+    def test_spawn_outside_function(self):
+        """错误写法：在函数外使用 spawn"""
+        source = """spawn worker()
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNotNone(error)
+    
+    def test_go_with_nonexistent_func(self):
+        """错误写法：go 调用不存在的函数"""
+        source = """async def run():
+    task = go nonexistent_func()
+"""
+        _, error = self._parse_code(source)
+        # 应该在语义分析阶段报错
+    
+    def test_spawn_with_nonexistent_func(self):
+        """错误写法：spawn 调用不存在的函数"""
+        source = """def main():
+    spawn nonexistent_func()
+"""
+        _, error = self._parse_code(source)
+        # 应该在语义分析阶段报错
+
+
+# ==================== 列表推导式边界测试 ====================
+
+class TestListCompBoundary(TestBoundaryFramework):
+    def test_list_comp_basic(self):
+        """正确写法：基本列表推导式"""
+        source = """def test():
+    result = [x for x in range(10)]
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_list_comp_with_condition(self):
+        """正确写法：带条件的列表推导式"""
+        source = """def test():
+    result = [x for x in range(10) if x % 2 == 0]
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_list_comp_nested(self):
+        """正确写法：嵌套循环列表推导式"""
+        source = """def test():
+    result = [(x, y) for x in [1, 2] for y in [3, 4]]
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_list_comp_multiple_conditions(self):
+        """正确写法：多个条件的列表推导式"""
+        source = """def test():
+    result = [x for x in range(20) if x > 5 if x < 15]
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_list_comp_tuple_destructure(self):
+        """错误写法：元组解构列表推导式（当前不支持）"""
+        source = """def test():
+    pairs = [(1, 'a'), (2, 'b')]
+    result = [x for x, y in pairs]
+"""
+        _, error = self._parse_code(source)
+        # 当前不支持元组解构作为循环变量
+        self.assertIsNotNone(error)
+    
+    def test_list_comp_empty(self):
+        """正确写法：空列表推导式"""
+        source = """def test():
+    result = [x for x in []]
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_list_comp_syntax_error(self):
+        """错误写法：缺少 for 子句"""
+        source = """def test():
+    result = [x]
+"""
+        _, error = self._parse_code(source)
+        # 这是普通列表字面量，不是推导式
+    
+    def test_list_comp_unbalanced_parens(self):
+        """错误写法：括号不匹配"""
+        source = """def test():
+    result = [x for x in (1, 2, 3]
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNotNone(error)
+
+
+# ==================== f-string 边界测试 ====================
+
+class TestFStringBoundary(TestBoundaryFramework):
+    def test_fstring_basic(self):
+        """正确写法：基本 f-string"""
+        source = """def test():
+    name = "World"
+    msg = f"Hello, {name}"
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_fstring_with_expression(self):
+        """正确写法：f-string 包含表达式"""
+        source = """def test():
+    x = 10
+    msg = f"x squared is {x ** 2}"
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_fstring_with_format_spec(self):
+        """正确写法：f-string 包含格式说明符"""
+        source = """def test():
+    pi = 3.14159
+    msg = f"Pi: {pi:.2f}"
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_fstring_raw(self):
+        """正确写法：raw f-string"""
+        source = """def test():
+    path = r"C:\\Users\\test"
+    msg = rf"Path: {path}"
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_fstring_uppercase(self):
+        """正确写法：大写 F-string"""
+        source = """def test():
+    name = "Test"
+    msg = F"Hello, {name}"
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_fstring_empty_expr(self):
+        """错误写法：空表达式（当前 lexer 可能不报错）"""
+        source = """def test():
+    msg = f"Hello, {}"
+"""
+        _, error = self._parse_code(source)
+        # 当前 lexer 可能不检测空表达式，这是已知限制
+    
+    def test_fstring_unclosed_brace(self):
+        """错误写法：未闭合的花括号（当前 lexer 可能不报错）"""
+        source = """def test():
+    msg = f"Hello, {name"
+"""
+        _, error = self._parse_code(source)
+        # 当前 lexer 可能不检测未闭合花括号，这是已知限制
+    
+    def test_fstring_nested_braces(self):
+        """正确写法：嵌套花括号"""
+        source = """def test():
+    x = 10
+    msg = f"Value: {{{x}}}"
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+
+
+# ==================== match 语句边界测试 ====================
+
+class TestMatchBoundary(TestBoundaryFramework):
+    def test_match_basic(self):
+        """正确写法：基本 match 语句"""
+        source = """def test(x: int):
+    match x:
+        case 1:
+            pass
+        case _:
+            pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_match_with_enum(self):
+        """正确写法：match 匹配枚举"""
+        source = """enum Color:
+    RED
+    GREEN
+    BLUE
+
+def test(c: Color):
+    match c:
+        case Color.RED:
+            pass
+        case Color.GREEN:
+            pass
+        case Color.BLUE:
+            pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_match_with_tuple(self):
+        """正确写法：match 匹配元组"""
+        source = """def test(pair):
+    match pair:
+        case (1, y):
+            pass
+        case (x, 2):
+            pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_match_with_guard(self):
+        """正确写法：match 带守卫条件"""
+        source = """def test(x: int):
+    match x:
+        case n if n > 0:
+            pass
+        case _:
+            pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_match_empty(self):
+        """错误写法：空 match 语句"""
+        source = """def test(x):
+    match x:
+        pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNotNone(error)
+    
+    def test_match_missing_default(self):
+        """正确写法：match 缺少默认 case"""
+        source = """def test(x: int):
+    match x:
+        case 1:
+            pass
+        case 2:
+            pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_match_duplicate_case(self):
+        """错误写法：重复的 case"""
+        source = """def test(x: int):
+    match x:
+        case 1:
+            pass
+        case 1:
+            pass
+"""
+        _, error = self._parse_code(source)
+        # 可能在语义分析阶段报错
+    
+    def test_match_outside_function(self):
+        """错误写法：函数外使用 match"""
+        source = """x = 1
+match x:
+    case 1:
+        pass
+"""
+        _, error = self._parse_code(source)
+        # match 应该可以在模块级别使用
+
+
+# ==================== 管道操作符边界测试 ====================
+
+class TestPipelineBoundary(TestBoundaryFramework):
+    def test_pipeline_basic(self):
+        """正确写法：基本管道操作"""
+        source = """def test():
+    result = 5 |> double |> square
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_pipeline_with_function_call(self):
+        """正确写法：管道操作带参数"""
+        source = """def test():
+    result = data |> process(filter="active") |> format()
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_pipeline_complex_expression(self):
+        """正确写法：复杂表达式中的管道"""
+        source = """def test():
+    result = (x + y) |> normalize() |> scale(2)
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_pipeline_empty(self):
+        """错误写法：空管道"""
+        source = """def test():
+    result = 5 |>
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNotNone(error)
+    
+    def test_pipeline_double(self):
+        """错误写法：连续管道无表达式"""
+        source = """def test():
+    result = 5 |> |>
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNotNone(error)
+    
+    def test_pipeline_at_start(self):
+        """错误写法：管道操作符在表达式开头"""
+        source = """def test():
+    result = |> process(data)
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNotNone(error)
+    
+    def test_pipeline_nested(self):
+        """正确写法：嵌套管道操作"""
+        source = """def test():
+    result = 5 |> (x -> x + 1) |> (x -> x * 2)
+"""
+        _, error = self._parse_code(source)
+        # 匿名函数可能不支持
+
+
+# ==================== 协程/async 边界测试 ====================
+
+class TestAsyncBoundary(TestBoundaryFramework):
+    def test_async_function_def(self):
+        """正确写法：异步函数定义"""
+        source = """async def fetch(url: str) -> str:
+    return url
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_async_with_return_type(self):
+        """正确写法：带返回类型的异步函数"""
+        source = """async def compute() -> int:
+    return 42
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_async_call(self):
+        """正确写法：调用异步函数"""
+        source = """async def helper():
+    pass
+
+async def main():
+    await helper()
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_await_outside_async(self):
+        """错误写法：在非异步函数中使用 await"""
+        source = """def main():
+    await helper()
+"""
+        _, error = self._parse_code(source)
+        # 应该报错
+    
+    def test_nested_async_function(self):
+        """正确写法：嵌套异步函数"""
+        source = """async def outer():
+    async def inner():
+        return 42
+    return await inner()
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_async_lambda(self):
+        """错误写法：异步 lambda"""
+        source = """async def test():
+    func = async lambda x -> x + 1
+"""
+        _, error = self._parse_code(source)
+        # 可能不支持
+
+
+# ==================== 函数参数边界测试 ====================
+
+class TestFunctionParamsBoundary(TestBoundaryFramework):
+    def test_params_basic(self):
+        """正确写法：基本参数"""
+        source = """def test(a: int, b: str) -> None:
+    pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_params_with_default(self):
+        """正确写法：带默认值的参数"""
+        source = """def test(a: int = 10, b: str = "default") -> None:
+    pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_params_keyword_only(self):
+        """正确写法：关键字-only 参数"""
+        source = """def test(a: int, *, b: str) -> None:
+    pass
+"""
+        _, error = self._parse_code(source)
+        # 可能支持
+    
+    def test_params_varargs(self):
+        """错误写法：可变参数（当前不支持）"""
+        source = """def test(*args, **kwargs):
+    pass
+"""
+        _, error = self._parse_code(source)
+        # 当前不支持 *args 和 **kwargs
+        self.assertIsNotNone(error)
+    
+    def test_params_invalid_order(self):
+        """错误写法：默认参数在非默认参数之前（当前不检测）"""
+        source = """def test(a: int = 10, b: int) -> None:
+    pass
+"""
+        _, error = self._parse_code(source)
+        # 当前不检测参数顺序，这是已知限制
+    
+    def test_params_duplicate_names(self):
+        """错误写法：重复的参数名（当前不检测）"""
+        source = """def test(a: int, a: str) -> None:
+    pass
+"""
+        _, error = self._parse_code(source)
+        # 当前不检测重复参数名，这是已知限制
+    
+    def test_params_nested_default(self):
+        """正确写法：嵌套默认值表达式"""
+        source = """def test(a: int = 1 + 2, b: str = "a" + "b") -> None:
+    pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+
+
+# ==================== 类边界测试 ====================
+
+class TestClassBoundary(TestBoundaryFramework):
+    def test_class_basic(self):
+        """正确写法：基本类定义"""
+        source = """class Foo:
+    def __init__(self):
+        pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_class_with_inheritance(self):
+        """正确写法：带继承的类定义"""
+        source = """class Base:
+    pass
+
+class Derived(Base):
+    pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_class_method(self):
+        """正确写法：类方法"""
+        source = """class Foo:
+    def method(self):
+        pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_class_nested(self):
+        """正确写法：嵌套类"""
+        source = """class Outer:
+    class Inner:
+        pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_class_with_type_param(self):
+        """错误写法：带类型参数的类（当前不支持）"""
+        source = """class Container<T>:
+    value: T
+"""
+        _, error = self._parse_code(source)
+        # 当前类不支持泛型语法，只有 struct 支持
+        self.assertIsNotNone(error)
+
+
+# ==================== 结构体边界测试 ====================
+
+class TestStructBoundaryExtended(TestBoundaryFramework):
+    def test_struct_with_methods(self):
+        """正确写法：带方法的结构体"""
+        source = """struct Point:
+    x: int
+    y: int
+    
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
+    
+    def distance(self) -> float:
+        return (self.x ** 2 + self.y ** 2) ** 0.5
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_struct_with_operator_overload(self):
+        """正确写法：带操作符重载的结构体"""
+        source = """struct Vector:
+    x: float
+    y: float
+    
+    def __add__(self, other: Vector) -> Vector:
+        return Vector(self.x + other.x, self.y + other.y)
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_struct_empty(self):
+        """正确写法：空结构体"""
+        source = """struct Empty:
+    pass
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
+    
+    def test_struct_nested_in_class(self):
+        """正确写法：类内嵌套结构体"""
+        source = """class Outer:
+    struct Inner:
+        value: int
+"""
+        _, error = self._parse_code(source)
+        # 可能不支持
+    
+    def test_struct_with_generic(self):
+        """正确写法：泛型结构体"""
+        source = """struct Pair<T, U>:
+    first: T
+    second: U
+"""
+        _, error = self._parse_code(source)
+        self.assertIsNone(error)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,119 @@
+#!bin cypy
+# 宏系统示例
+# 演示 Cypy 的宏定义、宏调用和反引号代码块插值
+
+# === 1. 基本宏定义 ===
+
+macro double_value(ts: Tokens) =
+    pass
+
+macro greet(name: Tokens) =
+    pass
+
+# === 2. 宏调用（使用 ! 语法） ===
+
+def basic_macro_calls() -> int:
+    let x = 21
+    let doubled = double_value!(x)
+    print(f"double_value!(x) = {doubled}")
+
+    greet!("World")
+
+    return 0
+
+# === 3. 反引号代码块插值 ===
+
+macro create_logger(level: Tokens) =
+    f```
+    def log_${level}(message: str) -> None:
+        print("[${level}] " + message)
+    ```
+
+# === 4. 多参数宏 ===
+
+macro make_pair(first: Tokens, second: Tokens) =
+    pass
+
+macro repeat_action(n: Tokens, action: Tokens) =
+    pass
+
+# === 5. 带代码生成的宏 ===
+
+macro generate_getter(field_name: Tokens, return_type: Tokens) =
+    f```
+    def get_${field_name}(self) -> ${return_type}:
+        return self.${field_name}
+    ```
+
+# === 6. 使用宏生成的代码 ===
+
+struct UserData:
+    name: str
+    age: int
+    email: str
+
+macro generate_getter(name: Tokens, return_type: Tokens) =
+    f```
+    def get_${name}(self) -> ${return_type}:
+        return self.${name}
+    ```
+
+# === 7. 宏组合示例 ===
+
+macro wrap_in_try(func_name: Tokens) =
+    f```
+    def safe_${func_name}(*args, **kwargs):
+        try:
+            return ${func_name}(*args, **kwargs)
+        except Exception as e:
+            print(f"Error in ${func_name}: {e}")
+            return None
+    ```
+
+# === 8. 实际可用的宏示例 ===
+
+macro swap_values(a: Tokens, b: Tokens) =
+    f```
+    let _temp = ${a}
+    ${a} = ${b}
+    ${b} = _temp
+    ```
+
+# === 9. 宏用于条件编译 ===
+
+macro if_debug(debug_expr: Tokens, code: Tokens) =
+    f```
+    if ${debug_expr}:
+        ${code}
+    ```
+
+# === 10. 宏作为便捷方法 ===
+
+macro with_resource(resource_name: Tokens, cleanup: Tokens, body: Tokens) =
+    f```
+    let ${resource_name} = create_resource()
+    defer:
+        ${cleanup}(${resource_name})
+    ${body}
+    ```
+
+# === 主函数 ===
+
+def main() -> int:
+    print("=== 基本宏调用 ===")
+    basic_macro_calls()
+
+    print("=== 宏用于类型安全操作 ===")
+    x: int = 10
+    y: int = 20
+    swap_values!(x, y)
+    print(f"swap_values!(x, y) -> x={x}, y={y}")
+
+    print("=== 宏用于调试日志 ===")
+    let DEBUG = True
+    if_debug!(DEBUG, print("调试模式已启用"))
+
+    print("=== 宏用于资源管理 ===")
+    print("with_resource! 宏可用于自动管理资源生命周期")
+
+    return 0
