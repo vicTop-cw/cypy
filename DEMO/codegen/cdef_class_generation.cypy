@@ -1,13 +1,13 @@
-# Cython cdef class 生成示例
-# 当结构体包含方法时，Cypy 会生成 cdef class
+# Cython class 生成示例
+# 当结构体包含方法时，Cypy 会生成 Cython class
 
-# 简单结构体 -> cdef struct
+# 简单结构体 -> Cython struct
 struct Color:
     r: int
     g: int
     b: int
 
-# 带方法的结构体 -> cdef class
+# 带方法的结构体 -> Cython class
 struct Shape:
     x: float
     y: float
@@ -32,7 +32,7 @@ def main() -> int:
     c = Color {r: 255, g: 0, b: 0}
     print(f"Color: RGB({c.r}, {c.g}, {c.b})")
     
-    # 使用带方法的结构体（cdef class）
+    # 使用带方法的结构体（Cython class）
     shape = Shape {x: 10.0, y: 20.0}
     shape.move(5.0, 5.0)
     print(f"Shape position: {shape.position()}")

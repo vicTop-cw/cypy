@@ -1,0 +1,15 @@
+# Vec 类型测试
+
+def vec_sum(v: list) -> int:
+    total = 0
+    for x in v:
+        total = total + x
+    return total
+
+def test_vec_literal() -> int:
+    v = [1, 2, 3, 4]
+    return vec_sum(v)
+
+def test_vec_repeat() -> int:
+    v = [0] * 5
+    return len(v)

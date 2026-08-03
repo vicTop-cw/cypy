@@ -1,0 +1,8 @@
+# Meta block 测试
+
+meta:
+    duck NumberLike:
+        a + b -> Self
+
+def test_meta() -> int:
+    return 0

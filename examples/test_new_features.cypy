@@ -1,0 +1,31 @@
+# Vec + Union + Macro + Meta 综合测试
+
+meta:
+    duck ValidNum:
+        a + b -> Self
+
+macro double_it(ts: Tokens) =
+    pass
+
+def process(x: object) -> object:
+    return x
+
+def vec_sum(v: list) -> int:
+    total = 0
+    for x in v:
+        total = total + x
+    return total
+
+def main() -> int:
+    # Vec literal
+    numbers = [1, 2, 3, 4, 5]
+    s = vec_sum(numbers)
+
+    # Union type usage
+    val: object = 42
+    result = process(val)
+
+    # Vec repeat
+    zeros = [0] * 10
+
+    return 0

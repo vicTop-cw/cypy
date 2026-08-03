@@ -1,0 +1,14 @@
+# 主模块
+
+from types import create_point, distance
+from geometry import midpoint, triple_distance
+
+def main() -> int:
+    p1 = create_point(0.0, 0.0)
+    p2 = create_point(3.0, 4.0)
+    
+    d = distance(p1, p2)
+    m = midpoint(p1, p2)
+    t = triple_distance(p1, p2)
+    
+    return 0

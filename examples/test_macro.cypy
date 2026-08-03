@@ -1,0 +1,8 @@
+# Macro 测试
+
+macro double(ts: Tokens) =
+    pass
+
+def test_macro() -> int:
+    x = 21
+    return x * 2

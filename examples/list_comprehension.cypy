@@ -4,17 +4,17 @@
 def main() -> int:
     # 基本列表推导式
     print("=== 基本列表推导式 ===")
-    let squares = [x ** 2 for x in range(10)]
+    squares = [x ** 2 for x in range(10)]
     print(f"Squares: {squares}")
 
     # 带条件的列表推导式
     print("\n=== 带条件的列表推导式 ===")
-    let even_squares = [x ** 2 for x in range(10) if x % 2 == 0]
+    even_squares = [x ** 2 for x in range(10) if x % 2 == 0]
     print(f"Even squares: {even_squares}")
 
     # 嵌套循环
     print("\n=== 嵌套循环 ===")
-    let pairs = [(x, y) for x in [1, 2, 3] for y in [4, 5, 6]]
+    pairs = [(x, y) for x in [1, 2, 3] for y in [4, 5, 6]]
     print(f"Pairs: {pairs}")
 
     return 0

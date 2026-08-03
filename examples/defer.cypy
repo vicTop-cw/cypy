@@ -1,22 +1,26 @@
-def process_file(filename: str) -> None:
-    let file = open(filename, "r")
+# defer 语句示例
+# 演示 Cypy 的 defer 资源清理语法
+
+def safe_operation():
+    print("Starting operation")
     defer:
-        file.close()
-        print("File closed")
-
-    let content = file.read()
-    print(f"Read {len(content)} bytes")
-
-def transaction() -> None:
-    print("Starting transaction")
-    defer:
-        print("Rolling back transaction")
-
-    print("Performing operations")
+        print("Cleaning up resources")
+    
+    print("Performing task")
     if False:
         return
+    
+    print("Operation completed")
 
-    print("Committing transaction")
+def multiple_defers():
+    print("=== Multiple defers ===")
+    defer:
+        print("First cleanup")
+    defer:
+        print("Second cleanup")
+    
+    print("Main logic")
 
-process_file("example.txt")
-transaction()
+safe_operation()
+print("-" * 30)
+multiple_defers()

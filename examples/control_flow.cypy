@@ -25,14 +25,14 @@ def main() -> int:
         print(f"  i = {i}")
 
     # 列表遍历
-    let fruits: list[str] = ["apple", "banana", "cherry"]
+    let fruits: list<str> = ["apple", "banana", "cherry"]
     print("\nList iteration:")
     for fruit in fruits:
         print(f"  fruit: {fruit}")
 
     # while 循环
     print("\nWhile loop:")
-    var count: int = 0
+    mut count: int = 0
     while count < 5:
         print(f"  count = {count}")
         count += 1

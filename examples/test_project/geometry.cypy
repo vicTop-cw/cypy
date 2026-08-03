@@ -1,0 +1,12 @@
+# 几何运算模块
+
+from types import create_point, distance
+
+def midpoint(p1: tuple<float, float>, p2: tuple<float, float>) -> tuple<float, float>:
+    mx = (p1[0] + p2[0]) / 2.0
+    my = (p1[1] + p2[1]) / 2.0
+    return create_point(mx, my)
+
+def triple_distance(p1: tuple<float, float>, p2: tuple<float, float>) -> float:
+    d = distance(p1, p2)
+    return d * 3.0

@@ -1,0 +1,6 @@
+def test_minimal() -> int:
+    count: int = 0
+    for i in range(10):
+        if i < 5:
+            count = count + 1
+    return count

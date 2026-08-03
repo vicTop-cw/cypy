@@ -80,7 +80,7 @@ def main() -> int:
     let immutable_point: Point = Point(x=10, y=20)
     print(f"Immutable point: {immutable_point}")
 
-    var mutable_point: Point = Point(x=5, y=5)
+    mut mutable_point: Point = Point(x=5, y=5)
     mutable_point.x = 15
     print(f"Mutable point after update: {mutable_point}")
 

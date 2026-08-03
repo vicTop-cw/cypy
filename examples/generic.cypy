@@ -6,10 +6,10 @@ def add(a: Number, b: Number) -> Number:
 def multiply(a: Number, b: Number) -> Number:
     return a * b
 
-struct Container[T]:
+struct Container<T>:
     value: T
 
-def get_value[T](container: Container[T]) -> T:
+def get_value<T>(container: Container<T>) -> T:
     return container.value
 
 let result1 = add(10, 20)

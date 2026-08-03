@@ -1,22 +1,22 @@
 # 隐式策略示例
-# implicit 关键字用于声明隐式变量和结构体
+# 使用 let 声明变量，struct 定义结构体
 
-# 隐式结构体定义
-implicit struct Config:
+# 结构体定义
+struct Config:
     debug: bool = True
     timeout: int = 30
     url: str = "http://localhost"
 
-# 隐式变量声明
-implicit ctx: Config = Config {debug: False, timeout: 60}
+# 使用 let 声明变量
+let ctx: Config = Config {debug: False, timeout: 60}
 
 def main() -> int:
-    # 使用隐式变量
+    # 使用变量
     print(f"Debug mode: {ctx.debug}")
     print(f"Timeout: {ctx.timeout}")
-    
-    # 修改隐式变量
+
+    # 修改变量字段
     ctx.url = "http://example.com"
     print(f"URL: {ctx.url}")
-    
+
     return 0

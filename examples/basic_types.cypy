@@ -17,7 +17,7 @@ def main() -> int:
     let e: float = a  # 隐式转换 (int -> float)
     let f: bool = True
 
-    print(f"implicit(int to float): {e}")
+    print(f"auto(int to float): {e}")
     print(f"bool: {f}")
 
     # 字符串类型
@@ -29,13 +29,13 @@ def main() -> int:
     print(raw_str)
 
     # 列表类型
-    let numbers: list[int] = [1, 2, 3, 4, 5]
+    let numbers: list<int> = [1, 2, 3, 4, 5]
 
-    print(f"list[int]: {numbers}")
+    print(f"list<int>: {numbers}")
 
     # 元组类型
-    let point: tuple[int, int] = (10, 20)
-    let data: tuple[str, int, float] = ("test", 42, 3.14)
+    let point: tuple<int, int> = (10, 20)
+    let data: tuple<str, int, float> = ("test", 42, 3.14)
 
     print(f"point: {point}")
     print(f"data: {data}")

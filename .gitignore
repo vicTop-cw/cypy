@@ -16,6 +16,10 @@ output_bridge/
 *.so
 *.dll
 
+# Test reports and benchmarks
+test_reports/
+benchmark_results/
+
 # Virtual environments
 venv/
 .env/

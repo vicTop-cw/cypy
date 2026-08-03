@@ -6,7 +6,7 @@ struct Point:
     x: float
     y: float
 
-# 带方法的结构体（生成 cdef class）
+# 带方法的结构体（生成 Cython class）
 struct Rectangle:
     width: float
     height: float

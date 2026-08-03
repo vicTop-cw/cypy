@@ -1,0 +1,9 @@
+# Union Type 测试
+
+def process_value(x: object) -> object:
+    return x
+
+def test_union() -> int:
+    x: object = 42
+    y: object = "hello"
+    return 0
