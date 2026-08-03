@@ -12,6 +12,8 @@ class TokenType:
     INTEGER = "INTEGER"
     FLOAT = "FLOAT"
     STRING = "STRING"
+    TRUE = "TRUE"
+    FALSE = "FALSE"
 
     PLUS = "PLUS"
     MINUS = "MINUS"
@@ -19,6 +21,7 @@ class TokenType:
     DIV = "DIV"
     MOD = "MOD"
     POW = "POW"
+    STAR_STAR = "STAR_STAR"
 
     EQ = "EQ"
     NE = "NE"
@@ -46,6 +49,7 @@ class TokenType:
     PIPE_GT = "PIPE_GT"
 
     DOT = "DOT"
+    DOT_DOT = "DOT_DOT"  # .. 可变参数分隔符
     COMMA = "COMMA"
     COLON = "COLON"
     SEMICOLON = "SEMICOLON"
@@ -58,6 +62,7 @@ class TokenType:
     AT = "AT"
     ARROW = "ARROW"
     BUILD_ASSIGN = "BUILD_ASSIGN"  # =:
+    BUILD_INDEX = "BUILD_INDEX"    # ^: (lz 索引构建块)
     BUILD_CALL = "BUILD_CALL"      # ~:
     BUILD_GEN = "BUILD_GEN"        # *:
     BUILD_VALUE = "BUILD_VALUE"    # ^
@@ -77,6 +82,7 @@ class TokenType:
     STRUCT = "STRUCT"
     ENUM = "ENUM"
     TRAIT = "TRAIT"
+    TYPECLASS = "TYPECLASS"
     IMPL = "IMPL"
     IMPLEMENTS = "IMPLEMENTS"
     EXTENDS = "EXTENDS"
@@ -88,17 +94,13 @@ class TokenType:
     LET = "LET"
     CONST = "CONST"
     DEFER = "DEFER"
-    POINTER = "POINTER"
     REF = "REF"
     MUT = "MUT"
     IS = "IS"
     IN = "IN"
     FOR_KW = "FOR_KW"
     META = "META"
-    CONSTRAINT = "CONSTRAINT"
-    ABSTRACT = "ABSTRACT"
-    SUBTYPE_KW = "SUBTYPE_KW"
-    DISPATCH = "DISPATCH"
+    DUCK = "DUCK"
     NEVER = "NEVER"
 
     GUARD = "GUARD"
@@ -160,34 +162,27 @@ class Lexer:
         "continue": TokenType.CONTINUE,
         "return": TokenType.RETURN,
         "def": TokenType.DEF,
-        "cdef": TokenType.CDEF,
         "class": TokenType.CLASS,
         "struct": TokenType.STRUCT,
         "enum": TokenType.ENUM,
         "trait": TokenType.TRAIT,
+        "typeclass": TokenType.TYPECLASS,
         "impl": TokenType.IMPL,
-        "implements": TokenType.IMPLEMENTS,
         "extends": TokenType.EXTENDS,
         "import": TokenType.IMPORT,
         "from": TokenType.FROM,
         "as": TokenType.AS,
         "type": TokenType.TYPE,
-        "var": TokenType.VAR,
         "let": TokenType.LET,
         "const": TokenType.CONST,
         "defer": TokenType.DEFER,
-        "pointer": TokenType.POINTER,
-        "ref": TokenType.REF,
         "mut": TokenType.MUT,
         "is": TokenType.IS,
         "in": TokenType.IN,
         "and": TokenType.AND,
         "or": TokenType.OR,
         "meta": TokenType.META,
-        "constraint": TokenType.CONSTRAINT,
-        "abstract": TokenType.ABSTRACT,
-        "subtype": TokenType.SUBTYPE_KW,
-        "dispatch": TokenType.DISPATCH,
+        "duck": TokenType.DUCK,
         "Never": TokenType.NEVER,
         "guard": TokenType.GUARD,
         "macro": TokenType.MACRO,
@@ -205,10 +200,8 @@ class Lexer:
         "except": TokenType.EXCEPT,
         "finally": TokenType.FINALLY,
         "raise": TokenType.RAISE,
-        "exception": TokenType.EXCEPTION,
         "with": TokenType.WITH,
         "lambda": TokenType.LAMBDA,
-        "no_strategy": TokenType.NO_STRATEGY,
         "owned": TokenType.OWNED,
         "suite": TokenType.SUITE,
         "test": TokenType.TEST,
@@ -217,6 +210,8 @@ class Lexer:
         "del": TokenType.DEL,
         "not": TokenType.NOT,
         "pass": TokenType.PASS,
+        "True": TokenType.TRUE,
+        "False": TokenType.FALSE,
     }
 
     def __init__(self, source: str):
@@ -360,6 +355,9 @@ class Lexer:
             char = self._peek()
             if char == ".":
                 if has_dot or has_exp:
+                    break
+                # 检查后面是否是另一个点（范围模式：1..10）
+                if self._peek_ahead(1) == ".":
                     break
                 has_dot = True
             elif char in "eE":
@@ -821,7 +819,11 @@ class Lexer:
 
             if char == ".":
                 self._advance()
-                yield Token(TokenType.DOT, ".", self.line, self.col - 1)
+                if self._peek() == ".":
+                    self._advance()
+                    yield Token(TokenType.DOT_DOT, "..", self.line, self.col - 2)
+                else:
+                    yield Token(TokenType.DOT, ".", self.line, self.col - 1)
                 continue
 
             if char == ",":
@@ -893,7 +895,21 @@ class Lexer:
 
             if char == "^":
                 self._advance()
-                yield Token(TokenType.BUILD_VALUE, "^", self.line, self.col - 1)
+                if self._peek() == ":":
+                    # 检查符号后是否有换行（构建块符号必须后换行）
+                    self._advance()
+                    next_char = self._peek()
+                    if next_char in ("\n",):
+                        # ^: 索引构建块 (lz)
+                        yield Token(TokenType.BUILD_INDEX, "^:", self.line, self.col - 2)
+                        self._expect_indent = True
+                    else:
+                        # 符号后没有换行，作为普通的 ^ 和 :
+                        yield Token(TokenType.BUILD_VALUE, "^", self.line, self.col - 2)
+                        yield Token(TokenType.COLON, ":", self.line, self.col - 1)
+                else:
+                    # 单独的 ^ 符号，用于构建值表达式
+                    yield Token(TokenType.BUILD_VALUE, "^", self.line, self.col - 1)
                 continue
 
             self._advance()

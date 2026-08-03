@@ -4,6 +4,11 @@ import os
 from .lexer import Token, TokenType
 
 
+class StopExpressionParsing(Exception):
+    """用于在匹配表达式中停止表达式解析的异常"""
+    pass
+
+
 # AST缓存全局实例
 class ASTCache:
     """AST解析结果缓存 - 避免重复解析相同的源代码"""
@@ -143,10 +148,32 @@ class EnumVariant(ASTNode):
 
 
 class TraitDef(ASTNode):
-    def __init__(self, name: str, methods: List[Any], line: int = 0, col: int = 0):
+    def __init__(self, name: str, methods: List[Any], generic_params: List[str] = None, super_traits: List[Any] = None, line: int = 0, col: int = 0):
         super().__init__("TraitDef", line, col)
         self.name = name
         self.methods = methods
+        self.generic_params = generic_params or []
+        self.super_traits = super_traits or []
+
+
+class TypeClassDef(ASTNode):
+    """TypeClass 定义节点 - 对标 Rust trait / Scala Type Class"""
+    def __init__(self, name: str, methods: List[Any], generic_params: List[str] = None, generic_constraints: Dict[str, Any] = None, line: int = 0, col: int = 0):
+        super().__init__("TypeClassDef", line, col)
+        self.name = name
+        self.methods = methods  # 方法签名列表
+        self.generic_params = generic_params or []  # 泛型参数
+        self.generic_constraints = generic_constraints or {}  # 泛型约束
+
+
+class TypeClassImpl(ASTNode):
+    """TypeClass 实现节点 - 对标 Rust impl Trait for Type"""
+    def __init__(self, typeclass_name: str, target_type: str, methods: List[Any], generic_params: List[str] = None, line: int = 0, col: int = 0):
+        super().__init__("TypeClassImpl", line, col)
+        self.typeclass_name = typeclass_name  # 实现的 TypeClass 名称
+        self.target_type = target_type  # 被实现的目标类型
+        self.methods = methods  # 方法实现列表
+        self.generic_params = generic_params or []  # 泛型参数
 
 
 class ExceptionDef(ASTNode):
@@ -204,13 +231,16 @@ class FuncDef(ASTNode):
 
 
 class Param(ASTNode):
-    def __init__(self, name: str, type_annotation: Optional[Any], default_value: Any = None, is_mut: bool = False, is_ref: bool = False, line: int = 0, col: int = 0):
+    def __init__(self, name: str, type_annotation: Optional[Any], default_value: Any = None, is_mut: bool = False, is_ref: bool = False, line: int = 0, col: int = 0, is_var_positional: bool = False, is_var_keyword: bool = False, is_dot_separator: bool = False):
         super().__init__("Param", line, col)
         self.name = name
         self.type_annotation = type_annotation
         self.default_value = default_value
         self.is_mut = is_mut
         self.is_ref = is_ref
+        self.is_var_positional = is_var_positional  # *args
+        self.is_var_keyword = is_var_keyword        # **kwargs
+        self.is_dot_separator = is_dot_separator    # .. 分隔符
 
 
 class ClassDef(ASTNode):
@@ -231,13 +261,14 @@ class TypeAlias(ASTNode):
 
 
 class LetStmt(ASTNode):
-    def __init__(self, name: str, type_annotation: Optional[Any], value: Optional[Any], mutable: bool = False, is_const: bool = False, line: int = 0, col: int = 0):
+    def __init__(self, name: Any, type_annotation: Optional[Any], value: Optional[Any], mutable: bool = False, is_const: bool = False, is_owned: bool = False, line: int = 0, col: int = 0):
         super().__init__("LetStmt", line, col)
-        self.name = name
+        self.name = name  # 可以是字符串（普通变量）或模式（解构绑定）
         self.type_annotation = type_annotation
         self.value = value
         self.mutable = mutable
         self.is_const = is_const
+        self.is_owned = is_owned
 
 
 class DeferStmt(ASTNode):
@@ -306,6 +337,14 @@ class MatchStmt(ASTNode):
         self.subject = subject  # 匹配的表达式
         self.cases = cases      # case 子句列表
         self.orelse = orelse    # else 分支
+
+
+class MatchExpr(ASTNode):
+    """match/case 模式匹配表达式（返回值）"""
+    def __init__(self, subject: Any, cases: List[Any], line: int = 0, col: int = 0):
+        super().__init__("MatchExpr", line, col)
+        self.subject = subject  # 匹配的表达式
+        self.cases = cases      # case 子句列表
 
 
 class CaseClause(ASTNode):
@@ -448,6 +487,72 @@ class Pattern(ASTNode):
         self.name = name
 
 
+class SlicePattern(ASTNode):
+    """切片模式 - .. 或 ..var 用于列表/元组模式中的剩余元素绑定"""
+    def __init__(self, name: Optional[str] = None, line: int = 0, col: int = 0):
+        super().__init__("SlicePattern", line, col)
+        self.name = name
+
+
+class ArrayPattern(ASTNode):
+    """数组/列表模式 - 在 match case 中匹配数组/列表结构"""
+    def __init__(self, elements: List[Any], rest_name: Optional[str] = None, line: int = 0, col: int = 0):
+        super().__init__("ArrayPattern", line, col)
+        self.elements = elements
+        self.rest_name = rest_name  # *rest 剩余绑定
+
+
+class StructPattern(ASTNode):
+    """结构体解构模式 - Point { x, y } 或 Point { x: px, y: py }"""
+    def __init__(self, struct_name: str, fields: List[Tuple[str, Any]], has_ellipsis: bool = False, line: int = 0, col: int = 0):
+        super().__init__("StructPattern", line, col)
+        self.struct_name = struct_name  # 结构体名称
+        self.fields = fields             # 字段列表 [(field_name, pattern), ...]
+        self.has_ellipsis = has_ellipsis # 是否包含 .. 忽略其他字段
+
+
+class DictPattern(ASTNode):
+    """字典/映射解构模式 - {"key": value, "key2": value2, **rest}"""
+    def __init__(self, pairs: List[Tuple[Any, Any]], rest_name: Optional[str] = None, line: int = 0, col: int = 0):
+        super().__init__("DictPattern", line, col)
+        self.pairs = pairs               # 键值对列表 [(key_pattern, value_pattern), ...]
+        self.rest_name = rest_name       # 剩余字段绑定变量名（**rest）
+
+
+class TypePattern(ASTNode):
+    """类型模式 - case int x: 匹配 int 类型并绑定到 x"""
+    def __init__(self, type_name: str, name: str, line: int = 0, col: int = 0):
+        super().__init__("TypePattern", line, col)
+        self.type_name = type_name  # 类型名称（如 int, str, Point）
+        self.name = name            # 绑定的变量名
+
+
+class AsPattern(ASTNode):
+    """As模式 - case pattern as name: 将匹配值绑定到变量"""
+    def __init__(self, pattern: Any, name: str, line: int = 0, col: int = 0):
+        super().__init__("AsPattern", line, col)
+        self.pattern = pattern  # 内部模式
+        self.name = name        # 绑定的变量名
+
+
+class ExtractorPattern(ASTNode):
+    """提取器模式 - 参考Scala的unapply，如 Email(user, domain)
+    优先级：__match_args__ < __unapply__ < __unapply_seq__ < __unwarp__
+    """
+    def __init__(self, type_name: str, args: List[Any], line: int = 0, col: int = 0):
+        super().__init__("ExtractorPattern", line, col)
+        self.type_name = type_name  # 类型/提取器名称（如 Email）
+        self.args = args            # 提取的参数模式列表 [pattern1, pattern2, ...]
+
+
+class RangePattern(ASTNode):
+    """范围模式 - case 1..10: 匹配范围内的值"""
+    def __init__(self, lower: Any, upper: Any, line: int = 0, col: int = 0):
+        super().__init__("RangePattern", line, col)
+        self.lower = lower  # 下界（包含）
+        self.upper = upper  # 上界（不包含）
+
+
 class PipeExpr(ASTNode):
     """管道表达式 - x |> f 等同于 f(x)"""
     def __init__(self, value: Any, function: Any, line: int = 0, col: int = 0):
@@ -466,6 +571,12 @@ class Constant(ASTNode):
 class PointerType(ASTNode):
     def __init__(self, base_type: Any, line: int = 0, col: int = 0):
         super().__init__("PointerType", line, col)
+        self.base_type = base_type
+
+
+class RefType(ASTNode):
+    def __init__(self, base_type: Any, line: int = 0, col: int = 0):
+        super().__init__("RefType", line, col)
         self.base_type = base_type
 
 
@@ -498,9 +609,10 @@ class UnionType(ASTNode):
 
 
 class ImplStmt(ASTNode):
-    def __init__(self, trait_name: str, for_type: Any, methods: List[Any], line: int = 0, col: int = 0):
+    def __init__(self, trait_name: str, trait_generic_args: List[Any], for_type: Any, methods: List[Any], line: int = 0, col: int = 0):
         super().__init__("ImplStmt", line, col)
         self.trait_name = trait_name
+        self.trait_generic_args = trait_generic_args or []
         self.for_type = for_type
         self.methods = methods
 
@@ -512,10 +624,18 @@ class MetaBlock(ASTNode):
 
 
 class BuildBlockExpr(ASTNode):
-    """构建块表达式 - 闭包无参函数，内部默认unsafe"""
+    """构建块表达式 - 闭包无参函数，内部默认unsafe
+    
+    LZ 语法参考:
+    - =: 变量构建块: 创建无参不安全闭包，块体末尾表达式作为返回值
+    - ^: 索引构建块: 对容器做索引访问，脱糖为 __getitem__ 调用
+    - ~: 调用构建块: 创建带参闭包，块体末尾返回元组/字典，自动拆包传递
+    - *: 生成器构建块: 创建生成器闭包
+    """
     BUILD_ASSIGN = "assign"    # =: 变量构建块
+    BUILD_INDEX = "index"      # ^: 索引构建块 (lz 新增)
     BUILD_CALL = "call"        # ~: 调用构建块
-    BUILD_GEN = "generator"    # *: 生成器调用构建块
+    BUILD_GEN = "generator"    # *: 生成器构建块
     
     def __init__(self, block_type: str, body: List[ASTNode], line: int = 0, col: int = 0):
         super().__init__("BuildBlockExpr", line, col)
@@ -530,26 +650,47 @@ class BuildValueExpr(ASTNode):
         self.operand = operand
 
 
-class ConstraintDef(ASTNode):
-    def __init__(self, name: str, types: List[Any], line: int = 0, col: int = 0):
-        super().__init__("ConstraintDef", line, col)
+class DuckRequirement(ASTNode):
+    """单个 duck 约束项
+
+    kind 类型:
+    - "operator": 操作符约束 (如: a < b -> bool, -a -> Self)
+    - "attribute": 属性约束 (如: name: str)
+    - "method": 方法约束 (如: len(self) -> int)
+    - "reference": 引用约束 (如: Comparable, Container<T>)
+    """
+    def __init__(self, kind: str, name: str, params: List[str],
+                 return_type: Optional[str] = None,
+                 line: int = 0, col: int = 0,
+                 generic_args: Optional[List[str]] = None,
+                 is_unary: bool = False):
+        super().__init__("DuckRequirement", line, col)
+        self.kind = kind
         self.name = name
-        self.types = types
-
-
-class SubtypeDecl(ASTNode):
-    def __init__(self, subtype: str, supertype: str, line: int = 0, col: int = 0):
-        super().__init__("SubtypeDecl", line, col)
-        self.subtype = subtype
-        self.supertype = supertype
-
-
-class DispatchDecl(ASTNode):
-    def __init__(self, func_name: str, params: List[Param], return_type: Optional[Any], line: int = 0, col: int = 0):
-        super().__init__("DispatchDecl", line, col)
-        self.func_name = func_name
         self.params = params
         self.return_type = return_type
+        self.generic_args = generic_args or []
+        self.is_unary = is_unary
+
+
+class DuckDef(ASTNode):
+    """duck 约束定义
+    
+    示例:
+        duck Comparable:
+            a < b -> bool
+            a > b -> bool
+        
+        duck Container[T]:
+            add(self, item: T) -> None
+            len(self) -> int
+    """
+    def __init__(self, name: str, type_params: List[str],
+                 requirements: List[DuckRequirement], line: int = 0, col: int = 0):
+        super().__init__("DuckDef", line, col)
+        self.name = name
+        self.type_params = type_params
+        self.requirements = requirements
 
 
 class MacroDef(ASTNode):
@@ -582,6 +723,16 @@ class ComptimeStmt(ASTNode):
     def __init__(self, expr: Any, line: int = 0, col: int = 0):
         super().__init__("ComptimeStmt", line, col)
         self.expr = expr
+
+
+class ComptimeFuncDef(ASTNode):
+    """编译期函数定义 - 在编译时执行的函数"""
+    def __init__(self, name: str, params: List[Any], return_type: Optional[Any], body: List[ASTNode], line: int = 0, col: int = 0):
+        super().__init__("ComptimeFuncDef", line, col)
+        self.name = name
+        self.params = params
+        self.return_type = return_type
+        self.body = body
 
 
 class BacktickBlock(ASTNode):
@@ -629,6 +780,13 @@ class VecLiteral(ASTNode):
         super().__init__("VecLiteral", line, col)
         self.elements = elements  # 元素列表
         self.size = size  # 如果是重复形式，size 指定重复次数
+
+
+class DictLiteral(ASTNode):
+    """字典字面量 - {key: value, key2: value2, ...}"""
+    def __init__(self, pairs: List[Tuple[Any, Any]], line: int = 0, col: int = 0):
+        super().__init__("DictLiteral", line, col)
+        self.pairs = pairs
 
 
 class Parser:
@@ -700,7 +858,7 @@ class Parser:
                 body.append(stmt)
         return Module(body)
 
-    def _parse_statement(self) -> Optional[ASTNode]:
+    def _parse_statement(self, signature_only: bool = False) -> Optional[ASTNode]:
         token = self._current()
         
         # 解析装饰器列表（注意：@name! 是宏调用，不是装饰器）
@@ -740,18 +898,11 @@ class Parser:
         if token.type == TokenType.ASYNC:
             self._consume()
             if self._current().type == TokenType.DEF:
-                return self._parse_func_def(decorators, is_async=True)
+                return self._parse_func_def(decorators, is_async=True, signature_only=signature_only)
             else:
                 raise ValueError(f"Unexpected token {self._current().type} after async at {self._current().line}:{self._current().col}")
         if token.type == TokenType.DEF:
-            return self._parse_func_def(decorators)
-        if token.type == TokenType.CDEF:
-            self._consume()
-            if self._current().type == TokenType.CLASS:
-                return self._parse_class_def(is_cdef=True)
-            else:
-                # cdef 变量声明：cdef int x = 10
-                return self._parse_typed_var()
+            return self._parse_func_def(decorators, signature_only=signature_only)
         if token.type == TokenType.CLASS:
             return self._parse_class_def()
         if token.type == TokenType.STRUCT:
@@ -760,18 +911,20 @@ class Parser:
             return self._parse_enum_def()
         if token.type == TokenType.TRAIT:
             return self._parse_trait_def()
-        if token.type == TokenType.EXCEPTION:
-            return self._parse_exception_def()
+        if token.type == TokenType.TYPECLASS:
+            return self._parse_typeclass_def()
         if token.type == TokenType.IMPL:
             return self._parse_impl_stmt()
         if token.type == TokenType.SUITE:
             return self._parse_suite_stmt()
         if token.type == TokenType.LET:
             return self._parse_let_stmt()
-        if token.type == TokenType.VAR:
-            return self._parse_var_stmt()
+        if token.type == TokenType.MUT:
+            return self._parse_mut_stmt()
         if token.type == TokenType.CONST:
             return self._parse_const_stmt()
+        if token.type == TokenType.OWNED:
+            return self._parse_owned_stmt()
         if token.type == TokenType.TEST:
             # test name: 语法：测试用例（参照 lang-zone/hermes）
             return self._parse_test_stmt()
@@ -811,6 +964,9 @@ class Parser:
         if token.type == TokenType.MACRO:
             return self._parse_macro_def()
         if token.type == TokenType.COMPTIME:
+            # 检查是否是 comptime def 语法
+            if self._peek_ahead(1) == TokenType.DEF:
+                return self._parse_comptime_func_def()
             return self._parse_comptime_stmt()
         if token.type == TokenType.SPAWN:
             return self._parse_spawn_stmt()
@@ -862,7 +1018,7 @@ class Parser:
 
         return self._parse_expr_stmt()
 
-    def _parse_func_def(self, decorators: List[Any] = None, is_async: bool = False, is_test: bool = False) -> FuncDef:
+    def _parse_func_def(self, decorators: List[Any] = None, is_async: bool = False, is_test: bool = False, signature_only: bool = False) -> FuncDef:
         # 函数定义统一使用 def 关键字
         self._consume(TokenType.DEF)
         
@@ -881,13 +1037,14 @@ class Parser:
             name_token = self._consume(TokenType.IDENTIFIER)
         
         # [generic] 泛型参数（可选，在函数名之后）
+        # 统一使用尖括号 <>（与 LZ 语法对齐）
         generic_params = []
         generic_constraints = {}
-        if self._current().type == TokenType.LBRACKET:
+        if self._current().type == TokenType.LT:
             self._consume()
-            if self._current().type == TokenType.RBRACKET:
+            if self._current().type == TokenType.GT:
                 raise ValueError(f"Generic parameter list cannot be empty at {name_token.line}:{name_token.col}")
-            while self._current().type != TokenType.RBRACKET:
+            while self._current().type != TokenType.GT:
                 param_name = self._consume(TokenType.IDENTIFIER).value
                 generic_params.append(param_name)
                 # 检查是否有约束
@@ -906,34 +1063,148 @@ class Parser:
         if self._current().type == TokenType.ARROW:
             self._consume()
             return_type = self._parse_type()
-        self._expect(TokenType.COLON)
-        self._push_scope("func")
-        body = self._parse_block()
-        self._pop_scope()
+        
+        # 支持 LZ 风格的 = 函数体语法（兼容 : 语法）
+        # def f() = expr  -> 单行函数体
+        # def f() =       -> 块函数体（换行后）
+        # def f():        -> 原有块函数体语法
+        # signature_only 模式（trait/typeclass 方法签名）: 无函数体，body 为空
+        is_lz_style = False
+        body = []
+        if signature_only:
+            # 签名模式：检查是否有 body 标记（= 或 :），如果没有则 body 为空
+            if self._current().type == TokenType.ASSIGN:
+                is_lz_style = True
+                self._consume()
+                if self._current().type not in (TokenType.INDENT, TokenType.NEWLINE, TokenType.EOF, TokenType.DEDENT):
+                    expr = self._parse_expression()
+                    self._push_scope("func")
+                    body = [ReturnStmt(expr, expr.line, expr.col)]
+                    self._pop_scope()
+                elif self._current().type in (TokenType.INDENT, TokenType.NEWLINE):
+                    self._push_scope("func")
+                    body = self._parse_block()
+                    self._pop_scope()
+            elif self._current().type == TokenType.COLON:
+                self._consume()
+                self._push_scope("func")
+                body = self._parse_block()
+                self._pop_scope()
+            # 否则 body 保持为空（签名模式）
+        elif self._current().type == TokenType.ASSIGN:
+            is_lz_style = True
+            self._consume()
+            # 检查是否是单行函数体（= 后跟表达式）
+            # 如果当前 token 是 INDENT、NEWLINE 或 EOF，则是块函数体
+            # 否则是单行函数体（表达式）
+            if self._current().type not in (TokenType.INDENT, TokenType.NEWLINE, TokenType.EOF):
+                # 单行函数体：解析表达式作为 body
+                expr = self._parse_expression()
+                self._push_scope("func")
+                body = [ReturnStmt(expr, expr.line, expr.col)]
+                self._pop_scope()
+            else:
+                # 块函数体：解析缩进块
+                self._push_scope("func")
+                body = self._parse_block()
+                self._pop_scope()
+        else:
+            # 原有 : 语法
+            self._expect(TokenType.COLON)
+            self._push_scope("func")
+            body = self._parse_block()
+            self._pop_scope()
+        
         return FuncDef(name_token.value, params, return_type, body, generic_params, generic_constraints, decorators, is_async, params_checker, is_test, name_token.line, name_token.col)
 
     def _parse_params(self) -> List[Param]:
         params = []
         if self._current().type != TokenType.RPAREN:
             while True:
+                # 检查是否是 .. 分隔符
+                if self._current().type == TokenType.DOT_DOT:
+                    line = self._current().line
+                    col = self._current().col
+                    self._consume()
+                    
+                    # .. 可能带类型注解（用于 args/kwargs 类型约束）
+                    type_annotation = None
+                    if self._current().type == TokenType.COLON:
+                        self._consume()
+                        type_annotation = self._parse_type()
+                    
+                    params.append(Param(
+                        name="__dot_separator__", 
+                        type_annotation=type_annotation, 
+                        is_dot_separator=True,
+                        line=line, 
+                        col=col
+                    ))
+                    
+                    if self._current().type != TokenType.COMMA:
+                        # 检查是否是双 .. (.. ..)
+                        if self._current().type == TokenType.DOT_DOT:
+                            # 第二个 ..
+                            line2 = self._current().line
+                            col2 = self._current().col
+                            self._consume()
+                            type_annotation2 = None
+                            if self._current().type == TokenType.COLON:
+                                self._consume()
+                                type_annotation2 = self._parse_type()
+                            params.append(Param(
+                                name="__dot_separator__", 
+                                type_annotation=type_annotation2, 
+                                is_dot_separator=True,
+                                line=line2, 
+                                col=col2
+                            ))
+                        else:
+                            break
+                    else:
+                        self._consume()
+                    continue
+                
                 is_mut = False
                 is_ref = False
                 if self._current().type == TokenType.MUT:
                     is_mut = True
                     self._consume()
-                if self._current().type == TokenType.REF:
-                    is_ref = True
-                    self._consume()
+                
                 name_token = self._consume(TokenType.IDENTIFIER)
                 type_annotation = None
                 default_value = None
+                
                 if self._current().type == TokenType.COLON:
                     self._consume()
                     type_annotation = self._parse_type()
+                
+                # 检查是否是 List<T> 类型（安全收集模式）
+                # 如果类型是 List<T>，标记为可变位置参数
+                is_var_positional = False
+                if type_annotation:
+                    # 处理泛型类型：GenericType(name='List', args=[...])
+                    if isinstance(type_annotation, GenericType) and type_annotation.name == 'List':
+                        is_var_positional = True
+                    # 处理普通名称类型
+                    elif hasattr(type_annotation, 'id') and type_annotation.id == 'List':
+                        is_var_positional = True
+                
                 if self._current().type == TokenType.ASSIGN:
                     self._consume()
                     default_value = self._parse_expression()
-                params.append(Param(name_token.value, type_annotation, default_value, is_mut, is_ref, name_token.line, name_token.col))
+                
+                params.append(Param(
+                    name_token.value, 
+                    type_annotation, 
+                    default_value, 
+                    is_mut, 
+                    is_ref, 
+                    name_token.line, 
+                    name_token.col,
+                    is_var_positional=is_var_positional
+                ))
+                
                 if self._current().type != TokenType.COMMA:
                     break
                 self._consume()
@@ -955,9 +1226,6 @@ class Parser:
         elif self._current().type == TokenType.EXTENDS:
             self._consume()
             bases = self._parse_type_list()
-        if self._current().type == TokenType.IMPLEMENTS:
-            self._consume()
-            bases.extend(self._parse_type_list())
         self._expect(TokenType.COLON)
         self._push_scope("class")
         body = self._parse_block()
@@ -971,11 +1239,12 @@ class Parser:
         
         generic_params = []
         generic_constraints = {}
-        if self._current().type == TokenType.LBRACKET:
+        # 统一使用尖括号 <>（与 LZ 语法对齐）
+        if self._current().type == TokenType.LT:
             self._consume()
-            if self._current().type == TokenType.RBRACKET:
+            if self._current().type == TokenType.GT:
                 raise ValueError(f"Generic parameter list cannot be empty at {name_token.line}:{name_token.col}")
-            while self._current().type != TokenType.RBRACKET:
+            while self._current().type != TokenType.GT:
                 param_name = self._consume(TokenType.IDENTIFIER).value
                 generic_params.append(param_name)
                 # 检查是否有约束
@@ -1057,30 +1326,69 @@ class Parser:
         self._consume(TokenType.TRAIT)
         name_token = self._consume(TokenType.IDENTIFIER)
         self._require_module_level("trait", name_token)
+        
+        generic_params = []
+        if self._current().type == TokenType.LT:
+            self._consume()
+            while self._current().type != TokenType.GT:
+                param_name = self._consume(TokenType.IDENTIFIER).value
+                generic_params.append(param_name)
+                if self._current().type == TokenType.COMMA:
+                    self._consume()
+            self._consume()
+        
+        super_traits = []
+        if self._current().type == TokenType.EXTENDS:
+            self._consume()
+            super_traits = self._parse_type_list()
+        
         self._expect(TokenType.COLON)
-        methods = self._parse_block()
-        return TraitDef(name_token.value, methods, name_token.line, name_token.col)
+        methods = self._parse_block(signature_only=True)
+        return TraitDef(name_token.value, methods, generic_params, super_traits, name_token.line, name_token.col)
 
-    def _parse_exception_def(self) -> ExceptionDef:
-        """解析异常类型定义"""
-        self._consume(TokenType.EXCEPTION)
+    def _parse_typeclass_def(self) -> TypeClassDef:
+        """解析 TypeClass 定义
+        
+        语法:
+            typeclass TypeClassName:
+                def method_name(self) -> return_type
+        
+        支持泛型:
+            typeclass Container<T>:
+                def get(self) -> T
+                def put(self, value: T) -> None
+        """
+        self._consume(TokenType.TYPECLASS)
         name_token = self._consume(TokenType.IDENTIFIER)
-        self._require_module_level("exception", name_token)
+        self._require_module_level("typeclass", name_token)
+        
+        generic_params = []
+        generic_constraints = {}
+        
+        # 解析泛型参数
+        if self._current().type == TokenType.LT:
+            self._consume()
+            while self._current().type != TokenType.GT:
+                param_name = self._consume(TokenType.IDENTIFIER).value
+                generic_params.append(param_name)
+                
+                # 解析泛型约束 (如 T: BoundType 或 T: A & B)
+                if self._current().type == TokenType.COLON:
+                    self._consume()
+                    constraints = []
+                    while self._current().type not in (TokenType.COMMA, TokenType.GT):
+                        constraints.append(self._parse_type())
+                        if self._current().type == TokenType.AND:
+                            self._consume()
+                    generic_constraints[param_name] = constraints if len(constraints) > 1 else (constraints[0] if constraints else None)
+                
+                if self._current().type == TokenType.COMMA:
+                    self._consume()
+            self._consume()  # 消耗 GT
         
         self._expect(TokenType.COLON)
-        
-        # 检查是否有父类型（exception MyError: BaseException:）
-        base_type = None
-        if self._current().type not in (TokenType.NEWLINE, TokenType.INDENT):
-            # 尝试解析类型
-            base_type = self._parse_type()
-            # 如果解析了类型，后面应该还有一个冒号
-            if base_type:
-                self._expect(TokenType.COLON)
-        
-        fields = self._parse_block()
-        
-        return ExceptionDef(name_token.value, base_type, fields, name_token.line, name_token.col)
+        methods = self._parse_block(signature_only=True)
+        return TypeClassDef(name_token.value, methods, generic_params, generic_constraints, name_token.line, name_token.col)
 
     def _parse_suite_stmt(self) -> SuiteDef:
         """解析测试套件定义 - 参照 lang-zone/hermes 设计
@@ -1148,7 +1456,19 @@ class Parser:
 
     def _parse_let_stmt(self) -> LetStmt:
         self._consume(TokenType.LET)
-        name_token = self._consume(TokenType.IDENTIFIER)
+        
+        # 支持解构绑定：let (x, y) = ... 或 let [a, b] = ...
+        token = self._current()
+        if token.type in (TokenType.LPAREN, TokenType.LBRACKET, TokenType.LBRACE):
+            # 解析解构模式
+            target = self._parse_pattern()
+            line, col = token.line, token.col
+        else:
+            # 普通变量声明
+            name_token = self._consume(TokenType.IDENTIFIER)
+            target = name_token.value
+            line, col = name_token.line, name_token.col
+        
         type_annotation = None
         if self._current().type == TokenType.COLON:
             self._consume()
@@ -1166,10 +1486,10 @@ class Parser:
         else:
             self._expect(TokenType.NEWLINE)
         # let 声明的是不可变变量
-        return LetStmt(name_token.value, type_annotation, value, False, False, name_token.line, name_token.col)
+        return LetStmt(target, type_annotation, value, False, False, False, line, col)
 
-    def _parse_var_stmt(self) -> LetStmt:
-        self._consume(TokenType.VAR)
+    def _parse_mut_stmt(self) -> LetStmt:
+        self._consume(TokenType.MUT)
         name_token = self._consume(TokenType.IDENTIFIER)
         type_annotation = None
         if self._current().type == TokenType.COLON:
@@ -1187,7 +1507,27 @@ class Parser:
             pass
         else:
             self._expect(TokenType.NEWLINE)
-        return LetStmt(name_token.value, type_annotation, value, True, False, name_token.line, name_token.col)
+        return LetStmt(name_token.value, type_annotation, value, True, False, False, name_token.line, name_token.col)
+
+    def _parse_owned_stmt(self) -> LetStmt:
+        """解析 owned 声明 - LZ风格的所有权语义，使用弱引用实现"""
+        self._consume(TokenType.OWNED)
+        name_token = self._consume(TokenType.IDENTIFIER)
+        type_annotation = None
+        if self._current().type == TokenType.COLON:
+            self._consume()
+            type_annotation = self._parse_type()
+        value = None
+        if self._current().type == TokenType.ASSIGN:
+            self._consume()
+            value = self._parse_expression()
+        if self._current().type == TokenType.NEWLINE:
+            self._consume()
+        elif self._current().type == TokenType.DEDENT:
+            pass
+        else:
+            self._expect(TokenType.NEWLINE)
+        return LetStmt(name_token.value, type_annotation, value, True, False, is_owned=True, line=name_token.line, col=name_token.col)
 
     def _parse_const_stmt(self) -> LetStmt:
         """解析 const 声明 - 编译期常量，值在编译时展开"""
@@ -1204,7 +1544,7 @@ class Parser:
         if self._current().type == TokenType.NEWLINE:
             self._consume()
         # const 声明的是编译期常量（不可变）
-        return LetStmt(name_token.value, type_annotation, value, False, is_const=True, line=name_token.line, col=name_token.col)
+        return LetStmt(name_token.value, type_annotation, value, False, is_const=True, is_owned=False, line=name_token.line, col=name_token.col)
 
     def _parse_typed_var(self, mutable: bool = True) -> LetStmt:
         name_token = self._consume(TokenType.IDENTIFIER)
@@ -1216,7 +1556,7 @@ class Parser:
             value = self._parse_expression()
         if self._current().type == TokenType.NEWLINE:
             self._consume()
-        return LetStmt(name_token.value, type_annotation, value, mutable, is_const=False, line=name_token.line, col=name_token.col)
+        return LetStmt(name_token.value, type_annotation, value, mutable, is_const=False, is_owned=False, line=name_token.line, col=name_token.col)
 
     def _parse_return_stmt(self) -> ReturnStmt:
         self._consume(TokenType.RETURN)
@@ -1292,7 +1632,7 @@ class Parser:
         self._consume(TokenType.AT)
         
         # 特殊处理关键字作为装饰器
-        if self._current().type in (TokenType.NO_STRATEGY, TokenType.TEST):
+        if self._current().type == TokenType.TEST:
             name_token = self._consume()
             name = Name(name_token.value, name_token.line, name_token.col)
         else:
@@ -1345,6 +1685,20 @@ class Parser:
                 self._consume()
                 pattern = self._parse_pattern_with_or()
                 
+                # 支持隐式元组模式：case x, y:
+                if self._current().type == TokenType.COMMA:
+                    patterns = [pattern]
+                    while self._current().type == TokenType.COMMA:
+                        self._consume()
+                        patterns.append(self._parse_pattern_with_or())
+                    pattern = patterns
+                
+                # 支持 case pattern as name 语法
+                if self._current().type == TokenType.AS:
+                    self._consume()
+                    name_token = self._consume(TokenType.IDENTIFIER)
+                    pattern = AsPattern(pattern, name_token.value, name_token.line, name_token.col)
+                
                 # 支持 case pattern if condition 语法
                 if self._current().type == TokenType.IF:
                     self._consume()
@@ -1369,9 +1723,93 @@ class Parser:
             self._consume()
         return MatchStmt(subject, cases, orelse, self._current().line, self._current().col)
     
+    def _parse_match_expr(self) -> MatchExpr:
+        """解析 match 表达式（返回值形式）
+        
+        match 表达式使用与 match 语句类似的语法，但 case 体是单个表达式：
+        match x:
+            case 1: "one"
+            case 2: "two"
+            case _: "other"
+        """
+        self._consume(TokenType.MATCH)
+        subject = self._parse_expression()
+        self._expect(TokenType.COLON)
+        
+        # 匹配表达式必须在一行或缩进块中
+        # 处理 INDENT（如果有）和 NEWLINE
+        if self._current().type == TokenType.INDENT:
+            self._consume()
+        if self._current().type == TokenType.NEWLINE:
+            self._consume()
+        
+        cases = []
+        
+        while self._current().type not in (TokenType.DEDENT, TokenType.EOF, TokenType.RBRACE, TokenType.RPAREN, TokenType.RBRACKET):
+            if self._current().type == TokenType.NEWLINE:
+                self._consume()
+                continue
+            
+            if self._current().type == TokenType.CASE:
+                self._consume()
+                pattern = self._parse_pattern_with_or()
+                
+                # 支持 case pattern if condition 语法
+                if self._current().type == TokenType.IF:
+                    self._consume()
+                    condition = self._parse_expression()
+                    pattern = {"pattern": pattern, "condition": condition}
+                
+                self._expect(TokenType.COLON)
+                
+                # match 表达式的 case 体是单个表达式
+                # 简单处理：直接解析下一个 token，如果是字符串/数字等直接使用
+                # 如果是 CASE，则说明上一个 case 没有 body（语法错误，但我们允许空 body）
+                body = []
+                if self._current().type not in (TokenType.CASE, TokenType.DEDENT, TokenType.EOF):
+                    # 设置停止 token，让表达式解析器在 CASE、DEDENT、EOF 处停止
+                    old_stop_tokens = getattr(self, '_stop_tokens', None)
+                    self._stop_tokens = {TokenType.CASE, TokenType.DEDENT, TokenType.EOF, TokenType.RBRACKET}
+                    try:
+                        body_expr = self._parse_simple_expression()
+                        body = [body_expr]
+                    except StopExpressionParsing:
+                        # 遇到停止 token，说明上一个 case 已经结束
+                        pass
+                    finally:
+                        self._stop_tokens = old_stop_tokens
+                
+                # 如果后面是换行且下一个 token 是 CASE，继续解析
+                if self._current().type == TokenType.NEWLINE:
+                    self._consume()
+                
+                cases.append(CaseClause(pattern, body, self._current().line, self._current().col))
+            else:
+                break
+        
+        return MatchExpr(subject, cases, self._current().line, self._current().col)
+    
     def _parse_pattern(self) -> Any:
         """解析匹配模式"""
         token = self._current()
+        
+        # **rest 剩余绑定模式（顶层）
+        if token.type == TokenType.POW:
+            self._consume()
+            name_token = self._consume(TokenType.IDENTIFIER)
+            return DictPattern([], name_token.value, token.line, token.col)
+        
+        # 切片模式：.. 或 ..var
+        if token.type == TokenType.DOT_DOT:
+            self._consume()
+            line = token.line
+            col = token.col
+            # 检查后面是否跟变量名（..var）
+            if self._current().type == TokenType.IDENTIFIER:
+                name_token = self._consume()
+                return SlicePattern(name_token.value, line, col)
+            # 单独的 ..（忽略剩余元素）
+            return SlicePattern(None, line, col)
         
         # 通配符模式：_
         if token.type == TokenType.IDENTIFIER and token.value == "_":
@@ -1382,10 +1820,36 @@ class Parser:
         if token.type == TokenType.INTEGER:
             self._consume()
             # 使用 base 0 自动识别进制（0x=十六进制, 0b=二进制, 0o=八进制）
-            return Constant(int(token.value, 0), token.line, token.col)
+            lower = Constant(int(token.value, 0), token.line, token.col)
+            # 检查是否是范围模式：1..10
+            if self._current().type == TokenType.DOT_DOT:
+                self._consume()
+                upper_token = self._current()
+                if upper_token.type == TokenType.INTEGER:
+                    self._consume()
+                    upper = Constant(int(upper_token.value, 0), upper_token.line, upper_token.col)
+                    return RangePattern(lower, upper, token.line, token.col)
+                elif upper_token.type == TokenType.FLOAT:
+                    self._consume()
+                    upper = Constant(float(upper_token.value), upper_token.line, upper_token.col)
+                    return RangePattern(lower, upper, token.line, token.col)
+            return lower
         if token.type == TokenType.FLOAT:
             self._consume()
-            return Constant(float(token.value), token.line, token.col)
+            lower = Constant(float(token.value), token.line, token.col)
+            # 检查是否是范围模式：1.5..10.5
+            if self._current().type == TokenType.DOT_DOT:
+                self._consume()
+                upper_token = self._current()
+                if upper_token.type == TokenType.INTEGER:
+                    self._consume()
+                    upper = Constant(int(upper_token.value, 0), upper_token.line, upper_token.col)
+                    return RangePattern(lower, upper, token.line, token.col)
+                elif upper_token.type == TokenType.FLOAT:
+                    self._consume()
+                    upper = Constant(float(upper_token.value), upper_token.line, upper_token.col)
+                    return RangePattern(lower, upper, token.line, token.col)
+            return lower
         if token.type == TokenType.STRING:
             self._consume()
             # 保留字符串的前缀（如 f-string 的 'f', 'F', 'rf', 'fr'）
@@ -1393,18 +1857,19 @@ class Parser:
             if prefix:
                 return Constant(token.value, token.line, token.col, prefix=prefix)
             return Constant(token.value, token.line, token.col)
+        if token.type == TokenType.TRUE:
+            self._consume()
+            return Constant(True, token.line, token.col)
+        if token.type == TokenType.FALSE:
+            self._consume()
+            return Constant(False, token.line, token.col)
         
         # 变量模式：标识符（模式绑定）
         if token.type == TokenType.IDENTIFIER:
             self._consume()
             # 如果后面跟着 .，说明是限定名（如 Color.Red），解析为属性访问
             if self._current().type == TokenType.DOT:
-                attr_expr = Attribute(
-                    value=Name(token.value, token.line, token.col),
-                    attr=None,
-                    line=token.line,
-                    col=token.col
-                )
+                attr_expr = Name(token.value, token.line, token.col)
                 while self._current().type == TokenType.DOT:
                     self._consume()
                     attr_name = self._consume(TokenType.IDENTIFIER).value
@@ -1415,18 +1880,125 @@ class Parser:
                         col=token.col
                     )
                 return attr_expr
+            # 如果后面跟着 {，说明是结构体模式（如 Point { x, y }）
+            if self._current().type == TokenType.LBRACE:
+                self._consume()
+                fields = []
+                has_ellipsis = False
+                while self._current().type != TokenType.RBRACE:
+                    if self._current().type == TokenType.NEWLINE:
+                        self._consume()
+                        continue
+                    if self._current().type == TokenType.DOT_DOT:
+                        has_ellipsis = True
+                        self._consume()
+                        continue
+                    if self._current().type == TokenType.COMMA:
+                        self._consume()
+                        continue
+                    
+                    field_name_token = self._consume(TokenType.IDENTIFIER)
+                    field_name = field_name_token.value
+                    
+                    # 检查是否是 field: pattern 形式（绑定到自定义变量名）
+                    if self._current().type == TokenType.COLON:
+                        self._consume()
+                        pattern = self._parse_pattern()
+                    else:
+                        # 默认绑定到同名变量
+                        pattern = Pattern(field_name, field_name_token.line, field_name_token.col)
+                    
+                    fields.append((field_name, pattern))
+                    
+                    if self._current().type == TokenType.COMMA:
+                        self._consume()
+                
+                self._consume()  # 消费 RBRACE
+                return StructPattern(token.value, fields, has_ellipsis, token.line, token.col)
+            
+            # 检查是否是提取器模式：case TypeName(pattern1, pattern2, ...)
+            # 参考Scala的unapply提取器，如 Email(user, domain)
+            if self._current().type == TokenType.LPAREN:
+                self._consume()
+                args = []
+                while self._current().type != TokenType.RPAREN:
+                    if self._current().type == TokenType.COMMA:
+                        self._consume()
+                        continue
+                    if self._current().type == TokenType.NEWLINE:
+                        self._consume()
+                        continue
+                    # 解析提取器参数（模式）
+                    arg_pattern = self._parse_pattern_with_or()
+                    args.append(arg_pattern)
+                self._consume()  # 消费 RPAREN
+                return ExtractorPattern(token.value, args, token.line, token.col)
+            
+            # 检查是否是类型模式：case TypeName variable:
+            # 如果后面跟着另一个标识符，则是类型模式（如 int x, str s, Point p）
+            if self._current().type == TokenType.IDENTIFIER:
+                name_token = self._consume()
+                return TypePattern(token.value, name_token.value, token.line, token.col)
+            
             return Pattern(token.value, token.line, token.col)
+        
+        # 字典模式：{"key": value, "key2": value2, **rest}
+        if token.type == TokenType.LBRACE:
+            self._consume()
+            pairs = []
+            rest_name = None
+            while self._current().type != TokenType.RBRACE:
+                if self._current().type == TokenType.NEWLINE:
+                    self._consume()
+                    continue
+                if self._current().type == TokenType.COMMA:
+                    self._consume()
+                    continue
+                
+                # 检查是否是 **rest 剩余绑定
+                if self._current().type == TokenType.POW:
+                    self._consume()
+                    name_token = self._consume(TokenType.IDENTIFIER)
+                    rest_name = name_token.value
+                    continue
+                
+                # 解析键（字符串字面量或标识符）
+                key = self._parse_pattern()
+                
+                # 冒号分隔键值
+                self._expect(TokenType.COLON)
+                
+                # 解析值模式
+                value = self._parse_pattern()
+                
+                pairs.append((key, value))
+                
+                if self._current().type == TokenType.COMMA:
+                    self._consume()
+            
+            self._consume()  # 消费 RBRACE
+            return DictPattern(pairs, rest_name, token.line, token.col)
         
         # 列表模式：[pattern1, pattern2, ...]
         if token.type == TokenType.LBRACKET:
             self._consume()
             patterns = []
+            rest_name = None
             while self._current().type != TokenType.RBRACKET:
+                # 支持 *rest 剩余绑定
+                if self._current().type == TokenType.MUL:
+                    self._consume()
+                    rest_token = self._consume(TokenType.IDENTIFIER)
+                    rest_name = rest_token.value
+                    # 跳过逗号（如果有）
+                    if self._current().type == TokenType.COMMA:
+                        self._consume()
+                    continue
                 patterns.append(self._parse_pattern())
                 if self._current().type == TokenType.COMMA:
                     self._consume()
             self._consume()
-            return patterns
+            return ArrayPattern(patterns, rest_name, token.line, token.col)
         
         # 元组模式：(pattern1, pattern2, ...)
         if token.type == TokenType.LPAREN:
@@ -1644,24 +2216,107 @@ class Parser:
             self._consume()
             orelse = self._parse_block()
         else:
-            # 单行形式：else expr（隐式返回）
-            orelse = self._parse_expression()
+            # 单行形式：else expr 或 else break/continue/return
+            # 检查是否是控制流语句
+            if self._current().type == TokenType.BREAK:
+                self._consume()
+                orelse = BreakStmt(self._current().line, self._current().col)
+            elif self._current().type == TokenType.CONTINUE:
+                self._consume()
+                orelse = ContinueStmt(self._current().line, self._current().col)
+            elif self._current().type == TokenType.RETURN:
+                self._consume()
+                # return 可能有返回值
+                if self._current().type not in [TokenType.NEWLINE, TokenType.DEDENT, TokenType.EOF]:
+                    return_value = self._parse_expression()
+                    orelse = ReturnStmt(return_value, self._current().line, self._current().col)
+                else:
+                    orelse = ReturnStmt(None, self._current().line, self._current().col)
+            else:
+                # 普通表达式
+                orelse = self._parse_expression()
+            
             # 消费换行符
             if self._current().type == TokenType.NEWLINE:
                 self._consume()
         
         return GuardStmt(test, orelse, is_let, let_target, self._current().line, self._current().col)
 
-    def _parse_impl_stmt(self) -> ImplStmt:
+    def _parse_impl_stmt(self) -> Any:
+        """解析 impl 语句 - 支持 trait 实现和 TypeClass 实现
+        
+        语法:
+            # Trait 实现
+            impl TraitName for TypeName:
+                ...
+            
+            # TypeClass 实现
+            impl typeclass TypeClassName for TypeName:
+                ...
+        """
         self._consume(TokenType.IMPL)
+        
+        # 检查是否是 TypeClass 实现
+        if self._current().type == TokenType.TYPECLASS:
+            self._consume()  # 消耗 typeclass 关键字
+            typeclass_name_token = self._consume(TokenType.IDENTIFIER)
+            self._require_module_level("impl typeclass", typeclass_name_token)
+            
+            # 解析 TypeClass 泛型参数
+            generic_params = []
+            if self._current().type == TokenType.LT:
+                self._consume()
+                while self._current().type != TokenType.GT:
+                    param_name = self._consume(TokenType.IDENTIFIER).value
+                    generic_params.append(param_name)
+                    if self._current().type == TokenType.COMMA:
+                        self._consume()
+                self._consume()
+            
+            # 消耗 for 关键字
+            if self._current().type == TokenType.FOR_KW or self._current().type == TokenType.FOR:
+                self._consume()
+            
+            # 解析目标类型（支持泛型，如 Box<T>）
+            target_type_node = self._parse_type()
+            # 提取目标类型名称
+            if isinstance(target_type_node, Name):
+                target_type_name = target_type_node.id
+            elif hasattr(target_type_node, 'id'):
+                target_type_name = target_type_node.id
+            else:
+                target_type_name = str(target_type_node)
+            
+            self._expect(TokenType.COLON)
+            methods = self._parse_block()
+            return TypeClassImpl(
+                typeclass_name_token.value, 
+                target_type_name, 
+                methods, 
+                generic_params,
+                typeclass_name_token.line, 
+                typeclass_name_token.col
+            )
+        
+        # 普通的 trait 实现
         trait_name_token = self._consume(TokenType.IDENTIFIER)
         self._require_module_level("impl", trait_name_token)
+        
+        trait_generic_args = []
+        if self._current().type == TokenType.LT:
+            self._consume()
+            while self._current().type != TokenType.GT:
+                trait_generic_args.append(self._parse_type())
+                if self._current().type == TokenType.COMMA:
+                    self._consume()
+            self._consume()
+        
         if self._current().type == TokenType.FOR_KW or self._current().type == TokenType.FOR:
             self._consume()
         for_type = self._parse_type()
         self._expect(TokenType.COLON)
         methods = self._parse_block()
-        return ImplStmt(trait_name_token.value, for_type, methods, trait_name_token.line, trait_name_token.col)
+        return ImplStmt(trait_name_token.value, trait_generic_args, for_type, methods, trait_name_token.line, trait_name_token.col)
 
     def _parse_meta_block(self) -> MetaBlock:
         self._consume(TokenType.META)
@@ -1671,65 +2326,234 @@ class Parser:
         self._expect(TokenType.INDENT)
         while self._current().type not in (TokenType.DEDENT, TokenType.EOF):
             token = self._current()
-            if token.type == TokenType.CONSTRAINT:
-                body.append(self._parse_constraint())
-            elif token.type == TokenType.SUBTYPE_KW:
-                body.append(self._parse_subtype())
-            elif token.type == TokenType.DISPATCH:
-                body.append(self._parse_dispatch())
-            elif token.type == TokenType.ABSTRACT:
-                body.append(self._parse_abstract())
+            if token.type == TokenType.DUCK:
+                body.append(self._parse_duck_def())
             elif token.type == TokenType.NEWLINE:
                 self._consume()
+            elif token.type == TokenType.PASS:
+                self._consume()
+            elif token.type in (TokenType.IF, TokenType.CONST, TokenType.DEF,
+                               TokenType.LET, TokenType.MUT, TokenType.IDENTIFIER,
+                               TokenType.META, TokenType.SETUP, TokenType.TEARDOWN):
+                stmt = self._parse_statement()
+                if stmt:
+                    body.append(stmt)
             else:
-                raise ValueError(f"Unexpected token {token.type} in meta block at {token.line}:{token.col}")
+                raise ValueError(f"Unexpected token {token.type} in meta block at {token.line}:{token.col}.")
         if self._current().type == TokenType.DEDENT:
             self._consume()
         return MetaBlock(body, 0, 0)
 
-    def _parse_constraint(self) -> ConstraintDef:
-        self._consume(TokenType.CONSTRAINT)
+    def _parse_duck_def(self) -> DuckDef:
+        """解析 duck 约束定义
+        
+        语法示例:
+            duck Comparable:
+                a < b -> bool
+                a > b -> bool
+            
+            duck Container[T]:
+                add(self, item: T) -> None
+                len(self) -> int
+        """
+        self._consume(TokenType.DUCK)
         name_token = self._consume(TokenType.IDENTIFIER)
-        self._expect(TokenType.ASSIGN)
-        types = []
-        while True:
-            types.append(self._parse_type())
-            if self._current().type == TokenType.PIPE:
+
+        # 解析可选的类型参数 <T, U>（统一使用尖括号）
+        type_params = []
+        if self._current().type == TokenType.LT:
+            self._consume()  # <
+            if self._current().type == TokenType.GT:
+                raise ValueError(f"Generic parameter list cannot be empty at {name_token.line}:{name_token.col}")
+            type_params.append(self._consume(TokenType.IDENTIFIER).value)
+            while self._current().type == TokenType.COMMA:
                 self._consume()
+                type_params.append(self._consume(TokenType.IDENTIFIER).value)
+            self._expect(TokenType.GT)
+        
+        self._expect(TokenType.COLON)
+        self._expect(TokenType.INDENT)
+        
+        requirements = []
+        while self._current().type not in (TokenType.DEDENT, TokenType.EOF):
+            if self._current().type == TokenType.NEWLINE:
+                self._consume()
+                if self._current().type in (TokenType.DEDENT, TokenType.EOF):
+                    break
+                continue
+            requirements.append(self._parse_duck_requirement())
+        
+        if self._current().type == TokenType.DEDENT:
+            self._consume()
+        
+        return DuckDef(name_token.value, type_params, requirements, name_token.line, name_token.col)
+
+    def _parse_duck_requirement(self) -> DuckRequirement:
+        """解析单个约束项
+        
+        约束类型识别:
+        1. 操作符: a < b -> bool, a + b -> Self
+        2. 属性: name: str
+        3. 方法: len(self) -> int, add(self, item: T) -> None
+        4. 引用: Comparable (标识符)
+        """
+        first_token = self._current()
+
+        # 处理一元操作符: -a -> Self
+        if first_token.type == TokenType.MINUS:
+            self._consume()  # -
+            operand = self._consume(TokenType.IDENTIFIER).value
+            return_type = None
+            if self._current().type == TokenType.ARROW:
+                self._consume()
+                return_type = self._parse_simple_type()
+            if self._current().type == TokenType.NEWLINE:
+                self._consume()
+            return DuckRequirement("operator", "-", [operand], return_type,
+                                   is_unary=True,
+                                   line=first_token.line, col=first_token.col)
+
+        # 先读取第一个标识符
+        if first_token.type != TokenType.IDENTIFIER:
+            raise ValueError(f"Expected identifier in duck requirement at {first_token.line}:{first_token.col}")
+        
+        first_name = self._consume(TokenType.IDENTIFIER).value
+        
+        # 根据下一个 token 判断约束类型
+        next_token = self._current()
+        
+        if next_token.type == TokenType.LPAREN:
+            # 方法约束: method_name(params) -> return_type
+            self._consume()  # (
+            params = self._parse_duck_params()
+            self._expect(TokenType.RPAREN)
+            return_type = None
+            if self._current().type == TokenType.ARROW:
+                self._consume()
+                return_type = self._parse_simple_type()
+            if self._current().type == TokenType.NEWLINE:
+                self._consume()
+            return DuckRequirement("method", first_name, params, return_type, first_token.line, first_token.col)
+        
+        elif next_token.type == TokenType.COLON:
+            # 属性约束: name: type
+            self._consume()  # :
+            attr_type = self._parse_simple_type()
+            if self._current().type == TokenType.NEWLINE:
+                self._consume()
+            return DuckRequirement("attribute", first_name, [], attr_type, first_token.line, first_token.col)
+        
+        elif next_token.type == TokenType.LT:
+            # 可能有歧义：Container<T>（引用约束带泛型）或 a < b -> bool（操作符约束）
+            # 尝试先解析为引用约束的泛型参数
+            saved_pos = self.pos
+            try:
+                self._consume()  # <
+                generic_args = [self._consume(TokenType.IDENTIFIER).value]
+                while self._current().type == TokenType.COMMA:
+                    self._consume()
+                    generic_args.append(self._consume(TokenType.IDENTIFIER).value)
+                self._expect(TokenType.GT)
+                # 成功解析为引用约束带泛型参数
+                if self._current().type == TokenType.NEWLINE:
+                    self._consume()
+                return DuckRequirement("reference", first_name, [], None,
+                                       generic_args=generic_args,
+                                       line=first_token.line, col=first_token.col)
+            except (ValueError, Exception):
+                # 回退，按操作符约束解析
+                self.pos = saved_pos
+
+            # 操作符约束: a < b -> bool
+            op = self._consume().value
+            right_name = self._consume(TokenType.IDENTIFIER).value
+            return_type = None
+            if self._current().type == TokenType.ARROW:
+                self._consume()
+                return_type = self._parse_simple_type()
+            if self._current().type == TokenType.NEWLINE:
+                self._consume()
+            return DuckRequirement("operator", op, [first_name, right_name], return_type, first_token.line, first_token.col)
+
+        elif next_token.type in (TokenType.GT, TokenType.LE, TokenType.GE,
+                                TokenType.EQ, TokenType.NE, TokenType.PLUS, TokenType.MINUS,
+                                TokenType.MUL, TokenType.DIV):
+            # 其他操作符约束: a > b -> bool, a + b -> Self, -a -> Self
+            op = self._consume().value
+            right_name = ""
+            is_unary = False
+            # 处理 <=> 飞船操作符 (LE + GT)
+            if next_token.type == TokenType.LE and self._current().type == TokenType.GT:
+                self._consume()
+                op = "<=>"
+            if next_token.type == TokenType.MINUS and self._current().type != TokenType.IDENTIFIER:
+                is_unary = True
             else:
-                break
-        if self._current().type == TokenType.NEWLINE:
-            self._consume()
-        return ConstraintDef(name_token.value, types, name_token.line, name_token.col)
+                right_name = self._consume(TokenType.IDENTIFIER).value
+            return_type = None
+            if self._current().type == TokenType.ARROW:
+                self._consume()
+                return_type = self._parse_simple_type()
+            if self._current().type == TokenType.NEWLINE:
+                self._consume()
+            return DuckRequirement("operator", op, [first_name, right_name], return_type,
+                                   is_unary=is_unary,
+                                   line=first_token.line, col=first_token.col)
 
-    def _parse_subtype(self) -> SubtypeDecl:
-        self._consume(TokenType.SUBTYPE_KW)
-        subtype_token = self._consume(TokenType.IDENTIFIER)
-        self._expect(TokenType.SUBTYPE)
-        supertype_token = self._consume(TokenType.IDENTIFIER)
-        if self._current().type == TokenType.NEWLINE:
-            self._consume()
-        return SubtypeDecl(subtype_token.value, supertype_token.value, subtype_token.line, subtype_token.col)
+        elif next_token.type == TokenType.NEWLINE or next_token.type in (TokenType.DEDENT, TokenType.EOF):
+            # 引用约束: Comparable (单独一行的标识符)
+            if self._current().type == TokenType.NEWLINE:
+                self._consume()
+            return DuckRequirement("reference", first_name, [], None, first_token.line, first_token.col)
+        
+        else:
+            raise ValueError(f"Unexpected token {next_token.type} in duck requirement at {next_token.line}:{next_token.col}")
 
-    def _parse_dispatch(self) -> DispatchDecl:
-        self._consume(TokenType.DISPATCH)
-        func_name_token = self._consume(TokenType.IDENTIFIER)
-        self._expect(TokenType.LPAREN)
-        params = self._parse_params()
-        self._expect(TokenType.RPAREN)
-        return_type = None
-        if self._current().type == TokenType.ARROW:
+    def _parse_duck_params(self) -> List[str]:
+        """解析 duck 方法约束的参数列表
+        
+        格式: self, item: T, index: int
+        返回参数名列表
+        """
+        params = []
+        if self._current().type == TokenType.RPAREN:
+            return params
+        
+        params.append(self._consume(TokenType.IDENTIFIER).value)
+        # 可选的类型注解
+        if self._current().type == TokenType.COLON:
             self._consume()
-            return_type = self._parse_type()
-        if self._current().type == TokenType.NEWLINE:
+            self._parse_simple_type()  # 消费类型注解但不存储
+        
+        while self._current().type == TokenType.COMMA:
             self._consume()
-        return DispatchDecl(func_name_token.value, params, return_type, func_name_token.line, func_name_token.col)
+            param_name = self._consume(TokenType.IDENTIFIER).value
+            params.append(param_name)
+            if self._current().type == TokenType.COLON:
+                self._consume()
+                self._parse_simple_type()  # 消费类型注解
+        
+        return params
 
-    def _parse_abstract(self) -> ASTNode:
-        self._consume(TokenType.ABSTRACT)
-        name_token = self._consume(TokenType.IDENTIFIER)
-        self._expect(TokenType.NEWLINE)
-        return Name(name_token.value, name_token.line, name_token.col)
+    def _parse_simple_type(self) -> str:
+        """解析简单类型 (用于 duck 约束中的类型注解)
+
+        支持: str, int, bool, float, None, Self, Iterator, etc.
+        """
+        type_name = self._consume(TokenType.IDENTIFIER).value
+
+        # 可选的泛型参数 <T>（统一使用尖括号）
+        if self._current().type == TokenType.LT:
+            self._consume()
+            type_name += "<"
+            type_name += self._consume(TokenType.IDENTIFIER).value
+            while self._current().type == TokenType.COMMA:
+                self._consume()
+                type_name += ", " + self._consume(TokenType.IDENTIFIER).value
+            self._expect(TokenType.GT)
+            type_name += ">"
+
+        return type_name
 
     def _parse_import(self) -> Import:
         self._consume(TokenType.IMPORT)
@@ -1759,14 +2583,15 @@ class Parser:
         self._consume(TokenType.TYPE)
         name_token = self._consume(TokenType.IDENTIFIER)
         
-        # 支持泛型类型别名：type Maybe[T] = T | None
+        # 支持泛型类型别名：type Maybe<T> = T | None
+        # 统一使用尖括号 <>（与 LZ 语法对齐）
         generic_params = []
-        if self._current().type == TokenType.LBRACKET:
+        if self._current().type == TokenType.LT:
             self._consume()
             # 检查空泛型参数列表
-            if self._current().type == TokenType.RBRACKET:
+            if self._current().type == TokenType.GT:
                 raise ValueError(f"Generic parameter list cannot be empty at {name_token.line}:{name_token.col}")
-            while self._current().type != TokenType.RBRACKET:
+            while self._current().type != TokenType.GT:
                 generic_params.append(self._consume(TokenType.IDENTIFIER).value)
                 if self._current().type == TokenType.COMMA:
                     self._consume()
@@ -1797,6 +2622,16 @@ class Parser:
                     build_block = self._parse_build_block(BuildBlockExpr.BUILD_GEN)
                     # x = func *: block 转换为 x = func(build_block)
                     return Assign(value, Call(right_value, [build_block]), value.line, value.col)
+                # 处理赋值右边的索引构建块：x = container ^: key
+                elif self._current().type == TokenType.BUILD_INDEX:
+                    self._consume()
+                    # ^: 块体是单个表达式（key）
+                    key_expr = self._parse_single_expr_block()
+                    # x = container ^: key 转换为 x = container[key][-1] (取最后一个元素)
+                    inner_index = Subscript(right_value, key_expr, value.line, value.col)
+                    minus_one = Constant(-1, value.line, value.col)
+                    index = Subscript(inner_index, minus_one, value.line, value.col)
+                    return Assign(value, index, value.line, value.col)
                 # 消费换行符或INDENT（Lexer会在换行后输出INDENT）
                 if self._current().type in (TokenType.NEWLINE, TokenType.INDENT):
                     self._consume()
@@ -1830,19 +2665,35 @@ class Parser:
         # 处理调用构建块 ~:（独立语句形式）
         if self._current().type == TokenType.BUILD_CALL:
             self._consume()
+            build_block = self._parse_build_block(BuildBlockExpr.BUILD_CALL)
             if isinstance(value, Name):
-                build_block = self._parse_build_block(BuildBlockExpr.BUILD_CALL)
+                # value ~: block → Assign(value, block) (赋值语义)
                 return Assign(value, build_block, value.line, value.col)
             else:
-                raise ValueError(f"Left side of ~: must be a variable name at {self._current().line}:{self._current().col}")
+                # (value 已经是 Call 或其他表达式)
+                # 链式调用: value ~: block → Call(value, [block])
+                return ExprStmt(Call(value, [build_block]), value.line, value.col)
+        # 处理索引构建块 ^:（独立语句形式）
+        if self._current().type == TokenType.BUILD_INDEX:
+            self._consume()
+            if isinstance(value, (Name, Attribute, Call)):
+                # container ^: key → container[key][-1] (取最后一个元素)
+                key_expr = self._parse_single_expr_block()
+                inner_subscript = Subscript(value, key_expr, value.line, value.col)
+                minus_one = Constant(-1, value.line, value.col)
+                subscript = Subscript(inner_subscript, minus_one, value.line, value.col)
+                # 包装在 ExprStmt 中，确保代码生成器正确处理
+                return ExprStmt(subscript, value.line, value.col)
+            else:
+                raise ValueError(f"Left side of ^: must be a container expression at {self._current().line}:{self._current().col}")
         # 处理生成器构建块 *:（独立语句形式）
         if self._current().type == TokenType.BUILD_GEN:
             self._consume()
+            build_block = self._parse_build_block(BuildBlockExpr.BUILD_GEN)
             if isinstance(value, Name):
-                build_block = self._parse_build_block(BuildBlockExpr.BUILD_GEN)
                 return Assign(value, build_block, value.line, value.col)
             else:
-                raise ValueError(f"Left side of *: must be a variable name at {self._current().line}:{self._current().col}")
+                return ExprStmt(Call(value, [build_block]), value.line, value.col)
         if self._current().type == TokenType.NEWLINE:
             self._consume()
         return ExprStmt(value, value.line, value.col)
@@ -2039,8 +2890,16 @@ class Parser:
                 kwargs = []
                 if self._current().type != TokenType.RPAREN:
                     while True:
-                        # 检查是否是关键字参数
-                        if self._current().type == TokenType.IDENTIFIER and self._peek_ahead(1) == TokenType.ASSIGN:
+                        # 检查是否是命名参数语法糖: name~ (简写为 name=name)
+                        # 检查 IDENTIFIER + TILDE 序列
+                        if (self._current().type == TokenType.IDENTIFIER and
+                            self._peek_ahead(1) == TokenType.TILDE):
+                            # name~ 语法糖: 脱糖为 name=name
+                            kw_name = self._consume().value  # consume IDENTIFIER
+                            self._consume()  # consume TILDE
+                            kw_value = Name(kw_name, self._current().line, self._current().col)
+                            kwargs.append((kw_name, kw_value))
+                        elif self._current().type == TokenType.IDENTIFIER and self._peek_ahead(1) == TokenType.ASSIGN:
                             # 关键字参数：name=value
                             kw_name = self._consume().value
                             self._consume()  # consume ASSIGN
@@ -2072,20 +2931,16 @@ class Parser:
                 break
             elif self._current().type == TokenType.BUILD_CALL:
                 # 处理调用构建块 ~:
-                # 如果 func 是简单的 Name，让上层 _parse_expr_stmt 处理为赋值
-                if hasattr(func, 'kind') and func.kind == "Name":
-                    break
                 self._consume()
                 build_block = self._parse_build_block(BuildBlockExpr.BUILD_CALL)
-                return Call(func, [build_block])
+                func = Call(func, [build_block])
+                # 不立即返回，继续循环以支持链式调用和后续操作
             elif self._current().type == TokenType.BUILD_GEN:
-                # 处理生成器调用构建块 *:
-                # 如果 func 是简单的 Name，让上层 _parse_expr_stmt 处理为赋值
-                if hasattr(func, 'kind') and func.kind == "Name":
-                    break
+                # 处理生成器构建块 *:
                 self._consume()
                 build_block = self._parse_build_block(BuildBlockExpr.BUILD_GEN)
-                return Call(func, [build_block])
+                func = Call(func, [build_block])
+                # 不立即返回，继续循环以支持链式调用和后续操作
             elif self._current().type == TokenType.LBRACE and hasattr(func, 'kind') and func.kind == "Name":
                 # 处理结构体字面量 StructName {field: value, ...}
                 self._consume()
@@ -2108,6 +2963,9 @@ class Parser:
 
     def _parse_primary(self) -> ASTNode:
         token = self._current()
+        # match 表达式（返回值形式）
+        if token.type == TokenType.MATCH:
+            return self._parse_match_expr()
         if token.type == TokenType.INTEGER:
             self._consume()
             # 使用 base 0 自动识别进制（0x=十六进制, 0b=二进制, 0o=八进制）
@@ -2115,6 +2973,13 @@ class Parser:
         if token.type == TokenType.FLOAT:
             self._consume()
             return Constant(float(token.value), token.line, token.col)
+        # 布尔字面量
+        if token.type == TokenType.TRUE:
+            self._consume()
+            return Constant(True, token.line, token.col)
+        if token.type == TokenType.FALSE:
+            self._consume()
+            return Constant(False, token.line, token.col)
         # 支持 type(expr) 作为一等类型表达式
         if token.type == TokenType.TYPE:
             self._consume()
@@ -2217,6 +3082,20 @@ class Parser:
             # 空列表
             self._expect(TokenType.RBRACKET)
             return Constant([], token.line, token.col)
+        if token.type == TokenType.LBRACE:
+            self._consume()
+            pairs = []
+            if self._current().type != TokenType.RBRACE:
+                while True:
+                    key = self._parse_expression()
+                    self._expect(TokenType.COLON)
+                    value = self._parse_expression()
+                    pairs.append((key, value))
+                    if self._current().type != TokenType.COMMA:
+                        break
+                    self._consume()
+            self._expect(TokenType.RBRACE)
+            return DictLiteral(pairs, token.line, token.col)
         if token.type == TokenType.SPAWN:
             # 作为表达式使用：task = spawn func()
             self._consume()
@@ -2282,39 +3161,43 @@ class Parser:
                         self._consume()
                 self._expect(TokenType.RPAREN)
             return MacroCall(name, args, token.line, token.col)
+        # 如果设置了 _stop_tokens 且当前 token 在停止列表中，停止表达式解析
+        stop_tokens = getattr(self, '_stop_tokens', None)
+        if stop_tokens is not None and token.type in stop_tokens:
+            raise StopExpressionParsing()
         raise ValueError(f"Unexpected token {token.type} at {token.line}:{token.col}")
 
     def _parse_lambda(self) -> LambdaExpr:
         """解析 lambda 表达式
         
         语法：
-        lambda params: body
+        lambda params -> body
         
         参数可以有类型注解：
-        lambda x: int, y: str: x + len(y)
+        lambda x: int, y: str -> x + len(y)
         
         示例：
-        lambda x: x * 2
-        lambda x, y: x + y
-        lambda x: int: x * 2
+        lambda x -> x * 2
+        lambda x, y -> x + y
+        lambda x: int -> x * 2
         """
         self._consume(TokenType.LAMBDA)
         
         # 解析参数列表
         params = []
-        if self._current().type != TokenType.COLON:
+        if self._current().type != TokenType.ARROW:
             while True:
                 param = self._parse_param_for_lambda()
                 params.append(param)
                 
-                if self._current().type == TokenType.COLON:
+                if self._current().type == TokenType.ARROW:
                     break
                 elif self._current().type == TokenType.COMMA:
                     self._consume()
                 else:
                     break
         
-        self._expect(TokenType.COLON)
+        self._expect(TokenType.ARROW)
         
         # 解析lambda体（单个表达式）
         body = self._parse_expression()
@@ -2322,19 +3205,28 @@ class Parser:
         return LambdaExpr(params, body, self._current().line, self._current().col)
     
     def _parse_param_for_lambda(self) -> Param:
-        """解析lambda参数（不支持类型注解，避免与lambda体的COLON冲突）"""
+        """解析lambda参数，支持类型注解
+        
+        语法：
+        param_name
+        param_name: type
+        """
         is_mut = False
         is_ref = False
+        
         # 支持 TEST 作为参数名（test 被识别为关键字）
         if self._current().type == TokenType.TEST:
             name_token = self._consume(TokenType.TEST)
         else:
             name_token = self._consume(TokenType.IDENTIFIER)
         
-        # 不解析类型注解，因为 COLON 会与 lambda 体的 COLON 冲突
-        # lambda 参数的类型注解应该在函数签名中定义
+        # 检查是否有类型注解（使用 COLON）
+        type_annotation = None
+        if self._current().type == TokenType.COLON:
+            self._consume()  # 消耗 COLON
+            type_annotation = self._parse_type()
         
-        return Param(name_token.value, None, None, is_mut, is_ref, name_token.line, name_token.col)
+        return Param(name_token.value, type_annotation, None, is_mut, is_ref, name_token.line, name_token.col)
 
     def _parse_type(self) -> ASTNode:
         base = self._parse_type_element()
@@ -2364,14 +3256,23 @@ class Parser:
             self._expect(TokenType.RBRACKET)
             return VecType(element_type, size.value if hasattr(size, 'value') else 4, token.line, token.col)
         
+        if token.type == TokenType.MUL:
+            # *Type 指针类型 (C 风格)
+            self._consume()
+            base_type = self._parse_type_element()
+            return PointerType(base_type, token.line, token.col)
+        
         base = self._parse_primary()
         while self._current().type == TokenType.MUL:
             self._consume()
             base = PointerType(base, base.line, base.col)
-        if self._current().type == TokenType.LBRACKET:
-            self._consume()
+        
+        # 统一使用尖括号 <>（与 LZ 语法对齐）
+        if self._current().type == TokenType.LT:
+            self._consume()  # 消费 <
+
             args = []
-            if self._current().type != TokenType.RBRACKET:
+            if self._current().type != TokenType.GT:
                 while True:
                     args.append(self._parse_type())
                     if self._current().type == TokenType.COMMA:
@@ -2380,7 +3281,16 @@ class Parser:
                         break
             else:
                 raise ValueError(f"Generic type parameter list cannot be empty at {base.line}:{base.col}")
-            self._expect(TokenType.RBRACKET)
+
+            # 消费 >（处理嵌套泛型 >> 拆分）
+            if self._current().type == TokenType.RSHIFT:
+                rshift_token = self._consume()
+                synthetic_gt = Token(TokenType.GT, ">", rshift_token.line, rshift_token.col)
+                self.pos = max(0, self.pos - 1)
+                self.tokens[self.pos] = synthetic_gt
+            else:
+                self._expect(TokenType.GT)
+            
             if isinstance(base, Name):
                 return GenericType(base.id, args, base.line, base.col)
             else:
@@ -2397,7 +3307,7 @@ class Parser:
                 break
         return types
 
-    def _parse_block(self) -> List[ASTNode]:
+    def _parse_block(self, signature_only: bool = False) -> List[ASTNode]:
         self._expect(TokenType.INDENT)
         body = []
         while self._current().type not in (TokenType.DEDENT, TokenType.EOF):
@@ -2408,7 +3318,7 @@ class Parser:
             # 在调用_parse_statement之前再次检查是否遇到DEDENT
             if self._current().type in (TokenType.DEDENT, TokenType.EOF):
                 break
-            stmt = self._parse_statement()
+            stmt = self._parse_statement(signature_only=signature_only)
             if stmt:
                 body.append(stmt)
         if self._current().type == TokenType.DEDENT:
@@ -2425,6 +3335,35 @@ class Parser:
             self._consume()
         body = self._parse_block()
         return BuildBlockExpr(block_type, body, self._current().line, self._current().col)
+
+    def _parse_single_expr_block(self) -> ASTNode:
+        """解析索引构建块 ^: 中的单个表达式
+        
+        LZ 语法: container ^:
+                     key_expr
+                 
+        块体是一个表达式（key），用于索引访问。
+        
+        Token 序列: BUILD_INDEX → NEWLINE → INDENT → expr → DEDENT → NEWLINE
+        """
+        # 消费换行符
+        if self._current().type == TokenType.NEWLINE:
+            self._consume()
+        # 消费 INDENT（缩进增加）
+        if self._current().type == TokenType.INDENT:
+            self._consume()
+        # 消费可能跟随的 NEWLINE（词法分析器在 INDENT 后会生成 NEWLINE）
+        if self._current().type == TokenType.NEWLINE:
+            self._consume()
+        # 解析单个表达式
+        expr = self._parse_expression()
+        # 消费 DEDENT（取消缩进）
+        if self._current().type == TokenType.DEDENT:
+            self._consume()
+        # 消费后面的 NEWLINE（如果有的话）
+        while self._current().type == TokenType.NEWLINE:
+            self._consume()
+        return expr
 
     def _parse_identifier(self) -> str:
         token = self._consume(TokenType.IDENTIFIER)
@@ -2472,6 +3411,36 @@ class Parser:
         body = self._parse_block()
         
         return MacroDef(name, params, body, self._current().line, self._current().col)
+    
+    def _parse_comptime_func_def(self) -> ComptimeFuncDef:
+        """解析 comptime def 编译期函数定义
+        
+        语法：
+        comptime def func_name(params) -> return_type:
+            body...
+        
+        在编译时执行的函数，不生成运行时代码
+        """
+        self._consume(TokenType.COMPTIME)
+        self._consume(TokenType.DEF)
+        
+        name_token = self._consume(TokenType.IDENTIFIER)
+        
+        self._expect(TokenType.LPAREN)
+        params = self._parse_params()
+        self._expect(TokenType.RPAREN)
+        
+        return_type = None
+        if self._current().type == TokenType.ARROW:
+            self._consume()
+            return_type = self._parse_type()
+        
+        self._expect(TokenType.COLON)
+        self._push_scope("func")
+        body = self._parse_block()
+        self._pop_scope()
+        
+        return ComptimeFuncDef(name_token.value, params, return_type, body, name_token.line, name_token.col)
     
     def _parse_comptime_stmt(self, consume_token: bool = True, consume_newline: bool = True) -> ComptimeStmt:
         """解析 comptime 编译期求值语句
