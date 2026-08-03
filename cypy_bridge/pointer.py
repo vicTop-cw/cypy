@@ -2,12 +2,16 @@
 Cypy Bridge Pointer Operations
 
 提供与Cython等价的指针操作功能，包括指针解引用、地址运算等。
+同时提供LZ风格的所有权语义模拟，通过弱引用实现。
 """
 
 import ctypes
-from typing import Any, Type
+import weakref
+from typing import Any, Type, Optional, Generic, TypeVar
 from .core import BridgeError, PointerError
 from .types import _type_mapper
+
+T = TypeVar('T')
 
 
 class Pointer:
@@ -243,6 +247,172 @@ def is_null(pointer: Pointer) -> bool:
     return not pointer
 
 
+class Owned(Generic[T]):
+    """
+    LZ风格的所有权语义模拟类，通过弱引用实现。
+    
+    Owned<T> 表示拥有对对象的独占所有权。
+    当 Owned 对象被销毁时，其内部的弱引用不会阻止对象被垃圾回收。
+    支持所有权转移和借用操作。
+    
+    特性：
+    - 使用弱引用存储对象，不增加引用计数
+    - 支持所有权转移（transfer_ownership）
+    - 支持借用（borrow）- 创建临时引用而不转移所有权
+    - 当内部对象被销毁时，Owned 变为无效状态
+    """
+    
+    def __init__(self, value: T):
+        """创建一个 Owned 对象
+        
+        参数：
+            value: 要拥有所有权的对象
+        """
+        self._weak_ref = weakref.ref(value)
+        self._is_valid = True
+    
+    @property
+    def is_valid(self) -> bool:
+        """检查 Owned 是否仍然有效（内部对象是否还存在）"""
+        return self._is_valid and self._weak_ref() is not None
+    
+    def take(self) -> T:
+        """获取内部对象并使 Owned 失效
+        
+        返回：
+            内部对象
+            
+        注意：调用此方法后，Owned 对象变为无效状态，
+        不能再访问其内部对象。
+        """
+        if not self._is_valid:
+            raise PointerError("Cannot take from invalid Owned")
+        obj = self._weak_ref()
+        self._is_valid = False
+        return obj
+    
+    def borrow(self) -> 'Borrowed[T]':
+        """创建一个借用引用
+        
+        返回：
+            Borrowed 对象，提供对内部对象的临时访问
+            
+        注意：借用期间，原 Owned 对象仍然有效。
+        如果原对象被销毁，借用变为无效。
+        """
+        if not self.is_valid:
+            raise PointerError("Cannot borrow from invalid Owned")
+        return Borrowed(self._weak_ref)
+    
+    def transfer(self) -> 'Owned[T]':
+        """转移所有权到新的 Owned 对象
+        
+        返回：
+            新的 Owned 对象，原 Owned 变为无效
+            
+        注意：调用此方法后，原 Owned 对象变为无效状态。
+        """
+        if not self._is_valid:
+            raise PointerError("Cannot transfer from invalid Owned")
+        obj = self._weak_ref()
+        self._is_valid = False
+        return Owned(obj)
+    
+    def __bool__(self) -> bool:
+        """检查 Owned 是否有效且非空"""
+        return self.is_valid
+    
+    def __repr__(self) -> str:
+        if not self._is_valid:
+            return "Owned(INVALID)"
+        obj = self._weak_ref()
+        if obj is None:
+            return "Owned(NULL)"
+        return f"Owned({type(obj).__name__}, {repr(obj)})"
+
+
+class Borrowed(Generic[T]):
+    """
+    借用引用类，表示对 Owned 对象的临时引用。
+    
+    Borrowed<T> 不拥有对象的所有权，只是临时访问。
+    如果原 Owned 对象被销毁，Borrowed 变为无效状态。
+    """
+    
+    def __init__(self, weak_ref: weakref.ref):
+        """创建一个 Borrowed 对象
+        
+        参数：
+            weak_ref: 弱引用，指向原对象
+        """
+        self._weak_ref = weak_ref
+    
+    @property
+    def is_valid(self) -> bool:
+        """检查借用是否仍然有效"""
+        return self._weak_ref() is not None
+    
+    def deref(self) -> T:
+        """解引用获取对象
+        
+        返回：
+            借用的对象
+            
+        抛出：
+            PointerError: 如果借用已失效
+        """
+        obj = self._weak_ref()
+        if obj is None:
+            raise PointerError("Cannot dereference invalid Borrowed")
+        return obj
+    
+    def __bool__(self) -> bool:
+        """检查借用是否有效"""
+        return self.is_valid
+    
+    def __repr__(self) -> str:
+        if not self.is_valid:
+            return "Borrowed(INVALID)"
+        obj = self._weak_ref()
+        return f"Borrowed({type(obj).__name__})"
+
+
+def transfer_ownership(source: Owned[T]) -> Owned[T]:
+    """转移所有权
+    
+    参数：
+        source: 源 Owned 对象
+        
+    返回：
+        新的 Owned 对象，源对象变为无效
+    """
+    return source.transfer()
+
+
+def borrow(owned: Owned[T]) -> Borrowed[T]:
+    """创建借用引用
+    
+    参数：
+        owned: Owned 对象
+        
+    返回：
+        Borrowed 对象，提供临时访问
+    """
+    return owned.borrow()
+
+
+def own(value: T) -> Owned[T]:
+    """创建 Owned 对象的便捷函数
+    
+    参数：
+        value: 要拥有所有权的对象
+        
+    返回：
+        Owned 对象
+    """
+    return Owned(value)
+
+
 __all__ = [
     'Pointer',
     'ptr',
@@ -251,4 +421,9 @@ __all__ = [
     'cast_ptr',
     'null_ptr',
     'is_null',
+    'Owned',
+    'Borrowed',
+    'transfer_ownership',
+    'borrow',
+    'own',
 ]

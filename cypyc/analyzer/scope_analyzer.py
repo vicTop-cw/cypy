@@ -1,5 +1,5 @@
 from typing import Dict, List, Set, Any
-from cypyc.parser.parser import ASTNode, Module, FuncDef, ClassDef, StructDef, LetStmt, Name, ExceptionDef, GoStmt, SpawnStmt
+from cypyc.parser.parser import ASTNode, Module, FuncDef, ClassDef, StructDef, LetStmt, Name, ExceptionDef, GoStmt, SpawnStmt, ArrayPattern, SlicePattern, StructPattern, TypePattern, DictPattern, AsPattern, ExtractorPattern, RangePattern, DuckDef
 
 
 class Symbol:
@@ -218,6 +218,11 @@ class ScopeAnalyzer:
             self._visit(stmt)
         self.in_meta_block = False
 
+    def _visit_DuckDef(self, node: DuckDef) -> None:
+        """处理 duck 约束定义，注册到当前作用域"""
+        self.current_scope.add_symbol(node.name, "duck", node)
+        # duck 约束的类型参数和需求在类型检查阶段处理
+
     def _visit_ExceptionDef(self, node: ExceptionDef) -> None:
         """处理异常类型定义"""
         self.current_scope.add_symbol(node.name, "exception", node)
@@ -317,6 +322,32 @@ class ScopeAnalyzer:
         for stmt in node.body:
             self._visit(stmt)
 
+    def _visit_ListComp(self, node: Any) -> None:
+        """处理列表推导式，注册循环变量到作用域"""
+        # 处理每个生成器
+        for gen in node.generators:
+            if len(gen) >= 2:
+                target, iter_expr = gen[0], gen[1]
+                # 先访问迭代对象
+                self._visit(iter_expr)
+                
+                # 注册循环变量 - target可能是字符串或元组
+                if isinstance(target, str):
+                    self.current_scope.add_symbol(target, "variable", node)
+                elif isinstance(target, tuple):
+                    # 元组解构，每个元素都是变量名
+                    for name in target:
+                        if isinstance(name, str):
+                            self.current_scope.add_symbol(name, "variable", node)
+                
+                # 处理 if 条件列表
+                if len(gen) > 2 and gen[2]:
+                    for if_expr in gen[2]:
+                        self._visit(if_expr)
+        
+        # 访问元素表达式
+        self._visit(node.elt)
+
     def _visit_WhileStmt(self, node: Any) -> None:
         """处理 while 循环，访问条件和循环体"""
         # 先访问条件表达式
@@ -346,9 +377,13 @@ class ScopeAnalyzer:
                 # 如果 pattern 是字典（case pattern if condition），获取真正的 pattern
                 if isinstance(pattern, dict) and 'pattern' in pattern:
                     pattern = pattern['pattern']
-                # 如果 pattern 是列表（元组/列表模式），递归访问每个元素
+                # 如果 pattern 是列表（元组模式）或 ArrayPattern（数组模式），递归访问每个元素
                 if isinstance(pattern, list):
                     for p in pattern:
+                        if hasattr(p, 'kind'):
+                            self._visit(p)
+                elif isinstance(pattern, ArrayPattern):
+                    for p in pattern.elements:
                         if hasattr(p, 'kind'):
                             self._visit(p)
                 else:
@@ -380,6 +415,87 @@ class ScopeAnalyzer:
     def _visit_Pattern(self, node: Any) -> None:
         """处理模式绑定（match case 中的变量绑定）"""
         self.current_scope.add_symbol(node.name, "variable", node)
+
+    def _visit_SlicePattern(self, node: Any) -> None:
+        """处理切片模式（.. 或 ..var）"""
+        # 如果有变量名，创建变量绑定
+        if node.name is not None:
+            self.current_scope.add_symbol(node.name, "variable", node)
+
+    def _visit_ArrayPattern(self, node: Any) -> None:
+        """处理数组模式"""
+        for element in node.elements:
+            if hasattr(element, 'kind'):
+                self._visit(element)
+
+    def _visit_StructPattern(self, node: Any) -> None:
+        """处理结构体解构模式"""
+        for field_name, field_pattern in node.fields:
+            if hasattr(field_pattern, 'kind'):
+                self._visit(field_pattern)
+
+    def _visit_TypePattern(self, node: TypePattern) -> None:
+        """处理类型模式（case TypeName variable:）"""
+        # 将类型名称注册为已使用（用于检查类型是否定义）
+        self._visit(Name(node.type_name, node.line, node.col))
+        # 将绑定的变量注册到当前作用域
+        self.current_scope.add_symbol(node.name, "variable", node)
+
+    def _visit_AsPattern(self, node: AsPattern) -> None:
+        """处理 As 模式（case pattern as name:）"""
+        # 先访问内部模式（可能是列表 - 元组模式）
+        if isinstance(node.pattern, list):
+            for p in node.pattern:
+                if hasattr(p, 'kind'):
+                    self._visit(p)
+        elif isinstance(node.pattern, dict):
+            if 'pattern' in node.pattern:
+                self._visit(node.pattern['pattern'])
+            if 'or' in node.pattern:
+                for p in node.pattern['or']:
+                    if hasattr(p, 'kind'):
+                        self._visit(p)
+        elif hasattr(node.pattern, 'kind'):
+            self._visit(node.pattern)
+        # 将绑定的变量注册到当前作用域
+        self.current_scope.add_symbol(node.name, "variable", node)
+
+    def _visit_DictPattern(self, node: DictPattern) -> None:
+        """处理字典模式（case {"key": value, **rest}:）"""
+        # 访问每个键值对的模式
+        for key_pattern, value_pattern in node.pairs:
+            self._visit(key_pattern)
+            self._visit(value_pattern)
+        # 如果有剩余绑定，注册到当前作用域
+        if node.rest_name:
+            self.current_scope.add_symbol(node.rest_name, "variable", node)
+
+    def _visit_ExtractorPattern(self, node: ExtractorPattern) -> None:
+        """处理提取器模式（参考Scala的unapply，如 Email(user, domain)）
+        
+        优先级：__match_args__ < __unapply__ < __unapply_seq__ < __unwarp__
+        
+        提取器模式中的变量需要注册到当前作用域。
+        """
+        # 将类型名称注册为已使用
+        self._visit(Name(node.type_name, node.line, node.col))
+        
+        # 访问每个参数模式，注册变量绑定
+        for arg_pattern in node.args:
+            if isinstance(arg_pattern, dict):
+                if 'pattern' in arg_pattern:
+                    self._visit(arg_pattern['pattern'])
+                elif 'or' in arg_pattern:
+                    for p in arg_pattern['or']:
+                        self._visit(p)
+            elif hasattr(arg_pattern, 'kind'):
+                self._visit(arg_pattern)
+
+    def _visit_RangePattern(self, node: RangePattern) -> None:
+        """处理范围模式（case 1..10:）"""
+        # 访问上下界表达式
+        self._visit(node.lower)
+        self._visit(node.upper)
 
     def _visit_Subscript(self, node: Any) -> None:
         """处理下标访问"""

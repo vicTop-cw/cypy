@@ -287,6 +287,7 @@ class CypyHook:
             if not pyx_path:
                 result.errors.append("未生成.pyx文件")
                 return result
+            pyx_path = os.path.abspath(pyx_path)
             
             # Step 2: 生成setup.py
             self._log("Step 2: Generating setup.py...")
@@ -294,7 +295,7 @@ class CypyHook:
             setup_generator = SetupGenerator()
             module_name = os.path.basename(pyx_path).replace(".pyx", "")
             setup_generator.set_module_name(module_name)
-            setup_generator.add_source(pyx_path)
+            setup_generator.add_source(os.path.basename(pyx_path))
             setup_code = setup_generator.generate()
             
             setup_path = os.path.join(actual_output_dir, "setup.py")
@@ -309,9 +310,12 @@ class CypyHook:
             temp_build_dir = None
             
             try:
+                # 确保输出目录存在
+                os.makedirs(actual_output_dir, exist_ok=True)
+                
                 # 检查目标.pyd文件是否存在（可能被锁定）
                 target_pyd_name = f"{module_name}.cp{sys.version_info.major}{sys.version_info.minor}-win_amd64.pyd"
-                target_pyd_path = os.path.join(actual_output_dir, target_pyd_name)
+                target_pyd_path = os.path.abspath(os.path.join(actual_output_dir, target_pyd_name))
                 is_locked = os.path.exists(target_pyd_path)
                 
                 if is_locked:
@@ -324,7 +328,7 @@ class CypyHook:
                     os.chdir(temp_build_dir)
                     self._log(f"Using temp directory for compilation due to file lock: {temp_build_dir}")
                 else:
-                    os.chdir(actual_output_dir)
+                    os.chdir(os.path.abspath(actual_output_dir))
                 
                 compile_cmd = [
                     sys.executable, "setup.py", "build_ext", "--inplace"
@@ -345,22 +349,25 @@ class CypyHook:
 
                 # Step 4: 查找生成的.pyd文件
                 pyd_files = []
-                current_dir = os.getcwd()
-                for root, dirs, files in os.walk(current_dir):
+                search_dir = os.getcwd()
+                for root, dirs, files in os.walk(search_dir):
                     for file in files:
                         if file.endswith(".pyd") or file.endswith(".so"):
-                            pyd_files.append(os.path.join(root, file))
+                            pyd_files.append(os.path.abspath(os.path.join(root, file)))
                 
                 if pyd_files:
                     temp_pyd_path = pyd_files[0]
                     
                     if is_locked:
                         # 将新编译的.pyd文件复制到目标位置
-                        shutil.copy(temp_pyd_path, target_pyd_path)
+                        shutil.copy2(temp_pyd_path, target_pyd_path)
                         result.pyd_path = target_pyd_path
                         self._log(f"Copied new .pyd to target location")
                     else:
-                        result.pyd_path = temp_pyd_path
+                        # 确保 .pyd 文件在目标位置可用
+                        if not os.path.exists(target_pyd_path) and temp_pyd_path != target_pyd_path:
+                            shutil.copy2(temp_pyd_path, target_pyd_path)
+                        result.pyd_path = target_pyd_path
                     
                     result.steps.append(f".pyd文件已生成: {result.pyd_path}")
                 else:

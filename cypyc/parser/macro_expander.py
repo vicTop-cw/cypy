@@ -12,11 +12,14 @@
 2. 遍历 AST，找到所有宏调用
 3. 根据宏定义展开宏调用，生成新的 AST 节点
 4. 递归处理展开后的代码，支持嵌套宏展开
+5. 插值后的反引号代码块重新解析为真实 AST 节点
 """
 
 import re
 from typing import Dict, List, Any, Optional
 from .parser import ASTNode, Module, MacroDef, MacroCall, Name, Constant, BacktickBlock, ComptimeStmt
+from .lexer import Lexer
+from .parser import Parser
 
 
 class MacroExpander:
@@ -208,10 +211,37 @@ class MacroExpander:
         if prefix == 'f':
             content = self._substitute_interpolations(content, args, params)
         
-        # 返回替换后的反引号块（不重新解析，保持 BacktickBlock 类型）
-        # 测试期望展开后的 AST 中仍然包含 BacktickBlock 节点
-        from .parser import BacktickBlock
-        return BacktickBlock(content, prefix, block.line, block.col)
+        # 将插值后的代码重新解析为真实的 AST 节点
+        # 这样下游的作用域分析、类型检查和代码生成才能正确处理
+        return self._reparse_code(content, block.line, block.col)
+    
+    def _reparse_code(self, code: str, line: int = 1, col: int = 1) -> Any:
+        """将代码字符串重新解析为 AST 节点
+        
+        Args:
+            code: 代码字符串
+            line: 起始行号（用于错误报告）
+            col: 起始列号（用于错误报告）
+            
+        Returns:
+            解析后的 AST 节点或节点列表
+        """
+        try:
+            lexer = Lexer(code)
+            tokens = lexer.tokenize()
+            
+            parser = Parser(tokens)
+            module = parser.parse()
+            
+            # 如果只有一个语句，直接返回
+            if len(module.body) == 1:
+                return module.body[0]
+            
+            # 否则返回语句列表
+            return module.body
+        except Exception as e:
+            # 解析失败时返回原始代码块作为降级
+            return BacktickBlock(code, '', line, col)
     
     def _substitute_interpolations(self, content: str, args: List[Any], params: List[dict]) -> str:
         """替换反引号代码块中的插值表达式

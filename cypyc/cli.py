@@ -171,6 +171,38 @@ def parse_args(args: Optional[list] = None) -> argparse.Namespace:
         help="Use bridge compiler instead of Cython",
     )
 
+    # build 子命令 - 项目级编译
+    build_parser = subparsers.add_parser(
+        "build",
+        help="Build entire project with cross-module type inference",
+    )
+    build_parser.add_argument(
+        "source",
+        nargs="?",
+        help="Path to project directory (default: current directory)",
+        default=".",
+    )
+    build_parser.add_argument(
+        "-o", "--output",
+        help="Output directory",
+        default="output",
+    )
+    build_parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Verbose output",
+    )
+    build_parser.add_argument(
+        "--entry",
+        help="Entry module name (compile only this module and its dependencies)",
+        default=None,
+    )
+    build_parser.add_argument(
+        "--check-only",
+        action="store_true",
+        help="Only perform type checking, don't generate code",
+    )
+
     # run 子命令
     run_parser = subparsers.add_parser(
         "run",
@@ -374,6 +406,9 @@ def main() -> int:
 
     elif args.command == "watch":
         return run_watch(args)
+
+    elif args.command == "build":
+        return run_build(args)
 
     else:
         # 默认行为：兼容旧版CLI
@@ -644,6 +679,87 @@ def run_watch(args):
         import traceback
         traceback.print_exc()
         return 1
+
+
+def run_build(args):
+    """执行项目级编译命令"""
+    from cypyc.project import ProjectCompiler
+
+    print(colored(f"\n{'='*60}", Color.BOLD))
+    print(colored(f"  Cypy Project Build", Color.BOLD))
+    print(colored(f"{'='*60}\n", Color.BOLD))
+
+    project_root = os.path.abspath(args.source)
+    if not os.path.isdir(project_root):
+        print_error(f"Project directory not found: {project_root}")
+        return 1
+
+    print_step(f"Project root: {project_root}", 1, 5)
+    print_step(f"Output directory: {args.output}", 2, 5)
+
+    compiler = ProjectCompiler(
+        project_root=project_root,
+        output_dir=args.output,
+        verbose=args.verbose,
+    )
+
+    if args.check_only:
+        print_step("Mode: Type check only", 3, 5)
+        print_step("Discovering modules...", 4, 5)
+
+        modules = compiler.discover_modules()
+        print_info(f"Found {len(modules)} modules")
+
+        print_step("Parsing and type checking...", 5, 5)
+        compiler.parse_all_modules()
+        compiler.build_dependency_graph()
+        compiler.collect_type_exports()
+
+        # 类型检查所有模块
+        all_ok = True
+        for module_name in compiler._ast_cache:
+            ok, errors = compiler.type_check_module(module_name)
+            if ok:
+                print_success(f"{module_name}: type check passed")
+            else:
+                print_error(f"{module_name}: type check failed")
+                for err in errors:
+                    print(f"  {colored('-', Color.RED)} {err}")
+                all_ok = False
+
+        if all_ok:
+            print_success("All modules passed type checking")
+            return 0
+        else:
+            print_error("Type checking failed")
+            return 1
+    else:
+        print_step("Mode: Full build", 3, 5)
+        print_step("Building project...", 4, 5)
+
+        result = compiler.build(entry_point=args.entry)
+
+        # 打印结果
+        if result.cycles_detected:
+            print_warning(f"Circular dependencies detected: {result.cycles_detected}")
+
+        print_step(f"Compilation order: {' -> '.join(result.compilation_order)}", 5, 5)
+
+        if result.success:
+            print_success(f"Project built successfully in {result.total_time:.2f}s")
+            print(f"\n  Compiled modules ({len(result.compiled_modules)}):")
+            for mod in result.compiled_modules:
+                pyd = result.pyd_paths.get(mod, "unknown")
+                print(f"    {colored('✓', Color.GREEN)} {mod} -> {pyd}")
+            return 0
+        else:
+            print_error(f"Build failed in {result.total_time:.2f}s")
+            print(f"\n  Failed modules ({len(result.failed_modules)}):")
+            for mod in result.failed_modules:
+                print(f"    {colored('✗', Color.RED)} {mod}")
+                for err in result.errors.get(mod, []):
+                    print(f"      {err}")
+            return 1
 
 
 if __name__ == "__main__":

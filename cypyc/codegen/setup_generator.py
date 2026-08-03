@@ -1,4 +1,5 @@
 from typing import List, Dict
+import os
 
 
 class SetupGenerator:
@@ -15,7 +16,8 @@ class SetupGenerator:
         self.module_name = name
 
     def add_source(self, source: str) -> None:
-        self.sources.append(source)
+        basename = os.path.basename(source)
+        self.sources.append(basename)
 
     def add_include_dir(self, path: str) -> None:
         self.include_dirs.append(path)
