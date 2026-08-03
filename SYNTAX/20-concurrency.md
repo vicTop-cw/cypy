@@ -75,7 +75,7 @@ from concurrent.futures import ThreadPoolExecutor
 def process_item(item: int) -> int:
     return item * 2
 
-let items: list[int] = [1, 2, 3, 4, 5]
+let items: list<int> = [1, 2, 3, 4, 5]
 
 with ThreadPoolExecutor(max_workers=3) as executor:
     results = list(executor.map(process_item, items))
@@ -119,7 +119,7 @@ def compute_factorial(n: int) -> int:
         result *= i
     return result
 
-let numbers: list[int] = [5, 6, 7, 8]
+let numbers: list<int> = [5, 6, 7, 8]
 
 with ProcessPoolExecutor(max_workers=2) as executor:
     results = list(executor.map(compute_factorial, numbers))

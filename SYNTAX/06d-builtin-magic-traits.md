@@ -10,10 +10,10 @@ Cypy 通过魔法方法（magic methods）实现类型系统的核心功能，�
 
 ```python
 struct StringWrapper:
-    letue: str
-    
+    value: str
+
     def __implicit_copy__(self) -> StringWrapper:
-        return StringWrapper(letue=self.letue)
+        return StringWrapper(value=self.value)
 
 let s = StringWrapper("hello")
 let s2 = s  # 自动调用 __implicit_copy__
@@ -27,7 +27,7 @@ let s2 = s  # 自动调用 __implicit_copy__
 struct Celsius:
     temp: float
     
-    def __implicit_into__[Fahrenheit](self) -> Fahrenheit:
+    def __implicit_into__<Fahrenheit>(self) -> Fahrenheit:
         return Fahrenheit(temp=self.temp * 9/5 + 32)
 
 struct Fahrenheit:
@@ -209,7 +209,7 @@ print(repr(p))  # Point(x=1, y=2)
 
 ```python
 struct Stack:
-    items: list[int]
+    items: list<int>
     
     def __len__(self) -> int:
         return len(self.items)
@@ -224,7 +224,7 @@ print(len(stack))  # 3
 
 ```python
 struct Stack:
-    items: list[int]
+    items: list<int>
     
     def __getitem__(self, index: int) -> int:
         return self.items[index]
@@ -239,7 +239,7 @@ print(stack[0])  # 1
 
 ```python
 struct Stack:
-    items: list[int]
+    items: list<int>
     
     def __setitem__(self, index: int, value: int) -> None:
         self.items[index] = value

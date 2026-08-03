@@ -49,7 +49,7 @@ const GREETING: str = "Hello, Cypy!"
 - 值在编译期计算并展开
 - 生成到 `.pyd` 文件中，运行时不可修改
 - 适合真正的常量值（数学常数、配置参数等）
-- 使用 `cdef readonly` 确保不可修改
+- 使用 `let` 确保不可修改（`let` 声明的变量不可重新赋值）
 
 ## 选择建议
 
@@ -133,22 +133,6 @@ print(counter)  # 0
 - **Python 兼容性**：生成的代码与 Python 的全局变量行为一致
 - **类型注解支持**：全局变量可以有类型注解，也可以没有
 
-## 隐式变量
-
-### `implicit` 关键字
-
-```python
-# 声明隐式变量
-implicit ctx: Context = Context()
-
-# 在函数中使用隐式参数
-def process(data: str, implicit ctx: Context):
-    ctx.log(data)
-
-# 调用时无需传递隐式参数
-process("hello")  # ctx 自动传入
-```
-
 ## 变量命名规则
 
 ### 标识符规则
@@ -172,4 +156,3 @@ MAX_SIZE: int = 1000         # 常量大写
 | `x = value` | 可变 | 有注解用静态类型，无注解退化为 PyObject | 运行时赋值 |
 | `let x = value` | 不可变 | 有注解用静态类型，无注解退化为 PyObject | 运行时赋值（只读） |
 | `const x = value` | 编译期常量 | 有注解用静态类型，无注解退化为 PyObject | 编译期展开到.pyd |
-| `implicit x = value` | 可变 | 有注解用静态类型，无注解退化为 PyObject | 运行时赋值（隐式上下文） |

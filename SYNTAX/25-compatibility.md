@@ -39,7 +39,7 @@ import threading
 import asyncio
 
 # 使用标准库功能
-def read_config(path: str) -> dict[str, object]:
+def read_config(path: str) -> dict<str, object>:
     with open(path, "r") as f:
         return json.load(f)
 ```
@@ -159,6 +159,8 @@ struct Point:
 #     cdef int x
 #     cdef int y
 ```
+
+> **注意**：上述 `cdef` 是 Cython 生成代码中的语法，由代码生成层（codegen）自动处理，用于展示 Cypy 与 Cython 的对应关系。在 Cypy 源码中，变量声明应使用 `let`/`mut`/`const`，`cdef` 不再作为 Cypy 关键字出现，编译器在生成 Cython 代码时自动插入相应的 `cdef` 声明。
 
 ## 兼容性特性
 

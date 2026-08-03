@@ -14,7 +14,7 @@ num: int = "42" as int
 text: str = 100 as str
 
 # 容器类型转换
-items: list[int] = (1, 2, 3) as list[int]
+items: list<int> = (1, 2, 3) as list<int>
 ```
 
 ### 内置函数转换
@@ -64,7 +64,7 @@ struct SafeInt:
             return float(self.value)
         raise TypeError(f"Cannot cast SafeInt to {target_type}")
     
-    def __try_cast__(self, target_type: type) -> tuple[bool, object]:
+    def __try_cast__(self, target_type: type) -> tuple<bool, object>:
         if target_type == float:
             return (True, float(self.value))
         return (False, None)
@@ -106,10 +106,8 @@ let i: int = num  # 通过守卫策略转换
 
 ```python
 # 策略栈最多5层，防止递归转换
-@no_strategy
-def bypass_conversion(x: object) -> object:
-    # @no_strategy 装饰器阻止策略应用
-    return x
+# 超过深度限制将抛出 TypeError
+let result: int = convert_through_five_layers(value)
 ```
 
 ## 类型转换规则
@@ -120,4 +118,3 @@ def bypass_conversion(x: object) -> object:
 | **隐式转换** | 通过 `__implicit_copy__` 和 `__implicit_into__` |
 | **守卫策略** | `__guarded_pred__` 判断条件，`__guarded_action__` 执行转换 |
 | **策略栈** | 最多5层深度，防止递归滥用 |
-| **@no_strategy** | 装饰器阻止策略应用到函数 |

@@ -86,6 +86,78 @@ cypyc --compile input.cypy --profile release
 cypyc --clean
 ```
 
+## 项目级编译
+
+### 基本用法
+
+```bash
+# 编译整个项目（支持跨模块类型推断）
+cypyc build <project_directory>
+
+# 指定输出目录
+cypyc build <project_directory> -o output
+
+# 指定入口模块（只编译该模块及其依赖）
+cypyc build <project_directory> --entry main
+
+# 仅类型检查
+cypyc build <project_directory> --check-only
+
+# 详细输出
+cypyc build <project_directory> -v
+```
+
+### 编译流程
+
+项目级编译采用两阶段处理：
+
+1. **第一阶段 - 类型收集**
+   - 扫描所有 `.cypy` 文件
+   - 解析所有模块的 AST
+   - 构建模块依赖图
+   - 收集所有模块的导出类型到 `TypeRegistry`
+
+2. **第二阶段 - 类型检查与编译**
+   - 按拓扑顺序编译模块（依赖模块先编译）
+   - 使用 `TypeRegistry` 进行跨模块类型推断
+   - 生成 Cython 代码并编译为 `.pyd`
+
+### 示例项目结构
+
+```
+my_project/
+├── types.cypy      # 类型定义模块
+├── geometry.cypy   # 依赖 types
+├── main.cypy       # 依赖 types 和 geometry
+└── output/
+    ├── types/
+    │   └── types.pyd
+    ├── geometry/
+    │   └── geometry.pyd
+    └── main/
+        └── main.pyd
+```
+
+### 跨模块类型推断
+
+项目级编译支持跨模块类型推断：
+
+```python
+# types.cypy
+def create_point(x: float, y: float) -> tuple<float, float>:
+    return (x, y)
+
+# geometry.cypy
+from types import create_point
+
+def midpoint(p1: tuple<float, float>, p2: tuple<float, float>) -> tuple<float, float>:
+    mx = (p1[0] + p2[0]) / 2.0
+    my = (p1[1] + p2[1]) / 2.0
+    return create_point(mx, my)
+```
+
+编译时，`geometry.cypy` 能够正确识别 `create_point` 的类型签名。
+
 ## 缓存机制
 
 ### 缓存目录
@@ -152,7 +224,7 @@ cypyc --compile input.cypy --opt=3
 
 ```python
 # 使用静态类型注解提升性能
-def process(data: list[int]) -> int:
+def process(data: list<int>) -> int:
     let total: int = 0
     for num in data:
         total += num

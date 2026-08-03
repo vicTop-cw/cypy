@@ -88,11 +88,11 @@ result = repeat("Hello", times=5)
 
 ```python
 # 列表解包
-let nums: list[int] = [1, 2, 3]
+let nums: list<int> = [1, 2, 3]
 result = sum_all(*nums)  # 6
 
 # 字典解包
-let user_data: dict[str, object] = {"name": "Alice", "age": 30}
+let user_data: dict<str, object> = {"name": "Alice", "age": 30}
 result = format_user(**user_data)
 ```
 

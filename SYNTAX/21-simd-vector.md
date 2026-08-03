@@ -2,33 +2,37 @@
 
 ## 向量类型
 
-### 基本向量
+### 基本语法
+
+Cypy 支持 SIMD 向量类型，使用 `vec[T; N]` 语法声明：
 
 ```python
-# 2D向量
-let v2: Vec2[int] = Vec2(10, 20)
-let v2f: Vec2[float] = Vec2(3.14, 2.71)
-
-# 3D向量
-let v3: Vec3[int] = Vec3(1, 2, 3)
-let v3f: Vec3[float] = Vec3(1.0, 2.0, 3.0)
-
-# 4D向量
-let v4: Vec4[int] = Vec4(1, 2, 3, 4)
-let v4f: Vec4[float] = Vec4(1.0, 2.0, 3.0, 4.0)
+# 向量类型声明
+let v: vec[int; 4] = vec![1, 2, 3, 4]
+let vf: vec[float; 4] = vec![1.0, 2.0, 3.0, 4.0]
 ```
 
-### 向量构造
+### 向量字面量
 
 ```python
-# 从标量构造
-let v: Vec3[float] = Vec3.fill(5.0)  # (5.0, 5.0, 5.0)
+# 显式元素列表
+let v1: vec[int; 4] = vec![1, 2, 3, 4]
 
-# 从元组构造
-let v: Vec2[int] = Vec2.from_tuple((10, 20))
+# 重复值形式
+let zeros: vec[int; 4] = vec![0; 4]  # [0, 0, 0, 0]
+let ones: vec[float; 8] = vec![1.0; 8]  # 8个1.0
+```
 
-# 从列表构造
-let v: Vec3[float] = Vec3.from_list([1.0, 2.0, 3.0])
+### 映射到 Cython
+
+向量类型在 Cython 中映射为 Python `list`：
+
+```python
+# Cypy 源码
+let v: vec[int; 4] = vec![1, 2, 3, 4]
+
+# 生成的 Cython 代码
+let v: list = [1, 2, 3, 4]
 ```
 
 ## 向量运算

@@ -1,5 +1,70 @@
 # 构建块语法
 
+## 索引构建块 (^:)
+
+### 基本语法
+
+```python
+# 索引构建块 ^: 获取容器中指定键元素的最后一个元素
+# container ^: key → container[key][-1]
+def get_last_score(scores: dict, player: str) -> int:
+    result = scores ^:
+        player
+    return result
+```
+
+### 使用场景
+
+```python
+# 从列表中获取指定索引的最后一个元素
+def get_last_item(items: list, key: str) -> int:
+    result = items ^:
+        key
+    return result
+
+# 在循环中使用索引构建块
+def process_with_index(items: list, keys: list) -> list:
+    results: list = []
+    for key in keys:
+        value = items ^:
+            key
+        results.append(value)
+    return results
+```
+
+### 语法规则
+
+```python
+# ^: 符号后必须换行
+result = container ^:
+    key  # ✅ 正确：换行形式
+
+# result = container ^: key  # ❌ 错误：必须换行
+```
+
+## 去括号语法 (~:)
+
+### 基本语法
+
+```python
+# 去括号语法 ~: 简化函数调用的括号书写
+# expr ~: block → lambda: expr(block)
+def transform_list(data: list, func: callable) -> list:
+    return [func(item) for item in data]
+
+# 使用 ~: 语法
+result = transform_list(data) ~:
+    lambda x: x * 2
+```
+
+### 链式调用
+
+```python
+# ~: 支持链式调用
+result = transform_list(data) ~:
+    lambda x: x * 2
+```
+
 ## 变量构建块
 
 ### 基本语法
@@ -124,6 +189,8 @@ let data =:
 | **变量构建块** | `=:` 创建闭包，自动赋值最后表达式 |
 | **调用构建块** | `~:` 创建闭包，返回给调用者执行 |
 | **生成器构建块** | `*:` 创建生成器闭包，返回迭代器 |
+| **索引构建块** | `^:` 获取容器[key][-1]，取最后一个元素 |
+| **去括号语法** | `~:` 简化函数调用括号书写 |
 | **early return** | 支持在构建块内提前返回 |
 | **guard** | 支持守卫语句 |
 | **语法要求** | 符号前后必须有空格，后必须换行 |

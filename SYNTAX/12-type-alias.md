@@ -6,8 +6,8 @@
 
 ```python
 # 简单类型别名
-type Point = tuple[int, int]
-type Matrix = list[list[float]]
+type Point = tuple<int, int>
+type Matrix = list<list<float>>
 type Callback = Callable[[int], str]
 
 # 使用类型别名
@@ -25,13 +25,13 @@ def process(callback: Callback):
 
 ```python
 # 泛型类型别名
-type Result[T] = tuple[bool, T]
-type Optional[T] = T | None
-type ListOrSet[T] = list[T] | set[T]
+type Result<T> = tuple<bool, T>
+type Optional<T> = T | None
+type ListOrSet<T> = list<T> | set<T>
 
 # 使用泛型类型别名
-let success: Result[int] = (True, 42)
-let failure: Result[str] = (False, "error")
+let success: Result<int> = (True, 42)
+let failure: Result<str> = (False, "error")
 let maybe_num: Optional[int] = None
 let numbers: ListOrSet[int] = [1, 2, 3]
 ```
@@ -84,7 +84,7 @@ let cfg: Config = Configuration(debug=True, timeout=30)
 | 特性 | 说明 |
 |------|------|
 | **类型安全** | 类型别名是类型的别名，不是新类型，编译时完全等价 |
-| **泛型支持** | 支持泛型类型别名 `type Result[T]` |
+| **泛型支持** | 支持泛型类型别名 `type Result<T>` |
 | **编译时扩展** | 类型别名在代码生成阶段被扩展为真实类型 |
 | **可读性** | 提高代码可读性，用有意义的名称替代复杂类型 |
 | **重构友好** | 修改类型别名定义即可影响所有使用位置 |

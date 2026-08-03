@@ -36,7 +36,7 @@ class ValidationError(Exception):
         self.message = message
 
 # 使用自定义异常
-def validate_user(user: dict[str, object]):
+def validate_user(user: dict<str, object>):
     if "name" not in user:
         raise ValidationError(field="name", message="Name is required")
     if len(str(user["name"])) < 3:

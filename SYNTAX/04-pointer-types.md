@@ -20,7 +20,7 @@ let p: *Point = addr(Point(x=10, y=20))
 
 ```python
 # 数组指针
-let arr: list[int] = [1, 2, 3, 4, 5]
+let arr: list<int> = [1, 2, 3, 4, 5]
 let arr_ptr: *int = addr(arr[0])
 
 # 指针算术

@@ -12,9 +12,9 @@ is_active: bool = True
 score: float = 95.5
 
 # 容器类型注解
-numbers: list[int] = [1, 2, 3]
-mapping: dict[str, int] = {"a": 1, "b": 2}
-coordinates: tuple[int, int] = (10, 20)
+numbers: list<int> = [1, 2, 3]
+mapping: dict<str, int> = {"a": 1, "b": 2}
+coordinates: tuple<int, int> = (10, 20)
 
 # 无初始化的注解
 result: int
@@ -81,8 +81,8 @@ result = double("42")  # ❌ 编译时类型错误
 
 ```python
 # 简单类型别名
-type Point = tuple[int, int]
-type Matrix = list[list[float]]
+type Point = tuple<int, int>
+type Matrix = list<list<float>>
 
 # 使用类型别名
 origin: Point = (0, 0)
@@ -93,11 +93,11 @@ identity: Matrix = [[1, 0], [0, 1]]
 
 ```python
 # 泛型类型别名
-type Result[T] = tuple[bool, T]
+type Result<T> = tuple<bool, T>
 
 # 使用泛型类型别名
-success: Result[int] = (True, 42)
-failure: Result[str] = (False, "error")
+success: Result<int> = (True, 42)
+failure: Result<str> = (False, "error")
 ```
 
 ## 联合类型

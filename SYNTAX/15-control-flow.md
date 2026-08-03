@@ -30,7 +30,7 @@ print(status)  # "Adult"
 
 ```python
 # 基本 for 循环
-let numbers: list[int] = [1, 2, 3, 4, 5]
+let numbers: list<int> = [1, 2, 3, 4, 5]
 for num in numbers:
     print(num)
 
@@ -54,7 +54,7 @@ while count < 5:
 
 # while-else 语句
 let found: bool = False
-let items: list[int] = [1, 2, 3, 4, 5]
+let items: list<int> = [1, 2, 3, 4, 5]
 let target: int = 3
 let i: int = 0
 
@@ -152,7 +152,7 @@ match point:
 
 ```python
 # 函数返回
-def find_positive(numbers: list[int]) -> int:
+def find_positive(numbers: list<int>) -> int:
     for num in numbers:
         if num > 0:
             return num  # 提前返回

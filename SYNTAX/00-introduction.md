@@ -26,7 +26,7 @@ Cypy（Cython + Python Syntactic Sugar）是一种基于 Python 语法体系的�
                       ▼
 ┌─────────────────────────────────────────────┐
 │              Cython 代码 (.pyx)             │
-│  cdef/cpdef 函数 + 静态类型 + C 特性         │
+│  cdef/cpdef（兼容层）+ 静态类型 + C 特性         │
 └─────────────────────┬───────────────────────┘
                       │ Cython 编译器 (cythonize)
                       ▼

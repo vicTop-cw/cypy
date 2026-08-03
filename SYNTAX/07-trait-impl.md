@@ -16,12 +16,12 @@ trait Serializable:
 ### 带方法体的特质
 
 ```python
-trait Comparable[T]:
+trait Comparable<T>:
     def compare(self, other: T) -> int:
-    
+
     def equals(self, other: T) -> bool:
         return self.compare(other) == 0
-    
+
     def less_than(self, other: T) -> bool:
         return self.compare(other) < 0
 ```
@@ -37,7 +37,7 @@ trait Printable:
 struct Person:
     name: str
     age: int
-    
+
     def print(self) -> None:
         print(f"Person: {self.name}, {self.age}")
 
@@ -64,7 +64,7 @@ impl Printable for Point:
 ### 定义泛型特质
 
 ```python
-trait Container[T]:
+trait Container<T>:
     def add(self, item: T) -> None:
     def remove(self, item: T) -> bool:
     def contains(self, item: T) -> bool:
@@ -74,25 +74,25 @@ trait Container[T]:
 ### 实现泛型特质
 
 ```python
-struct List[T]:
-    items: list[T]
-    
+struct List<T>:
+    items: list<T>
+
     def add(self, item: T) -> None:
         self.items.append(item)
-    
+
     def remove(self, item: T) -> bool:
         if item in self.items:
             self.items.remove(item)
             return True
         return False
-    
+
     def contains(self, item: T) -> bool:
         return item in self.items
-    
+
     def size(self) -> int:
         return len(self.items)
 
-impl Container[T] for List[T]:
+impl Container<T> for List<T>:
     pass
 ```
 
@@ -113,10 +113,10 @@ trait ReadWrite extends Readable, Writable:
 
 struct File:
     path: str
-    
+
     def read(self) -> str:
         return f"Reading from {self.path}"
-    
+
     def write(self, data: str) -> None:
         print(f"Writing to {self.path}: {data}")
 
@@ -157,6 +157,6 @@ process("world", file)
 |------|------|
 | **接口定义** | 特质定义方法签名，不包含实现（除非提供默认实现） |
 | **实现分离** | 特质实现与结构体定义分离 |
-| **泛型支持** | 支持泛型特质 `trait Name[T]` |
+| **泛型支持** | 支持泛型特质 `trait Name<T>` |
 | **多重继承** | 特质可以继承多个其他特质 |
 | **类型抽象** | 特质可以作为类型注解，实现多态 |

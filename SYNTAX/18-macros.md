@@ -2,21 +2,41 @@
 
 ## 当前实现状态
 
-**注意**：当前版本的宏系统实现非常有限，以下描述的是实际实现的功能。
+Cypy 支持编译期宏定义和调用。宏在编译时展开，生成代码。
 
-### 宏定义
+### 宏定义语法
 
 ```python
-# 宏定义（参数为字符串列表）
-macro debug_log(message):
-    print(f"[DEBUG] {message}")
+# 基本宏定义
+macro name(ts: Tokens) -> Tokens =
+    body
+
+# 示例：定义一个简单的宏
+macro double(ts: Tokens) =
+    pass  # 宏体在编译期执行
 ```
 
 ### 宏调用
 
 ```python
-# 宏调用（带!后缀）
-debug_log!("Hello, World")
+# 宏调用（使用宏名）
+let result = double!(x)
+```
+
+### 代码生成
+
+宏定义生成的 Cython 代码：
+
+```python
+# Cypy 源码
+macro double(ts: Tokens) =
+    pass
+
+# 生成的 Cython 代码
+# macro double - compile-time macro
+def _macro_double(ts):
+    # Macro body evaluated at compile time
+    pass  # Macro expansion happens during parsing
 ```
 
 ### 反引号代码块插值

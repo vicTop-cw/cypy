@@ -85,7 +85,7 @@ struct SafeInt:
             return float(self.value)
         raise TypeError(f"Cannot cast to {target_type}")
     
-    def __try_cast__(self, target_type: type) -> tuple[bool, object]:
+    def __try_cast__(self, target_type: type) -> tuple<bool, object>:
         if target_type == float:
             return (True, float(self.value))
         return (False, None)

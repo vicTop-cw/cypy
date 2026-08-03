@@ -1,5 +1,52 @@
 # 语法糖
 
+## 命名参数语法糖 (name~)
+
+### 基本语法
+
+```python
+# name~ 语法糖：在函数调用中自动转换为 name=name 形式
+def make_point(x: float, y: float, z: float) -> tuple<float, float, float>:
+    return (x, y, z)
+
+# 传统写法
+return make_point(x=x, y=y, z=z)
+
+# 使用 name~ 语法糖
+return make_point(x~, y~, z~)
+```
+
+### 混合参数
+
+```python
+# 支持位置参数和命名参数糖混合使用
+def add_values(a: int, b: int, c: int) -> int:
+    return a + b + c
+
+x = 10
+y = 20
+c = 30
+
+# 前两个位置参数 + 后命名参数糖
+result = add_values(x, y, c~)  # 等价于 add_values(x, y, c=c)
+```
+
+### 方法调用
+
+```python
+# 方法调用中的 name~ 语法糖
+class Calculator:
+    def add(self, x: float) -> float:
+        self.value += x
+        return self.value
+
+calc = Calculator(0.0)
+value = 5.0
+
+# 方法调用中的 name~
+result = calc.add(value~)  # 等价于 calc.add(value=value)
+```
+
 ## 管道操作符
 
 ### 基本语法
@@ -31,7 +78,7 @@ def double(x: int) -> int:
 def square(x: int) -> int:
     return x ** 2
 
-def sum_list(items: list[int]) -> int:
+def sum_list(items: list<int>) -> int:
     return sum(items)
 
 # 管道链式处理
@@ -64,9 +111,57 @@ def process(input: str) -> str:
 
 ```python
 # guard 语句的 else 子句值会隐式返回
-def get_name(user: dict[str, object]) -> str:
+def get_name(user: dict<str, object>) -> str:
     guard "name" in user else "Unknown"
     return str(user["name"])
+```
+
+### 循环守卫
+
+```python
+# 在循环中使用 guard，失败时生成 break（退出循环）
+def process_items(items: list<int>) -> int:
+    count: int = 0
+    for item in items:
+        guard item > 0 else break  # 非正数则跳过
+        count = count + 1
+    return count
+
+# 在 while 循环中使用 guard
+def find_first_valid(values: list<int>) -> int:
+    i: int = 0
+    while i < len(values):
+        guard values[i] > 0 else break  # 遇到非正数停止
+        i = i + 1
+    return i
+
+# guard else continue：跳过当前迭代
+def sum_positive(items: list<int>) -> int:
+    total: int = 0
+    for item in items:
+        guard item > 0 else continue  # 非正数跳过
+        total = total + item
+    return total
+
+# guard else return：提前返回
+def validate_and_process(data: list<int>) -> str:
+    for value in data:
+        guard value >= 0 else return "Invalid data"  # 负数提前返回
+        guard value < 100 else break  # 超过100停止处理
+    return "ok"
+```
+
+### 嵌套循环中的守卫
+
+```python
+# 嵌套循环中的 guard 正确 break 当前层循环
+def find_pairs(items: list<int>) -> int:
+    count: int = 0
+    for i in range(len(items)):
+        for j in range(len(items)):
+            guard items[i] + items[j] < 100 else break  # 退出内层循环
+            count = count + 1
+    return count
 ```
 
 ## defer 语句
@@ -202,8 +297,10 @@ print(merged)  # {"verbose": False, "debug": True, "timeout": 30}
 
 | 特性 | 说明 |
 |------|------|
+| **命名参数糖 (name~)** | `name~` 自动转换为 `name=name` 关键字参数 |
 | **管道操作符** | `|>` 转换为嵌套函数调用 |
 | **守卫语句** | `guard cond else expr` 单行形式 |
+| **循环守卫** | 循环中 guard 失败生成 `break`/`continue`/`return` |
 | **defer** | 函数退出时自动执行清理代码 |
 | **match-case** | Python 3.10+ 模式匹配语法 |
 | **f-string** | 格式化字符串，支持表达式 |
