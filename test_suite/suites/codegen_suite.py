@@ -28,8 +28,8 @@ def main() -> int:
     with CompilerFixture() as fixture:
         cython_code = fixture.compile(source)
         Assert.is_not_none(cython_code, "Code generation failed")
-        # Cython 使用 cpdef 声明带类型注解的函数
-        Assert.contains(cython_code, "cpdef int add")
+        # 模块级函数以普通 def 生成，剥离类型注解（避免 cpdef 闭包问题）
+        Assert.contains(cython_code, "def add(a, b):")
 
 
 @codegen_suite.test("codegen_struct_def")

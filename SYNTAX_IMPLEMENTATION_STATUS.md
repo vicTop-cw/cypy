@@ -1,6 +1,6 @@
 # Cypy 语法实现状态报告
 
-**生成时间**: 2026-07-30
+**生成时间**: 2026-08-03
 **分析版本**: 当前主分支
 
 ---
@@ -54,6 +54,7 @@
 | `comptime` | ComptimeStmt/ComptimeFuncDef | ✅ |
 | `pointer/ref/mut` | PointerType/RefType | ✅ |
 | `is/in/and/or/not` | BinOp/UnaryOp | ✅ |
+| `global/nonlocal` | GlobalStmt/NonlocalStmt | ✅ |
 
 ### 2.2 类型系统（100% 完成）
 
@@ -76,11 +77,31 @@
 | 管道操作符 `|>` | PipeExpr | ✅ |
 | 宏定义 | MacroDef | ✅ |
 | 宏调用 | MacroCall | ✅ |
-| 类型约束 | ConstraintDef | ✅ |
-| 子类型声明 | SubtypeDecl | ✅ |
-| 分发声明 | DispatchDecl | ✅ |
 | 元块 | MetaBlock | ✅ |
 | 构建值表达式 | BuildValueExpr | ✅ |
+
+### 2.4 计划中（未实现）的特性
+
+| 特性 | AST 节点 | 状态 | 计划版本 |
+|------|----------|------|----------|
+| 类型约束 `constraint` | ConstraintDef | ❌ 未实现 | v0.5 |
+| 子类型声明 `subtype` | SubtypeDecl | ❌ 未实现 | v0.5 |
+| 分发声明 `dispatch` | DispatchDecl | ❌ 未实现 | v0.5 |
+
+> **注**：以上三个关键字在 lexer/parser/codegen 中均未实现。当前可用 `type` 别名（如 `type Numeric = int | float`）作为替代方案。
+
+### 2.5 v0.3-v0.4 新增功能
+
+| 特性 | AST 节点 | 状态 |
+|------|----------|------|
+| 三元条件表达式 `x if c else y` | IfExp | ✅ |
+| `*args`/`**kwargs` 可变参数 | Param (is_var_positional/is_var_keyword) | ✅ |
+| 整除运算符 `//` | BinOp | ✅ |
+| 复合赋值 `//=`、`%=` | AugAssign | ✅ |
+| `global`/`nonlocal` 声明 | GlobalStmt/NonlocalStmt | ✅ |
+| CythonGenerator `await` 支持 | AwaitExpr | ✅ |
+| CythonGenerator `async def` 支持 | FuncDef (is_async) | ✅ |
+| CythonGenerator BacktickBlock | BacktickBlock | ✅ |
 
 ---
 
@@ -92,8 +113,6 @@
 |-------|------|------|
 | `NEVER` | ⚠️ | 类型系统中使用，无独立 AST |
 | `FOR_KW` | ⚠️ | 已合并到 FOR |
-| `POINTER` | ❌ | 已移除（死代码） |
-| `NO_STRATEGY` | ⚠️ | 解析为修饰符，无独立 AST |
 | `OWNED` | ⚠️ | 解析为 LetStmt 修饰符 |
 | `BANG` | ⚠️ | 用于 vec! 和宏调用，无独立 AST |
 | `FAT_ARROW` | ⚠️ | 解析为表达式一部分 |
@@ -199,26 +218,20 @@
 | `vec![v1, v2]` | ✅ 已实现 | 保持 |
 | `A \| B` 联合类型 | ✅ 已实现（降级为 object） | 建议优化类型检查 |
 | `macro name(ts: Tokens) = body` | ✅ 已实现 | 保持 |
-| `constraint Name = A \| B` | ✅ 已实现 | 保持 |
-| `subtype A <: B` | ✅ 已实现 | 保持 |
-| `dispatch name(params) -> ret` | ✅ 已实现 | 保持 |
+| `constraint Name = A \| B` | ❌ 未实现 | lexer/parser 缺失，计划 v0.5（当前用 `type` 别名替代） |
+| `subtype A <: B` | ❌ 未实现 | lexer/parser 缺失，计划 v0.5 |
+| `dispatch name(params) -> ret` | ❌ 未实现 | lexer/parser 缺失，计划 v0.5 |
 | `x |> f(args)` | ✅ 已实现 | 保持 |
 
 ### 7.2 潜在移除/调整
 
-| 语法 | 问题 | 建议 |
-|------|------|------|
-| `cdef` 关键字 | 与 `def` 功能重叠 | 建议移除或合并 |
-| `POINTER` 关键字 | 死代码（parser 从未使用） | **已移除** |
-| `NO_STRATEGY` | 使用场景有限 | 可考虑移除 |
-| `FOR_KW` | 与 `FOR` 重复 | 建议合并 |
+所有潜在移除项（`cdef`、`POINTER`、`NO_STRATEGY`、`FOR_KW`）均已从语言中移除。
 
 ### 7.3 待完善功能
 
 | 功能 | 当前状态 | 建议 |
 |------|----------|------|
-| `BacktickBlock` | 解析支持，codegen 部分 | 完善代码生成 |
-| `MacroDef` 运行时执行 | 生成桩代码 | 实现编译期展开 |
+| `BacktickBlock` | ✅ 已完成（codegen 已实现） | 保持 |
 | `UnionType` 类型检查 | 降级为 object | 增强类型检查器 |
 
 ---
@@ -230,7 +243,7 @@
 | 文档 | 状态 | 需更新 |
 |------|------|--------|
 | `00-introduction.md` | ✅ 完整 | 无 |
-| `01-basic-types.md` | ✅ 完整 | 添加 Vec 类型 |
+| `01-basic-types.md` | ✅ 完整 | 无 |
 | `02-type-annotations.md` | ✅ 完整 | 无 |
 | `03-type-conversion.md` | ✅ 完整 | 无 |
 | `04-pointer-types.md` | ✅ 完整 | 无 |
@@ -241,19 +254,19 @@
 | `09-functions.md` | ✅ 完整 | 无 |
 | `10-variables.md` | ✅ 完整 | 无 |
 | `11-generics.md` | ✅ 完整 | 无 |
-| `12-operators.md` | ⚠️ 缺失 | 添加管道操作符 |
+| `12-operators.md` | ✅ 完整 | 无 |
 | `12-type-alias.md` | ✅ 完整 | 无 |
 | `13-build-blocks.md` | ✅ 完整 | 无 |
-| `14-syntax-sugar.md` | ⚠️ 缺失 | 添加命名参数糖 |
+| `14-syntax-sugar.md` | ✅ 完整 | 无 |
 | `15-control-flow.md` | ✅ 完整 | 无 |
 | `16-exceptions.md` | ✅ 完整 | 无 |
 | `17-pattern-matching.md` | ✅ 完整 | 无 |
-| `18-macros.md` | ⚠️ 缺失 | 添加宏语法说明 |
+| `18-macros.md` | ✅ 完整 | 无 |
 | `19-comptime.md` | ✅ 完整 | 无 |
 | `20-concurrency.md` | ✅ 完整 | 无 |
-| `21-simd-vector.md` | ⚠️ 缺失 | 添加 Vec 语法说明 |
+| `21-simd-vector.md` | ✅ 完整 | 无 |
 | `22-magic-properties.md` | ✅ 完整 | 无 |
-| `23-compilation.md` | ⚠️ 缺失 | 添加项目级编译说明 |
+| `23-compilation.md` | ✅ 完整 | 无 |
 | `24-incremental-hot-reload.md` | ✅ 完整 | 无 |
 | `25-compatibility.md` | ✅ 完整 | 无 |
 
@@ -279,16 +292,11 @@
 
 ### 9.2 优先级建议
 
-1. **高优先级**
-   - 更新 SYNTAX 文档（添加 Vec/Union/Macro/Constraint 说明）
-   - 补充新特性的单元测试
-   - 创建新特性的示例文件
-
 2. **中优先级**
    - 完善宏的编译期展开实现
    - 增强 UnionType 的类型检查
-   - 整理 `.trae/documents/` 中的历史规划
+   - 实现 `Callable[[T], R]` 函数类型标注
 
 3. **低优先级**
-   - 清理冗余关键字（`POINTER` 已移除，`cdef`/`NO_STRATEGY`/`FOR_KW` 保留）
    - 优化代码注释和内联文档
+   - 清理冗余关键字

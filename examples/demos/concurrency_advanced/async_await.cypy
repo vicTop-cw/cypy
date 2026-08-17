@@ -81,7 +81,7 @@ class FileResource:
     
     def __exit__(self, exc_type, exc_val, exc_tb):
         print("  [FileResource] 关闭资源")
-        if exc_type != None:
+        if exc_type is not None:
             print(f"  [FileResource] 异常: {exc_val}")
         return False
     

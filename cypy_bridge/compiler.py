@@ -1695,12 +1695,13 @@ class CCodeGenerator:
             self._write(f"    PyObject* _exc_value = NULL;")
             self._write(f"    PyObject* _exc_tb = NULL;")
             self._write(f"    PyErr_Fetch(&_exc_type, &_exc_value, &_exc_tb);")
-            self._write(f"    if (PyObject_IsInstance(_exc_value, {exc_type_str})) {{")
+            # 用异常类型匹配（PyErr_SetNone 时 value 为 NULL，不能对 value 做 IsInstance）
+            self._write(f"    if (PyErr_GivenExceptionMatches(_exc_type, {exc_type_str})) {{")
             self.indent += 1
             
             # 绑定异常变量
             if exc_name:
-                self._write(f"    PyObject* {exc_name} = _exc_value;")
+                self._write(f"    PyObject* {exc_name} = _exc_value ? _exc_value : Py_None;")
             
             # 生成 except 块
             for stmt in except_body:
@@ -3388,12 +3389,17 @@ class BridgeCacheManager:
         self._manifest_cache = {}
     
     def _get_base_cache_dir(self, source_path: str = None) -> str:
-        """获取基础缓存目录（__pycache__/cypy/）"""
+        """获取基础缓存目录（__pycache__/cypy/py{major}{minor}/）
+
+        按 Python 版本隔离缓存目录，避免不同解释器版本编译出的
+        .pyd 文件（cp311/cp313 等）互相污染导致导入失败。
+        """
         if source_path:
             source_dir = os.path.dirname(source_path)
         else:
             source_dir = os.getcwd()
-        cache_dir = os.path.join(source_dir, "__pycache__", "cypy")
+        py_tag = f"py{sys.version_info.major}{sys.version_info.minor}"
+        cache_dir = os.path.join(source_dir, "__pycache__", "cypy", py_tag)
         os.makedirs(cache_dir, exist_ok=True)
         return cache_dir
     
@@ -3596,12 +3602,13 @@ class BridgeCompiler:
             import setuptools
             from setuptools import Extension, setup
             
+            python_lib = f"python{sys.version_info.major}{sys.version_info.minor}"
             extension = Extension(
                 module_name,
                 sources=[c_file],
                 include_dirs=[os.path.join(sys.exec_prefix, 'include')],
                 library_dirs=[os.path.join(sys.exec_prefix, 'libs')],
-                libraries=['python313']
+                libraries=[python_lib]
             )
             
             # 创建setup.py内容
@@ -3618,7 +3625,7 @@ extension = Extension(
     sources=['{c_file_escaped}'],
     include_dirs=['{include_dir_escaped}'],
     library_dirs=['{lib_dir_escaped}'],
-    libraries=['python313']
+    libraries=['{python_lib}']
 )
 
 setup(
@@ -3637,12 +3644,18 @@ setup(
                 result = subprocess.run(
                     [sys.executable, setup_file, 'build_ext', '--inplace'],
                     capture_output=True,
-                    text=True,
                     cwd=tmp_dir
                 )
-                
+
+                # 以字节读取并容错解码，避免 Windows 下默认 GBK 编码导致的
+                # UnicodeDecodeError（编译器输出可能含非 GBK 字节）
+                raw_out = result.stdout if isinstance(result.stdout, bytes) else result.stdout.encode("utf-8", "replace")
+                raw_err = result.stderr if isinstance(result.stderr, bytes) else result.stderr.encode("utf-8", "replace")
+                stdout_text = raw_out.decode("utf-8", "replace")
+                stderr_text = raw_err.decode("utf-8", "replace")
+
                 if result.returncode != 0:
-                    error_msg = f"Compile error:\n{result.stdout}\n{result.stderr}"
+                    error_msg = f"Compile error:\n{stdout_text}\n{stderr_text}"
                     raise BridgeError(error_msg)
                 
                 # 找到生成的.pyd文件

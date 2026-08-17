@@ -1,0 +1,174 @@
+# 新功能演示
+# 本 DEMO 展示已实现和计划中的语法特性
+# 标记为 [PLANNED] 的功能尚未实现，仅作演示用途
+
+# ============================================================
+# 1. 三元条件表达式 [已实现 v0.3]
+# ============================================================
+
+def ternary_demo(x: int) -> str:
+    return "positive" if x > 0 else "non-positive"
+
+def ternary_nested(x: int) -> str:
+    return "positive" if x > 0 else ("zero" if x == 0 else "negative")
+
+
+# ============================================================
+# 2. *args/**kwargs 可变参数 [已实现 v0.3]
+# ============================================================
+
+def varargs_func(*args) -> int:
+    let count: int = 0
+    for a in args:
+        count += 1
+    return count
+
+def varkwargs_func(**kwargs) -> int:
+    let count: int = 0
+    for k in kwargs:
+        count += 1
+    return count
+
+def mixed_varargs(a: int, *args, **kwargs) -> int:
+    let count: int = a
+    for x in args:
+        count += x
+    for k in kwargs:
+        count += kwargs[k]
+    return count
+
+
+# ============================================================
+# 3. 整除运算符 // 和复合赋值 //=, %= [已实现 v0.3]
+# ============================================================
+
+def floordiv_demo(a: int, b: int) -> int:
+    return a // b
+
+def compound_assign_demo(x: int) -> int:
+    x //= 3
+    x %= 5
+    return x
+
+
+# ============================================================
+# 4. 切片语法 [已实现 v0.2]
+# ============================================================
+
+def slice_demo() -> list<int>:
+    let items: list<int> = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    let sliced: list<int> = items[2:6]
+    return sliced
+
+def slice_start_only() -> list<int>:
+    let items: list<int> = [0, 1, 2, 3, 4, 5]
+    return items[2:]
+
+def slice_end_only() -> list<int>:
+    let items: list<int> = [0, 1, 2, 3, 4, 5]
+    return items[:3]
+
+def slice_with_step() -> list<int>:
+    let items: list<int> = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    return items[::2]
+
+
+# ============================================================
+# 5. not in / not is 操作符 [已实现 v0.2]
+# ============================================================
+
+def not_in_demo(item: int, collection: list<int>) -> bool:
+    return item not in collection
+
+def not_in_string(sub: str, s: str) -> bool:
+    return sub not in s
+
+def not_is_demo(x, y) -> bool:
+    return x not is y
+
+
+# ============================================================
+# 6. Callable[[T], R] 函数类型 [PLANNED]
+# ============================================================
+
+# 计划语法:
+# def apply(f: Callable[[int], str], x: int) -> str:
+#     return f(x)
+# 当前替代方案:
+
+def apply_int_to_str(f, x: int) -> str:
+    return f(x)
+
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Features Demo ===")
+
+    print("--- ternary (implemented v0.3) ---")
+    print(f"ternary(5): {ternary_demo(5)}")
+    print(f"ternary(-3): {ternary_demo(-3)}")
+    print(f"ternary_nested(0): {ternary_nested(0)}")
+
+    print("--- varargs (implemented v0.3) ---")
+    print(f"varargs(1, 2, 3): {varargs_func(1, 2, 3)}")
+    print(f"varkwargs(a=1, b=2): {varkwargs_func(a=1, b=2)}")
+    print(f"mixed(1, 2, 3, x=4): {mixed_varargs(1, 2, 3, x=4)}")
+
+    print("--- floor div (implemented v0.3) ---")
+    print(f"7 // 2 = {floordiv_demo(7, 2)}")
+    print(f"compound(20): {compound_assign_demo(20)}")
+
+    print("--- slice (implemented v0.2) ---")
+    print(f"slice[2:6]: {slice_demo()}")
+    print(f"slice[2:]: {slice_start_only()}")
+    print(f"slice[:3]: {slice_end_only()}")
+    print(f"slice[::2]: {slice_with_step()}")
+
+    print("--- not in / not is (implemented v0.2) ---")
+    print(f"3 not in [1,2,3]: {not_in_demo(3, [1, 2, 3])}")
+    print(f"6 not in [1,2,3]: {not_in_demo(6, [1, 2, 3])}")
+    print(f"None not is None: {not_is_demo(None, None)}")
+
+
+suite UpcomingFeaturesTests:
+    test slice_middle:
+        assert slice_demo() == [2, 3, 4, 5]
+
+    test slice_start:
+        assert slice_start_only() == [2, 3, 4, 5]
+
+    test slice_end:
+        assert slice_end_only() == [0, 1, 2]
+
+    test slice_step:
+        assert slice_with_step() == [0, 2, 4, 6, 8]
+
+    test not_in_true:
+        assert not_in_demo(6, [1, 2, 3]) == True
+
+    test not_in_false:
+        assert not_in_demo(3, [1, 2, 3]) == False
+
+    test ternary_positive:
+        assert ternary_demo(5) == "positive"
+
+    test ternary_negative:
+        assert ternary_demo(-3) == "non-positive"
+
+    test ternary_zero:
+        assert ternary_nested(0) == "zero"
+
+    test floordiv:
+        assert floordiv_demo(7, 2) == 3
+
+    test compound_assign:
+        assert compound_assign_demo(20) == 2
+
+    test varargs:
+        assert varargs_func(1, 2, 3) == 3
+
+    test varkwargs:
+        assert varkwargs_func(a=1, b=2) == 2

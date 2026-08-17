@@ -1,0 +1,162 @@
+[
+  {
+    "name": "fibonacci_recursive",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "fibonacci() missing 1 required positional argument: 'n'",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "fibonacci_recursive",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.0,
+    "memory_kb": 0.0,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "factorial_loop",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "factorial() missing 1 required positional argument: 'n'",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "factorial_loop",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.0,
+    "memory_kb": 0.0,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "list_sum",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "list_sum() missing 1 required positional argument: 'n'",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "list_sum",
+    "implementation": "cypy",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "Type check errors: ['Type mismatch in assignment: expected int, got object at 6:9']",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "string_concat",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "string_concat() missing 1 required positional argument: 'n'",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "string_concat",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.0,
+    "memory_kb": 0.0,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "math_operations",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "math_operations() missing 1 required positional argument: 'n'",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "math_operations",
+    "implementation": "cypy",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "Type check errors: ['Type mismatch in binary operation: float + None at 0:0']",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "nested_loop",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "nested_loop() missing 1 required positional argument: 'n'",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "nested_loop",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.0,
+    "memory_kb": 0.0,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "struct_operations",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "struct_operations() missing 1 required positional argument: 'n'",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "struct_operations",
+    "implementation": "cypy",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "Type check errors: ['Type mismatch: expected list, got Point at 7:5']",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "generic_function",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "process_data() missing 1 required positional argument: 'n'",
+    "timestamp": "2026-07-30 09:27:25"
+  },
+  {
+    "name": "generic_function",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.0,
+    "memory_kb": 0.0,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:27:25"
+  }
+]

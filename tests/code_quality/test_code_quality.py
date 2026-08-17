@@ -585,8 +585,9 @@ class CodeQualityChecker:
         for pattern, description in dangerous_patterns:
             matches = re.findall(pattern, cython_code)
             if matches:
+                rule_id = "SEC-" + pattern[:20].replace("\\", "_")
                 issues.append(QualityIssue(
-                    rule_id=f"SEC-{pattern[:20].replace('\\', '_')}",
+                    rule_id=rule_id,
                     severity=SeverityLevel.HIGH,
                     category="security",
                     description=description,
@@ -605,8 +606,9 @@ class CodeQualityChecker:
         for pattern, description in sensitive_patterns:
             matches = re.findall(pattern, cython_code, re.IGNORECASE)
             if matches:
+                rule_id = "SEC-SENS-" + pattern[:20].replace("\\", "_")
                 issues.append(QualityIssue(
-                    rule_id=f"SEC-SENS-{pattern[:20].replace('\\', '_')}",
+                    rule_id=rule_id,
                     severity=SeverityLevel.CRITICAL,
                     category="security",
                     description=f"检测到{description}",

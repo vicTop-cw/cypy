@@ -1,16 +1,17 @@
+import re
 from typing import Any, List, Dict, Set
 from cypyc.parser.parser import (
     ASTNode, Module, FuncDef, LetStmt, ReturnStmt, IfStmt, ForStmt, WhileStmt,
     BinOp, UnaryOp, Call, Name, Constant, Attribute, Subscript, StructDef,
-    StructField, EnumDef, EnumVariant, DeferStmt, DerefExpr, PointerType,
+    StructField, EnumDef, EnumVariant, DeferStmt,     DerefExpr, PointerType, DictLiteral,
     RefType, GenericType, TraitDef, ImplStmt, MetaBlock, GuardStmt, ComptimeStmt,
     BuildBlockExpr, CastExpr, ClassDef, Import, FromImport, ExceptionDef,
     SuiteDef, TestDef, SetupStmt, TeardownStmt, ListComp, ComptimeFuncDef,
     ArrayPattern, SlicePattern, StructPattern, TypePattern, DictPattern, AsPattern,
     ExtractorPattern, RangePattern, UnionType, TypeClassDef, TypeClassImpl,
-    BreakStmt, ContinueStmt, VecType, VecLiteral, PipeExpr,
+    BreakStmt, ContinueStmt, GlobalStmt, NonlocalStmt, VecType, VecLiteral, PipeExpr,
     MacroDef, MacroCall, DuckDef, DuckRequirement,
-    BuildValueExpr
+    BuildValueExpr, IfExp, AwaitExpr, BacktickBlock
 )
 from cypyc.codegen.type_mapper import TypeMapper
 
@@ -26,6 +27,7 @@ class CythonGenerator:
         self.type_mapper = TypeMapper()
         self.in_cdef_context = False
         self.needs_libc_import = False  # 是否需要导入C标准库
+        self._current_local_types = {}  # 当前函数内局部变量/参数名 -> Cython 类型字符串
         self.source_file = source_file  # 源文件路径
         # 模块符号收集
         self.public_symbols = []
@@ -51,15 +53,61 @@ class CythonGenerator:
         self._loop_depth: int = 0
         # 宏定义注册表：{macro_name: MacroDef node}
         self.macro_defs: Dict[str, MacroDef] = {}
+        # 泛型参数集合（作为类型标识符时回退为 object）
+        self._generic_params: Set[str] = set()
+        # 提取器类型注册表：定义了 __unapply__/__unapply_seq__/__unwarp__/__match_args__ 的类型名
+        self._extractor_types: Set[str] = set()
+        # cdef struct 类型名（isinstance 不可用，类模式只做字段检查）
+        self._struct_types: Set[str] = set()
+        # 类/结构体字段顺序：{type_name: [field_name, ...]}（用于类模式位置参数绑定）
+        self._class_fields: Dict[str, list] = {}
+        # meta 块编译期命名空间（跨多个 meta 块共享，用于条件生成与常量求值）
+        self._meta_namespace: Dict[str, Any] = {}
+        # 构建块（=:）转换为嵌套函数时使用的唯一计数器
+        self._bb_counter: int = 0
+        # 被提升到函数开头的指针变量基类型映射：{name: base_type}
+        self._hoisted_pointer_types: Dict[str, str] = {}
+        # typing 构造类型在 cdef/cpdef 中不可用，回退为 object
+        _object_generics = ('Callable', 'Optional', 'Union', 'Any', 'Sequence',
+                            'Iterable', 'Mapping', 'MutableMapping', 'Set', 'FrozenSet',
+                            'Type', 'Generator', 'Coroutine', 'Awaitable', 'Deque', 'DefaultDict')
+        self._object_generic_types = set(_object_generics)
+        for _t in _object_generics:
+            self.type_mapper.add_custom_type(_t, 'object', 'object')
 
     def generate(self, node: ASTNode) -> str:
         self.output = []
+        # 编译期宏展开：将反引号宏（@name!(...)）在代码生成前展开为真实语句。
+        # 仅在 AST 含宏相关节点时执行，普通代码不受影响；字符串模板宏
+        # （macro name = f"..."）不含 BacktickBlock，会被正常保留并继续由
+        # 本生成器的 _expand_macro 处理。
+        if self._contains_macro_nodes(node):
+            from cypyc.parser.macro_expander import expand_macros
+            node = expand_macros(node)
         # 首先收集所有类型别名定义
         self._collect_type_aliases(node)
         # 然后检测是否需要C库导入
         self._detect_libc_usage(node)
         self._visit(node)
         return "\n".join(self.output)
+
+    @staticmethod
+    def _contains_macro_nodes(node: ASTNode) -> bool:
+        """快速判断 AST 是否包含需要在代码生成前展开的宏节点"""
+        stack = [node]
+        while stack:
+            cur = stack.pop()
+            if not isinstance(cur, ASTNode):
+                continue
+            kind = getattr(cur, 'kind', None)
+            if kind in ('MacroDef', 'MacroCall', 'BacktickBlock', 'ComptimeStmt'):
+                return True
+            for attr in cur.__dict__.values():
+                if isinstance(attr, ASTNode):
+                    stack.append(attr)
+                elif isinstance(attr, list):
+                    stack.extend(a for a in attr if isinstance(a, ASTNode))
+        return False
     
     def _collect_type_aliases(self, node: ASTNode) -> None:
         """收集所有类型别名定义到注册表"""
@@ -121,6 +169,15 @@ class CythonGenerator:
         """检查单个节点是否包含闭包"""
         if node is None:
             return False
+        # 嵌套的函数定义（FuncDef / AsyncFuncDef）会形成闭包，Cython 的 cpdef/cdef 不支持
+        if getattr(node, 'kind', None) in ('FuncDef', 'AsyncFuncDef'):
+            return True
+        # lambda 表达式也是闭包，所在函数必须使用 def（cpdef 不支持闭包）
+        if getattr(node, 'kind', None) == 'LambdaExpr':
+            return True
+        # spawn / go 块会生成嵌套函数（闭包），所在函数也必须使用 def
+        if getattr(node, 'kind', None) in ('SpawnStmt', 'GoStmt'):
+            return True
         if hasattr(node, 'kind') and node.kind == 'BuildBlockExpr':
             return self._build_block_generates_closure(node)
         # 检查函数调用中的参数
@@ -212,6 +269,18 @@ class CythonGenerator:
             self.output.append("    " * self.indent + text)
 
     def _visit_Module(self, node: Module) -> None:
+        # Cython 编译指令必须位于文件最顶部（在任何语句/文档字符串之前），否则会被忽略
+        self._write("# cython: language_level=3")
+        self._write("# cython: boundscheck=False")
+        self._write("# cython: wraparound=False")
+        # 注意：不使用 cdivision=True。Cypy 语义与 Python 一致，整数除零应触发
+        # ZeroDivisionError 而非编译成 C 常量除零（会导致 C2124 编译错误）。
+        self._write("# cython: initializedcheck=False")
+        self._write("# cython: nonecheck=False")
+        # 抑制某些仅作警告处理的诊断（如 match 后的不可达代码），避免被当作错误中断编译
+        self._write("# cython: warn.unreachable=False")
+        self._write("# cython: warn.undeclared=False")
+        self._write("")
         self._write("# Generated by Cypy compiler")
         self._write('"""')
         self._write(f"Cython module compiled from Cypy source")
@@ -219,17 +288,16 @@ class CythonGenerator:
         self._write('"""')
         self._write("")
         
-        # Cython 编译优化指令
-        self._write("# cython: language_level=3")
-        self._write("# cython: boundscheck=False")
-        self._write("# cython: wraparound=False")
-        self._write("# cython: cdivision=True")
-        self._write("# cython: initializedcheck=False")
-        self._write("# cython: nonecheck=False")
-        self._write("")
-        
         # 导入 cython 模块用于优化装饰器
         self._write("import cython")
+        # 指针相关 C 函数（malloc/free/sizeof 等），按需可用
+        self._write("from libc.stdlib cimport malloc, free")
+        self._write("from libc.string cimport memset")
+        self._write("")
+        # 元编程内置常量（供 meta 块/__generated_at__ 等使用）
+        self._write("import datetime as _cypy_dt")
+        self._write("__generated_at__ = _cypy_dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')")
+        self._write("__module_version__ = '1.0.0'")
         self._write("")
         
         # 添加C标准库导入
@@ -263,12 +331,35 @@ class CythonGenerator:
                     self.private_symbols.append(name)
                 else:
                     self.public_symbols.append(name)
+                self._struct_types.add(name)
+                # 检测提取器类型并收集字段顺序
+                fields = []
+                for m in (getattr(stmt, 'body', None) or []):
+                    mname = getattr(m, 'name', None)
+                    if mname in ('__unapply__', '__unapply_seq__', '__unwarp__', '__match_args__'):
+                        self._extractor_types.add(name)
+                        break
+                    if mname:
+                        fields.append(mname)
+                if fields:
+                    self._class_fields[name] = fields
             elif isinstance(stmt, ClassDef):
                 name = stmt.name
                 if name.startswith('_'):
                     self.private_symbols.append(name)
                 else:
                     self.public_symbols.append(name)
+                # 检测是否为提取器类型（定义了 __unapply__ 等方法）并收集字段顺序
+                fields = []
+                for m in (getattr(stmt, 'body', None) or []):
+                    mname = getattr(m, 'name', None)
+                    if mname in ('__unapply__', '__unapply_seq__', '__unwarp__', '__match_args__'):
+                        self._extractor_types.add(name)
+                        break
+                    if mname:
+                        fields.append(mname)
+                if fields:
+                    self._class_fields[name] = fields
             elif isinstance(stmt, EnumDef):
                 name = stmt.name
                 self.enum_defs[name] = stmt  # 注册枚举类型
@@ -404,15 +495,15 @@ class CythonGenerator:
             if getattr(param, 'is_dot_separator', False):
                 continue
             
-            # 处理 List<T> 安全收集模式（可变位置参数）
+            # 处理 *args（可变位置参数）
             if getattr(param, 'is_var_positional', False):
-                params.append("*args")
+                params.append(f"*{param.name}")
                 added_var_positional = True
                 continue
             
-            # 处理 **kwargs
+            # 处理 **kwargs（可变关键字参数）
             if getattr(param, 'is_var_keyword', False):
-                params.append("**kwargs")
+                params.append(f"**{param.name}")
                 added_var_keyword = True
                 continue
             
@@ -422,6 +513,10 @@ class CythonGenerator:
                 # 如果参数是 ref，添加 & 后缀（C++ 引用语法）
                 if getattr(param, 'is_ref', False):
                     param_str = f"{self._type_to_str(param.type_annotation)}& {param.name}"
+                # 跟踪指针参数名（供指针算术/指针比较的 NULL 转换使用）
+                if isinstance(param.type_annotation, PointerType):
+                    base = param.type_annotation.base_type
+                    self._hoisted_pointer_types[param.name] = self._type_to_str(base) if base is not None else "void"
             else:
                 param_str = param.name
             
@@ -436,6 +531,11 @@ class CythonGenerator:
         return params
     
     def _visit_FuncDef(self, node: FuncDef) -> None:
+        # 泛型参数在签名/体内作为类型标识符时回退为 object
+        saved_generic_params = set(self._generic_params)
+        if node.generic_params:
+            self._generic_params |= set(node.generic_params)
+
         # 检查是否有 @python 装饰器
         has_python_decorator = False
         other_decorators = []
@@ -452,6 +552,22 @@ class CythonGenerator:
             self._visit_Decorator(decorator)
         
         has_type_annotation = any(p.type_annotation for p in node.params if not getattr(p, 'is_dot_separator', False)) or node.return_type
+
+        # 检测是否包含指针类型参数/返回值：指针类型必须生成强类型签名
+        # （int* 无法转为 Python 对象，普通无类型 def 参数会编译失败）
+        def _is_pointer_type(ann):
+            return ann is not None and isinstance(ann, PointerType)
+        has_pointer_param = any(_is_pointer_type(getattr(p, 'type_annotation', None)) for p in node.params)
+        has_pointer_return = _is_pointer_type(node.return_type)
+        has_pointer_type = has_pointer_param or has_pointer_return
+
+        # never / Never 返回类型语义上表示“不返回”，必须显式保留为 NoReturn 注解
+        # （即便普通模块级函数默认剥离类型注解，也要为 Never 特例保留）
+        def _is_never_type(rt):
+            if rt is None:
+                return False
+            return getattr(rt, 'id', None) in ('never', 'Never', 'NeverType')
+        return_is_never = _is_never_type(node.return_type)
         
         # 处理 <checker> 参数检查站（定义时的 checker，在函数体开头自动调用）
         has_checker = node.params_checker is not None
@@ -475,7 +591,39 @@ class CythonGenerator:
         # 统计分隔符数量（用于双 .. 模式激活 args/kwargs）
         dot_separator_count = sum(1 for p in node.params if getattr(p, 'is_dot_separator', False))
         has_double_dot = dot_separator_count >= 2
-        
+
+        # 嵌套函数（定义在其他函数体内）必须使用 def（Cython 不支持嵌套 cpdef/cdef）
+        is_nested = getattr(self, '_func_depth', 0) > 0
+        if is_nested:
+            is_fn = False
+            has_type_annotation = False
+
+        # 特殊方法（__xxx__）在 cdef class 中必须使用 def，不能用 cpdef/cdef
+        is_dunder = node.name.startswith('__') and node.name.endswith('__') and len(node.name) > 4
+        if is_dunder:
+            is_fn = False
+            has_type_annotation = False
+
+        # 普通（非 cdef）class 中的方法不能使用 cpdef/cdef，必须用 def
+        # 但若函数包含指针类型参数/返回值，仍必须生成带类型签名（cdef/def+类型），
+        # 否则 int* 无法作为 Python 对象传参而编译失败。
+        in_cdef_class = getattr(self, '_in_cdef_class', False)
+        if not in_cdef_class and not has_pointer_type:
+            is_fn = False
+            has_type_annotation = False
+
+        # 带任意装饰器的函数（含 @cython.* ）不能使用 cpdef/cdef，必须用 def
+        if hasattr(node, 'decorators') and node.decorators:
+            is_fn = False
+            has_type_annotation = False
+
+        # 记录当前函数的参数类型，供代码生成推断（如 int/int 除法）
+        saved_local_types = dict(self._current_local_types)
+        for p in node.params:
+            ann = getattr(p, 'type_annotation', None)
+            if ann is not None:
+                self._current_local_types[p.name] = self._sanitize_type(self._type_to_str(ann))
+
         # @python 装饰的函数生成纯 Python 代码
         if has_python_decorator:
             params = self._generate_param_strings(node, is_struct_method, has_self, use_types=False)
@@ -485,6 +633,20 @@ class CythonGenerator:
                 self._write(f"def {node.name}({params_str}):")
             else:
                 self._write(f"def {node.name}():")
+        elif getattr(node, 'is_async', False):
+            # async 函数：Cython 的 async def 必须使用 def（不支持 cpdef/cdef）
+            params = self._generate_param_strings(node, is_struct_method, has_self, use_types=False)
+            params_str = ", ".join(params)
+            if return_is_never:
+                rt = self._type_to_str(node.return_type)
+                if params_str:
+                    self._write(f"async def {node.name}({params_str}) -> {rt}:")
+                else:
+                    self._write(f"async def {node.name}() -> {rt}:")
+            elif params_str:
+                self._write(f"async def {node.name}({params_str}):")
+            else:
+                self._write(f"async def {node.name}():")
         elif is_fn and not is_generator and not has_closure:
             # fn 函数强制生成 cdef（优化性能）
             return_type = ""
@@ -496,7 +658,15 @@ class CythonGenerator:
             # 添加 @cython.inline 优化装饰器
             self._write("@cython.inline")
             self._write(f"cdef{return_type} {node.name}({', '.join(params)}):")
-        elif has_type_annotation and not is_generator and not has_closure:
+        elif has_pointer_type and not is_generator and not has_closure and not is_nested:
+            # 含指针类型的函数：必须生成 cdef 强类型签名。cdef 函数保持 C 类型，
+            # 调用时不会把 int* 等 C 类型装箱为 Python 对象（def 会失败）。
+            return_type = ""
+            if node.return_type:
+                return_type = f" {self._type_to_str(node.return_type)}"
+            params = self._generate_param_strings(node, is_struct_method, has_self, use_types=True)
+            self._write(f"cdef{return_type} {node.name}({', '.join(params)}):")
+        elif has_type_annotation and not is_generator and not has_closure and not is_nested:
             return_type = ""
             if node.return_type:
                 return_type = f" {self._type_to_str(node.return_type)}"
@@ -512,15 +682,48 @@ class CythonGenerator:
             # 有闭包或无类型注解时使用 def（Cython cpdef 不支持闭包）
             use_types = has_type_annotation and has_closure
             params = self._generate_param_strings(node, is_struct_method, has_self, use_types=use_types)
-            
             params_str = ", ".join(params)
-            if params_str:
+            if return_is_never:
+                rt = self._type_to_str(node.return_type)
+                if params_str:
+                    self._write(f"def {node.name}({params_str}) -> {rt}:")
+                else:
+                    self._write(f"def {node.name}() -> {rt}:")
+            elif params_str:
                 self._write(f"def {node.name}({params_str}):")
             else:
                 self._write(f"def {node.name}():")
         
         self.indent += 1
-        
+
+        # 进入函数体，递增嵌套深度（用于嵌套函数检测）
+        self._func_depth = getattr(self, '_func_depth', 0) + 1
+
+        # 收集函数体内所有指针声明，统一提升到函数开头用 cdef 声明。
+        # Cython 不允许在循环/条件语句内部使用 cdef 声明，故必须先提升。
+        pointer_decls = self._collect_pointer_decls(node.body)
+        old_hoisted = getattr(self, '_hoisted_pointer_names', set())
+        self._hoisted_pointer_names = set(name for name, _ in pointer_decls)
+        old_hoisted_types = getattr(self, '_hoisted_pointer_types', {})
+        self._hoisted_pointer_types = dict((name, base) for name, base in pointer_decls)
+        # 同时把函数的指针参数纳入，供指针比较 / 指针参数 NULL 转换使用
+        if not hasattr(self, '_func_pointer_indices'):
+            self._func_pointer_indices = {}
+        func_ptr_indices = self._func_pointer_indices
+        func_ptr_indices.setdefault(node.name, set())
+        for pi, p in enumerate(node.params):
+            if getattr(p, 'type_annotation', None) is not None and isinstance(p.type_annotation, PointerType):
+                pbase = p.type_annotation.base_type
+                self._hoisted_pointer_types[p.name] = self._type_to_str(pbase) if pbase is not None else "void"
+                func_ptr_indices[node.name].add(pi)
+        if pointer_decls:
+            for name, base in pointer_decls:
+                self._write(f"cdef {base} * {name}")
+
+        # 收集函数体内被 addr()/& 取地址的变量名，这些变量必须声明为 cdef 才能取址
+        old_addr_taken = getattr(self, '_addr_taken', set())
+        self._addr_taken = self._collect_addr_names(node.body)
+
         # 分离defer语句和普通语句
         defer_stmts = []
         normal_stmts = []
@@ -542,10 +745,11 @@ class CythonGenerator:
             self._write(checker_call)
         
         # 处理可变参数：List<T> 安全收集模式
+        # *args 语法的参数已经是元组，List<T> 模式需要转换为 list
         for param in node.params:
             if getattr(param, 'is_var_positional', False) and param.name != 'args':
-                # 将 *args 转换为指定的 List<T> 参数
-                self._write(f"{param.name} = list(args)")
+                # 将 *param.name 收集的元组转换为 list（List<T> 安全收集模式）
+                self._write(f"{param.name} = list({param.name})")
         
         # 处理双 .. 模式：注入 args/kwargs 变量
         if has_double_dot:
@@ -555,32 +759,172 @@ class CythonGenerator:
         
         # 检查是否有defer语句
         if defer_stmts:
-            # 生成try块
-            self._write("try:")
-            self.indent += 1
+            # 不在 try/finally 中包裹（Cython 不允许在 try 内声明 cdef 变量），
+            # 改为在每个顶层 return 之前、以及函数体末尾注入 defer 语句（逆序执行）
+            def _emit_deferred():
+                for defer_stmt in reversed(defer_stmts):
+                    for stmt in defer_stmt.body:
+                        if isinstance(stmt, (Call, BinOp, UnaryOp, Name, Constant)):
+                            self._write(self._expr_to_str(stmt))
+                        else:
+                            self._visit(stmt)
+
+            emitted_at_return = False
             for stmt in normal_stmts:
+                if isinstance(stmt, ReturnStmt):
+                    # 在 return 之前执行 defer（每个 return 处各注入一次）
+                    _emit_deferred()
+                    emitted_at_return = True
                 self._visit(stmt)
-            self.indent -= 1
-            
-            # 生成finally块（defer语句按逆序执行）
-            self._write("finally:")
-            self.indent += 1
-            # defer语句按声明顺序的逆序执行
-            for defer_stmt in reversed(defer_stmts):
-                for stmt in defer_stmt.body:
-                    # defer body中可能包含表达式节点（如Call），需要转换为表达式语句
-                    if isinstance(stmt, (Call, BinOp, UnaryOp, Name, Constant)):
-                        self._write(self._expr_to_str(stmt))
-                    else:
-                        self._visit(stmt)
-            self.indent -= 1
+            # 仅在函数没有显式 return 时才在函数末尾注入（避免与 return 前的注入重复）
+            if not emitted_at_return:
+                _emit_deferred()
         else:
             # 没有defer语句，直接输出所有语句
             for stmt in node.body:
                 self._visit(stmt)
         
         self.indent -= 1
+
+        # 离开函数体，递减嵌套深度
+        self._func_depth = getattr(self, '_func_depth', 0) - 1
+
+        # 恢复提升的指针声明集合（避免泄露到外层/嵌套函数）
+        self._hoisted_pointer_names = old_hoisted
+        self._hoisted_pointer_types = old_hoisted_types
+        self._addr_taken = old_addr_taken
+
+        # 恢复泛型参数集合
+        self._generic_params = saved_generic_params
+
+        # 恢复局部类型记录
+        self._current_local_types = saved_local_types
+
         self._write("")
+
+    def _collect_addr_names(self, stmts) -> set:
+        """递归收集函数体内被 addr() 或 & 取地址的变量名（这些变量必须声明为 cdef）。
+        遍历函数体内所有 AST 节点（含 LetStmt/Assign 的 RHS），不进入嵌套函数/类作用域。"""
+        names = set()
+
+        def _scan(node):
+            if node is None:
+                return
+            if isinstance(node, list):
+                for item in node:
+                    _scan(item)
+                return
+            if not hasattr(node, '__dict__'):
+                return
+            kind = getattr(node, 'kind', None)
+            # 不进入嵌套函数/类（它们有独立作用域）
+            if kind in ('FuncDef', 'ClassDef', 'StructDef', 'TypeClassDef', 'TraitDef'):
+                return
+            # addr(x) -> 收集 x
+            if isinstance(node, Call) and getattr(getattr(node, 'func', None), 'id', None) == 'addr' \
+                    and getattr(node, 'args', None):
+                arg0 = node.args[0]
+                if isinstance(arg0, tuple):
+                    arg0 = arg0[1]
+                if isinstance(arg0, Name):
+                    names.add(arg0.id)
+                elif isinstance(arg0, str):
+                    names.add(arg0)
+            # &(x) -> 收集 x
+            if isinstance(node, UnaryOp) and getattr(node, 'op', None) == '&':
+                operand = getattr(node, 'operand', None)
+                if isinstance(operand, Name):
+                    names.add(operand.id)
+                elif isinstance(operand, str):
+                    names.add(operand)
+            # 递归进入所有子节点
+            for attr, value in node.__dict__.items():
+                if attr.startswith('_'):
+                    continue
+                _scan(value)
+
+        for s in (stmts or []):
+            _scan(s)
+        return names
+        for s in (stmts or []):
+            if s is None:
+                continue
+            kind = getattr(s, 'kind', None)
+            # 不进入嵌套函数/类（它们有自己的作用域）
+            if kind in ('FuncDef', 'ClassDef', 'StructDef', 'TypeClassDef', 'TraitDef'):
+                continue
+            # addr(x) -> 收集 x
+            if kind == 'ExprStmt':
+                val = getattr(s, 'value', None)
+                if isinstance(val, Call) and getattr(getattr(val, 'func', None), 'id', None) == 'addr' \
+                        and getattr(val, 'args', None):
+                    arg0 = val.args[0]
+                    if isinstance(arg0, tuple):
+                        arg0 = arg0[1]
+                    if isinstance(arg0, Name):
+                        names.add(arg0.id)
+                    elif isinstance(arg0, str):
+                        names.add(arg0)
+                # &(x) -> 收集 x
+                if isinstance(val, UnaryOp) and getattr(val, 'op', None) == '&':
+                    operand = getattr(val, 'operand', None)
+                    if isinstance(operand, Name):
+                        names.add(operand.id)
+                    elif isinstance(operand, str):
+                        names.add(operand)
+            # 递归进入可包含语句的块
+            nested = []
+            if kind == 'MatchStmt':
+                for c in getattr(s, 'cases', []) or []:
+                    nested.append(getattr(c, 'body', None))
+            elif kind == 'IfStmt':
+                nested.append(getattr(s, 'body', None))
+                nested.append(getattr(s, 'orelse', None))
+            elif kind == 'ForStmt':
+                nested.append(getattr(s, 'body', None))
+            elif kind == 'WhileStmt':
+                nested.append(getattr(s, 'body', None))
+            elif kind == 'TryStmt':
+                nested.append(getattr(s, 'body', None))
+                for h in getattr(s, 'handlers', []) or []:
+                    nested.append(getattr(h, 'body', None))
+                nested.append(getattr(s, 'finalbody', None))
+            elif kind == 'WithStmt':
+                nested.append(getattr(s, 'body', None))
+            for sub in nested:
+                names |= self._collect_addr_names(sub)
+        return names
+
+    def _collect_pointer_decls(self, stmts, seen=None):
+        """收集函数体内所有指针 let 声明（name, base_type），不包含嵌套函数/类作用域。"""
+        if seen is None:
+            seen = set()
+        decls = []
+        for s in (stmts or []):
+            if s is None:
+                continue
+            kind = getattr(s, 'kind', None)
+            # 不进入嵌套函数/类（它们有自己的作用域）
+            if kind in ('FuncDef', 'ClassDef', 'StructDef', 'TypeClassDef', 'TraitDef'):
+                continue
+            if kind == 'LetStmt' and isinstance(getattr(s, 'type_annotation', None), PointerType) and isinstance(s.name, str):
+                if s.name not in seen:
+                    seen.add(s.name)
+                    decls.append((s.name, self._type_to_str(s.type_annotation.base_type)))
+            # 递归进入可包含语句的块
+            nested = []
+            if kind == 'MatchStmt':
+                for c in getattr(s, 'cases', []) or []:
+                    nested.append(getattr(c, 'body', []) or [])
+                    nested.append(getattr(c, 'orelse', []) or [])
+            else:
+                for attr in ('body', 'orelse', 'finalbody'):
+                    x = getattr(s, attr, None)
+                    if isinstance(x, list):
+                        nested.append(x)
+            for sub in nested:
+                decls.extend(self._collect_pointer_decls(sub, seen))
+        return decls
 
     def _visit_LetStmt(self, node: LetStmt) -> None:
         is_const = getattr(node, 'is_const', False)
@@ -589,30 +933,67 @@ class CythonGenerator:
         # 检查是否是解构绑定（name 不是字符串）
         is_pattern = not isinstance(node.name, str)
         
-        # 检查是否需要隐式复制或转换
-        needs_implicit_copy = self._pending_copies.get(node.name) is not None
-        needs_implicit_conversion = self._pending_conversions.get(node.name) is not None
+        # 指针声明：若已被提升到函数开头，这里只做普通赋值（或声明但不带 cdef）
+        is_hoisted_pointer = (isinstance(node.type_annotation, PointerType)
+                              and node.name in getattr(self, '_hoisted_pointer_names', set()))
+        if is_hoisted_pointer:
+            if node.value:
+                if isinstance(node.value, ComptimeStmt):
+                    value = self._expr_to_str(node.value.expr)
+                else:
+                    value = self._expr_to_str(node.value)
+                # malloc 返回 void*，赋值给已提升的指针变量时需转换到目标基类型
+                if isinstance(node.value, Call) and getattr(getattr(node.value, 'func', None), 'id', None) == 'malloc':
+                    base = getattr(self, '_hoisted_pointer_types', {}).get(node.name)
+                    if base:
+                        value = value.replace('<void*>', f'<{base}*>', 1)
+                self._write(f"{node.name} = {value}")
+            # 无初始值时已在函数开头用 cdef 声明，这里无需再写
+            return
+        # 仅当变量名为普通字符串时才查询待处理记录；
+        # 解构绑定（let (a, b) = ...）的 name 是模式列表，不能作为 dict 键
+        _name_is_str = isinstance(node.name, str)
+        needs_implicit_copy = _name_is_str and self._pending_copies.get(node.name) is not None
+        needs_implicit_conversion = _name_is_str and self._pending_conversions.get(node.name) is not None
         
         if is_const:
             # 解构绑定不支持 const
             if is_pattern:
                 self._write(f"# Warning: const with destructuring not supported")
             if node.type_annotation:
-                cdef_type = self._type_to_str(node.type_annotation)
-                if node.value:
+                cdef_type = self._sanitize_type(self._type_to_str(node.type_annotation))
+                if isinstance(node.type_annotation, PointerType):
+                    # 指针变量必须用 cdef 声明：cdef int * p
+                    base = self._type_to_str(node.type_annotation.base_type)
+                    self._hoisted_pointer_types[node.name] = base
+                    if node.value:
+                        value = self._expr_to_str(node.value)
+                        if needs_implicit_conversion:
+                            value = self._generate_implicit_conversion(node, value)
+                        self._write(f"cdef {base} * {node.name} = {value}")
+                    else:
+                        self._write(f"cdef {base} * {node.name}")
+                elif node.value:
                     value = self._expr_to_str(node.value)
                     # 如果需要隐式转换，添加转换代码
                     if needs_implicit_conversion:
                         value = self._generate_implicit_conversion(node, value)
-                    self._write(f"cdef readonly {cdef_type} {node.name} = {value}")
+                    # 被 addr()/& 取地址的变量必须声明为 cdef 才能取址
+                    if node.name in getattr(self, '_addr_taken', set()):
+                        self._write(f"cdef {cdef_type} {node.name} = {value}")
+                    else:
+                        self._write(f"{node.name}: {cdef_type} = {value}")
                 else:
-                    self._write(f"cdef readonly {cdef_type} {node.name}")
+                    if node.name in getattr(self, '_addr_taken', set()):
+                        self._write(f"cdef {cdef_type} {node.name}")
+                    else:
+                        self._write(f"{node.name}: {cdef_type}")
             else:
                 if node.value:
                     value = self._expr_to_str(node.value)
-                    self._write(f"cdef readonly {node.name} = {value}")
+                    self._write(f"{node.name} = {value}")
                 else:
-                    self._write(f"cdef readonly {node.name}")
+                    self._write(f"{node.name} = None")
             return
         
         if is_owned:
@@ -658,8 +1039,23 @@ class CythonGenerator:
             else:
                 self._write(f"{node.name} = None")
         elif node.type_annotation:
-            cdef_type = self._type_to_str(node.type_annotation)
-            if node.value:
+            cdef_type = self._sanitize_type(self._type_to_str(node.type_annotation))
+            if isinstance(node.type_annotation, PointerType):
+                base = self._type_to_str(node.type_annotation.base_type)
+                if node.value:
+                    if isinstance(node.value, ComptimeStmt):
+                        value = self._expr_to_str(node.value.expr)
+                    else:
+                        value = self._expr_to_str(node.value)
+                    # malloc 返回 void*，赋值给指针变量时需转换到目标基类型
+                    if isinstance(node.value, Call) and getattr(getattr(node.value, 'func', None), 'id', None) == 'malloc':
+                        value = value.replace('<void*>', f'<{base}*>', 1)
+                    if needs_implicit_conversion:
+                        value = self._generate_implicit_conversion(node, value)
+                    self._write(f"cdef {base} * {node.name} = {value}")
+                else:
+                    self._write(f"cdef {base} * {node.name}")
+            elif node.value:
                 if isinstance(node.value, ComptimeStmt):
                     value = self._expr_to_str(node.value.expr)
                 else:
@@ -667,9 +1063,16 @@ class CythonGenerator:
                 # 如果需要隐式转换，生成转换代码
                 if needs_implicit_conversion:
                     value = self._generate_implicit_conversion(node, value)
-                self._write(f"cdef {cdef_type} {node.name} = {value}")
+                # 被 addr()/& 取地址的变量必须声明为 cdef 才能取址
+                if node.name in getattr(self, '_addr_taken', set()):
+                    self._write(f"cdef {cdef_type} {node.name} = {value}")
+                else:
+                    self._write(f"{node.name}: {cdef_type} = {value}")
             else:
-                self._write(f"cdef {cdef_type} {node.name}")
+                if node.name in getattr(self, '_addr_taken', set()):
+                    self._write(f"cdef {cdef_type} {node.name}")
+                else:
+                    self._write(f"{node.name}: {cdef_type}")
         else:
             if node.value:
                 if isinstance(node.value, ComptimeStmt):
@@ -686,11 +1089,12 @@ class CythonGenerator:
             else:
                 self._write(f"{node.name}")
         
-        # 清理待处理记录
-        if node.name in self._pending_copies:
-            del self._pending_copies[node.name]
-        if node.name in self._pending_conversions:
-            del self._pending_conversions[node.name]
+        # 清理待处理记录（解构绑定的 name 非字符串，跳过）
+        if _name_is_str:
+            if node.name in self._pending_copies:
+                del self._pending_copies[node.name]
+            if node.name in self._pending_conversions:
+                del self._pending_conversions[node.name]
 
     def _ensure_owned_import(self) -> None:
         """确保导入所有权相关的函数"""
@@ -727,6 +1131,18 @@ class CythonGenerator:
         """注册待处理的隐式操作"""
         self._pending_copies = pending_copies
         self._pending_conversions = pending_conversions
+
+    def _visit_ExprStmt(self, node: Any) -> None:
+        """表达式语句：解包内部节点并写出（使用 _visit 以正确分发语句型节点）"""
+        inner = getattr(node, 'value', None)
+        if inner is not None:
+            self._visit(inner)
+        elif getattr(node, 'value', None) is not None:
+            self._visit(node.value)
+
+    def _visit_PassStmt(self, node: Any) -> None:
+        """pass 语句"""
+        self._write("pass")
 
     def _visit_ReturnStmt(self, node: ReturnStmt) -> None:
         if node.value:
@@ -771,93 +1187,286 @@ class CythonGenerator:
     def _visit_ContinueStmt(self, node: Any) -> None:
         self._write("continue")
 
+    def _visit_GlobalStmt(self, node: GlobalStmt) -> None:
+        self._write(f"global {', '.join(node.names)}")
+
+    def _visit_NonlocalStmt(self, node: NonlocalStmt) -> None:
+        self._write(f"nonlocal {', '.join(node.names)}")
+
     def _visit_MatchStmt(self, node: Any) -> None:
-        """生成 match/case 语句的 Cython 代码
-        
-        对于包含 ExtractorPattern 的情况，生成自定义的 if-elif 链来实现
-        __unapply__ → __unapply_seq__ → __unwarp__ → __match_args__ 的优先级调度。
-        """
+        """生成 match/case 语句的 Cython 代码（编译为 if/elif 链，Cython 不支持原生 match）"""
         subject_str = self._expr_to_str(node.subject)
-        subject_var = f"_match_subject"
-        
-        # 检查是否包含 ExtractorPattern
-        has_extractor = any(self._contains_extractor(case.pattern) for case in node.cases)
-        
-        if has_extractor:
-            # 使用自定义 if-elif 链实现优先级调度
-            self._write(f"{subject_var} = {subject_str}")
-            for i, case in enumerate(node.cases):
-                pattern_str = self._pattern_to_str(case.pattern)
-                condition = self._extractor_pattern_condition(subject_var, case.pattern)
-                
-                if i == 0:
-                    self._write(f"if {condition}:")
-                else:
-                    self._write(f"elif {condition}:")
-                
-                self.indent += 1
-                for stmt in case.body:
-                    self._visit(stmt)
-                self.indent -= 1
-            
-            if node.orelse:
-                self._write("else:")
-                self.indent += 1
-                for stmt in node.orelse:
-                    self._visit(stmt)
-                self.indent -= 1
-        else:
-            # 使用 Python 原生 match-case 语法
-            self._write(f"match {subject_str}:")
+        self._match_counter = getattr(self, '_match_counter', 0) + 1
+        subject_var = f"_match_subject_{self._match_counter}"
+
+        self._write(f"{subject_var} = {subject_str}")
+        # 先为每个 case 计算匹配信息；提取器模式会产生 pre 临时变量赋值。
+        # 注意：这些 pre 必须放在 if/elif 链之前，因为 Python/Cython 不允许
+        # 在 if/elif 分支之间插入语句（否则后续 elif 会变成语法错误）。
+        all_pre = []
+        cases_info = []
+        for case in node.cases:
+            cond, bindings, submap, pre = self._pattern_match_info(subject_var, case.pattern)
+            all_pre.extend(pre)
+            cases_info.append((cond, bindings, case.body))
+        for ps in all_pre:
+            self._write(ps)
+        for i, (cond, bindings, body) in enumerate(cases_info):
+            if i == 0:
+                self._write(f"if {cond}:")
+            else:
+                self._write(f"elif {cond}:")
             self.indent += 1
-            for case in node.cases:
-                pattern_str = self._pattern_to_str(case.pattern)
-                self._write(f"case {pattern_str}:")
-                self.indent += 1
-                for stmt in case.body:
-                    self._visit(stmt)
-                self.indent -= 1
-            if node.orelse:
-                self._write("else:")
-                self.indent += 1
-                for stmt in node.orelse:
-                    self._visit(stmt)
-                self.indent -= 1
+            for b in bindings:
+                self._write(b)
+            for stmt in body:
+                self._visit(stmt)
             self.indent -= 1
+
+        if node.orelse:
+            self._write("else:")
+            self.indent += 1
+            for stmt in node.orelse:
+                self._visit(stmt)
+            self.indent -= 1
+
+    def _pattern_match_info(self, subject_var: str, pattern: Any):
+        """返回 (condition_str, [binding_stmts], {name: access_expr}, [pre_stmts])
+        供 match 分支使用。pre_stmts 为分支条件求值前需执行的临时变量赋值。"""
+        def _merge(c, b, s, p):
+            return c, list(b), dict(s), list(p)
+        if isinstance(pattern, dict):
+            if 'condition' in pattern:
+                inner_cond, inner_bind, inner_sub, inner_pre = self._pattern_match_info(subject_var, pattern['pattern'])
+                guard = self._substitute_names(self._expr_to_str(pattern['condition']), inner_sub)
+                return (f"({inner_cond}) and ({guard})", inner_bind, inner_sub, inner_pre)
+            if 'or' in pattern:
+                conds, binds, subs, pres = [], [], {}, []
+                for p in pattern['or']:
+                    c, b, s, pr = self._pattern_match_info(subject_var, p)
+                    conds.append(c)
+                    binds.extend(b)
+                    subs.update(s)
+                    pres.extend(pr)
+                return ("(" + " or ".join(conds) + ")", binds, subs, pres)
+        if isinstance(pattern, RangePattern):
+            lower = self._expr_to_str(pattern.lower)
+            upper = self._expr_to_str(pattern.upper)
+            return (f"{lower} <= {subject_var} < {upper}", [], {}, [])
+        if isinstance(pattern, TypePattern):
+            cond = f"isinstance({subject_var}, {pattern.type_name})"
+            if pattern.name and pattern.name != '_':
+                return (cond, [f"{pattern.name} = {subject_var}"], {pattern.name: subject_var}, [])
+            return (cond, [], {}, [])
+        if hasattr(pattern, 'kind') and pattern.kind == "Pattern":
+            if pattern.name == '_' or pattern.name is None:
+                return ("True", [], {}, [])
+            if pattern.name in ('None', 'True', 'False', 'Ellipsis'):
+                literal = {'None': 'None', 'True': 'True', 'False': 'False', 'Ellipsis': 'Ellipsis'}[pattern.name]
+                return (f"{subject_var} == {literal}", [], {}, [])
+            return ("True", [f"{pattern.name} = {subject_var}"], {pattern.name: subject_var}, [])
+        if isinstance(pattern, Constant):
+            return (f"{subject_var} == {repr(pattern.value)}", [], {}, [])
+        if isinstance(pattern, list):
+            conds = [f"isinstance({subject_var}, tuple)", f"len({subject_var}) == {len(pattern)}"]
+            binds, subs, pres = [], {}, []
+            for i, e in enumerate(pattern):
+                ec, eb, es, ep = self._pattern_match_info(f"{subject_var}[{i}]", e)
+                conds.append(ec)
+                binds.extend(eb)
+                subs.update(es)
+                pres.extend(ep)
+            return (" and ".join(conds), binds, subs, pres)
+        if isinstance(pattern, ArrayPattern):
+            has_star = any(getattr(e, 'kind', None) == 'SlicePattern' for e in pattern.elements)
+            if not has_star:
+                conds = [f"isinstance({subject_var}, (list, tuple))", f"len({subject_var}) == {len(pattern.elements)}"]
+                binds, subs, pres = [], {}, []
+                for i, e in enumerate(pattern.elements):
+                    ec, eb, es, ep = self._pattern_match_info(f"{subject_var}[{i}]", e)
+                    conds.append(ec)
+                    binds.extend(eb)
+                    subs.update(es)
+                    pres.extend(ep)
+                return (" and ".join(conds), binds, subs, pres)
+            # 含 *rest（SlicePattern）的序列模式
+            star_idx = next(i for i, e in enumerate(pattern.elements)
+                            if getattr(e, 'kind', None) == 'SlicePattern')
+            num_after = len(pattern.elements) - star_idx - 1
+            conds = [f"isinstance({subject_var}, (list, tuple))",
+                     f"len({subject_var}) >= {len(pattern.elements) - 1}"]
+            binds, subs, pres = [], {}, []
+            for i, e in enumerate(pattern.elements):
+                if getattr(e, 'kind', None) == 'SlicePattern':
+                    if e.name:
+                        if num_after > 0:
+                            slice_expr = f"{subject_var}[{i}:len({subject_var})-{num_after}]"
+                        else:
+                            slice_expr = f"{subject_var}[{i}:]"
+                        binds.append(f"{e.name} = {slice_expr}")
+                        subs[e.name] = slice_expr
+                else:
+                    if i > star_idx:
+                        pos = f"len({subject_var}) - {num_after} + {i - star_idx - 1}"
+                        sub_expr = f"{subject_var}[{pos}]"
+                    else:
+                        sub_expr = f"{subject_var}[{i}]"
+                    ec, eb, es, ep = self._pattern_match_info(sub_expr, e)
+                    conds.append(ec)
+                    binds.extend(eb)
+                    subs.update(es)
+                    pres.extend(ep)
+            return (" and ".join(conds), binds, subs, pres)
+        if hasattr(pattern, 'kind') and pattern.kind == "StructPattern":
+            conds = [f"isinstance({subject_var}, {pattern.struct_name})"]
+            binds, subs, pres = [], {}, []
+            for field_name, field_pattern in pattern.fields:
+                fc, fb, fs, fp = self._pattern_match_info(f"{subject_var}.{field_name}", field_pattern)
+                conds.append(fc)
+                binds.extend(fb)
+                subs.update(fs)
+                pres.extend(fp)
+            return (" and ".join(conds), binds, subs, pres)
+        if isinstance(pattern, AsPattern):
+            inner_cond, inner_bind, inner_sub, inner_pre = self._pattern_match_info(subject_var, pattern.pattern)
+            binds = list(inner_bind)
+            subs = dict(inner_sub)
+            pres = list(inner_pre)
+            if pattern.name and pattern.name != '_':
+                binds.append(f"{pattern.name} = {subject_var}")
+                subs[pattern.name] = subject_var
+            return (inner_cond, binds, subs, pres)
+        if isinstance(pattern, ExtractorPattern):
+            return self._extractor_match_info(subject_var, pattern)
+        if isinstance(pattern, DictPattern):
+            conds = [f"isinstance({subject_var}, dict)"]
+            binds, subs, pres = [], {}, []
+            keys = []
+            for key_pat, val_pat in pattern.pairs:
+                key_repr = self._expr_to_str(key_pat)
+                keys.append(key_repr)
+                conds.append(f"{key_repr} in {subject_var}")
+                vc, vb, vs, vp = self._pattern_match_info(f"{subject_var}[{key_repr}]", val_pat)
+                binds.extend(vb)
+                subs.update(vs)
+                pres.extend(vp)
+                if vc != "True":
+                    conds.append(f"({vc})")
+            if pattern.rest_name:
+                rest_expr = f"{{k: v for k, v in {subject_var}.items() if k not in ({', '.join(keys)})}}"
+                binds.append(f"{pattern.rest_name} = {rest_expr}")
+                subs[pattern.rest_name] = rest_expr
+            return (" and ".join(conds), binds, subs, pres)
+        if isinstance(pattern, Attribute):
+            # 命名常量 / 属性模式（如 case Color.Red:）：等价于等值比较
+            attr_str = self._expr_to_str(pattern)
+            return (f"{subject_var} == {attr_str}", [], {}, [])
+        return ("True", [], {}, [])
+
+    def _extractor_match_info(self, subject_var: str, pattern: Any):
+        """为提取器模式生成条件与绑定。
+        - 若该类型是注册过的提取器（定义了 __unapply__ 等），按解包逻辑处理（支持嵌套）。
+        - 否则视为类模式（class pattern）：仅做 isinstance 检查，并将各参数名绑定到对应属性。
+        """
+        type_name = getattr(pattern, 'type_name', None)
+        if type_name not in self._extractor_types:
+            # 类/结构体模式：按字段顺序检查各位置参数（常量比较 / 捕获绑定）
+            fields = self._class_fields.get(type_name, [])
+            conds = []
+            if type_name not in self._struct_types:
+                conds.append(f"isinstance({subject_var}, {type_name})")
+            binds, subs = [], {}
+            for i, arg in enumerate(pattern.args):
+                field_name = fields[i] if i < len(fields) else f"__f{i}"
+                if isinstance(arg, Constant):
+                    conds.append(f"{subject_var}.{field_name} == {repr(arg.value)}")
+                elif hasattr(arg, 'kind') and arg.kind == "Pattern":
+                    if arg.name not in ('_', None):
+                        binds.append(f"{arg.name} = {subject_var}.{field_name}")
+                        subs[arg.name] = f"{subject_var}.{field_name}"
+                else:
+                    # 嵌套模式：递归检查
+                    ec, eb, es, ep = self._pattern_match_info(f"{subject_var}.{field_name}", arg)
+                    conds.append(ec)
+                    binds.extend(eb)
+                    subs.update(es)
+            if not conds:
+                conds = ["True"]
+            return (" and ".join(conds), binds, subs, [])
+        # 提取器模式：通过 __unapply__ 等解包
+        self._extractor_counter = getattr(self, '_extractor_counter', 0) + 1
+        tmp = f"_ext_{self._extractor_counter}"
+        # 单行条件表达式选择解包方法（避免嵌套块导致缩进错位），分支短路求值
+        pre = [f"{tmp} = ({subject_var}.__unapply__() if hasattr({subject_var}, '__unapply__') else "
+               f"({subject_var}.__unapply_seq__() if hasattr({subject_var}, '__unapply_seq__') else "
+               f"({subject_var}.__unwarp__() if hasattr({subject_var}, '__unwarp__') else "
+               f"(type({subject_var}).__match_args__({subject_var}) if hasattr(type({subject_var}), '__match_args__') else None))))"]
+        conds = [f"{tmp} is not None"]
+        binds, subs = [], {}
+        for i, arg in enumerate(pattern.args):
+            val_var = f"{tmp}_a{i}"
+            pre.append(f"{val_var} = ({tmp}[{i}] if isinstance({tmp}, (list, tuple)) else {tmp})")
+            ac, ab, as_, apre = self._pattern_match_info(val_var, arg)
+            pre.extend(apre)
+            conds.append(ac)
+            binds.extend(ab)
+            subs.update(as_)
+        cond = "(" + ") and (".join(conds) + ")" if len(conds) > 1 else conds[0]
+        return (cond, binds, subs, pre)
+
+    def _substitute_names(self, expr: str, submap: Dict[str, str]) -> str:
+        """将表达式中的捕获变量名替换为其访问表达式（用于 guard 条件求值）"""
+        if not submap:
+            return expr
+        for name in sorted(submap, key=len, reverse=True):
+            expr = re.sub(r'\b' + re.escape(name) + r'\b', submap[name], expr)
+        return expr
     
+    def _assign_to_walrus(self, stmt: str):
+        """将 'a = b' 形式的赋值语句转换为 walrus 表达式 '(a := b)'，用于注入到 lambda 中。"""
+        s = stmt.strip()
+        m = re.match(r'^([A-Za-z_]\w*)\s*=\s*(.+)$', s)
+        if m:
+            return f"({m.group(1)} := {m.group(2)})"
+        return f"({s})"
+
     def _visit_MatchExpr(self, node: Any) -> str:
-        """生成 match/case 表达式的 Cython 代码（返回值形式）"""
+        """生成 match/case 表达式的 Cython 代码（返回值形式）
+        通过 lambda + 三元链实现；提取器/嵌套模式的绑定（pre/binds）以 walrus 形式注入，
+        并在 lambda 开头一次性求值所有提取器的解包 pre，使各分支的条件与绑定均可引用。"""
         subject_str = self._expr_to_str(node.subject)
         subject_var = f"_match_subject"
-        
-        # 检查是否包含 ExtractorPattern
-        has_extractor = any(self._contains_extractor(case.pattern) for case in node.cases)
-        
-        # 使用嵌套三元运算符实现 match 表达式
-        # 格式: (lambda x: "a" if cond1 else "b" if cond2 else "c")(x)
-        parts = []
-        parts.append(f"(lambda {subject_var}: ")
-        
+
+        # 收集所有 case 的 pre（提取器解包），在 lambda 开头一次性求值，供各分支条件/绑定引用
+        all_pre = []
+        for case in node.cases:
+            _, _, _, pre = self._pattern_match_info(subject_var, case.pattern)
+            all_pre.extend(pre or [])
+        seen = set()
+        all_pre_unique = []
+        for p in all_pre:
+            if p not in seen:
+                seen.add(p)
+                all_pre_unique.append(p)
+
+        parts = [f"(lambda {subject_var}: ("]
+        if all_pre_unique:
+            pre_walruses = [self._assign_to_walrus(p) for p in all_pre_unique]
+            parts.append("(" + ", ".join(pre_walruses) + "), ")
+
+        n = len(node.cases)
         for i, case in enumerate(node.cases):
             body_expr = self._expr_to_str(case.body[0]) if case.body else "None"
-            
-            if has_extractor:
-                # 提取器模式：使用自定义条件
-                condition = self._extractor_pattern_condition(subject_var, case.pattern)
+            cond, binds, subs, pre = self._pattern_match_info(subject_var, case.pattern)
+            # 将本分支的绑定以 walrus 注入到分支体（在条件满足后求值）
+            walruses = [self._assign_to_walrus(b) for b in (binds or [])]
+            if walruses:
+                body_expr = "(" + ", ".join(walruses + [body_expr]) + ")[-1]"
+            if i < n - 1:
+                parts.append(f"{body_expr} if {cond} else ")
             else:
-                # 普通模式：转换为条件表达式
-                condition = self._pattern_to_condition(subject_var, case.pattern)
-            
-            if i == 0:
-                parts.append(f"{body_expr} if {condition} else ")
-            elif i == len(node.cases) - 1:
-                # 最后一个 case 是默认分支
                 parts.append(f"{body_expr}")
-            else:
-                parts.append(f"{body_expr} if {condition} else ")
-        
-        parts.append(f")({subject_str})")
-        
+        parts.append(f")[-1])({subject_str})")
         return "".join(parts)
     
     def _pattern_to_condition(self, subject_var: str, pattern: Any) -> str:
@@ -877,6 +1486,9 @@ class CythonGenerator:
         if hasattr(pattern, 'kind') and pattern.kind == "Constant":
             return f"{subject_var} == {repr(pattern.value)}"
         if hasattr(pattern, 'kind') and pattern.kind == "Pattern":
+            if pattern.name in ('None', 'True', 'False', 'Ellipsis'):
+                literal = {'None': 'None', 'True': 'True', 'False': 'False', 'Ellipsis': 'Ellipsis'}[pattern.name]
+                return f"{subject_var} == {literal}"
             return "True"
         return "True"
     
@@ -936,7 +1548,14 @@ class CythonGenerator:
         """
         type_name = pattern.type_name
         arg_patterns = pattern.args
-        
+
+        # 若该类型不是注册过的提取器，则视为类模式
+        if type_name not in self._extractor_types:
+            # cdef struct 不能用 isinstance；此处（表达式上下文）无法绑定字段，直接判真
+            if type_name in self._struct_types:
+                return "True"
+            return f"isinstance({subject_var}, {type_name})"
+
         # 生成变量绑定代码
         bind_code = []
         arg_names = []
@@ -977,9 +1596,65 @@ class CythonGenerator:
         condition_str = " or ".join(conditions)
         
         # 生成完整的条件表达式（包含类型检查和提取逻辑）
-        full_condition = f"(isinstance({subject_var}, {type_name}) if {type_name} in globals() else True) and ({condition_str})"
+        full_condition = f"isinstance({subject_var}, {type_name}) and ({condition_str})"
         
         return full_condition
+
+    def _generate_tuple_condition(self, subject_var: str, pattern: list) -> str:
+        """生成元组模式匹配条件"""
+        conditions = []
+        conditions.append(f"isinstance({subject_var}, tuple)")
+        conditions.append(f"len({subject_var}) == {len(pattern)}")
+        for i, elem_pattern in enumerate(pattern):
+            elem_var = f"{subject_var}[{i}]"
+            if hasattr(elem_pattern, 'kind') and elem_pattern.kind == "Pattern":
+                conditions.append(f"isinstance({elem_var}, {elem_pattern.name})")
+            elif hasattr(elem_pattern, 'kind') and elem_pattern.kind == "Constant":
+                conditions.append(f"{elem_var} == {repr(elem_pattern.value)}")
+            elif isinstance(elem_pattern, dict):
+                inner_cond = self._extractor_pattern_condition(elem_var, elem_pattern)
+                conditions.append(f"({inner_cond})")
+        return " and ".join(conditions)
+
+    def _generate_array_condition(self, subject_var: str, pattern: 'ArrayPattern') -> str:
+        """生成数组/列表模式匹配条件"""
+        conditions = []
+        conditions.append(f"isinstance({subject_var}, (list, tuple))")
+        conditions.append(f"len({subject_var}) >= {len(pattern.elements)}")
+        for i, elem_pattern in enumerate(pattern.elements):
+            elem_var = f"{subject_var}[{i}]"
+            if hasattr(elem_pattern, 'kind') and elem_pattern.kind == "Pattern":
+                conditions.append(f"isinstance({elem_var}, {elem_pattern.name})")
+            elif hasattr(elem_pattern, 'kind') and elem_pattern.kind == "Constant":
+                conditions.append(f"{elem_var} == {repr(elem_pattern.value)}")
+            elif isinstance(elem_pattern, dict):
+                inner_cond = self._extractor_pattern_condition(elem_var, elem_pattern)
+                conditions.append(f"({inner_cond})")
+        if pattern.rest_name:
+            conditions.append(f"len({subject_var}) > {len(pattern.elements)}")
+        return " and ".join(conditions)
+
+    def _generate_dict_condition(self, subject_var: str, pattern: 'DictPattern') -> str:
+        """生成字典模式匹配条件"""
+        conditions = []
+        conditions.append(f"isinstance({subject_var}, dict)")
+        for key_pattern, value_pattern in pattern.pairs:
+            if hasattr(key_pattern, 'value'):
+                key_str = repr(key_pattern.value)
+            else:
+                key_str = str(key_pattern)
+            value_var = f"{subject_var}.get({key_str})"
+            conditions.append(f"{key_str} in {subject_var}")
+            if hasattr(value_pattern, 'kind') and value_pattern.kind == "Pattern":
+                conditions.append(f"isinstance({value_var}, {value_pattern.name})")
+            elif hasattr(value_pattern, 'kind') and value_pattern.kind == "Constant":
+                conditions.append(f"{value_var} == {repr(value_pattern.value)}")
+            elif isinstance(value_pattern, dict):
+                inner_cond = self._extractor_pattern_condition(value_var, value_pattern)
+                conditions.append(f"({inner_cond})")
+        if pattern.rest_name:
+            conditions.append(f"len({subject_var}) > {len(pattern.pairs)}")
+        return " and ".join(conditions)
     
     def _pattern_to_str(self, pattern: Any) -> str:
         """将模式转换为字符串表示"""
@@ -1081,18 +1756,140 @@ class CythonGenerator:
         self._write(f"del {targets_str}")
 
     def _visit_ExprStmt(self, node: Any) -> None:
-        self._write(self._expr_to_str(node.value))
+        value = node.value
+        # 语句型宏：展开后可能是多行代码（如 debug_log），需按行写出以保持缩进
+        # 兼容两种形式：显式 MacroCall 节点，或 func 为已定义宏名的普通 Call
+        if isinstance(value, MacroCall):
+            expanded = self._expand_macro(value.name, value.args)
+            for line in expanded.split("\n"):
+                self._write(line)
+            return
+        if self._is_macro_call(value):
+            expanded = self._expand_macro(value.func.id, value.args)
+            for line in expanded.split("\n"):
+                self._write(line)
+            return
+        self._write(self._expr_to_str(value))
+
+    def _emit_build_block_assign(self, target, block) -> None:
+        """将 =: 构建块转换为嵌套函数调用：块内语句作为函数体，最后表达式作为返回值。"""
+        name = f"_bb_{self._bb_counter}"
+        self._bb_counter += 1
+        self._write(f"def {name}():")
+        self.indent += 1
+        stmts = block.body
+        for i, stmt in enumerate(stmts):
+            sk = getattr(stmt, 'kind', None)
+            if i == len(stmts) - 1:
+                if sk == 'ReturnStmt':
+                    self._visit(stmt)
+                elif sk == 'ExprStmt':
+                    self._write(f"return {self._expr_to_str(getattr(stmt, 'value', None))}")
+                else:
+                    self._visit(stmt)
+            else:
+                self._visit(stmt)
+        self.indent -= 1
+        if target is not None:
+            self._write(f"{self._expr_to_str(target)} = {name}()")
+        else:
+            self._write(f"{name}()")
+
+    def _is_rest_subscript(self, elt):
+        """判断元素是否为 rest[0] 形式的剩余元素收集（rest 变量绑定到尾部切片）
+        在解析中表现为 Subscript(value=Name('rest'), slice=0) 或 DerefExpr(operand=Name('rest'))"""
+        kind = getattr(elt, 'kind', None)
+        if kind == 'Subscript':
+            val = getattr(elt, 'value', None)
+            if not isinstance(val, Name):
+                return None
+            sl = getattr(elt, 'slice', None)
+            if isinstance(sl, int) and sl == 0:
+                return val.id
+            if isinstance(sl, Constant) and getattr(sl, 'value', None) == 0:
+                return val.id
+            return None
+        if kind == 'DerefExpr':
+            op = getattr(elt, 'operand', None)
+            if isinstance(op, Name):
+                return op.id
+            if isinstance(op, str):
+                return op
+        return None
+
+    def _emit_list_rest_unpack(self, elts, value, rest_idx) -> None:
+        """将 [first, rest[0]] = expr 转换为 first = tmp[0]; rest = tmp[1:]"""
+        tmp = f"_rest_tmp_{self._bb_counter}"
+        self._bb_counter += 1
+        self._write(f"{tmp} = {self._expr_to_str(value)}")
+        for j, elt in enumerate(elts):
+            r = self._is_rest_subscript(elt)
+            if r is not None:
+                # rest[0] 收集剩余元素（从当前位置到末尾）
+                self._write(f"{r} = {tmp}[{j}:]")
+            else:
+                self._write(f"{self._expr_to_str(elt)} = {tmp}[{j}]")
 
     def _visit_Assign(self, node: Any) -> None:
+        # =: 构建块：内联转换为嵌套函数，避免把块内赋值/控制流丢失
+        if isinstance(node.value, BuildBlockExpr) and \
+                getattr(node.value, 'block_type', None) == BuildBlockExpr.BUILD_ASSIGN:
+            self._emit_build_block_assign(node.target, node.value)
+            return
+        # 列表解包含 rest[0] 剩余元素收集：[first, rest[0]] = expr
+        # LHS 列表字面量在 parser 中表现为 Constant(value=[...]) 或带 .elements 的节点
+        tgt = node.target
+        tgt_elts = None
+        if hasattr(tgt, 'elements'):
+            tgt_elts = getattr(tgt, 'elements', None) or []
+        elif getattr(tgt, 'kind', None) == 'Constant' and isinstance(getattr(tgt, 'value', None), list):
+            tgt_elts = getattr(tgt, 'value', None)
+        if tgt_elts is not None:
+            rest_idx = None
+            for i, elt in enumerate(tgt_elts):
+                if self._is_rest_subscript(elt) is not None:
+                    rest_idx = i
+                    break
+            if rest_idx is not None:
+                self._emit_list_rest_unpack(tgt_elts, node.value, rest_idx)
+                return
         target = self._expr_to_str(node.target)
         if isinstance(node.value, ComptimeStmt):
             # comptime 在编译时求值，结果作为常量
             value = self._expr_to_str(node.value.expr)
         else:
             value = self._expr_to_str(node.value)
+        # malloc 返回 void*，赋值给已提升的指针变量时需转换到目标基类型
+        if isinstance(node.value, Call) and getattr(getattr(node.value, 'func', None), 'id', None) == 'malloc':
+            base = getattr(self, '_hoisted_pointer_types', {}).get(target)
+            if base:
+                value = value.replace('<void*>', f'<{base}*>', 1)
         self._write(f"{target} = {value}")
 
     def _visit_StructDef(self, node: StructDef) -> None:
+        # 结构体泛型参数在签名中作为类型标识符时回退为 object
+        saved_generic_params = set(self._generic_params)
+        if node.generic_params:
+            self._generic_params |= set(node.generic_params)
+
+        # 结构体字段是否含有 Python 对象类型（str/list/dict/等），C 结构体不支持
+        from cypyc.parser.parser import StructField
+        primitives = {
+            'int', 'float', 'double', 'long', 'short', 'char', 'bint',
+            'longlong', 'unsigned int', 'unsigned long', 'unsigned char',
+            'unsigned short', 'unsigned longlong', 'size_t', 'Py_ssize_t',
+            'long double', 'signed char', 'uint8', 'uint16', 'uint32', 'uint64',
+            'int8', 'int16', 'int32', 'int64', 'float32', 'float64',
+        }
+        def _has_object_field(n):
+            for f in n.fields:
+                if isinstance(f, StructField) and getattr(f, 'type_annotation', None):
+                    t = self._sanitize_type(self._type_to_str(f.type_annotation))
+                    base = t.split('[')[0].strip()
+                    if base not in primitives:
+                        return True
+            return False
+
         # 检查是否有 @value 装饰器
         has_value_decorator = False
         if hasattr(node, 'decorators') and node.decorators:
@@ -1103,7 +1900,10 @@ class CythonGenerator:
                     break
         
         # 如果结构体有方法或 @value 装饰器，使用 cdef class
-        use_class = has_value_decorator or (hasattr(node, 'methods') and node.methods)
+        # 若结构体包含 Python 对象类型字段（str/list/dict 等），C 结构体不支持，
+        # 也需改用 cdef class（扩展类型）
+        use_class = has_value_decorator or (hasattr(node, 'methods') and node.methods) \
+            or _has_object_field(node)
         
         if use_class:
             # 设置当前结构体名称，用于方法生成时添加 self 参数
@@ -1115,6 +1915,9 @@ class CythonGenerator:
             field_names = [f.name for f in node.fields if isinstance(f, StructField)]
             if field_names:
                 slots_str = ", ".join(f'"{f}"' for f in field_names)
+                # 单元素时必须是 ("x",) 而非 ("x")，否则会被当作字符串迭代
+                if len(field_names) == 1:
+                    slots_str += ","
                 self._write(f"__slots__ = ({slots_str})")
             
             # 生成字段 - cdef class 需要 cdef 前缀，使用 public 使字段可从 Python 访问
@@ -1170,6 +1973,7 @@ class CythonGenerator:
                     else:
                         self._write(f"{field_type} {field.name}")
             self.indent -= 1
+        self._generic_params = saved_generic_params
         self._write("")
     
     def _generate_value_methods(self, node: StructDef) -> None:
@@ -1287,17 +2091,23 @@ class CythonGenerator:
             in_loop: 是否在循环中（决定生成 break 还是 return）
         """
         if isinstance(orelse, list):
-            # 多行形式：else: 块体
-            for stmt in orelse:
-                if hasattr(stmt, 'kind'):
+            # 多行形式：else: 块体。块内最后一条“表达式语句”为隐式返回值
+            last = orelse[-1] if orelse else None
+            has_terminal = last is not None and getattr(last, 'kind', None) in ('ReturnStmt', 'BreakStmt', 'ContinueStmt', 'RaiseStmt')
+            if has_terminal:
+                for stmt in orelse:
                     self._visit(stmt)
-            # 块体执行完后，循环中应 break，非循环中应 return
-            if in_loop:
-                self._write(f"# guard failed in loop - implicit break")
-                self._write(f"break")
             else:
-                self._write(f"# guard failed - implicit return")
-                self._write(f"return")
+                # 执行 else 块中的所有语句（多行形式），再生成退出语句
+                for stmt in orelse:
+                    self._visit(stmt)
+                if not has_terminal:
+                    if in_loop:
+                        self._write("# guard failed in loop - implicit break")
+                        self._write("break")
+                    else:
+                        self._write("# guard failed - implicit return")
+                        self._write("return")
         elif isinstance(orelse, BreakStmt):
             # else break: 直接生成 break
             self._write(f"break")
@@ -1403,17 +2213,8 @@ class CythonGenerator:
                     if expr_str:
                         expr_parts.append(expr_str)
             
-            if not has_complex and len(expr_parts) == 1:
-                # 单表达式: 直接传递值
-                self._write(expr_parts[0])
-            else:
-                # 多语句: IIFE 模式
-                self._write("(lambda: (")
-                self.indent += 1
-                if expr_parts:
-                    self._write(", ".join(expr_parts) + ",")
-                self.indent -= 1
-                self._write(")[-1])()")
+            # =: 构建块统一转换为嵌套函数调用，保证块内赋值/控制流不丢失
+            self._emit_build_block_assign(None, node)
             
         elif node.block_type == BuildBlockExpr.BUILD_CALL:
             # ~: 调用构建块
@@ -1558,24 +2359,48 @@ class CythonGenerator:
         base_classes = [self._type_to_str(t) for t in node.super_traits]
         if not base_classes:
             base_classes = ["object"]
-        
+
+        # Cython 的 cdef class 只允许继承一个扩展类型（extension type）基类。
+        # trait 组合（如 ReadWrite(Readable, Writable)）会产生多个 cdef 基类 -> 非法。
+        # 解决：只保留第一个 super trait 作为 cdef 基类，其余 super trait 的方法合并进本 trait。
+        all_methods = list(node.methods)
+        if len(base_classes) > 1:
+            seen = {m.name for m in all_methods if isinstance(m, FuncDef)}
+            trait_defs = getattr(self, 'trait_defs', {})
+            for st_name in base_classes[1:]:
+                st_def = trait_defs.get(st_name)
+                if st_def is not None:
+                    for m in st_def.methods:
+                        if isinstance(m, FuncDef) and m.name not in seen:
+                            all_methods.append(m)
+                            seen.add(m.name)
+            base_classes = [base_classes[0]]
+
         bases_str = ", ".join(base_classes)
         self._write(f"cdef class {node.name}({bases_str}):")
         self.indent += 1
-        
+
+        # trait 的泛型参数（如 T）与 Self 伪类型在方法签名中无对应 C 类型，
+        # 需加入 _generic_params 使其回退为 object（否则 Cython 报 'T' is not a type identifier）
+        _saved_trait_generic = set(self._generic_params)
+        if getattr(node, 'generic_params', None):
+            self._generic_params |= set(node.generic_params)
+        self._generic_params.add('Self')
+
         self._write("__slots__ = ('__vtable__',)")
         self._write("cdef void** __vtable__")
         
-        for method in node.methods:
+        for method in all_methods:
             if isinstance(method, FuncDef):
                 return_type_str = self._type_to_str(method.return_type) if method.return_type else "void"
+                return_type_str = self._normalize_method_type(return_type_str)
                 # 跳过 self 参数，只处理方法的实际参数
                 params_parts = []
                 for p in method.params:
                     if p.name == 'self':
                         continue
                     param_type = self._type_to_str(p.type_annotation) if p.type_annotation else 'object'
-                    params_parts.append(f"{param_type} {p.name}")
+                    params_parts.append(f"{self._normalize_method_type(param_type)} {p.name}")
                 params_str = ", ".join(params_parts)
                 if params_str:
                     params_str = f"self, {params_str}"
@@ -1584,24 +2409,26 @@ class CythonGenerator:
                 
                 has_body = len(method.body) > 0 and not (len(method.body) == 1 and getattr(method.body[0], 'kind', '') == 'PassStmt')
                 
+                # def 函数不能使用 cdef 风格的 `int name`，改用 -> 返回类型注解
+                ret_ann = "" if return_type_str in ("void", "object", "") else f" -> {return_type_str}"
+                
                 if has_body:
-                    self._write(f"cpdef {return_type_str} {method.name}({params_str}):")
+                    self._write(f"def {method.name}({params_str}){ret_ann}:")
                     self.indent += 1
                     for stmt in method.body:
                         self._visit(stmt)
                     self.indent -= 1
                 else:
-                    self._write("@cython.abstract(True)")
-                    self._write(f"cpdef {return_type_str} {method.name}({params_str}):")
+                    self._write(f"def {method.name}({params_str}){ret_ann}:")
                     self.indent += 1
-                    self._write("raise NotImplementedError(f\"{type(self).__name__} must implement {method.name}\")")
+                    self._write(f"raise NotImplementedError(f\"{{type(self).__name__}} must implement '{method.name}'\")")
                     self.indent -= 1
         
         self._write(f"def __init__(self):")
         self.indent += 1
-        self._write(f"self.__vtable__ = <void**>malloc({len(node.methods) + 1} * sizeof(void*))")
+        self._write(f"self.__vtable__ = <void**>malloc({len(all_methods) + 1} * sizeof(void*))")
         vtable_index = 0
-        for method in node.methods:
+        for method in all_methods:
             if isinstance(method, FuncDef):
                 self._write(f"self.__vtable__[{vtable_index}] = <void*>self.{method.name}")
                 vtable_index += 1
@@ -1617,9 +2444,31 @@ class CythonGenerator:
         self._write(f"self.__vtable__ = NULL")
         self.indent -= 1
         self.indent -= 1
-        
+
+        # 恢复 trait 泛型参数上下文
+        self._generic_params = _saved_trait_generic
+
         self.indent -= 1
         self._write("")
+
+    def _type_has_generics(self, typename: str) -> bool:
+        """判断类型字符串是否包含泛型标记（<...> 或 [...]）"""
+        return '<' in typename or '[' in typename
+
+    def _cdef_type_for_impl(self, typename: str) -> str:
+        """cdef class 的属性/参数类型若包含泛型（如 Wrapper<T>、ListBox[T]），
+        Cython 不支持，回退为 object；非泛型类型原样保留。
+        """
+        if self._type_has_generics(typename):
+            return "object"
+        return typename
+
+    def _impl_class_name_part(self, typename: str) -> str:
+        """将类型字符串中的泛型标记转换为合法标识符片段，用于拼接 cdef 类名"""
+        return (typename
+                .replace('<', '_').replace('>', '_')
+                .replace('[', '_').replace(']', '_')
+                .replace(', ', '_').replace(' ', '_'))
 
     def _visit_ImplStmt(self, node: ImplStmt) -> None:
         for_type = self._type_to_str(node.for_type) if isinstance(node.for_type, ASTNode) else str(node.for_type)
@@ -1627,15 +2476,15 @@ class CythonGenerator:
         if node.trait_generic_args:
             trait_generic_str = "[" + ", ".join(self._type_to_str(arg) for arg in node.trait_generic_args) + "]"
         
-        impl_class_name = f"_{node.trait_name}{trait_generic_str.replace('[', '_').replace(']', '_').replace(', ', '_')}__{for_type}"
+        impl_class_name = f"_{node.trait_name}{self._impl_class_name_part(trait_generic_str)}__{self._impl_class_name_part(for_type)}"
         
         self._write(f"cdef class {impl_class_name}({node.trait_name}):")
         self.indent += 1
         
         self._write(f"__slots__ = ('__inner__',)")
-        self._write(f"cdef {for_type} __inner__")
+        self._write(f"cdef {self._cdef_type_for_impl(for_type)} __inner__")
         
-        self._write(f"def __init__(self, {for_type} obj):")
+        self._write(f"def __init__(self, {self._cdef_type_for_impl(for_type)} obj):")
         self.indent += 1
         self._write(f"self.__inner__ = obj")
         self._write(f"super().__init__()")
@@ -1650,13 +2499,14 @@ class CythonGenerator:
         for method in node.methods:
             if isinstance(method, FuncDef):
                 return_type_str = self._type_to_str(method.return_type) if method.return_type else "void"
+                return_type_str = self._normalize_method_type(return_type_str)
                 # 跳过 self 参数
                 params_parts = []
                 for p in method.params:
                     if p.name == 'self':
                         continue
                     param_type = self._type_to_str(p.type_annotation) if p.type_annotation else 'object'
-                    params_parts.append(f"{param_type} {p.name}")
+                    params_parts.append(f"{self._normalize_method_type(param_type)} {p.name}")
                 params_str = ", ".join(params_parts)
                 if params_str:
                     params_str = f"self, {params_str}"
@@ -1680,6 +2530,13 @@ class CythonGenerator:
         """
         bases_str = "object"
         
+        # TypeClass 的泛型参数（如 T）与 callable 等伪类型在方法签名中无对应 C 类型，
+        # 需加入 _generic_params 使其回退为 object
+        _saved_tc_generic = set(self._generic_params)
+        if getattr(node, 'generic_params', None):
+            self._generic_params |= set(node.generic_params)
+        self._generic_params.add('Self')
+
         self._write(f"cdef class {node.name}({bases_str}):")
         self.indent += 1
         
@@ -1691,11 +2548,13 @@ class CythonGenerator:
         for method in node.methods:
             if isinstance(method, FuncDef):
                 return_type_str = self._type_to_str(method.return_type) if method.return_type else "void"
+                return_type_str = self._normalize_method_type(return_type_str)
                 params_parts = []
                 for p in method.params:
                     if p.name == 'self':
                         continue
                     param_type = self._type_to_str(p.type_annotation) if p.type_annotation else "object"
+                    param_type = self._normalize_method_type(param_type)
                     params_parts.append(f"{param_type} {p.name}")
                 params_str = ", ".join(params_parts)
                 if params_str:
@@ -1703,9 +2562,9 @@ class CythonGenerator:
                 else:
                     params_str = "self"
                 
-                # TypeClass 方法声明为抽象方法
-                self._write(f"@cython.abstract(True)")
-                self._write(f"cpdef {return_type_str} {method.name}({params_str}):")
+                # TypeClass 方法声明为抽象方法（用 def + 注解形式）
+                ret_ann = "" if return_type_str in ("void", "object", "") else f" -> {return_type_str}"
+                self._write(f"def {method.name}({params_str}){ret_ann}:")
                 self.indent += 1
                 self._write(f'raise NotImplementedError(f"{{type(self).__name__}} must implement {method.name}")')
                 self.indent -= 1
@@ -1731,28 +2590,46 @@ class CythonGenerator:
         self._write(f"self.__typeclass_vtable__ = NULL")
         self.indent -= 1
         self.indent -= 1
-        
+
+        # 恢复 TypeClass 泛型参数上下文
+        self._generic_params = _saved_tc_generic
+
         self.indent -= 1
         self._write("")
+
+    def _normalize_method_type(self, typename: str) -> str:
+        """归一化方法签名中的类型：callable 等非 Cython 类型与泛型类型均回退为 object"""
+        if typename in ('callable', 'function', 'Function', 'Any', 'object'):
+            return "object"
+        if self._type_has_generics(typename):
+            return "object"
+        return typename
 
     def _visit_TypeClassImpl(self, node: TypeClassImpl) -> None:
         """生成 TypeClass 实现的 Cython 代码
         
         为目标类型生成包装类，继承 TypeClass 并委托给内部对象。
         """
-        target_type = node.target_type
+        target_type = self._type_to_str(node.target_type) if isinstance(node.target_type, ASTNode) else str(node.target_type)
         typeclass_name = node.typeclass_name
-        
-        # 生成唯一的实现类名
-        impl_class_name = f"__TypeClass_{typeclass_name}_impl_{target_type}"
+
+        # 泛型参数在签名中作为类型标识符时回退为 object
+        saved_generic_params = set(self._generic_params)
+        if node.generic_params:
+            self._generic_params |= set(node.generic_params)
+        if target_type in self._generic_params:
+            target_type = "object"
+
+        # 生成唯一的实现类名（泛型标记转为合法标识符片段）
+        impl_class_name = f"__TypeClass_{typeclass_name}_impl_{self._impl_class_name_part(target_type)}"
         
         self._write(f"cdef class {impl_class_name}({typeclass_name}):")
         self.indent += 1
         
         self._write(f"__slots__ = ('__inner__',)")
-        self._write(f"cdef {target_type} __inner__")
+        self._write(f"cdef {self._cdef_type_for_impl(target_type)} __inner__")
         
-        self._write(f"def __init__(self, {target_type} obj):")
+        self._write(f"def __init__(self, {self._cdef_type_for_impl(target_type)} obj):")
         self.indent += 1
         self._write(f"self.__inner__ = obj")
         self._write(f"super().__init__()")
@@ -1764,12 +2641,13 @@ class CythonGenerator:
         for method in node.methods:
             if isinstance(method, FuncDef):
                 return_type_str = self._type_to_str(method.return_type) if method.return_type else "void"
+                return_type_str = self._normalize_method_type(return_type_str)
                 params_parts = []
                 for p in method.params:
                     if p.name == 'self':
                         continue
                     param_type = self._type_to_str(p.type_annotation) if p.type_annotation else "object"
-                    params_parts.append(f"{param_type} {p.name}")
+                    params_parts.append(f"{self._normalize_method_type(param_type)} {p.name}")
                 params_str = ", ".join(params_parts)
                 if params_str:
                     params_str = f"self, {params_str}"
@@ -1782,22 +2660,71 @@ class CythonGenerator:
                     self._visit(stmt)
                 self.indent -= 1
         
+        self._generic_params = saved_generic_params
         self.indent -= 1
         self._write("")
 
+    def _emit_meta_assign(self, stmt, ns) -> None:
+        """编译期求值 meta 块内的赋值，并将结果作为模块级常量输出"""
+        # 兼容 ConstDecl / Assign / LetStmt 等不同节点
+        name = getattr(stmt, 'name', None)
+        if not isinstance(name, str):
+            name = getattr(name, 'id', None)
+        if name is None:
+            # Assign 节点使用 .target（可能是 Name 或字符串）
+            target = getattr(stmt, 'target', None)
+            if isinstance(target, str):
+                name = target
+            elif target is not None:
+                name = getattr(target, 'id', None)
+        value = getattr(stmt, 'value', None)
+        if name is None or value is None:
+            return
+        value_src = self._expr_to_str(value)
+        # 求值以填入命名空间（供后续条件分支引用）
+        try:
+            val = eval(value_src, {"__builtins__": {}}, ns)
+        except Exception:
+            val = None
+        ns[name] = val
+        self._write(f"{name} = {value_src}")
+
+    def _emit_meta_if(self, stmt, ns) -> None:
+        """编译期求值 meta 块内的条件生成"""
+        cond_src = self._expr_to_str(getattr(stmt, 'test', getattr(stmt, 'condition', None)))
+        try:
+            ok = bool(eval(cond_src, {"__builtins__": {}}, ns))
+        except Exception:
+            ok = False
+        if ok:
+            for s in (getattr(stmt, 'body', None) or []):
+                if isinstance(s, DuckDef):
+                    continue
+                elif isinstance(s, FuncDef):
+                    self._visit(s)
+                elif getattr(s, 'kind', None) == 'IfStmt':
+                    self._emit_meta_if(s, ns)
+                else:
+                    self._emit_meta_assign(s, ns)
+
     def _visit_MetaBlock(self, node: MetaBlock) -> None:
-        """生成元编程块的 Cython 代码 - 处理 duck 约束"""
+        """生成元编程块的 Cython 代码 - 处理 duck 约束与编译期求值"""
         self._write("# === Meta Block ===")
         self._write("_duck_registry = {}")
 
-        ducks = []
-
+        ns = self._meta_namespace
         for stmt in node.body:
             if isinstance(stmt, DuckDef):
-                ducks.append(stmt)
-
-        for duck in ducks:
-            self._visit_DuckDef(duck)
+                self._visit_DuckDef(stmt)
+            elif isinstance(stmt, FuncDef):
+                # 编译期生成的模块级函数，直接输出为 def
+                self._visit(stmt)
+            elif getattr(stmt, 'kind', None) == 'IfStmt':
+                # 条件生成（如 if HAS_FEATURES: CONFIG = {...}）
+                self._emit_meta_if(stmt, ns)
+            else:
+                # 模块级常量声明（ConstDecl / Assign / LetStmt）
+                self._emit_meta_assign(stmt, ns)
 
         self._write("")
 
@@ -1857,9 +2784,8 @@ class CythonGenerator:
             }
             reqs_data.append(req_entry)
 
-        # 使用 repr() 生成合法的 Python 字典字面量
-        import json
-        reqs_json = json.dumps(reqs_data, ensure_ascii=False)
+        # 使用 repr() 生成合法的 Python 字典字面量（避免 json.dumps 的 false/true/null 不被 Cython 识别）
+        reqs_json = repr(reqs_data)
         self._write(f"_duck_registry['{node.name}'] = {{'type_params': {node.type_params!r}, 'requirements': {reqs_json}}}")
 
     def _visit_LambdaExpr(self, node: Any) -> str:
@@ -1877,26 +2803,56 @@ class CythonGenerator:
         """生成 try/except/finally 语句的 Cython 代码"""
         self._write("try:")
         self.indent += 1
-        for stmt in node.body:
-            self._visit(stmt)
-        self.indent -= 1
-        
-        # 处理 except 子句
-        for except_clause in getattr(node, 'except_clauses', []):
-            except_type = self._type_to_str(except_clause.type) if except_clause.type else ""
-            except_var = f" as {except_clause.name}" if getattr(except_clause, 'name', None) else ""
-            self._write(f"except {except_type}{except_var}:")
-            self.indent += 1
-            for stmt in except_clause.body:
+        if node.body:
+            for stmt in node.body:
                 self._visit(stmt)
+        else:
+            self._write("pass")
+        self.indent -= 1
+
+        handlers = getattr(node, 'handlers', []) or []
+        finally_body = getattr(node, 'orelse', None) or []
+
+        # 处理 except 子句（handlers 为 (type, name, body) 列表）
+        for handler in handlers:
+            if isinstance(handler, (list, tuple)):
+                exc_type, exc_name, except_body = (list(handler) + [None, None, None])[:3]
+            else:
+                exc_type = getattr(handler, 'type', None)
+                exc_name = getattr(handler, 'name', None)
+                except_body = getattr(handler, 'body', [])
+            if exc_type is None:
+                self._write("except:")
+            else:
+                exc_type_str = self._expr_to_str(exc_type) if hasattr(exc_type, 'kind') else str(exc_type)
+                if exc_name:
+                    self._write(f"except {exc_type_str} as {exc_name}:")
+                else:
+                    self._write(f"except {exc_type_str}:")
+            self.indent += 1
+            if except_body:
+                for stmt in except_body:
+                    self._visit(stmt)
+            else:
+                self._write("pass")
             self.indent -= 1
-        
+
         # 处理 finally 子句
-        if hasattr(node, 'finally_body') and node.finally_body:
+        if finally_body:
             self._write("finally:")
             self.indent += 1
-            for stmt in node.finally_body:
-                self._visit(stmt)
+            if finally_body:
+                for stmt in finally_body:
+                    self._visit(stmt)
+            else:
+                self._write("pass")
+            self.indent -= 1
+
+        # Cython 要求 try 至少跟随 except 或 finally
+        if not handlers and not finally_body:
+            self._write("except:")
+            self.indent += 1
+            self._write("pass")
             self.indent -= 1
 
     def _visit_RaiseStmt(self, node: Any) -> None:
@@ -1924,8 +2880,7 @@ class CythonGenerator:
 
     def _visit_VecType(self, node: VecType) -> str:
         """VecType → Python list type"""
-        elem_type = self._type_to_str(node.element_type)
-        return f"list  # vec[{elem_type}; {node.size}]"
+        return "list"
 
     def _visit_VecLiteral(self, node: VecLiteral) -> str:
         """VecLiteral → Python list literal"""
@@ -1934,6 +2889,13 @@ class CythonGenerator:
             elem = self._expr_to_str(node.elements[0])
             return f"[{elem}] * {node.size}"
         return f"[{elements_str}]"
+
+    def _visit_DictLiteral(self, node: DictLiteral) -> str:
+        """DictLiteral → Python dict literal"""
+        parts = []
+        for k, v in node.pairs:
+            parts.append(f"{self._expr_to_str(k)}: {self._expr_to_str(v)}")
+        return "{" + ", ".join(parts) + "}"
 
     def _visit_PipeExpr(self, node: PipeExpr) -> str:
         """PipeExpr → function call (already converted to Call by parser, fallback for direct usage)"""
@@ -1948,7 +2910,9 @@ class CythonGenerator:
         elif hasattr(func, 'id'):
             return f"{func.id}({value_str})"
         else:
-            return f"{self._expr_to_str(func)}({value_str})"
+            # 函数表达式是 lambda 等复杂形式时必须加括号，否则 lambda x: f(g) 会被误解析为 lambda x: (f(g))
+            func_str = self._expr_to_str(func)
+            return f"({func_str})({value_str})"
 
     def _visit_MacroDef(self, node: MacroDef) -> None:
         """MacroDef → 编译期函数"""
@@ -1960,14 +2924,60 @@ class CythonGenerator:
         self.indent -= 1
         self._write("")
 
+    def _expand_macro(self, name: str, args) -> str:
+        """编译期宏展开：将宏体模板中的 {param} 替换为调用实参的源码字符串。"""
+        # 宏名可能带 ! 后缀（@name! 或 name! 语法），统一去除以便查表
+        if isinstance(name, str):
+            name = name.rstrip('!')
+        mdef = self.macro_defs.get(name)
+        if not mdef:
+            # 未知宏：退化为函数调用（虽不可达，保证语法合法）
+            args_str = ", ".join(self._expr_to_str(a) for a in args)
+            return f"_macro_{name}({args_str})"
+        params = []
+        for p in (getattr(mdef, 'params', []) or []):
+            if isinstance(p, dict):
+                params.append(p.get('name'))
+            elif hasattr(p, 'name'):
+                params.append(p.name)
+            else:
+                params.append(str(p))
+        arg_sources = [self._expr_to_str(a) for a in args]
+        template = ""
+        for stmt in (getattr(mdef, 'body', []) or []):
+            if getattr(stmt, 'kind', None) == 'ExprStmt':
+                val = getattr(stmt, 'value', None)
+                if val is not None:
+                    template += getattr(val, 'value', '') or ''
+        for i, p in enumerate(params):
+            if i < len(arg_sources):
+                template = template.replace('{' + p + '}', arg_sources[i])
+        return template
+
     def _visit_MacroCall(self, node: MacroCall) -> str:
-        """MacroCall → 运行时调用或编译期展开"""
-        args_str = ", ".join(self._expr_to_str(a) for a in node.args)
-        return f"_macro_{node.name}({args_str})"
+        """MacroCall → 编译期展开为模板替换后的代码"""
+        return self._expand_macro(node.name, node.args)
+
+    def _is_macro_call(self, node) -> bool:
+        """判断一个 Call 节点是否对应已定义的宏（而非普通函数）"""
+        func = getattr(node, 'func', None)
+        if not isinstance(func, Name):
+            return False
+        name = func.id.rstrip('!') if isinstance(func.id, str) else func.id
+        return name in self.macro_defs
 
     def _visit_BuildValueExpr(self, node: BuildValueExpr) -> str:
         """BuildValueExpr → 值提取表达式"""
         return self._expr_to_str(node.operand)
+
+    def _visit_AwaitExpr(self, node: AwaitExpr) -> str:
+        """AwaitExpr → await 表达式（Cython 原生 async 支持）"""
+        value_str = self._expr_to_str(node.value)
+        return f"await {value_str}"
+
+    def _visit_BacktickBlock(self, node: BacktickBlock) -> str:
+        """BacktickBlock → 反引号代码块，运行时退化为字符串字面量"""
+        return repr(node.content)
 
     def _visit_SpawnStmt(self, node: Any) -> None:
         """生成 spawn 语句的 Cython 代码"""
@@ -1976,16 +2986,17 @@ class CythonGenerator:
             self._write("import threading")
         
         if hasattr(node, 'body') and node.body:
-            # 块形式：spawn: body...
-            self._write("threading.Thread(target=lambda: (")
+            # 块形式：spawn: body... 使用独立函数包装（lambda 元组包裹语句非法）
+            counter = getattr(self, '_conc_counter', 0)
+            self._conc_counter = counter + 1
+            fname = f"_cypy_spawn_{counter}"
+            self._write(f"def {fname}():")
             self.indent += 1
             for stmt in node.body:
-                if isinstance(stmt, (Call, BinOp, UnaryOp, Name, Constant)):
-                    self._write(self._expr_to_str(stmt) + ",")
-                else:
-                    self._visit(stmt)
+                self._visit(stmt)
             self.indent -= 1
-            self._write(")).start()")
+            self._write("")
+            self._write(f"threading.Thread(target={fname}).start()")
         elif hasattr(node, 'target') and node.target:
             # 调用形式：spawn func(args)
             args_str = ", ".join(self._expr_to_str(arg) for arg in getattr(node, 'args', []))
@@ -1998,16 +3009,17 @@ class CythonGenerator:
             self._write("import asyncio")
         
         if hasattr(node, 'body') and node.body:
-            # 块形式：go: body...
-            self._write("asyncio.create_task((async lambda: (")
+            # 块形式：go: body... 使用独立 async 函数包装
+            counter = getattr(self, '_conc_counter', 0)
+            self._conc_counter = counter + 1
+            fname = f"_cypy_go_{counter}"
+            self._write(f"async def {fname}():")
             self.indent += 1
             for stmt in node.body:
-                if isinstance(stmt, (Call, BinOp, UnaryOp, Name, Constant)):
-                    self._write(self._expr_to_str(stmt) + ",")
-                else:
-                    self._visit(stmt)
+                self._visit(stmt)
             self.indent -= 1
-            self._write("))())")
+            self._write("")
+            self._write(f"asyncio.create_task({fname}())")
         elif hasattr(node, 'target') and node.target:
             # 调用形式：go func(args)
             args_str = ", ".join(self._expr_to_str(arg) for arg in getattr(node, 'args', []))
@@ -2029,6 +3041,7 @@ class CythonGenerator:
             # 例如: type Maybe[T] = T | None
             # 生成: T = TypeVar('T'); Maybe = Union[T, None]
             self._write("# 泛型类型别名")
+            self._write("from typing import TypeVar, Union")
             for param in node.generic_params:
                 self._write(f"{param} = TypeVar('{param}')")
             self._write(f"{node.name} = Union[{target_type}]")
@@ -2077,7 +3090,7 @@ class CythonGenerator:
         # 运算符优先级（从高到低）
         precedence = {
             '**': 5,
-            '*': 4, '/': 4, '%': 4,
+            '*': 4, '/': 4, '%': 4, '//': 4,
             '+': 3, '-': 3,
             '<<': 2, '>>': 2,
             '&': 1, '^': 1, '|': 1,
@@ -2102,9 +3115,51 @@ class CythonGenerator:
             if right_prec < current_prec or (node.op == '**' and right_prec <= current_prec):
                 right_str = f"({right_str})"
         
-        return f"{left_str} {node.op} {right_str}"
+        # 处理 "not is" → "is not"（Python/Cython 语法要求）
+        op = node.op
+        if op == "not is":
+            op = "is not"
+        # int / int 使用整数除法（与类型检查器一致：int / int -> int）
+        if op == '/' and self._is_int_expr(node.left) and self._is_int_expr(node.right):
+            op = '//'
+
+        # 指针算术：ptr + idx（idx 为 Python 对象时）必须把 idx 转换为 C 整数，
+        # 否则 Cython 会尝试把指针转成 Python 对象做加法
+        if op in ('+', '-'):
+            hoisted = getattr(self, '_hoisted_pointer_types', {})
+            left_is_ptr = left_str in hoisted
+            right_is_ptr = right_str in hoisted
+            if left_is_ptr and not right_is_ptr:
+                right_str = f"<Py_ssize_t>({right_str})"
+            elif right_is_ptr and not left_is_ptr:
+                left_str = f"<Py_ssize_t>({left_str})"
+
+        # 指针与 None/null 的相等比较：Cython 不允许 int* 与 Python None 比较，
+        # 需把 None 转为 C 的 NULL（仅当另一侧为已知指针变量时）
+        if op in ('==', '!=', 'is', 'is not'):
+            hoisted = getattr(self, '_hoisted_pointer_types', {})
+            if right_str == 'None' and left_str in hoisted:
+                right_str = 'NULL'
+            elif left_str == 'None' and right_str in hoisted:
+                left_str = 'NULL'
+
+        return f"{left_str} {op} {right_str}"
+
+    def _visit_IfExp(self, node) -> str:
+        """生成三元条件表达式的 Cython 代码"""
+        body_str = self._expr_to_str(node.body)
+        test_str = self._expr_to_str(node.test)
+        orelse_str = self._expr_to_str(node.orelse)
+        return f"({body_str} if {test_str} else {orelse_str})"
 
     def _visit_UnaryOp(self, node: UnaryOp) -> str:
+        if node.op == 'not':
+            return f"not {self._expr_to_str(node.operand)}"
+        if node.op == '&':
+            # Cypy 中 & 为解引用操作符（*ptr），等价于 ptr[0]
+            operand = node.operand
+            operand_str = self._expr_to_str(operand)
+            return f"({operand_str})[0]"
         return f"{node.op}{self._expr_to_str(node.operand)}"
 
     def _visit_DerefExpr(self, node: DerefExpr) -> str:
@@ -2115,29 +3170,41 @@ class CythonGenerator:
         value_str = self._expr_to_str(node.value)
         target_type_str = self._type_to_str(node.target_type)
         
-        # 检查是否需要调用 __cast__ 或 __try_cast__
-        # 对于基本类型，使用 Cython 的类型转换语法
-        basic_types = {'int', 'float', 'double', 'bool', 'str', 'long', 'char'}
-        
-        # 对于非基本类型的目标，生成 __cast__ 调用
-        if target_type_str not in basic_types:
-            return f"{value_str}.__cast__[{target_type_str}]()"
-        
-        # 基本类型转换：使用 Cython 的类型转换语法
+        # 使用 Cython 的类型转换语法：<T>value（兼容基本类型与指针/结构体）
         return f"<{target_type_str}>{value_str}"
 
     def _visit_Call(self, node: Call) -> str:
+        # 处理显式 __cast__[T]() / __try_cast__[T]() 转换为 Cython 的 <T>obj 语法
+        if isinstance(node.func, Subscript) and isinstance(getattr(node.func, 'value', None), Attribute) \
+                and node.func.value.attr in ('__cast__', '__try_cast__'):
+            obj_str = self._expr_to_str(node.func.value.value)
+            type_str = self._type_to_str(node.func.slice)
+            return f"<{type_str}>{obj_str}"
+
         # 处理参数：支持位置参数和关键字参数
+        func_name = node.func.id if isinstance(node.func, Name) else None
+        func_ptr_idxs = getattr(self, '_func_pointer_indices', {}).get(func_name, set()) if func_name else set()
         arg_strings = []
-        for arg in node.args:
+        for ai, arg in enumerate(node.args):
             if isinstance(arg, tuple) and len(arg) == 2:
                 # 关键字参数：(name, value)
                 kw_name, kw_value = arg
                 arg_strings.append(f"{kw_name}={self._expr_to_str(kw_value)}")
             else:
                 # 位置参数
-                arg_strings.append(self._expr_to_str(arg))
+                arg_str = self._expr_to_str(arg)
+                # 若实参是 null/Nothing/None 且对应形参为指针类型，则映射为 C 的 NULL
+                # （Cython 不允许把 Python None 赋给 int* 等指针参数）
+                is_null_literal = (isinstance(arg, Name) and arg.id in ('null', 'Nothing')) or \
+                                  (isinstance(arg, Constant) and arg.value is None)
+                if is_null_literal and ai in func_ptr_idxs:
+                    arg_str = "NULL"
+                arg_strings.append(arg_str)
         args = ", ".join(arg_strings)
+        
+        # 宏调用（无 ! 语法，func 为已定义宏名）：编译期展开
+        if self._is_macro_call(node):
+            return self._expand_macro(node.func.id, node.args)
         
         if hasattr(node.func, 'id'):
             func_name = node.func.id
@@ -2150,12 +3217,15 @@ class CythonGenerator:
                 # sizeof 需要特殊处理，参数可能是类型或表达式
                 return f"{func_name}({args})"
             elif func_name == 'addr':
-                # addr(var) 转换为 &var
+                # addr(var) 转换为 &var；若 var 是指针则转 void*（T** 不能直接使用）
                 if node.args:
                     first_arg = node.args[0]
                     if isinstance(first_arg, tuple):
                         first_arg = first_arg[1]
-                    return f"&{self._expr_to_str(first_arg)}"
+                    first_str = self._expr_to_str(first_arg)
+                    if isinstance(first_arg, Name) and first_arg.id in getattr(self, '_hoisted_pointer_types', {}):
+                        return f"<void*>{first_str}"
+                    return f"&{first_str}"
                 return f"{func_name}({args})"
             elif func_name == 'free':
                 return f"{func_name}({args})"
@@ -2164,10 +3234,22 @@ class CythonGenerator:
         # 使用逗号表达式：(checker(), func(args))[1] 获取函数调用结果
         if node.checker:
             return f"({node.checker}(), {self._expr_to_str(node.func)}({args}))[1]"
-        
-        return f"{self._expr_to_str(node.func)}({args})"
+
+        func_node = node.func
+        func_str = self._expr_to_str(func_node)
+        # 函数表达式是 lambda / 调用 / 运算等复杂形式时必须加括号，
+        # 否则 lambda x: f(g) 会被误解析为 lambda x: (f(g))
+        if hasattr(func_node, 'kind') and func_node.kind not in ('Name', 'Attribute', 'Subscript'):
+            func_str = f"({func_str})"
+        return f"{func_str}({args})"
 
     def _visit_Name(self, node: Name) -> str:
+        # Cypy 的 null 关键字映射到 Python 的 None
+        if node.id in ('null', 'Nothing'):
+            return "None"
+        # 泛型类型参数作为值使用（如 U() 构造）时无对应运行时对象，回退为 object
+        if node.id in getattr(self, '_generic_params', set()):
+            return "object"
         return node.id
 
     def _visit_Constant(self, node: Constant) -> str:
@@ -2175,9 +3257,27 @@ class CythonGenerator:
             # 检查是否是 f-string
             prefix = getattr(node, 'prefix', None)
             if prefix == 'f':
-                return f'f"{node.value}"'
-            # 使用双引号生成字符串
-            return f'"{node.value}"'
+                val = node.value
+                # f-string 在解析期已被渲染为字符串，其中的指针表达式（如 {&p}、{p}、{p + 1}）仍是文本。
+                # 指针/指针算术结果无法直接转换为 Python 对象打印，需转换为 void*。
+                hoisted = getattr(self, '_hoisted_pointer_types', {})
+                def _fix_addr(m):
+                    expr = m.group(1).strip()
+                    # &NAME 为解引用（ptr[0]），结果是普通值可直接打印
+                    mm = re.match(r'^&\s*([A-Za-z_]\w*)$', expr)
+                    if mm and mm.group(1) in hoisted:
+                        return '{' + mm.group(1) + '[0]}'
+                    # NAME 或 NAME +/- ...：指针（地址）或指针算术，需转 Py_ssize_t 才能打印
+                    if '[' not in expr and '.' not in expr:
+                        mm = re.match(r'^([A-Za-z_]\w*)\s*(?:[+\-]\s*[^\[\]]+)?$', expr)
+                        if mm and mm.group(1) in hoisted:
+                            return '{<Py_ssize_t>(' + expr + ')}'
+                    return m.group(0)
+                val = re.sub(r'\{([^}{]*)\}', _fix_addr, val)
+                # 对 f-string 也使用 repr 以正确处理引号与转义字符
+                return 'f' + repr(val)
+            # 使用 repr 以正确处理引号、换行等转义字符
+            return repr(node.value)
         if isinstance(node.value, bool):
             return "True" if node.value else "False"
         if isinstance(node.value, list):
@@ -2214,17 +3314,30 @@ class CythonGenerator:
         return f"{self._expr_to_str(node.value)}.{node.attr}"
 
     def _visit_Subscript(self, node: Any) -> str:
-        return f"{self._expr_to_str(node.value)}[{self._expr_to_str(node.slice)}]"
+        value_str = self._expr_to_str(node.value)
+        # 处理切片语法 list[a:b:c]
+        if isinstance(node.slice, dict) and node.slice.get('slice'):
+            start = self._expr_to_str(node.slice['start']) if node.slice.get('start') is not None else ''
+            end = self._expr_to_str(node.slice['end']) if node.slice.get('end') is not None else ''
+            step = self._expr_to_str(node.slice['step']) if node.slice.get('step') is not None else ''
+            if step:
+                return f"{value_str}[{start}:{end}:{step}]"
+            return f"{value_str}[{start}:{end}]"
+        return f"{value_str}[{self._expr_to_str(node.slice)}]"
 
     def _visit_PointerType(self, node: PointerType) -> str:
         base_type = self._type_to_str(node.base_type)
-        return f"{base_type}*"
+        # Cython 要求指针类型带空格：int *p（而非 int*p）
+        return f"{base_type} *"
 
     def _visit_RefType(self, node: RefType) -> str:
         base_type = self._type_to_str(node.base_type)
         return f"{base_type}&"
 
     def _visit_GenericType(self, node: GenericType) -> str:
+        # typing 构造类型（Optional/Callable/Union 等）无 Cython 对应类型，回退为 object
+        if node.name in self._object_generic_types:
+            return "object"
         if node.name in self.type_aliases:
             alias_node = self.type_aliases[node.name]
             alias_params = alias_node.generic_params
@@ -2262,8 +3375,28 @@ class CythonGenerator:
         return node
 
     def _expr_to_str(self, node: ASTNode) -> str:
+        # 表达式语句节点：解包内部表达式
+        if getattr(node, 'kind', None) == 'ExprStmt':
+            return self._expr_to_str(getattr(node, 'value', None) or node)
+        # go 调用形式作为表达式：asyncio.create_task(...)
+        if getattr(node, 'kind', None) == 'GoStmt':
+            if getattr(node, 'target', None) and getattr(node, 'body', None):
+                counter = getattr(self, '_conc_counter', 0)
+                self._conc_counter = counter + 1
+                fname = f"_cypy_go_{counter}"
+                self._write(f"async def {fname}():")
+                self.indent += 1
+                for stmt in node.body:
+                    self._visit(stmt)
+                self.indent -= 1
+                self._write("")
+                return f"asyncio.create_task({fname}())"
+            args_str = ", ".join(self._expr_to_str(a) for a in getattr(node, 'args', []))
+            return f"asyncio.create_task({self._expr_to_str(node.target)}({args_str}))"
         if isinstance(node, BinOp):
             return self._visit_BinOp(node)
+        if isinstance(node, IfExp):
+            return self._visit_IfExp(node)
         if isinstance(node, UnaryOp):
             return self._visit_UnaryOp(node)
         if isinstance(node, DerefExpr):
@@ -2282,16 +3415,20 @@ class CythonGenerator:
             return self._visit_Subscript(node)
         if isinstance(node, VecLiteral):
             return self._visit_VecLiteral(node)
+        if isinstance(node, DictLiteral):
+            return self._visit_DictLiteral(node)
         if isinstance(node, PipeExpr):
             return self._visit_PipeExpr(node)
         if isinstance(node, MacroCall):
             return self._visit_MacroCall(node)
         if isinstance(node, BuildValueExpr):
             return self._visit_BuildValueExpr(node)
+        if isinstance(node, AwaitExpr):
+            return self._visit_AwaitExpr(node)
+        if isinstance(node, BacktickBlock):
+            return self._visit_BacktickBlock(node)
         if isinstance(node, UnionType):
-            return "object  # union[" + " | ".join(
-                t.id if hasattr(t, 'id') else str(t) for t in node.types
-            ) + "]"
+            return "object"
         if isinstance(node, VecType):
             return self._visit_VecType(node)
         if hasattr(node, "kind") and node.kind == "StructLiteral":
@@ -2330,19 +3467,48 @@ class CythonGenerator:
             return node.id
         return str(node)
 
+    def _sanitize_type(self, type_str: str) -> str:
+        """移除类型字符串中的泛型下标（如 list[str] -> list），使其可作为注解使用。"""
+        if type_str is None:
+            return "object"
+        # 去掉形如 [ ... ] 的泛型下标部分
+        idx = type_str.find("[")
+        if idx != -1:
+            # 仅当 [ 前是字母/标识符时才截断，避免误伤普通表达式
+            if idx > 0 and (type_str[idx - 1].isalnum() or type_str[idx - 1] in "_."):
+                base = type_str[:idx].strip()
+                if base:
+                    return base
+        return type_str
+
+    def _is_int_expr(self, node: Any) -> bool:
+        """判断表达式是否为整数类型（用于决定 / 是否生成 //）"""
+        if node is None:
+            return False
+        if isinstance(node, Constant) and isinstance(node.value, int) and not isinstance(node.value, bool):
+            return True
+        if isinstance(node, Name):
+            t = self._current_local_types.get(node.id)
+            if t in ('int', 'long', 'short', 'char', 'longlong',
+                     'unsigned int', 'unsigned long', 'unsigned char'):
+                return True
+            return False
+        if isinstance(node, UnaryOp) and node.op in ('+', '-', '~'):
+            return self._is_int_expr(node.operand)
+        if isinstance(node, BinOp):
+            return self._is_int_expr(node.left) and self._is_int_expr(node.right)
+        return False
+
     def _type_to_str(self, node: ASTNode) -> str:
+        if hasattr(node, 'id') and node.id in ('None', 'Nothing', 'null'):
+            return "object"
+        # never / Never 返回类型映射到 Python 的 NoReturn（表示该函数不返回）
+        if hasattr(node, 'id') and node.id in ('never', 'Never', 'NeverType'):
+            return "NoReturn"
         # 联合类型使用 object 表示（Cython 不支持原生联合类型）
         if isinstance(node, UnionType):
             # 在 Cython 中，联合类型使用 object 类型
-            # 生成注释说明这是联合类型
-            type_names = []
-            for t in node.types:
-                if hasattr(t, 'id'):
-                    type_names.append(t.id)
-                elif hasattr(t, 'name'):
-                    type_names.append(t.name)
-            # 返回 object 并添加注释
-            return "object  # union[" + " | ".join(type_names) + "]"
+            return "object"
         if isinstance(node, VecType):
             return self._visit_VecType(node)
         if isinstance(node, Name):
@@ -2352,6 +3518,9 @@ class CythonGenerator:
                 return self._type_to_str(alias_node.target)
             # 检查是否是枚举类型，如果是则返回object（Cython中Python类不能直接作为cpdef参数类型）
             if node.id in self.enum_defs:
+                return "object"
+            # 泛型参数在 Cython 中无对应类型，回退为 object
+            if node.id in self._generic_params:
                 return "object"
             return self.type_mapper.to_cython(node.id)
         if isinstance(node, PointerType):
@@ -2448,32 +3617,37 @@ class CythonGenerator:
             self._write(f"class {node.name}{bases_str}:")
         
         self.indent += 1
-        
+
+        # 记录是否处于 cdef class，供方法生成时决定 cpdef/def
+        prev_in_cdef = getattr(self, '_in_cdef_class', False)
+        self._in_cdef_class = is_cdef
+
         # 分离方法和其他语句
         methods = []
         other_stmts = []
-        
+
         for stmt in node.body:
             if isinstance(stmt, FuncDef):
                 methods.append(stmt)
             else:
                 other_stmts.append(stmt)
-        
+
         # 处理类属性（非方法的语句）
         for stmt in other_stmts:
             self._visit(stmt)
-        
+
         # 生成方法
         for method in methods:
             if hasattr(method, 'is_struct_method'):
                 method.is_struct_method = True
             self._visit_FuncDef(method)
-        
+
         # 如果没有任何内容，添加 pass
         if not node.body:
             self._write("pass")
-        
+
         self.indent -= 1
+        self._in_cdef_class = prev_in_cdef
         self._write("")
     
     def _find_used_module_vars(self, body: List[ASTNode]) -> Set[str]:

@@ -213,26 +213,34 @@ class CypyHook:
             result.steps.extend(transpile_result.steps)
             
             if result.success and result.cython_code:
-                os.makedirs(self.output_dir, exist_ok=True)
-                # 处理不同的源文件扩展名
-                basename = os.path.basename(source_path)
-                if basename.endswith(".cypy"):
-                    pyx_filename = basename.replace(".cypy", ".pyx")
-                elif basename.endswith(".py"):
-                    pyx_filename = basename.replace(".py", ".pyx")
-                else:
-                    pyx_filename = basename + ".pyx"
-                
-                pyx_path = os.path.join(self.output_dir, pyx_filename)
-                with open(pyx_path, "w", encoding="utf-8") as f:
-                    f.write(result.cython_code)
-                result.pyx_path = pyx_path
-                result.steps.append(f"Cython文件已生成: {pyx_path}")
+                # output_dir 为空时回退到 'output'，避免 makedirs('') 抛错
+                effective_output_dir = self.output_dir or "output"
+                try:
+                    os.makedirs(effective_output_dir, exist_ok=True)
+                    # 处理不同的源文件扩展名
+                    basename = os.path.basename(source_path)
+                    if basename.endswith(".cypy"):
+                        pyx_filename = basename.replace(".cypy", ".pyx")
+                    elif basename.endswith(".py"):
+                        pyx_filename = basename.replace(".py", ".pyx")
+                    else:
+                        pyx_filename = basename + ".pyx"
+                    
+                    pyx_path = os.path.join(effective_output_dir, pyx_filename)
+                    with open(pyx_path, "w", encoding="utf-8") as f:
+                        f.write(result.cython_code)
+                    result.pyx_path = pyx_path
+                    result.steps.append(f"Cython文件已生成: {pyx_path}")
 
-                # 更新增量编译缓存
-                if incremental and ast:
-                    incremental_compiler = self._get_incremental_compiler()
-                    incremental_compiler.update_cache(source_path, ast, result.cython_code)
+                    # 更新增量编译缓存
+                    if incremental and ast:
+                        incremental_compiler = self._get_incremental_compiler()
+                        incremental_compiler.update_cache(source_path, ast, result.cython_code)
+                except Exception as write_err:
+                    # 写入 .pyx 失败时必须标记失败，否则上层会误判为成功
+                    result.success = False
+                    result.errors.append(f"生成.pyx文件错误: {write_err}")
+                    return result
 
             return result
 
@@ -258,8 +266,8 @@ class CypyHook:
         result.steps.append("=== 一步到位编译模式 ===")
         result.steps.append(f"开始处理文件: {source_path}")
 
-        # 使用参数output_dir或回退到实例属性
-        actual_output_dir = output_dir if output_dir else self.output_dir
+        # 使用参数output_dir或回退到实例属性（为空时回退到 'output'）
+        actual_output_dir = output_dir if output_dir else (self.output_dir or "output")
         
         try:
             # Step 1: 转译（需要临时设置output_dir）
@@ -336,16 +344,22 @@ class CypyHook:
                 process = subprocess.run(
                     compile_cmd,
                     capture_output=True,
-                    text=True,
                     timeout=120
                 )
-                
+
+                # 以字节读取并容错解码，避免 Windows 下默认 GBK 编码导致的
+                # UnicodeDecodeError（编译器输出可能含非 GBK 字节）
+                raw_out = process.stdout if isinstance(process.stdout, bytes) else process.stdout.encode("utf-8", "replace")
+                raw_err = process.stderr if isinstance(process.stderr, bytes) else process.stderr.encode("utf-8", "replace")
+                stdout_text = raw_out.decode("utf-8", "replace")
+                stderr_text = raw_err.decode("utf-8", "replace")
+
                 if process.returncode != 0:
-                    result.errors.append(f"编译错误: {process.stderr}")
+                    result.errors.append(f"编译错误: {stderr_text}")
                     result.steps.append(f"编译失败: {process.returncode}")
                     return result
-                
-                result.steps.append(f"编译成功: {process.stdout[:200]}...")
+
+                result.steps.append(f"编译成功: {stdout_text[:200]}...")
 
                 # Step 4: 查找生成的.pyd文件
                 pyd_files = []

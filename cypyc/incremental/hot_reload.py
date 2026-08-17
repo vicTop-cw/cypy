@@ -423,14 +423,13 @@ class HotReloadEngine:
                 # 记录模块级别的依赖关系（简化版：基于导入语句）
                 if hasattr(ast, 'body'):
                     for stmt in ast.body:
-                        if hasattr(stmt, 'kind') and stmt.kind == 'ImportStmt':
-                            for imp in getattr(stmt, 'imports', []):
-                                imported_name = getattr(imp, 'name', '')
-                                if imported_name in self._module_source_map:
-                                    # 添加反向依赖：被导入的模块 -> 当前模块
-                                    if imported_name not in self._module_dependencies:
-                                        self._module_dependencies[imported_name] = set()
-                                    self._module_dependencies[imported_name].add(module_name)
+                        if hasattr(stmt, 'kind') and stmt.kind == 'Import':
+                            imported_name = getattr(stmt, 'module', '')
+                            if imported_name in self._module_source_map:
+                                # 添加反向依赖：被导入的模块 -> 当前模块
+                                if imported_name not in self._module_dependencies:
+                                    self._module_dependencies[imported_name] = set()
+                                self._module_dependencies[imported_name].add(module_name)
         except Exception:
             pass  # 解析失败不影响热重载
     

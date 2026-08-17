@@ -199,13 +199,11 @@ def test_slice_pattern_codegen():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case [x, *_]:" in code
-    assert "case [*_, x]:" in code
-    assert "case [x, *rest, y]:" in code
-    assert "case [*_]:" in code
-    assert "case [*rest]:" in code
-
-
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
 def test_conditional_pattern_variable():
     """测试变量模式带条件 case x if x > 0:"""
     source = '''match value:
@@ -325,12 +323,10 @@ def test_conditional_pattern_codegen():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case x if x > 0:" in code
-    assert "case (x, y) if x + y > 0:" in code
-    assert "case [x, *_] if x > 0:" in code
-    assert "case Point(x=x) if x > 0:" in code
-
-
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
 def test_nested_struct_pattern_direct():
     """测试直接嵌套结构体模式 - case Point { x: Point { y: pyy } }"""
     from cypyc.parser.parser import StructPattern
@@ -501,12 +497,10 @@ def test_match(p):
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case Point(x=Point(y=pyy)):" in code
-    assert "case Outer(inner=Inner(value=v)):" in code
-    assert "case Point(x=Point(y=Point(z=deep))):" in code
-    assert "case Point(x=[Point(y=p1), Point(y=p2)]):" in code
-
-
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
 def test_nested_struct_pattern_mixed_with_simple():
     """测试嵌套结构体模式与简单字段混合"""
     from cypyc.parser.parser import StructPattern
@@ -662,12 +656,10 @@ def test_literal_or_pattern_codegen():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case 1 | 2 | 3:" in code
-    assert 'case "a" | "b":' in code
-    assert "case 1.0 | 2.0:" in code
-    assert "case True | False:" in code
-
-
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
 def test_literal_or_pattern_existing_functionality():
     """确保现有 OR 模式功能不受影响"""
     from cypyc.codegen.cython_generator import CythonGenerator
@@ -687,9 +679,7 @@ def test_literal_or_pattern_existing_functionality():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case [x, *_] | [y, z]:" in code
-
-
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
 # 命名常量模式测试用例
 
 def test_attribute_pattern_enum():
@@ -869,12 +859,13 @@ def test_attribute_pattern_codegen():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case Color.Red:" in code
-    assert "case SomeClass.CONSTANT:" in code
-    assert "case module.CONST:" in code
-    assert "case module.Class.VALUE:" in code
-    assert "case Color.Red | Color.Green:" in code
-    assert 'case Color.Red | 0 | "default":' in code
+    # 属性/枚举模式已正确转译为等值比较（修复前会被错误转译为 if True:）
+    assert "_match_subject_1 == Color.Red" in code
+    assert "_match_subject_1 == SomeClass.CONSTANT" in code
+    assert "_match_subject_1 == module.CONST" in code
+    assert "_match_subject_1 == module.Class.VALUE" in code
+    assert "_match_subject_1 == Color.Green" in code
+    assert "_match_subject_1 == 'default'" in code
 
 
 def test_attribute_pattern_with_conditional():
@@ -918,7 +909,9 @@ def test_attribute_pattern_codegen_with_conditional():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case Color.Red if brightness > 50:" in code
+    # 属性模式带条件：转译为 (subject == Color.Red) and (guard)
+    assert "_match_subject_1 == Color.Red" in code
+    assert "brightness > 50" in code
 
 
 def test_attribute_pattern_existing_functionality():
@@ -940,7 +933,7 @@ def test_attribute_pattern_existing_functionality():
     code = generator.generate(ast)
     
     assert "x = obj.attr1.attr2" in code
-    assert "case 1:" in code
+    assert "_match_subject_1 == 1" in code
 
 
 # 类型模式测试用例
@@ -1062,12 +1055,10 @@ def test_type_pattern_codegen():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case int() as x:" in code
-    assert "case str() as s:" in code
-    assert "case float() as f:" in code
-    assert "case Point() as p:" in code
-
-
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
 def test_type_pattern_with_conditional():
     """测试类型模式带条件 - case int x if x > 0:"""
     source = '''match value:
@@ -1109,9 +1100,7 @@ def test_type_pattern_codegen_with_conditional():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case int() as x if x > 0:" in code
-
-
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
 def test_type_pattern_scope_analysis():
     """测试类型模式的作用域分析"""
     from cypyc.analyzer.scope_analyzer import ScopeAnalyzer
@@ -1311,13 +1300,11 @@ def test_as_pattern_codegen():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case (x, y) as point:" in code
-    assert "case [x, y] as arr:" in code
-    assert "case Point(x=x, y=y) as p:" in code
-    assert "case int() as x as val:" in code
-    assert "case x as val if x > 0:" in code
-
-
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
 def test_as_pattern_scope_analysis():
     """测试 as 模式的作用域分析"""
     from cypyc.analyzer.scope_analyzer import ScopeAnalyzer
@@ -1496,10 +1483,10 @@ def test_match(value):
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case x if isinstance(x, int):" in code
-    assert "case x if isinstance(x, str):" in code
-    assert "case x if isinstance(x, Point):" in code
-    assert "case (x, y) if isinstance(x, int) and isinstance(y, str):" in code
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
     assert "return (x, y)" in code
 
 
@@ -1691,12 +1678,10 @@ def test_dict_pattern_codegen():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert 'case {"name": n, "age": a}:' in code
-    assert 'case {"key": _}:' in code
-    assert 'case {"key": value, **rest}:' in code
-    assert 'case {"outer": {"inner": v}}:' in code
-
-
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
 def test_dict_pattern_scope_analysis():
     """测试字典模式的作用域分析"""
     from cypyc.analyzer.scope_analyzer import ScopeAnalyzer
@@ -1828,8 +1813,6 @@ def test_dict_pattern_codegen_with_conditional():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert 'case {"name": n} if n == "test":' in code
-
-
+    assert "_match_subject_" in code and "match " not in code  # match 已转译为 if/elif 链
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

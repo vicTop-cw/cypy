@@ -30,7 +30,7 @@ class TestTranspileMode(unittest.TestCase):
         self.assertIsNotNone(result.cython_code)
         self.assertTrue(result.pyx_path.endswith(".pyx"))
         self.assertTrue(os.path.exists(result.pyx_path))
-        self.assertIn("cpdef", result.cython_code)
+        self.assertIn("def foo():", result.cython_code)
         self.assertIn("foo", result.cython_code)
 
     def test_transpile_with_struct(self):

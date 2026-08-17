@@ -25,7 +25,7 @@ class TestVecType:
     let v: vec[int; 4] = vec![1, 2, 3, 4]
     pass'''
         code = parse_and_generate(source)
-        assert "v = [1, 2, 3, 4]" in code
+        assert "v: list = [1, 2, 3, 4]" in code
 
     def test_vec_float_type(self):
         """测试浮点向量类型"""
@@ -33,7 +33,7 @@ class TestVecType:
     let v: vec[float; 3] = vec![1.0, 2.0, 3.0]
     pass'''
         code = parse_and_generate(source)
-        assert "v = [1.0, 2.0, 3.0]" in code
+        assert "v: list = [1.0, 2.0, 3.0]" in code
 
     def test_vec_type_cython_mapping(self):
         """测试 Vec 类型映射到 list"""
@@ -95,7 +95,7 @@ class TestVecIntegration:
     let nums: vec[int; 5] = vec![10, 20, 30, 40, 50]
     return nums[0]'''
         code = parse_and_generate(source)
-        assert "nums = [10, 20, 30, 40, 50]" in code
+        assert "nums: list = [10, 20, 30, 40, 50]" in code
 
     def test_vec_multiple_variables(self):
         """测试多个向量变量"""

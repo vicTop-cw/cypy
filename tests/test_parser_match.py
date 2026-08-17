@@ -248,8 +248,10 @@ def test_match(p):
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case Point(x=x, y=y):" in code
-    assert "case Point(x=px, **_):" in code
+    # struct 模式已转译为 isinstance 检查（Cypy 转译 match 为 if/elif）
+    assert "isinstance(_match_subject_1, Point)" in code
+    assert "x = _match_subject_1.x" in code
+    assert "px = _match_subject_1.x" in code
 
 
 def test_match_array_pattern_fixed_length():
@@ -388,9 +390,11 @@ def test_match_array_pattern_codegen():
     generator = CythonGenerator()
     code = generator.generate(ast)
     
-    assert "case [x, y, z]:" in code
-    assert "case [[a, b], [c, d]]:" in code
-    assert "case [1, x, 3]:" in code
+    # 数组模式已转译为 isinstance + len 检查（Cypy 转译 match 为 if/elif）
+    assert "isinstance(_match_subject_1, (list, tuple))" in code
+    assert "len(_match_subject_1) == 3" in code
+    assert "a = _match_subject_1[0][0]" in code
+    assert "_match_subject_1[0] == 1" in code
 
 
 if __name__ == "__main__":

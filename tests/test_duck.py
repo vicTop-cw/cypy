@@ -433,9 +433,9 @@ meta:
 """)
         assert "_duck_registry['C']" in output
         assert "[...]" not in output
-        assert '"kind": "operator"' in output
-        assert '"name": "<"' in output
-        assert '"is_unary": false' in output
+        assert "'kind': 'operator'" in output
+        assert "'name': '<'" in output
+        assert "'is_unary': False" in output
 
     def test_unary_operator_in_output(self):
         """一元操作符在注释和注册表中"""
@@ -445,7 +445,7 @@ meta:
         -a -> Self
 """)
         assert "#   Operator: -a -> Self" in output
-        assert '"is_unary": true' in output
+        assert "'is_unary': True" in output
 
 
 # ========== Edge Cases 测试 ==========

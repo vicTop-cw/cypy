@@ -1,0 +1,162 @@
+[
+  {
+    "name": "fibonacci_recursive",
+    "implementation": "python",
+    "time_ms": 0.24912900000344962,
+    "memory_kb": 184.0908203125,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:22:37"
+  },
+  {
+    "name": "fibonacci_recursive",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.07947066682390869,
+    "memory_kb": 147.08515625,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:22:37"
+  },
+  {
+    "name": "factorial_loop",
+    "implementation": "python",
+    "time_ms": 0.23334299970883876,
+    "memory_kb": 183.7470703125,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:22:37"
+  },
+  {
+    "name": "factorial_loop",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.058323030261266416,
+    "memory_kb": 146.99765625,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:22:37"
+  },
+  {
+    "name": "list_sum",
+    "implementation": "python",
+    "time_ms": 6.27467600046657,
+    "memory_kb": 522.943359375,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:22:38"
+  },
+  {
+    "name": "list_sum",
+    "implementation": "cypy_estimated",
+    "time_ms": 3.267078261073355,
+    "memory_kb": 418.3546875,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:22:39"
+  },
+  {
+    "name": "string_concat",
+    "implementation": "python",
+    "time_ms": 1.53203800029587,
+    "memory_kb": 188.625,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:22:39"
+  },
+  {
+    "name": "string_concat",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.8333426087831513,
+    "memory_kb": 150.9,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:22:39"
+  },
+  {
+    "name": "math_operations",
+    "implementation": "python",
+    "time_ms": 1.871590000228025,
+    "memory_kb": 219.306640625,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:22:39"
+  },
+  {
+    "name": "math_operations",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.8043826086973043,
+    "memory_kb": 175.4453125,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:22:39"
+  },
+  {
+    "name": "nested_loop",
+    "implementation": "python",
+    "time_ms": 300.9144119999837,
+    "memory_kb": 197.0,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:23:11"
+  },
+  {
+    "name": "nested_loop",
+    "implementation": "cypy_estimated",
+    "time_ms": 109.37302500013695,
+    "memory_kb": 157.60000000000002,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:23:43"
+  },
+  {
+    "name": "struct_operations",
+    "implementation": "python",
+    "time_ms": 45.348701999755576,
+    "memory_kb": 1627.064453125,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:23:48"
+  },
+  {
+    "name": "struct_operations",
+    "implementation": "cypy_estimated",
+    "time_ms": 19.69138956527509,
+    "memory_kb": 1301.57890625,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:23:52"
+  },
+  {
+    "name": "generic_function",
+    "implementation": "python",
+    "time_ms": 13.381176000111736,
+    "memory_kb": 241.1796875,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:23:54"
+  },
+  {
+    "name": "generic_function",
+    "implementation": "cypy_estimated",
+    "time_ms": 5.936993043312965,
+    "memory_kb": 192.94375000000002,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 11:23:55"
+  }
+]

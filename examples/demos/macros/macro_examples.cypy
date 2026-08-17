@@ -1,0 +1,99 @@
+# 宏系统示例
+# 演示 macro 定义、调用和反引号代码块
+
+# ============================================================
+# 1. 基本宏定义
+# ============================================================
+
+macro double_value(ts: Tokens) =
+    f"({ts} * 2)"
+
+macro square(ts: Tokens) =
+    f"({ts} * {ts})"
+
+macro unless(cond: Tokens, body: Tokens) =
+    f"if not ({cond}):\n    {body}"
+
+# ============================================================
+# 2. 宏调用
+# ============================================================
+
+def macro_demo(x: int) -> int:
+    # 宏在编译期展开
+    let y = double_value(x)
+    let z = square(x)
+    return y + z
+
+# ============================================================
+# 3. 反引号代码块
+# ============================================================
+
+def backtick_demo() -> str:
+    # 反引号代码块用于捕获代码片段（三反引号）
+    let code = ```print("hello")```
+    return code
+
+def fstring_backtick_demo(name: str) -> str:
+    # f 前缀的反引号代码块支持插值
+    let code = f```print("Hello, {name}")```
+    return code
+
+# ============================================================
+# 4. 宏与普通函数对比
+# ============================================================
+
+def function_double(x: int) -> int:
+    return x * 2
+
+def compare_macro_vs_function(x: int) -> int:
+    # 宏在编译期展开，无函数调用开销
+    let macro_result = double_value(x)
+    # 函数在运行时调用
+    let func_result = function_double(x)
+    return macro_result + func_result
+
+# ============================================================
+# 5. 条件宏
+# ============================================================
+
+macro debug_log(msg: Tokens) =
+    f"if __debug__:\n    print({msg})"
+
+def conditional_macro_demo(value: int) -> int:
+    debug_log(f"Processing value: {value}")
+    return value * 2
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Macro System Demo ===")
+
+    print("--- Basic macros ---")
+    print(f"double_value(5) + square(5) = {macro_demo(5)}")
+
+    print("--- Backtick blocks ---")
+    print(f"backtick: {backtick_demo()}")
+    print(f"f-backtick: {fstring_backtick_demo('World')}")
+
+    print("--- Macro vs function ---")
+    print(f"compare(5) = {compare_macro_vs_function(5)}")
+
+    print("--- Conditional macro ---")
+    print(f"conditional(10) = {conditional_macro_demo(10)}")
+
+
+suite MacroTests:
+    test macro_double:
+        assert macro_demo(5) == 35
+
+    test backtick_content:
+        let code = backtick_demo()
+        assert len(code) > 0
+
+    test compare_macro_function:
+        assert compare_macro_vs_function(5) == 20
+
+    test conditional_macro:
+        assert conditional_macro_demo(10) == 20

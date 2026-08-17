@@ -1,0 +1,162 @@
+[
+  {
+    "name": "fibonacci_recursive",
+    "implementation": "python",
+    "time_ms": 0.23112300026696175,
+    "memory_kb": 184.0908203125,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:02"
+  },
+  {
+    "name": "fibonacci_recursive",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.07583599993571018,
+    "memory_kb": 147.08515625,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:02"
+  },
+  {
+    "name": "factorial_loop",
+    "implementation": "python",
+    "time_ms": 0.17779700021492317,
+    "memory_kb": 183.7470703125,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:02"
+  },
+  {
+    "name": "factorial_loop",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.05823151511845715,
+    "memory_kb": 146.99765625,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:02"
+  },
+  {
+    "name": "list_sum",
+    "implementation": "python",
+    "time_ms": 6.113410000107251,
+    "memory_kb": 522.943359375,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:03"
+  },
+  {
+    "name": "list_sum",
+    "implementation": "cypy",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "Type check errors: ['Type mismatch in assignment: expected int, got object at 6:9']",
+    "timestamp": "2026-07-30 09:45:03"
+  },
+  {
+    "name": "string_concat",
+    "implementation": "python",
+    "time_ms": 1.4304609998362139,
+    "memory_kb": 188.625,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:03"
+  },
+  {
+    "name": "string_concat",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.7917808695271126,
+    "memory_kb": 150.9,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:03"
+  },
+  {
+    "name": "math_operations",
+    "implementation": "python",
+    "time_ms": 0.9581020000041462,
+    "memory_kb": 219.306640625,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:03"
+  },
+  {
+    "name": "math_operations",
+    "implementation": "cypy",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "Type check errors: ['Type mismatch in binary operation: float + None at 0:0']",
+    "timestamp": "2026-07-30 09:45:03"
+  },
+  {
+    "name": "nested_loop",
+    "implementation": "python",
+    "time_ms": 107.54906200018013,
+    "memory_kb": 197.0,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:15"
+  },
+  {
+    "name": "nested_loop",
+    "implementation": "cypy_estimated",
+    "time_ms": 49.64079821428251,
+    "memory_kb": 157.60000000000002,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:29"
+  },
+  {
+    "name": "struct_operations",
+    "implementation": "python",
+    "time_ms": 19.27863199991407,
+    "memory_kb": 1627.064453125,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:31"
+  },
+  {
+    "name": "struct_operations",
+    "implementation": "cypy",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "Type check errors: ['Type mismatch: expected list, got Point at 7:5']",
+    "timestamp": "2026-07-30 09:45:31"
+  },
+  {
+    "name": "generic_function",
+    "implementation": "python",
+    "time_ms": 6.359723999921698,
+    "memory_kb": 241.1796875,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:32"
+  },
+  {
+    "name": "generic_function",
+    "implementation": "cypy_estimated",
+    "time_ms": 3.3720195651530167,
+    "memory_kb": 192.94375000000002,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:45:33"
+  }
+]

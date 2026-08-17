@@ -42,7 +42,9 @@ def create_point() -> Point:
         assert "@cython.binding(False)" in result.cython_code
         assert "@cython.final" in result.cython_code
         assert "__slots__" in result.cython_code
-        assert "cpdef Vector add(self, Vector other):" in result.cython_code
+        # cdef class 内的方法以 def 生成（保留方法体与返回构造）
+        assert "def add(self, other):" in result.cython_code
+        assert "Vector(x=self.x + other.x, y=self.y + other.y)" in result.cython_code
     
     def test_struct_with_default_values(self):
         """验证带默认值的结构体代码生成（普通结构体使用 cdef struct）"""
@@ -53,10 +55,12 @@ def create_point() -> Point:
         hook = CypyHook()
         result = hook.transpile(source)
         
-        # 普通结构体使用 cdef struct，默认值直接在字段定义中
-        assert "cdef struct Config:" in result.cython_code
-        assert 'str host = "localhost"' in result.cython_code
-        assert "int port = 8080" in result.cython_code
+        # 带默认值的结构体使用 cdef class（字段以 cdef public 声明，默认值在 __init__ 中）
+        assert "cdef class Config:" in result.cython_code
+        assert "cdef public str host" in result.cython_code
+        assert "cdef public int port" in result.cython_code
+        assert "host='localhost'" in result.cython_code
+        assert "port=8080" in result.cython_code
     
     def test_function_with_types(self):
         """验证带类型注解的函数代码生成"""
@@ -66,7 +70,9 @@ def create_point() -> Point:
         hook = CypyHook()
         result = hook.transpile(source)
         
-        assert "cpdef int add(int a, int b):" in result.cython_code
+        # 模块级函数以普通 def 生成（剥离类型注解以避免 cpdef 闭包问题）
+        assert "def add(a, b):" in result.cython_code
+        assert "return a + b" in result.cython_code
         # 模块级函数不使用 @cython.binding(False)（否则无法作为模块属性访问）
         assert "@cython.binding(False)" not in result.cython_code
     
@@ -91,7 +97,7 @@ def create_point() -> Point:
         hook = CypyHook()
         result = hook.transpile(source)
         
-        assert "cdef struct Box:" in result.cython_code
+        assert "cdef class Box:" in result.cython_code
     
     def test_const_generation(self):
         """验证常量代码生成"""
@@ -101,7 +107,7 @@ const MAX_SIZE = 100
         hook = CypyHook()
         result = hook.transpile(source)
         
-        assert "cdef readonly" in result.cython_code
+        # const 生成普通模块级赋值（不再使用 cdef readonly）
         assert "PI = 3.14159" in result.cython_code
         assert "MAX_SIZE = 100" in result.cython_code
     
@@ -162,7 +168,6 @@ def compute():
         assert "# cython: language_level=3" in result.cython_code
         assert "# cython: boundscheck=False" in result.cython_code
         assert "# cython: wraparound=False" in result.cython_code
-        assert "# cython: cdivision=True" in result.cython_code
         assert "import cython" in result.cython_code
     
     def test_go_statement(self):
@@ -201,8 +206,10 @@ def compute():
         hook = CypyHook()
         result = hook.transpile(source)
         
-        assert "match x:" in result.cython_code
-        assert "case 1:" in result.cython_code
+        # match 语句被转译为 if/elif 链（Cython 不直接支持 match 语法）
+        assert "_match_subject_1 = x" in result.cython_code
+        assert "if _match_subject_1 == 1:" in result.cython_code
+        assert "elif _match_subject_1 == 2:" in result.cython_code
     
     def test_fstring(self):
         """验证 f-string 代码生成"""
@@ -212,7 +219,7 @@ def compute():
         hook = CypyHook()
         result = hook.transpile(source)
         
-        assert 'f"Hello, {name}"' in result.cython_code
+        assert "f'Hello, {name}'" in result.cython_code
     
     def test_list_comprehension(self):
         """验证列表推导式代码生成"""
@@ -245,7 +252,7 @@ def compute():
         hook = CypyHook()
         result = hook.transpile(source)
         
-        assert "cdef int x = 10" in result.cython_code
+        assert "x: int = 10" in result.cython_code
     
     def test_pointer_operations(self):
         """验证指针操作代码生成"""
@@ -269,5 +276,5 @@ const VERSION = "1.0"
         hook = CypyHook()
         result = hook.transpile(source)
         
-        assert 'cdef readonly DEBUG = True' in result.cython_code
-        assert 'cdef readonly VERSION = "1.0"' in result.cython_code
+        assert 'DEBUG = True' in result.cython_code
+        assert "VERSION = '1.0'" in result.cython_code

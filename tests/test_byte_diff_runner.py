@@ -75,11 +75,13 @@ class ByteDiffRunner:
             result = subprocess.run(
                 [sys.executable, setup_path, "build_ext", "--inplace"],
                 capture_output=True,
-                text=True,
                 timeout=120
             )
+            stderr_text = (result.stderr.decode("utf-8", "replace")
+                           if isinstance(result.stderr, bytes)
+                           else result.stderr)
             if result.returncode != 0:
-                raise RuntimeError(f"Cython build failed:\n{result.stderr}")
+                raise RuntimeError(f"Cython build failed:\n{stderr_text}")
         finally:
             os.chdir(original_dir)
         
@@ -110,20 +112,24 @@ if hasattr({module_name}, '__main__'):
         result = subprocess.run(
             [sys.executable, "-c", test_script],
             capture_output=True,
-            text=True,
             timeout=30
         )
-        return result.stdout.strip()
+        stdout_text = (result.stdout.decode("utf-8", "replace")
+                       if isinstance(result.stdout, bytes)
+                       else result.stdout)
+        return stdout_text.strip()
     
     def _run_python_code(self, python_source: str) -> str:
         """运行等效的 Python 代码"""
         result = subprocess.run(
             [sys.executable, "-c", python_source],
             capture_output=True,
-            text=True,
             timeout=30
         )
-        return result.stdout.strip()
+        stdout_text = (result.stdout.decode("utf-8", "replace")
+                       if isinstance(result.stdout, bytes)
+                       else result.stdout)
+        return stdout_text.strip()
     
     def compare(self, cypy_source: str, python_source: str, module_name: str = "test_module") -> dict:
         """对比 Cypy 和 Python 代码的执行结果"""

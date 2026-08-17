@@ -20,7 +20,9 @@ class TestScopeAnalyzer(unittest.TestCase):
         self.assertIn("Undefined name 'y'", analyzer.errors[0])
 
     def test_duplicate_declaration(self):
-        source = "let x = 1\nlet x = 2\n"
+        # Cypy 遵循 Python 语义允许 let 重新绑定；但同一作用域内的重复"定义"
+        # （def/class/struct/trait/typeclass/enum）被视为重复声明并报错。
+        source = "def foo():\n    return 1\ndef foo():\n    return 2\n"
         lexer = Lexer(source)
         parser = Parser(lexer.tokenize())
         ast = parser.parse()

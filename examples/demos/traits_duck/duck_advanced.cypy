@@ -193,6 +193,13 @@ def absolute_value<T: Negatable>(value: T) -> T:
         return -value
     return value
 
+# 返回两个可比较值中的较大者
+def find_max<T: Comparable>(a: T, b: T) -> T:
+    """在可比较的两个值中返回较大者"""
+    if a > b:
+        return a
+    return b
+
 # === 7. 综合示例 ===
 struct IntContainer:
     items: list<int>
@@ -222,6 +229,13 @@ struct ComplexNum:
     def __mul__(self, other: ComplexNum) -> ComplexNum:
         return ComplexNum(real=self.real * other.real - self.imag * other.imag, imag=self.real * other.imag + self.imag * other.real)
 
+    def __sub__(self, other: ComplexNum) -> ComplexNum:
+        return ComplexNum(real=self.real - other.real, imag=self.imag - other.imag)
+
+    def __truediv__(self, other: ComplexNum) -> ComplexNum:
+        denom = other.real * other.real + other.imag * other.imag
+        return ComplexNum(real=(self.real * other.real + self.imag * other.imag) / denom, imag=(self.imag * other.real - self.real * other.imag) / denom)
+
 struct Temperature:
     celsius: float
 
@@ -239,6 +253,15 @@ struct Score:
 
     def __eq__(self, other: Score) -> bool:
         return self.value == other.value
+
+    def __ne__(self, other: Score) -> bool:
+        return self.value != other.value
+
+    def __le__(self, other: Score) -> bool:
+        return self.value <= other.value
+
+    def __ge__(self, other: Score) -> bool:
+        return self.value >= other.value
 
 def demo() -> None:
     # Container<int> 泛型约束

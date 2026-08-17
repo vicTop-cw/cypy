@@ -13,6 +13,14 @@ import argparse
 import sys
 import os
 
+# 修复 Windows 控制台编码问题（GBK 无法输出 ✓/✗ 等 Unicode 字符）
+if sys.platform == 'win32':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    except (AttributeError, ValueError):
+        pass
+
 # 添加项目根目录到路径
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
@@ -48,7 +56,7 @@ def main():
     parser.add_argument(
         "--demo-dir",
         help="DEMO output directory",
-        default=os.path.join(os.path.dirname(__file__), '..', 'DEMO')
+        default=os.path.join(os.path.dirname(__file__), '..', 'examples', 'demos', 'legacy')
     )
     
     args = parser.parse_args()

@@ -230,10 +230,9 @@ def test_extractor_pattern_codegen():
     code = codegen.generate(ast)
     
     # 验证生成的代码包含优先级调度逻辑
-    assert "__unapply__" in code
-    assert "__unapply_seq__" in code
-    assert "__unwarp__" in code
-    assert "__match_args__" in code
+    # 提取器模式已转译为 isinstance + 字段访问（__f0/__f1）
+    assert "isinstance(_match_subject_1, Email)" in code
+    assert "_match_subject_1.__f0" in code
 
 
 # ==================== 范围模式测试 ====================
@@ -296,7 +295,7 @@ def test_range_pattern_codegen():
     code = codegen.generate(ast)
     
     # 验证范围模式转换为守卫条件
-    assert "1 <= _ < 10" in code
+    assert "1 <= _match_subject_1 < 10" in code
 
 
 def test_range_pattern_with_conditional():

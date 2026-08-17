@@ -117,11 +117,12 @@
 
 | 测试维度 | 输入示例 | 系统表现 | 测试状态 | 备注 |
 |----------|----------|----------|----------|------|
-| 错误写法：块外使用 | `constraint Number = int | float\n` | 抛出 `ValueError` | ✅ 通过 | 正确识别 constraint 只能在 meta 块内 |
 | 错误写法：块内无效语法 | `meta:\n    invalid_syntax\n` | 抛出 `ValueError` | ✅ 通过 | 正确识别无效语法 |
-| 作用域边界：函数内 | `def foo():\n    meta:\n        constraint Number = int | float\n` | 抛出错误 | ✅ 通过 | 正确检测到 meta 只能在模块顶级定义 |
+| 作用域边界：函数内 | `def foo():\n    meta:\n        pass\n` | 抛出错误 | ✅ 通过 | 正确检测到 meta 只能在模块顶级定义 |
 
 **问题**：已修复 - meta 现在只能在模块顶级定义。
+
+> **注**：`constraint` 关键字当前未实现（计划 v0.5+），相关测试用例已移除。当前可用 `type` 别名作为替代方案。
 
 ---
 

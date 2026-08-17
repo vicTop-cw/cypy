@@ -1,0 +1,29 @@
+{
+  "op": "project_structure",
+  "version": "1.0.0",
+  "definition": "Cypy 项目结构规范（由 FIST project-init 生成）",
+  "preconditions": [],
+  "laws": [
+    "必填项存在",
+    "目录结构符合 PROJECT-SPEC/01"
+  ],
+  "tests": [
+    {
+      "name": "项目根存在",
+      "input": {
+        "project_dir": "."
+      },
+      "expected": {
+        "valid": true
+      }
+    },
+    {
+      "name": "不存在的目录",
+      "input": {
+        "project_dir": "nonexistent_dir_xyz"
+      },
+      "expected": "DirNotFound"
+    }
+  ],
+  "fingerprint": "fnv1a64:01f12f64db6d55fb"
+}

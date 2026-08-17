@@ -5,10 +5,10 @@
 # === 1. 基本宏定义 ===
 
 macro double_value(ts: Tokens) =
-    pass
+    f"({ts} * 2)"
 
 macro greet(name: Tokens) =
-    pass
+    f'print("Hello, " + {name})'
 
 # === 2. 宏调用（使用 ! 语法） ===
 
@@ -32,10 +32,10 @@ macro create_logger(level: Tokens) =
 # === 4. 多参数宏 ===
 
 macro make_pair(first: Tokens, second: Tokens) =
-    pass
+    f"Pair({first}, {second})"
 
 macro repeat_action(n: Tokens, action: Tokens) =
-    pass
+    f"for _ in range({n}):\n    {action}"
 
 # === 5. 带代码生成的宏 ===
 

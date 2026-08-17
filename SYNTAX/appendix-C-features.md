@@ -584,3 +584,32 @@ Cypy 设计为与 Python/Cython 高度兼容，但存在一些必要差异。
 3. **构建块是核心**：`=:` 等构建块支持 early return 和 guard，是 Cypy 区别于 Python/Cython 的标志性特性。
 4. **指针与 defer 配合**：指针默认逃逸，必须显式 `defer` 清理，避免内存泄漏。
 5. **三反引号字面量**：用于宏代码捕获，支持 `f`/`r` 前缀，符合 lang-zone 规范。
+
+## 已知限制
+
+以下语法特性尚未实现，将在后续迭代中逐步添加：
+
+| 限制 | 当前替代方案 | 计划版本 |
+|------|-------------|---------|
+| `Callable[[T], R]` 函数类型标注 | 使用 `def` + 类型推断 | v0.5 |
+| `&` 位运算与取址冲突 | 使用 `|` 和 `^` 替代（`&` 保留给取址） | v0.5 |
+| walrus 操作符 `:=` | 使用构建块 `=:` 语法 | v0.5+ |
+
+### 已实现的限制修复
+
+| 特性 | 实现版本 |
+|------|---------|
+| 切片语法 `list[a:b]` | v0.2 |
+| `not in` 操作符 | v0.2 |
+| `not is` 操作符 | v0.2 |
+| Codegen `_generate_tuple_condition` | v0.2 |
+| Codegen `_generate_array_condition` | v0.2 |
+| Codegen `_generate_dict_condition` | v0.2 |
+| 三元条件表达式 `x if c else y` | v0.3 |
+| `*args`/`**kwargs` 可变参数 | v0.3 |
+| 整除运算符 `//` | v0.3 |
+| 复合赋值 `//=`、`%=` | v0.3 |
+| `global`/`nonlocal` 声明 | v0.4 |
+| CythonGenerator `await` 表达式 | v0.4 |
+| CythonGenerator `async def` 函数 | v0.4 |
+| CythonGenerator BacktickBlock | v0.4 |

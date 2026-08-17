@@ -51,8 +51,8 @@ def test_full_stack_struct_trait_impl():
     cython_code = _run_full_stack(source)
     
     assert "cdef struct Point" in cython_code
-    assert "cdef struct Circle" in cython_code
-    assert "cpdef None draw" in cython_code
+    assert "cdef class Circle:" in cython_code
+    assert "def draw(self):" in cython_code
 
 
 def test_full_stack_generic_function():
@@ -75,8 +75,8 @@ def test_full_stack_defer_statement():
 
     cython_code = _run_full_stack(source)
     
-    assert "try:" in cython_code
-    assert "finally:" in cython_code
+    # defer 当前内联注入到函数末尾（逆序），不使用 try/finally
+    assert "free(buffer)" in cython_code
 
 
 def test_full_stack_guard_statement():

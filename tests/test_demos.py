@@ -216,6 +216,26 @@ DEMO_FILES = {
         "description": "复合声明与作用域",
         "features": ["let_mut_const", "scope", "default_params", "keyword_args", "complex_return", "type_inference", "generic_struct", "closures", "match_destructure", "strings", "comprehensions"],
     },
+    # Upcoming features (部分已实现 v0.2)
+    "upcoming_features/planned_features.cypy": {
+        "description": "即将支持的功能演示",
+        "features": ["ternary_planned", "varargs_planned", "callable_planned", "slice_implemented", "not_in_implemented", "not_is_implemented"],
+    },
+    # SIMD 向量示例
+    "simd_vectors/vec_examples.cypy": {
+        "description": "SIMD 向量类型与运算",
+        "features": ["vec_type", "vec_literal", "vector_arithmetic", "indexing", "color_blending"],
+    },
+    # 宏系统示例
+    "macros/macro_examples.cypy": {
+        "description": "宏定义、调用与反引号代码块",
+        "features": ["macro_def", "macro_call", "backtick_block", "fstring_backtick", "conditional_macro"],
+    },
+    # 联合类型示例
+    "type_system/union_type_examples.cypy": {
+        "description": "联合类型、类型别名与可选类型",
+        "features": ["union_type", "multi_union", "type_alias", "optional_type", "polymorphic_dispatch"],
+    },
 }
 
 

@@ -1,0 +1,17 @@
+name,implementation,time_ms,memory_kb,iterations,success,error,timestamp
+fibonacci_recursive,python,0,0,100,False,fibonacci() missing 1 required positional argument: 'n',2026-07-30 09:27:25
+fibonacci_recursive,cypy_estimated,0.0,0.0,100,True,,2026-07-30 09:27:25
+factorial_loop,python,0,0,100,False,factorial() missing 1 required positional argument: 'n',2026-07-30 09:27:25
+factorial_loop,cypy_estimated,0.0,0.0,100,True,,2026-07-30 09:27:25
+list_sum,python,0,0,100,False,list_sum() missing 1 required positional argument: 'n',2026-07-30 09:27:25
+list_sum,cypy,0,0,100,False,"Type check errors: ['Type mismatch in assignment: expected int, got object at 6:9']",2026-07-30 09:27:25
+string_concat,python,0,0,100,False,string_concat() missing 1 required positional argument: 'n',2026-07-30 09:27:25
+string_concat,cypy_estimated,0.0,0.0,100,True,,2026-07-30 09:27:25
+math_operations,python,0,0,100,False,math_operations() missing 1 required positional argument: 'n',2026-07-30 09:27:25
+math_operations,cypy,0,0,100,False,Type check errors: ['Type mismatch in binary operation: float + None at 0:0'],2026-07-30 09:27:25
+nested_loop,python,0,0,100,False,nested_loop() missing 1 required positional argument: 'n',2026-07-30 09:27:25
+nested_loop,cypy_estimated,0.0,0.0,100,True,,2026-07-30 09:27:25
+struct_operations,python,0,0,100,False,struct_operations() missing 1 required positional argument: 'n',2026-07-30 09:27:25
+struct_operations,cypy,0,0,100,False,"Type check errors: ['Type mismatch: expected list, got Point at 7:5']",2026-07-30 09:27:25
+generic_function,python,0,0,100,False,process_data() missing 1 required positional argument: 'n',2026-07-30 09:27:25
+generic_function,cypy_estimated,0.0,0.0,100,True,,2026-07-30 09:27:25

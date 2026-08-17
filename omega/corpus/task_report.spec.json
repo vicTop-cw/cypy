@@ -1,0 +1,38 @@
+{
+  "op": "task_report",
+  "version": "1.0",
+  "definition": {
+    "signature": "task_report(text: str) -> {conclusion, evidence, analysis, gaps, archive_suggestion}",
+    "note": "子任务回传强制五段式格式（FIST-SKILL 第 3 章）：结论/证据/分析/缺口与风险/建议入档位置"
+  },
+  "preconditions": [
+    "text 非空",
+    "text 包含全部五段式标题"
+  ],
+  "laws": [
+    "L1"
+  ],
+  "tests": [
+    {
+      "input": {
+        "text": "结论：任务完成\n证据：文件已生成\n分析：逻辑正确\n缺口与风险：无\n建议入档位置：docs/"
+      },
+      "expected": {
+        "valid": true
+      }
+    },
+    {
+      "input": {
+        "text": "结论：任务完成"
+      },
+      "error": "MissingSection"
+    },
+    {
+      "input": {
+        "text": ""
+      },
+      "error": "EmptyText"
+    }
+  ],
+  "fingerprint": "fnv1a64:65d6d1afe24dd779"
+}

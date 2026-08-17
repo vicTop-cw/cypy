@@ -5,7 +5,7 @@
 
 ## 关键字总览
 
-Cypy 关键字共 54 个，按用途分为 11 个类别。所有关键字均为保留字，不可作为标识符使用。
+Cypy 关键字共 61 个，按用途分为 11 个类别。所有关键字均为保留字，不可作为标识符使用。
 
 > **注**：`True` / `False` 在词法分析中作为独立的 `TokenType.TRUE` / `TokenType.FALSE` 处理，但语义上属于布尔值关键字。
 
@@ -163,6 +163,8 @@ Cypy 关键字共 54 个，按用途分为 11 个类别。所有关键字均为�
 | `mut` | 内存 | `mut name [: T] = expr` 或 `param: mut T` | 可变变量声明 / 参数修饰符 | `mut x: int = 10` |
 | `owned` | 内存 | `owned <name>` 或 `param: owned T` | 独占所有权 | `def consume(x: owned Buf): ...` |
 | `lambda` | 函数 | `lambda params: expr` | 匿名函数 | `let f = lambda x: x + 1` |
+| `global` | 作用域 | `global <name>` | 声明全局变量 | `global counter; counter += 1` |
+| `nonlocal` | 作用域 | `nonlocal <name>` | 声明外层函数变量 | `nonlocal x; x += 1` |
 
 参见：`12-operators.md`、`04-pointer-types.md`、`07-trait-impl.md`。
 
@@ -171,14 +173,15 @@ Cypy 关键字共 54 个，按用途分为 11 个类别。所有关键字均为�
 ## 关键字速查表（按字母序）
 
 ```
-and       async     await     break     case      class     comptime  const
-continue  def       defer     del       duck      elif      else
-enum      extends   False     finally   for       from      go
-guard     if        import    in        is        lambda    let
-macro     match     meta      mut       Never     owned     or
-pass      raise     return    setup     spawn     struct    suite
-test      teardown  trait     True      try       type      typeclass
-vec       while     with      yield
+and       as        assert    async     await     break     case
+class     comptime  const     continue  def       defer     del
+duck      elif      else      enum      except    extends   False
+finally   for       from      global    go        guard     if
+impl      import    in        is        lambda    let       macro
+match     meta      mut       Never     nonlocal  not       or
+owned     pass      raise     return    setup     spawn     struct
+suite     test      teardown  trait     True      try       type
+typeclass vec       while     with      yield
 ```
 
 ## 备注

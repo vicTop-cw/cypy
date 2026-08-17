@@ -51,8 +51,13 @@ def struct_pointer_demo() -> int:
 # === 4. 指针算术 ===
 
 def pointer_arithmetic_demo() -> int:
-    let arr: list<int> = [10, 20, 30, 40, 50]
-    let arr_ptr: *int = addr(arr[0])
+    let arr: *int = malloc(sizeof(int) * 5)
+    arr[0] = 10
+    arr[1] = 20
+    arr[2] = 30
+    arr[3] = 40
+    arr[4] = 50
+    let arr_ptr: *int = arr
 
     print(f"arr[0] = {&arr_ptr}")
 
@@ -66,6 +71,7 @@ def pointer_arithmetic_demo() -> int:
         let p: *int = arr_ptr + i
         print(f"  arr[{i}] = {&p}")
 
+    free(arr)
     return 0
 
 # === 5. 动态内存分配与指针 ===

@@ -21,7 +21,7 @@ class TestPointerOperations(unittest.TestCase):
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("cdef int* ptr", code)
+        self.assertIn("cdef int * ptr", code)
 
 
 class TestEnumTranslation(unittest.TestCase):
@@ -56,7 +56,7 @@ class TestLetValTranslation(unittest.TestCase):
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("cdef int x = 42", code)
+        self.assertIn("x: int = 42", code)
 
     def test_var_mutable(self):
         source = "def func():\n    var x: int = 10\n    x = x + 1\n    return x\n"
@@ -65,7 +65,7 @@ class TestLetValTranslation(unittest.TestCase):
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("cdef int x = 10", code)
+        self.assertIn("x: int = 10", code)
         self.assertIn("x = x + 1", code)
 
 

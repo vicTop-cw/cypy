@@ -1,0 +1,17 @@
+name,implementation,time_ms,memory_kb,iterations,success,error,timestamp
+fibonacci_recursive,python,0,0,100,False,name 'fibonacci' is not defined,2026-07-30 09:39:19
+fibonacci_recursive,cypy_estimated,0.0,0.0,100,True,,2026-07-30 09:39:19
+factorial_loop,python,0.18837499985238537,61.541015625,100,True,,2026-07-30 09:39:19
+factorial_loop,cypy_estimated,0.06063030309495376,45.73671875,100,True,,2026-07-30 09:39:19
+list_sum,python,5.864455999981146,392.5185546875,100,True,,2026-07-30 09:39:20
+list_sum,cypy,0,0,100,False,"Type check errors: ['Type mismatch in assignment: expected int, got object at 6:9']",2026-07-30 09:39:20
+string_concat,python,1.5358959999866784,57.2802734375,100,True,,2026-07-30 09:39:20
+string_concat,cypy_estimated,0.7995265218398899,45.82421875,100,True,,2026-07-30 09:39:20
+math_operations,python,0,0,100,False,name 'math' is not defined,2026-07-30 09:39:20
+math_operations,cypy,0,0,100,False,Type check errors: ['Type mismatch in binary operation: float + None at 0:0'],2026-07-30 09:39:20
+nested_loop,python,317.5162840000121,69.2177734375,100,True,,2026-07-30 09:39:53
+nested_loop,cypy_estimated,114.60412035719077,52.673437500000006,100,True,,2026-07-30 09:40:26
+struct_operations,python,0,0,100,False,name 'Point' is not defined,2026-07-30 09:40:26
+struct_operations,cypy,0,0,100,False,"Type check errors: ['Type mismatch: expected list, got Point at 7:5']",2026-07-30 09:40:26
+generic_function,python,0,0,100,False,name 'identity' is not defined,2026-07-30 09:40:26
+generic_function,cypy_estimated,0.0,0.0,100,True,,2026-07-30 09:40:26

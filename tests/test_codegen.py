@@ -16,7 +16,7 @@ class TestCythonGenerator(unittest.TestCase):
         generator = CythonGenerator()
         code = generator.generate(ast)
 
-        self.assertIn("cpdef int foo(int x):", code)
+        self.assertIn("def foo(x):", code)
         self.assertIn("return x", code)
 
     def test_generate_let_stmt(self):

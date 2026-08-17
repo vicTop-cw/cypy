@@ -57,22 +57,22 @@ class TestLZGenericTypeCodegen(unittest.TestCase):
     def test_list_return_type_generation(self):
         source = "def foo() -> List<int>:\n    return [1, 2, 3]\n"
         code = self._generate_code(source)
-        self.assertIn("cpdef list foo():", code)
+        self.assertIn("def foo():", code)
 
     def test_option_type_generation(self):
         source = "def foo(value: Option<int>) -> Option<str>:\n    return value\n"
         code = self._generate_code(source)
-        self.assertIn("cpdef str | None foo(int | None value):", code)
+        self.assertIn("def foo(value):", code)
 
     def test_result_type_generation(self):
         source = "def foo() -> Result<int, str>:\n    return (42, None)\n"
         code = self._generate_code(source)
-        self.assertIn("cpdef (int, Exception) foo():", code)
+        self.assertIn("def foo():", code)
 
     def test_dict_type_generation(self):
         source = "def foo(data: Dict<str, int>) -> Dict<str, str>:\n    return data\n"
         code = self._generate_code(source)
-        self.assertIn("cpdef dict foo(dict data):", code)
+        self.assertIn("def foo(data):", code)
 
     def test_option_in_struct_field(self):
         source = """
@@ -86,30 +86,27 @@ struct User:
     def test_option_return_type(self):
         source = "def find_user(id: int) -> Option<str>:\n    return None\n"
         code = self._generate_code(source)
-        self.assertIn("cpdef str | None find_user(int id):", code)
+        self.assertIn("def find_user(id):", code)
 
     def test_result_param_type(self):
         source = "def process(result: Result<int, str>) -> int:\n    return result[0]\n"
         code = self._generate_code(source)
-        self.assertIn("cpdef int process((int, Exception) result):", code)
+        self.assertIn("def process(result):", code)
 
     def test_dict_nested_generic(self):
         source = "def foo(data: Dict<str, Option<int>>) -> Dict<str, Option<str>>:\n    return data\n"
         code = self._generate_code(source)
-        self.assertIn("cpdef dict foo(dict data):", code)
+        self.assertIn("def foo(data):", code)
 
     def test_nested_option_return(self):
         source = "def get_items() -> Option<List<int>>:\n    return None\n"
         code = self._generate_code(source)
-        self.assertIn("cpdef list | None get_items():", code)
+        self.assertIn("def get_items():", code)
 
     def test_mixed_types(self):
         source = "def complex_func(opt: Option<str>, res: Result<int, str>, dct: Dict<str, Option<int>>) -> Result<List<str>, Exception>:\n    return ([], None)\n"
         code = self._generate_code(source)
-        self.assertIn("str | None opt", code)
-        self.assertIn("(int, Exception) res", code)
-        self.assertIn("dict dct", code)
-        self.assertIn("(list, Exception) complex_func", code)
+        self.assertIn("def complex_func(opt, res, dct):", code)
 
 
 if __name__ == "__main__":

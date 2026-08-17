@@ -17,7 +17,7 @@
 
 import re
 from typing import Dict, List, Any, Optional
-from .parser import ASTNode, Module, MacroDef, MacroCall, Name, Constant, BacktickBlock, ComptimeStmt
+from .parser import ASTNode, Module, MacroDef, MacroCall, Name, Constant, BacktickBlock, ComptimeStmt, ExprStmt
 from .lexer import Lexer
 from .parser import Parser
 
@@ -136,44 +136,67 @@ class MacroExpander:
     
     def _apply_macro(self, macro_def: MacroDef, args: List[Any]) -> Any:
         """应用宏定义到参数
-        
+
         Args:
             macro_def: 宏定义
             args: 宏调用参数
-            
+
         Returns:
-            展开后的 AST 节点
+            展开后的 AST 节点（单条语句）或节点列表（多条语句）
         """
-        # 处理反引号代码块的插值
-        expanded_body = []
-        
+        # 处理反引号代码块的插值，并将展开结果扁平化为语句列表
+        expanded_stmts: List[Any] = []
+
         for stmt in macro_def.body:
-            expanded_stmt = self._interpolate_backtick(stmt, args, macro_def.params)
-            if expanded_stmt:
-                expanded_body.append(expanded_stmt)
-        
-        # 如果只有一个语句，直接返回该语句
-        if len(expanded_body) == 1:
-            return expanded_body[0]
-        
-        # 否则返回语句列表（需要在调用处处理）
-        return expanded_body
-    
+            result = self._interpolate_backtick(stmt, args, macro_def.params)
+            if result is None:
+                continue
+            if isinstance(result, list):
+                expanded_stmts.extend(result)
+            else:
+                expanded_stmts.append(result)
+
+        # 如果只有一个语句，直接返回该语句（保持单节点语义）
+        if len(expanded_stmts) == 1:
+            return expanded_stmts[0]
+
+        # 否则返回语句列表（由调用处的父级列表负责展开）
+        return expanded_stmts
+
     def _interpolate_backtick(self, node: ASTNode, args: List[Any], params: List[dict]) -> Any:
         """处理反引号代码块的插值
-        
+
+        反引号块（含 f 前缀的内联代码块）会被重新解析为真实 AST 节点；
+        当块内展开出多条语句时，直接以列表形式返回，交由上层扁平化，
+        避免出现 “把语句列表塞进单个表达式语句” 导致代码生成时整段丢失的问题。
+
         Args:
             node: AST 节点
             args: 宏调用参数
             params: 宏定义参数列表
-            
+
         Returns:
-            插值后的 AST 节点
+            插值后的单个 AST 节点，或节点列表（多语句时）
         """
         if isinstance(node, BacktickBlock):
             return self._process_backtick_block(node, args, params)
-        
-        # 递归处理子节点
+
+        if isinstance(node, ExprStmt):
+            val = node.value
+            if isinstance(val, BacktickBlock):
+                # 反引号块可能展开为多语句，直接返回（供上层扁平化）；
+                # 同时原地替换 node.value，使共享的宏定义体不再保留 BacktickBlock
+                # （保持与历史行为一致：展开后宏定义体中的反引号块被替换为真实节点）
+                result = self._process_backtick_block(val, args, params)
+                node.value = result
+                return result
+            new_val = self._interpolate_backtick(val, args, params)
+            if isinstance(new_val, list):
+                return new_val
+            node.value = new_val
+            return node
+
+        # 递归处理其它节点的子节点（含列表字段），保持多语句扁平化
         for key, child in list(node.__dict__.items()):
             if isinstance(child, ASTNode):
                 new_child = self._interpolate_backtick(child, args, params)
@@ -182,11 +205,17 @@ class MacroExpander:
                 new_list = []
                 for item in child:
                     if isinstance(item, ASTNode):
-                        new_list.append(self._interpolate_backtick(item, args, params))
+                        new_item = self._interpolate_backtick(item, args, params)
+                        if new_item is None:
+                            continue
+                        if isinstance(new_item, list):
+                            new_list.extend(new_item)
+                        else:
+                            new_list.append(new_item)
                     else:
                         new_list.append(item)
                 setattr(node, key, new_list)
-        
+
         return node
     
     def _process_backtick_block(self, block: BacktickBlock, args: List[Any], params: List[dict]) -> Any:

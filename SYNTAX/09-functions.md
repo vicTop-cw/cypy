@@ -56,17 +56,65 @@ def add(x: int, y: int) -> int:
 
 ## 可变参数
 
+Cypy 支持使用 `*args` 和 `**kwargs` 语法接收可变数量的参数：
+
+### *args（可变位置参数）
+
 ```python
-# 可变位置参数
-def sum_all(*args: int) -> int:
-    total: int = 0
-    for num in args:
-        total += num
+def sum_all(*args) -> int:
+    total = 0
+    for n in args:
+        total += n
     return total
 
-# 可变关键字参数
-def format_user(**kwargs: object) -> str:
-    return ", ".join(f"{k}: {v}" for k, v in kwargs.items())
+# 调用
+let result = sum_all(1, 2, 3, 4)  # 10
+```
+
+### **kwargs（可变关键字参数）
+
+```python
+def configure(**kwargs) -> None:
+    for key in kwargs:
+        print(f"{key}: {kwargs[key]}")
+
+# 调用
+configure(host="localhost", port=8080)
+```
+
+### 混合使用
+
+```python
+def handler(a: int, *args, **kwargs) -> int:
+    let result = a
+    for x in args:
+        result += x
+    for k in kwargs:
+        result += kwargs[k]
+    return result
+```
+
+### List<T> 安全收集模式
+
+Cypy 还支持使用 `List<T>` 类型注解来标记可变位置参数，编译器会自动收集为 list：
+
+```python
+def log_all(messages: List<str>) -> None:
+    for msg in messages:
+        print(msg)
+
+# 调用时自动收集
+log_all("hello", "world", "!")
+```
+
+### 双 .. 分隔符
+
+使用 `..` 分隔符可以同时启用 *args 和 **kwargs：
+
+```python
+def flexible(a: int, .., b: str, ..):
+    pass
+# 等价于 def flexible(a: int, *args, b: str, **kwargs)
 ```
 
 ## 函数调用

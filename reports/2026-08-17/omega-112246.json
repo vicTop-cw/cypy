@@ -1,0 +1,62 @@
+{
+  "project_dir": "E:\\IDEProjects\\AI\\Cypy",
+  "total": 9,
+  "passed": 9,
+  "accuracy": 100.0,
+  "results": [
+    {
+      "category": "结构",
+      "item": "必填项: README.md",
+      "passed": true,
+      "detail": "存在"
+    },
+    {
+      "category": "结构",
+      "item": "必填项: CHANGELOG.md",
+      "passed": true,
+      "detail": "存在"
+    },
+    {
+      "category": "结构",
+      "item": "必填项: reports",
+      "passed": true,
+      "detail": "存在"
+    },
+    {
+      "category": "spec",
+      "item": "project_structure.spec.json#0",
+      "passed": true,
+      "detail": "期望 {'valid': True}，实际: {'valid': True}"
+    },
+    {
+      "category": "spec",
+      "item": "project_structure.spec.json#1",
+      "passed": true,
+      "detail": "期望 {'valid': True}，实际: {'valid': True}"
+    },
+    {
+      "category": "spec",
+      "item": "project_structure.spec.json#2",
+      "passed": true,
+      "detail": "期望错误 DirNotFound，实际: DirNotFound"
+    },
+    {
+      "category": "spec",
+      "item": "task_report.spec.json#0",
+      "passed": true,
+      "detail": "期望 {'valid': True}，实际: {'valid': True}"
+    },
+    {
+      "category": "spec",
+      "item": "task_report.spec.json#1",
+      "passed": true,
+      "detail": "期望错误 MissingSection，实际: MissingSection: ['证据', '分析', '缺口与风险', '建议入档位置']"
+    },
+    {
+      "category": "spec",
+      "item": "task_report.spec.json#2",
+      "passed": true,
+      "detail": "期望错误 EmptyText，实际: EmptyText"
+    }
+  ]
+}

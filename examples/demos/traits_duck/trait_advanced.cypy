@@ -25,6 +25,17 @@ trait Persistable extends ReadWrite, Loggable:
     def save(self) -> bool
     def load(self) -> bool
 
+# 注：AdvancedPoint 在下方通过 impl 关联 Printable / Serializable，
+# 其方法直接在 struct 体内实现，此处声明 trait 以提供抽象接口。
+trait Printable:
+    def print_info(self) -> None
+    def to_json(self) -> str
+
+trait Serializable:
+    def to_json(self) -> str
+    def read(self) -> str
+    def write(self, data: str) -> None
+
 # === 2. 实现继承的 Trait ===
 struct SimpleFile:
     path: str

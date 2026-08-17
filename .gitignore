@@ -12,13 +12,19 @@ htmlcov/
 # Build output directories
 output/
 output_bridge/
+test_bench_output/
 *.pyd
 *.so
 *.dll
+*.egg-info/
 
 # Test reports and benchmarks
 test_reports/
 benchmark_results/
+
+# FIST runtime artifacts
+omega/.runtime/
+omega/.cache/
 
 # Virtual environments
 venv/

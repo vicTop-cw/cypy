@@ -1,0 +1,108 @@
+# SIMD 向量示例
+# 演示 vec[T; N] 类型、vec! 字面量和向量运算
+
+# ============================================================
+# 1. 基本向量类型
+# ============================================================
+
+def create_vectors():
+    # 整数向量
+    let vi: vec[int; 4] = vec![1, 2, 3, 4]
+    # 浮点向量
+    let vf: vec[float; 4] = vec![1.0, 2.0, 3.0, 4.0]
+    print(f"int vector: {vi}")
+    print(f"float vector: {vf}")
+    return 0
+
+# ============================================================
+# 2. 向量运算
+# ============================================================
+
+def vector_add(a: vec[int; 4], b: vec[int; 4]) -> vec[int; 4]:
+    return vec![a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]]
+
+def vector_dot(a: vec[int; 4], b: vec[int; 4]) -> int:
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]
+
+def vector_scale(v: vec[int; 4], s: int) -> vec[int; 4]:
+    return vec![v[0] * s, v[1] * s, v[2] * s, v[3] * s]
+
+# ============================================================
+# 3. 向量索引和访问
+# ============================================================
+
+def access_elements(v: vec[int; 4]) -> int:
+    let first = v[0]
+    let second = v[1]
+    let last = v[3]
+    return first + second + last
+
+# ============================================================
+# 4. 实际应用：颜色混合
+# ============================================================
+
+def blend_colors(c1: vec[float; 3], c2: vec[float; 3], t: float) -> vec[float; 3]:
+    return vec![c1[0] * (1.0 - t) + c2[0] * t, c1[1] * (1.0 - t) + c2[1] * t, c1[2] * (1.0 - t) + c2[2] * t]
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== SIMD Vector Demo ===")
+
+    print("--- Create vectors ---")
+    create_vectors()
+
+    print("--- Vector operations ---")
+    let a = vec![1, 2, 3, 4]
+    let b = vec![5, 6, 7, 8]
+    let summed = vector_add(a, b)
+    let dotted = vector_dot(a, b)
+    let scaled = vector_scale(a, 2)
+    print(f"a + b = {summed}")
+    print(f"a . b = {dotted}")
+    print(f"a * 2 = {scaled}")
+
+    print("--- Access elements ---")
+    let total = access_elements(a)
+    print(f"sum of first, second, last = {total}")
+
+    print("--- Color blending ---")
+    let red = vec![1.0, 0.0, 0.0]
+    let blue = vec![0.0, 0.0, 1.0]
+    let purple = blend_colors(red, blue, 0.5)
+    print(f"blend(red, blue, 0.5) = {purple}")
+
+
+suite VectorTests:
+    test vector_add_basic:
+        let a = vec![1, 2, 3, 4]
+        let b = vec![5, 6, 7, 8]
+        let result = vector_add(a, b)
+        assert result[0] == 6
+        assert result[1] == 8
+        assert result[2] == 10
+        assert result[3] == 12
+
+    test vector_dot_basic:
+        let a = vec![1, 2, 3, 4]
+        let b = vec![5, 6, 7, 8]
+        assert vector_dot(a, b) == 70
+
+    test vector_scale_basic:
+        let a = vec![1, 2, 3, 4]
+        let result = vector_scale(a, 3)
+        assert result[0] == 3
+        assert result[3] == 12
+
+    test access_elements_basic:
+        let a = vec![1, 2, 3, 4]
+        assert access_elements(a) == 7
+
+    test blend_colors_basic:
+        let red = vec![1.0, 0.0, 0.0]
+        let blue = vec![0.0, 0.0, 1.0]
+        let purple = blend_colors(red, blue, 0.5)
+        assert purple[0] == 0.5
+        assert purple[2] == 0.5

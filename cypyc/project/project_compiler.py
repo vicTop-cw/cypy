@@ -177,9 +177,9 @@ class ProjectCompiler:
                 elif isinstance(stmt, ParsedFromImport):
                     # from module import name1, name2
                     imports.append((stmt.module, stmt.names))
-                # 也处理 ImportStmt/ImportFromStmt (旧版 AST)
+                # 也处理 Import/ImportFrom (旧版 AST 兼容)
                 elif hasattr(stmt, 'kind'):
-                    if stmt.kind == 'ImportStmt':
+                    if stmt.kind == 'Import':
                         for alias in getattr(stmt, 'names', []):
                             if hasattr(alias, 'name'):
                                 imports.append((alias.name, ['*']))
@@ -419,12 +419,16 @@ class ProjectCompiler:
                 result = subprocess.run(
                     [sys.executable, "setup.py", "build_ext", "--inplace"],
                     capture_output=True,
-                    text=True,
                     timeout=120,
                 )
 
+                # 以字节读取并容错解码，避免 Windows 下默认 GBK 编码导致的
+                # UnicodeDecodeError（编译器输出可能含非 GBK 字节）
+                raw_err = result.stderr if isinstance(result.stderr, bytes) else result.stderr.encode("utf-8", "replace")
+                stderr_text = raw_err.decode("utf-8", "replace")
+
                 if result.returncode != 0:
-                    errors.append(f"Build failed: {result.stderr[-500:]}")
+                    errors.append(f"Build failed: {stderr_text[-500:]}")
                     return False, None, errors
 
                 # Step 5: 查找生成的 .pyd 文件

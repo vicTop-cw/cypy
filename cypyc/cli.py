@@ -25,24 +25,36 @@ def colored(text: str, color: str) -> str:
     return f"{color}{text}{Color.RESET}"
 
 
+def _configure_streams() -> None:
+    """将 stdout/stderr 重配置为 UTF-8（errors='replace'），
+    避免在 GBK 等控制台编码下打印中文错误信息或 Unicode 符号时崩溃。"""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if callable(reconfigure):
+            try:
+                reconfigure(encoding="utf-8", errors="replace")
+            except (ValueError, OSError, AttributeError):
+                pass
+
+
 def print_success(message: str) -> None:
     """打印成功消息"""
-    print(colored(f"✓ {message}", Color.GREEN))
+    print(colored(f"[OK] {message}", Color.GREEN))
 
 
 def print_error(message: str) -> None:
     """打印错误消息"""
-    print(colored(f"✗ {message}", Color.RED), file=sys.stderr)
+    print(colored(f"[FAIL] {message}", Color.RED), file=sys.stderr)
 
 
 def print_warning(message: str) -> None:
     """打印警告消息"""
-    print(colored(f"⚠ {message}", Color.YELLOW))
+    print(colored(f"[WARN] {message}", Color.YELLOW))
 
 
 def print_info(message: str) -> None:
     """打印信息消息"""
-    print(colored(f"ℹ {message}", Color.BLUE))
+    print(colored(f"[INFO] {message}", Color.BLUE))
 
 
 def print_step(message: str, step: int = 0, total: int = 0) -> None:
@@ -327,6 +339,8 @@ def parse_args(args: Optional[list] = None) -> argparse.Namespace:
 
 
 def main() -> int:
+    # 在任意输出之前重配置标准流编码，避免 GBK 控制台打印中文/Unicode 时崩溃
+    _configure_streams()
     try:
         args = parse_args()
     except SystemExit as e:
@@ -343,29 +357,29 @@ def main() -> int:
         if args.hook_command == "install":
             from cypy_hook.hook import install_hook
             install_hook()
-            print("✓ Cypy import hook installed successfully")
+            print("[OK] Cypy import hook installed successfully")
             print("  Now you can import .py files with '#!bin cypy' header directly")
             return 0
         
         elif args.hook_command == "uninstall":
             from cypy_hook.hook import uninstall_hook
             uninstall_hook()
-            print("✓ Cypy import hook uninstalled successfully")
+            print("[OK] Cypy import hook uninstalled successfully")
             return 0
         
         elif args.hook_command == "status":
             from cypy_hook.hook import is_hook_installed
             if is_hook_installed():
-                print("✓ Cypy import hook is installed")
+                print("[OK] Cypy import hook is installed")
             else:
-                print("✗ Cypy import hook is not installed")
+                print("[FAIL] Cypy import hook is not installed")
             return 0
         
         elif args.hook_command == "clear-cache":
             from cypy_hook.hook import CypyCacheManager
             cache_manager = CypyCacheManager()
             cache_manager.clear_cache()
-            print("✓ Cypy compilation cache cleared successfully")
+            print("[OK] Cypy compilation cache cleared successfully")
             return 0
         
         # 原有hook参数（保留兼容）
@@ -575,7 +589,7 @@ def run_run(args):
     result, output = hook.run(args.source, args.func)
     
     if result.success:
-        print(f"✓ Execution successful")
+        print(f"[OK] Execution successful")
         print(f"  Output: {output}")
         
         if args.verbose:
@@ -585,7 +599,7 @@ def run_run(args):
         
         return 0
     else:
-        print(f"✗ Execution failed:")
+        print(f"[FAIL] Execution failed:")
         for error in result.errors:
             print(f"  - {error}")
         
@@ -619,7 +633,7 @@ def run_default(args):
     result = hook.transpile_file(args.source)
     
     if result.success:
-        print(f"✓ Compilation successful")
+        print(f"[OK] Compilation successful")
         print(f"  Output: {result.pyx_path}")
         
         if args.emit_cython and result.cython_code:
@@ -630,7 +644,7 @@ def run_default(args):
         
         return 0
     else:
-        print(f"✗ Compilation failed:")
+        print(f"[FAIL] Compilation failed:")
         for error in result.errors:
             print(f"  - {error}")
         return 1
@@ -670,11 +684,11 @@ def run_watch(args):
                 break
         
         engine.stop()
-        print("✓ Hot reload server stopped")
+        print("[OK] Hot reload server stopped")
         return 0
         
     except Exception as e:
-        print(f"✗ Hot reload server failed:")
+        print(f"[FAIL] Hot reload server failed:")
         print(f"  - {str(e)}")
         import traceback
         traceback.print_exc()
@@ -750,13 +764,13 @@ def run_build(args):
             print(f"\n  Compiled modules ({len(result.compiled_modules)}):")
             for mod in result.compiled_modules:
                 pyd = result.pyd_paths.get(mod, "unknown")
-                print(f"    {colored('✓', Color.GREEN)} {mod} -> {pyd}")
+                print(f"    {colored('[OK]', Color.GREEN)} {mod} -> {pyd}")
             return 0
         else:
             print_error(f"Build failed in {result.total_time:.2f}s")
             print(f"\n  Failed modules ({len(result.failed_modules)}):")
             for mod in result.failed_modules:
-                print(f"    {colored('✗', Color.RED)} {mod}")
+                print(f"    {colored('[FAIL]', Color.RED)} {mod}")
                 for err in result.errors.get(mod, []):
                     print(f"      {err}")
             return 1

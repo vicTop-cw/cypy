@@ -1,0 +1,162 @@
+[
+  {
+    "name": "fibonacci_recursive",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "name 'fibonacci' is not defined",
+    "timestamp": "2026-07-30 09:39:19"
+  },
+  {
+    "name": "fibonacci_recursive",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.0,
+    "memory_kb": 0.0,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:39:19"
+  },
+  {
+    "name": "factorial_loop",
+    "implementation": "python",
+    "time_ms": 0.18837499985238537,
+    "memory_kb": 61.541015625,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:39:19"
+  },
+  {
+    "name": "factorial_loop",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.06063030309495376,
+    "memory_kb": 45.73671875,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:39:19"
+  },
+  {
+    "name": "list_sum",
+    "implementation": "python",
+    "time_ms": 5.864455999981146,
+    "memory_kb": 392.5185546875,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:39:20"
+  },
+  {
+    "name": "list_sum",
+    "implementation": "cypy",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "Type check errors: ['Type mismatch in assignment: expected int, got object at 6:9']",
+    "timestamp": "2026-07-30 09:39:20"
+  },
+  {
+    "name": "string_concat",
+    "implementation": "python",
+    "time_ms": 1.5358959999866784,
+    "memory_kb": 57.2802734375,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:39:20"
+  },
+  {
+    "name": "string_concat",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.7995265218398899,
+    "memory_kb": 45.82421875,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:39:20"
+  },
+  {
+    "name": "math_operations",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "name 'math' is not defined",
+    "timestamp": "2026-07-30 09:39:20"
+  },
+  {
+    "name": "math_operations",
+    "implementation": "cypy",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "Type check errors: ['Type mismatch in binary operation: float + None at 0:0']",
+    "timestamp": "2026-07-30 09:39:20"
+  },
+  {
+    "name": "nested_loop",
+    "implementation": "python",
+    "time_ms": 317.5162840000121,
+    "memory_kb": 69.2177734375,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:39:53"
+  },
+  {
+    "name": "nested_loop",
+    "implementation": "cypy_estimated",
+    "time_ms": 114.60412035719077,
+    "memory_kb": 52.673437500000006,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:40:26"
+  },
+  {
+    "name": "struct_operations",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "name 'Point' is not defined",
+    "timestamp": "2026-07-30 09:40:26"
+  },
+  {
+    "name": "struct_operations",
+    "implementation": "cypy",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "Type check errors: ['Type mismatch: expected list, got Point at 7:5']",
+    "timestamp": "2026-07-30 09:40:26"
+  },
+  {
+    "name": "generic_function",
+    "implementation": "python",
+    "time_ms": 0,
+    "memory_kb": 0,
+    "iterations": 100,
+    "success": false,
+    "error": "name 'identity' is not defined",
+    "timestamp": "2026-07-30 09:40:26"
+  },
+  {
+    "name": "generic_function",
+    "implementation": "cypy_estimated",
+    "time_ms": 0.0,
+    "memory_kb": 0.0,
+    "iterations": 100,
+    "success": true,
+    "error": "",
+    "timestamp": "2026-07-30 09:40:26"
+  }
+]

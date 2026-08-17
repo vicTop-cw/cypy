@@ -1,0 +1,155 @@
+# 联合类型示例
+# 演示 A | B 联合类型、类型别名和可选类型
+# 注：constraint/subtype/dispatch 关键字为计划功能（v0.5+）
+
+# ============================================================
+# 1. 基本联合类型
+# ============================================================
+
+def process_value(value: int | str) -> str:
+    if isinstance(value, int):
+        return f"Integer: {value}"
+    else:
+        return f"String: {value}"
+
+# ============================================================
+# 2. 多类型联合
+# ============================================================
+
+def describe(data: int | float | str | bool) -> str:
+    if isinstance(data, bool):
+        return f"Boolean: {data}"
+    elif isinstance(data, int):
+        return f"Integer: {data}"
+    elif isinstance(data, float):
+        return f"Float: {data:.2f}"
+    else:
+        return f"String: {data}"
+
+# ============================================================
+# 3. 类型别名（注：constraint 关键字为计划功能 v0.5，当前使用 type 别名）
+# ============================================================
+
+type Numeric = int | float
+
+def add_numbers(a: Numeric, b: Numeric) -> Numeric:
+    return a + b
+
+# ============================================================
+# 4. 联合类型与集合
+# ============================================================
+
+def filter_items(items: list<int | str>) -> list<int>:
+    let result: list<int> = []
+    for item in items:
+        if isinstance(item, int):
+            result.append(item)
+    return result
+
+# ============================================================
+# 5. 类型验证（子类型声明为计划功能）
+# ============================================================
+
+def validate_positive(x: int) -> int:
+    if x < 0:
+        raise ValueError("Value must be positive")
+    return x
+
+# ============================================================
+# 6. 可选类型 (T | None)
+# ============================================================
+
+def safe_divide(a: int, b: int) -> int | None:
+    if b == 0:
+        return None
+    return a // b
+
+def handle_optional(value: int | None) -> str:
+    if value is None:
+        return "No value"
+    return f"Value: {value}"
+
+# ============================================================
+# 7. 多态分发（分发声明为计划功能，当前用函数替代）
+# ============================================================
+
+def area(shape: dict) -> float:
+    # 根据形状类型计算面积
+    if "radius" in shape:
+        return 3.14159 * shape["radius"] ** 2
+    elif "width" in shape and "height" in shape:
+        return float(shape["width"] * shape["height"])
+    else:
+        return 0.0
+
+# ============================================================
+# 主入口
+# ============================================================
+
+if __name__ == "__main__":
+    print("=== Union Type Demo ===")
+
+    print("--- Basic union ---")
+    print(process_value(42))
+    print(process_value("hello"))
+
+    print("--- Multi-type union ---")
+    print(describe(True))
+    print(describe(42))
+    print(describe(3.14))
+    print(describe("world"))
+
+    print("--- Type constraint ---")
+    print(f"add(1, 2) = {add_numbers(1, 2)}")
+    print(f"add(1.5, 2.5) = {add_numbers(1.5, 2.5)}")
+
+    print("--- Union with collections ---")
+    let mixed: list<int | str> = [1, "two", 3, "four", 5]
+    let numbers = filter_items(mixed)
+    print(f"Filtered: {numbers}")
+
+    print("--- Optional types ---")
+    print(f"safe_divide(10, 2) = {safe_divide(10, 2)}")
+    print(f"safe_divide(10, 0) = {safe_divide(10, 0)}")
+    print(handle_optional(42))
+    print(handle_optional(None))
+
+    print("--- Dispatch ---")
+    let circle = {"radius": 5}
+    let rect = {"width": 4, "height": 6}
+    print(f"Circle area: {area(circle)}")
+    print(f"Rectangle area: {area(rect)}")
+
+
+suite UnionTypeTests:
+    test process_int:
+        assert process_value(42) == "Integer: 42"
+
+    test process_str:
+        assert process_value("hello") == "String: hello"
+
+    test describe_bool:
+        assert describe(True) == "Boolean: True"
+
+    test describe_int:
+        assert describe(42) == "Integer: 42"
+
+    test add_ints:
+        assert add_numbers(1, 2) == 3
+
+    test filter_items:
+        let mixed: list<int | str> = [1, "two", 3, "four", 5]
+        let result = filter_items(mixed)
+        assert result == [1, 3, 5]
+
+    test safe_divide_ok:
+        assert safe_divide(10, 2) == 5
+
+    test safe_divide_zero:
+        assert safe_divide(10, 0) is None
+
+    test handle_optional_value:
+        assert handle_optional(42) == "Value: 42"
+
+    test handle_optional_none:
+        assert handle_optional(None) == "No value"

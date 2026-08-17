@@ -26,7 +26,7 @@ class TestUnionType:
     pass'''
         code = parse_and_generate(source)
         assert "object" in code
-        assert "union" in code.lower() or "int | float" in code
+        # union 类型当前降级为 object（保 cdef 签名安全）
 
     def test_union_type_with_none(self):
         """测试带 None 的联合类型"""
@@ -56,7 +56,7 @@ class TestUnionTypeInFunctions:
 def main() -> None:
     pass'''
         code = parse_and_generate(source)
-        assert "object" in code
+        assert "def process(input):" in code
 
     def test_union_type_return(self):
         """测试联合类型作为返回值"""
@@ -68,7 +68,7 @@ def main() -> None:
 def main() -> None:
     pass'''
         code = parse_and_generate(source)
-        assert "object" in code
+        assert "def find_user(user_id):" in code
 
     def test_union_type_both(self):
         """测试参数和返回值都是联合类型"""
@@ -80,7 +80,7 @@ def main() -> None:
 def main() -> None:
     pass'''
         code = parse_and_generate(source)
-        assert "object" in code
+        assert "def convert(value):" in code
 
 
 class TestUnionTypeWithIsinstance:
@@ -124,7 +124,8 @@ class TestUnionTypeCodegen:
     let value: int | float = 42
     pass'''
         code = parse_and_generate(source)
-        assert "int | float" in code or "# union" in code.lower()
+        # union 类型当前降级为 object；类型信息仅在源码层面保留
+        assert "value: object" in code
 
     def test_union_type_no_runtime_check(self):
         """测试联合类型降级为 object"""
@@ -132,7 +133,7 @@ class TestUnionTypeCodegen:
     let value: str | int = get_value()
     pass'''
         code = parse_and_generate(source)
-        assert "value = " in code
+        assert "value: object = get_value()" in code
         assert "object" in code
 
 

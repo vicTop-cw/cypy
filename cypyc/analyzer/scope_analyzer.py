@@ -44,6 +44,15 @@ class ScopeAnalyzer:
         self._register_builtins()
         # 是否在 meta block 中（meta block 中允许前向引用）
         self.in_meta_block = False
+        # 作为类型注解使用时视为已定义的内建/泛型类型名
+        self._known_type_names = {
+            'Callable', 'callable', 'Tuple', 'Optional', 'Union', 'List',
+            'Dict', 'Set', 'Generator', 'Iterable', 'Iterator', 'Sequence',
+        }
+        # 用户定义种类（用于重复定义检测）
+        self._user_def_kinds = {'function', 'class', 'struct', 'trait',
+                                'typeclass', 'enum'}
+        self._builtin_names: set = set()
     
     def _register_builtins(self):
         """注册内置类型和函数到根作用域"""
@@ -56,6 +65,33 @@ class ScopeAnalyzer:
             ('None', 'type'),
             ('Exception', 'type'),
             ('list', 'type'),
+            ('dict', 'type'),
+            ('set', 'type'),
+            ('tuple', 'type'),
+            ('Callable', 'type'),
+            ('callable', 'type'),
+            ('object', 'type'),
+            ('Any', 'type'),
+            ('Nothing', 'type'),
+            ('Null', 'type'),
+            # 常见内置异常类型
+            ('ValueError', 'type'),
+            ('TypeError', 'type'),
+            ('RuntimeError', 'type'),
+            ('IndexError', 'type'),
+            ('KeyError', 'type'),
+            ('AttributeError', 'type'),
+            ('IOError', 'type'),
+            ('OSError', 'type'),
+            ('FileNotFoundError', 'type'),
+            ('PermissionError', 'type'),
+            ('OverflowError', 'type'),
+            ('ZeroDivisionError', 'type'),
+            ('KeyboardInterrupt', 'type'),
+            ('StopIteration', 'type'),
+            ('AssertionError', 'type'),
+            ('NotImplementedError', 'type'),
+            # 内置函数
             ('print', 'function'),
             ('len', 'function'),
             ('malloc', 'function'),
@@ -65,14 +101,44 @@ class ScopeAnalyzer:
             ('ord', 'function'),
             ('range', 'function'),
             ('type', 'function'),
+            ('sorted', 'function'),
+            ('isinstance', 'function'),
+            ('getattr', 'function'),
+            ('hash', 'function'),
+            ('super', 'function'),
+            ('abs', 'function'),
+            ('min', 'function'),
+            ('max', 'function'),
+            ('sum', 'function'),
+            ('any', 'function'),
+            ('all', 'function'),
+            ('enumerate', 'function'),
+            ('zip', 'function'),
+            ('map', 'function'),
+            ('filter', 'function'),
+            ('reversed', 'function'),
             ('True', 'constant'),
             ('False', 'constant'),
+            ('null', 'constant'),
             ('_', 'wildcard'),
             ('__name__', 'variable'),
             ('__main__', 'constant'),
         ]
         for name, kind in builtins:
             self.root_scope.add_symbol(name, kind, None)
+        self._builtin_names = {name for name, _ in builtins}
+
+    def _check_redefinition(self, name: str, node: ASTNode) -> bool:
+        """检测同名用户定义重复声明（跳过内置名）。"""
+        if not name or name in self._builtin_names:
+            return False
+        existing = self.current_scope.symbols.get(name)
+        if existing is not None and existing.kind in self._user_def_kinds:
+            self.errors.append(
+                f"Name '{name}' is already declared in this scope "
+                f"(line {node.line}, col {node.col})")
+            return True
+        return False
 
     def analyze(self, node: ASTNode) -> Scope:
         self._visit(node)
@@ -101,6 +167,18 @@ class ScopeAnalyzer:
             self._visit(stmt)
 
     def _visit_FuncDef(self, node: FuncDef) -> None:
+        # 检测 property 装饰器（@property / @x.setter / @x.deleter）：
+        # 同名 getter/setter 是合理定义，不应报重复声明
+        is_property = False
+        if hasattr(node, 'decorators') and node.decorators:
+            for decorator in node.decorators:
+                dname = self._decorator_name(decorator)
+                if dname in ('property', 'setter', 'deleter'):
+                    is_property = True
+                    break
+
+        if node.name and not is_property:
+            self._check_redefinition(node.name, node)
         # 检查是否有 @python 装饰器
         has_python_decorator = False
         if hasattr(node, 'decorators') and node.decorators:
@@ -148,7 +226,22 @@ class ScopeAnalyzer:
 
         self.current_scope = func_scope.parent
 
+    @staticmethod
+    def _decorator_name(decorator: Any) -> str:
+        """从装饰器节点提取名称：@property -> 'property'；@x.setter -> 'setter'"""
+        name = getattr(decorator, 'name', None)
+        if name is None:
+            return ''
+        if hasattr(name, 'id'):
+            return name.id
+        if hasattr(name, 'attr'):
+            return name.attr
+        if hasattr(name, 'name'):
+            return name.name
+        return str(name)
+
     def _visit_ClassDef(self, node: ClassDef) -> None:
+        self._check_redefinition(node.name, node)
         self.current_scope.add_symbol(node.name, "class", node)
         class_scope = self.current_scope.create_child("class")
         self.current_scope = class_scope
@@ -164,6 +257,7 @@ class ScopeAnalyzer:
             self.errors.append(f"Struct '{node.name}' can only be defined at module level (line {node.line}, col {node.col})")
             return
         
+        self._check_redefinition(node.name, node)
         self.current_scope.add_symbol(node.name, "struct", node)
         struct_scope = self.current_scope.create_child("struct")
         self.current_scope = struct_scope
@@ -187,6 +281,7 @@ class ScopeAnalyzer:
             self.errors.append(f"Enum '{node.name}' can only be defined at module level (line {node.line}, col {node.col})")
             return
         
+        self._check_redefinition(node.name, node)
         self.current_scope.add_symbol(node.name, "enum", node)
 
     def _visit_TraitDef(self, node: Any) -> None:
@@ -195,6 +290,7 @@ class ScopeAnalyzer:
             self.errors.append(f"Trait '{node.name}' can only be defined at module level (line {node.line}, col {node.col})")
             return
         
+        self._check_redefinition(node.name, node)
         self.current_scope.add_symbol(node.name, "trait", node)
 
     def _visit_ImplStmt(self, node: Any) -> None:
@@ -202,9 +298,153 @@ class ScopeAnalyzer:
         if self.current_scope.kind != "module":
             self.errors.append(f"impl for '{node.for_type}' can only be defined at module level (line {node.line}, col {node.col})")
             return
-        
+
+        # 将 for_type 中可能携带的泛型参数（如 Wrapper<T>）注册到模块作用域，
+        # 以便 impl 块体内的方法可以引用这些类型参数。
+        if getattr(node, 'for_type', None):
+            for gp in self._generic_params_from_type(node.for_type):
+                self.current_scope.add_symbol(gp, "type", node)
+
         # 访问 trait 名称和实现类型
         self._visit(node.for_type)
+        # 在独立子作用域中检查实现方法，避免不同类型（如 Color 与 Wrapper）
+        # 的同名方法在模块作用域中误报“重复声明”
+        impl_scope = self.current_scope.create_child("impl")
+        self.current_scope = impl_scope
+        for m in getattr(node, 'methods', []) or []:
+            self._visit(m)
+        self.current_scope = impl_scope.parent
+
+    def _generic_params_from_type(self, typ: Any) -> List[str]:
+        """从类型表达式（字符串或 AST 节点）中提取泛型参数名，如 Wrapper<T> -> ['T']"""
+        params: List[str] = []
+        if typ is None:
+            return params
+        if isinstance(typ, str):
+            # 形如 Wrapper<T> 或 Container<T, U>
+            import re as _re
+            for m in _re.findall(r'<([^>]+)>', typ):
+                for part in m.split(','):
+                    part = part.strip()
+                    if part:
+                        params.append(part)
+            return params
+        if hasattr(typ, 'kind') and typ.kind == 'GenericType':
+            # 提取泛型实参（如 Wrapper<T> -> ['T']），而非基础类型名 Wrapper
+            for arg in getattr(typ, 'args', []) or []:
+                if isinstance(arg, str):
+                    params.append(arg)
+                elif hasattr(arg, 'id'):
+                    params.append(arg.id)
+                else:
+                    params.extend(self._generic_params_from_type(arg))
+        return params
+
+    def _visit_TypeClassDef(self, node: Any) -> None:
+        """处理 typeclass 定义，注册泛型参数并访问方法体"""
+        self._check_redefinition(node.name, node)
+        self.current_scope.add_symbol(node.name, "typeclass", node)
+        tc_scope = self.current_scope.create_child("typeclass")
+        self.current_scope = tc_scope
+        for gp in getattr(node, 'generic_params', []) or []:
+            gp_name = gp['name'] if isinstance(gp, dict) and 'name' in gp else gp
+            if gp_name and gp_name != '_':
+                tc_scope.add_symbol(gp_name, "type", node)
+        for m in getattr(node, 'methods', []) or []:
+            self._visit(m)
+        self.current_scope = tc_scope.parent
+
+    def _visit_TypeClassImpl(self, node: Any) -> None:
+        """处理 impl typeclass X for Y，注册泛型参数并访问方法体"""
+        # target_type 可能携带泛型，如 Wrapper<T>
+        for gp in self._generic_params_from_type(getattr(node, 'target_type', None)):
+            self.current_scope.add_symbol(gp, "type", node)
+        # 实现块自身声明的泛型参数（如 impl typeclass Eq<U> for Wrapper<U>）
+        for gp in getattr(node, 'generic_params', []) or []:
+            gp_name = gp['name'] if isinstance(gp, dict) and 'name' in gp else gp
+            if gp_name and gp_name != '_':
+                self.current_scope.add_symbol(gp_name, "type", node)
+        # 方法名限定在独立子作用域，避免不同实现类型（如 Color 与 Wrapper）
+        # 的同名方法在模块作用域中误报“重复声明”
+        impl_scope = self.current_scope.create_child("typeclass")
+        self.current_scope = impl_scope
+        for m in getattr(node, 'methods', []) or []:
+            self._visit(m)
+        self.current_scope = impl_scope.parent
+
+    def _visit_LambdaExpr(self, node: Any) -> None:
+        """处理 lambda 表达式，注册参数并访问函数体"""
+        lambda_scope = self.current_scope.create_child("lambda")
+        self.current_scope = lambda_scope
+        for p in getattr(node, 'params', []) or []:
+            pname = getattr(p, 'name', None) or (getattr(p, 'id', None) if hasattr(p, 'id') else None)
+            if pname and pname != '_':
+                lambda_scope.add_symbol(pname, "variable", node)
+        if hasattr(node, 'body') and node.body is not None:
+            self._visit(node.body)
+        self.current_scope = lambda_scope.parent
+
+    def _visit_WithStmt(self, node: Any) -> None:
+        """处理 with 语句，注册 as 绑定变量"""
+        for item in getattr(node, 'items', []) or []:
+            if isinstance(item, (list, tuple)):
+                expr = item[0] if len(item) > 0 else None
+                var = item[1] if len(item) > 1 else None
+                if expr is not None:
+                    self._visit(expr)
+                if var is not None:
+                    var_name = var.id if hasattr(var, 'id') else var
+                    if var_name and var_name != '_':
+                        self.current_scope.add_symbol(var_name, "variable", node)
+            else:
+                self._visit(item)
+        for stmt in getattr(node, 'body', []) or []:
+            self._visit(stmt)
+
+    def _visit_ComptimeFuncDef(self, node: Any) -> None:
+        """处理 comptime def，注册函数名与参数并访问函数体"""
+        name = getattr(node, 'name', None)
+        if name:
+            self.current_scope.add_symbol(name, "function", node)
+        fn_scope = self.current_scope.create_child("function")
+        self.current_scope = fn_scope
+        for p in getattr(node, 'params', []) or []:
+            pname = getattr(p, 'name', None) or (getattr(p, 'id', None) if hasattr(p, 'id') else None)
+            if pname and pname != '_':
+                fn_scope.add_symbol(pname, "variable", node)
+        ret = getattr(node, 'return_type', None)
+        if ret is not None:
+            self._visit(ret)
+        body = getattr(node, 'body', None)
+        if isinstance(body, list):
+            for stmt in body:
+                self._visit(stmt)
+        elif body is not None:
+            self._visit(body)
+        self.current_scope = fn_scope.parent
+
+    def _visit_MacroDef(self, node: Any) -> None:
+        """处理 macro 定义，注册宏名（去掉可能的 ! 后缀）"""
+        name = getattr(node, 'name', None)
+        if name:
+            base = name[:-1] if name.endswith('!') else name
+            self.current_scope.add_symbol(base, "macro", node)
+
+    def _visit_MacroCall(self, node: Any) -> None:
+        """处理宏调用，仅访问参数，宏名作为字符串不查作用域"""
+        for arg in getattr(node, 'args', []) or []:
+            self._visit(arg)
+
+    def _visit_ComptimeStmt(self, node: Any) -> None:
+        """处理 comptime: 块，访问块内语句（含内部 def）"""
+        block = getattr(node, 'body', None)
+        if block is None:
+            block = getattr(node, 'expr', None)
+        if isinstance(block, list):
+            for stmt in block:
+                self._visit(stmt)
+        elif block is not None:
+            self._visit(block)
 
     def _visit_MetaBlock(self, node: Any) -> None:
         """处理 meta 块，确保只能在模块顶级定义"""
@@ -237,6 +477,32 @@ class ScopeAnalyzer:
                     self._visit(field.type_annotation)
         self.current_scope = exc_scope.parent
 
+    def _visit_SuiteDef(self, node: Any) -> None:
+        """测试套件定义：建立独立作用域，隔离各 test 内的变量声明"""
+        suite_scope = self.current_scope.create_child("suite")
+        self.current_scope = suite_scope
+        for stmt in node.body:
+            self._visit(stmt)
+        self.current_scope = suite_scope.parent
+
+    def _visit_TestDef(self, node: Any) -> None:
+        """测试用例定义：建立独立作用域，避免不同 test 间 let 变量冲突"""
+        test_scope = self.current_scope.create_child("test")
+        self.current_scope = test_scope
+        for stmt in node.body:
+            self._visit(stmt)
+        self.current_scope = test_scope.parent
+
+    def _visit_SetupStmt(self, node: Any) -> None:
+        """套件初始化块"""
+        for stmt in node.body:
+            self._visit(stmt)
+
+    def _visit_TeardownStmt(self, node: Any) -> None:
+        """套件清理块"""
+        for stmt in node.body:
+            self._visit(stmt)
+
     def _visit_TypeAlias(self, node: Any) -> None:
         """处理类型别名定义"""
         self.current_scope.add_symbol(node.name, "type", node)
@@ -245,11 +511,60 @@ class ScopeAnalyzer:
             for param in node.generic_params:
                 self.current_scope.add_symbol(param, "type", node)
 
+    def _extract_names(self, node: Any) -> List[str]:
+        """从赋值/解构目标中提取所有被绑定的变量名"""
+        names: List[str] = []
+        if node is None:
+            return names
+        if isinstance(node, str):
+            if node and node != '_':
+                names.append(node)
+            return names
+        if isinstance(node, (list, tuple)):
+            for e in node:
+                names.extend(self._extract_names(e))
+            return names
+        if hasattr(node, 'kind'):
+            k = node.kind
+            if k == 'Name':
+                if node.id != '_':
+                    names.append(node.id)
+                return names
+            if k == 'Pattern':
+                if getattr(node, 'name', None) and node.name != '_':
+                    names.append(node.name)
+                return names
+            if k in ('TupleExpr', 'ListExpr'):
+                els = getattr(node, 'elements', None) or getattr(node, 'elts', None) or []
+                for el in els:
+                    names.extend(self._extract_names(el))
+                return names
+            if k == 'Constant' and isinstance(node.value, (tuple, list)):
+                for el in node.value:
+                    names.extend(self._extract_names(el))
+                return names
+            if k in ('ArrayPattern', 'TuplePattern'):
+                ps = getattr(node, 'patterns', None) or getattr(node, 'elements', None) or []
+                for p in ps:
+                    names.extend(self._extract_names(p))
+                return names
+            if k == 'StarExpr':
+                inner = getattr(node, 'value', None) or getattr(node, 'expr', None)
+                if inner is not None:
+                    names.extend(self._extract_names(inner))
+                return names
+        if hasattr(node, 'id'):
+            if node.id != '_':
+                names.append(node.id)
+            return names
+        return names
+
     def _visit_LetStmt(self, node: LetStmt) -> None:
-        if node.name in self.current_scope.symbols:
-            self.errors.append(f"Variable '{node.name}' already declared in this scope at {node.line}:{node.col}")
-        else:
-            self.current_scope.add_symbol(node.name, "variable", node)
+        # 采用函数/模块级作用域：允许同名变量重复声明（符合 Python 语义），
+        # 不再对“已声明”报错，避免 suite/test/分支块中的 let 互相冲突。
+        for nm in self._extract_names(node.name):
+            if nm not in self.current_scope.symbols:
+                self.current_scope.add_symbol(nm, "variable", node)
         if node.value:
             self._visit(node.value)
 
@@ -288,35 +603,42 @@ class ScopeAnalyzer:
         # meta block 中允许前向引用，不检查名称是否定义
         if self.in_meta_block:
             return
-        symbol = self.current_scope.lookup(node.id)
-        if symbol is None:
-            self.errors.append(f"Undefined name '{node.id}' at {node.line}:{node.col}")
+        name = node.id
+        # 宏调用形式：name!（如 double_value!）去掉 ! 后查宏定义
+        if isinstance(name, str) and name.endswith('!'):
+            base = name[:-1]
+            if self.current_scope.lookup(base) or base in self._known_type_names:
+                return
+            name = base
+        if self.current_scope.lookup(name):
+            return
+        # 已知类型名（内建类型、泛型容器、callable 等）作为注解使用时视为已定义
+        if name in self._known_type_names:
+            return
+        self.errors.append(f"Undefined name '{node.id}' at {node.line}:{node.col}")
 
     def _visit_Assign(self, node: Any) -> None:
-        # 先访问 value，确保右边的表达式先被检查
+        # 先注册目标变量（支持单个变量及解构赋值，并支持自引用如 result = match...）
+        for nm in self._extract_names(node.target):
+            if nm in self.current_scope.symbols:
+                continue
+            # 若父作用域已存在该变量，视为对外部变量的重新赋值，不重复注册
+            if self.current_scope.parent and self.current_scope.parent.lookup(nm):
+                continue
+            self.current_scope.add_symbol(nm, "variable", node)
+        # 再访问 value
         if node.value:
             self._visit(node.value)
-        # 然后注册变量（如果是新变量）
-        if hasattr(node.target, 'id'):
-            target_name = node.target.id
-            if target_name not in self.current_scope.symbols:
-                # 检查父作用域中是否存在同名变量
-                if self.current_scope.parent and self.current_scope.parent.lookup(target_name):
-                    # 如果父作用域存在，说明是赋值给外部变量，不需要在当前作用域注册
-                    pass
-                else:
-                    # 新变量，注册到当前作用域
-                    self.current_scope.add_symbol(target_name, "variable", node)
 
     def _visit_ForStmt(self, node: Any) -> None:
         """处理 for 循环，注册循环变量到作用域"""
         # 先访问迭代对象
         self._visit(node.iter)
         
-        # 注册循环变量
-        if hasattr(node.target, 'id'):
-            target_name = node.target.id
-            self.current_scope.add_symbol(target_name, "variable", node)
+        # 注册循环变量（支持单个变量及解构目标）
+        for nm in self._extract_names(node.target):
+            if nm not in self.current_scope.symbols:
+                self.current_scope.add_symbol(nm, "variable", node)
         
         # 访问循环体
         for stmt in node.body:
@@ -387,7 +709,9 @@ class ScopeAnalyzer:
                         if hasattr(p, 'kind'):
                             self._visit(p)
                 else:
-                    self._visit(pattern)
+                    # pattern 可能不是 AST 节点（如字典模式 / or 模式），仅对节点递归访问
+                    if hasattr(pattern, 'kind'):
+                        self._visit(pattern)
             if hasattr(case, 'condition') and case.condition:
                 self._visit(case.condition)
             for stmt in case.body:
@@ -500,7 +824,8 @@ class ScopeAnalyzer:
     def _visit_Subscript(self, node: Any) -> None:
         """处理下标访问"""
         self._visit(node.value)
-        self._visit(node.slice)
+        if hasattr(node.slice, 'kind'):
+            self._visit(node.slice)
 
     def _visit_FromImport(self, node: Any) -> None:
         """处理 from module import names 语句，注册导入的名称到当前作用域"""

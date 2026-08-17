@@ -248,6 +248,63 @@ let formatted = f"Pi: {pi:.2f}"  # "Pi: 3.14"
 let result = f"2 + 3 = {2 + 3}"  # "2 + 3 = 5"
 ```
 
+## 三元条件表达式
+
+Cypy 支持三元条件表达式 `x if cond else y` 作为语法糖，简化简单的条件赋值：
+
+```python
+# 传统写法
+if x > 0:
+    result = "positive"
+else:
+    result = "non-positive"
+
+# 三元表达式写法
+let result = "positive" if x > 0 else "non-positive"
+```
+
+### 嵌套使用
+
+```python
+let grade = "A" if score >= 90 else ("B" if score >= 80 else "C")
+```
+
+## 可变参数语法糖
+
+### *args / **kwargs
+
+```python
+# Python 风格的可变参数
+def sum_all(*args) -> int:
+    return sum(args)
+
+def configure(**kwargs) -> None:
+    for key in kwargs:
+        print(f"{key} = {kwargs[key]}")
+```
+
+### List<T> 安全收集模式
+
+```python
+# Cypy 特有：List<T> 自动收集为 list
+def process(items: List<int>) -> int:
+    return len(items)
+
+# 调用时自动收集位置参数为 list
+process(1, 2, 3, 4)
+```
+
+### name~ 命名参数简写
+
+```python
+# name~ 自动展开为 name=name
+def make_point(x: float, y: float) -> Point:
+    return Point(x, y)
+
+let p = make_point(x~, y~)
+# 等价于 make_point(x=x, y=y)
+```
+
 ## 切片语法
 
 ### 基本切片

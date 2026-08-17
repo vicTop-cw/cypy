@@ -114,18 +114,17 @@ class IncrementalCompiler:
     
     def _extract_imported_modules(self, ast: ASTNode) -> List[str]:
         """从AST中提取导入的模块名称"""
-        from cypyc.parser.parser import ImportStmt, ImportFromStmt
-        
+        from cypyc.parser.parser import Import, FromImport
+
         imports = []
         if hasattr(ast, 'body'):
             for stmt in ast.body:
-                if isinstance(stmt, ImportStmt):
-                    for alias in stmt.names:
-                        imports.append(alias.name)
-                elif isinstance(stmt, ImportFromStmt):
+                if isinstance(stmt, Import):
+                    imports.append(stmt.module)
+                elif isinstance(stmt, FromImport):
                     if stmt.module:
                         imports.append(stmt.module)
-        
+
         return imports
     
     def _load_cache(self, source_path: str) -> Optional[CompilationCacheEntry]:

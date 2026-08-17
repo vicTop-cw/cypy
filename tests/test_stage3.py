@@ -12,7 +12,7 @@ class TestGenericTypes(unittest.TestCase):
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("struct Pair", code)
+        self.assertIn("cdef class Pair:", code)
 
     def test_generic_function(self):
         source = "def identity<T>(value: T) -> T:\n    return value\n"
@@ -30,7 +30,8 @@ class TestGenericTypes(unittest.TestCase):
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("Pair[int, str]", code)
+        # 泛型参数在 cdef class 签名中被擦除为基类 Pair
+        self.assertIn("p: Pair", code)
 
 
 class TestTraitImplementation(unittest.TestCase):
@@ -42,7 +43,7 @@ class TestTraitImplementation(unittest.TestCase):
         generator = CythonGenerator()
         code = generator.generate(ast)
         self.assertIn("cdef class Drawable", code)
-        self.assertIn("cpdef None draw", code)
+        self.assertIn("def draw(self):", code)
 
     def test_trait_with_multiple_methods(self):
         source = "trait Shape:\n    def area() -> float:\n        pass\n    def perimeter() -> float:\n        pass\n"
@@ -51,8 +52,8 @@ class TestTraitImplementation(unittest.TestCase):
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("cpdef float area", code)
-        self.assertIn("cpdef float perimeter", code)
+        self.assertIn("def area(self) -> float:", code)
+        self.assertIn("def perimeter(self) -> float:", code)
 
 
 class TestImplBlock(unittest.TestCase):

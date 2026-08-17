@@ -77,7 +77,7 @@ def main() -> int:
     
     print("--- 联合类型别名 ---")
     let maybe_name: OptionalStr = find_user(1)
-    if maybe_name != None:
+    if maybe_name is not None:
         print(f"  Found user: {maybe_name}")
     
     let not_found: OptionalStr = find_user(99)

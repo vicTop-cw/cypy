@@ -102,9 +102,9 @@ class TestVarargsCodegen(unittest.TestCase):
     return total
 """
         code = self._generate_code(source)
-        # 应该生成 *args 和 values = list(args)
-        self.assertIn('*args', code)
-        self.assertIn('values = list(args)', code)
+        # 应该生成 *values 和 values = list(values)
+        self.assertIn('*values', code)
+        self.assertIn('values = list(values)', code)
     
     def test_double_dot_codegen(self):
         """测试双 .. 分隔符代码生成"""
@@ -122,10 +122,10 @@ class TestVarargsCodegen(unittest.TestCase):
     pass
 """
         code = self._generate_code(source)
-        # 应该包含 level 参数和 *args
+        # 应该包含 level 参数和 *messages
         self.assertIn('level', code)
-        self.assertIn('*args', code)
-        self.assertIn('messages = list(args)', code)
+        self.assertIn('*messages', code)
+        self.assertIn('messages = list(messages)', code)
 
 
 if __name__ == '__main__':

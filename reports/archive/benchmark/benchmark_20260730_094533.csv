@@ -1,0 +1,17 @@
+name,implementation,time_ms,memory_kb,iterations,success,error,timestamp
+fibonacci_recursive,python,0.23112300026696175,184.0908203125,100,True,,2026-07-30 09:45:02
+fibonacci_recursive,cypy_estimated,0.07583599993571018,147.08515625,100,True,,2026-07-30 09:45:02
+factorial_loop,python,0.17779700021492317,183.7470703125,100,True,,2026-07-30 09:45:02
+factorial_loop,cypy_estimated,0.05823151511845715,146.99765625,100,True,,2026-07-30 09:45:02
+list_sum,python,6.113410000107251,522.943359375,100,True,,2026-07-30 09:45:03
+list_sum,cypy,0,0,100,False,"Type check errors: ['Type mismatch in assignment: expected int, got object at 6:9']",2026-07-30 09:45:03
+string_concat,python,1.4304609998362139,188.625,100,True,,2026-07-30 09:45:03
+string_concat,cypy_estimated,0.7917808695271126,150.9,100,True,,2026-07-30 09:45:03
+math_operations,python,0.9581020000041462,219.306640625,100,True,,2026-07-30 09:45:03
+math_operations,cypy,0,0,100,False,Type check errors: ['Type mismatch in binary operation: float + None at 0:0'],2026-07-30 09:45:03
+nested_loop,python,107.54906200018013,197.0,100,True,,2026-07-30 09:45:15
+nested_loop,cypy_estimated,49.64079821428251,157.60000000000002,100,True,,2026-07-30 09:45:29
+struct_operations,python,19.27863199991407,1627.064453125,100,True,,2026-07-30 09:45:31
+struct_operations,cypy,0,0,100,False,"Type check errors: ['Type mismatch: expected list, got Point at 7:5']",2026-07-30 09:45:31
+generic_function,python,6.359723999921698,241.1796875,100,True,,2026-07-30 09:45:32
+generic_function,cypy_estimated,3.3720195651530167,192.94375000000002,100,True,,2026-07-30 09:45:33

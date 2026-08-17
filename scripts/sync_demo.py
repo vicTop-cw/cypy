@@ -46,7 +46,7 @@ def main():
     parser.add_argument(
         "--demo-dir",
         help="DEMO directory",
-        default=os.path.join(os.path.dirname(__file__), '..', 'DEMO')
+        default=os.path.join(os.path.dirname(__file__), '..', 'examples', 'demos', 'legacy')
     )
     
     args = parser.parse_args()

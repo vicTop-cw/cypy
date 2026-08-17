@@ -1,0 +1,300 @@
+{
+  "test_metadata": {
+    "start_time": "2026-07-30 11:30:24",
+    "end_time": "2026-07-30 11:31:35",
+    "execution_time_seconds": 70.58570337295532,
+    "project_root": "E:\\IDEProjects\\AI\\Cypy"
+  },
+  "compilation_pipeline": {
+    "lexer": {
+      "status": "ok",
+      "details": "Generated 66 tokens"
+    },
+    "parser": {
+      "status": "ok",
+      "details": "AST parsed successfully"
+    },
+    "type_checker": {
+      "status": "ok",
+      "details": "Type checking passed"
+    },
+    "code_generator": {
+      "status": "ok",
+      "details": "Generated 692 chars of Cython code"
+    },
+    "overall": "excellent"
+  },
+  "performance_benchmarks": {
+    "status": "ok",
+    "total_cases": 8,
+    "successful": 16,
+    "failed": 0,
+    "python_baseline": {
+      "total_time_ms": 309.5303300017258,
+      "avg_time_ms": 38.69129125021573,
+      "cases": [
+        {
+          "name": "fibonacci_recursive",
+          "implementation": "python",
+          "time_ms": 0.27191100001800805,
+          "memory_kb": 184.0908203125,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:24"
+        },
+        {
+          "name": "factorial_loop",
+          "implementation": "python",
+          "time_ms": 0.25122600025497377,
+          "memory_kb": 183.7470703125,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:24"
+        },
+        {
+          "name": "list_sum",
+          "implementation": "python",
+          "time_ms": 6.937715000240132,
+          "memory_kb": 522.943359375,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:25"
+        },
+        {
+          "name": "string_concat",
+          "implementation": "python",
+          "time_ms": 1.6424529999494553,
+          "memory_kb": 188.625,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:26"
+        },
+        {
+          "name": "math_operations",
+          "implementation": "python",
+          "time_ms": 1.140735000371933,
+          "memory_kb": 219.306640625,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:27"
+        },
+        {
+          "name": "nested_loop",
+          "implementation": "python",
+          "time_ms": 229.66295599995647,
+          "memory_kb": 197.0,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:50"
+        },
+        {
+          "name": "struct_operations",
+          "implementation": "python",
+          "time_ms": 52.09193300048355,
+          "memory_kb": 1627.064453125,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:31:25"
+        },
+        {
+          "name": "generic_function",
+          "implementation": "python",
+          "time_ms": 17.531401000451297,
+          "memory_kb": 241.1796875,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:31:33"
+        }
+      ]
+    },
+    "cypy_estimated": {
+      "total_time_ms": 136.3226209714896,
+      "avg_time_ms": 17.0403276214362,
+      "cases": [
+        {
+          "name": "fibonacci_recursive",
+          "implementation": "cypy_estimated",
+          "time_ms": 0.10407433340636392,
+          "memory_kb": 147.08515625,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:24"
+        },
+        {
+          "name": "factorial_loop",
+          "implementation": "cypy_estimated",
+          "time_ms": 0.06788969692548343,
+          "memory_kb": 146.99765625,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:24"
+        },
+        {
+          "name": "list_sum",
+          "implementation": "cypy_estimated",
+          "time_ms": 3.3366869565646127,
+          "memory_kb": 418.3546875,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:26"
+        },
+        {
+          "name": "string_concat",
+          "implementation": "cypy_estimated",
+          "time_ms": 0.9184191304603188,
+          "memory_kb": 150.9,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:26"
+        },
+        {
+          "name": "math_operations",
+          "implementation": "cypy_estimated",
+          "time_ms": 0.5383817390437522,
+          "memory_kb": 175.4453125,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:30:27"
+        },
+        {
+          "name": "nested_loop",
+          "implementation": "cypy_estimated",
+          "time_ms": 99.91916607146518,
+          "memory_kb": 157.60000000000002,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:31:20"
+        },
+        {
+          "name": "struct_operations",
+          "implementation": "cypy_estimated",
+          "time_ms": 23.65939521747034,
+          "memory_kb": 1301.57890625,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:31:31"
+        },
+        {
+          "name": "generic_function",
+          "implementation": "cypy_estimated",
+          "time_ms": 7.778607826153546,
+          "memory_kb": 192.94375000000002,
+          "iterations": 100,
+          "success": true,
+          "error": "",
+          "timestamp": "2026-07-30 11:31:35"
+        }
+      ]
+    },
+    "comparison": [
+      {
+        "name": "nested_loop",
+        "python_time_ms": 229.66295599995647,
+        "cypy_estimated_time_ms": 99.91916607146518,
+        "estimated_speedup": 2.29848751775705,
+        "improvement_percent": 129.84875177570498
+      },
+      {
+        "name": "factorial_loop",
+        "python_time_ms": 0.25122600025497377,
+        "cypy_estimated_time_ms": 0.06788969692548343,
+        "estimated_speedup": 3.700502603962462,
+        "improvement_percent": 270.0502603962462
+      },
+      {
+        "name": "generic_function",
+        "python_time_ms": 17.531401000451297,
+        "cypy_estimated_time_ms": 7.778607826153546,
+        "estimated_speedup": 2.2537967451587573,
+        "improvement_percent": 125.37967451587573
+      },
+      {
+        "name": "string_concat",
+        "python_time_ms": 1.6424529999494553,
+        "cypy_estimated_time_ms": 0.9184191304603188,
+        "estimated_speedup": 1.7883479834814038,
+        "improvement_percent": 78.83479834814038
+      },
+      {
+        "name": "list_sum",
+        "python_time_ms": 6.937715000240132,
+        "cypy_estimated_time_ms": 3.3366869565646127,
+        "estimated_speedup": 2.0792226212863154,
+        "improvement_percent": 107.92226212863154
+      },
+      {
+        "name": "math_operations",
+        "python_time_ms": 1.140735000371933,
+        "cypy_estimated_time_ms": 0.5383817390437522,
+        "estimated_speedup": 2.1188218649429897,
+        "improvement_percent": 111.88218649429898
+      },
+      {
+        "name": "fibonacci_recursive",
+        "python_time_ms": 0.27191100001800805,
+        "cypy_estimated_time_ms": 0.10407433340636392,
+        "estimated_speedup": 2.6126614614605956,
+        "improvement_percent": 161.26614614605955
+      },
+      {
+        "name": "struct_operations",
+        "python_time_ms": 52.09193300048355,
+        "cypy_estimated_time_ms": 23.65939521747034,
+        "estimated_speedup": 2.201744064954726,
+        "improvement_percent": 120.17440649547262
+      }
+    ]
+  },
+  "quality_assessment": {
+    "status": "good",
+    "total_cases": 8,
+    "average_score": 99.975,
+    "highest_score": 100.0,
+    "lowest_score": 99.8,
+    "level_distribution": {
+      "excellent": 8,
+      "good": 0,
+      "acceptable": 0,
+      "needs_improvement": 0,
+      "poor": 0
+    },
+    "dimension_scores": {
+      "compilation_success": 100.0,
+      "functional_correctness": 100.0,
+      "type_safety": 100.0,
+      "code_efficiency": 100.0,
+      "code_standards": 99.75,
+      "security": 100.0
+    },
+    "total_issues": 1,
+    "issue_severity_distribution": {
+      "low": 1
+    },
+    "critical_issues_count": 0
+  },
+  "conclusions": [
+    "编译 Pipeline 完整验证通过：源码解析 → 类型检查 → Cython 代码生成 全链路正常。",
+    "基于代码复杂度分析，Cypy(Cython) 预估性能提升 2.4x (最高 3.7x) 于 Python。 实际性能需在 Cython 编译环境中验证。",
+    "代码生成质量平均评分: 100.0/100，0 个严重问题需关注。"
+  ],
+  "recommendations": [
+    "最薄弱的质量维度是 'code_standards' (平均 99.8 分)，建议优先改进。",
+    "建议建立持续集成测试，每次代码提交时自动运行性能基准测试和质量检测。",
+    "建议在有 Cython 编译环境的 CI 服务器上测量实际运行时性能。"
+  ]
+}

@@ -41,7 +41,7 @@ def add(x: int, y: int) -> int:
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("cpdef int add(int x, int y):", code)
+        self.assertIn("def add(x, y):", code)
 
 
 class TestStructMethods(unittest.TestCase):
@@ -80,7 +80,7 @@ struct Point:
         generator = CythonGenerator()
         code = generator.generate(ast)
         self.assertIn("cdef class Point", code)
-        self.assertIn("cpdef double distance(self, Point other)", code)
+        self.assertIn("def distance(self, other):", code)
     
     def test_struct_method_operator_precedence(self):
         """测试结构体方法中的运算符优先级"""

@@ -991,13 +991,13 @@ class TestFunctionParamsBoundary(TestBoundaryFramework):
         # 可能支持
     
     def test_params_varargs(self):
-        """错误写法：可变参数（当前不支持）"""
+        """正确写法：可变参数（已支持 v0.3）"""
         source = """def test(*args, **kwargs):
     pass
 """
         _, error = self._parse_code(source)
-        # 当前不支持 *args 和 **kwargs
-        self.assertIsNotNone(error)
+        # v0.3 已支持 *args 和 **kwargs
+        self.assertIsNone(error)
     
     def test_params_invalid_order(self):
         """错误写法：默认参数在非默认参数之前（当前不检测）"""

@@ -40,6 +40,9 @@ class TokenType:
     MINUS_ASSIGN = "MINUS_ASSIGN"
     MUL_ASSIGN = "MUL_ASSIGN"
     DIV_ASSIGN = "DIV_ASSIGN"
+    MOD_ASSIGN = "MOD_ASSIGN"
+    FLOORDIV = "FLOORDIV"
+    FLOORDIV_ASSIGN = "FLOORDIV_ASSIGN"
 
     AND = "AND"
     OR = "OR"
@@ -130,6 +133,8 @@ class TokenType:
     TEARDOWN = "TEARDOWN"
     DEL = "DEL"
     PASS = "PASS"
+    GLOBAL = "GLOBAL"
+    NONLOCAL = "NONLOCAL"
 
     FAT_ARROW = "FAT_ARROW"  # =>
     BANG = "BANG"  # !
@@ -210,8 +215,12 @@ class Lexer:
         "del": TokenType.DEL,
         "not": TokenType.NOT,
         "pass": TokenType.PASS,
+        "global": TokenType.GLOBAL,
+        "nonlocal": TokenType.NONLOCAL,
         "True": TokenType.TRUE,
         "False": TokenType.FALSE,
+        "true": TokenType.TRUE,
+        "false": TokenType.FALSE,
     }
 
     def __init__(self, source: str):
@@ -703,9 +712,12 @@ class Lexer:
                     yield Token(TokenType.DIV_ASSIGN, "/=", self.line, self.col - 2)
                 elif self._peek() == "/":
                     self._advance()
-                    while self._peek() is not None and self._peek() != "\n":
+                    # // 可以是整除运算符或整除赋值 //=
+                    if self._peek() == "=":
                         self._advance()
-                    continue
+                        yield Token(TokenType.FLOORDIV_ASSIGN, "//=", self.line, self.col - 3)
+                    else:
+                        yield Token(TokenType.FLOORDIV, "//", self.line, self.col - 2)
                 else:
                     yield Token(TokenType.DIV, "/", self.line, self.col - 1)
                 continue

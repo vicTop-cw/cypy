@@ -203,7 +203,7 @@ def test_demo_integration_array():
     """数组操作集成 DEMO"""
     demo_source = """
 # 数组操作集成示例
-def sum_array(arr: list[int]) -> int:
+def sum_array(arr: list<int>) -> int:
     total: int = 0
     for item in arr:
         total += item
