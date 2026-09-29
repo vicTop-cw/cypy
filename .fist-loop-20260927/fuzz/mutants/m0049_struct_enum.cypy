@@ -1,0 +1,36 @@
+# 结构体和枚举示例
+# 演示 Cypy 的 struct 和 enum 定义
+
+struct Point:
+    x: int
+    y: int
+    
+    def __init__(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
+    
+    def __add__(self, other: Point) -> Point:
+        return Point(x=self.x + other.x, y=self.y + other.y)
+    
+    def __str__(self) -> str:
+        return f"({self.x}, {self.y})"
+
+struct Rectangle:
+    origin: Point
+    width: int
+    height: int
+    
+    def area(self) -> int:
+        return self.width * self.height
+
+struct Circle:
+    center: Point
+    radius: float
+    
+    def circumference(self) -> float:
+        return 2 * 3.14159 * self.radius
+    
+    def contains(self, point: Point) -> bool:
+        dx: float = point.x - self.center.x
+        dy: float = point.y - self.center.y
+        let dist_sq: float = dx ** 2 + dy ** 

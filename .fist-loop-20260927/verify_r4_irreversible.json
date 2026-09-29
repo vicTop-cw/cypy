@@ -1,0 +1,169 @@
+{
+ "started": "2026-09-28T00:52:55+00:00",
+ "window_start_utc": "2026-09-27T23:40:14+00:00",
+ "not_executed": [
+  "git push / 任何远端写",
+  "git commit / git add",
+  "golden 重注册（--update 落库）",
+  "改 PROJECT-SPEC / SYNTAX 冻结语义",
+  "删文件 / 删分支 / 删 worktree",
+  "清库 / 删任务与调用日志",
+  "PR / merge / tag 推送"
+ ],
+ "not_executed_total": 7,
+ "items": [
+  {
+   "item": "git push / 任何远端写",
+   "authority": "红线：只挂账",
+   "measurement": {
+    "remotes_configured": 4,
+    "git_meta_written_this_stage": [],
+    "local_refs_vs_remote": [
+     "refs/heads/master",
+     "17d68b4",
+     "refs/remotes/gitcode/master",
+     "17d68b4",
+     "refs/remotes/origin/HEAD",
+     "0db3b9c",
+     "refs/remotes/origin/main",
+     "0db3b9c",
+     "refs/remotes/origin/master",
+     "2ea6be2"
+    ]
+   },
+   "not_executed": true
+  },
+  {
+   "item": "git commit / git add",
+   "authority": "红线：只挂账",
+   "measurement": {
+    "head": "17d68b43696250da1b09ddfa1e91721c97256798",
+    "commits_on_head": 30,
+    "staged_rows": 0,
+    "prev_head": {
+     "head": "17d68b4",
+     "staged": 0,
+     "dirty_rows": 169,
+     "worktrees": [
+      "17d68b4",
+      "17d68b4"
+     ],
+     "foreign_worktree_present": true
+    }
+   },
+   "not_executed": true
+  },
+  {
+   "item": "golden 重注册（--update 落库）",
+   "authority": "红线：交人工",
+   "measurement": {
+    "examples_out_touched_this_stage": [],
+    "e2e_script_touched": []
+   },
+   "not_executed": true
+  },
+  {
+   "item": "改 PROJECT-SPEC / SYNTAX 冻结语义",
+   "authority": "红线：交人工",
+   "measurement": {
+    "files": 43,
+    "diff_vs_prev": []
+   },
+   "not_executed": true
+  },
+  {
+   "item": "删文件 / 删分支 / 删 worktree",
+   "authority": "红线：交人工",
+   "measurement": {
+    "tracked_deleted_rows": 10,
+    "prev_tracked_deleted": "n/a",
+    "branches": [
+     "*",
+     "->",
+     "master",
+     "origin/main",
+     "remotes/gitcode/master",
+     "remotes/origin/HEAD",
+     "remotes/origin/main",
+     "remotes/origin/master"
+    ],
+    "worktrees": [
+     "E:/IDEProjects/AI/Cypy",
+     "E:/IDEProjects/AI/_cypy_head_baseline"
+    ]
+   },
+   "not_executed": true
+  },
+  {
+   "item": "清库 / 删任务与调用日志",
+   "authority": "红线：只挂账",
+   "measurement": {
+    "tasks": 539,
+    "call_log": 4158,
+    "specs": 852,
+    "prev_call_log_total": 4133
+   },
+   "not_executed": true
+  },
+  {
+   "item": "PR / merge / tag 推送",
+   "authority": "红线：本地 tag 也要人点头才推",
+   "measurement": {
+    "remote_count": 4
+   },
+   "not_executed": true
+  }
+ ],
+ "canary": {
+  "predicate_catches_known_write": true,
+  "needle_file": ".fist-loop-20260927/verify_r4_matrix.py"
+ },
+ "git_meta_written_this_stage": [],
+ "git_meta_canary_files": [
+  ".fist-loop-20260927/verify_r4_ledger3way.py"
+ ],
+ "adjudication_queue": [
+  "BUG-65 冻结文档 7 行（改文档 = 改冻结面 ⇒ 人工）",
+  "BUG-69 bridge 生成 C 的模块级 if：本环已用 MSVC 实测被打回，修法（入口分派移进函数体 vs 改自述）二选一交人工",
+  "BUG-70 parser.py/cython_generator.py 越过 3000 行阈值的拆分（跨文件重构不可逆）",
+  "BUG-71 切片类型面：改推断（切片→容器类型）会影响存量程序，需裁决",
+  "BUG-72 codegen 死码：删函数 vs 把模式条件下沉回这三个方法，两种改法语义不同",
+  "BUG-73 两套缓存的真相源合一（改增量语义）",
+  "hook.eval 写侧 `__result__` 缺口（上一环 half-open 转结）",
+  "R3 锁文件本轮被重新锚定到 --help：判据语义变了，需人工过目"
+ ],
+ "ledger_cards_total": 73,
+ "note": "「未执行」的每一条都由测量支持；mtime/sha/行数三类谓词都配了 canary 或前后对照",
+ "self_checks": [
+  {
+   "label": "canary：mtime 谓词必须抓住本环确实改过的文件（否则「没写过」是空的）",
+   "got": true,
+   "want": true,
+   "why": "{\"predicate_catches_known_write\": true, \"needle_file\": \".fist-loop-20260927/verify_r4_matrix.py\"}",
+   "ok": true
+  },
+  {
+   "label": "挂账清单必须逐条给正面测量（不许空条目）",
+   "got": true,
+   "want": true,
+   "why": "见 items",
+   "ok": true
+  },
+  {
+   "label": "每一条都必须是「未执行」",
+   "got": [],
+   "want": [],
+   "why": "任一条被执行就要停下报告",
+   "ok": true
+  },
+  {
+   "label": "清单条数≥7（覆盖 push/commit/golden/冻结/删除/清库/PR）",
+   "got": true,
+   "want": true,
+   "why": "7 条",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T00:52:56+00:00"
+}

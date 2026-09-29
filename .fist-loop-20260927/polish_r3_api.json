@@ -1,0 +1,16 @@
+{
+ "public_added": true,
+ "public_is_not_dunder": true,
+ "cli_no_private_call": true,
+ "cli_private_occurrences": 0,
+ "delegation_equal_on_broken": true,
+ "clean_errors": [],
+ "broken_error_count": 1,
+ "cli_check_only_rc": 0,
+ "cli_check_only_artifacts": [],
+ "cli_lines_touched": [
+  "_, errors = hook.analyze_only(text)"
+ ],
+ "at_utc": "2026-09-27T18:12:07+00:00",
+ "refuse": []
+}

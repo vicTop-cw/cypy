@@ -1,0 +1,14 @@
+{
+ "Triple_ok": {
+  "with_new_judge": [
+   "Type mismatch: expected Pair[Pair[int]], got tuple[tuple[int, int], tuple[int, int]] at 5:9"
+  ],
+  "with_new_judge_off": [
+   "Type mismatch: expected Pair[Pair[int]], got tuple[tuple[int, int], tuple[int, int]] at 5:9"
+  ]
+ },
+ "Pair_direct_ok": {
+  "with_new_judge": [],
+  "with_new_judge_off": []
+ }
+}

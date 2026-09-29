@@ -1,0 +1,55 @@
+{
+ "file": "tests/test_loop_20260927_advance_r4.py",
+ "expected_tests": 26,
+ "breakdown": {
+  "name_face_probes": 14,
+  "doc_worked_example": 1,
+  "pinned_card_locks": 4,
+  "doc_citation_locks": 3,
+  "defer_shape_locks": 4
+ },
+ "card_ids": [
+  "BUG-74",
+  "BUG-75",
+  "BUG-76",
+  "BUG-77"
+ ],
+ "prefix_red_ids": [
+  "test_defer_declared_shape[defer_two_exits]",
+  "test_doc_worked_example_maps_to_noreturn",
+  "test_name_face_at_cli_entry[A4-doc_worked_example]",
+  "test_name_face_at_cli_entry[A4-never_in_param_position]",
+  "test_name_face_at_cli_entry[A4-never_min_return]",
+  "test_name_face_at_cli_entry[A4B-iter]",
+  "test_name_face_at_cli_entry[A4B-open]",
+  "test_name_face_at_cli_entry[A4B-repr]"
+ ],
+ "prefix_green_ids": [
+  "test_declared_builtins_still_cited_in_syntax_docs[iter]",
+  "test_declared_builtins_still_cited_in_syntax_docs[open]",
+  "test_declared_builtins_still_cited_in_syntax_docs[repr]",
+  "test_defer_declared_shape[defer_before_return]",
+  "test_defer_declared_shape[single_defer]",
+  "test_defer_declared_shape[two_defers_lifo]",
+  "test_name_face_at_cli_entry[A4-bogus_function_control]",
+  "test_name_face_at_cli_entry[A4-bogus_type_name_control]",
+  "test_name_face_at_cli_entry[A4B-bytes]",
+  "test_name_face_at_cli_entry[A4B-chr]",
+  "test_name_face_at_cli_entry[A4B-divmod]",
+  "test_name_face_at_cli_entry[A4B-hex]",
+  "test_name_face_at_cli_entry[A4B-pow]",
+  "test_name_face_at_cli_entry[A4B-round]",
+  "test_pinned_defects_still_have_a_card[BUG-74]",
+  "test_pinned_defects_still_have_a_card[BUG-75]",
+  "test_pinned_defects_still_have_a_card[BUG-76]",
+  "test_pinned_defects_still_have_a_card[BUG-77]"
+ ],
+ "generator": "advance_r4_gen_locks.py",
+ "sources": [
+  "advance_r4_never.json",
+  "advance_r4_builtins.json",
+  "advance_r4_filed.json",
+  "advance_r4_dormant.json"
+ ],
+ "note": "条数由本生成器按反解到的条目数算出；`advance_r4_locks.py` 与 `advance_r4_baselines.py` 各自拿实测收集数来比这格——两份来源不一致就红"
+}

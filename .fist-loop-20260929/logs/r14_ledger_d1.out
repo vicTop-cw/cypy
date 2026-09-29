@@ -1,0 +1,3 @@
+LANDED 2 OF 2 DIRTY_OWN {'own_residue': 0, 'own_stamp_count': 2, 'own_badstamp': 0} SWEEP {'whole_residue_lines': 0, 'whole_dblstamp_lines': 0}
+BEFORE {'headers': 143, 'unique': 142, 'open': 42, 'fixed': 93, 'amend': 1} AFTER {'headers': 143, 'unique': 142, 'open': 40, 'fixed': 95, 'amend': 1} TOUCHED ['BUG-141', 'BUG-142'] SUMMARY_KEPT True
+CONCLUSION r14_ledger touched=2 ids=['BUG-141', 'BUG-142'] headers=143 open=40 fixed=95 refresh=False stamp=2026-09-29T12:37:05Z dict_cases=23 dict_fp=fnv1a64:d31d62984b62f3ae locks=29 pytest=2390->2442 delta=52

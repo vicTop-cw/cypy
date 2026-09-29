@@ -1,0 +1,78 @@
+{
+ "refuse": [
+  "loop_progress.md 里已有本环记录 ⇒ 拒绝重复追加（幂等门）"
+ ],
+ "checks": [
+  {
+   "label": "§八 判据类标题条数==正文条数",
+   "got": 8,
+   "want": 8,
+   "why": "标题改了正文没改=这一类老坑",
+   "ok": true
+  },
+  {
+   "label": "§八 操作类标题条数==正文条数",
+   "got": 4,
+   "want": 4,
+   "why": "同上",
+   "ok": true
+  },
+  {
+   "label": "§十一 有被拒原文逐字表（占位存在）",
+   "got": true,
+   "want": true,
+   "why": "法 7 要求逐字进报告，表由判据件反解",
+   "ok": true
+  },
+  {
+   "label": "根终态已归档",
+   "got": "已归档",
+   "want": "已归档",
+   "why": "close_root out",
+   "ok": true
+  },
+  {
+   "label": "叶全数完成",
+   "got": 16,
+   "want": 16,
+   "why": "root out.leaves_done",
+   "ok": true
+  },
+  {
+   "label": "叶无失败",
+   "got": [],
+   "want": [],
+   "why": "leaf closer out.failed",
+   "ok": true
+  },
+  {
+   "label": "报告在盘上且够长",
+   "got": true,
+   "want": true,
+   "why": "memory/reviews/20260928.05.00.00.md",
+   "ok": true
+  },
+  {
+   "label": "报告里门禁格没有 ❌ 也没有未解析",
+   "got": true,
+   "want": true,
+   "why": "渲染终检",
+   "ok": true
+  },
+  {
+   "label": "被拒明细条数==refused 计数",
+   "got": 60,
+   "want": 60,
+   "why": "分支+根 = 总数",
+   "ok": true
+  },
+  {
+   "label": "分支重放的幂等拒绝=48（8 枝 × 3 工具，重跑一次就是 48 条噪声）",
+   "got": 48,
+   "want": 48,
+   "why": "根上 12 条另计",
+   "ok": true
+  }
+ ],
+ "written": false
+}

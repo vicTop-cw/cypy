@@ -1,0 +1,3 @@
+repro: python -m cypyc transpile .fist-loop-20260927/hunts/fuzz_01.cypy -o .fist-loop-20260927/fuzz/cli_out   # file = "let x = 1 " (10 bytes, trailing space, NO final newline)
+out  : [FAIL] Transpile failed: /   - 读取文件错误: 'in <string>' requires string as left operand, not NoneType   (exit=1)
+tb   : File "cypyc/parser/lexer.py", line 510, in tokenize -> self._skip_whitespace() / line 278, in _skip_whitespace -> while self._peek() in " \t": -> TypeError: 'in <string>' requires string as left operand, not NoneType

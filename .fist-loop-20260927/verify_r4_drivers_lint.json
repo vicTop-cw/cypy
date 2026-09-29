@@ -1,0 +1,128 @@
+{
+ "started": "2026-09-28T01:24:15+00:00",
+ "window_start_utc": "2026-09-27T23:40:14",
+ "scanned": [
+  "verify_r4_appendixC.py",
+  "verify_r4_baselines.py",
+  "verify_r4_calllog_tally.py",
+  "verify_r4_callsite.py",
+  "verify_r4_close_spec.py",
+  "verify_r4_compile.py",
+  "verify_r4_drivers_lint.py",
+  "verify_r4_file_bugs.py",
+  "verify_r4_irreversible.py",
+  "verify_r4_ledger3way.py",
+  "verify_r4_lib.py",
+  "verify_r4_lockproof.py",
+  "verify_r4_matrix.py",
+  "verify_r4_progress.py",
+  "verify_r4_render_order.py",
+  "verify_r4_repro.py",
+  "verify_r4_self_audit.py"
+ ],
+ "detail": [
+  {
+   "file": "verify_r4_appendixC.py",
+   "bytes": 16300,
+   "mtime_utc": "2026-09-28T00:34:08+00:00"
+  },
+  {
+   "file": "verify_r4_baselines.py",
+   "bytes": 10780,
+   "mtime_utc": "2026-09-28T00:34:46+00:00"
+  },
+  {
+   "file": "verify_r4_calllog_tally.py",
+   "bytes": 10947,
+   "mtime_utc": "2026-09-28T00:35:38+00:00"
+  },
+  {
+   "file": "verify_r4_callsite.py",
+   "bytes": 15681,
+   "mtime_utc": "2026-09-28T00:38:33+00:00"
+  },
+  {
+   "file": "verify_r4_close_spec.py",
+   "bytes": 12484,
+   "mtime_utc": "2026-09-28T01:23:44+00:00"
+  },
+  {
+   "file": "verify_r4_compile.py",
+   "bytes": 15249,
+   "mtime_utc": "2026-09-28T00:33:23+00:00"
+  },
+  {
+   "file": "verify_r4_drivers_lint.py",
+   "bytes": 5613,
+   "mtime_utc": "2026-09-28T00:26:22+00:00"
+  },
+  {
+   "file": "verify_r4_file_bugs.py",
+   "bytes": 12507,
+   "mtime_utc": "2026-09-28T00:36:38+00:00"
+  },
+  {
+   "file": "verify_r4_irreversible.py",
+   "bytes": 11012,
+   "mtime_utc": "2026-09-28T00:37:16+00:00"
+  },
+  {
+   "file": "verify_r4_ledger3way.py",
+   "bytes": 11710,
+   "mtime_utc": "2026-09-28T00:46:15+00:00"
+  },
+  {
+   "file": "verify_r4_lib.py",
+   "bytes": 5733,
+   "mtime_utc": "2026-09-27T23:50:07+00:00"
+  },
+  {
+   "file": "verify_r4_lockproof.py",
+   "bytes": 7758,
+   "mtime_utc": "2026-09-28T00:38:15+00:00"
+  },
+  {
+   "file": "verify_r4_matrix.py",
+   "bytes": 10065,
+   "mtime_utc": "2026-09-28T00:27:34+00:00"
+  },
+  {
+   "file": "verify_r4_progress.py",
+   "bytes": 12405,
+   "mtime_utc": "2026-09-28T01:04:44+00:00"
+  },
+  {
+   "file": "verify_r4_render_order.py",
+   "bytes": 3849,
+   "mtime_utc": "2026-09-28T00:54:20+00:00"
+  },
+  {
+   "file": "verify_r4_repro.py",
+   "bytes": 8024,
+   "mtime_utc": "2026-09-28T00:32:17+00:00"
+  },
+  {
+   "file": "verify_r4_self_audit.py",
+   "bytes": 17546,
+   "mtime_utc": "2026-09-28T01:19:38+00:00"
+  }
+ ],
+ "drivers_scanned": 17,
+ "hard_violations": 0,
+ "hard_lines": [],
+ "soft_total": 0,
+ "soft_codes": {},
+ "canary": {
+  "bad_caught": 1,
+  "clean_false_positive": 0,
+  "bad_line_preview": [
+   "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verifyr4canary_5mela6ds\\canary_bad.py:2:101: E501 line too long (185 > 100 characters)"
+  ],
+  "leftover": []
+ },
+ "line_length_declared": 100,
+ "note": "软账条数只降不升：上一环 fix_r4_drivers_lint.json 的 soft_total 是基线",
+ "refuse": [],
+ "at_utc": "2026-09-28T01:24:21+00:00",
+ "previous_round_soft_baseline": 0
+}

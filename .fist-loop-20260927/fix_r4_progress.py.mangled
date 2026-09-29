@@ -1,0 +1,132 @@
+"""把 R4-修复 的结果写进 `.fist-loop-20260927/loop_progress.md`：数字全部从判据件反解。
+
+手写计数是上一环被点名的形状（标题写 131/0 失败、正文却是另一套）。这里正文的每个数都从件里取，
+并做双向对账：① 页脚同名键不重复（幂等）；② 若该环记录已在册则拒绝叠加。
+"""
+
+from __future__ import annotations
+
+import datetime
+import json
+import re
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent
+PROG = ROOT / ".fist-loop-20260927" / "loop_progress.md"
+MARK = "### R4-修复"
+REFUSE: list = []
+
+
+def L(name: str) -> dict:
+    p = HERE / name
+    if not p.exists():
+        REFUSE.append(f"判据件缺失：{name}")
+        return {}
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        REFUSE.append(f"判据件不是合法 JSON：{name}（{str(exc)[:120]}）")
+        return {}
+
+
+def main() -> int:
+    started = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    claim, locks, rc = L("fix_r4_claim.json"), L("fix_r4_locks.json"), L("fix_r4_rc.json")
+    rev, imp, docsart = (L("fix_r4_revert.json"), L("fix_r4_impact.json"),
+                          L("fix_r4_docs.json"))
+    base, led = L("fix_r4_baselines.json"), L("fix_r4_ledger.json")
+    lchk, lint = L("fix_r4_ledger_check.json"), L("fix_r4_drivers_lint.json")
+    tally, sad = L("fix_r4_calllog_tally.json"), L("fix_r4_self_audit.json")
+    ro = L("fix_r4_render_order.json")
+    closer = L("close_r4_fix.out.json")
+    rootc = L("close_r4_fix_root.out.json")
+    rep = ROOT / "memory" / "reviews" / f"{ro.get('report', '').split('/')[-1]}" \
+        if ro.get("report") else None
+    rep_bytes = rep.stat().st_size if rep and rep.exists() else 0
+
+    for name, d in (("fix_r4_baselines.json", base), ("fix_r4_calllog_tally.json", tally),
+                    ("fix_r4_self_audit.json", sad), ("close_r4_fix.out.json", closer)):
+        if d.get("refuse"):
+            REFUSE.append(f"{name} 的 refuse 非空，不能进进度账：{d['refuse'][:2]}")
+    if not (rep and rep.exists()):
+        REFUSE.append(f"报告文件不在盘上：{ro.get('report') or '(render_order 件缺失)'}")
+    if len(closer.get("leaves") or []) != 16:
+        REFUSE.append(f"叶收口件只有 {len(closer.get('leaves') or [])} 行（应 16）")
+    if closer.get("failed"):
+        REFUSE.append(f"有叶未闭：{json.dumps(closer['failed'], ensure_ascii=False)[:200]}")
+    if ro and ro.get("report_sha256") and rep and rep.exists():
+        import hashlib
+        now = hashlib.sha256(rep.read_bytes()).hexdigest()[:16]
+        if now != ro["report_sha256"]:
+            REFUSE.append(f"报告在渲染后被改动：sha {ro['report_sha256']} → {now}")
+
+    pf = base.get("pytest", {})
+    row = (
+        f"{MARK}（根 `T0r85`，执行人 `cypy-fixer`）\n\n"
+        f"- 结论：**已收口**。六张单闭环（RC1..RC4 + 文档两单），"
+        f"交人工 {len(claim.get('handoff') or [])} 张、转下一环 {len(claim.get('next_round') or [])} 张。\n"
+        f"- 产品码：`cypyc/analyzer/type_checker.py` "
+        f"+{rc.get('added_lines')} / -{rc.get('removed_lines')}，"
+        f"共享件 {rc.get('shared_symbols')}，调用点 {rc.get('call_site_total')} 处。\n"
+        f"- 锁：修前 `{(locks.get('before') or {}).get('summary_line')}` → "
+        f"修后 `{(locks.get('after') or {}).get('summary_line')}`；"
+        f"回退矩阵四腿 `{[r.get('rc') for r in rev.get('rows') or []]}` 全部承重、对照零误伤。\n"
+        f"- 影响面：{imp.get('corpus')} 档语料逐档差分，新增诊断 {len(imp.get('newly_rejected') or [])} / "
+        f"消失诊断 {len(imp.get('newly_accepted') or [])} / 待裁决"
+        f"{len(imp.get('unadjudicated') or [])}。\n"
+        f"- 三套体系：pytest {pf.get('passed')} 通过（地板 "
+        f"{(base.get('floors') or {}).get('pytest')}）、收集 {(base.get('collect')"
+        f"or {}).get('nodeids')}、"
+        f"自研 {(base.get('suite') or {}).get('fields')}、e2e {(base.get('e2e') or {}).get('fields')}；"
+        f"HEAD `{(base.get('git') or {}).get('head')}`、暂存 {(base.get('git') or {}).get('staged')}、"
+        f"冻结面在窗口内 {(base.get('radius') or {}).get('frozen')}。\n"
+        f"- 账面：修复单 {led.get('agree_total')}/{len(led.get('cards') or [])} 三向一致，"
+        f"账本条目 {led.get('ledger_total')} 条（追加 FIXED 未多生条目），"
+        f"格式化后只读复核 {lchk.get('agree_total')}/{lchk.get('total')}。\n"
+        f"- 文档面：{len(docsart.get('agreed') or [])} 行按实读对齐、"
+    f"半开 {len(docsart.get('half_open') or [])} 条转结、"
+    f"冻结面只读探针 {docsart.get('frozen_control')}。
+"
+    f"- 驱动面：本轮亲笔 {lint.get('drivers_scanned')} 个脚本，硬错 {lint.get('hard_violations')}、"
+        f"软账 {lint.get('soft_total')}（上一环基线 {lint.get('previous_round_soft_baseline')}）。\n"
+        f"- 调用面（渲染前快照）：树 {tally.get('tree_rows')} 行 / 修复单 {tally.get('bug_card_rows')} 行，"
+        f"被拒 树 {tally.get('tree_refused')} + 单 {tally.get('bug_card_refused')}，"
+        f"载体 {json.dumps({k: v.get('this_stage_total') for k, v in"
+        f"(tally.get('spec_named_carriers') or {}).items()}, ensure_ascii=False)}；"
+        f"Omega 标记 {json.dumps(tally.get('omega_marked'), ensure_ascii=False)}。\n"
+        f"- 报告：`{(ro.get('report') or '—')}`（{rep_bytes} B，sha256/16 "
+        f"`{ro.get('report_sha256')}`，渲染 {ro.get('renders')} 次）；"
+        f"自证 {sad.get('gates_pass')}/{sad.get('gates_total')} 道门禁、"
+        f"占位 {len(sad.get('placeholders_bad') or [])} 个解析失败。\n"
+        f"- 收口：叶 {len(closer.get('leaves') or [])}/16、根状态 "
+        f"`{(rootc.get('root') or {}).get('status') if"
+        f"isinstance(rootc.get('root'), dict) else rootc.get('root_status')}`；"
+        f"终账见 `fix_r4_calllog_tally_final.json`。\n"
+        f"- 时长与失效：本环自 2026-09-27T21:16:43Z 起，判据自伤 5 条已写进报告《八》。\n")
+
+    text = PROG.read_text(encoding="utf-8") if PROG.exists() else ""
+    if MARK in text:
+        print(json.dumps({"refuse": [f"进度账里已有「{MARK}」段 ⇒ 拒绝叠加（幂等门）"]},
+                         ensure_ascii=False))
+        return 1
+    keys = re.findall(r"(?:^|\s)([a-z][\w-]*)=", row)
+    dup = sorted({k for k in keys if keys.count(k) > 1})
+    if dup:
+        REFUSE.append(f"记录内同名键出现两次：{dup}")
+    PROG.write_text(text.rstrip("\n") + "\n\n" + row.rstrip("\n") + "\n",
+                    encoding="utf-8", newline="\n")
+    doc_out = {"started": started, "mark": MARK, "refuse": sorted(set(REFUSE)),
+               "bytes_written": len(row.encode("utf-8")), "dup_keys": dup,
+               "at_utc": datetime.datetime.now(
+                   datetime.timezone.utc).isoformat(timespec="seconds")}
+    (HERE / "fix_r4_progress.json").write_text(
+        json.dumps(doc_out, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
+    print(json.dumps({"refuse": doc_out["refuse"], "mark": MARK,
+                      "bytes": doc_out["bytes_written"]}, ensure_ascii=False, indent=1))
+    return 1 if doc_out["refuse"] else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

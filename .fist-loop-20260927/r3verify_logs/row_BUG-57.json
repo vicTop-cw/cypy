@@ -1,0 +1,25 @@
+{
+ "bug": "BUG-57",
+ "patches": 3,
+ "applied": 3,
+ "compiled": true,
+ "pos_red": [
+  "test_bug57_builtin_member_type_is_diagnosed",
+  "test_bug57_union_docstrings_advertise_only_runnable_shapes"
+ ],
+ "ctl_red": [],
+ "collateral_red": [],
+ "restored": true,
+ "sha_before": {
+  "cypy_bridge/union.py": "483f368c4f71412cfdb8d4e332d797fde077f92641b62bc6c9bbbec193c94857"
+ },
+ "sha_after_restore": "483f368c4f71412cfdb8d4e332d797fde077f92641b62bc6c9bbbec193c94857",
+ "sha_equal": true,
+ "touched_files": [
+  "cypy_bridge/union.py"
+ ],
+ "workspace_untouched": true,
+ "matches_prev_head": null,
+ "reds_total": 2,
+ "seen_total": 17
+}

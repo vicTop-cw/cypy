@@ -1,0 +1,49 @@
+#!bin cypy
+# ============================================================
+# fields.cypy — FieldInfo + Field() factory (Pydantic Field port)
+# ============================================================
+
+struct FieldInfo:
+    # Declarative description of a single model field.
+    name: str
+    type_name: str
+    item_type: str
+    required: bool
+    has_default: bool
+    default: object
+    min_length: int
+    max_length: int
+    ge: float
+    le: float
+    pattern: str
+
+    def __init__(self, name: str = "", type_name: str = "str", item_type: str = "",
+                 required: bool = False, default: object = None,
+                 min_length: int = -1, max_length: int = -1,
+                 ge: float = -1.0, le: float = -1.0, pattern: str = ""):
+        self.name = name
+        self.type_name = type_name
+        self.item_type = item_type
+        self.required = required
+        self.has_default = (not required)
+        self.default = default
+        self.min_length = min_length
+        self.max_length = max_length
+        self.ge = ge
+        self.le = le
+        self.pattern = pattern
+
+
+def Field(type_name: str = "str", item_type: str = "", required: bool = False,
+          default: object = None, min_length: int = -1, max_length: int = -1,
+          ge: float = -1.0, le: float = -1.0, pattern: str = "") -> FieldInfo:
+    return FieldInfo(
+        name="", type_name=type_name, item_type=item_type,
+        required=required, default=default,
+        min_length=min_length, max_length=max_length,
+        ge=ge, le=le, pattern=pattern
+    )
+
+
+def List(item_type: str) -> FieldInfo:
+    return FieldInfo(name="", type_name="list", item_type=item_type)

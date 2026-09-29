@@ -1,0 +1,11 @@
+{
+ "mark": "### R4-推进",
+ "block_chars": 4830,
+ "ring_minutes": 153,
+ "report_sha256": "95294140a79ebcad0f040f3fed2f58a0459b32ac4c8ff25c0c64bfc11a366d6c",
+ "root": "已归档",
+ "self_checks": 20,
+ "checks_red": [],
+ "at_utc": "2026-09-28T05:33:15+00:00",
+ "refuse": []
+}

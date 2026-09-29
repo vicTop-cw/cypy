@@ -1,0 +1,2 @@
+{"refuse": [], "test_suite": {"total": 47, "passed": 47, "failed": 0, "rc": 0}, "targeted": {"file_count": 85, "rc": 0, "summary_line": "====================== 1761 passed in 291.73s (0:04:51) =======================", "passed": 1761, "failed": 0, "errors": 0}}
+rc=0

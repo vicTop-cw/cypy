@@ -1,0 +1,2 @@
+repro: python -m cypyc transpile .fist-loop-20260927/hunts/fuzz_03.cypy -o .fist-loop-20260927/fuzz/cli_out   # file has 0xff 0xfe 0x80 after "let x = 1 "
+out  : [FAIL] Transpile failed: /   - 读取文件错误: 'utf-8' codec can't decode byte 0xff in position 10: invalid start byte   (exit=1)

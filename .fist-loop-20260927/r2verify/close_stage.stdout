@@ -1,0 +1,17 @@
+T0r57.1.1 law=L1 三套基线独立复算（干净子进程，末行逐字进报告，不与修复环互相抵扣） ov=pass verify=ok err=none
+T0r57.1.2 law=L1 三套基线独立复算（干净子进程，末行逐字进报告，不与修复环互相抵扣） ov=pass verify=ok err=none
+T0r57.2.1 law=L2 BUG-44 对抗复测：struct 与 class 两侧的 @staticmethod/@classmethod 都不注入 self ov=pass verify=ok err=none
+T0r57.2.2 law=L2 BUG-44 对抗复测：struct 与 class 两侧的 @staticmethod/@classmethod 都不注入 self ov=pass verify=ok err=none
+T0r57.3.1 law=L3 BUG-45 对抗复测：参数位脱糖，局部位按未文档化只记观察不占号 ov=pass verify=ok err=none
+T0r57.3.2 law=L3 BUG-45 对抗复测：参数位脱糖，局部位按未文档化只记观察不占号 ov=pass verify=ok err=none
+T0r57.4.1 law=L4 BUG-39/51 对抗复测：模块级与 class 体必诊断，宏体必合法（守卫不过头也不足） ov=pass verify=ok err=none
+T0r57.4.2 law=L4 BUG-39/51 对抗复测：模块级与 class 体必诊断，宏体必合法（守卫不过头也不足） ov=pass verify=ok err=none
+T0r57.5.1 law=L5 BUG-35/46/47 调用面复测：分桶、两条 hook 入口一致、包级 API 真可用 ov=pass verify=ok err=none
+T0r57.5.2 law=L5 BUG-35/46/47 调用面复测：分桶、两条 hook 入口一致、包级 API 真可用 ov=pass verify=ok err=none
+T0r57.6.1 law=L6 账本三向对照：逐号点名 + 双发检测（键必须用整条 summary） ov=pass verify=ok err=none
+T0r57.6.2 law=L6 账本三向对照：逐号点名 + 双发检测（键必须用整条 summary） ov=pass verify=ok err=none
+T0r57.7.1 law=L7 BUG-50 损害面复核：文本债与语义增量分栏，HEAD 不是 pre-black 底 ov=pass verify=ok err=none
+T0r57.7.2 law=L7 BUG-50 损害面复核：文本债与语义增量分栏，HEAD 不是 pre-black 底 ov=pass verify=ok err=none
+T0r57.8.1 law=L8 新缺陷入账与双发处置：BUG-52 落账可回读，BUG-53 已标 DUPLICATE 并指认正身 ov=pass verify=ok err=none
+T0r57.8.2 law=L8 新缺陷入账与双发处置：BUG-52 落账可回读，BUG-53 已标 DUPLICATE 并指认正身 ov=pass verify=ok err=none
+closed=16/16 failed=none

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-polish-20260926\pfist.py", line 148, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-polish-20260926\pfist.py", line 131, in main
+    calls = json.load(open(argv[1], encoding="utf-8"))
+                      ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '.fist-polish-20260926/bugs_batch.json'

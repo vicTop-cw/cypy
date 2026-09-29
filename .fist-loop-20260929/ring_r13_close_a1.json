@@ -1,0 +1,321 @@
+{
+ "started_z": "2026-09-29T11:19:32Z",
+ "stage": "close",
+ "tag": "a1",
+ "ns": "cypy-loop-20260929",
+ "refusals": [],
+ "benign": [],
+ "idempotent": [],
+ "nodes": {
+  "T0r119.1.1": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "face",
+   "status_after": "已完成"
+  },
+  "T0r119.1.2": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "face",
+   "status_after": "已完成"
+  },
+  "T0r119.2.1": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "face",
+   "status_after": "已完成"
+  },
+  "T0r119.2.2": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "face",
+   "status_after": "已完成"
+  },
+  "T0r119.3.1": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "face",
+   "status_after": "已完成"
+  },
+  "T0r119.3.2": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "face",
+   "status_after": "已完成"
+  },
+  "T0r119.1.3": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "boundary-real",
+   "status_after": "已完成"
+  },
+  "T0r119.2.3": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "boundary-declared-na",
+   "status_after": "已完成"
+  },
+  "T0r119.3.3": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "boundary-declared-na",
+   "status_after": "已完成"
+  },
+  "T0r119.4.1": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "boundary-declared-na",
+   "status_after": "已完成"
+  },
+  "T0r119.4.2": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "boundary-declared-na",
+   "status_after": "已完成"
+  },
+  "T0r119.4.3": {
+   "status_before": "已领取",
+   "steps": {
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true
+    },
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "kind": "boundary-declared-na",
+   "status_after": "已完成"
+  }
+ },
+ "obs": {
+  "corpus_cases": 28,
+  "fingerprint": "fnv1a64:7349f8d14b3fc9fc",
+  "locks": 31,
+  "matrix": {
+   "cells": 7,
+   "mutation_cells": 5,
+   "load_bearing": 5,
+   "all_mutation_red": true,
+   "all_gate_red": true,
+   "control_cells": 1,
+   "control_zero_red": true
+  },
+  "filed_new_ids": [],
+  "ledger": {
+   "headers": 141,
+   "open_blocks": 40,
+   "fixed_sections": 93,
+   "amend_sections": 1,
+   "residue_lines": 0,
+   "dblstamp_lines": 0,
+   "hard_bad_stamps": 0,
+   "soft_bad_stamps": 18
+  }
+ },
+ "entry_gate": {
+  "pass": true,
+  "reasons": [],
+  "observed": {
+   "corpus": {
+    "cases": 28,
+    "fingerprint": "fnv1a64:7349f8d14b3fc9fc"
+   },
+   "locks": 31,
+   "report_bytes": 24701,
+   "ledger": {
+    "headers": 141,
+    "open_blocks": 40,
+    "fixed_sections": 93,
+    "amend_sections": 1,
+    "residue_lines": 0,
+    "dblstamp_lines": 0,
+    "hard_bad_stamps": 0,
+    "soft_bad_stamps": 18
+   },
+   "probe": {
+    "cases": 39,
+    "red": 18,
+    "should_be_green_now_red": []
+   },
+   "citation_check": {
+    "checks": 33,
+    "failed": 0
+   },
+   "matrix": {
+    "cells": 7,
+    "mutation_cells": 5,
+    "load_bearing": 5,
+    "all_mutation_red": true,
+    "all_gate_red": true,
+    "control_cells": 1,
+    "control_zero_red": true
+   },
+   "spec_kind_guard": {
+    "pass": true,
+    "missing": [],
+    "live": [
+     "check",
+     "result",
+     "spec"
+    ]
+   }
+  }
+ },
+ "tree_readback": {
+  "root": "T0r119",
+  "rows": 17,
+  "leaves": 12,
+  "boundary": 6
+ },
+ "faces_missing": [],
+ "pending_leaves": 0,
+ "branch_final": {
+  "T0r119.1": "已完成",
+  "T0r119.2": "已完成",
+  "T0r119.3": "已完成",
+  "T0r119.4": "已完成"
+ },
+ "root_final": "已完成",
+ "loop_drive": {
+  "gates": {
+   "create_ok": true,
+   "status_pre_ok": true,
+   "all_ticks_ok": true,
+   "status_post_ok": true,
+   "cross_process_negative_confirmed": true,
+   "round_advanced": true,
+   "mode_sequence_matches_declared_steps": true,
+   "current_idx_progression": true,
+   "no_early_stop": true
+  },
+  "ticks_ok": 6,
+  "steps": 6,
+  "pre": {
+   "round": 0,
+   "stop_reason": "",
+   "max_rounds": 6
+  },
+  "post": {
+   "round": 1,
+   "stop_reason": "",
+   "max_rounds": 6
+  },
+  "seq": [
+   "advance",
+   "bugfind",
+   "fix_and_merge",
+   "verify",
+   "polish",
+   "advance"
+  ],
+  "idx": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   0
+  ]
+ },
+ "call_log_error_rows": 0,
+ "call_log_error_rows_old_needle": 0,
+ "rollup": {
+  "已完成": 17
+ },
+ "calls": 89,
+ "suite_totals": [
+  "47",
+  "47",
+  "0"
+ ],
+ "golden_totals": "PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+}

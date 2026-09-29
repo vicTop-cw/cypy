@@ -1,0 +1,9 @@
+L0 L0 live（修复后） | red=0 rc=0 crash=False ids=[]
+L1 L1 只退解析器 | red=34 rc=1 crash=False ids=['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#0]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#11]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#12]']
+L2 L2 只退注解位元数门 | red=4 rc=1 crash=False ids=['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#10]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#9]', 'tests/test_generic_class_r11.py::test_arity_wording_is_shared_between_annotation_and_callsite']
+L3 L3 只退接收者代入 | red=18 rc=1 crash=False ids=['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#0]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#11]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#13]']
+L4 L4 只退形式参数守卫 | red=1 rc=1 crash=False ids=['tests/test_generic_class_r11.py::test_generic_class_method_name_is_not_registered_as_formal_type']
+L5 L5 只退 struct 裸名擦除 | red=2 rc=1 crash=False ids=['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#23]', 'tests/test_generic_class_r11.py::test_struct_field_substitution_still_judges']
+L6 L6 只改注释（对照格） | red=0 rc=0 crash=False ids=[]
+GATES {"cells_run": 7, "cells_expected": 7, "l0_zero_red": true, "l0_identity_all_true": true, "no_ruler_crash": true, "comment_only_control_zero_red": true, "load_bearing_every_cell": true, "identity_flipped_every_cell": true}
+CONCLUSION cells=7/7 load_bearing=5/5 identity_flips=5/4 comment_control_zero_red=True rc=0

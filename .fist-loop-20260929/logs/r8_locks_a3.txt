@@ -1,0 +1,8 @@
+M1 生成器末路回到 str(node)               anchor=1 run=2/12 restored=True verdict=承重：摘掉即红
+M2 摘掉注解闭集校验挂钩                      anchor=1 run=4/10 restored=True verdict=承重：摘掉即红
+M3 摘掉位置模式元数诊断                      anchor=1 run=1/19 restored=True verdict=承重：摘掉即红
+M4 让元数比较条件永假                       anchor=1 run=1/19 restored=True verdict=承重：摘掉即红
+M5 class 位置槽位退回 fields-only        anchor=1 run=3/41 restored=True verdict=承重：摘掉即红
+C 对照：只动一行注释                        anchor=1 run=0/14 restored=True verdict=对照绿（尺没坏）
+CONCLUSION control_green=True load_bearing=5/5 not_load_bearing=[] anchor_cells_refused=[]
+MATRIX_RC=0

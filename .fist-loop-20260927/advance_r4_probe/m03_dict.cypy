@@ -1,0 +1,7 @@
+let config: dict<str, int> = {"debug": 1, "timeout": 30}
+
+def main() -> int:
+    match config:
+        case {"timeout": t} if t > 60:
+            print(t)
+    return 0

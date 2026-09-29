@@ -1,0 +1,35 @@
+{
+ "refuse": [],
+ "appended": [
+  "BUG-95",
+  "BUG-112",
+  "BUG-113"
+ ],
+ "skipped_existing": [],
+ "ids": {
+  "class_slots": "BUG-112",
+  "match_args": "BUG-113",
+  "dotdot": "BUG-114",
+  "name_order": "BUG-115",
+  "coverage": "BUG-116"
+ },
+ "receipt_ids": [],
+ "receipt_summaries_n": 5,
+ "picked_summaries": {
+  "class_slots_summary": "[模式匹配:class 位置槽位] ClassDef 无 .fields 时 _pattern_slot_types 恒空，case C(x, y) 的元数检查被静默跳过",
+  "match_args_summary": "[模式匹配:槽位数] struct 里的 `__match_args__ = (...)` 被当成第三个数据字段计入槽位数",
+  "dotdot_summary": "[模式匹配:语法未落地] SYNTAX/17 文档写法 `tuple<int, ...>` 与 `case Numbers(x, y, ..)` 进不了解析器（Unexpected token DOT_DOT）",
+  "name_order_summary": "[模式匹配:元数来源] 元数来源未消费 `__match_args__` 名称序，只按数据字段数计算",
+  "coverage_summary": "[规范落地] corpus/ 与 tests/regression/ 已建立但只覆盖 2 个 op（41 个测试对）"
+ },
+ "written_at_utc": "2026-09-29T04:46:06+00:00",
+ "recheck": {
+  "entries": 117,
+  "fixed_sections": 82,
+  "open_after": 35,
+  "spec17_lines": 449,
+  "insert_only_verified": true,
+  "bytes_before": 330875,
+  "bytes_after": 334716
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "started_z": "2026-09-29T04:59:22Z",
+ "ns": "cypy-loop-20260929",
+ "root": "T0r114",
+ "steps": {
+  "T0r114.1": {
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r114.1] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}",
+   "status_after": "待验收"
+  },
+  "T0r114.2": {
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r114.2] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}",
+   "status_after": "待验收"
+  },
+  "T0r114.3": {
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r114.3] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}",
+   "status_after": "待验收"
+  },
+  "T0r114.4": {
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r114.4] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}",
+   "status_after": "待验收"
+  },
+  "T0r114.5": {
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r114.5] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}",
+   "status_after": "待验收"
+  },
+  "T0r114.6": {
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r114.6] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}",
+   "status_after": "待验收"
+  },
+  "T0r114": "拆分中",
+  "root:execute": {
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r114] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+   "status_after": "拆分中"
+  },
+  "root:submit": {
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+   "status_after": "拆分中"
+  },
+  "root_after_execute_submit": "拆分中"
+ },
+ "refusals": [],
+ "product_gate": {
+  "report_bytes": 16820,
+  "report_conclusion_tail": "**一句话终态**：`corpus/` + Ω-gate + 回归件这层可执行规格已立住并立刻打出两条真缺陷，三套回归全绿、5/5 锁承重、5/5 负控制会红 ⇒ 本轮「无回归」达成；",
+  "verifier_conclusion": "CONCLUSION pass=66 fail=0 report=T0r114-cypy-selfdrive-r8-report.md rc=0"
+ },
+ "tree_counts": {
+  "root": 1,
+  "branches": 6,
+  "leaves": 18,
+  "branch_status_before": {
+   "T0r114.1": "待验收",
+   "T0r114.2": "待验收",
+   "T0r114.3": "待验收",
+   "T0r114.4": "待验收",
+   "T0r114.5": "待验收",
+   "T0r114.6": "待验收"
+  }
+ },
+ "root_status_before": "拆分中",
+ "root_chain_attempted": false,
+ "rollup_after": {
+  "已完成": 18,
+  "待验收": 6,
+  "拆分中": 1
+ },
+ "call_log_rows_since_start": 8,
+ "rpc_sent_total": 8,
+ "rpc_sent_by_tool": {
+  "execute": 1,
+  "submit": 1,
+  "verify": 6
+ },
+ "final_root_status": "拆分中"
+}

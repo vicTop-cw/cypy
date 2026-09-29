@@ -1,0 +1,47 @@
+{
+ "G1_identity_int": {
+  "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> int:\n    n: int = identity<int>(42)\n    return n\n"
+ },
+ "G2_identity_str": {
+  "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> str:\n    s: str = identity<str>(\"Alice\")\n    return s\n"
+ },
+ "G3_infer_list": {
+  "src": "def get_first<T>(items: list<T>) -> T:\n    return items[0]\n\n\ndef f() -> int:\n    xs: list<int> = [1, 2, 3]\n    return get_first(xs)\n"
+ },
+ "G4_bad_constraint": {
+  "src": "def process<T: int | float>(value: T) -> T:\n    return value\n\n\ndef f() -> str:\n    return process<str>(\"hello\")\n"
+ },
+ "G5_ok_constraint": {
+  "src": "def process<T: int | float>(value: T) -> T:\n    return value\n\n\ndef f() -> int:\n    return process<int>(42)\n"
+ },
+ "G6_generic_class": {
+  "src": "class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    b: Box<int> = Box<int>(42)\n    return b.get()\n"
+ },
+ "G7_multi_params": {
+  "src": "def pair<T, U>(first: T, second: U) -> tuple<T, U>:\n    return (first, second)\n\n\ndef f() -> int:\n    p: tuple<int, str> = pair<int, str>(42, \"a\")\n    return 0\n"
+ },
+ "G8_arity_mismatch": {
+  "src": "def pair<T, U>(first: T, second: U) -> tuple<T, U>:\n    return (first, second)\n\n\ndef f() -> int:\n    return pair<int>(42)\n"
+ },
+ "G9_typearg_vs_param": {
+  "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> int:\n    return identity<int>(\"oops\")\n"
+ },
+ "G10_generic_trait": {
+  "src": "trait Container<T>:\n    def get(self, index: int) -> T:\n\n\ndef f() -> int:\n    return 0\n"
+ },
+ "G11_call_undeclared_generic": {
+  "src": "def f() -> int:\n    return mystery<int>(42)\n"
+ },
+ "G12_generic_return_mismatch": {
+  "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> int:\n    s: str = identity<int>(\"Alice\")\n    return 0\n"
+ },
+ "G13_nested_generic": {
+  "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> int:\n    xs: list<int> = [1, 2]\n    y: list<int> = identity[list[int]](xs)\n    return len(y)\n"
+ },
+ "G14_generic_struct": {
+  "src": "struct Wrap<T>:\n    value: T\n\n\ndef f() -> int:\n    return 0\n"
+ },
+ "G15_typeparam_used_in_body": {
+  "src": "def dup<T>(x: T) -> T:\n    return x + x\n\n\ndef f() -> int:\n    return dup<int>(2)\n"
+ }
+}

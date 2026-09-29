@@ -1,0 +1,13 @@
+{
+ "fz01": {
+  "exception": "TypeError",
+  "msg": "'in <string>' requires string as left operand, not NoneType"
+ },
+ "fz02": {
+  "exception": null,
+  "artifact_len": 730
+ },
+ "fz02_top_level_return_lines": [
+  "return 0"
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "rows": [
+  {
+   "parse": "OK",
+   "analyze": "OK",
+   "codegen": "OK",
+   "errors": [],
+   "internal": "",
+   "code_head": "# cython: language_level=3\n# cython: boundscheck=False\n# cython: wraparound=False\n# cython: initializedcheck=False\n# cyt",
+   "slot_types": {
+    "Email": [
+     "str",
+     "str"
+    ]
+   },
+   "unapply_in_code": true,
+   "case": "__unapply__ 元组提取器",
+   "verdict": "OK"
+  },
+  {
+   "parse": "OK",
+   "analyze": "OK",
+   "codegen": "OK",
+   "errors": [],
+   "internal": "",
+   "code_head": "# cython: language_level=3\n# cython: boundscheck=False\n# cython: wraparound=False\n# cython: initializedcheck=False\n# cyt",
+   "slot_types": {
+    "Wrapper": [
+     "int"
+    ]
+   },
+   "unapply_in_code": true,
+   "case": "__unwarp__ 解包模式",
+   "verdict": "OK"
+  },
+  {
+   "parse": "PARSE-FAIL",
+   "analyze": "OK",
+   "codegen": "OK",
+   "errors": [],
+   "internal": "ValueError: Unexpected token DOT_DOT at 4:45",
+   "code_head": "",
+   "slot_types": {},
+   "unapply_in_code": false,
+   "case": "__unapply_seq__ 序列提取器（文档写法 tuple<int, ...> + case (x, y, ..)）",
+   "verdict": "PARSE-FAIL"
+  },
+  {
+   "parse": "OK",
+   "analyze": "OK",
+   "codegen": "OK",
+   "errors": [],
+   "internal": "",
+   "code_head": "# cython: language_level=3\n# cython: boundscheck=False\n# cython: wraparound=False\n# cython: initializedcheck=False\n# cyt",
+   "slot_types": {
+    "Point": [
+     "int",
+     "int"
+    ]
+   },
+   "unapply_in_code": false,
+   "case": "__match_args__ 位置解构",
+   "verdict": "OK"
+  },
+  {
+   "parse": "OK",
+   "analyze": "OK",
+   "codegen": "OK",
+   "errors": [],
+   "internal": "",
+   "code_head": "# cython: language_level=3\n# cython: boundscheck=False\n# cython: wraparound=False\n# cython: initializedcheck=False\n# cyt",
+   "slot_types": {},
+   "unapply_in_code": false,
+   "case": "类型模式 case int x",
+   "verdict": "OK"
+  },
+  {
+   "parse": "OK",
+   "analyze": "OK",
+   "codegen": "OK",
+   "errors": [],
+   "internal": "",
+   "code_head": "# cython: language_level=3\n# cython: boundscheck=False\n# cython: wraparound=False\n# cython: initializedcheck=False\n# cyt",
+   "slot_types": {},
+   "unapply_in_code": false,
+   "case": "OR 模式 case 1 | 2",
+   "verdict": "OK"
+  }
+ ]
+}

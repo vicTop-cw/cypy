@@ -1,0 +1,59 @@
+{
+ "refuse": [],
+ "pytest": {
+  "rc": 0,
+  "passed": 1894,
+  "floor": 1894,
+  "failed": [],
+  "collected": 1894,
+  "collect_rc": 0,
+  "other_counts": {},
+  "line": "1894 passed in 395.87s (0:06:35)"
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": "47",
+   "Passed": "47",
+   "Failed": "0",
+   "Skipped": "0"
+  },
+  "green": true
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+  "fields": {
+   "PASS": "25",
+   "FAIL": "0",
+   "WARN": "0",
+   "UNREG/RUNFAIL": "0"
+  },
+  "green": true
+ },
+ "git": {
+  "head": "17d68b4",
+  "head_rc": 0,
+  "staged": 0,
+  "dirty_rows": 162
+ },
+ "radius": {
+  "count": 3,
+  "rows": [
+   {
+    "file": "cypyc/analyzer/scope_analyzer.py",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "cypyc/codegen/cython_generator.py",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "tests/test_polish_20260927_r2.py",
+    "attributed_to_this_lane": true
+   }
+  ],
+  "unclaimed_by_this_lane": []
+ }
+}

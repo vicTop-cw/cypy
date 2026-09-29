@@ -1,0 +1,97 @@
+#!bin cypy
+# ============================================================
+# checker.cypy — Runtime type checking (is_bearable, check_type)
+# ============================================================
+
+from types import TypeVar, UnionType, OptionalType, CallableType, LiteralType, AnnotatedType
+
+struct CheckResult:
+    # Result of a type check
+    is_valid: bool
+    message: str
+
+    def __init__(self, is_valid: bool = True, message: str = ""):
+        self.is_valid = is_valid
+        self.message = message
+
+    def __repr__(self) -> str:
+        if self.is_valid:
+            return "CheckResult(valid)"
+        return f"CheckResult(invalid: {self.message})"
+
+
+def check_type(obj: object, hint: object) -> CheckResult:
+    # Detailed type check — returns CheckResult with error message
+    if hint is int:
+        if isinstance(obj, int):
+            guard isinstance(obj, bool) else return CheckResult(is_valid=True)
+            return CheckResult(is_valid=False, message="Expected int, got bool")
+        return CheckResult(is_valid=False, message=f"Expected int, got {type(obj).__name__}")
+    if hint is float:
+        if isinstance(obj, (int, float)):
+            guard isinstance(obj, bool) else return CheckResult(is_valid=True)
+            return CheckResult(is_valid=False, message="Expected float, got bool")
+        return CheckResult(is_valid=False, message=f"Expected float, got {type(obj).__name__}")
+    if hint is str:
+        if isinstance(obj, str):
+            return CheckResult(is_valid=True)
+        return CheckResult(is_valid=False, message=f"Expected str, got {type(obj).__name__}")
+    if hint is bool:
+        if isinstance(obj, bool):
+            return CheckResult(is_valid=True)
+        return CheckResult(is_valid=False, message=f"Expected bool, got {type(obj).__name__}")
+    if hint is object:
+        return CheckResult(is_valid=True)
+    # Handle None type
+    if hint is type(None):
+        if obj is None:
+            return CheckResult(is_valid=True)
+        return CheckResult(is_valid=False, message=f"Expected None, got {type(obj).__name__}")
+    # Handle Union types
+    if isinstance(hint, UnionType):
+        for arg in hint.args:
+            let sub: CheckResult = check_type(obj, arg)
+            if sub.is_valid:
+                return CheckResult(is_valid=True)
+        return CheckResult(is_valid=False, message=f"Value {obj} not compatible with union {hint}")
+    # Handle Optional
+    if isinstance(hint, OptionalType):
+        if obj is None:
+            return CheckResult(is_valid=True)
+        return check_type(obj, hint.inner)
+    # Handle Literal types
+    if isinstance(hint, LiteralType):
+        for val in hint.values:
+            if obj == val:
+                return CheckResult(is_valid=True)
+        return CheckResult(is_valid=False, message=f"Value {obj} not in literal {hint}")
+    # Handle Annotated types
+    if isinstance(hint, AnnotatedType):
+        return check_type(obj, hint.inner)
+    # Handle TypeVar — skip validation (generic, checked at instantiation)
+    if isinstance(hint, TypeVar):
+        return CheckResult(is_valid=True)
+    # Handle class types — isinstance check
+    if isinstance(hint, type):
+        if isinstance(obj, hint):
+            return CheckResult(is_valid=True)
+        return CheckResult(is_valid=False, message=f"Expected {hint.__name__}, got {type(obj).__name__}")
+    # Unknown type — pass through
+    return CheckResult(is_valid=True)
+
+
+def is_bearable(obj: object, hint: object) -> bool:
+    # Check if obj is bearable (compatible with) the given type hint
+    let result: CheckResult = check_type(obj, hint)
+    return result.is_valid
+
+
+def check_callable_args(args: list<object>, hint_args: list<object>) -> CheckResult:
+    # Check if function arguments match a Callable type hint
+    if len(args) != len(hint_args):
+        return CheckResult(is_valid=False, message=f"Expected {len(hint_args)} args, got {len(args)}")
+    for i in range(len(args)):
+        let sub: CheckResult = check_type(args[i], hint_args[i])
+        if not sub.is_valid:
+            return CheckResult(is_valid=False, message=f"Arg {i}: {sub.message}")
+    return CheckResult(is_valid=True)

@@ -1,0 +1,221 @@
+{
+ "refuse": [],
+ "items": 12,
+ "probes": [
+  "git commit（本地提交）",
+  "git push（推送到远端）",
+  "git add / 暂存区写入",
+  "git tag（新标签）",
+  "删分支 / 合并 PR",
+  "改 PROJECT-SPEC / SYNTAX 冻结语义",
+  "既有冻结文档漂移被本环吞掉或冒充已修",
+  "删除被跟踪文件",
+  "对非本环文件整档 formatter 重排",
+  "弱化/删除既有测试",
+  "删别人的 worktree",
+  "清空/回退 FIST 任务库"
+ ],
+ "self_test": {
+  "injected": 1,
+  "caught": 1,
+  "refuse_after_cleanup": 0
+ },
+ "live_probe_items": 9,
+ "derived_items": 1,
+ "manifest_items": 2,
+ "executed_none": 1,
+ "executed": [],
+ "detail": [
+  {
+   "action": "git commit（本地提交）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "head": "17d68b436962",
+    "expected": "17d68b4",
+    "reflog_top": "17d68b43696250da1b09ddfa1e91721c97256798 HEAD@{0} reset: moving to HEAD"
+   },
+   "note": "实测判据：HEAD 仍是本轮底树 ⇒ 本环零 commit",
+   "at_utc": "2026-09-27T18:19:04+00:00"
+  },
+  {
+   "action": "git push（推送到远端）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "ahead_of_upstream_now": "1",
+    "ahead_at_prev_stage": "1",
+    "upstream": "origin/master",
+    "remote_reflog_top": "2ea6be2 refs/remotes/origin/master@{2026-08-03 11:42:24 +0800}: update by push",
+    "remote_reflog_parsed": true
+   },
+   "note": "判据两半：本地领先数与上一环实测相等（推过就会变 0）＋ 远端跟踪 ref 的 reflog 顶条时间早于开工",
+   "at_utc": "2026-09-27T18:19:04+00:00"
+  },
+  {
+   "action": "git add / 暂存区写入",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "staged_files": [],
+    "staged_count": 0,
+    "dirty_rows": 167
+   },
+   "note": "暂存区必须为空；167 条脏行是历轮未提交成果（红线禁止提交，只挂账）",
+   "at_utc": "2026-09-27T18:19:04+00:00"
+  },
+  {
+   "action": "git tag（新标签）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "tag_total": 0,
+    "created_after_stage_start": []
+   },
+   "note": "开工口径 2026-09-27T17:37:27+00:00 之后新建的 tag 必须为 0",
+   "at_utc": "2026-09-27T18:19:04+00:00"
+  },
+  {
+   "action": "删分支 / 合并 PR",
+   "executed": false,
+   "method": "manifest",
+   "evidence": {
+    "branch_count": 5,
+    "branches": [
+     "master",
+     "gitcode/master",
+     "origin",
+     "origin/main",
+     "origin/master"
+    ],
+    "current_branch": "master",
+    "has_upstream": "origin/master"
+   },
+   "note": "清单级：开工前没留 branch 清单快照，删除会连 reflog 一起消失 ⇒ 事后探针证不了'没删过'，只能证当下计数与所在分支；本环确实未跑 git branch -d / merge（push 面另有 live 探针，仓库有 origin/master 上游，所以'不可能推'这句不成立，改为实测领先数与远端 reflog）",
+   "at_utc": "2026-09-27T18:19:04+00:00"
+  },
+  {
+   "action": "改 PROJECT-SPEC / SYNTAX 冻结语义",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "files_touched_in_stage_window": [],
+    "stage_start_utc": "2026-09-27T17:37:27+00:00"
+   },
+   "note": "mtime 反解，不是自述",
+   "at_utc": "2026-09-27T18:19:04+00:00"
+  },
+  {
+   "action": "既有冻结文档漂移被本环吞掉或冒充已修",
+   "executed": false,
+   "method": "manifest",
+   "evidence": {
+    "files": 2,
+    "added": 41,
+    "removed": 11,
+    "files_list": [
+     "SYNTAX/01-basic-types.md",
+     "SYNTAX/appendix-A-keywords.md"
+    ]
+   },
+   "note": "清单级：这是历轮未提交造成的，diff-vs-HEAD 分不出是谁改的 ⇒ 只作上界记录并交裁决，不取交集",
+   "at_utc": "2026-09-27T18:19:04+00:00"
+  },
+  {
+   "action": "删除被跟踪文件",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "deleted_rows_now": 10,
+    "deleted_rows_at_prev_stage": 10,
+    "rows": [
+     "D examples/demos/legacy/analyzer/type_checking.cypy",
+     "D examples/demos/legacy/builtins/defer_and_guard.cypy",
+     "D examples/demos/legacy/builtins/generics.cypy",
+     "D examples/demos/legacy/builtins/pointer_operations.cypy",
+     "D examples/demos/legacy/codegen/cdef_class_generation.cypy",
+     "D examples/demos/legacy/codegen/module_magic_attrs.cypy"
+    ]
+   },
+   "note": "与上一环同键（deleted_tracked）对照：数目一变就说明有人删了档",
+   "at_utc": "2026-09-27T18:19:04+00:00"
+  },
+  {
+   "action": "对非本环文件整档 formatter 重排",
+   "executed": false,
+   "method": "derived",
+   "evidence": {
+    "files_touched_in_stage_window": [
+     "cypy_hook/hook.py",
+     "cypyc/cli.py",
+     "docs/USAGE.md",
+     "tests/test_loop_20260927_fix_r3.py",
+     "tests/test_loop_20260927_polish_r3.py"
+    ],
+    "lane_files": [
+     "cypy_hook/hook.py",
+     "cypyc/cli.py",
+     "docs/USAGE.md",
+     "tests/test_loop_20260927_fix_r3.py",
+     "tests/test_loop_20260927_polish_r3.py"
+    ]
+   },
+   "note": "由半径反解：black/ruff --fix 整档跑必然在其他文件上留下 mtime",
+   "at_utc": "2026-09-27T18:19:05+00:00"
+  },
+  {
+   "action": "弱化/删除既有测试",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "names_before": 17,
+    "names_after": 17,
+    "disappeared": []
+   },
+   "note": "改前快照（tmp_polish/before）与盘面逐名对照；名字没少才谈得上没删",
+   "at_utc": "2026-09-27T18:19:05+00:00"
+  },
+  {
+   "action": "删别人的 worktree",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "worktrees": [
+     "E:/IDEProjects/AI/Cypy",
+     "E:/IDEProjects/AI/_cypy_head_baseline"
+    ]
+   },
+   "note": "foreign 树必须原样在",
+   "at_utc": "2026-09-27T18:19:05+00:00"
+  },
+  {
+   "action": "清空/回退 FIST 任务库",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "call_log_rows_now": 3227,
+    "call_log_rows_at_prev_closure": 3027,
+    "issue_up_tool_rows": 0
+   },
+   "note": "只增不减才算没动库；issue_up 在本 FIST 构建里不是工具名（实测 30 个工具无此项）⇒ 如实上报",
+   "at_utc": "2026-09-27T18:19:05+00:00"
+  }
+ ],
+ "stage_start_utc": "2026-09-27T17:37:27+00:00",
+ "lane_files": [
+  "cypy_hook/hook.py",
+  "cypyc/cli.py",
+  "docs/USAGE.md",
+  "tests/test_loop_20260927_fix_r3.py",
+  "tests/test_loop_20260927_polish_r3.py"
+ ],
+ "radius_window": [
+  "cypy_hook/hook.py",
+  "cypyc/cli.py",
+  "docs/USAGE.md",
+  "tests/test_loop_20260927_fix_r3.py",
+  "tests/test_loop_20260927_polish_r3.py"
+ ],
+ "started_at_utc": "2026-09-27T18:19:05+00:00",
+ "finished_at_utc": "2026-09-27T18:19:05+00:00"
+}

@@ -1,0 +1,42 @@
+{
+ "refuse": [],
+ "pytest": {
+  "rc": 0,
+  "passed": 1903,
+  "floor": 1903,
+  "failed": [],
+  "collected": 1903,
+  "collect_rc": 0,
+  "other_counts": {},
+  "line": "1903 passed in 412.93s (0:06:52)"
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": "47",
+   "Passed": "47",
+   "Failed": "0",
+   "Skipped": "0"
+  },
+  "green": true
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+  "fields": {
+   "PASS": "25",
+   "FAIL": "0",
+   "WARN": "0",
+   "UNREG/RUNFAIL": "0"
+  },
+  "green": true
+ },
+ "git": {
+  "head": "17d68b4",
+  "head_rc": 0,
+  "staged": 0,
+  "dirty_rows": 163
+ }
+}
+RADIUS count=4 unclaimed=[]

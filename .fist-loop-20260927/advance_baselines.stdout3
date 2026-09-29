@@ -1,0 +1,83 @@
+{
+ "refuse": [
+  "判据7e 本轮自己写的代码有 lint 违例：[\"tests/test_loop_20260927_advance.py:142:56: E741 ambiguous variable name 'l'\", 'tests/test_loop_20260927_advance.py:43:101: E501 line too long (103 > 100 characters)', 'tests/test_loop_20260927_advance.py:62:101: E501 line too long (104 > 100 characters)', \"tests/test_loop_20260927_advance.py:73:49: E741 ambiguous variable name 'l'\", \"tests/test_loop_20260927_advance.py:79:34: E741 ambiguous variable name 'l'\", \"tests/test_loop_20260927_advance.py:81:38: E741 ambiguous variable name 'l'\"]"
+ ],
+ "pytest": {
+  "rc": 0,
+  "passed": 1868,
+  "failed_or_error": [],
+  "failed_tests": [],
+  "skipped_lines": 0,
+  "summary_line": "====================== 1868 passed in 278.77s (0:04:38) ======================="
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "green": true,
+  "verdict": "绿"
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+ },
+ "collection": {
+  "rc": 0,
+  "count": 6,
+  "file": "tests/test_loop_20260927_advance.py"
+ },
+ "radius": {
+  "attribution": "mtime ≥ 本轮起点（不是 git diff——工作树里还有上一轮的未提交改动）",
+  "since": "polish 收口之后",
+  "product_files_touched_this_stage": [
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/parser.py"
+  ],
+  "expected": [
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/parser.py"
+  ],
+  "new_token_or_class_defs_in_my_hunks": []
+ },
+ "lint": {
+  "scanned_files": 10,
+  "authored_whole": 7,
+  "preexisting_with_hunk_ranges": {
+   "cypyc/codegen/cython_generator.py": [
+    3193,
+    3194,
+    3195,
+    3196,
+    3197,
+    3198,
+    3199,
+    3200
+   ],
+   "cypyc/parser/parser.py": [
+    1592,
+    1593,
+    1594,
+    1595,
+    1596,
+    1597,
+    1598,
+    1599,
+    1600,
+    1601
+   ]
+  },
+  "total_in_scope_files": 673,
+  "attributable_to_this_round": [
+   "tests/test_loop_20260927_advance.py:142:56: E741 ambiguous variable name 'l'",
+   "tests/test_loop_20260927_advance.py:43:101: E501 line too long (103 > 100 characters)",
+   "tests/test_loop_20260927_advance.py:62:101: E501 line too long (104 > 100 characters)",
+   "tests/test_loop_20260927_advance.py:73:49: E741 ambiguous variable name 'l'",
+   "tests/test_loop_20260927_advance.py:79:34: E741 ambiguous variable name 'l'",
+   "tests/test_loop_20260927_advance.py:81:38: E741 ambiguous variable name 'l'"
+  ],
+  "e501_only_exempted_files": [
+   ".fist-loop-20260927/gen_report_r1_advance.py"
+  ],
+  "exempted_hits": 8
+ },
+ "doc_rc": 0
+}

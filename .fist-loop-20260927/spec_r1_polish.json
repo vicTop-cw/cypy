@@ -1,0 +1,21 @@
+{
+ "key": "r1_polish",
+ "tag": "[loop:20260927-loop:R1-打磨]",
+ "assignee": "cypy-polisher",
+ "difficulty": "难",
+ "description": "[loop:20260927-loop:R1-打磨] 打磨模式（polish）R1：只完善已有功能，不加新功能、不动冻结语义。清 R1-验证 转结的三类存量：tests/ 里 skip/xfail 标记逐条定性、mypy strict 在改动面的可裁边界、TODO/FIXME 与技术债标记收敛；顺带做 ≤20 行不动语义的 quick win（其余转结）。开工先实测 mode_list 对 polish 的 forbidden_tools(publish) 是否真被服务端拦，结果如实记。开关 omega/laya/issue_up/call_log 全开，基线只升不降。",
+ "laws": [
+  "模式约束实测（publish 是否真被拦）与账本口径定死",
+  "tests/ skip/xfail 标记逐条定性",
+  "mypy strict 在改动面的可裁边界与存量清单",
+  "TODO/FIXME/HACK 等技术债标记收敛",
+  "死代码与重复分支清理（不动语义）",
+  "quick win 判定与当场闭环",
+  "双套基线与端到端基准复跑不回落",
+  "打磨报告与转结"
+ ],
+ "fingerprint": {
+  "必须": "publish 实测结果原样记录（成功或拒绝原文）；skip/xfail 每条有判定与依据；技术债标记计数前后对比由脚本反解；双套基线与 25 份基准不回落；报告落 memory/reviews/",
+  "禁止": "新增功能或新语法；改 PROJECT-SPEC/SYNTAX 冻结语义；弱化或删除既有测试；git push/删文件；把没做的写成 done"
+ }
+}

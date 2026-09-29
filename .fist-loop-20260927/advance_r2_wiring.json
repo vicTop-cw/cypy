@@ -1,0 +1,18 @@
+{
+ "cli_wiring": {
+  "artifact_dir": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\wiring\\out",
+  "hook_marker": "spy-hook",
+  "watch_dirs": [
+   "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\wiring"
+  ],
+  "on_reload_callable": true,
+  "debounce_delay": 0.7,
+  "callback_output": "[Watch] Published 2 artifact(s) to E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\wiring\\out: m.pyx, m.cp313.pyd",
+  "stopped": true
+ },
+ "monitor_debounce_measured": {
+  "explicit": 1.23,
+  "default": 0.5
+ },
+ "refuse": []
+}

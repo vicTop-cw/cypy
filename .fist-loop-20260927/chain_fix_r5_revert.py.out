@@ -1,0 +1,21 @@
+{
+ "refuse": [
+  "判据自证未过：两次全量跑的节点数必须等于 pytest 自己报的 collected（丢行=矩阵读不到真相）（实得 [false, true]）",
+  "判据自证未过：有锁的单摘回后必须变红（不红=这条锁不承重）；无锁的单只能记 not_measured（实得 [74, 75, 76, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91]）"
+ ],
+ "matrix_rows": 22,
+ "groups": 5,
+ "revert_red": 17,
+ "assertion_level": 14,
+ "sha": "153/153",
+ "collateral": [],
+ "red_checks": [
+  "有锁的单摘回后必须变红（不红=这条锁不承重）；无锁的单只能记 not_measured",
+  "两次全量跑的节点数必须等于 pytest 自己报的 collected（丢行=矩阵读不到真相）"
+ ],
+ "self_checks": "9/11",
+ "cards_rows": [
+  22,
+  20
+ ]
+}

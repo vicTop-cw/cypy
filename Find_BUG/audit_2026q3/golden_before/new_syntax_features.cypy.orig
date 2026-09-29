@@ -1,0 +1,163 @@
+# Cypy 新语法特性示例
+
+# ========== 1. name~ 命名参数语法糖 ==========
+
+def make_point(x: float, y: float, z: float) -> tuple<float, float, float>:
+    return (x, y, z)
+
+def test_named_param_sugar() -> tuple<float, float, float>:
+    x = 1.0
+    y = 2.0
+    z = 3.0
+    return make_point(x~, y~, z~)
+
+
+def add_values(a: int, b: int, c: int) -> int:
+    return a + b + c
+
+def test_mixed_named_params() -> int:
+    x = 10
+    y = 20
+    c = 30
+    return add_values(x, y, c~)
+
+
+# ========== 2. guard 循环守卫 ==========
+
+def test_guard_in_for_loop() -> int:
+    count: int = 0
+    for i in range(10):
+        guard i < 5 else break
+        count = count + 1
+    return count
+
+
+def test_guard_in_while_loop() -> int:
+    count: int = 0
+    i: int = 0
+    while i < 10:
+        guard i < 3 else break
+        count = count + 1
+        i = i + 1
+    return count
+
+
+def test_guard_not_in_loop() -> str:
+    x: int = 0
+    guard x > 0 else "invalid input"
+    return "ok"
+
+
+def test_guard_single_line_else() -> str:
+    value: int = -1
+    guard value >= 0 else "negative"
+    return "positive"
+
+
+def test_guard_in_nested_loop() -> int:
+    total: int = 0
+    for i in range(5):
+        for j in range(5):
+            guard (i + j) < 8 else break
+            total = total + 1
+    return total
+
+
+def test_guard_multiple_in_loop() -> int:
+    count: int = 0
+    for i in range(20):
+        guard i % 2 == 0 else continue
+        guard i < 10 else break
+        count = count + 1
+    return count
+
+
+# ========== 3. ^: 索引构建块 ==========
+
+def get_last_item(items: list, key: str):
+    result = items ^:
+        key
+    return result
+
+
+def process_with_index(items: list, keys: list):
+    results: list = []
+    for key in keys:
+        value = items ^:
+            key
+        results.append(value)
+    return results
+
+
+# ========== 4. ~: 去括号语法 ==========
+
+def double_value(x: int) -> int:
+    return x * 2
+
+def compute(x: int, y: int) -> int:
+    return x + y
+
+def test_deparens_basic() -> int:
+    return double_value ~:
+        21
+
+def test_deparens_chained() -> int:
+    result = double_value ~:
+        double_value(5)
+    return result
+
+def test_deparens_with_named_arg() -> int:
+    value = 10
+    return double_value ~:
+        value
+
+def test_deparens_in_expression() -> int:
+    x = compute(10, 20)
+    return double_value ~:
+        x
+
+
+# ========== 主入口 ==========
+
+if __name__ == "__main__":
+    print("=== Cypy 新语法特性测试 ===")
+
+    point = test_named_param_sugar()
+    print(f"1. name~ 语法糖: {point}")
+
+    mixed = test_mixed_named_params()
+    print(f"2. 混合命名参数: {mixed}")
+
+    guard_result1 = test_guard_in_for_loop()
+    print(f"3. for 循环 guard: {guard_result1}")
+
+    guard_result2 = test_guard_in_while_loop()
+    print(f"4. while 循环 guard: {guard_result2}")
+
+    guard_result3 = test_guard_not_in_loop()
+    print(f"5. 非循环 guard: {guard_result3}")
+
+    guard_result4 = test_guard_in_nested_loop()
+    print(f"6. 嵌套循环 guard: {guard_result4}")
+
+    guard_result5 = test_guard_multiple_in_loop()
+    print(f"7. 多重 guard: {guard_result5}")
+
+    test_items = [10, 20, 30]
+    last = get_last_item(test_items, "last")
+    print(f"8. ^: 索引构建块: {last}")
+
+    dep1 = test_deparens_basic()
+    print(f"9. ~: 去括号基础: {dep1}")
+
+    dep2 = test_deparens_chained()
+    print(f"10. ~: 去括号链式: {dep2}")
+
+    dep3 = test_deparens_with_named_arg()
+    print(f"11. ~: 与 name~ 组合: {dep3}")
+
+    dep4 = test_deparens_in_expression()
+    print(f"12. ~: 表达式中使用: {dep4}")
+
+    print("")
+    print("=== 所有测试完成 ===")

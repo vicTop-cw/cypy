@@ -1,0 +1,20 @@
+{
+  "mapping": [
+    {
+      "bug_id": "BUG-9",
+      "task_id": "T0r14",
+      "summary": "[silent-fail] cypyc/incremental/hot_reload.py:253 HotReloadEngine 的模块级状态快照/回滚仍是 `except Exception: pass`，BUG-5 的修复只覆盖了 CypyProxyModule 那一份平行实现",
+      "fired": true
+    },
+    {
+      "bug_id": "BUG-10",
+      "task_id": "T0r15",
+      "summary": "[silent-fail] cypyc/incremental/hot_reload.py:457 热重载把依赖分析与增量缓存更新的解析失败整段吞掉（:332 与 :457 两处，注释即『解析失败不影响热重载』）",
+      "fired": true
+    }
+  ],
+  "failures": [],
+  "missing": [],
+  "ledger_before": 8,
+  "ledger_after": 10
+}

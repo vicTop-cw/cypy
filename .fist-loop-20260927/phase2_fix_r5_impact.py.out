@@ -1,0 +1,28 @@
+E:\IDEProjects\AI\Cypy\.fist-loop-20260927\fix_r5_impact.py:108: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.
+  tf.extractall(SNAP)
+{
+ "refuse": [],
+ "corpus_total": 203,
+ "new_diagnostics": 0,
+ "new_rejections": 0,
+ "new_acceptances": 14,
+ "shape_changed": 4,
+ "adjudication_needed": 0,
+ "api_surface": {
+  "head": {
+   "analyze_only": false,
+   "transpile": true
+  },
+  "current": {
+   "analyze_only": true,
+   "transpile": true
+  }
+ },
+ "canary": {
+  "transpile_comparable": true,
+  "analyze_only_same_surface": false,
+  "bad_source_rejected_both": true
+ },
+ "red_checks": [],
+ "self_checks": "6/6"
+}

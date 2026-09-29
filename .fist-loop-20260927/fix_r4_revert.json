@@ -1,0 +1,101 @@
+{
+ "started": "2026-09-27T21:48:14+00:00",
+ "lock_file": "tests/test_loop_20260927_fix_r4.py",
+ "baseline_sha256": "ff9e8821cb226009ed89b340aed4de1bd7531bee84b552940ef1970e060908c8",
+ "restored_sha256": "ff9e8821cb226009ed89b340aed4de1bd7531bee84b552940ef1970e060908c8",
+ "clean_run_failed": [],
+ "rows": [
+  {
+   "rc": "RC1",
+   "status": "mutated",
+   "failed": [
+    "test_call_face_reports_over_cli",
+    "test_fixture_matches_declared_expectation[C01]",
+    "test_fixture_matches_declared_expectation[C02]",
+    "test_fixture_matches_declared_expectation[C03]",
+    "test_fixture_matches_declared_expectation[C04]",
+    "test_fixture_matches_declared_expectation[C05]",
+    "test_fixture_matches_declared_expectation[C06]",
+    "test_fixture_matches_declared_expectation[C07]",
+    "test_fixture_matches_declared_expectation[C08]"
+   ],
+   "expected_red_hit": true,
+   "controls_green": [
+    "test_arg_type_control_on_dynamic_value_stays_silent",
+    "test_arity_control_on_alias_callable_still_reports",
+    "test_fixture_matches_declared_expectation[C08_ctl]",
+    "test_fixture_matches_declared_expectation[C09_ctl]"
+   ],
+   "controls_broken": [],
+   "other_cause_failures": [
+    "test_call_face_reports_over_cli",
+    "test_fixture_matches_declared_expectation[C06]",
+    "test_fixture_matches_declared_expectation[C07]",
+    "test_fixture_matches_declared_expectation[C08]"
+   ]
+  },
+  {
+   "rc": "RC2",
+   "status": "mutated",
+   "failed": [
+    "test_fixture_matches_declared_expectation[C06]",
+    "test_fixture_matches_declared_expectation[C07]",
+    "test_fixture_matches_declared_expectation[C08]"
+   ],
+   "expected_red_hit": true,
+   "controls_green": [
+    "test_arg_type_control_on_dynamic_value_stays_silent",
+    "test_arity_control_on_alias_callable_still_reports",
+    "test_fixture_matches_declared_expectation[C08_ctl]",
+    "test_fixture_matches_declared_expectation[C09_ctl]"
+   ],
+   "controls_broken": [],
+   "other_cause_failures": []
+  },
+  {
+   "rc": "RC3",
+   "status": "mutated",
+   "failed": [
+    "test_fixture_matches_declared_expectation[C09]",
+    "test_fixture_matches_declared_expectation[C10]",
+    "test_fixture_matches_declared_expectation[C11]"
+   ],
+   "expected_red_hit": true,
+   "controls_green": [
+    "test_arg_type_control_on_dynamic_value_stays_silent",
+    "test_arity_control_on_alias_callable_still_reports",
+    "test_fixture_matches_declared_expectation[C08_ctl]",
+    "test_fixture_matches_declared_expectation[C09_ctl]"
+   ],
+   "controls_broken": [],
+   "other_cause_failures": []
+  },
+  {
+   "rc": "RC4",
+   "status": "mutated",
+   "failed": [
+    "test_fixture_matches_declared_expectation[C12]"
+   ],
+   "expected_red_hit": true,
+   "controls_green": [
+    "test_arg_type_control_on_dynamic_value_stays_silent",
+    "test_arity_control_on_alias_callable_still_reports",
+    "test_fixture_matches_declared_expectation[C08_ctl]",
+    "test_fixture_matches_declared_expectation[C09_ctl]"
+   ],
+   "controls_broken": [],
+   "other_cause_failures": []
+  }
+ ],
+ "collateral": {
+  "RC1": [
+   "test_call_face_reports_over_cli",
+   "test_fixture_matches_declared_expectation[C06]",
+   "test_fixture_matches_declared_expectation[C07]",
+   "test_fixture_matches_declared_expectation[C08]"
+  ]
+ },
+ "note": "跨根因连带变红是**合并修**的必然结果（共用 callable_sigs 与 _callable_arg_mismatch），逐条记下但不算违例；违例只看两条：本根因的锁必须红、四条对照锁必须一直绿",
+ "refuse": [],
+ "at_utc": "2026-09-27T21:48:24+00:00"
+}

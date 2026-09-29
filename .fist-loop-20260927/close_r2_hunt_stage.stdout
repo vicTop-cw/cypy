@@ -1,0 +1,17 @@
+T0r55.1.1 law=狩猎面清点与动态入口白名单（五个未覆盖模块的符号台账） ov=pass verify=ok err=none
+T0r55.1.2 law=狩猎面清点与动态入口白名单（五个未覆盖模块的符号台账） ov=pass verify=ok err=none
+T0r55.2.1 law=CLI 声明面逐子命令逐旗标打到调用面（含 --help 与 README 声称） ov=pass verify=ok err=none
+T0r55.2.2 law=CLI 声明面逐子命令逐旗标打到调用面（含 --help 与 README 声称） ov=pass verify=ok err=none
+T0r55.3.1 law=零调用点符号扫描与 grep 反证（死码 vs 反射入口分栏） ov=pass verify=ok err=none
+T0r55.3.2 law=零调用点符号扫描与 grep 反证（死码 vs 反射入口分栏） ov=pass verify=ok err=none
+T0r55.4.1 law=AST 往返与产物差分对拍（同源码两次编译一致性） ov=pass verify=ok err=none
+T0r55.4.2 law=AST 往返与产物差分对拍（同源码两次编译一致性） ov=pass verify=ok err=none
+T0r55.5.1 law=fuzz 变异预算内执行与失效面记录 ov=pass verify=ok err=none
+T0r55.5.2 law=fuzz 变异预算内执行与失效面记录 ov=pass verify=ok err=none
+T0r55.6.1 law=最小复现与确诊（每条候选成对对照：正例必抓＋固定反例必不抓） ov=pass verify=ok err=none
+T0r55.6.2 law=最小复现与确诊（每条候选成对对照：正例必抓＋固定反例必不抓） ov=pass verify=ok err=none
+T0r55.7.1 law=入账与 quick win 判定（BUG-46 起，静默型优先占号） ov=pass verify=ok err=none
+T0r55.7.2 law=入账与 quick win 判定（BUG-46 起，静默型优先占号） ov=pass verify=ok err=none
+T0r55.8.1 law=狩猎报告与转结（含另一条 lane 主张的可观测性复核） ov=pass verify=ok err=none
+T0r55.8.2 law=狩猎报告与转结（含另一条 lane 主张的可观测性复核） ov=pass verify=ok err=none
+closed=16/16 failed=none

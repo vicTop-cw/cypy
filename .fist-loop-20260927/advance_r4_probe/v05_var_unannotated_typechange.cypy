@@ -1,0 +1,8 @@
+def main() -> int:
+    counter: int = 0
+    counter += 1
+    name = "Alice"
+    name = 42
+    print(counter)
+    print(name)
+    return 0

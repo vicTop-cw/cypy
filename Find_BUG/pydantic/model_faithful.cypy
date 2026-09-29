@@ -1,0 +1,40 @@
+#!bin cypy
+# ============================================================
+# model_faithful.cypy — Faithful port of Model (stress-test compiler)
+# ============================================================
+
+from fields import Field, FieldInfo
+from validation import validate_value
+from errors import ValidationError
+
+struct Model:
+    # Generic base class — in faithful port, T is resolved per subclass
+    _fields: dict<str, FieldInfo>
+    _values: dict<str, object>
+    model_config: dict<str, object>
+
+    def __init__(self):
+        self._fields = {}
+        self._values = {}
+        self.model_config = {}
+
+    def _init_from_data(self, data: dict<str, object>) -> None:
+        # Collect fields from class annotations, validate and store
+        for name in self._fields:
+            let fi: FieldInfo = self._fields[name]
+            if name in data:
+                self._values[name] = validate_value(fi, data[name])
+            elif fi.has_default:
+                self._values[name] = validate_value(fi, fi.default)
+            elif fi.required:
+                raise ValidationError([{"loc": name, "msg": "field required", "type": "missing"}])
+            else:
+                self._values[name] = None
+
+    def get(self, name: str) -> object:
+        if name in self._values:
+            return self._values[name]
+        return None
+
+    def model_dump(self) -> dict<str, object>:
+        return self._values

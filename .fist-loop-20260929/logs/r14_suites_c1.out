@@ -1,0 +1,6 @@
+suite_exit=0
+CONCLUSION specs=1 cases=28 passed=28 failed=0 refused=0 accuracy=100.00% rc=0
+golden_exit=0
+PASS  test_union.cypy
+PASS  test_vec.cypy
+[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0

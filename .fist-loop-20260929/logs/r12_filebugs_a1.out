@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\file_r12_bugs.py", line 47, in <module>
+    f"`in call to '<unknown>'`；trait 分支与 typeclass 分支各拼一份 `{line}:{col}` 尾巴"
+                                                                      ^^^^
+NameError: name 'line' is not defined. Did you mean: 'slice'?

@@ -1,0 +1,310 @@
+{
+ "refuse": [],
+ "counts": {
+  "candidates": 9,
+  "gaps": [
+   2,
+   3,
+   4,
+   6,
+   7,
+   8,
+   9
+  ],
+  "works": [
+   1,
+   5
+  ],
+  "not_declared": []
+ },
+ "rows": [
+  {
+   "id": 1,
+   "name": "raise X from e（异常链）",
+   "declared": true,
+   "doc_evidence": [
+    {
+     "where": "SYNTAX/16-exceptions.md:111",
+     "needle": "from e",
+     "found": true,
+     "quoted_line": "raise RuntimeError(\"Failed to load data\") from e"
+    }
+   ],
+   "probe": {
+    "rc": 0,
+    "source_rel": ".fist-loop-20260927/probes/adv_c1.cypy",
+    "emit_rel": ".fist-loop-20260927/probes/out/adv_c1.pyx",
+    "cli_error_first": "",
+    "ok_banner": true,
+    "emit_lines": 34
+   },
+   "matcher_control": {
+    "pairs": [
+     {
+      "pat": "raise\\s+\\w+\\([^)]*\\)\\s+from\\s+\\w+",
+      "catches_positive": true,
+      "misses_negative": true
+     }
+    ]
+   },
+   "emit_matched": true,
+   "verdict": "works"
+  },
+  {
+   "id": 2,
+   "name": "枚举内自定义方法",
+   "declared": true,
+   "doc_evidence": [
+    {
+     "where": "SYNTAX/06-enum.md:79",
+     "needle": "自定义方法",
+     "found": true,
+     "quoted_line": "### 自定义方法"
+    }
+   ],
+   "probe": {
+    "rc": 1,
+    "source_rel": ".fist-loop-20260927/probes/adv_c2.cypy",
+    "emit_rel": null,
+    "cli_error_first": "  \u001b[31m-\u001b[0m 读取文件错误: Expected IDENTIFIER, got DEF at 5:5",
+    "ok_banner": false,
+    "emit_lines": 0
+   },
+   "matcher_control": {
+    "pairs": [
+     {
+      "pat": "def\\s+label\\s*\\(",
+      "catches_positive": true,
+      "misses_negative": true
+     }
+    ]
+   },
+   "emit_matched": false,
+   "verdict": "gap-parse"
+  },
+  {
+   "id": 3,
+   "name": "struct 里的 @staticmethod",
+   "declared": true,
+   "doc_evidence": [
+    {
+     "where": "SYNTAX/06d-builtin-magic-traits.md:49",
+     "needle": "@staticmethod",
+     "found": true,
+     "quoted_line": "@staticmethod"
+    }
+   ],
+   "probe": {
+    "rc": 0,
+    "source_rel": ".fist-loop-20260927/probes/adv_c3.cypy",
+    "emit_rel": ".fist-loop-20260927/probes/out/adv_c3.pyx",
+    "cli_error_first": "",
+    "ok_banner": true,
+    "emit_lines": 38
+   },
+   "matcher_control": {
+    "pairs": [
+     {
+      "pat": "def\\s+origin\\(\\s*\\)",
+      "catches_positive": true,
+      "misses_negative": true
+     }
+    ]
+   },
+   "emit_matched": false,
+   "verdict": "gap-silent"
+  },
+  {
+   "id": 4,
+   "name": "__implicit_default__ 隐式默认填充",
+   "declared": true,
+   "doc_evidence": [
+    {
+     "where": "SYNTAX/06d-builtin-magic-traits.md:53",
+     "needle": "__implicit_default__",
+     "found": true,
+     "quoted_line": "def __implicit_default__() -> Config:"
+    }
+   ],
+   "probe": {
+    "rc": 0,
+    "source_rel": ".fist-loop-20260927/probes/adv_c4.cypy",
+    "emit_rel": ".fist-loop-20260927/probes/out/adv_c4.pyx",
+    "cli_error_first": "",
+    "ok_banner": true,
+    "emit_lines": 42
+   },
+   "matcher_control": {
+    "pairs": [
+     {
+      "pat": "__implicit_default__\\s*\\(\\s*\\)",
+      "catches_positive": true,
+      "misses_negative": true
+     }
+    ]
+   },
+   "emit_matched": false,
+   "verdict": "gap-silent"
+  },
+  {
+   "id": 5,
+   "name": "let x =:（变量构建块）",
+   "declared": true,
+   "doc_evidence": [
+    {
+     "where": "SYNTAX/13-build-blocks.md:74",
+     "needle": "let result =:",
+     "found": true,
+     "quoted_line": "let result =:"
+    }
+   ],
+   "probe": {
+    "rc": 0,
+    "source_rel": ".fist-loop-20260927/probes/adv_c5.cypy",
+    "emit_rel": ".fist-loop-20260927/probes/out/adv_c5.pyx",
+    "cli_error_first": "",
+    "ok_banner": true,
+    "emit_lines": 34
+   },
+   "matcher_control": {
+    "pairs": [
+     {
+      "pat": "(?m)^result\\s*=\\s*_bb_\\d+\\(\\)$",
+      "catches_positive": true,
+      "misses_negative": true
+     }
+    ]
+   },
+   "emit_matched": true,
+   "verdict": "works"
+  },
+  {
+   "id": 6,
+   "name": "guard <cond>（action 可省）",
+   "declared": true,
+   "doc_evidence": [
+    {
+     "where": "SYNTAX/appendix-A-keywords.md:41",
+     "needle": "guard <cond> [: <action>]",
+     "found": true,
+     "quoted_line": "| `guard` | 控制流 | `guard <cond> [: <action>]` | 守卫：条件不满足时执行兜底动作 | `guard x > 0: return -1` |"
+    }
+   ],
+   "probe": {
+    "rc": 1,
+    "source_rel": ".fist-loop-20260927/probes/adv_c6.cypy",
+    "emit_rel": null,
+    "cli_error_first": "  \u001b[31m-\u001b[0m 读取文件错误: Expected ELSE, got NEWLINE at 3:5",
+    "ok_banner": false,
+    "emit_lines": 0
+   },
+   "matcher_control": {
+    "pairs": [
+     {
+      "pat": "guard",
+      "catches_positive": true,
+      "misses_negative": true
+     }
+    ]
+   },
+   "emit_matched": false,
+   "verdict": "gap-parse"
+  },
+  {
+   "id": 7,
+   "name": "f(name~ value) 调用形波浪",
+   "declared": true,
+   "doc_evidence": [
+    {
+     "where": "SYNTAX/appendix-B-operators.md:187",
+     "needle": "f(name~",
+     "found": true,
+     "quoted_line": "| `~`（后缀） | 命名参数 | 14（后缀） | `name~ expr` | 命名参数语法糖：`f(name~ value)` 等价于 `f(name=value)` | `f(x~ 10, y~ 20)` |"
+    }
+   ],
+   "probe": {
+    "rc": 1,
+    "source_rel": ".fist-loop-20260927/probes/adv_c7.cypy",
+    "emit_rel": null,
+    "cli_error_first": "",
+    "ok_banner": false,
+    "emit_lines": 0
+   },
+   "matcher_control": {
+    "pairs": [
+     {
+      "pat": "~",
+      "catches_positive": true,
+      "misses_negative": true
+     }
+    ]
+   },
+   "emit_matched": false,
+   "verdict": "gap-parse"
+  },
+  {
+   "id": 8,
+   "name": "def f(..args) 具名可变参数",
+   "declared": true,
+   "doc_evidence": [
+    {
+     "where": "SYNTAX/appendix-B-operators.md:167",
+     "needle": "def f(..args)",
+     "found": true,
+     "quoted_line": "| `..` | 范围/可变参数 | 14 | `a..b` 或 `..args` | 范围模式（含端点）或可变参数分隔 | `1..10`；`def f(..args)` |"
+    }
+   ],
+   "probe": {
+    "rc": 1,
+    "source_rel": ".fist-loop-20260927/probes/adv_c8.cypy",
+    "emit_rel": null,
+    "cli_error_first": "  \u001b[31m-\u001b[0m 读取文件错误: Expected RPAREN, got IDENTIFIER at 1:9",
+    "ok_banner": false,
+    "emit_lines": 0
+   },
+   "matcher_control": {
+    "pairs": [
+     {
+      "pat": "args",
+      "catches_positive": true,
+      "misses_negative": true
+     }
+    ]
+   },
+   "emit_matched": false,
+   "verdict": "gap-parse"
+  },
+  {
+   "id": 9,
+   "name": "case Point(x=0, y=0) 结构体关键字模式",
+   "declared": true,
+   "doc_evidence": [
+    {
+     "where": "SYNTAX/17-pattern-matching.md:118",
+     "needle": "case Point(x=0, y=0)",
+     "found": true,
+     "quoted_line": "case Point(x=0, y=0):"
+    }
+   ],
+   "probe": {
+    "rc": 1,
+    "source_rel": ".fist-loop-20260927/probes/adv_c9.cypy",
+    "emit_rel": null,
+    "cli_error_first": "  \u001b[31m-\u001b[0m 读取文件错误: Unexpected pattern token ASSIGN at 7:21",
+    "ok_banner": false,
+    "emit_lines": 0
+   },
+   "matcher_control": {
+    "pairs": [
+     {
+      "pat": "\\.\\_?_f\\d|x\\s*==\\s*0",
+      "catches_positive": true,
+      "misses_negative": true
+     }
+    ]
+   },
+   "emit_matched": false,
+   "verdict": "gap-parse"
+  }
+ ]
+}

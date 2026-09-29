@@ -1,0 +1,186 @@
+{
+ "key": "r2_verify",
+ "root_task": "T0r57",
+ "assignee": "cypy-verifier",
+ "stage": "R2-验证",
+ "forbid": "在本环修产品码或改既有测试；动 PROJECT-SPEC/ 与 SYNTAX/ 冻结语义；git add/commit/push；把修复环的判据结果当自己的证据；用「产物里出现了某字样」代替调用面判据；重发已经落账的 report_bug；替另一条 lane 未盘上可观测的主张签完成",
+ "laws": [
+  {
+   "name": "L1 三套基线独立复算（干净子进程，末行逐字进报告，不与修复环互相抵扣）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r2_baselines.json",
+     "1886 passed",
+     900
+    ],
+    [
+     ".fist-loop-20260927/r2_verify_body.md",
+     "独立复算",
+     6000
+    ]
+   ]
+  },
+  {
+   "name": "L2 BUG-44 对抗复测：struct 与 class 两侧的 @staticmethod/@classmethod 都不注入 self",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r2_probe.json",
+     "P1.binding_only_on_bound",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r2_probe.json",
+     "P2.classmethod_keeps_cls",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "L3 BUG-45 对抗复测：参数位脱糖，局部位按未文档化只记观察不占号",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r2_probe.json",
+     "P3.param_desugared",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r2_probe.json",
+     "P3b.observation_only",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "L4 BUG-39/51 对抗复测：模块级与 class 体必诊断，宏体必合法（守卫不过头也不足）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r2_probe.json",
+     "P4.macro_return_legal",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r2_probe.json",
+     "P4.class_return_diagnosed",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "L5 BUG-35/46/47 调用面复测：分桶、两条 hook 入口一致、包级 API 真可用",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r2_probe.json",
+     "P5.syntax_error_not_read_bucket",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r2_probe.json",
+     "P6.package_api",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "L6 账本三向对照：逐号点名 + 双发检测（键必须用整条 summary）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r2_ledger3way.json",
+     "bug_card_only_no_task",
+     900
+    ],
+    [
+     ".fist-loop-20260927/verify_r2_ledger3way.json",
+     "duplicate_summaries",
+     900
+    ]
+   ]
+  },
+  {
+   "name": "L7 BUG-50 损害面复核：文本债与语义增量分栏，HEAD 不是 pre-black 底",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r2_probe.json",
+     "P9.black_noise_split",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r2_file_bug52.json",
+     "black_noise_split",
+     700
+    ]
+   ]
+  },
+  {
+   "name": "L8 新缺陷入账与双发处置：BUG-52 落账可回读，BUG-53 已标 DUPLICATE 并指认正身",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r2_file_bug52.json",
+     "BUG-52",
+     700
+    ],
+    [
+     "memory/bugs.md",
+     "### DUPLICATE",
+     60000
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "L1 三套基线独立复算（干净子进程，末行逐字进报告，不与修复环互相抵扣）",
+   ".fist-loop-20260927/verify_r2_baselines.json",
+   "1886 passed"
+  ],
+  [
+   "L2 BUG-44 对抗复测：struct 与 class 两侧的 @staticmethod/@classmethod 都不注入 self",
+   ".fist-loop-20260927/verify_r2_probe.json",
+   "P1.binding_only_on_bound"
+  ],
+  [
+   "L3 BUG-45 对抗复测：参数位脱糖，局部位按未文档化只记观察不占号",
+   ".fist-loop-20260927/verify_r2_probe.json",
+   "P3.param_desugared"
+  ],
+  [
+   "L4 BUG-39/51 对抗复测：模块级与 class 体必诊断，宏体必合法（守卫不过头也不足）",
+   ".fist-loop-20260927/verify_r2_probe.json",
+   "P4.macro_return_legal"
+  ],
+  [
+   "L5 BUG-35/46/47 调用面复测：分桶、两条 hook 入口一致、包级 API 真可用",
+   ".fist-loop-20260927/verify_r2_probe.json",
+   "P5.syntax_error_not_read_bucket"
+  ],
+  [
+   "L6 账本三向对照：逐号点名 + 双发检测（键必须用整条 summary）",
+   ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "bug_card_only_no_task"
+  ],
+  [
+   "L7 BUG-50 损害面复核：文本债与语义增量分栏，HEAD 不是 pre-black 底",
+   ".fist-loop-20260927/verify_r2_probe.json",
+   "P9.black_noise_split"
+  ],
+  [
+   "L8 新缺陷入账与双发处置：BUG-52 落账可回读，BUG-53 已标 DUPLICATE 并指认正身",
+   ".fist-loop-20260927/verify_r2_file_bug52.json",
+   "BUG-52"
+  ]
+ ],
+ "root_deliverable": "R2-验证 交付：{REPORT}；三套基线独立复算 pytest 1886 passed（收集 1886）/ 自研 47/47 / e2e PASS=25 FAIL=0，HEAD 仍 17d68b4；27 条对抗探针零拒绝 ⇒ R2-修复 的 6 单未被推翻；账本三向对照 entries=53 / bug_tasks=49 / bug_card_only=8 / 孤儿 4 条已逐号定性；BUG-50 损害面给出新数（parser.py 文本差 1893 行中 1433 行纯排版、对 black(HEAD) 只差 460 行）；新入账 BUG-52（formatter 声明与仓库状态不兼容，142/156 文件），本环自身缺陷 8 条当场修回（含我重跑非幂等脚本造成的 BUG-53 双发，已标 DUPLICATE 并指认正身）",
+ "root_marker": "[selfdrive-verify]",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/verify_r2_baselines.json",
+   "1886 passed",
+   900
+  ],
+  [
+   ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "orphans",
+   900
+  ]
+ ],
+ "root_verify_reason": "每条结论都有自己的取数件与成对反例：产物判据前钉 require_emit（rc=0 且 .pyx 非空），重复检测键用整条 summary（截断会造 3 组假双发），账本对照用 call_log 反解 report_bug 回执而不是回忆"
+}

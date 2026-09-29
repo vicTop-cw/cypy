@@ -1,0 +1,36 @@
+PASS 29
+FAIL 路径存在 cypyc/analyzer/type_checker.py:3994
+FAIL 路径存在 cypyc/codegen/cython_generator.py:443
+FAIL 路径存在 cypyc/utils/ast_utils.py:7 ASTUtils.is_positional_member
+FAIL 路径存在 logs/r8_bugsurface_a1.txt
+FAIL 路径存在 logs/r8_e2e_r2.log
+FAIL 路径存在 logs/r8_final.flag
+FAIL 路径存在 logs/r8_locks_a2.txt
+FAIL 路径存在 logs/r8_locks_a3.txt
+FAIL 路径存在 logs/r8_native_r2.log
+FAIL 路径存在 logs/r8_negatives_a3.txt
+FAIL 路径存在 logs/r8_pytest_r1_prefix.log
+FAIL 路径存在 logs/r8_pytest_r2_mixedlabel.log
+FAIL 路径存在 make_corpus.py
+FAIL 路径存在 omega_gate.py
+FAIL 路径存在 project-cypy-r6-selfdrive-loop.md
+FAIL 路径存在 r8_pytest_r3.log
+FAIL 路径存在 verify_r7_locks.py
+FAIL 正文 open 清单与反解集合相等：正文 1 个 / 实测 34 个；差集={'BUG-109', 'BUG-107', 'BUG-71', 'BUG-65', 'BUG-98', 'BUG-69', 'BUG-77', 'BUG-116', 'BUG-53', 'BUG-68', 'BUG-94', 'BUG-115', 'BUG-103', 'BUG-73', 'BUG-49', 'BUG-43', 'BUG-50', 'BUG-70', 'BUG-101', 'BUG-104', 'BUG-110', 'BUG-102', 'BUG-72', 'BUG-52', 'BUG-97', 'BUG-54', 'BUG-100', 'BUG-106', 'BUG-96', 'BUG-111', 'BUG-105', 'BUG-99', 'BUG-114'}
+FAIL 正文点名 T0r114.6.1
+FAIL 正文点名 T0r114.1.3
+FAIL 正文点名 T0r114.2.2
+FAIL 正文点名 T0r114.3.1
+FAIL 正文点名 T0r114.4.3
+FAIL 正文点名 T0r114.4.2
+FAIL 正文点名 T0r114.5.2
+FAIL 正文点名 T0r114.6.3
+FAIL 正文点名 T0r114.2.1
+FAIL 正文点名 T0r114.2.3
+FAIL 正文点名 T0r114.5.1
+FAIL 正文点名 T0r114.6.2
+FAIL 正文点名 T0r114.3.3
+FAIL 正文点名 T0r114.4.1
+FAIL 正文点名 T0r114.5.3
+FAIL 正文点名 T0r114.3.2
+CONCLUSION pass=29 fail=34 report=T0r114-cypy-selfdrive-r8-report.md rc=1

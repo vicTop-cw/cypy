@@ -1,0 +1,133 @@
+{
+ "key": "r3_polish",
+ "tag": "[loop:20260927-loop:R3-打磨]",
+ "assignee": "cypy-polisher",
+ "difficulty": "难",
+ "description": "[loop:20260927-loop:R3-打磨] 打磨（polish）R3：不新增语义、不扩功能面，只把 R3-寻虫/修复/验证 三环留下的**质量缺口**收掉，范围严格限在四件事：(1) 回归锁的夹具质量——BUG-55 的锁用的 `generic struct Box<T>` 不在 SYNTAX/11 冻结形里（冻结形是 `struct Box<T>`），换成冻结形并显式留一条「非冻结形仍被 parser 容忍」的对照，不静默；(2) 补 R3-验证 新测到但没有锁的形状：`--bridge --generate-setup` 出可解析 setup.py、`--bridge --emit-cython` 必须明确 decline、子模块取值走 `importlib`（旧包 `__init__` 会用同名函数遮蔽子模块）；(3) 入口 API 打磨：CLI 停止直调私有 `CypyHook._parse_and_analyze`（定义在 cypy_hook/hook.py:221，全仓唯一外部调用点是 cypyc/cli.py:495），改走新增的公开 `analyze_only()`，语义一字不动；(4) 文档/旗标一致性与行尾策略：`docs/USAGE.md`、`transpile --help`、argparse 定义三向对表并留可复跑判据；行尾现状实测为 39 个纯 CRLF / 203 个纯 LF / 仅 1 个逐行混用（tests/test_new_features_boundary.py），只点名不整档重排（上一轮 formatter 整档重排把 425 行改动放大到 1885 行且不可回滚）。omega 强验证 / laya / call_log 全开，三套判据体系与 git 红线同一批复算，基线只升不降，不可逆动作一律挂账。",
+ "fingerprint": {
+  "必须": "每条打磨都有「改前/改后」的可复跑判据与新锁；新增测试必须同时提高收集数下限并跑两套测试体系；三向文档对表由脚本反解而非人读；lint 存量只准减不准增（逐文件上限）；报告页脚每格能从判据件反解；本轮改动半径逐档归属本单",
+  "禁止": "把打磨做成新增语义或扩面；弱化/删除既有测试；整档交给 formatter/black；改 PROJECT-SPEC 与 SYNTAX 冻结语义；git add/commit/push；用「读起来更顺」替代可复跑判据；替另一条 lane 的改动签归属"
+ },
+ "laws": [
+  {
+   "name": "锁夹具换冻结形：BUG-55 用 SYNTAX/11 的 `struct Box<T>`，并留非冻结形被容忍的显式对照",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_locks.json",
+     "frozen_fixture_swapped",
+     1
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_locks.json",
+     "nonfrozen_control_kept",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "补三条新锁：bridge 生成 setup / bridge 对 emit-cython 明确 decline / importlib 取子模块",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_locks.json",
+     "new_locks",
+     3
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_locks.json",
+     "each_new_lock_red_when_reverted",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "入口 API 打磨：新增公开 CypyHook.analyze_only()（现只有私有 _parse_and_analyze，cypy_hook/hook.py:221），cypyc/cli.py:495 改走公开面；语义与错误清单一字不动",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_api.json",
+     "public_added",
+     1
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_api.json",
+     "cli_no_private_call",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "文档-帮助-argparse 三向一致：USAGE.md:66-70 的四个 transpile 旗标与 :102 的 build --check-only 都必须既在 --help 里、又被对应子命令读取；判据可复跑",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_docs.json",
+     "flags_three_way",
+     1
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_docs.json",
+     "guard_rerunnable",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "lint 存量只减不增：E9/W605 零、亲笔文件零违例、E501 逐文件不高于开工基线",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_lint.json",
+     "hard_violations",
+     1
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_lint.json",
+     "e501_within_baseline",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "行尾策略只点名不动刀：混用清单实测、新文件统一 LF 的守卫、禁整档重排的理由留字",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_eol.json",
+     "mixed_files_manifest",
+     1
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_eol.json",
+     "no_bulk_reformat",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "三套判据体系与红线复算：收集数随新锁上调，两套测试体系都跑，基线只升不降",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_baselines.json",
+     "pytest",
+     8
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_baselines.json",
+     "git",
+     5
+    ]
+   ]
+  },
+  {
+   "name": "改动半径与报告自洽：每档归属本单、页脚每格从判据件反解",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_baselines.json",
+     "radius",
+     3
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_self_audit.json",
+     "counts_all_equal",
+     1
+    ]
+   ]
+  }
+ ]
+}

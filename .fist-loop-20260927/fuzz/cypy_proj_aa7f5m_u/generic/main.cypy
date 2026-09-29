@@ -1,0 +1,27 @@
+type Number = int | float
+
+def add(a: Number, b: Number) -> Number:
+    return a + b
+
+def multiply(a: Number, b: Number) -> Number:
+    return a * b
+
+struct Container<T>:
+    value: T
+
+def get_value<T>(container: Container<T>) -> T:
+    return container.value
+
+
+def main() -> int:
+    let r1 = add(10, 20)
+    let r2 = add(3.14, 2.71)
+    let r3 = multiply(r1, r2)
+    print(f"generic add = {r1}")
+    print(f"generic addf = {r2}")
+    print(f"generic mul = {r3}")
+    return 0
+
+
+if __name__ == "__main__":
+    main()

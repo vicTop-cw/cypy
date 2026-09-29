@@ -1,0 +1,3 @@
+def main() -> int:
+    # 中文注释 GBK 风险面
+    return 0

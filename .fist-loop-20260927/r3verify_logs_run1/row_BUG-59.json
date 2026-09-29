@@ -1,0 +1,24 @@
+{
+ "bug": "BUG-59",
+ "patches": 2,
+ "applied": 2,
+ "compiled": true,
+ "pos_red": [
+  "test_bug59_compilation_order_stable_across_hash_seeds"
+ ],
+ "ctl_red": [],
+ "collateral_red": [],
+ "restored": true,
+ "sha_before": {
+  "cypyc/project/module_dependency_graph.py": "a0f1d6eff2a982a4047c6f5839f7116e44a575dd66e8b9d1ed72ba280794a7bb"
+ },
+ "sha_after_restore": "a0f1d6eff2a982a4047c6f5839f7116e44a575dd66e8b9d1ed72ba280794a7bb",
+ "sha_equal": true,
+ "touched_files": [
+  "cypyc/project/module_dependency_graph.py"
+ ],
+ "workspace_untouched": true,
+ "matches_prev_head": null,
+ "reds_total": 1,
+ "seen_total": 17
+}

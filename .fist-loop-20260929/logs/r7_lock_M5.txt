@@ -1,0 +1,28 @@
+{
+ "cell": "M5 class 位置槽位退回 fields-only",
+ "file": "cypyc/analyzer/type_checker.py",
+ "anchor_count": 1,
+ "tests": [
+  "tests/regression/test_corpus_pairs.py"
+ ],
+ "run": {
+  "rc": 1,
+  "failed": 3,
+  "passed": 41,
+  "errors": 0,
+  "skipped": 0,
+  "collected": 44,
+  "count_arith_ok": true,
+  "stray_error_lines": [
+   "E   AssertionError: cypy.pattern.positional.json#11 error 判不过：缺片段 \"Positional pattern 'C'\"；观测=''",
+   "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\lockproof_r7\\tests\\regression\\test_corpus_pairs.py:62: AssertionError: cypy.p",
+   "E   AssertionError: cypy.pattern.positional.json#14 error 判不过：缺片段 \"Positional pattern 'Point' has 3 slot(s)\"；观测=''"
+  ],
+  "collect_or_internal_errors": 0,
+  "internal_error": false,
+  "summary_line": "======================== 3 failed, 41 passed in 0.40s ========================="
+ },
+ "restored_bytes_identical": true,
+ "verdict": "承重：摘掉即红",
+ "carries": true
+}

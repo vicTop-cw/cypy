@@ -1,0 +1,193 @@
+{
+ "refused": [
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r56.1",
+   "error": "语料 [spec:T0r56.1:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r56.1",
+   "error": "语料 [spec:T0r56.1:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r56.1",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r56.2",
+   "error": "语料 [spec:T0r56.2:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r56.2",
+   "error": "语料 [spec:T0r56.2:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r56.2",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r56.3",
+   "error": "语料 [spec:T0r56.3:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r56.3",
+   "error": "语料 [spec:T0r56.3:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r56.3",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r56.4",
+   "error": "语料 [spec:T0r56.4:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r56.4",
+   "error": "语料 [spec:T0r56.4:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r56.4",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r56.5",
+   "error": "语料 [spec:T0r56.5:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r56.5",
+   "error": "语料 [spec:T0r56.5:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r56.5",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r56.6",
+   "error": "语料 [spec:T0r56.6:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r56.6",
+   "error": "语料 [spec:T0r56.6:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r56.6",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r56.7",
+   "error": "语料 [spec:T0r56.7:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r56.7",
+   "error": "语料 [spec:T0r56.7:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r56.7",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r56.8",
+   "error": "语料 [spec:T0r56.8:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r56.8",
+   "error": "语料 [spec:T0r56.8:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r56.8",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "claim",
+   "task_id": "T0r56",
+   "error": "非法迁移: claim 要求状态 [待领取]，当前是 [待验收]"
+  },
+  {
+   "call": "execute",
+   "task_id": "T0r56",
+   "error": "非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute"
+  },
+  {
+   "call": "submit",
+   "task_id": "T0r56",
+   "error": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r56",
+   "error": "任务 [T0r56] 未开启 Omega 强验证（description 缺少 [omega:required] 标记），无需创建语料"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r56",
+   "error": "任务 [T0r56] 未开启 Omega 强验证，无语料可审"
+  },
+  {
+   "call": "omega_result_verify",
+   "task_id": "T0r56",
+   "error": "任务 [T0r56] 未开启 Omega 强验证，无需成果复验"
+  }
+ ],
+ "root_final": "已归档",
+ "leaves_done": 16,
+ "call_log_rows": 400,
+ "call_log_tally": {
+  "archive": 2,
+  "bug_list": 1,
+  "call_log": 1,
+  "claim": 32,
+  "execute": 31,
+  "get": 28,
+  "laya_decide": 1,
+  "omega_result_verify": 55,
+  "omega_spec_create": 55,
+  "omega_spec_review": 55,
+  "omega_status": 16,
+  "output_validate": 32,
+  "publish": 1,
+  "report_bug": 2,
+  "submit": 32,
+  "task_plan_deep": 1,
+  "verify": 55
+ },
+ "root_output_validate": [
+  {
+   "path": "memory/reviews/20260927.17.30.01.md",
+   "contains": "[selfdrive-fix]",
+   "min_chars": 1500
+  },
+  {
+   "path": ".fist-loop-20260927/fix_r2_baselines.json",
+   "contains": "1886 passed",
+   "min_chars": 300
+  },
+  {
+   "path": ".fist-loop-20260927/fix_r2_lint_selftest.json",
+   "contains": "selfprobe-caught",
+   "min_chars": 120
+  }
+ ]
+}

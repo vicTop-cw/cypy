@@ -1,0 +1,149 @@
+{
+ "now": "2026-09-27T12:45:00Z",
+ "filed": [
+  {
+   "id": "C1",
+   "rpc_bug_id": "BUG-55",
+   "task_id": "T0r63",
+   "severity": "medium",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C1"
+  },
+  {
+   "id": "C3",
+   "rpc_bug_id": "BUG-56",
+   "task_id": "T0r64",
+   "severity": "medium",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C3"
+  },
+  {
+   "id": "C4",
+   "rpc_bug_id": "BUG-57",
+   "task_id": "T0r65",
+   "severity": "low",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C4"
+  },
+  {
+   "id": "C5",
+   "rpc_bug_id": "BUG-58",
+   "task_id": "T0r66",
+   "severity": "medium",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C5"
+  },
+  {
+   "id": "C6",
+   "rpc_bug_id": "BUG-59",
+   "task_id": "T0r67",
+   "severity": "medium",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C6"
+  },
+  {
+   "id": "C8",
+   "rpc_bug_id": "BUG-60",
+   "task_id": "T0r68",
+   "severity": "low",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C8"
+  }
+ ],
+ "skipped": [],
+ "withdrawn": [
+  {
+   "id": "C2",
+   "verdict": "DESIGN"
+  },
+  {
+   "id": "C7",
+   "verdict": "REJECTED"
+  }
+ ],
+ "entries_before": 54,
+ "entries_after": 60,
+ "new_numbers": [
+  55,
+  56,
+  57,
+  58,
+  59,
+  60
+ ],
+ "refuse": [],
+ "by_id": {
+  "C1": {
+   "id": "C1",
+   "rpc_bug_id": "BUG-55",
+   "task_id": "T0r63",
+   "severity": "medium",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C1"
+  },
+  "C3": {
+   "id": "C3",
+   "rpc_bug_id": "BUG-56",
+   "task_id": "T0r64",
+   "severity": "medium",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C3"
+  },
+  "C4": {
+   "id": "C4",
+   "rpc_bug_id": "BUG-57",
+   "task_id": "T0r65",
+   "severity": "low",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C4"
+  },
+  "C5": {
+   "id": "C5",
+   "rpc_bug_id": "BUG-58",
+   "task_id": "T0r66",
+   "severity": "medium",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C5"
+  },
+  "C6": {
+   "id": "C6",
+   "rpc_bug_id": "BUG-59",
+   "task_id": "T0r67",
+   "severity": "medium",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C6"
+  },
+  "C8": {
+   "id": "C8",
+   "rpc_bug_id": "BUG-60",
+   "task_id": "T0r68",
+   "severity": "low",
+   "ledger_path": "./memory/bugs.md",
+   "summary_on_disk": true,
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C8"
+  }
+ },
+ "n_filed": 6,
+ "n_withdrawn": 2,
+ "ledger_stamps": {
+  "BUG-55": "2026-09-27T12:46:09Z",
+  "BUG-56": "2026-09-27T12:46:10Z",
+  "BUG-57": "2026-09-27T12:46:10Z",
+  "BUG-58": "2026-09-27T12:46:10Z",
+  "BUG-59": "2026-09-27T12:46:10Z",
+  "BUG-60": "2026-09-27T12:46:10Z"
+ },
+ "rpc_now_arg": "2026-09-27T12:45:00Z",
+ "stamp_drift_note": "RPC 的 now 参数是我手敲的 12:45:00Z，账本实际落盘戳逐字为 2026-09-27T12:46:09Z、2026-09-27T12:46:10Z ⇒ 差 69-70s；条目戳由服务端写盘瞬间决定，我没有也不该改。"
+}

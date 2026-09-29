@@ -1,0 +1,158 @@
+{
+ "refuse": [],
+ "started_at_utc": "2026-09-27T19:02:01+00:00",
+ "note": "三套体系是**一批连续复算**（各格自带 at_utc）；地板=上一环实测 1929 + 本轮新锁条数",
+ "new_locks_declared": 9,
+ "pytest_floor": 1938,
+ "stage_start_utc": "2026-09-27T18:41:40+00:00",
+ "stage_start_basis": "root_stage.py 发布 T0r73 的时刻（root_r3_advance.out.json 同批）",
+ "pytest": {
+  "rc": 0,
+  "passed": 1938,
+  "floor": 1938,
+  "failed": [],
+  "collected": 1938,
+  "collect_rc": 0,
+  "advance_locks_collected": 9,
+  "advance_lock_nodeids": [
+   "test_advance_alias_form_is_also_checked",
+   "test_advance_arity_and_return_errors_coexist",
+   "test_advance_callable_arity_violation_reported",
+   "test_advance_callable_arity_zero_args_passed_reported",
+   "test_advance_codegen_object_fallback_unchanged",
+   "test_advance_correct_single_arg_call_stays_clean",
+   "test_advance_keyword_arg_call_is_skipped",
+   "test_advance_two_arg_and_zero_arg_forms_match",
+   "test_advance_unrecognized_callable_shape_is_not_judged"
+  ],
+  "other_counts": {},
+  "line": "1938 passed in 569.30s (0:09:29)",
+  "at_utc": "2026-09-27T19:11:34+00:00"
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": "47",
+   "Passed": "47",
+   "Failed": "0",
+   "Skipped": "0"
+  },
+  "green": true,
+  "at_utc": "2026-09-27T19:13:20+00:00"
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+  "fields": {
+   "PASS": "25",
+   "FAIL": "0",
+   "WARN": "0",
+   "UNREG/RUNFAIL": "0"
+  },
+  "green": true,
+  "at_utc": "2026-09-27T19:18:15+00:00"
+ },
+ "git": {
+  "head": "17d68b4",
+  "head_ok": true,
+  "staged_zero": true,
+  "staged_rows": 0,
+  "dirty_rows": 168,
+  "deleted_tracked": 10,
+  "ahead_of_upstream": "1",
+  "worktrees": [
+   "E:/IDEProjects/AI/Cypy",
+   "E:/IDEProjects/AI/_cypy_head_baseline"
+  ],
+  "foreign_worktree_present": true,
+  "temp_snapshots_left": {
+   "tmp_advance": [],
+   "tmp_polish": [],
+   "tmp_verify": []
+  },
+  "temp_snapshots_gone": true,
+  "all_ok": true,
+  "at_utc": "2026-09-27T19:18:15+00:00"
+ },
+ "radius": {
+  "count": 2,
+  "files": [
+   {
+    "file": "cypyc/analyzer/type_checker.py",
+    "mtime_utc": "2026-09-27T18:44:03+00:00",
+    "attributed": true
+   },
+   {
+    "file": "tests/test_loop_20260927_advance_r3.py",
+    "mtime_utc": "2026-09-27T19:12:03+00:00",
+    "attributed": true
+   }
+  ],
+  "lane_files": [
+   "cypyc/analyzer/type_checker.py",
+   "tests/test_loop_20260927_advance_r3.py"
+  ],
+  "lane_attributions": {
+   "cypyc/analyzer/type_checker.py": "法 1：Callable 入参元数判定落地（含两个私有辅助方法）",
+   "tests/test_loop_20260927_advance_r3.py": "法 2：本轮新增回归锁（新文件）"
+  },
+  "unexpected": [],
+  "missing": [],
+  "stage_start_utc": "2026-09-27T18:41:40+00:00",
+  "scanned_dirs": [
+   "cypyc",
+   "cypy_hook",
+   "cypy_bridge",
+   "tests",
+   "docs",
+   "scripts",
+   "examples"
+  ],
+  "at_utc": "2026-09-27T19:18:15+00:00"
+ },
+ "lint": {
+  "rc": 0,
+  "drivers": 7,
+  "hard_violations": 0,
+  "own_new_file": {
+   "tests/test_loop_20260927_advance_r3.py": 0
+  },
+  "own_new_clean": true,
+  "product_face": {
+   "cypyc/analyzer/type_checker.py": {
+    "added_lines": 37,
+    "violations_now": 325,
+    "violations_before": 325,
+    "violations_on_my_lines": 0,
+    "unfiltered_control": {
+     "would_be_refused": true,
+     "count": 325
+    },
+    "snapshot_sha16": "4db6e1f3bfc2c7d3"
+   }
+  },
+  "canary": {
+   "cypyc/analyzer/type_checker.py:too_long": {
+    "added_lines": 3,
+    "on_my_lines": 1,
+    "codes": [
+     "E501"
+    ]
+   },
+   "cypyc/analyzer/type_checker.py:clean": {
+    "added_lines": 3,
+    "on_my_lines": 0,
+    "codes": []
+   }
+  },
+  "product_clean": true,
+  "detail": [],
+  "at_utc": "2026-09-27T19:18:23+00:00"
+ },
+ "pytest_ge_floor": 1,
+ "three_systems_green": 1,
+ "radius_exact": 1,
+ "floor_raised": 9,
+ "finished_at_utc": "2026-09-27T19:18:23+00:00"
+}

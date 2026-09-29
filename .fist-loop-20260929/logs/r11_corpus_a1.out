@@ -1,0 +1,3 @@
+MISMATCH #20 typecheck stage=ok errors=['Return type mismatch: expected int, got Link[int] at 9:1'] -> ok=False why=errors 期望 0，实际 1：['Return type mismatch: expected int, got Link[int] at 9:1']
+MISMATCH #24 codegen stage=typecheck errors=['Return type mismatch: expected int, got str at 15:1'] -> ok=False why=缺片段 'class Pair:'；观测='Return type mismatch: expected int, got str at 15:1'
+CONCLUSION refuse=2 条断言与实测不符 ⇒ 不改 corpus/

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\close_r8_ring.py", line 35, in <module>
+    _r7.spec.loader.exec_module(_r7mod)
+    ^^^^^^^^
+AttributeError: 'ModuleSpec' object has no attribute 'spec'

@@ -1,0 +1,19 @@
+{
+ "started_z": "2026-09-29T08:22:42Z",
+ "stage": "close",
+ "ns": "cypy-loop-20260929",
+ "refusals": [],
+ "benign": [],
+ "idempotent": [],
+ "nodes": {},
+ "obs": {},
+ "entry_gate": {
+  "pass": false,
+  "reasons": [
+   "账上查无根单：ns=cypy-loop-20260929 且 description 含 T0r999-不存在的根单前缀 且 parent_id=''"
+  ],
+  "observed": {
+   "db": "E:\\IDEProjects\\AI\\Cypy\\fist-mbt.db"
+  }
+ }
+}

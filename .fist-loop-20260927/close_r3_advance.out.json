@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r73.1.1",
+   "law": "元数检查落地：`Callable[[T1..Tn], R]` 被以 m≠n 调用时必报 arity 错，形状不认识则跳过不误判",
+   "artifact": ".fist-loop-20260927/advance_r3_arity.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.1.2",
+   "law": "元数检查落地：`Callable[[T1..Tn], R]` 被以 m≠n 调用时必报 arity 错，形状不认识则跳过不误判",
+   "artifact": ".fist-loop-20260927/advance_r3_arity.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.2.1",
+   "law": "成对回归锁：每条新锁都要『摘掉实现就红』且『只改注释仍绿』，与既有两条 Callable 锁不得互相顶包",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.2.2",
+   "law": "成对回归锁：每条新锁都要『摘掉实现就红』且『只改注释仍绿』，与既有两条 Callable 锁不得互相顶包",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.3.1",
+   "law": "产物面不动：同一源在改动前/后的 .pyx 逐字差分（除 `__compile_time__`/`__generated_at__` 两行），违例夹具单独分栏",
+   "artifact": ".fist-loop-20260927/advance_r3_codegen_diff.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.3.2",
+   "law": "产物面不动：同一源在改动前/后的 .pyx 逐字差分（除 `__compile_time__`/`__generated_at__` 两行），违例夹具单独分栏",
+   "artifact": ".fist-loop-20260927/advance_r3_codegen_diff.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.4.1",
+   "law": "语料零新增红：同一棵快照树在两/三种状态下逐档对表，且必须自带看得见 arity 行的敏感性对照",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.4.2",
+   "law": "语料零新增红：同一棵快照树在两/三种状态下逐档对表，且必须自带看得见 arity 行的敏感性对照",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.5.1",
+   "law": "半径外形状点名挂账：别名塌缩成 object、`Callable[..., R]` parser 直接拒绝且 SYNTAX 未声明、实参类型判定需先抽共用谓词",
+   "artifact": ".fist-loop-20260927/advance_r3_scope_face.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.5.2",
+   "law": "半径外形状点名挂账：别名塌缩成 object、`Callable[..., R]` parser 直接拒绝且 SYNTAX 未声明、实参类型判定需先抽共用谓词",
+   "artifact": ".fist-loop-20260927/advance_r3_scope_face.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.6.1",
+   "law": "三套判据体系与红线复算：pytest 地板随新锁上调且收集数同步，套件 47/47、e2e 25/25，git 红线未动",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.6.2",
+   "law": "三套判据体系与红线复算：pytest 地板随新锁上调且收集数同步，套件 47/47、e2e 25/25，git 红线未动",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.7.1",
+   "law": "改动半径逐档归属本单：mtime 反解与清单双向对表（多一档越界、少一档未落地都算红），亲笔 lint 分『新写整档』与『既有档只对新加行负责』两口径",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.7.2",
+   "law": "改动半径逐档归属本单：mtime 反解与清单双向对表（多一档越界、少一档未落地都算红），亲笔 lint 分『新写整档』与『既有档只对新加行负责』两口径",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.8.1",
+   "law": "不可逆面零执行且判据通道自测必红：逐条 live/derived/manifest 分级，注入假违例必须被抓住，既有测试名逐名对照",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r73.8.2",
+   "law": "不可逆面零执行且判据通道自测必红：逐条 live/derived/manifest 分级，注入假违例必须被抓住，既有测试名逐名对照",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r73",
+ "stage": "R3-推进"
+}

@@ -1,0 +1,60 @@
+{
+ "captured_at_utc": "2026-09-27T17:48:54+00:00",
+ "head": "17d68b4",
+ "files_before": {
+  "tests/test_loop_20260927_fix_r3.py": {
+   "sha256": "55ff2fdc3fd2d54b6c46c5d4e2b6078f7283b0dfc5dfac1e9628173cb54b8e02",
+   "bytes": 12588,
+   "mtime_utc": "2026-09-27T16:16:54+00:00"
+  },
+  "cypy_hook/hook.py": {
+   "sha256": "9321697444a5c8b2345f743da676a8a8d0ccfc3a300bf7ab2729c4711b577ed8",
+   "bytes": 47418,
+   "mtime_utc": "2026-09-27T08:49:15+00:00"
+  },
+  "cypyc/cli.py": {
+   "sha256": "e66c34967748497d0413b0875fd0844c98a5dd87759a4f9b8c88ada437bc80da",
+   "bytes": 28858,
+   "mtime_utc": "2026-09-27T16:07:27+00:00"
+  },
+  "docs/USAGE.md": {
+   "sha256": "1228cce01844502b3ab0c1c02ab612b926c35d4d3a0679cb9561abf86f97fdea",
+   "bytes": 13267,
+   "mtime_utc": "2026-09-27T11:44:23+00:00"
+  }
+ },
+ "before_copies_in": ".fist-loop-20260927\\tmp_polish\\before",
+ "cli_flag_survey": {
+  "transpile_argparse": [],
+  "transpile_help": [
+   "--bridge",
+   "--check-only",
+   "--emit-ast",
+   "--emit-code",
+   "--emit-cython",
+   "--generate-setup",
+   "--help",
+   "--output",
+   "--verbose"
+  ],
+  "build_argparse": [],
+  "build_help": [
+   "--check-only",
+   "--entry",
+   "--help",
+   "--output",
+   "--verbose"
+  ],
+  "usage_md_transpile_lines": [
+   "--bridge",
+   "--check-only",
+   "--emit-ast",
+   "--emit-cython",
+   "--generate-setup"
+  ],
+  "usage_md_build_lines": [
+   "--check-only",
+   "--entry"
+  ]
+ }
+}

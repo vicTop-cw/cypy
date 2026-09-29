@@ -1,0 +1,89 @@
+{
+ "started_z": "2026-09-29T12:26:26Z",
+ "ns": "cypy-loop-20260929",
+ "readings": {
+  "before_cases": 23,
+  "after_cases": 23,
+  "silent_before": [
+   "D01_value_wrong",
+   "D02_key_wrong",
+   "D03_return_value_wrong",
+   "D04_nested_list_wrong",
+   "D05_alias_dict_wrong",
+   "D06_dict_of_dict_wrong",
+   "D07_bool_key_under_str"
+  ],
+  "now_red": [
+   "D01_value_wrong",
+   "D02_key_wrong",
+   "D03_return_value_wrong",
+   "D04_nested_list_wrong",
+   "D05_alias_dict_wrong",
+   "D06_dict_of_dict_wrong",
+   "D07_bool_key_under_str"
+  ],
+  "still_silent": [],
+  "green_now": [
+   "G01_empty_literal",
+   "G02_correct",
+   "G03_hetero_values",
+   "G04_widening_value",
+   "G05_bool_widening",
+   "G06_user_type_value",
+   "G07_untyped_let",
+   "G08_nested_correct",
+   "G09_dict_of_dict_ok",
+   "G10_param_annotation",
+   "G11_empty_then_return",
+   "G12_empty_untyped",
+   "G13_scalar_alias_dict",
+   "G14_hetero_both"
+  ],
+  "must_green": 14,
+  "must_red": 7,
+  "spec_cases": 23,
+  "spec_fp": "fnv1a64:d31d62984b62f3ae",
+  "locks": 29
+ },
+ "first_diag": "Dict value type mismatch: expected int, got str at 2:9",
+ "before": {
+  "headers": 141,
+  "open": 141,
+  "fixed": 93
+ },
+ "filed": [
+  {
+   "key": "R14-DICT-LITERAL-NO-INFER",
+   "reply_verbatim": "{\"bug_id\": \"BUG-141\", \"id\": \"BUG-141\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  },
+  {
+   "key": "R14-MANUAL-DANGLING-TEST-PATH",
+   "reply_verbatim": "{\"bug_id\": \"BUG-142\", \"id\": \"BUG-142\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  }
+ ],
+ "skipped_existing": [],
+ "refusals": [],
+ "bug_list_shape": "dict",
+ "bug_list_count": 143,
+ "after": {
+  "headers": 143,
+  "open": 143,
+  "fixed": 93
+ },
+ "new_ids": [
+  "BUG-141",
+  "BUG-142"
+ ],
+ "key_to_id": {},
+ "id_of_key": {
+  "R14-DICT-LITERAL-NO-INFER": "BUG-141",
+  "R14-MANUAL-DANGLING-TEST-PATH": "BUG-142"
+ },
+ "summaries_in_bug_list": {
+  "R14-DICT-LITERAL-NO-INFER": true,
+  "R14-MANUAL-DANGLING-TEST-PATH": true
+ },
+ "db_path": "fist-mbt.db(exists)",
+ "call_log_report_bug_rows": 45,
+ "call_log_error_rows": 253
+}

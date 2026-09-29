@@ -1,0 +1,38 @@
+{
+ "utc": "2026-09-29T04:17:52+00:00",
+ "specs": 2,
+ "cases_total": 38,
+ "cases_passed": 37,
+ "accuracy_pct": 97.37,
+ "per_spec": [
+  {
+   "op": "cypy.annotation.shape",
+   "n": 24,
+   "passed": 24,
+   "failed": [],
+   "refused": [],
+   "accuracy": 1.0
+  },
+  {
+   "op": "cypy.pattern.positional",
+   "n": 14,
+   "passed": 13,
+   "failed": [
+    {
+     "idx": 11,
+     "side": "error",
+     "op": "typecheck",
+     "ok": false,
+     "reason": "缺片段 \"Positional pattern 'C'\"；观测=''",
+     "src_head": "class C:"
+    }
+   ],
+   "refused": [],
+   "accuracy": 0.9285714285714286
+  }
+ ],
+ "failed": [
+  "cypy.pattern.positional#11: 缺片段 \"Positional pattern 'C'\"；观测=''"
+ ],
+ "refused": []
+}

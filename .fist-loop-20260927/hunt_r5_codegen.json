@@ -1,0 +1,357 @@
+{
+ "started": "2026-09-28T06:35:43+00:00",
+ "cases": 7,
+ "rows": [
+  {
+   "id": "G01",
+   "key": "CODEGEN_binop_parens_dropped_reassociate",
+   "phenomenon": "`a - (b - c)` 落成 `a - b - c`（同族还有 `%`/`>>`/`|` 与 `&`）⇒ 静默改算术",
+   "doc": {
+    "file": "SYNTAX/12-operators.md",
+    "line": 34,
+    "quote": "| `<` | 小于 | 判断左边小于右边 |"
+   },
+   "want_pos": "parens_dropped",
+   "want_ctl": "kept",
+   "pos_first": {
+    "rc": 0,
+    "line": "return a - b - c",
+    "observed": "parens_dropped"
+   },
+   "pos_second": {
+    "rc": 0,
+    "line": "return a - b - c",
+    "observed": "parens_dropped"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "line": "return a * (b + c)",
+    "observed": "kept"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "line": "return a * (b + c)",
+    "observed": "kept"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "G02",
+   "key": "LEXER_declared_augassign_unreachable",
+   "phenomenon": "文档写了 `**=`/`&=`/`|=`，词法器从不发这种 token ⇒ 硬解析失败（同族 8 个可用）",
+   "doc": {
+    "file": "SYNTAX/12-operators.md",
+    "line": 85,
+    "quote": "| `**=` | 幂赋值 | `x **= 3` | `x = x ** 3` |"
+   },
+   "want_pos": "unreachable",
+   "want_ctl": "lowered",
+   "pos_first": {
+    "rc": 1,
+    "diag": [
+     "\u001b[31m-\u001b[0m 编译错误: Unexpected token ASSIGN at 2:9"
+    ],
+    "observed": "unreachable"
+   },
+   "pos_second": {
+    "rc": 1,
+    "diag": [
+     "\u001b[31m-\u001b[0m 编译错误: Unexpected token ASSIGN at 2:9"
+    ],
+    "observed": "unreachable"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "line": "a = a + y",
+    "observed": "lowered"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "line": "a = a + y",
+    "observed": "lowered"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "G03",
+   "key": "CODEGEN_nested_defer_emitted_eagerly",
+   "phenomenon": "`if`/`for` 里的 defer 就地发射，清理在函数退出**之前**跑（顶层 defer 才搬走）",
+   "doc": {
+    "file": "SYNTAX/14-syntax-sugar.md",
+    "line": 176,
+    "quote": "file.close()  # 函数退出时自动执行"
+   },
+   "want_pos": "eager",
+   "want_ctl": "moved_to_exit",
+   "pos_first": {
+    "rc": 0,
+    "order": [
+     "print('CLEAN')",
+     "print('BODY')"
+    ],
+    "observed": "eager"
+   },
+   "pos_second": {
+    "rc": 0,
+    "order": [
+     "print('CLEAN')",
+     "print('BODY')"
+    ],
+    "observed": "eager"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "order": [
+     "print('BODY')",
+     "print('CLEAN')"
+    ],
+    "observed": "moved_to_exit"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "order": [
+     "print('BODY')",
+     "print('CLEAN')"
+    ],
+    "observed": "moved_to_exit"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "G04",
+   "key": "COMPTIME_collection_literal_leaks_ast_repr",
+   "phenomenon": "comptime 的列表/元组字面量把 `Constant(line=…)` 的 repr 写进产物 ⇒ 产物不可编译",
+   "doc": {
+    "file": "SYNTAX/19-comptime.md",
+    "line": 20,
+    "quote": "2. **代码生成**：在 `LetStmt` 和 `Assign` 中，`comptime` 表达式被当作普通表达式处理，不会在编译期实际执行"
+   },
+   "want_pos": "ast_leak",
+   "want_ctl": "clean",
+   "pos_first": {
+    "rc": 0,
+    "leaks": [
+     "Constant(line="
+    ],
+    "snippet": "[Constant(line=2, col=16), Constant(line=2, col=19)]",
+    "observed": "ast_leak"
+   },
+   "pos_second": {
+    "rc": 0,
+    "leaks": [
+     "Constant(line="
+    ],
+    "snippet": "[Constant(line=2, col=16), Constant(line=2, col=19)]",
+    "observed": "ast_leak"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "leaks": [],
+    "observed": "clean"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "leaks": [],
+    "observed": "clean"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "G05",
+   "key": "COMPTIME_string_result_emitted_unescaped",
+   "phenomenon": "comptime 的字符串结果被裸插值写进产物 ⇒ 变成活表达式（可劫持 docstring）",
+   "doc": {
+    "file": "SYNTAX/19-comptime.md",
+    "line": 21,
+    "quote": "3. **独立语句**：单独的 `comptime:` 语句被转换为注释（`# comptime: ...`）"
+   },
+   "want_pos": "unescaped",
+   "want_ctl": "commented",
+   "pos_first": {
+    "rc": 0,
+    "snippet": [
+     "\"a\"b\""
+    ],
+    "observed": "unescaped"
+   },
+   "pos_second": {
+    "rc": 0,
+    "snippet": [
+     "\"a\"b\""
+    ],
+    "observed": "unescaped"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "snippet": [],
+    "observed": "commented"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "snippet": [],
+    "observed": "commented"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "G07",
+   "key": "COMPTIME_block_form_crashes_with_internal_exception",
+   "phenomenon": "文档写明 `comptime:` 块形式「未实现」，但失败方式是把内部异常`'list' object has no attribute '__dict__'` 当诊断抛出（行内形式却能出码）⇒ 缺陷在诊断路径，不是功能未实现",
+   "doc": {
+    "file": "SYNTAX/19-comptime.md",
+    "line": 42,
+    "quote": "| `comptime:` 块形式 | 未实现 |"
+   },
+   "want_pos": "internal_exception",
+   "want_ctl": "no_internal_exception",
+   "pos_first": {
+    "rc": 1,
+    "diag": [
+     "\u001b[31m-\u001b[0m 转译错误: 'list' object has no attribute '__dict__'"
+    ],
+    "observed": "internal_exception"
+   },
+   "pos_second": {
+    "rc": 1,
+    "diag": [
+     "\u001b[31m-\u001b[0m 转译错误: 'list' object has no attribute '__dict__'"
+    ],
+    "observed": "internal_exception"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "diag": [],
+    "observed": "no_internal_exception"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "diag": [],
+    "observed": "no_internal_exception"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "G06",
+   "key": "TYPES_documented_pointer_element_types_rejected",
+   "phenomenon": "文档工作例里的返回位 `*char` 被判 `Undefined name 'char'`（`let` 位却能用）",
+   "doc": {
+    "file": "SYNTAX/04-pointer-types.md",
+    "line": 59,
+    "quote": "def allocate_buffer(size: int) -> *char:"
+   },
+   "want_pos": "rejected",
+   "want_ctl": "lowered",
+   "pos_first": {
+    "rc": 1,
+    "diag": [],
+    "observed": "rejected"
+   },
+   "pos_second": {
+    "rc": 1,
+    "diag": [],
+    "observed": "rejected"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "diag": [],
+    "observed": "lowered"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "diag": [],
+    "observed": "lowered"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  }
+ ],
+ "confirmed": [
+  "G01",
+  "G02",
+  "G03",
+  "G04",
+  "G05",
+  "G07",
+  "G06"
+ ],
+ "unsure": [],
+ "keys": [
+  "CODEGEN_binop_parens_dropped_reassociate",
+  "LEXER_declared_augassign_unreachable",
+  "CODEGEN_nested_defer_emitted_eagerly",
+  "COMPTIME_collection_literal_leaks_ast_repr",
+  "COMPTIME_string_result_emitted_unescaped",
+  "COMPTIME_block_form_crashes_with_internal_exception",
+  "TYPES_documented_pointer_element_types_rejected"
+ ],
+ "canary": {
+  "wrong_expectation_cannot_confirm": true,
+  "control_direction_is_declared_per_case": true
+ },
+ "tmp_left": [],
+ "self_checks": [
+  {
+   "label": "六条候选各跑两遍（24 档观察全部拿到）",
+   "got": 28,
+   "want": 28,
+   "why": "四档 × 每条候选",
+   "ok": true
+  },
+  {
+   "label": "确诊 + 未确认 = 总数",
+   "got": 7,
+   "want": 7,
+   "why": "两栏回加",
+   "ok": true
+  },
+  {
+   "label": "确诊集合非空（否则是本判据看不见，不是产品干净）",
+   "got": true,
+   "want": true,
+   "why": "确诊 ['G01', 'G02', 'G03', 'G04', 'G05', 'G07', 'G06']／未确认 []",
+   "ok": true
+  },
+  {
+   "label": "声明原文全部定位成功",
+   "got": [],
+   "want": [],
+   "why": "file:line 现读",
+   "ok": true
+  },
+  {
+   "label": "产物观察看的是文本不是 rc==0（G04/G05 的 rc 都是 0，坏在产物里）",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "两格的 rc 都是 0，坏在产物里",
+   "ok": true
+  },
+  {
+   "label": "canary：pos 与 ctl 的期望方向每条都相反（同向就是没在做对照）",
+   "got": true,
+   "want": true,
+   "why": "{\"wrong_expectation_cannot_confirm\": true, \"control_direction_is_declared_per_case\": true}",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T06:35:58+00:00"
+}

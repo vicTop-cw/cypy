@@ -1,0 +1,173 @@
+{
+ "tree": ".fist-loop-20260929/lockproof_r7",
+ "identity_ok": true,
+ "identity_paths": [
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\lockproof_r7\\cypyc\\__init__.py",
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\lockproof_r7\\cypyc\\analyzer\\type_checker.py",
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\lockproof_r7\\cypyc\\codegen\\cython_generator.py"
+ ],
+ "identity_rc": 0,
+ "cells": [
+  {
+   "cell": "M1 生成器末路回到 str(node)",
+   "file": "cypyc/codegen/cython_generator.py",
+   "anchor_count": 1,
+   "tests": [
+    "tests/test_annotation_shape.py"
+   ],
+   "run": {
+    "rc": 1,
+    "failed": 2,
+    "passed": 12,
+    "errors": 0,
+    "skipped": 0,
+    "collected": 14,
+    "count_arith_ok": true,
+    "stray_error_lines": [],
+    "collect_or_internal_errors": 0,
+    "internal_error": false,
+    "summary_line": "======================== 2 failed, 12 passed in 0.55s ========================="
+   },
+   "restored_bytes_identical": true,
+   "verdict": "承重：摘掉即红",
+   "carries": true
+  },
+  {
+   "cell": "M2 摘掉注解闭集校验挂钩",
+   "file": "cypyc/analyzer/type_checker.py",
+   "anchor_count": 1,
+   "tests": [
+    "tests/test_annotation_shape.py"
+   ],
+   "run": {
+    "rc": 1,
+    "failed": 4,
+    "passed": 10,
+    "errors": 0,
+    "skipped": 0,
+    "collected": 14,
+    "count_arith_ok": true,
+    "stray_error_lines": [],
+    "collect_or_internal_errors": 0,
+    "internal_error": false,
+    "summary_line": "======================== 4 failed, 10 passed in 0.43s ========================="
+   },
+   "restored_bytes_identical": true,
+   "verdict": "承重：摘掉即红",
+   "carries": true
+  },
+  {
+   "cell": "M3 摘掉位置模式元数诊断",
+   "file": "cypyc/analyzer/type_checker.py",
+   "anchor_count": 1,
+   "tests": [
+    "tests/test_extractor_pattern.py"
+   ],
+   "run": {
+    "rc": 1,
+    "failed": 1,
+    "passed": 19,
+    "errors": 0,
+    "skipped": 0,
+    "collected": 20,
+    "count_arith_ok": true,
+    "stray_error_lines": [],
+    "collect_or_internal_errors": 0,
+    "internal_error": false,
+    "summary_line": "======================== 1 failed, 19 passed in 0.36s ========================="
+   },
+   "restored_bytes_identical": true,
+   "verdict": "承重：摘掉即红",
+   "carries": true
+  },
+  {
+   "cell": "M4 让元数比较条件永假",
+   "file": "cypyc/analyzer/type_checker.py",
+   "anchor_count": 1,
+   "tests": [
+    "tests/test_extractor_pattern.py"
+   ],
+   "run": {
+    "rc": 1,
+    "failed": 1,
+    "passed": 19,
+    "errors": 0,
+    "skipped": 0,
+    "collected": 20,
+    "count_arith_ok": true,
+    "stray_error_lines": [],
+    "collect_or_internal_errors": 0,
+    "internal_error": false,
+    "summary_line": "======================== 1 failed, 19 passed in 0.28s ========================="
+   },
+   "restored_bytes_identical": true,
+   "verdict": "承重：摘掉即红",
+   "carries": true
+  },
+  {
+   "cell": "M5 class 位置槽位退回 fields-only",
+   "file": "cypyc/analyzer/type_checker.py",
+   "anchor_count": 1,
+   "tests": [
+    "tests/regression/test_corpus_pairs.py"
+   ],
+   "run": {
+    "rc": 1,
+    "failed": 3,
+    "passed": 41,
+    "errors": 0,
+    "skipped": 0,
+    "collected": 44,
+    "count_arith_ok": true,
+    "stray_error_lines": [
+     "E   AssertionError: cypy.pattern.positional.json#11 error 判不过：缺片段 \"Positional pattern 'C'\"；观测=''",
+     "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\lockproof_r7\\tests\\regression\\test_corpus_pairs.py:62: AssertionError: cypy.p",
+     "E   AssertionError: cypy.pattern.positional.json#14 error 判不过：缺片段 \"Positional pattern 'Point' has 3 slot(s)\"；观测=''"
+    ],
+    "collect_or_internal_errors": 0,
+    "internal_error": false,
+    "summary_line": "======================== 3 failed, 41 passed in 0.40s ========================="
+   },
+   "restored_bytes_identical": true,
+   "verdict": "承重：摘掉即红",
+   "carries": true
+  },
+  {
+   "cell": "C 对照：只动一行注释",
+   "file": "cypyc/codegen/cython_generator.py",
+   "anchor_count": 1,
+   "tests": [
+    "tests/test_annotation_shape.py"
+   ],
+   "run": {
+    "rc": 0,
+    "failed": 0,
+    "passed": 14,
+    "errors": 0,
+    "skipped": 0,
+    "collected": 14,
+    "count_arith_ok": true,
+    "stray_error_lines": [],
+    "collect_or_internal_errors": 0,
+    "internal_error": false,
+    "summary_line": "============================= 14 passed in 0.42s =============================="
+   },
+   "restored_bytes_identical": true,
+   "verdict": "对照绿（尺没坏）",
+   "carries": true
+  }
+ ],
+ "control_green": true,
+ "load_bearing": [
+  "M1 生成器末路回到 str(node)",
+  "M2 摘掉注解闭集校验挂钩",
+  "M3 摘掉位置模式元数诊断",
+  "M4 让元数比较条件永假",
+  "M5 class 位置槽位退回 fields-only"
+ ],
+ "not_load_bearing": [],
+ "tree_restores_byte_identical": {
+  "cypyc/codegen/cython_generator.py": true,
+  "cypyc/analyzer/type_checker.py": true
+ }
+}

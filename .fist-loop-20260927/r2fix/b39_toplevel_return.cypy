@@ -1,0 +1,4 @@
+def ok():
+    return 1
+
+return 0

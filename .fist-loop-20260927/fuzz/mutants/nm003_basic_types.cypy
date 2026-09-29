@@ -1,0 +1,24 @@
+# 基础类型示例
+# 演示 Cypy 的基本类型系统
+
+def main() -> int:
+    # 基本数值类型
+    let a: int = 42
+    let b: float = 3.14
+    let c: double = 2.71828
+    let d: bool = True
+
+    print(f"int: {a}")
+    print(f"float: {b}")
+    print(f"double: {c}")
+    print(f"bool: {d}")
+
+    # 数值类型转换
+    let e: float = a  # 隐式转换 (int -> float)
+    let f: bool = True
+
+    print(f"auto(int to float): {e}")
+    print(f"bool: {f}")
+
+    # 字符串类型
+    let name: str = "�����

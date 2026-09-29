@@ -1,0 +1,372 @@
+{
+ "pid": 39308,
+ "cases": {
+  "L0": {
+   "mutations": [],
+   "rc": 0,
+   "failed_ids": [],
+   "n_failed": 0,
+   "crash": false,
+   "collect_errors": 0,
+   "summary_line": "============================= 125 passed in 0.99s =============================",
+   "n_passed": 125,
+   "identity": {
+    "parser_class_records_params": true,
+    "checker_annotation_gate": true,
+    "checker_receiver_substitution": true,
+    "checker_formal_guard": true,
+    "checker_struct_erasure": true
+   },
+   "label": "L0 live（修复后）"
+  },
+  "L1": {
+   "mutations": [
+    {
+     "file": "cypyc/parser/parser.py",
+     "needle": "        generic_params, generic_constraints = se",
+     "lines": 2
+    },
+    {
+     "file": "cypyc/parser/parser.py",
+     "needle": "            name_token.value, bases, body, name_",
+     "lines": 3
+    }
+   ],
+   "rc": 1,
+   "failed_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#0]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#11]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#12]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#13]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#14]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#15]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#16]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#18]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#19]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#1]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#20]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#21]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#24]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#25]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#26]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#27]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#28]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#2]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#3]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#5]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#7]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#8]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#9]",
+    "tests/test_generic_class_r11.py::test_arity_wording_is_shared_between_annotation_and_callsite",
+    "tests/test_generic_class_r11.py::test_bare_generic_class_use_is_erased_not_diagnosed",
+    "tests/test_generic_class_r11.py::test_class_members_are_read_from_body_not_fields",
+    "tests/test_generic_class_r11.py::test_codegen_erases_type_parameters_in_class_header",
+    "tests/test_generic_class_r11.py::test_empty_param_list_wording_is_shared_with_struct",
+    "tests/test_generic_class_r11.py::test_formal_parameter_name_never_leaks_as_a_type",
+    "tests/test_generic_class_r11.py::test_generic_class_method_name_is_not_registered_as_formal_type",
+    "tests/test_generic_class_r11.py::test_generic_class_parses_three_prefix_forms",
+    "tests/test_generic_class_r11.py::test_generic_class_records_params_and_constraints",
+    "tests/test_generic_class_r11.py::test_manual_generic_class_example_is_clean",
+    "tests/test_generic_class_r11.py::test_receiver_substitution_types_fields_and_methods"
+   ],
+   "n_failed": 34,
+   "crash": false,
+   "collect_errors": 0,
+   "summary_line": "======================== 34 failed, 91 passed in 0.93s ========================",
+   "n_passed": 91,
+   "identity": {
+    "parser_class_records_params": false,
+    "checker_annotation_gate": true,
+    "checker_receiver_substitution": true,
+    "checker_formal_guard": true,
+    "checker_struct_erasure": true
+   },
+   "label": "L1 只退解析器"
+  },
+  "L2": {
+   "mutations": [
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "            # SYNTAX/11「泛型类」规则 3：注解位的类型实参个数由声明侧参",
+     "lines": 11
+    }
+   ],
+   "rc": 1,
+   "failed_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#10]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#9]",
+    "tests/test_generic_class_r11.py::test_arity_wording_is_shared_between_annotation_and_callsite",
+    "tests/test_generic_class_r11.py::test_non_generic_class_rejects_type_arguments"
+   ],
+   "n_failed": 4,
+   "crash": false,
+   "collect_errors": 0,
+   "summary_line": "======================== 4 failed, 121 passed in 0.94s ========================",
+   "n_passed": 121,
+   "identity": {
+    "parser_class_records_params": true,
+    "checker_annotation_gate": false,
+    "checker_receiver_substitution": true,
+    "checker_formal_guard": true,
+    "checker_struct_erasure": true
+   },
+   "label": "L2 只退注解位元数门"
+  },
+  "L3": {
+   "mutations": [
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "                class_def = self.class_defs[vnam",
+     "lines": 22
+    }
+   ],
+   "rc": 1,
+   "failed_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#0]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#11]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#13]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#14]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#15]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#16]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#17]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#18]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#20]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#21]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#24]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#25]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#28]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#7]",
+    "tests/test_generic_class_r11.py::test_bare_generic_class_use_is_erased_not_diagnosed",
+    "tests/test_generic_class_r11.py::test_formal_parameter_name_never_leaks_as_a_type",
+    "tests/test_generic_class_r11.py::test_manual_generic_class_example_is_clean",
+    "tests/test_generic_class_r11.py::test_receiver_substitution_types_fields_and_methods"
+   ],
+   "n_failed": 18,
+   "crash": false,
+   "collect_errors": 0,
+   "summary_line": "======================= 18 failed, 107 passed in 0.88s ========================",
+   "n_passed": 107,
+   "identity": {
+    "parser_class_records_params": true,
+    "checker_annotation_gate": true,
+    "checker_receiver_substitution": false,
+    "checker_formal_guard": true,
+    "checker_struct_erasure": true
+   },
+   "label": "L3 只退接收者代入"
+  },
+  "L4": {
+   "mutations": [
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "        if return_type is not None and return_ty",
+     "lines": 4
+    }
+   ],
+   "rc": 1,
+   "failed_ids": [
+    "tests/test_generic_class_r11.py::test_generic_class_method_name_is_not_registered_as_formal_type"
+   ],
+   "n_failed": 1,
+   "crash": false,
+   "collect_errors": 0,
+   "summary_line": "======================== 1 failed, 124 passed in 0.90s ========================",
+   "n_passed": 124,
+   "identity": {
+    "parser_class_records_params": true,
+    "checker_annotation_gate": true,
+    "checker_receiver_substitution": true,
+    "checker_formal_guard": false,
+    "checker_struct_erasure": true
+   },
+   "label": "L4 只退形式参数守卫"
+  },
+  "L5": {
+   "mutations": [
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "                for param in getattr(struct_def,",
+     "lines": 2
+    }
+   ],
+   "rc": 1,
+   "failed_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#23]",
+    "tests/test_generic_class_r11.py::test_struct_field_substitution_still_judges"
+   ],
+   "n_failed": 2,
+   "crash": false,
+   "collect_errors": 0,
+   "summary_line": "======================== 2 failed, 123 passed in 0.92s ========================",
+   "n_passed": 123,
+   "identity": {
+    "parser_class_records_params": true,
+    "checker_annotation_gate": true,
+    "checker_receiver_substitution": true,
+    "checker_formal_guard": true,
+    "checker_struct_erasure": false
+   },
+   "label": "L5 只退 struct 裸名擦除"
+  },
+  "L6": {
+   "mutations": [
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "        遍历形状与从前一致（照旧走 `_visit_children`），只是把所属类声",
+     "lines": 1
+    }
+   ],
+   "rc": 0,
+   "failed_ids": [],
+   "n_failed": 0,
+   "crash": false,
+   "collect_errors": 0,
+   "summary_line": "============================= 125 passed in 0.89s =============================",
+   "n_passed": 125,
+   "identity": {
+    "parser_class_records_params": true,
+    "checker_annotation_gate": true,
+    "checker_receiver_substitution": true,
+    "checker_formal_guard": true,
+    "checker_struct_erasure": true
+   },
+   "label": "L6 只改注释（对照格）"
+  }
+ },
+ "anchors": {
+  "A1": "        generic_params, generic_constraints = self._parse_type_param_list(name_token)\n        bases = []",
+  "A2": "            name_token.value, bases, body, name_token.line, name_token.col, is_cdef=is_cdef,\n            generic_params=generic_params, generic_constraints=generic_constraints,\n        )",
+  "B1": "            # SYNTAX/11「泛型类」规则 3：注解位的类型实参个数由声明侧参数表决定。\n            # 同一节点可能被多处访问，文案自带行列 ⇒ 按整条消息去重，不叠第二条同事实的账。\n            decl = self.class_defs.get(node.name) or self.struct_defs.get(node.name)\n            if decl is not None:\n                diag = self._generic_arity_diagnostic(\n                    node.name, list(getattr(decl, \"generic_params\", []) or []),\n                    len(generic_params), getattr(node, \"line\", 0), getattr(node, \"col\", 0))\n                if diag and diag not in self.errors:\n                    self.errors.append(diag)\n\n",
+  "B2": "                class_def = self.class_defs[vname]\n                declared = list(getattr(class_def, 'generic_params', []) or [])\n                old_type_map = self.type_map.copy()\n                for param in declared:\n                    # 裸名（`let b: Box = Box(1)`）按擦除处理：形式参数名不是类型，\n                    # 不能当成成员/方法的返回类型外泄成诊断（规则 3 的后半句）。\n                    self.type_map[param] = Type(\"object\")\n                for i, param in enumerate(declared):\n                    if i < len(value_type.generic_params or []):\n                        self.type_map[param] = value_type.generic_params[i]\n                try:\n                    for body_stmt in class_def.body:\n                        if isinstance(body_stmt, LetStmt) and body_stmt.name == node.attr:\n                            result_type = self._visit(body_stmt.type_annotation)\n                            if result_type is not None:\n                                return result_type\n                        elif isinstance(body_stmt, FuncDef) and body_stmt.name == node.attr:\n                            result_type = self._get_type_from_node(body_stmt.return_type)\n                            if result_type is not None:\n                                return result_type\n                finally:\n                    self.type_map = old_type_map",
+  "B3": "        if return_type is not None and return_type.name in self._generic_formal_params:\n            # 名字表按裸名建，装不下接收者的代入 ⇒ 形式参数一律登记成未知（object），\n            # 由 `_visit_Attribute` 那条按类型实参代入的真形去判（SYNTAX/11「泛型类」规则 4）。\n            return_type = Type(\"object\")",
+  "B4": "                for param in getattr(struct_def, 'generic_params', []):\n                    self.type_map[param] = Type(\"object\")"
+ },
+ "load_bearing": {
+  "L1": {
+   "n_failed": 34,
+   "required_min": 3,
+   "identity_flipped": true,
+   "first_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#0]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#11]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#12]"
+   ],
+   "red_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#0]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#11]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#12]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#13]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#14]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#15]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#16]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#18]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#19]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#1]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#20]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#21]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#24]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#25]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#26]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#27]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#28]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#2]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#3]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#5]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#7]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#8]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#9]",
+    "tests/test_generic_class_r11.py::test_arity_wording_is_shared_between_annotation_and_callsite",
+    "tests/test_generic_class_r11.py::test_bare_generic_class_use_is_erased_not_diagnosed",
+    "tests/test_generic_class_r11.py::test_class_members_are_read_from_body_not_fields",
+    "tests/test_generic_class_r11.py::test_codegen_erases_type_parameters_in_class_header",
+    "tests/test_generic_class_r11.py::test_empty_param_list_wording_is_shared_with_struct",
+    "tests/test_generic_class_r11.py::test_formal_parameter_name_never_leaks_as_a_type",
+    "tests/test_generic_class_r11.py::test_generic_class_method_name_is_not_registered_as_formal_type",
+    "tests/test_generic_class_r11.py::test_generic_class_parses_three_prefix_forms",
+    "tests/test_generic_class_r11.py::test_generic_class_records_params_and_constraints",
+    "tests/test_generic_class_r11.py::test_manual_generic_class_example_is_clean",
+    "tests/test_generic_class_r11.py::test_receiver_substitution_types_fields_and_methods"
+   ]
+  },
+  "L2": {
+   "n_failed": 4,
+   "required_min": 1,
+   "identity_flipped": true,
+   "first_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#10]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#9]",
+    "tests/test_generic_class_r11.py::test_arity_wording_is_shared_between_annotation_and_callsite"
+   ],
+   "red_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#10]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#9]",
+    "tests/test_generic_class_r11.py::test_arity_wording_is_shared_between_annotation_and_callsite",
+    "tests/test_generic_class_r11.py::test_non_generic_class_rejects_type_arguments"
+   ]
+  },
+  "L3": {
+   "n_failed": 18,
+   "required_min": 2,
+   "identity_flipped": true,
+   "first_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#0]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#11]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#13]"
+   ],
+   "red_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#0]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#11]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#13]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#14]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#15]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#16]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#17]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#18]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#20]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#21]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#24]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#25]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#28]",
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#7]",
+    "tests/test_generic_class_r11.py::test_bare_generic_class_use_is_erased_not_diagnosed",
+    "tests/test_generic_class_r11.py::test_formal_parameter_name_never_leaks_as_a_type",
+    "tests/test_generic_class_r11.py::test_manual_generic_class_example_is_clean",
+    "tests/test_generic_class_r11.py::test_receiver_substitution_types_fields_and_methods"
+   ]
+  },
+  "L4": {
+   "n_failed": 1,
+   "required_min": 1,
+   "identity_flipped": true,
+   "first_ids": [
+    "tests/test_generic_class_r11.py::test_generic_class_method_name_is_not_registered_as_formal_type"
+   ],
+   "red_ids": [
+    "tests/test_generic_class_r11.py::test_generic_class_method_name_is_not_registered_as_formal_type"
+   ]
+  },
+  "L5": {
+   "n_failed": 2,
+   "required_min": 1,
+   "identity_flipped": true,
+   "first_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#23]",
+    "tests/test_generic_class_r11.py::test_struct_field_substitution_still_judges"
+   ],
+   "red_ids": [
+    "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#23]",
+    "tests/test_generic_class_r11.py::test_struct_field_substitution_still_judges"
+   ]
+  }
+ },
+ "gates": {
+  "cells_run": 7,
+  "cells_expected": 7,
+  "l0_zero_red": true,
+  "l0_identity_all_true": true,
+  "no_ruler_crash": true,
+  "comment_only_control_zero_red": true,
+  "load_bearing_every_cell": true,
+  "identity_flipped_every_cell": true
+ }
+}

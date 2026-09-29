@@ -1,0 +1,5 @@
+enum Colr:
+    RED
+    GREEN
+
+print(Color.RED)

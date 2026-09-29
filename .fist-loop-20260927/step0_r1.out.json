@@ -1,0 +1,24 @@
+{
+ "verdict": "OK",
+ "tools_missing": [],
+ "resolved": {
+  "bug_list_path": "./memory/bugs.md",
+  "bug_list_resolved_path": ".",
+  "bug_list_count": 32,
+  "ledger_titles_on_disk": 32
+ },
+ "probe_new_ids": [
+  "BUG-33"
+ ],
+ "probe_task_id": null,
+ "report_bug_keys": [
+  "bug_id",
+  "path",
+  "project_dir",
+  "resolved_path",
+  "status"
+ ],
+ "retract_ids_ok": true,
+ "retract_body_ok": true,
+ "ledger_titles_final": 32
+}

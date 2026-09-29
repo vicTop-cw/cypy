@@ -1,0 +1,45 @@
+E:\IDEProjects\AI\Cypy\.fist-loop-20260927\fix_r5_locks.py:113: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.
+  tf.extractall(SNAP)
+{
+ "refuse": [],
+ "locked": [
+  73,
+  74,
+  75,
+  76,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  91
+ ],
+ "locks_missing": [
+  68,
+  69,
+  71,
+  72
+ ],
+ "green_on_head": [],
+ "red_log_cards": 2,
+ "red_before": 18,
+ "green_after": 18,
+ "assertion_level": 13,
+ "lock_nodes_total": 118,
+ "canary": {
+  "file": "tests/test_codegen_verification.py",
+  "passed_in_snapshot": 19
+ },
+ "red_checks": [
+  "红必须是断言级（collection error/崩溃不算锁）"
+ ],
+ "self_checks": "10/11"
+}

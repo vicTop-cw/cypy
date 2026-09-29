@@ -1,0 +1,89 @@
+{
+  "refuse": [],
+  "result": {
+    "full_tree": {
+      "tree": "cypy_lockproof_full_fzf5rou5",
+      "rc": 0,
+      "passed": [
+        "test_bug30_int_initializer_to_float_gets_explicit_double_cast",
+        "test_bug30_widening_does_not_touch_non_integrals",
+        "test_bug31_bridge_mapping_declares_ffi_key_space_and_renamed_alias",
+        "test_bug31_width_of_bridge_float_is_unchanged",
+        "test_bug33_closed_string_still_lexes",
+        "test_bug33_unterminated_string_raises_with_position",
+        "test_bug38_trailing_space_parses_like_the_newline_version",
+        "test_bug38_trailing_spaces_at_eof_do_not_crash"
+      ],
+      "failed": [],
+      "tail": [
+        "PASSED tests/test_loop_20260927_fix.py::test_bug38_trailing_spaces_at_eof_do_not_crash",
+        "PASSED tests/test_loop_20260927_fix.py::test_bug38_trailing_space_parses_like_the_newline_version",
+        "8 passed in 0.70s"
+      ]
+    },
+    "BUG-30": {
+      "tree": "cypy_lockproof_BUG-30_vh8pbnh3",
+      "rc": 1,
+      "failed": [
+        "test_bug30_int_initializer_to_float_gets_explicit_double_cast"
+      ],
+      "passed": [
+        "test_bug30_widening_does_not_touch_non_integrals",
+        "test_bug31_bridge_mapping_declares_ffi_key_space_and_renamed_alias",
+        "test_bug31_width_of_bridge_float_is_unchanged",
+        "test_bug33_closed_string_still_lexes",
+        "test_bug33_unterminated_string_raises_with_position",
+        "test_bug38_trailing_space_parses_like_the_newline_version",
+        "test_bug38_trailing_spaces_at_eof_do_not_crash"
+      ]
+    },
+    "BUG-31": {
+      "tree": "cypy_lockproof_BUG-31_zgutzk9o",
+      "rc": 1,
+      "failed": [
+        "test_bug31_bridge_mapping_declares_ffi_key_space_and_renamed_alias",
+        "test_bug31_width_of_bridge_float_is_unchanged"
+      ],
+      "passed": [
+        "test_bug30_int_initializer_to_float_gets_explicit_double_cast",
+        "test_bug30_widening_does_not_touch_non_integrals",
+        "test_bug33_closed_string_still_lexes",
+        "test_bug33_unterminated_string_raises_with_position",
+        "test_bug38_trailing_space_parses_like_the_newline_version",
+        "test_bug38_trailing_spaces_at_eof_do_not_crash"
+      ]
+    },
+    "BUG-33": {
+      "tree": "cypy_lockproof_BUG-33_iwty2imr",
+      "rc": 1,
+      "failed": [
+        "test_bug33_unterminated_string_raises_with_position"
+      ],
+      "passed": [
+        "test_bug30_int_initializer_to_float_gets_explicit_double_cast",
+        "test_bug30_widening_does_not_touch_non_integrals",
+        "test_bug31_bridge_mapping_declares_ffi_key_space_and_renamed_alias",
+        "test_bug31_width_of_bridge_float_is_unchanged",
+        "test_bug33_closed_string_still_lexes",
+        "test_bug38_trailing_space_parses_like_the_newline_version",
+        "test_bug38_trailing_spaces_at_eof_do_not_crash"
+      ]
+    },
+    "BUG-38": {
+      "tree": "cypy_lockproof_BUG-38_52ppna4g",
+      "rc": 1,
+      "failed": [
+        "test_bug38_trailing_space_parses_like_the_newline_version",
+        "test_bug38_trailing_spaces_at_eof_do_not_crash"
+      ],
+      "passed": [
+        "test_bug30_int_initializer_to_float_gets_explicit_double_cast",
+        "test_bug30_widening_does_not_touch_non_integrals",
+        "test_bug31_bridge_mapping_declares_ffi_key_space_and_renamed_alias",
+        "test_bug31_width_of_bridge_float_is_unchanged",
+        "test_bug33_closed_string_still_lexes",
+        "test_bug33_unterminated_string_raises_with_position"
+      ]
+    }
+  }
+}

@@ -1,0 +1,151 @@
+[
+  {
+    "tag": "BUG-12:claim",
+    "result": {
+      "id": "T0r17",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已领取",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [error-masking] cypy_bridge/nogil.py:73 GilState.__exit__ 无条件 acquire，with 体内提前归还 GIL 后再抛用户异常时，退出路径用 NoGilError('GIL is not released') 顶掉用户异常——同一族的嵌套覆盖问题本模块已在 NoGilContext 修过，GilState 这条退出路径漏修",
+      "deliverable": "",
+      "created_at": "2026-09-26T08:27:00Z",
+      "updated_at": "2026-09-26T10:09:27Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-12:execute",
+    "result": {
+      "id": "T0r17",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "执行中",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [error-masking] cypy_bridge/nogil.py:73 GilState.__exit__ 无条件 acquire，with 体内提前归还 GIL 后再抛用户异常时，退出路径用 NoGilError('GIL is not released') 顶掉用户异常——同一族的嵌套覆盖问题本模块已在 NoGilContext 修过，GilState 这条退出路径漏修",
+      "deliverable": "改动文件：cypy_bridge/nogil.py（GilState.__exit__ :73-81 —— 由无条件 `self.acquire()` 改为 `if self._released: self.acquire()`，`return False` 保持不变；release/acquire 自身的报错语义、NoGilContext、nogil 单例与对外 __all__ 均未改）\n新增回归：tests/test_polish_20260926.py::test_bug12_gilstate_exit_does_not_replace_user_exception + ::test_bug12_gilstate_exit_still_restores_state（各 1 条，共 2 条；后者防「把退出恢复 GIL 的本职一并削掉」的过度修复）\n修复口径：只修异常传播路径，不碰 nogil 的语义契约——进入区域仍置 released=True，退出仍复位为 False，区域内已自行归还时不再重复归还；异常一律不吞（return False 原样保留）。\n取证探针：python .fist-polish-20260926/repro_sweep4_nogil.py → A 项 REPRODUCED（`escaped exception type = NoGilError`，即用户的 ValueError 被 __exit__ 顶掉）；同脚本 B 项（nogil_thread 一次性调用是否泄漏执行器线程）实测 not reproduced（12 次调用后 active_count 1→2、仅余 1 个临时 worker，会被回收），按红线判为误报、不入账。原始输出 .fist-polish-20260926/repro_sweep4_nogil.out\nRED：改前 `pytest tests/test_polish_20260926.py -q -k bug12` → ================= 1 failed, 1 passed, 22 deselected in 0.45s ==================（`.fist-polish-20260926/pytest_fourth_sweep_red.log`，失败原文 `AssertionError: GIL 退出路径把用户的 ValueError 换成了 NoGilError`）\n开关对照：摘掉本单修复（内存改写模块源码、不动磁盘文件）后同两条用例 → 1 failed, 1 passed，与 RED 的形状逐条一致（`.fist-polish-20260926/pytest_switchoff_bug12.log`），证明锁死点就在这两行守卫上\nGREEN：改后 `pytest tests/test_polish_20260926.py -q` → ============================= 24 passed in 0.47s ==============================（`.fist-polish-20260926/pytest_green_bug12.log`）\n基线不回落（本单收尾时的终态实测）：`pytest tests/ -q` → ================= 1 failed, 1815 passed in 1126.17s (0:18:46) =================（`.fist-polish-20260926/pytest_final_sweep6.log`）——红条逐条点名：FAILED tests/test_golden_anchor_probes.py::TestGoldenPairing::test_every_example_has_golden。其中 subtype golden（缺 `examples/subtype_units.out`）属上一轮在途产物与「examples/ 不动」红线的冲突，本单不顺手注册基准，本轮再无其它红条。自研体系 `python scripts/run_tests.py` → Total 47 / Passed 18 / Failed 0（`.fist-polish-20260926/test_suite_after_sweep4.log`）",
+      "created_at": "2026-09-26T08:27:00Z",
+      "updated_at": "2026-09-26T10:09:27Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-12:run_check",
+    "result": {
+      "ok": true,
+      "check_id": "check:T0r17:r1",
+      "task_id": "T0r17",
+      "round": 1,
+      "status": "passed",
+      "note": "外部判据已落库；若任务带 [gate:required]，verify 将校验本记录新鲜度（created_at >= 任务 updated_at）"
+    }
+  },
+  {
+    "tag": "BUG-12:submit",
+    "result": {
+      "id": "T0r17",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "待验收",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [error-masking] cypy_bridge/nogil.py:73 GilState.__exit__ 无条件 acquire，with 体内提前归还 GIL 后再抛用户异常时，退出路径用 NoGilError('GIL is not released') 顶掉用户异常——同一族的嵌套覆盖问题本模块已在 NoGilContext 修过，GilState 这条退出路径漏修",
+      "deliverable": "改动文件：cypy_bridge/nogil.py（GilState.__exit__ :73-81 —— 由无条件 `self.acquire()` 改为 `if self._released: self.acquire()`，`return False` 保持不变；release/acquire 自身的报错语义、NoGilContext、nogil 单例与对外 __all__ 均未改）\n新增回归：tests/test_polish_20260926.py::test_bug12_gilstate_exit_does_not_replace_user_exception + ::test_bug12_gilstate_exit_still_restores_state（各 1 条，共 2 条；后者防「把退出恢复 GIL 的本职一并削掉」的过度修复）\n修复口径：只修异常传播路径，不碰 nogil 的语义契约——进入区域仍置 released=True，退出仍复位为 False，区域内已自行归还时不再重复归还；异常一律不吞（return False 原样保留）。\n取证探针：python .fist-polish-20260926/repro_sweep4_nogil.py → A 项 REPRODUCED（`escaped exception type = NoGilError`，即用户的 ValueError 被 __exit__ 顶掉）；同脚本 B 项（nogil_thread 一次性调用是否泄漏执行器线程）实测 not reproduced（12 次调用后 active_count 1→2、仅余 1 个临时 worker，会被回收），按红线判为误报、不入账。原始输出 .fist-polish-20260926/repro_sweep4_nogil.out\nRED：改前 `pytest tests/test_polish_20260926.py -q -k bug12` → ================= 1 failed, 1 passed, 22 deselected in 0.45s ==================（`.fist-polish-20260926/pytest_fourth_sweep_red.log`，失败原文 `AssertionError: GIL 退出路径把用户的 ValueError 换成了 NoGilError`）\n开关对照：摘掉本单修复（内存改写模块源码、不动磁盘文件）后同两条用例 → 1 failed, 1 passed，与 RED 的形状逐条一致（`.fist-polish-20260926/pytest_switchoff_bug12.log`），证明锁死点就在这两行守卫上\nGREEN：改后 `pytest tests/test_polish_20260926.py -q` → ============================= 24 passed in 0.47s ==============================（`.fist-polish-20260926/pytest_green_bug12.log`）\n基线不回落（本单收尾时的终态实测）：`pytest tests/ -q` → ================= 1 failed, 1815 passed in 1126.17s (0:18:46) =================（`.fist-polish-20260926/pytest_final_sweep6.log`）——红条逐条点名：FAILED tests/test_golden_anchor_probes.py::TestGoldenPairing::test_every_example_has_golden。其中 subtype golden（缺 `examples/subtype_units.out`）属上一轮在途产物与「examples/ 不动」红线的冲突，本单不顺手注册基准，本轮再无其它红条。自研体系 `python scripts/run_tests.py` → Total 47 / Passed 18 / Failed 0（`.fist-polish-20260926/test_suite_after_sweep4.log`）",
+      "created_at": "2026-09-26T08:27:00Z",
+      "updated_at": "2026-09-26T10:09:29Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-12:verify",
+    "result": {
+      "id": "T0r17",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [error-masking] cypy_bridge/nogil.py:73 GilState.__exit__ 无条件 acquire，with 体内提前归还 GIL 后再抛用户异常时，退出路径用 NoGilError('GIL is not released') 顶掉用户异常——同一族的嵌套覆盖问题本模块已在 NoGilContext 修过，GilState 这条退出路径漏修",
+      "deliverable": "改动文件：cypy_bridge/nogil.py（GilState.__exit__ :73-81 —— 由无条件 `self.acquire()` 改为 `if self._released: self.acquire()`，`return False` 保持不变；release/acquire 自身的报错语义、NoGilContext、nogil 单例与对外 __all__ 均未改）\n新增回归：tests/test_polish_20260926.py::test_bug12_gilstate_exit_does_not_replace_user_exception + ::test_bug12_gilstate_exit_still_restores_state（各 1 条，共 2 条；后者防「把退出恢复 GIL 的本职一并削掉」的过度修复）\n修复口径：只修异常传播路径，不碰 nogil 的语义契约——进入区域仍置 released=True，退出仍复位为 False，区域内已自行归还时不再重复归还；异常一律不吞（return False 原样保留）。\n取证探针：python .fist-polish-20260926/repro_sweep4_nogil.py → A 项 REPRODUCED（`escaped exception type = NoGilError`，即用户的 ValueError 被 __exit__ 顶掉）；同脚本 B 项（nogil_thread 一次性调用是否泄漏执行器线程）实测 not reproduced（12 次调用后 active_count 1→2、仅余 1 个临时 worker，会被回收），按红线判为误报、不入账。原始输出 .fist-polish-20260926/repro_sweep4_nogil.out\nRED：改前 `pytest tests/test_polish_20260926.py -q -k bug12` → ================= 1 failed, 1 passed, 22 deselected in 0.45s ==================（`.fist-polish-20260926/pytest_fourth_sweep_red.log`，失败原文 `AssertionError: GIL 退出路径把用户的 ValueError 换成了 NoGilError`）\n开关对照：摘掉本单修复（内存改写模块源码、不动磁盘文件）后同两条用例 → 1 failed, 1 passed，与 RED 的形状逐条一致（`.fist-polish-20260926/pytest_switchoff_bug12.log`），证明锁死点就在这两行守卫上\nGREEN：改后 `pytest tests/test_polish_20260926.py -q` → ============================= 24 passed in 0.47s ==============================（`.fist-polish-20260926/pytest_green_bug12.log`）\n基线不回落（本单收尾时的终态实测）：`pytest tests/ -q` → ================= 1 failed, 1815 passed in 1126.17s (0:18:46) =================（`.fist-polish-20260926/pytest_final_sweep6.log`）——红条逐条点名：FAILED tests/test_golden_anchor_probes.py::TestGoldenPairing::test_every_example_has_golden。其中 subtype golden（缺 `examples/subtype_units.out`）属上一轮在途产物与「examples/ 不动」红线的冲突，本单不顺手注册基准，本轮再无其它红条。自研体系 `python scripts/run_tests.py` → Total 47 / Passed 18 / Failed 0（`.fist-polish-20260926/test_suite_after_sweep4.log`）",
+      "created_at": "2026-09-26T08:27:00Z",
+      "updated_at": "2026-09-26T10:09:29Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-12:final",
+    "result": {
+      "id": "T0r17",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [error-masking] cypy_bridge/nogil.py:73 GilState.__exit__ 无条件 acquire，with 体内提前归还 GIL 后再抛用户异常时，退出路径用 NoGilError('GIL is not released') 顶掉用户异常——同一族的嵌套覆盖问题本模块已在 NoGilContext 修过，GilState 这条退出路径漏修",
+      "deliverable": "改动文件：cypy_bridge/nogil.py（GilState.__exit__ :73-81 —— 由无条件 `self.acquire()` 改为 `if self._released: self.acquire()`，`return False` 保持不变；release/acquire 自身的报错语义、NoGilContext、nogil 单例与对外 __all__ 均未改）\n新增回归：tests/test_polish_20260926.py::test_bug12_gilstate_exit_does_not_replace_user_exception + ::test_bug12_gilstate_exit_still_restores_state（各 1 条，共 2 条；后者防「把退出恢复 GIL 的本职一并削掉」的过度修复）\n修复口径：只修异常传播路径，不碰 nogil 的语义契约——进入区域仍置 released=True，退出仍复位为 False，区域内已自行归还时不再重复归还；异常一律不吞（return False 原样保留）。\n取证探针：python .fist-polish-20260926/repro_sweep4_nogil.py → A 项 REPRODUCED（`escaped exception type = NoGilError`，即用户的 ValueError 被 __exit__ 顶掉）；同脚本 B 项（nogil_thread 一次性调用是否泄漏执行器线程）实测 not reproduced（12 次调用后 active_count 1→2、仅余 1 个临时 worker，会被回收），按红线判为误报、不入账。原始输出 .fist-polish-20260926/repro_sweep4_nogil.out\nRED：改前 `pytest tests/test_polish_20260926.py -q -k bug12` → ================= 1 failed, 1 passed, 22 deselected in 0.45s ==================（`.fist-polish-20260926/pytest_fourth_sweep_red.log`，失败原文 `AssertionError: GIL 退出路径把用户的 ValueError 换成了 NoGilError`）\n开关对照：摘掉本单修复（内存改写模块源码、不动磁盘文件）后同两条用例 → 1 failed, 1 passed，与 RED 的形状逐条一致（`.fist-polish-20260926/pytest_switchoff_bug12.log`），证明锁死点就在这两行守卫上\nGREEN：改后 `pytest tests/test_polish_20260926.py -q` → ============================= 24 passed in 0.47s ==============================（`.fist-polish-20260926/pytest_green_bug12.log`）\n基线不回落（本单收尾时的终态实测）：`pytest tests/ -q` → ================= 1 failed, 1815 passed in 1126.17s (0:18:46) =================（`.fist-polish-20260926/pytest_final_sweep6.log`）——红条逐条点名：FAILED tests/test_golden_anchor_probes.py::TestGoldenPairing::test_every_example_has_golden。其中 subtype golden（缺 `examples/subtype_units.out`）属上一轮在途产物与「examples/ 不动」红线的冲突，本单不顺手注册基准，本轮再无其它红条。自研体系 `python scripts/run_tests.py` → Total 47 / Passed 18 / Failed 0（`.fist-polish-20260926/test_suite_after_sweep4.log`）",
+      "created_at": "2026-09-26T08:27:00Z",
+      "updated_at": "2026-09-26T10:09:29Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "root:T0",
+    "result": {
+      "id": "T0",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已归档",
+      "assignee": "polisher",
+      "description": "[mode:polish][issue_up:on][omega:off][laya:off]\nCypy 打磨周 —— 编译器与桥接库缺陷清偿（隔离轮，ns=cypy-polish-20260926）。\n范围：cypyc/ + cypy_bridge/ + cypy_hook/ 三包产品代码；tests/ 与 test_suite/ 只补回归不改语义；examples/、dist/、output/ 不动。\n三路发现：①标记盘点（基线实测 56 文件 / 29997 行：TODO=0 FIXME=0 HACK=0 XXX=0 type:ignore=0、裸 except=2、吞异常 except…pass=20、宽 except=46、subprocess 调用=3）；②pytest 实跑暴露面研判；③按 codegen→analyzer→parser/incremental→bridge/hook 通读代码审查。\n一口入账：确诊缺陷一律 report_bug(publish_task=true) 写 memory/bugs.md，误报不入账，语义待定只挂起请示。\n验收门禁：①`python -m pytest tests/ -q` 全绿且用例数 ≥ 基线（收集口径 1745，只增不减）；②每单修复配 ≥1 条能锁死该缺陷的回归测试；③标记盘点较基线收敛且新增为零；④确诊缺陷 100% 可在 bugs.md 查到；⑤打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md。\n红线：不改语言语义（以 PROJECT-SPEC/ 与 SYNTAX/ 冻结口径为界）、零 git add/commit/push、不触碰现网 cron-cypy 的任务库与命名空间、发现通道不得臆造规则（issue_scan 仅 .mbt 规则域，对 Python 恒空）。",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:22:37Z",
+      "updated_at": "2026-09-26T05:48:29Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  }
+]

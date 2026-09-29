@@ -1,0 +1,335 @@
+{
+ "mode": "pre_render_snapshot",
+ "grouped_by": "params_json.task_id（树按 T0r85.% 前缀，六张修复单按整号）",
+ "stage_seed_needle": "%[loop:20260927-loop:R4-修复]%",
+ "stage_seed_rows": 2,
+ "stage_seed_by_tool": {
+  "publish": {
+   "ok": 1,
+   "refused": 0,
+   "examples": []
+  },
+  "laya_decide": {
+   "ok": 1,
+   "refused": 0,
+   "examples": []
+  }
+ },
+ "omega_marked": {
+  "leaves": 16,
+  "leaves_total": 16,
+  "root": 1
+ },
+ "scopes": {
+  "T0r85": {
+   "label": "R4-修复 任务树（根＋8 支＋16 叶）",
+   "rows": 18,
+   "distinct_tasks": 17,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "task_plan_deep": {
+     "ok": 1,
+     "refused": 0
+    },
+    "omega_status": {
+     "ok": 16,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r75": {
+   "label": "修复单 RC1（BUG-61）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r76": {
+   "label": "修复单 RC2（BUG-62）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r77": {
+   "label": "修复单 RC3（BUG-63）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r78": {
+   "label": "修复单 RC4（BUG-64）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r80": {
+   "label": "修复单 DOC_cli（BUG-66）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r81": {
+   "label": "修复单 DOC_example（BUG-67）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  }
+ },
+ "tree_rows": 18,
+ "bug_card_rows": 24,
+ "tree_refused": 0,
+ "bug_card_refused": 0,
+ "client_visible": {
+  "T0r85": 18,
+  "T0r75": 4,
+  "T0r76": 4,
+  "T0r77": 4,
+  "T0r78": 4,
+  "T0r80": 4,
+  "T0r81": 4
+ },
+ "total_call_log_rows": 3952,
+ "spec_named_carriers": {
+  "laya": {
+   "carriers": {
+    "laya_decide": {
+     "whole_db": 19,
+     "this_stage_seed": 1,
+     "in_tree": 0,
+     "in_bug_cards": 0
+    }
+   },
+   "this_stage_total": 1
+  },
+  "issue_up": {
+   "carriers": {
+    "publish": {
+     "whole_db": 21,
+     "this_stage_seed": 1,
+     "in_tree": 0,
+     "in_bug_cards": 0
+    },
+    "report_bug": {
+     "whole_db": 85,
+     "this_stage_seed": 0,
+     "in_tree": 0,
+     "in_bug_cards": 0
+    }
+   },
+   "this_stage_total": 1
+  },
+  "call_log": {
+   "carriers": {
+    "call_log": {
+     "whole_db": 22,
+     "this_stage_seed": 0,
+     "in_tree": 1,
+     "in_bug_cards": 0,
+     "client_rows_returned": 3952,
+     "client_visible_T0r85_rows": 18,
+     "client_visible_bug_rows": 24
+    }
+   },
+   "this_stage_total": 1
+  },
+  "omega": {
+   "carriers": {
+    "omega_spec_create": {
+     "whole_db": 435,
+     "this_stage_seed": 0,
+     "in_tree": 0,
+     "in_bug_cards": 0
+    },
+    "omega_spec_review": {
+     "whole_db": 435,
+     "this_stage_seed": 0,
+     "in_tree": 0,
+     "in_bug_cards": 0
+    },
+    "omega_result_verify": {
+     "whole_db": 432,
+     "this_stage_seed": 0,
+     "in_tree": 0,
+     "in_bug_cards": 0
+    }
+   },
+   "this_stage_total": 0,
+   "deferred_to_closure": true,
+   "marked_leaves": 16,
+   "marked_branches": 0
+  }
+ },
+ "named_tools_in_this_build": {
+  "laya": {
+   "exact": 0,
+   "substring": 19
+  },
+  "issue_up": {
+   "exact": 0,
+   "substring": 0
+  },
+  "omega_spec_create": {
+   "exact": 435,
+   "substring": 435
+  },
+  "omega_spec_review": {
+   "exact": 435,
+   "substring": 435
+  },
+  "omega_result_verify": {
+   "exact": 432,
+   "substring": 432
+  },
+  "report_bug": {
+   "exact": 85,
+   "substring": 85
+  },
+  "output_validate": {
+   "exact": 357,
+   "substring": 357
+  },
+  "submit": {
+   "exact": 320,
+   "substring": 320
+  },
+  "claim": {
+   "exact": 331,
+   "substring": 331
+  },
+  "verify": {
+   "exact": 487,
+   "substring": 919
+  },
+  "call_log": {
+   "exact": 22,
+   "substring": 22
+  },
+  "run_check": {
+   "exact": 2,
+   "substring": 2
+  }
+ },
+ "distinct_refusal_texts": 0,
+ "refusals_md": "（本环 0 条被拒调用，故无原文可引）",
+ "note": "报数分栏：任务树与 bugs 树的修复单是两套 ns，只报其一就是掩盖。本件是**渲染前快照**，叶/根收口链在渲染之后执行 ⇒ 其逐调用看 fix_r4_calllog_tally_final.json 与 close_r4_fix*.out.json",
+ "refuse": [],
+ "queried_at_utc": "2026-09-27T22:16:57+00:00"
+}

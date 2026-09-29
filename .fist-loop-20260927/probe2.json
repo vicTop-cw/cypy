@@ -1,0 +1,4 @@
+[{"tool":"github_env_check","args":{}},
+ {"tool":"reserve_check","args":{}},
+ {"tool":"omega_status","args":{}},
+ {"tool":"list","args":{"namespace":"bugs"}}]

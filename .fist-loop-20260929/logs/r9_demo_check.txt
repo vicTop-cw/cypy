@@ -1,0 +1,9 @@
+[1m
+============================================================[0m
+[1m  Cypy Transpiler[0m
+[1m============================================================
+[0m
+[36m[1/3][0m Source: examples/demos/upcoming_features/planned_features.cypy
+[36m[2/3][0m Output: output
+[36m[3/3][0m Using Cython compiler mode
+[32m[OK] Static analysis passed (no code generated)[0m

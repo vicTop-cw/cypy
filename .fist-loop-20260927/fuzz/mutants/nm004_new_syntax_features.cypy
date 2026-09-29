@@ -1,0 +1,44 @@
+# Cypy 新语法特性示例 —— name~ 命名参数糖 + guard 循环守卫
+#
+# T0r258.4.2 说明：
+#   * 原先的驱动体是 `if __name__ == "__main__":`（cypyc run 走 import + 调 main()，
+#     守卫永不成立）且没有 `def main()`，于是 15 处 print 一行都跑不到，
+#     golden 只有 1 字节换行 —— 一条零约束力的假锚点。现在改为 hello.cypy /
+#     generic.cypy 的 `def main() -> int:` 惯例，8 个 test_* 全部被调用，
+#     每个 test 一行可观察输出。
+#   * `^:` 索引构建块与 `~:` 去括号构建块的用例已显式挂起到
+#     examples/_pending_build_blocks.cypy（下划线前缀 = 判据不注册、不假装绿）：
+#     它们分别被 BUG-025（负索引段错误 exit 139）、BUG-026（return 位置的 `~:`
+#     静默误编译成函数对象）、BUG-027（`~:` 规范形态不可解析）挡住，
+#     详见 Find_BUG/BUGS.md。
+
+# ========== 1. name~ 命名参数语法糖 ==========
+
+def make_point(x: float, y: float, z: float) -> tuple<float, float, float>:
+    return (x, y, z)
+
+def test_named_param_sugar() -> tuple<float, float, float>:
+    x = 1.0
+    y = 2.0
+    z = 3.0
+    return make_point(x~, y~, z~)
+
+
+def add_values(a: int, b: int, c: int) -> int:
+    return a + b + c
+
+def test_mixed_named_params() -> int:
+    x = 10
+    y = 20
+    c = 30
+    return add_values(x, y, c~)
+
+
+# ========== 2. guard 循环守卫 ==========
+
+def test_guard_in_for_loop() -> int:
+    count: int = 0
+    for i in range(10):
+        guard i < 5 else break
+        count = count + 1
+    return c�����

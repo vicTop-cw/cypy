@@ -1,0 +1,80 @@
+{
+ "filed": [
+  {
+   "summary": "hook install 打印 [OK] 但不做任何持久化，紧接着 status 在另一进程里报未安",
+   "severity": "high",
+   "resp": {
+    "bug_id": "BUG-46",
+    "status": "OPEN",
+    "path": "./memory/bugs.md",
+    "resolved_path": ".",
+    "project_dir": "."
+   }
+  },
+  {
+   "summary": "docs 声明的 cypy_hook 包级 API（install_hook/uninstall_h",
+   "severity": "medium",
+   "resp": {
+    "bug_id": "BUG-47",
+    "status": "OPEN",
+    "path": "./memory/bugs.md",
+    "resolved_path": ".",
+    "project_dir": "."
+   }
+  },
+  {
+   "summary": "cypyc watch 只打印横幅：改动或新增被监控文件后 16s 内无任何重编译产物与事件日志，r",
+   "severity": "high",
+   "resp": {
+    "bug_id": "BUG-48",
+    "status": "OPEN",
+    "path": "./memory/bugs.md",
+    "resolved_path": ".",
+    "project_dir": "."
+   }
+  }
+ ],
+ "bug_list_tail": [
+  {
+   "id": "BUG-41",
+   "status": "OPEN",
+   "summary": "tests/test_boundary_comprehensive.py 两组测试类被同名重复定义遮住，6 条用例静默不执行"
+  },
+  {
+   "id": "BUG-42",
+   "status": "OPEN",
+   "summary": "产品码里 _visit_ExprStmt / _visit_MetaBlock 各定义两次，前一份成为死代码"
+  },
+  {
+   "id": "BUG-43",
+   "status": "OPEN",
+   "summary": "[静态检查配置] mypy 按声明的 python_version=3.9 跑测试树会整轮中断（依赖里有 3.10 语法），strict 门"
+  },
+  {
+   "id": "BUG-44",
+   "status": "OPEN",
+   "summary": "struct 里的 @staticmethod 生成时仍注入 self，产物签名与声明不符且调用必炸"
+  },
+  {
+   "id": "BUG-45",
+   "status": "OPEN",
+   "summary": "struct 的 __implicit_default__ 默认值生成成裸名字，导入即 NameError，声明的自动填充没有落地"
+  },
+  {
+   "id": "BUG-46",
+   "status": "OPEN",
+   "summary": "hook install 打印 [OK] 但不做任何持久化，紧接着 status 在另一进程里报未安装（两命令互相否定）"
+  },
+  {
+   "id": "BUG-47",
+   "status": "OPEN",
+   "summary": "docs 声明的 cypy_hook 包级 API（install_hook/uninstall_hook/is_hook_installe"
+  },
+  {
+   "id": "BUG-48",
+   "status": "OPEN",
+   "summary": "cypyc watch 只打印横幅：改动或新增被监控文件后 16s 内无任何重编译产物与事件日志，rc 始终 0"
+  }
+ ],
+ "bug_total_in_list": 48
+}

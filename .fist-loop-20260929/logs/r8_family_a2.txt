@@ -1,0 +1,14 @@
+__unapply__ 元组提取器                                          OK          parse=OK analyze=OK codegen=OK
+    slot_types={'Email': ['str', 'str']} extractor_called_in_code=True phantom_f=False
+__unwarp__ 解包模式                                            OK          parse=OK analyze=OK codegen=OK
+    slot_types={'Wrapper': ['int']} extractor_called_in_code=True phantom_f=False
+__unapply_seq__ 序列提取器（文档写法 tuple<int, ...> + case (x, y, ..)） PARSE-FAIL  parse=PARSE-FAIL analyze=OK codegen=OK
+    internal: ValueError: Unexpected token DOT_DOT at 4:45
+    slot_types={} extractor_called_in_code=False phantom_f=False
+__match_args__ 位置解构                                        OK          parse=OK analyze=OK codegen=OK
+    slot_types={'Point': ['int', 'int', 'object']} extractor_called_in_code=False phantom_f=False
+类型模式 case int x                                            OK          parse=OK analyze=OK codegen=OK
+    slot_types={} extractor_called_in_code=False phantom_f=False
+OR 模式 case 1 | 2                                           OK          parse=OK analyze=OK codegen=OK
+    slot_types={} extractor_called_in_code=False phantom_f=False
+CONCLUSION cases=6 {'OK': 5, 'DIAGNOSTIC': 0, 'PARSE-FAIL': 1, 'INTERNAL': 0} rows_json=.fist-loop-20260929/hunt_r8_extractor_family.json

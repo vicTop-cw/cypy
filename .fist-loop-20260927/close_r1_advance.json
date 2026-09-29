@@ -1,0 +1,82 @@
+{
+ "key": "r1_advance",
+ "root_task": "T0r54",
+ "assignee": "cypy-advancer",
+ "stage": "R1-推进",
+ "forbid": "实现文档未声明的新语法；改 PROJECT-SPEC/SYNTAX 语义；弱化或删除既有测试；git push/删文件；用「模块里有函数+有单测」冒充入口可用",
+ "laws": [
+  {
+   "name": "从冻结文档反解「已声明未实现」清单（带 file:line 与实跑证据）",
+   "artifacts": [
+    [".fist-loop-20260927/advance_verify_r1.json", "doc_evidence", 3000],
+    [".fist-loop-20260927/advance_verify_r1.json", "gap-parse", 3000]
+   ]
+  },
+  {
+   "name": "挑选项的口径与裁决记录（laya fallback）",
+   "artifacts": [
+    [".fist-loop-20260927/hunts/advance_candidates_r1.md", "明确不可选", 2000],
+    [".fist-loop-20260927/advance_verify_r1.json", "matcher_control", 3000]
+   ]
+  },
+  {
+   "name": "实现补口 1（打到调用面，不是只补模块内函数）",
+   "artifacts": [
+    [".fist-loop-20260927/advance_verify_r1.json", "works", 3000],
+    ["tests/test_loop_20260927_advance.py", "test_bug_adv1_runtime_chain_visible_at_cli", 4000]
+   ]
+  },
+  {
+   "name": "实现补口 2 与转结说明",
+   "artifacts": [
+    ["tests/test_loop_20260927_advance.py", "test_bug_adv2_let_and_bare_forms_emit_identically", 4000],
+    [".fist-loop-20260927/advance_baselines_r1.json", "doc_example", 2000]
+   ]
+  },
+  {
+   "name": "每条补口的锁死回归与回退树证红",
+   "artifacts": [
+    [".fist-loop-20260927/advance_lockproof_r1.json", "red_locks", 300],
+    [".fist-loop-20260927/advance_lockproof_reverted_ADV-1.log", "2 failed, 4 passed", 1500]
+   ]
+  },
+  {
+   "name": "文档-实现双向一致性核对（不新增语法）",
+   "artifacts": [
+    [".fist-loop-20260927/advance_baselines_r1.json", "radius", 2000],
+    [".fist-loop-20260927/advance_baselines_r1.json", "emit_has_block_call", 2000]
+   ]
+  },
+  {
+   "name": "双套基线与端到端基准复跑不回落",
+   "artifacts": [
+    [".fist-loop-20260927/advance_pytest_r1.log", " passed", 500],
+    [".fist-loop-20260927/advance_baselines_r1.json", "Total: 47 | Passed: 47", 2000]
+   ]
+  },
+  {
+   "name": "推进报告与转结",
+   "artifacts": [
+    [".fist-loop-20260927/advance_file_bugs_r1.json", "BUG-45", 1000],
+    [".fist-loop-20260927/advance_baselines_r1.json", "collection", 2000]
+   ]
+  }
+ ],
+ "branches": [
+  ["清单反解：9 条候选逐条打到 CLI 复算", ".fist-loop-20260927/advance_verify_r1.json", "verdict"],
+  ["挑选项口径：静默型入账、显式失败转结", ".fist-loop-20260927/hunts/advance_candidates_r1.md", "明确不可选"],
+  ["补口 1：raise X from e 的 cause 进产物", "tests/test_loop_20260927_advance.py", "test_bug_adv1_raise_from_keeps_cause_in_emit"],
+  ["补口 2：let x =: 脱糖到裸形路径", "tests/test_loop_20260927_advance.py", "test_bug_adv2_let_and_bare_forms_emit_identically"],
+  ["回退树证红：两条补口各自回退都恰让自己的锁转红", ".fist-loop-20260927/advance_lockproof_r1.json", "red_locks"],
+  ["双向一致：文档原文例子过 CLI；半径核对无新语法单元", ".fist-loop-20260927/advance_baselines_r1.json", "radius"],
+  ["三套基线不回落（下限 1868）", ".fist-loop-20260927/advance_pytest_r1.log", " passed"],
+  ["报告与转结（BUG-44/45 + 5 条显式缺口）", ".fist-loop-20260927/advance_file_bugs_r1.json", "BUG-45"]
+ ],
+ "root_deliverable": "R1-推进 交付：{REPORT}；9 条「已声明未实现」候选全部自己在 CLI 上复算（清单 advance_verify_r1.json）；落地 2 条补口（raise…from 的 cause 进产物、let x =: 脱糖到裸形构建块路径），两条都打到调用面并各有回退树证红；新入账 BUG-44/BUG-45（两条静默型产物缺陷）；其余 5 条是显式解析失败的功能缺失，按口径只转结不占 bug 号",
+ "root_marker": "[selfdrive-advance]",
+ "root_extra_artifacts": [
+  [".fist-loop-20260927/advance_baselines_r1.json", "\"pytest\"", 300],
+  [".fist-loop-20260927/advance_lockproof_r1.json", "red_locks", 300]
+ ],
+ "root_verify_reason": "两条补口都打到调用面（transpile + run），回退树各自证红且互不混因，三套基线当场 L4 通过"
+}

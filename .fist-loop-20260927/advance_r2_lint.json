@@ -1,0 +1,33 @@
+{
+ "limit": 100,
+ "files": {
+  "cypyc/incremental/hot_reload.py": {
+   "authored_lines": 78,
+   "authored_violations": [],
+   "debt_before": 97,
+   "debt_after": 93
+  },
+  "cypyc/cli.py": {
+   "authored_lines": 15,
+   "authored_violations": [],
+   "debt_before": 59,
+   "debt_after": 58
+  },
+  "tests/test_advance_20260927_r2.py": {
+   "authored_lines": 329,
+   "authored_violations": [],
+   "debt_before": 0,
+   "debt_after": 0
+  },
+  "docs/USAGE.md": {
+   "authored_lines": 7,
+   "authored_violations": [],
+   "debt_before": 2,
+   "debt_after": 2
+  }
+ },
+ "refuse": [],
+ "selftest": "selfprobe-caught",
+ "selftest_negative": "clean-not-flagged",
+ "authored_lines_checked": 429
+}

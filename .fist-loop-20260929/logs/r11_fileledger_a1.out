@@ -1,0 +1,7 @@
+FILED R11-SPEC-KIND-NEEDLE-ZERO | {"bug_id": "BUG-130", "id": "BUG-130", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+FILED R11-CALLLOG-ERROR-NEEDLE-ZERO | {"bug_id": "BUG-131", "id": "BUG-131", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+FILED R11-LOOP-NEVER-TICKED | {"bug_id": "BUG-132", "id": "BUG-132", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+FILED R11-CLOSE-ROOT-UNBOUND | {"bug_id": "BUG-133", "id": "BUG-133", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+NEW_IDS ["BUG-130", "BUG-131", "BUG-132", "BUG-133"]
+KEYS_PRESENT_AFTER {"R11-SPEC-KIND-NEEDLE-ZERO": true, "R11-CALLLOG-ERROR-NEEDLE-ZERO": true, "R11-LOOP-NEVER-TICKED": true, "R11-CLOSE-ROOT-UNBOUND": true}
+CONCLUSION filed=4 refused=0 skipped=0 new_ids=4 headers=134 call_log={"rows": 5, "error_rows_ok_needle": 0, "error_rows_old_needle": 0, "report_bug_rows": 4}

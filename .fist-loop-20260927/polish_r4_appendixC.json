@@ -1,0 +1,148 @@
+{
+ "started": "2026-09-28T01:59:31+00:00",
+ "note_file": "docs/APPENDIX_C_DEVIATIONS.md",
+ "frozen_doc": "SYNTAX/appendix-C-features.md",
+ "deviations": [
+  {
+   "n": 1,
+   "doc_row": "| 切片语法 `list[a:b]` | v0.2 |",
+   "verdict": "claim-false",
+   "reason": "生成面 .pyx 证据缺 []；类型面把切片表达式的类型判成容器**元素**类型：实测 ['Return type mismatch: expected list[int], got int at 4:1']；仓内自带 DEMO examples/demos/upcoming_features/planned_features.cypy 走 --check-only 得 1 码、4 条诊断 ⇒ 文档「已实现 v0.2」在调用面不成立"
+  },
+  {
+   "n": 4,
+   "doc_row": "| Codegen `_generate_tuple_condition` | v0.2 |",
+   "verdict": "claim-half-true",
+   "reason": "行为面成立（生成物含 ['isinstance(_match_subject_1, (list, tuple))', 'len(_match_subject_1) == 2']），但文档点名的私有方法 `_generate_tuple_condition` 调用计数为 0 ⇒ 该名字不在活路径上（活路径在 `_pattern_match_info`，把同样的条件就地拼出来）"
+  },
+  {
+   "n": 5,
+   "doc_row": "| Codegen `_generate_array_condition` | v0.2 |",
+   "verdict": "claim-half-true",
+   "reason": "行为面成立（生成物含 ['isinstance(_match_subject_1, (list, tuple))', 'len(_match_subject_1) >= 1', 'rest = _match_subject_1[1:]']），但文档点名的私有方法 `_generate_array_condition` 调用计数为 0 ⇒ 该名字不在活路径上（活路径在 `_pattern_match_info`，把同样的条件就地拼出来）"
+  },
+  {
+   "n": 6,
+   "doc_row": "| Codegen `_generate_dict_condition` | v0.2 |",
+   "verdict": "claim-half-true",
+   "reason": "行为面成立（生成物含 ['isinstance(_match_subject_1, dict)', \"'a' in _match_subject_1\"]），但文档点名的私有方法 `_generate_dict_condition` 调用计数为 0 ⇒ 该名字不在活路径上（活路径在 `_pattern_match_info`，把同样的条件就地拼出来）"
+  }
+ ],
+ "queue_frozen_edit": [
+  1,
+  4,
+  5,
+  6
+ ],
+ "note_done_rows": 4,
+ "frozen_files": 37,
+ "frozen_sha": {
+  "SYNTAX/00-introduction.md": "06546224bff5578e",
+  "SYNTAX/01-basic-types.md": "b0bb9655b8efc9da",
+  "SYNTAX/02-type-annotations.md": "425f9c850424ecfd",
+  "SYNTAX/03-type-conversion.md": "a67ad542a7757805",
+  "SYNTAX/04-pointer-types.md": "a9b43d3a677376ee",
+  "SYNTAX/05-struct.md": "8513d76e913c40e7",
+  "SYNTAX/06-enum.md": "c5386effee4caa5c",
+  "SYNTAX/06d-builtin-magic-traits.md": "9f0142a113088ad7",
+  "SYNTAX/07-trait-impl.md": "19330908bbf1072c",
+  "SYNTAX/08-class.md": "6025206b0474e03a",
+  "SYNTAX/09-functions.md": "a8e133711f7a019a",
+  "SYNTAX/10-variables.md": "85c426324d57f4bf",
+  "SYNTAX/11-generics.md": "b20bf2f2a2d23ac0",
+  "SYNTAX/12-operators.md": "69894d3038d08210",
+  "SYNTAX/12-type-alias.md": "9af1e4ded1212322",
+  "SYNTAX/13-build-blocks.md": "5c1cb10078b80749",
+  "SYNTAX/14-syntax-sugar.md": "d4dd1e1449f26c98",
+  "SYNTAX/15-control-flow.md": "75db27ca725fe3e7",
+  "SYNTAX/16-exceptions.md": "09fa25b209990896",
+  "SYNTAX/17-pattern-matching.md": "47fa56e722d50bce",
+  "SYNTAX/18-macros.md": "af4582073585e574",
+  "SYNTAX/19-comptime.md": "87eff0d947956d5d",
+  "SYNTAX/20-concurrency.md": "88d009b3dce47765",
+  "SYNTAX/21-simd-vector.md": "aaae367f33bfe6f9",
+  "SYNTAX/22-magic-properties.md": "21321559e3e6e036",
+  "SYNTAX/23-compilation.md": "8a9171980edf159d",
+  "SYNTAX/24-incremental-hot-reload.md": "2fc484c94735a473",
+  "SYNTAX/25-compatibility.md": "739b69320e7419d9",
+  "SYNTAX/26-union-type.md": "5fe6a5a9bd9d3389",
+  "SYNTAX/27-constraints.md": "5f986fe6af67a198",
+  "SYNTAX/30-tutorial-pointers.md": "2b5b59d7daedeb6a",
+  "SYNTAX/31-tutorial-metaprogramming.md": "d6b688af41b11223",
+  "SYNTAX/32-tutorial-concurrency.md": "c052b705f44685c3",
+  "SYNTAX/33-type-constraints-subtypes-dispatch.md": "325986f03ef3615f",
+  "SYNTAX/appendix-A-keywords.md": "3a13cd6234770f5d",
+  "SYNTAX/appendix-B-operators.md": "bfd06c53012095a9",
+  "SYNTAX/appendix-C-features.md": "3e78de517b5648d5"
+ },
+ "frozen_sha_equal": true,
+ "canary": {
+  "injected_file": "SYNTAX/00-introduction.md",
+  "caught": true
+ },
+ "note_bytes": 2635,
+ "existed_before_this_run": false,
+ "self_checks": [
+  {
+   "label": "形差行数 = claim-false ∪ half-true（4 行，不多不少）",
+   "got": [
+    1,
+    4,
+    5,
+    6
+   ],
+   "want": [
+    1,
+    4,
+    5,
+    6
+   ],
+   "why": "[1, 4, 5, 6]",
+   "ok": true
+  },
+  {
+   "label": "每行引用的冻结面原文都能逐字搜到（不是我复述的）",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "合成器幂等：同一输入连写两次字节必须相同（不叠行）",
+   "got": true,
+   "want": true,
+   "why": "2635 vs 2635",
+   "ok": true
+  },
+  {
+   "label": "重跑取回的内容与本次生成一致（没有漂出第二种形态）",
+   "got": true,
+   "want": true,
+   "why": "盘上前值 0 B / 本次 2635 B",
+   "ok": true
+  },
+  {
+   "label": "补注非空且 4 行都落表",
+   "got": 4,
+   "want": 4,
+   "why": "表格数据行数（扣表头与分隔行）",
+   "ok": true
+  },
+  {
+   "label": "冻结面全量 sha 写补注前后逐字相等",
+   "got": true,
+   "want": true,
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "canary：注入一处假改动必须被比较谓词抓到",
+   "got": true,
+   "want": true,
+   "why": "SYNTAX/00-introduction.md",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T01:59:31+00:00"
+}

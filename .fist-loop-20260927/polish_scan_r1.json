@@ -1,0 +1,173 @@
+{
+ "refuse": [
+  "判据3 mypy 被中断（声明的 python_version=3.9 与依赖里的 3.10 语法冲突）⇒ 这道门在测试树上跑不起来，给的条数不是边界而是事故；已入账 BUG-43。原文：C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\_pytest\\terminal.py:1729: error | Found 1 error in 1 file (errors prevented further checking)",
+  "判据3 error 分类里出现 [syntax]，通常意味着版本口径不一致而非存量类型债：{'syntax': 1}"
+ ],
+ "scan": {
+  "py_files": 154,
+  "dirs": [
+   "cypyc",
+   "cypy_bridge",
+   "scripts",
+   "tests"
+  ],
+  "bom_py_files": [
+   "tests/test_codegen_new_features.py",
+   "tests/test_parser_integration.py",
+   "tests/test_parser_test.py",
+   "tests/test_parser_union.py"
+  ],
+  "unparsable_py_files": []
+ },
+ "law2_skip_marks": [
+  {
+   "where": "tests/test_demos.py:35",
+   "line": "pytest.skip(f\"DEMO 文件不存在: {file_path}\")",
+   "bug_ids": [],
+   "in_function": "read_demo_file",
+   "attribution": "所属函数体内文本（含装饰器与 docstring）",
+   "refs": {},
+   "verdict": "无缺陷号引用 ⇒ 需人工读用途（不自动定性）"
+  },
+  {
+   "where": "tests/test_polish_20260926.py:179",
+   "line": "pytest.skip(\"平台允许写 property，回滚未失败\")",
+   "bug_ids": [],
+   "in_function": "test_bug5_state_restore_reports_setattr_failure",
+   "attribution": "所属函数体内文本（含装饰器与 docstring）",
+   "refs": {},
+   "verdict": "无缺陷号引用 ⇒ 需人工读用途（不自动定性）"
+  },
+  {
+   "where": "tests/test_project_compiler.py:361",
+   "line": "pytest.skip(\"该源码在当前 parser 下仍能解析，无法验证解析失败诊断\")",
+   "bug_ids": [],
+   "in_function": "test_parse_failures_are_reported_as_warnings",
+   "attribution": "所属函数体内文本（含装饰器与 docstring）",
+   "refs": {},
+   "verdict": "无缺陷号引用 ⇒ 需人工读用途（不自动定性）"
+  }
+ ],
+ "law2_bug_status": {},
+ "law4_control": {
+  "comment_caught": 1,
+  "string_not_counted": true,
+  "string_mention_recorded": true
+ },
+ "law4_string_mentions": [
+  {
+   "where": "tests/test_demos.py:487",
+   "text": "\"# TODO\""
+  }
+ ],
+ "law4_debt": {
+  "total": 0,
+  "by_kind": {},
+  "sample": []
+ },
+ "law5_candidates": {
+  "counts": {
+   "F841": 108,
+   "F811": 10,
+   "E722": 2
+  },
+  "dup_defs": [
+   {
+    "where": "cypy_bridge\\compiler.py:3712",
+    "msg": "redefinition of unused 'shutil' from line 18",
+    "effective_def": "import shutil",
+    "shadowed_def": "import shutil",
+    "reading": "Python 里后定义覆盖前定义 ⇒ 前一处（shadowed）是死代码；删除它不改语义，删除后一处会改语义"
+   },
+   {
+    "where": "cypy_bridge\\compiler.py:3847",
+    "msg": "redefinition of unused 'shutil' from line 18",
+    "effective_def": "import shutil",
+    "shadowed_def": "import shutil",
+    "reading": "Python 里后定义覆盖前定义 ⇒ 前一处（shadowed）是死代码；删除它不改语义，删除后一处会改语义"
+   },
+   {
+    "where": "cypy_bridge\\compiler.py:3883",
+    "msg": "redefinition of unused 'shutil' from line 18",
+    "effective_def": "import shutil",
+    "shadowed_def": "import shutil",
+    "reading": "Python 里后定义覆盖前定义 ⇒ 前一处（shadowed）是死代码；删除它不改语义，删除后一处会改语义"
+   },
+   {
+    "where": "cypyc\\analyzer\\comptime_evaluator.py:685",
+    "msg": "redefinition of unused 'ast' from line 27",
+    "effective_def": "def register_comptime_functions(ast: ASTNode, evaluator: ComptimeEvaluator) -> None:",
+    "shadowed_def": "import ast",
+    "reading": "Python 里后定义覆盖前定义 ⇒ 前一处（shadowed）是死代码；删除它不改语义，删除后一处会改语义"
+   },
+   {
+    "where": "cypyc\\analyzer\\scope_analyzer.py:926",
+    "msg": "redefinition of unused '_visit_MetaBlock' from line 484",
+    "effective_def": "def _visit_MetaBlock(self, node: Any) -> None:",
+    "shadowed_def": "def _visit_MetaBlock(self, node: Any) -> None:",
+    "reading": "Python 里后定义覆盖前定义 ⇒ 前一处（shadowed）是死代码；删除它不改语义，删除后一处会改语义"
+   },
+   {
+    "where": "cypyc\\codegen\\cython_generator.py:2065",
+    "msg": "redefinition of unused '_visit_ExprStmt' from line 1399",
+    "effective_def": "def _visit_ExprStmt(self, node: Any) -> None:",
+    "shadowed_def": "def _visit_ExprStmt(self, node: Any) -> None:",
+    "reading": "Python 里后定义覆盖前定义 ⇒ 前一处（shadowed）是死代码；删除它不改语义，删除后一处会改语义"
+   },
+   {
+    "where": "cypyc\\project\\project_compiler.py:833",
+    "msg": "redefinition of unused 'sys' from line 13",
+    "effective_def": "import sys",
+    "shadowed_def": "import sys",
+    "reading": "Python 里后定义覆盖前定义 ⇒ 前一处（shadowed）是死代码；删除它不改语义，删除后一处会改语义"
+   },
+   {
+    "where": "tests\\code_quality\\test_code_quality.py:196",
+    "msg": "redefinition of unused 'ast' from line 15",
+    "effective_def": "ast = parser.parse()",
+    "shadowed_def": "import ast",
+    "reading": "Python 里后定义覆盖前定义 ⇒ 前一处（shadowed）是死代码；删除它不改语义，删除后一处会改语义"
+   },
+   {
+    "where": "tests\\test_boundary_comprehensive.py:420",
+    "msg": "redefinition of unused 'TestPointerBoundary' from line 200",
+    "effective_def": "class TestPointerBoundary(TestBoundaryFramework):",
+    "shadowed_def": "class TestPointerBoundary(TestBoundaryFramework):",
+    "reading": "Python 里后定义覆盖前定义 ⇒ 前一处（shadowed）是死代码；删除它不改语义，删除后一处会改语义"
+   },
+   {
+    "where": "tests\\test_boundary_comprehensive.py:910",
+    "msg": "redefinition of unused 'TestPipelineBoundary' from line 282",
+    "effective_def": "class TestPipelineBoundary(TestBoundaryFramework):",
+    "shadowed_def": "class TestPipelineBoundary(TestBoundaryFramework):",
+    "reading": "Python 里后定义覆盖前定义 ⇒ 前一处（shadowed）是死代码；删除它不改语义，删除后一处会改语义"
+   }
+  ],
+  "f601": [],
+  "e722": [
+   {
+    "where": "tests\\test_byte_diff_runner.py:26",
+    "msg": "do not use bare 'except'"
+   },
+   {
+    "where": "tests\\test_byte_diff_runner.py:30",
+    "msg": "do not use bare 'except'"
+   }
+  ]
+ },
+ "law3_mypy": {
+  "total_errors": 1,
+  "aborted": true,
+  "per_file": {
+   "C:/Users/victo/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0/LocalCache/local-packages/Python313/site-packages/_pytest/terminal.py": 1
+  },
+  "per_code": {
+   "syntax": 1
+  },
+  "tail_lines": [
+   "C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\_pytest\\terminal.py:1729: error: Pattern matching is only supported in Python 3.10 and greater  [syntax]",
+   "Found 1 error in 1 file (errors prevented further checking)"
+  ],
+  "loop_new_file_errors": {}
+ }
+}

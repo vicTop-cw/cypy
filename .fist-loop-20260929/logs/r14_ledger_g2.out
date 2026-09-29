@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\amend_r14_ledger.py", line 171, in <module>
+    `{'a': 1, 'b': 2.5}` 要红）与成对半边 `G15_mixed_numeric_widening_ok`（同一字面量收进
+     ^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format specifier ' 1, 'b': 2.5' for object of type 'str'

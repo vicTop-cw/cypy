@@ -1,0 +1,12 @@
+[L0] L0 live（修复后） | pytest rc=0 red=0 crash=False | gate CONCLUSION specs=1 cases=14 passed=14 failed=0 refused=0 accuracy=100.00% rc=0 | ident={"parser_has_type_args": true, "parser_has_checker": false, "codegen_has_tuple": false, "analyzer_has_binding": true}
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r10_locks.py", line 303, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r10_locks.py", line 250, in main
+    p.write_text(revert_parser(t), encoding="utf-8", newline="\n")
+                 ~~~~~~~~~~~~~^^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r10_locks.py", line 153, in revert_parser
+    assert "type_args_for_call" not in out
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

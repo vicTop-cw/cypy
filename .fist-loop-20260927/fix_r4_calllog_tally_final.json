@@ -1,0 +1,390 @@
+{
+ "mode": "final_after_closure",
+ "grouped_by": "params_json.task_id（树按 T0r85.% 前缀，六张修复单按整号）",
+ "stage_seed_needle": "%[loop:20260927-loop:R4-修复]%",
+ "stage_seed_rows": 2,
+ "stage_seed_by_tool": {
+  "publish": {
+   "ok": 1,
+   "refused": 0,
+   "examples": []
+  },
+  "laya_decide": {
+   "ok": 1,
+   "refused": 0,
+   "examples": []
+  }
+ },
+ "omega_marked": {
+  "leaves": 16,
+  "leaves_total": 16,
+  "root": 1
+ },
+ "scopes": {
+  "T0r85": {
+   "label": "R4-修复 任务树（根＋8 支＋16 叶）",
+   "rows": 197,
+   "distinct_tasks": 25,
+   "by_tool": {
+    "claim": {
+     "ok": 17,
+     "refused": 1
+    },
+    "task_plan_deep": {
+     "ok": 1,
+     "refused": 0
+    },
+    "omega_status": {
+     "ok": 16,
+     "refused": 0
+    },
+    "omega_spec_create": {
+     "ok": 25,
+     "refused": 0
+    },
+    "omega_spec_review": {
+     "ok": 25,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 16,
+     "refused": 1
+    },
+    "submit": {
+     "ok": 16,
+     "refused": 1
+    },
+    "output_validate": {
+     "ok": 17,
+     "refused": 0
+    },
+    "omega_result_verify": {
+     "ok": 25,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 25,
+     "refused": 0
+    },
+    "get": {
+     "ok": 10,
+     "refused": 0
+    },
+    "archive": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 3,
+   "refused_detail": [
+    {
+     "scope": "T0r85",
+     "task": "T0r85",
+     "tool": "claim",
+     "ts": "2026-09-27T23:32:22Z",
+     "err": "非法迁移: claim 要求状态 [待领取]，当前是 [待验收]"
+    },
+    {
+     "scope": "T0r85",
+     "task": "T0r85",
+     "tool": "execute",
+     "ts": "2026-09-27T23:32:22Z",
+     "err": "Omega 强验证门禁：任务 [T0r85] 尚未创建语料，请先由语料创建者执行 omega_spec_create"
+    },
+    {
+     "scope": "T0r85",
+     "task": "T0r85",
+     "tool": "submit",
+     "ts": "2026-09-27T23:32:22Z",
+     "err": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"
+    }
+   ]
+  },
+  "T0r75": {
+   "label": "修复单 RC1（BUG-61）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r76": {
+   "label": "修复单 RC2（BUG-62）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r77": {
+   "label": "修复单 RC3（BUG-63）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r78": {
+   "label": "修复单 RC4（BUG-64）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r80": {
+   "label": "修复单 DOC_cli（BUG-66）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  },
+  "T0r81": {
+   "label": "修复单 DOC_example（BUG-67）",
+   "rows": 4,
+   "distinct_tasks": 1,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 1,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 1,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  }
+ },
+ "tree_rows": 197,
+ "bug_card_rows": 24,
+ "tree_refused": 3,
+ "bug_card_refused": 0,
+ "client_visible": {
+  "T0r85": 197,
+  "T0r75": 4,
+  "T0r76": 4,
+  "T0r77": 4,
+  "T0r78": 4,
+  "T0r80": 4,
+  "T0r81": 4
+ },
+ "total_call_log_rows": 4133,
+ "spec_named_carriers": {
+  "laya": {
+   "carriers": {
+    "laya_decide": {
+     "whole_db": 19,
+     "this_stage_seed": 1,
+     "in_tree": 0,
+     "in_bug_cards": 0
+    }
+   },
+   "this_stage_total": 1
+  },
+  "issue_up": {
+   "carriers": {
+    "publish": {
+     "whole_db": 21,
+     "this_stage_seed": 1,
+     "in_tree": 0,
+     "in_bug_cards": 0
+    },
+    "report_bug": {
+     "whole_db": 85,
+     "this_stage_seed": 0,
+     "in_tree": 0,
+     "in_bug_cards": 0
+    }
+   },
+   "this_stage_total": 1
+  },
+  "call_log": {
+   "carriers": {
+    "call_log": {
+     "whole_db": 24,
+     "this_stage_seed": 0,
+     "in_tree": 1,
+     "in_bug_cards": 0,
+     "client_rows_returned": 4133,
+     "client_visible_T0r85_rows": 197,
+     "client_visible_bug_rows": 24
+    }
+   },
+   "this_stage_total": 1
+  },
+  "omega": {
+   "carriers": {
+    "omega_spec_create": {
+     "whole_db": 460,
+     "this_stage_seed": 0,
+     "in_tree": 25,
+     "in_bug_cards": 0
+    },
+    "omega_spec_review": {
+     "whole_db": 460,
+     "this_stage_seed": 0,
+     "in_tree": 25,
+     "in_bug_cards": 0
+    },
+    "omega_result_verify": {
+     "whole_db": 457,
+     "this_stage_seed": 0,
+     "in_tree": 25,
+     "in_bug_cards": 0
+    }
+   },
+   "this_stage_total": 75
+  }
+ },
+ "named_tools_in_this_build": {
+  "laya": {
+   "exact": 0,
+   "substring": 19
+  },
+  "issue_up": {
+   "exact": 0,
+   "substring": 0
+  },
+  "omega_spec_create": {
+   "exact": 460,
+   "substring": 460
+  },
+  "omega_spec_review": {
+   "exact": 460,
+   "substring": 460
+  },
+  "omega_result_verify": {
+   "exact": 457,
+   "substring": 457
+  },
+  "report_bug": {
+   "exact": 85,
+   "substring": 85
+  },
+  "output_validate": {
+   "exact": 374,
+   "substring": 374
+  },
+  "submit": {
+   "exact": 337,
+   "substring": 337
+  },
+  "claim": {
+   "exact": 348,
+   "substring": 348
+  },
+  "verify": {
+   "exact": 512,
+   "substring": 969
+  },
+  "call_log": {
+   "exact": 24,
+   "substring": 24
+  },
+  "run_check": {
+   "exact": 2,
+   "substring": 2
+  }
+ },
+ "distinct_refusal_texts": 3,
+ "refusals_md": "| 被拒原文（逐字） | 工具 | 次数 | 首个见证 |\n| --- | --- | --- | --- |\n| `非法迁移: claim 要求状态 [待领取]，当前是 [待验收]` | claim | 1 | T0r85 @ 2026-09-27T23:32:22Z |\n| `Omega 强验证门禁：任务 [T0r85] 尚未创建语料，请先由语料创建者执行 omega_spec_create` | execute | 1 | T0r85 @ 2026-09-27T23:32:22Z |\n| `非法迁移: submit 要求状态 [执行中]，当前是 [待验收]` | submit | 1 | T0r85 @ 2026-09-27T23:32:22Z |",
+ "note": "收口后的终账：含 16 叶 + 8 支 + 根的 Omega/门禁链逐调用",
+ "refuse": [],
+ "queried_at_utc": "2026-09-27T23:33:02+00:00"
+}

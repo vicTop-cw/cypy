@@ -1,0 +1,9 @@
+def main() -> int:
+    print(repr(1))
+    print(chr(65))
+    print(hex(255))
+    print(pow(2, 10))
+    print(round(3.6))
+    print(divmod(7, 2))
+    print(bytes(4))
+    return 0

@@ -1,0 +1,5 @@
+def main() -> int:
+    let x: int = 1
+    x ^= 3
+    print(x)
+    return 0

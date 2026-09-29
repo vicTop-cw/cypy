@@ -1,0 +1,233 @@
+{
+ "refuse": [],
+ "counts": 23,
+ "counts_total": 23,
+ "counts_all_equal": 1,
+ "refusal_table": {
+  "rows_in_report": 6,
+  "rows_in_artifact": 6,
+  "missing": [],
+  "extra": []
+ },
+ "repro_reruns": 6,
+ "repro_reruns_match_claim": 6,
+ "detail": [
+  {
+   "claim": "root",
+   "reported": "T0r70",
+   "recomputed": "T0r70",
+   "source": "root_r3_fix.out.json:root",
+   "equal": true
+  },
+  {
+   "claim": "gates",
+   "reported": "46",
+   "recomputed": 46,
+   "source": "report_spec_r3_fix.json:gates",
+   "equal": true
+  },
+  {
+   "claim": "refused",
+   "reported": "6",
+   "recomputed": 6,
+   "source": "close_r3_fix_root.out.json:refused",
+   "equal": true
+  },
+  {
+   "claim": "locks 条数（页脚 vs 测试文件 def test_ 计数）",
+   "reported": "17",
+   "recomputed": 17,
+   "source": "tests/test_loop_20260927_fix_r3.py",
+   "equal": true
+  },
+  {
+   "claim": "pos 条数",
+   "reported": "11",
+   "recomputed": 11,
+   "source": "fix_r3_plan.json:pos_locks 求和",
+   "equal": true
+  },
+  {
+   "claim": "ctl 条数",
+   "reported": "6",
+   "recomputed": 6,
+   "source": "fix_r3_plan.json:ctl_locks 求和",
+   "equal": true
+  },
+  {
+   "claim": "locks 汇总与台账一致",
+   "reported": 17,
+   "recomputed": 17,
+   "source": "测试文件 def test_ 计数 vs plan.per_bug.locks 求和",
+   "equal": true
+  },
+  {
+   "claim": "锁清点件的 collected",
+   "reported": 17,
+   "recomputed": 17,
+   "source": "fix_r3_locks_inventory.json:collected",
+   "equal": true
+  },
+  {
+   "claim": "pytest",
+   "reported": "1920",
+   "recomputed": 1920,
+   "source": "fix_r3_baselines.json:pytest.passed",
+   "equal": true
+  },
+  {
+   "claim": "suite",
+   "reported": "47/47",
+   "recomputed": "47/47",
+   "source": "fix_r3_baselines.json:suite",
+   "equal": true
+  },
+  {
+   "claim": "e2e",
+   "reported": "25/25",
+   "recomputed": "25/25",
+   "source": "fix_r3_baselines.json:e2e.PASS（FAIL 见下）",
+   "equal": true
+  },
+  {
+   "claim": "e2e FAIL/WARN/UNREG 全零",
+   "reported": "0",
+   "recomputed": "0",
+   "source": "fix_r3_baselines.json:e2e.fields",
+   "equal": true
+  },
+  {
+   "claim": "radius",
+   "reported": "7",
+   "recomputed": 7,
+   "source": "fix_r3_baselines.json:radius.count",
+   "equal": true
+  },
+  {
+   "claim": "radius 全部归属本单",
+   "reported": 0,
+   "recomputed": 0,
+   "source": "fix_r3_baselines.json:radius.unclaimed_by_this_lane",
+   "equal": true
+  },
+  {
+   "claim": "fixed= 清单条数 vs 页脚",
+   "reported": 6,
+   "recomputed": 6,
+   "source": "页脚 fixed= vs fix_r3_plan.json:per_bug",
+   "equal": true
+  },
+  {
+   "claim": "账本本轮 FIXED 段数",
+   "reported": 6,
+   "recomputed": 6,
+   "source": "memory/bugs.md 含 2026-09-28 R3-修复 的 FIXED 段",
+   "equal": true
+  },
+  {
+   "claim": "账本 FIXED 段与全部(修复=已完成)段不串轮",
+   "reported": 6,
+   "recomputed": 6,
+   "source": "上一轮（R2）没有『修复=已完成』段 ⇒ 两个数应相等",
+   "equal": true
+  },
+  {
+   "claim": "flips 清单",
+   "reported": "C1,C3,C4,C6",
+   "recomputed": "C1,C3,C4,C6",
+   "source": "fix_r3_evidence.json:flips[*].after_rc==1",
+   "equal": true
+  },
+  {
+   "claim": "kept_red 清单",
+   "reported": "C5,C8",
+   "recomputed": "C5,C8",
+   "source": "fix_r3_evidence.json:flips[*].after_rc==0",
+   "equal": true
+  },
+  {
+   "claim": "baselines_run",
+   "reported": "2",
+   "recomputed": 2,
+   "source": "fix_r3_baselines.json + fix_r3_baselines_run1.json 存在数",
+   "equal": true
+  },
+  {
+   "claim": "judge-defects",
+   "reported": "12",
+   "recomputed": 12,
+   "source": "报告《六》段『判据与工具类』小节下的编号条数",
+   "equal": true
+  },
+  {
+   "claim": "op-defects",
+   "reported": "8",
+   "recomputed": 8,
+   "source": "报告《六》段『操作』小节下的编号条数",
+   "equal": true
+  },
+  {
+   "claim": "被拒逐字对表（双向集合）",
+   "reported": 6,
+   "recomputed": 6,
+   "source": "close_r3_fix_root.out.json:refused vs 报告《被拒原文》表",
+   "equal": true
+  }
+ ],
+ "reruns_detail": [
+  {
+   "bug": "BUG-55",
+   "cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C1",
+   "before_rc": 0,
+   "after_rc_claimed": 1,
+   "rc_now": 1,
+   "matches_claim": true,
+   "output_tail": "{\"id\": \"C1\", \"observed\": {\"generic_nodes\": 1, \"collected\": 1}, \"defect_present\": false}\n"
+  },
+  {
+   "bug": "BUG-56",
+   "cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C3",
+   "before_rc": 0,
+   "after_rc_claimed": 1,
+   "rc_now": 1,
+   "matches_claim": true,
+   "output_tail": "\": [\"check_only\", \"emit_ast\", \"emit_cython\", \"generate_setup\"], \"run_build\": [\"check_only\"]}}, \"defect_present\": false}\n"
+  },
+  {
+   "bug": "BUG-57",
+   "cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C4",
+   "before_rc": 0,
+   "after_rc_claimed": 1,
+   "rc_now": 1,
+   "matches_claim": true,
+   "output_tail": "Error: Union member 'int' is a Python builtin type; pass a ctypes type (ctypes.c_int) or a \"}, \"defect_present\": false}\n"
+  },
+  {
+   "bug": "BUG-58",
+   "cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C5",
+   "before_rc": 0,
+   "after_rc_claimed": 0,
+   "rc_now": 0,
+   "matches_claim": true,
+   "output_tail": "{\"id\": \"C5\", \"observed\": {\"returned\": \"None\", \"annotation\": \"Optional\"}, \"defect_present\": true}\n"
+  },
+  {
+   "bug": "BUG-59",
+   "cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C6",
+   "before_rc": 0,
+   "after_rc_claimed": 1,
+   "rc_now": 1,
+   "matches_claim": true,
+   "output_tail": " 'e']\", \"42\": \"['a', 'b', 'c', 'd', 'e']\", \"99\": \"['a', 'b', 'c', 'd', 'e']\"}, \"distinct\": 1}, \"defect_present\": false}\n"
+  },
+  {
+   "bug": "BUG-60",
+   "cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C8",
+   "before_rc": 0,
+   "after_rc_claimed": 0,
+   "rc_now": 0,
+   "matches_claim": true,
+   "output_tail": "{\"id\": \"C8\", \"observed\": {\"node_kinds\": [\"PointerType\"], \"errors\": []}, \"defect_present\": true}\n"
+  }
+ ]
+}

@@ -1,0 +1,1262 @@
+{
+ "tree": "E:/IDEProjects/AI/Cypy",
+ "n_sources": 206,
+ "n_with_cons_decl": 16,
+ "cons_decl_total": 34,
+ "crashes": [],
+ "parse_refused": 3,
+ "runner_line": "RUNNER tree=E:\\IDEProjects\\AI\\Cypy sources=206",
+ "rows": {
+  ".fist-polish-20260926/tmp_float/probe.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  ".fist-polish-20260926/tmp_float/probe2.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  ".fist-polish-20260926/tmp_float/repro_pass8.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/_pending_build_blocks.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/_pending_type_defects.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/basic_types.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/concurrency.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/constraint_numeric.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 3
+  },
+  "examples/control_flow.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/defer.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/basics/control_flow.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/basics/hello.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/basics/types.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/basics/variables.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/boundary_cases/boundary_values.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/boundary_cases/combined_features.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/boundary_cases/composite_declarations.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/boundary_cases/exception_edges.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/boundary_cases/nested_syntax.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/boundary_cases/special_operators.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/concurrency_advanced/async_await.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/concurrency_advanced/exceptions_demo.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/concurrency_advanced/magic_properties.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/concurrency_advanced/simd_vector.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/concurrency_advanced/spawn_go.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/concurrency_advanced/union_type.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/data_structures/class_demo.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/data_structures/enum_demo.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/data_structures/struct_demo.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/data_structures/type_alias_demo.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/legacy/analyzer/scope_usage.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/legacy/analyzer/type_safety.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/legacy/codegen/codegen_basic.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/legacy/codegen/codegen_struct.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/legacy/integration/array_operations.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/legacy/integration/full_program.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/legacy/integration/recursion.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/legacy/parser/basic_syntax.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/legacy/parser/type_conversion.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/macros/macro_examples.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/memory_metaprogramming/comptime_demo.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/memory_metaprogramming/defer_demo.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/memory_metaprogramming/macros.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/memory_metaprogramming/meta_blocks.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 3
+  },
+  "examples/demos/memory_metaprogramming/pointers.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/patterns_operators/build_blocks.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/patterns_operators/extractor_patterns.cypy": {
+   "errors": [
+    "Positional pattern 'Numbers' has 2 slot(s) but type 'Numbers' unpacks only 1 at 75:14",
+    "Positional pattern 'Numbers' has 3 slot(s) but type 'Numbers' unpacks only 1 at 91:14"
+   ],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/patterns_operators/pattern_matching.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/patterns_operators/pipe_operator.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/patterns_operators/syntax_sugar.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/simd_vectors/vec_examples.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/traits_duck/duck_advanced.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 4
+  },
+  "examples/demos/traits_duck/duck_basic.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 9
+  },
+  "examples/demos/traits_duck/trait_advanced.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "examples/demos/traits_duck/trait_basic.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/type_system/union_type_examples.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/demos/upcoming_features/planned_features.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/functions.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/generic.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/generics_advanced.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/hello.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/list_comprehension.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/meta.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/metaprogramming.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/minimal_test.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/new_syntax_features.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/pipe_operator.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/pointers.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/struct_enum.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/struct_records.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/subtype_units.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "examples/test_duck.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 4
+  },
+  "examples/test_macro.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/test_meta.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "examples/test_new_features.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/test_project/geometry.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/test_project/main.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/test_project/types.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/test_union.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "examples/test_vec.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_constraint_silently_swallowed.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_constraint_value_position.cypy": {
+   "errors": [
+    "'Numeric' is a constraint, not a type: it can only appear as a generic bound 'T: Numeric'. For a usable union type write 'type Numeric = int | float'. Use 'constraint' as a bound only (SYNTAX/33 C-2.1) at 5:8",
+    "Type mismatch: expected Numeric, got int at 5:5"
+   ],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_dispatch_missing.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "ValueError: Expected RPAREN, got COLON at 4:16",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_subtype_missing.cypy": {
+   "errors": [
+    "cannot assign 'float' to 'Meter': 'Meter' is a nominal subtype of 'float'; downcast requires an explicit 'v as Meter'. A nominal type does not flow back into its base on its own -- with 'type Meter = float' both directions would pass silently, which is exactly what S-3.4 refuses at 7:5"
+   ],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/fixtures/feat_type_system/pos_inline_union_bound.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_assign.cypy": {
+   "errors": [
+    "Generic constraint violation: type 'int' does not satisfy constraint 'NumberLike' (allowed: NumberLike) for parameter 'T', in call to 'combine' declared at line 5, col 5, reported at line 9, col 13"
+   ],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_call.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_intret.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_self.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_two_types.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_via_wrapper.cypy": {
+   "errors": [
+    "Generic constraint violation: type 'int' does not satisfy constraint 'NumberLike' (allowed: NumberLike) for parameter 'T', in call to 'combine' declared at line 5, col 5, reported at line 9, col 12"
+   ],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 1
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/probe_explicit_init.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/probe_fields_only_positional.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/probe_struct_enum_nostrstatus.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/repro_caret_build_block.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/repro_deparens_canonical.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "ValueError: Expected ARROW, got INTEGER at 11:23",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/repro_deparens_in_return.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/repro_deparens_noncanonical.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/repro_subscript_chain.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/v_neg_index_list.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/v_pos_index.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/anchor02/v_str_key_chain.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_cat_int/integration/array_operations.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_cat_int/integration/full_program.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_cat_int/integration/recursion.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_fix9/analyzer/scope_usage.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_fix9/analyzer/type_safety.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_fix9/codegen/codegen_basic.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_fix9/codegen/codegen_struct.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_fix9/integration/array_operations.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_fix9/integration/full_program.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_fix9/integration/recursion.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_fix9/parser/basic_syntax.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_fix9/parser/type_conversion.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_real/analyzer/scope_usage.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_real/codegen/codegen_struct.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_real/integration/array_operations.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/demos_real/parser/type_conversion.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/analyzer/scope_usage.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/analyzer/type_safety.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/codegen/codegen_basic.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/codegen/codegen_struct.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/parser/basic_syntax.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/parser/type_conversion.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_A/demos/analyzer/scope_usage.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_A/demos/analyzer/type_safety.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_A/demos/codegen/codegen_basic.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_A/demos/codegen/codegen_struct.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_A/demos/parser/basic_syntax.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_A/demos/parser/type_conversion.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_B/demos/analyzer/scope_usage.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_B/demos/analyzer/type_safety.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_B/demos/codegen/codegen_basic.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_B/demos/codegen/codegen_struct.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_B/demos/parser/basic_syntax.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_B/demos/parser/type_conversion.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_C/demos/analyzer/scope_usage.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_C/demos/analyzer/type_safety.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_C/demos/codegen/codegen_basic.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_C/demos/codegen/codegen_struct.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_C/demos/parser/basic_syntax.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/fixed_C/demos/parser/type_conversion.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj04/geometry.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj04/types.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj05/pk2/__init__.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj05/pk2/sib2.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj05/pk3/__init__.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj05/pk3/a/b/deep.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "ValueError: Expected IDENTIFIER, got DOT_DOT at 1:6",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj05/pk3/a/top.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj05/pkg/sub/leaf.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj05/pkg/sub/sib.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj06a/app/consumer.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj06a/vendor/pkg/mod.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj06b/consumer.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj06b/left/mod.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj06b/right/mod.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj07a/lib.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj07a/main.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj07b/aa.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj07b/bb.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj08/foo/__init__.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj08/foo/bar.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj08/foo.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj08_alt/zzz_pkg/__init__.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/proj08_alt/zzz_pkg.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/projexp/pkg/sub/leaf.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/projexp/pkg/sub/sib.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/projexp/toproot.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/projexp2/app/consumer.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/projexp2/vendor/pkg/mod.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/projexp3/foo/__init__.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/projexp3/foo.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/repro02_v1.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/repro02_v2_same_lines.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/repro02_v3_extra_line.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/repro03_v1.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/repro03_v2.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/repro03_v3_added_def.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/audit_2026q3/scratch/tsuite/demos_reordered/cat/alpha.cypy": {
+   "errors": [
+    "Undefined name 'ALPHA' at 1:1",
+    "Undefined name 'SOURCE' at 1:7"
+   ],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/beartype/__init__.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/beartype/checker.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/beartype/decorator.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/beartype/types.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/pydantic/base_model.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/pydantic/errors.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/pydantic/examples_faithful.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/pydantic/fields.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/pydantic/model_faithful.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/pydantic/models.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/pydantic/registry.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/pydantic/validation.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/pydantic/validators_faithful.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/sqlalchemy_core/sqlalchemy_core.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/tenacity/tenacity.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/test_bug_fixes.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/capabilities/sql_runner.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/core/agent.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/core/components.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/core/errors.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/core/llm.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/core/registry.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/core/tool.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/core/user.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/integrations/sqlite.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/tools/run_sql.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  },
+  "Find_BUG/Vanna/tools/visualize_data.cypy": {
+   "errors": [],
+   "crash": "",
+   "parse_refused": "",
+   "cons_decls": 0
+  }
+ }
+}

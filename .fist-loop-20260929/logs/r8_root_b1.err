@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\close_r8_root2.py", line 158, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\close_r8_root2.py", line 129, in main
+    chain(b, f"R8 枝干：Ω-gate 41/41、pytest 2202 全绿、锁矩阵 5/5 承重（{REPORT.name}）")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\close_r8_root2.py", line 115, in chain
+    r, blob = call(node, tool, args)
+              ~~~~^^^^^^^^^^^^^^^^^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\close_r8_root2.py", line 93, in call
+    res = _raw(tool, args)
+  File "E:\IDEProjects\AI\Cypy\scripts\fist.py", line 114, in call
+    frame = self._recv(self._send("tools/call", {"name": tool, "arguments": arguments}),
+                       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\IDEProjects\AI\Cypy\scripts\fist.py", line 84, in _send
+    self.proc.stdin.flush()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+Exception ignored in: <_io.TextIOWrapper name=3 encoding='utf-8'>
+OSError: [Errno 22] Invalid argument

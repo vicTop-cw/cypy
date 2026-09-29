@@ -1,0 +1,7 @@
+def main() -> int:
+    let b: bytes = b"abc"
+    print(len(b))
+    print(chr(65))
+    print(ord("A"))
+    print(hex(255))
+    return 0

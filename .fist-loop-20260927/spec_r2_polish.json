@@ -1,0 +1,21 @@
+{
+ "key": "r2_polish",
+ "tag": "[loop:20260927-loop:R2-打磨]",
+ "assignee": "cypy-polisher",
+ "difficulty": "中",
+ "description": "[loop:20260927-loop:R2-打磨] 打磨（polish）R2：半径=「不改变对外语义的可验证收敛」，三件。① 给 R2-验证 指出的空白面补永久回归锁：class（非 struct）里的 @staticmethod/@classmethod 不得被注入 self、classmethod 保留显式 cls（struct 侧 18 条锁已覆盖，class 侧此前无锁）。② 清偿 BUG-42：产品码里 _visit_ExprStmt / _visit_MetaBlock 各定义两次，前一份是死代码；先用生效性证据（类字典里的 co_firstlineno、AST 同名计数、两份函数体的行数差）定哪份生效，删除被遮蔽的那两份，再跑三套基线证明行为未变。③ 机制化：新增一条结构判据（同一类体内方法名不得重复定义），让 BUG-42 的形状回不来。禁止：动既有测试的断言或数量（只能加不能减）、全仓 formatter 提交（BUG-50/52 的坑）、改 PROJECT-SPEC/SYNTAX 冻结语义、git add/commit/push。开关 omega/laya/issue_up/call_log 全开，基线只升不降，收口前逐条给'什么现象不算证明'。",
+ "laws": [
+  "打磨面清点与半径声明（本轮只碰这三件，列明不碰项）",
+  "class 侧非绑定方法补锁：新增用例 + 收集数下限 + 与 struct 侧锁的分栏",
+  "BUG-42 生效性证据：类字典 co_firstlineno、AST 同名 ClassDef/FunctionDef 计数、两份体长",
+  "死代码删除的可逆性与行为等价论证：删除前后 AST 顶层符号集不变、三套基线不降",
+  "结构判据：同一类体内方法名重复 ⇒ 直接失败（机制化，BUG-42 回不来）",
+  "账本回写：BUG-42 追加 FIXED 段并挂到本轮枝干",
+  "作用域化 lint 与 formatter 债分栏（亲笔行零违例，142/156 存量债不记在本单名下）",
+  "打磨报告与转结（未做项、交裁决项、时间盒实测）"
+ ],
+ "fingerprint": {
+  "必须": "新增用例数与收集数下限同窗实测（pytest collected 必须 ≥ 1886+新增数）；死代码删除给出'删除前后 ast 顶层符号集合相同'与三套基线末行逐字；结构判据要能自己被抓到（配一条合成违例：临时同类两名方法必须让判据红）；BUG-42 的 FIXED 段挂在 T0r58 枝干且能从 sqlite 回读；HEAD 仍 17d68b4",
+  "禁止": "改/删既有测试断言；把 142 个文件的 formatter 债一次清掉（不可复审的大 diff）；动冻结文档；git add/commit/push；用行为基线全绿代替生效性证据；重跑非幂等的入账/上卷脚本"
+ }
+}

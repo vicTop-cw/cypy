@@ -1,0 +1,23 @@
+# Meta block 测试
+#
+# T0r258.4.2：原来只有一个返回 0 的 test_meta()，运行成功但零输出，golden 因此
+# 是冻结的崩溃回溯。现在让 meta 里声明的 duck 约束真正被一个泛型函数使用并打印，
+# 约束不成立时应当在编译期报错而不是无声通过。
+# 注意：约束求解器目前只认 `def main` 里的调用点，把同样的调用挪进别的函数就会
+# 误报 `Generic constraint violation`（Find_BUG/BUGS.md BUG-030，归 constraint/subtype
+# 那条线），所以这里刻意只在 main() 里调用 combine。
+
+meta:
+    duck NumberLike:
+        a + b -> Self
+
+def combine<T: NumberLike>(a: T, b: T) -> T:
+    return a + b
+
+def main() -> int:
+    print(f"meta duck combine int = {combine(20, 22)}")
+    print(f"meta duck combine float = {combine(1.5, 2.25)}")
+    return 0
+
+if __name__ == "__main__":
+    main()

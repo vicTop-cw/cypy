@@ -1,0 +1,262 @@
+{
+  "note": "派单与车道回执的落盘记录：scope_declared 是我派单时亲笔写的文件半径，files_reported/cards/verbatim 是车道自报，两者都要被 fix_r5_rc.py 拿 git diff 与 mtime 复算，报了就≠改了。",
+  "ring_tag": "[loop:20260927-loop:R5-修复]",
+  "lanes": [
+    {
+      "lane": "lane-lexer",
+      "status": "completed",
+      "scope_declared": [
+        "cypyc/parser/lexer.py",
+        "cypyc/parser/parser.py",
+        "tests/parser/"
+      ],
+      "cards": [
+        79,
+        75
+      ],
+      "files_reported": [
+        "cypyc/parser/lexer.py",
+        "cypyc/parser/parser.py",
+        "tests/parser/test_r5_fix_lexer_tokens.py"
+      ],
+      "red_log": "r5_fix_lexer_lock.red.log",
+      "verbatim": [
+        "AssertionError: `a **= y` 走不到出码：ValueError: Unexpected token ASSIGN at 2:9",
+        "AssertionError: TokenType 缺 XOR：`^` 只作 BUILD_VALUE ⇒ 异或无 token 可发",
+        "AssertionError: `~a` 仍解析失败：ValueError: Unexpected token TILDE at 2:12"
+      ],
+      "corrections": [
+        "BUG-75 在 R5-寻虫 的判据件里没有对应 case（该单是 R4-推进立的），账本给的复跑入口 advance_r4_scope_face.py 会回写判据件，与并发只读约束冲突，故未跑；钉在 declared_rejected 的两格要指挥官亲自复跑关账",
+        "`~` 的根因不在词法器（早就发 TILDE），在解析器 _parse_unary_expr 没有分支 ⇒ 只改了 parser.py",
+        "`^=` 的静默产错码没顺手动（另单在册），并用对照锁钉住"
+      ],
+      "style_note": "cypyc/parser/lexer.py 在 HEAD 就带 38 条 flake8 违规；车道做的是逐条比对：改后违规多重集与 HEAD 完全相同（新增 ~100 行零违规），未整档重排"
+    },
+    {
+      "lane": "lane-tests",
+      "status": "completed",
+      "scope_declared": [
+        "tests/test_codegen_verification.py",
+        "tests/test_unit_test_modes.py"
+      ],
+      "cards": [
+        77
+      ],
+      "files_reported": [
+        "tests/test_codegen_verification.py",
+        "tests/test_unit_test_modes.py"
+      ],
+      "red_log": "",
+      "verbatim": [
+        "AssertionError: ['Compilation error: Expected COLON, got INTEGER at 2:22']",
+        "AssertionError: [\"Undefined name 'asyncio' at 2:8\"]",
+        "AssertionError: ['Compilation error: Unexpected token COMMA at 1:33']",
+        "AssertionError: [\"Undefined name 'cdef' at 2:5\", \"Undefined name 'cdef' at 3:5\"]"
+      ],
+      "corrections": [
+        "7 处空守卫里收了 3 处（无条件断言化），4 处按纪律保留守卫并逐条交裁决：comptime / go / typealias / pointer",
+        "modes:105 的 else 分支与上一行是同一条断言，去分支不减覆盖；modes:128 实测 success=True，断言现在是承重的",
+        "advance_r4_dormant.py 复跑后 vacuous_guards.sites 实测 4 条（非 0），该件的两条 refuse 是本轮收口的直接后果"
+      ],
+      "style_note": "两文件 black 幂等、flake8 rc=0；HEAD 基线本有 49 条违规，规整 46 条 W293 + 3 条既存违规，无断言被删/放宽/skip"
+    },
+    {
+      "lane": "lane-analyzer",
+      "status": "completed",
+      "scope_declared": [
+        "cypyc/analyzer/",
+        "tests/analyzer/"
+      ],
+      "cards": [
+        81,
+        82,
+        83,
+        84
+      ],
+      "files_reported": [
+        "cypyc/analyzer/comptime_evaluator.py",
+        "cypyc/analyzer/type_checker.py",
+        "cypyc/analyzer/scope_analyzer.py",
+        "tests/analyzer/test_r5_fix_comptime_types.py"
+      ],
+      "red_log": "",
+      "verbatim": [
+        "AssertionError: 返回值里仍有 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19))]",
+        "AssertionError: 求不出来的元素被当成值返回了：[Name(line=2, col=16), Constant(line=2, col=28)]",
+        "AssertionError: 求值侧没有结构化的未实现诊断类型 cypyc.analyzer.comptime_evaluator.ComptimeNotImplementedError",
+        "AssertionError: 用户拿不到「未实现」措辞：[]",
+        "AssertionError: 文档工作例的 *char 返回位被拒：[\"Undefined name 'char' at 1:43\"]"
+      ],
+      "corrections": [
+        "BUG-82 的根因不在分析器：求值侧值实测正确（a\"b），坏在 cypyc/codegen/cython_generator.py 的 _visit_ComptimeStmt 直插 f'\"{result}\"'，该文件本车道禁改 ⇒ 未修",
+        "BUG-83 残留：cypyc/parser/macro_expander.py:140-144 对块形式 ComptimeStmt.expr 为 list 仍抛 'list' object has no attribute '__dict__'；CLI 两张脸被分析器诊断提前拦住所以用户看不到",
+        "BUG-84 定位与账本机制栏不同：Undefined name 'char' 实出自 scope_analyzer.py:697 _visit_Name（注解位），type_checker 那侧只是同表缺名不报错 ⇒ 两条通道一起补齐",
+        "接口变更通告：evaluate_comptime() 对块形式改为抛 ComptimeNotImplementedError（ValueError 子类）而不是返回 None，生成侧须显式 except 该类型"
+      ],
+      "style_note": "亲笔行 flake8 违规 0；整档计数 comptime_evaluator 107→96、type_checker 323、scope_analyzer 29 未增；未整档 black 重排（仓库 36/41 个 cypyc 文件本就不 black-clean）"
+    },
+    {
+      "lane": "lane-codegen",
+      "status": "failed：达到 150 轮上限，没有交付报告",
+      "scope_declared": [
+        "cypyc/codegen/",
+        "tests/codegen/"
+      ],
+      "cards": [
+        74,
+        76,
+        78,
+        80,
+        81,
+        82,
+        90
+      ],
+      "cards_source": "由 tests/codegen/test_r5_fix_codegen.py 里的 def test_bug<号>_ 标记现读，不是回忆",
+      "files_reported": [],
+      "red_log": "",
+      "measured_by_commander": [
+        "python -X utf8 -m pytest tests/codegen/test_r5_fix_codegen.py -q → 36 passed in 1.75s（08:42Z 亲跑）",
+        "cypyc/codegen/cython_generator.py mtime 2026-09-28T16:33（本地）＝ 本环窗口内有改动",
+        "自报是否真改了行为不采信：交 fix_r5_locks.py 在 HEAD 快照树复算（红=真改了，绿=锁是装饰）"
+      ],
+      "verbatim": [],
+      "corrections": [
+        "该车道最后一条自述是「Now implementing the fixes. BUG-78 first (precedence table + paren rule):」⇒ 交付面必须以盘上实测为准，不得按「它说它在做」入账"
+      ],
+      "style_note": "无交付报告 ⇒ 风格门由 fix_r5_drivers_lint / 全量复算兜底"
+    },
+    {
+      "lane": "lane-cli-hook",
+      "status": "completed",
+      "scope_declared": [
+        "cypyc/cli.py",
+        "cypy_hook/",
+        "tests/cli/"
+      ],
+      "cards": [
+        73,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "files_reported": [
+        "cypyc/cli.py",
+        "cypy_hook/hook.py",
+        "tests/cli/test_r5_fix_cli_hook.py"
+      ],
+      "red_log": "",
+      "verbatim": [
+        "AssertionError: 写在子命令前的 -o 没生效（仍写 output/）：… [2/3] Output: output … Output: output\\hello.pyx",
+        "AssertionError: 带 BOM 的 #!bin cypy 首行没被认出来  assert False is True",
+        "AssertionError: BOM 版被 import hook 静默放行（既不编译也不给诊断）  assert None is not None",
+        "AssertionError: 回执报「已清除」，产物却原地留着：[…marker_ok.cp313-win_amd64.pyd, …marker_ok.c, …setup.py, …build\\marker_ok.obj]",
+        "Failed: clear-cache 碰到删不动的文件直接抛裸异常，用户拿不到原因：PermissionError(13, …)",
+        "AssertionError: 仍然只用空清单交代失败：… Failed modules (0):[FAIL] Build failed in 0.04s（entry 名 nosuch 全文不出现）",
+        "AssertionError: entry 被拒却回报成功：… [INFO] Found 3 modules … [OK] All modules passed type checking  assert 0 != 0"
+      ],
+      "corrections": [
+        "BUG-88 症状 2「编译顺序打印的是未过滤全集」没修：result.compilation_order 由 cypyc/project/project_compiler.py:722 填全图拓扑序，那档不在本车道 ⇒ 本单只算修一半，账本机制栏点名的 project_compiler 面未动",
+        "BUG-86 端到端「loader=ExtensionFileLoader」证据未钉：按纪律不触发 C 工具链，锁只到 is_cypy_file/find_spec + transpile 面",
+        "BUG-85 的 -v 在 compile/build 全量面的完整效果未钉，锁用 transpile --check-only 与 build --check-only 的日志通道验同一根因",
+        "H06 探针判据过粗：hunt_r5_cli_face.k06 用 \"3\" in out 判 ignored，修后仍会打 [INFO] Found 3 modules（发现数属实）⇒ B.rerun('H06') 可能仍报 ignored，要改用逐模块行复测",
+        "BUG-73（本车道认领的第六张）没有交付条目：报告只逐张写了 85/86/87/88/89 ⇒ 73 的处置以盘上实测与锁为准",
+        "BUG-73 记入 undelivered_cards：本轮实测（两次 compile_to_pyd 连跑）仍是「先写缓存命中、再写缓存未命中」且第二次 .pyd 被重写 ⇒ 本环对 73 没有交付，那条只查账本在场性的锁（test_bug73_card_present_in_ledger）不算代码级锁"
+      ],
+      "measured_by_commander": [
+        "自报窄跑：tests/cli/test_r5_fix_cli_hook.py → 21 passed in 4.32s（以 fix_r5_locks.py 的复算为准）",
+        "自报牵连面：tests/cli + test_cli/test_hook/test_dynamic_awareness/test_polish_20260926(_pass7)/test_project_compiler/test_loop_20260927_polish_r3 → 149 passed；另 test_stage5+test_hot_reload → 33 passed；全量/自研套件/e2e 未跑（由 fix_r5_baselines.py 补）"
+      ],
+      "style_note": "亲笔行 black 零意见、flake8 零违例；整档存量违例 cli.py 81→74、hook.py 122→117（未整档重排，避免淹没真实 diff）；新测试文件 black/flake8 零违例",
+      "undelivered_cards": [
+        73
+      ]
+    },
+    {
+      "lane": "lane-commander",
+      "status": "completed",
+      "scope_declared": [
+        "tests/test_loop_20260927_advance_r4.py"
+      ],
+      "cards": [
+        76
+      ],
+      "files_reported": [
+        "tests/test_loop_20260927_advance_r4.py"
+      ],
+      "red_log": "fix_r5_baselines.out",
+      "verbatim": [
+        "FAILED tests/test_loop_20260927_advance_r4.py::test_defer_declared_shape[defer_two_exits]",
+        "AssertionError: assert [2, 2] == [2, 1]（At index 1 diff: 2 != 1）",
+        "tests\\test_loop_20260927_advance_r4.py:330: AssertionError"
+      ],
+      "corrections": [
+        "这不是回归而是 BUG-76 修好的直接后果：该格的注释自己写着「修好后这两格会红 ⇒ 与关账同批走，不许悄悄把钉住的形状改掉」，故按关账同批翻档",
+        "翻档方式＝把这一格的判定档从 pinned_defect(exits=2, cleanups=1) 换成 all_exits_cleaned(exits=2, cleanups=2)，并逐出口校验 return 前一行确有清理；旧档只数总次数，新档要求每个出口都有清理 ⇒ 只升不降",
+        "pinned_defect 分支保留（判定档机制不给未来钉住的缺陷拆掉），但本环已无该档的格",
+        "实测产物（2026-09-28 亲跑 transpile）：f.close() 注入在两个 return 之前，各一次"
+      ],
+      "measured_by_commander": [
+        "翻档前：pytest tests/test_loop_20260927_advance_r4.py::test_defer_declared_shape -q → 1 failed, 3 passed",
+        "翻档后：同一节点集 → 4 passed in 1.69s",
+        "合成违例对照：把「嵌套 return 前没有清理」的形状喂给新分支 → 被抓到（line 3 prev='if flag:'），证明新档会失败不是恒绿",
+        "flake8：新增行 0 违例；整档既存 E501 18 条/W391 1 条未增未减（未整档重排）"
+      ],
+      "style_note": "该文件在 HEAD 就非 black-clean（1 file would be reformatted），按仓库口径只做定点改动"
+    },
+    {
+      "lane": "lane-commander-identity",
+      "status": "completed",
+      "scope_declared": [
+        "BUG-90 的另一半：调用方把源路径交给生成器（hook + project 两个入口）",
+        "BUG-91：接上真路径之后产物头注里的反斜杠没转义 ⇒ Cython 就地语法错误（本环新入账）"
+      ],
+      "cards": [
+        90,
+        91
+      ],
+      "files_reported": [
+        "cypyc/codegen/cython_generator.py",
+        "cypy_hook/hook.py",
+        "cypyc/project/project_compiler.py",
+        "tests/codegen/test_r5_fix_codegen.py"
+      ],
+      "verbatim": [
+        "判据自证未过：自研套件达地板 47/47（实得 46/47）",
+        "判据自证未过：自研套件 rc=0（实得 1）",
+        "\"three_systems_green\": [true, false, true]",
+        "\"suite\": {\"Total\": 47, \"Passed\": 46, \"Failed\": 1, \"Skipped\": 0}",
+        "BASELINES_EXIT=1",
+        "E       AssertionError:",
+        "E         Cython module compiled from Cypy source",
+        "E         Source file: C:\\Users\\who\\proj\\main.cypy",
+        "E       assert '\\\\\\\\Users' in '\\nCython module compiled from Cypy source\\nSource file: C:\\\\Users\\\\who\\\\proj\\\\main.cypy\\n'",
+        "tests\\codegen\\test_r5_fix_codegen.py:503: AssertionError",
+        "FAILED tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal",
+        "（节点 test_bug91_windows_path_in_header_docstring_is_a_valid_literal，摘除态实测）",
+        "E           AssertionError: assert 'main' in []",
+        "E            +  where [] = ProjectCompileResult(success=False, compiled_modules=[], failed_modules=['main'], errors={'main': ['Build failed: honS...cted=[], total_time=1.5839195251464844, type_registry_stats={'modules': ",
+        "tests\\test_project_compiler.py:161: AssertionError",
+        "FAILED tests/test_project_compiler.py::TestProjectCompiler::test_single_module_compile",
+        "（节点 test_single_module_compile，摘除态实测）"
+      ],
+      "red_log": ".fist-loop-20260927/fix_r5_book91.json",
+      "corrections": [
+        "起因不是「套件坏了一条」而是 BUG-90 只修了一半：卡片机制栏自己写着「CythonGenerator(source_file=None) 的默认值从未被任何调用方覆盖」，而 codegen 车道的锁全部直接构造生成器（`_lower(..., source_file=...)`），打不到 hook/project 这两个真入口 ⇒ 删掉伪造之后，走文件入口的产物直接没有身份常量",
+        "接线之后又暴露一条：产物头注把 Windows 路径原文写进模块 docstring，单反斜杠被读成 unicode 转义，项目模式 cythonize 就地 CompileError（新单 BUG-91，同环已修）",
+        "当场套件红字（本会话内实测，非盘上件）：    ✗ codegen_module_magic_attrs: failed /       Message: generated Cython lacks `__name__ = ...` assignment",
+        "认领表按法①「从盘上反解」重跑一次：planned_ids 21→22（只多 91），ring_new_ids 仍是寻虫环那 13 个键，12/12 自证零红；重跑前的件留在 fix_r5_snap/intake_before_rerun.json",
+        "BUG-91 不是寻虫环 13 张里的：report_bug 返回 BUG-91，账本 90→91 条、sqlite bugs 树 +1、call_log report_bug +1（三向见件 fix_r5_book91.json）"
+      ],
+      "measured_by_commander": [
+        "双向 A/B（件里存着三段全文）：摘除前两条锁都绿 → 摘除后两条都红 → 装回后都绿，生成器按字节还原 sha256 前 12 位与件里 generator_sha 一致",
+        "自研套件 codegen 档：接线前 9 项 1 failed（codegen_module_magic_attrs），接线后 9/9",
+        "项目模式实测：临时工程 main.cypy 走 build() → SUCCESS True / COMPILED ['main']，产物头注是成对反斜杠、`__name__ = 'main'`、`__file__ = '<真路径>'`（探针 .fist-loop-20260927/fix_r5_snap/probe_project_identity.py）",
+        "lint：cypy_hook/hook.py 违例 122→116（只减不增），cypyc/project/project_compiler.py 本趟新增 0 条（既存 12 条是环内他趟留下的），锁文件新增行 0 违例；产品码只做定点改动，未整档重排",
+        "BUG-90 的两条既有锁（hook 无路径不伪造 / 有路径真身份）与新增两条同档跑过：7 passed"
+      ],
+      "style_note": "三个产品文件在 HEAD 就非 black-clean；black 想重排的锁文件 274/424 行是本轮他趟留下的既存形，本趟未顺手改"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+[{"tool": "report_bug", "args": {"project_dir": "E:\\IDEProjects\\AI\\Cypy", "summary": "probe: absolute project_dir must be rejected", "detail": "probe only — expected bug_project_dir_ok rejection, no ledger write", "severity": "low", "publish_task": false}}]

@@ -1,0 +1,66 @@
+{
+ "started_z": "2026-09-29T06:01:42Z",
+ "ledger_ids_before": [
+  1,
+  117,
+  117
+ ],
+ "ledger_bytes_before": 343080,
+ "filed": [
+  {
+   "key": "R10-CALLSITE-CHECKER",
+   "reply_verbatim": "{\"bug_id\": \"BUG-118\", \"id\": \"BUG-118\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  },
+  {
+   "key": "R10-GENERIC-CLASS-PARSE",
+   "reply_verbatim": "{\"bug_id\": \"BUG-119\", \"id\": \"BUG-119\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  },
+  {
+   "key": "R10-TRAIT-ABSTRACT-PARSE",
+   "reply_verbatim": "{\"bug_id\": \"BUG-120\", \"id\": \"BUG-120\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  },
+  {
+   "key": "R10-BRACKET-CALLSITE",
+   "reply_verbatim": "{\"bug_id\": \"BUG-121\", \"id\": \"BUG-121\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  },
+  {
+   "key": "R10-TYPEARG-NOT-VISITED",
+   "reply_verbatim": "{\"bug_id\": \"BUG-122\", \"id\": \"BUG-122\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  }
+ ],
+ "skipped_existing": [],
+ "refusals": [],
+ "probe": {
+  "bug_list_shape": [
+   "bugs",
+   "count",
+   "note",
+   "open_with_linked_done",
+   "path",
+   "project_dir",
+   "resolved_path"
+  ],
+  "bug_list_rows": 118
+ },
+ "ledger_ids_after": [
+  1,
+  122,
+  122
+ ],
+ "new_ids": [
+  118,
+  119,
+  120,
+  121,
+  122
+ ],
+ "ledger_grew_by_report_bug": true,
+ "keys_present_after": {
+  "R10-CALLSITE-CHECKER": true,
+  "R10-GENERIC-CLASS-PARSE": true,
+  "R10-TRAIT-ABSTRACT-PARSE": true,
+  "R10-BRACKET-CALLSITE": true,
+  "R10-TYPEARG-NOT-VISITED": true
+ },
+ "call_log_error_rows": 0
+}

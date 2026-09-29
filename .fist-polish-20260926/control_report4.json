@@ -1,0 +1,82 @@
+{
+ "report": "20260926.19.49.33.md",
+ "variants": 6,
+ "baseline_ok": true,
+ "caught": 6,
+ "missed": [],
+ "rows": [
+  {
+   "variant": "baseline_unchanged",
+   "rc": 0,
+   "caught": true,
+   "reds": [],
+   "expect": "基线副本必须 rc=0"
+  },
+  {
+   "variant": "hide_refusal",
+   "rc": 1,
+   "caught": true,
+   "matched": [
+    "每一条被服务端拒绝的原始文案"
+   ],
+   "reds": [
+    "每一条被服务端拒绝的原始文案都要逐字出现在报告里（红线「失败原样上报」），缺 ['T0:execute：非法执行: 任务处于 [待验收]', 'T0:submit：非法迁移: submit 要求状态 [执行中]，当前是 [待验收]']"
+   ],
+   "expect": "删掉披露行 → 必须判「拒绝文案没逐字进正文」"
+  },
+  {
+   "variant": "fake_closed",
+   "rc": 1,
+   "caught": true,
+   "matched": [
+    "### FIXED"
+   ],
+   "reds": [
+    "bugs.md 里带 ### FIXED 段的条目要等于库里 已完成 的单，差异 ['BUG-13']",
+    "闭环表标「入账未修」的单要等于库里非 已完成 的单（['BUG-13'] vs []）",
+    "每张 已完成 的单都要有 verify→已完成 的原始回复，缺 ['BUG-13']"
+   ],
+   "expect": "把未修的单改成已完成 → 必须与 bugs.md 的 FIXED 段对不上"
+  },
+  {
+   "variant": "drop_map5",
+   "rc": 1,
+   "caught": true,
+   "matched": [
+    "bugs.md 条目集合",
+    "一一对应"
+   ],
+   "reds": [
+    "闭环表逐单一行且仅一行：表内 ['BUG-1', 'BUG-10', 'BUG-11', 'BUG-12', 'BUG-13', 'BUG-2', 'BUG-3', 'BUG-4', 'BUG-5', 'BUG-6', 'BUG-7', 'BUG-8', 'BUG-9'] vs 入账 ['BUG-1', 'BUG-10', 'BUG-11', 'BUG-12', 'BUG-2', 'BUG-3', 'BUG-4', 'BUG-5', 'BUG-6', 'BUG-7', 'BUG-8', 'BUG-9']",
+    "只读查库要与入账映射一一对应：逐行 13/声明 13 vs 映射 12，差异 ['BUG-13']",
+    "bugs.md 条目集合要与入账映射同集合：['BUG-1', 'BUG-10', 'BUG-11', 'BUG-12', 'BUG-13', 'BUG-2', 'BUG-3', 'BUG-4', 'BUG-5', 'BUG-6', 'BUG-7', 'BUG-8', 'BUG-9'] vs ['BUG-1', 'BUG-10', 'BUG-11', 'BUG-12', 'BUG-2', 'BUG-3', 'BUG-4', 'BUG-5', 'BUG-6', 'BUG-7', 'BUG-8', 'BUG-9']"
+   ],
+   "expect": "少读一份入账映射 → 集合必须不齐"
+  },
+  {
+   "variant": "swap_marker",
+   "rc": 1,
+   "caught": true,
+   "matched": [
+    "闭环表标「入账未修」"
+   ],
+   "reds": [
+    "闭环表标「入账未修」的单要等于库里非 已完成 的单（['BUG-1'] vs ['BUG-13']）"
+   ],
+   "expect": "把「入账未修」挪到已闭环的单上 → 集合必须不一致"
+  },
+  {
+   "variant": "poison_verify",
+   "rc": 1,
+   "caught": true,
+   "matched": [
+    "四步生命周期"
+   ],
+   "reds": [
+    "修复单的四步生命周期不许带 __error__：['BUG-1:verify']",
+    "每一条被服务端拒绝的原始文案都要逐字出现在报告里（红线「失败原样上报」），缺 ['BUG-1:verify：对照注入的拒绝']"
+   ],
+   "expect": "生命周期回复里注入拒绝 → 必须被点名"
+  }
+ ]
+}

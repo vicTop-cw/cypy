@@ -1,0 +1,259 @@
+{
+ "started_utc": "2026-09-29T03:16:04+00:00",
+ "ticks": [
+  {
+   "mode": "advance",
+   "ok": false,
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "mode": "bugfind",
+   "ok": false,
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "mode": "fix_and_merge",
+   "ok": false,
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "mode": "verify",
+   "ok": false,
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "mode": "polish",
+   "ok": false,
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "mode": "advance",
+   "ok": false,
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  }
+ ],
+ "rejections": {
+  "T0r112.3.1": "refused",
+  "T0r112.3.2": "refused",
+  "T0r112.3.3": "refused",
+  "T0r112.4.1": "refused",
+  "T0r112.4.2": "refused",
+  "T0r112.4.3": "refused",
+  "T0r112.5.1": "refused",
+  "T0r112.5.2": "refused",
+  "T0r112.5.3": "refused",
+  "T0r112.6.1": "refused",
+  "T0r112.6.2": "refused",
+  "T0r112.6.3": "refused",
+  "T0r112.7.1": "refused",
+  "T0r112.7.2": "refused",
+  "T0r112.7.3": "refused"
+ },
+ "root": {
+  "T0r112": {
+   "status": "拆分中",
+   "assignee": null,
+   "reply_keys": [
+    "assignee",
+    "cleanup_mode",
+    "completed_by",
+    "created_at",
+    "deliverable",
+    "depends_on",
+    "depth",
+    "description",
+    "id",
+    "importance",
+    "is_leaf",
+    "namespace",
+    "parent_id",
+    "priority",
+    "project_dir",
+    "split_n",
+    "status",
+    "updated_at"
+   ]
+  }
+ },
+ "refusals": [
+  {
+   "node": "cypy-selfdrive-20260929",
+   "tool": "loop_tick",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "node": "cypy-selfdrive-20260929",
+   "tool": "loop_tick",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "node": "cypy-selfdrive-20260929",
+   "tool": "loop_tick",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "node": "cypy-selfdrive-20260929",
+   "tool": "loop_tick",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "node": "cypy-selfdrive-20260929",
+   "tool": "loop_tick",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "node": "cypy-selfdrive-20260929",
+   "tool": "loop_tick",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-20260929\"}}"
+  },
+  {
+   "node": "T0r112.3.1",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.3.2",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.3.3",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.4.1",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.4.2",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.4.3",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.5.1",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.5.2",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.5.3",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.6.1",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.6.2",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.6.3",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.7.1",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.7.2",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  },
+  {
+   "node": "T0r112.7.3",
+   "tool": "reject",
+   "reply": "{\"__error__\": {\"code\": -32000, \"message\": \"非法打回: 任务处于 [待领取]，仅待验收可打回\"}}"
+  }
+ ],
+ "tree": {
+  "rows": 29,
+  "by_status": {
+   "拆分中": 6,
+   "待验收": 2,
+   "已完成": 6,
+   "待领取": 15
+  },
+  "pending_leaves": 15
+ },
+ "recheck": {
+  "tasks_by_status": {
+   "已完成": 6,
+   "待领取": 15,
+   "待验收": 2,
+   "拆分中": 6
+  },
+  "call_log_this_round": {
+   "claim": {
+    "ok": 6,
+    "refused": 0
+   },
+   "execute": {
+    "ok": 6,
+    "refused": 12
+   },
+   "get": {
+    "ok": 37,
+    "refused": 0
+   },
+   "loop_create": {
+    "ok": 1,
+    "refused": 1
+   },
+   "loop_tick": {
+    "ok": 0,
+    "refused": 6
+   },
+   "omega_result_verify": {
+    "ok": 6,
+    "refused": 12
+   },
+   "omega_spec_create": {
+    "ok": 6,
+    "refused": 12
+   },
+   "omega_spec_review": {
+    "ok": 6,
+    "refused": 0
+   },
+   "reject": {
+    "ok": 0,
+    "refused": 15
+   },
+   "run_check": {
+    "ok": 18,
+    "refused": 0
+   },
+   "submit": {
+    "ok": 6,
+    "refused": 12
+   },
+   "task_plan_deep": {
+    "ok": 1,
+    "refused": 0
+   },
+   "verify": {
+    "ok": 6,
+    "refused": 12
+   }
+  },
+  "call_log_rows": 181,
+  "queried_at_utc": "2026-09-29T03:16:04+00:00"
+ }
+}

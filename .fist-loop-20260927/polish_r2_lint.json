@@ -1,0 +1,26 @@
+{
+ "limit": 100,
+ "refuse": [],
+ "authored_file": {
+  "rel": "tests/test_polish_20260927_r2.py",
+  "violations": [],
+  "lines_checked": 147
+ },
+ "product_files": {
+  "cypyc/codegen/cython_generator.py": {
+   "added_lines": 0,
+   "removed_lines": 8,
+   "debt_before": 418,
+   "debt_after": 418
+  },
+  "cypyc/analyzer/scope_analyzer.py": {
+   "added_lines": 0,
+   "removed_lines": 12,
+   "debt_before": 47,
+   "debt_after": 44
+  }
+ },
+ "selftest": "selfprobe-caught",
+ "selftest_negative": "clean-not-flagged",
+ "authored_lines_checked": 147
+}

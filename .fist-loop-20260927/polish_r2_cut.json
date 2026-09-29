@@ -1,0 +1,64 @@
+{
+  "dry_run": false,
+  "bound_lines": {
+    "_visit_ExprStmt": 2084,
+    "_visit_ExprStmt__module": "cypyc.codegen.cython_generator",
+    "_visit_MetaBlock": 926,
+    "_visit_MetaBlock__module": "cypyc.analyzer.scope_analyzer"
+  },
+  "post_bound_lines": {
+    "_visit_ExprStmt": 2076,
+    "_visit_ExprStmt__module": "cypyc.codegen.cython_generator",
+    "_visit_MetaBlock": 914,
+    "_visit_MetaBlock__module": "cypyc.analyzer.scope_analyzer"
+  },
+  "measures": {
+    "bug42_expr_stmt": {
+      "rel": "cypyc/codegen/cython_generator.py",
+      "qualified": "CythonGenerator._visit_ExprStmt",
+      "bound_line": 2084,
+      "def_lines_before": [
+        1418,
+        2084
+      ],
+      "removed_range": [
+        1418,
+        1425
+      ],
+      "removed_lines": 8,
+      "swallowed_trailing_blank": true,
+      "removed_sha8": "659af698",
+      "removed_chars": 299,
+      "removed_text": "    def _visit_ExprStmt(self, node: Any) -> None:\n        \"\"\"表达式语句：解包内部节点并写出（使用 _visit 以正确分发语句型节点）\"\"\"\n        inner = getattr(node, 'value', None)\n        if inner is not None:\n            self._visit(inner)\n        elif getattr(node, 'value', None) is not None:\n            self._visit(node.value)\n",
+      "after_def_lines": [
+        2076
+      ],
+      "after_bound_line": 2076,
+      "applied": true
+    },
+    "bug42_meta_block": {
+      "rel": "cypyc/analyzer/scope_analyzer.py",
+      "qualified": "ScopeAnalyzer._visit_MetaBlock",
+      "bound_line": 926,
+      "def_lines_before": [
+        484,
+        926
+      ],
+      "removed_range": [
+        484,
+        495
+      ],
+      "removed_lines": 12,
+      "swallowed_trailing_blank": true,
+      "removed_sha8": "fee43efe",
+      "removed_chars": 439,
+      "removed_text": "    def _visit_MetaBlock(self, node: Any) -> None:\n        \"\"\"处理 meta 块，确保只能在模块顶级定义\"\"\"\n        if self.current_scope.kind != \"module\":\n            self.errors.append(f\"meta block can only be defined at module level (line {node.line}, col {node.col})\")\n            return\n        \n        # 设置在 meta block 中标志\n        self.in_meta_block = True\n        for stmt in node.body:\n            self._visit(stmt)\n        self.in_meta_block = False\n",
+      "after_def_lines": [
+        914
+      ],
+      "after_bound_line": 914,
+      "applied": true
+    }
+  },
+  "refuse": []
+}

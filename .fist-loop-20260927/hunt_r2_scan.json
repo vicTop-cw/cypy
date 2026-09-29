@@ -1,0 +1,214 @@
+{
+ "refuse": [],
+ "cli_face": {
+  "rows": [
+   {
+    "sub": "transpile",
+    "help_rc": 0,
+    "usage": "usage: cypyc transpile [-h] [-o OUTPUT] [-v] [--emit-code] [--bridge]",
+    "invalid_choice": "",
+    "flags": [
+     "bridge",
+     "check-only",
+     "emit-ast",
+     "emit-code",
+     "emit-cython",
+     "generate-setup",
+     "help",
+     "output",
+     "verbose"
+    ]
+   },
+   {
+    "sub": "compile",
+    "help_rc": 0,
+    "usage": "usage: cypyc compile [-h] [-o OUTPUT] [-v] [--bridge] source",
+    "invalid_choice": "",
+    "flags": [
+     "bridge",
+     "help",
+     "output",
+     "verbose"
+    ]
+   },
+   {
+    "sub": "build",
+    "help_rc": 0,
+    "usage": "usage: cypyc build [-h] [-o OUTPUT] [-v] [--entry ENTRY] [--check-only]",
+    "invalid_choice": "",
+    "flags": [
+     "check-only",
+     "entry",
+     "help",
+     "output",
+     "verbose"
+    ]
+   },
+   {
+    "sub": "run",
+    "help_rc": 0,
+    "usage": "usage: cypyc run [-h] [-o OUTPUT] [-v] source [func]",
+    "invalid_choice": "",
+    "flags": [
+     "help",
+     "output",
+     "verbose"
+    ]
+   },
+   {
+    "sub": "watch",
+    "help_rc": 0,
+    "usage": "usage: cypyc watch [-h] [-o OUTPUT] [-v] [--debounce DEBOUNCE] [source]",
+    "invalid_choice": "",
+    "flags": [
+     "debounce",
+     "help",
+     "output",
+     "verbose"
+    ]
+   },
+   {
+    "sub": "hook",
+    "help_rc": 0,
+    "usage": "usage: cypyc hook [-h] [-o OUTPUT] [-v] [--transpile-only] [--compile]",
+    "invalid_choice": "",
+    "flags": [
+     "compile",
+     "eval",
+     "help",
+     "output",
+     "run",
+     "transpile-only",
+     "verbose"
+    ]
+   }
+  ],
+  "subs": [
+   "transpile",
+   "compile",
+   "build",
+   "run",
+   "watch",
+   "hook"
+  ]
+ },
+ "cross_module_build": {
+  "build_rc": 0,
+  "build_err_first": "",
+  "transpile_rc": 0,
+  "build_emit_bytes": 791,
+  "transpile_emit_bytes": 791,
+  "build_typed_signature": false,
+  "transpile_typed_signature": false,
+  "cross_module_differs": true,
+  "build_emit_head": "# cython: language_level=3 ⏎ # cython: boundscheck=False ⏎ # cython: wraparound=False ⏎ # cython: initializedcheck=False ⏎ # cython: nonecheck=False ⏎ # cython: warn.unreachable=False ⏎ # cython: warn.undeclared=",
+  "verdict": "build rc=0 但产物里看不到跨模块类型推断的痕迹"
+ },
+ "watch_face": {
+  "rc": 1,
+  "alive": false,
+  "banner_seen": false,
+  "first_lines": [
+   "usage: cypyc [-h] [-o OUTPUT] [-v] [--version]",
+   "{transpile,compile,build,run,watch,hook} ...",
+   "cypyc: error: argument command: invalid choice: '57806' (choose from 'transpile', 'compile', 'build', 'run', 'watch', 'hook')"
+  ],
+  "port_flag_declared": false
+ },
+ "hook_face": {
+  "help_rc": 0,
+  "help_usage": "usage: cypyc hook [-h] [-o OUTPUT] [-v] [--transpile-only] [--compile]",
+  "import_rc": 0,
+  "import_line": "not-on-meta-path",
+  "meta_path_hook_active": false
+ },
+ "determinism": {
+  "corpus": 6,
+  "rows": [
+   {
+    "src": "_pending_build_blocks.cypy",
+    "a": "df7fcadb0c843448",
+    "b": "ec8fe3c00451ca0e",
+    "stable": false
+   },
+   {
+    "src": "_pending_type_defects.cypy",
+    "a": "1ff97108af3b6aea",
+    "b": "1ff97108af3b6aea",
+    "stable": true
+   },
+   {
+    "src": "basic_types.cypy",
+    "a": "de3a238c0a784eaa",
+    "b": "de3a238c0a784eaa",
+    "stable": true
+   },
+   {
+    "src": "concurrency.cypy",
+    "a": "6422d654f7f9a120",
+    "b": "6422d654f7f9a120",
+    "stable": true
+   },
+   {
+    "src": "constraint_numeric.cypy",
+    "a": "82f6658be5a0bbde",
+    "b": "cc3e54b2e9960a4f",
+    "stable": false
+   },
+   {
+    "src": "control_flow.cypy",
+    "a": "42ad60376950175d",
+    "b": "cf5741e29a6ba9d3",
+    "stable": false
+   }
+  ],
+  "unstable": [
+   "_pending_build_blocks.cypy",
+   "constraint_numeric.cypy",
+   "control_flow.cypy"
+  ]
+ },
+ "zero_call_symbols": {
+  "dirs": [
+   "cypyc/transformer",
+   "cypyc/utils",
+   "cypyc/project",
+   "cypy_hook",
+   "scripts"
+  ],
+  "indexed_files": 1368,
+  "symbols": 41,
+  "dynamic_entry_whitelist": [
+   "E:/IDEProjects/AI/Cypy/cypy_hook/__init__.py",
+   "E:/IDEProjects/AI/Cypy/cypy_hook/hook.py",
+   "E:/IDEProjects/AI/Cypy/cypyc/project/__init__.py",
+   "E:/IDEProjects/AI/Cypy/cypyc/transformer/__init__.py",
+   "E:/IDEProjects/AI/Cypy/cypyc/utils/__init__.py",
+   "E:/IDEProjects/AI/Cypy/scripts/fist.py",
+   "E:/IDEProjects/AI/Cypy/scripts/run_tests.py",
+   "E:/IDEProjects/AI/Cypy/scripts/sync_demo.py"
+  ],
+  "orphan_candidates": [
+   {
+    "file": "cypyc/utils/error_reporter.py",
+    "name": "ErrorCode",
+    "line": 5,
+    "kind": "class",
+    "dunder": false,
+    "ref_count": 0,
+    "refs": []
+   },
+   {
+    "file": "cypyc/project/module_dependency_graph.py",
+    "name": "ModuleNode",
+    "line": 16,
+    "kind": "class",
+    "dunder": false,
+    "ref_count": 0,
+    "refs": []
+   }
+  ],
+  "orphan_count": 2,
+  "dunder_orphans": []
+ }
+}

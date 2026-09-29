@@ -1,0 +1,24 @@
+{
+ "bug": "BUG-60",
+ "patches": 1,
+ "applied": 1,
+ "compiled": true,
+ "pos_red": [
+  "test_bug60_docstring_rule2_aligns_with_frozen_syntax"
+ ],
+ "ctl_red": [],
+ "collateral_red": [],
+ "restored": true,
+ "sha_before": {
+  "cypyc/analyzer/build_block_checker.py": "ac70118be159a035063b29fbb46c8ab5216da9e5069677b3be2ce4039bd40909"
+ },
+ "sha_after_restore": "ac70118be159a035063b29fbb46c8ab5216da9e5069677b3be2ce4039bd40909",
+ "sha_equal": true,
+ "touched_files": [
+  "cypyc/analyzer/build_block_checker.py"
+ ],
+ "workspace_untouched": true,
+ "matches_prev_head": null,
+ "reds_total": 1,
+ "seen_total": 17
+}

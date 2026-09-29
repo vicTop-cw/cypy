@@ -1,0 +1,34 @@
+{
+ "rc_at_check": null,
+ "banner_seen": true,
+ "budget_s": 30,
+ "events": {
+  "modify_event_line": true,
+  "modify_elapsed_s": 0.41,
+  "add_produced_or_reloaded": true,
+  "both_a_and_b_published": true,
+  "add_elapsed_s": 23.32
+ },
+ "outputs_in_out_dir": [
+  "a.cp313-win_amd64.pyd",
+  "a.pyx",
+  "b.cp313-win_amd64.pyd",
+  "b.pyx"
+ ],
+ "log_lines_total": 21,
+ "grep": {
+  "file_changed": 3,
+  "successfully_reloaded": 3,
+  "failed_to_reload": 0,
+  "monitor_found": true,
+  "callback_error": 0,
+  "watch_published": 2,
+  "watch_no_artifacts": 0,
+  "traceback": 0
+ },
+ "monitor_found_line": "[CypyFileMonitor] Found 1 Cypy files to monitor",
+ "tail": "\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\out\nDebounce delay: 0.2s\n\nPress Ctrl+C to stop\n\n[CypyFileMonitor] Found 1 Cypy files to monitor\n[CypyFileMonitor] Started monitoring 1 directories\n[HotReload] Engine started, monitoring 1 directories\n[HotReload] File changed: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\a.cypy\n[HotReload] Affected modules: {'a'}\n[HotReload] File changed: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\a.cypy\n[HotReload] Affected modules: {'a'}\n[HotReload] Successfully reloaded: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\a.cypy\n[Watch] Published 2 artifact(s) to E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\out: a.cp313-win_amd64.pyd, a.pyx\n[HotReload] Successfully reloaded: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\a.cypy\n[HotReload] File changed: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\b.cypy\n[HotReload] Affected modules: {'b'}\n[HotReload] Successfully reloaded: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\b.cypy\n[Watch] Published 4 artifact(s) to E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\out: a.cp313-win_amd64.pyd, a.pyx, b.cp313-win_amd64.pyd, b.pyx\n",
+ "rc_final_before_terminate": null,
+ "rc_after_terminate": 1,
+ "refuse": []
+}

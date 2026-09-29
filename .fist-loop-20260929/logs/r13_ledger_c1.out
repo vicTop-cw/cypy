@@ -1,0 +1,3 @@
+LANDED 4 OF 4 SWEEP_WHOLE_LEDGER {'residue_lines': 0, 'dblstamp_lines': 0}
+BEFORE {'headers': 141, 'open': 40, 'fixed': 93, 'amend': 1} AFTER {'headers': 141, 'open': 40, 'fixed': 93, 'amend': 1} TOUCHED ['137', '138', '139', '136'] SUMMARY_KEPT True
+CONCLUSION r13_ledger touched=4 ids=['137', '138', '139', '136'] headers=141 open=40 fixed=93 amend=1 refresh=True derived=D

@@ -1,0 +1,30 @@
+{
+ "started": "2026-09-27T23:32:01+00:00",
+ "stage_order": "判据件 → 报告终版 → 叶收口 → 根收口",
+ "renders": 1,
+ "report": "memory/reviews/20260928.06.15.00.md",
+ "report_bytes": 29907,
+ "report_sha256": "8f748f3253103641",
+ "report_mtime_utc": "2026-09-27T23:30:34+00:00",
+ "spec_name": "20260928.06.15.00",
+ "root_task": "T0r85",
+ "marker": "[selfdrive-fix]",
+ "signature": "root=T0r85 + [selfdrive-fix]",
+ "product_mtime_utc": {
+  "cypyc/analyzer/type_checker.py": "2026-09-27T21:48:24+00:00",
+  "tests/test_loop_20260927_fix_r4.py": "2026-09-27T21:26:25+00:00",
+  "docs/USAGE.md": "2026-09-27T21:45:46+00:00"
+ },
+ "tag": "[loop:20260927-loop:R4-修复]",
+ "judges_total": 13,
+ "judges_later_than_report": [],
+ "product_later_than_report": [],
+ "earliest_judge_utc": "2026-09-27T21:43:16+00:00",
+ "latest_judge_utc": "2026-09-27T23:30:25+00:00",
+ "gates_declared_in_spec": 102,
+ "gate_rows_in_report": 102,
+ "unresolved_placeholders": 0,
+ "red_gate_rows": 0,
+ "refuse": [],
+ "at_utc": "2026-09-27T23:32:01+00:00"
+}

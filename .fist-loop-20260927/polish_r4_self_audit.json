@@ -1,0 +1,268 @@
+{
+ "started": "2026-09-28T02:44:02+00:00",
+ "spec": "report_spec_r4_polish.json",
+ "report_name": "20260928.10.35.00",
+ "window_start_utc": "2026-09-28T01:41:16",
+ "gates_total": 149,
+ "gates_pass": 133,
+ "gates_self_deferred": [
+  "⑨-1",
+  "⑨-2",
+  "⑨-3",
+  "⑨-4",
+  "⑨-5",
+  "⑨-6",
+  "⑨-7",
+  "⑨-8",
+  "⑨-9",
+  "⑨-10",
+  "⑨-11",
+  "⑨-12",
+  "⑨-13",
+  "⑨-14",
+  "⑨-15",
+  "⑨-16"
+ ],
+ "gates_fail": [],
+ "gates_by_law": {
+  "1": 14,
+  "2": 10,
+  "3": 14,
+  "4": 12,
+  "5": 13,
+  "6": 14,
+  "7": 25,
+  "8": 20
+ },
+ "artifacts_declared": 12,
+ "artifacts_with_refuse": [],
+ "stale_timestamps": [],
+ "section10_items": {
+  "declared": 19,
+  "actual": 19
+ },
+ "placeholders_total": 102,
+ "placeholders_bad": [],
+ "placeholders_self_pending_first_run": [],
+ "placeholders_empty": [
+  "polish_r4_baselines.json|radius.frozen",
+  "polish_r4_baselines.json|radius.product",
+  "polish_r4_baselines.json|systems.pytest.failed_names",
+  "polish_r4_calllog_tally.json|loop_roots_without_calls",
+  "polish_r4_ledger.json|append_only_diff.removed_samples",
+  "polish_r4_structural.json|executed_irreversible",
+  "polish_r4_structural.json|product_files_touched_this_ring",
+  "polish_r4_structural.json|renamed_verbatim"
+ ],
+ "placeholders_empty_unjustified": [],
+ "needle_strict_violations": [],
+ "needle_loose_only_hits": [],
+ "needle_canary": {
+  "substring_rule_would_pass_control": true,
+  "strict_rule_rejects_control": true,
+  "control_hit_is_a_filename_inside_frozen_sha": true
+ },
+ "needle_rule": "needle 必须是被引件里的真键名；旧口径（值里含子串）会放过文件名与前缀命中",
+ "stale_undisclosed": [],
+ "stale_artifacts": [],
+ "stale_canary_caught": true,
+ "fixpoint": {
+  "close_spec": "close_r4_polish.json",
+  "keys": [
+   "gates_pass",
+   "gates_total",
+   "placeholders_total",
+   "stale_artifacts_len"
+  ],
+  "mismatch": [],
+  "converged": true,
+  "embedded": {
+   "gates_pass": 133,
+   "gates_total": 149,
+   "placeholders_total": 102,
+   "stale_artifacts_len": 0,
+   "at_utc": "2026-09-28T02:44:01+00:00"
+  },
+  "actual": {
+   "gates_pass": 133,
+   "gates_total": 149,
+   "placeholders_total": 102,
+   "stale_artifacts_len": 0
+  },
+  "note": "不动点已推到：收口 spec 引用的格数与其后一次自证实测逐格相同",
+  "canary_drift_caught": true
+ },
+ "body": ".fist-loop-20260927/r4_polish_body.md",
+ "self_checks": [
+  {
+   "label": "门禁 label 不重复",
+   "got": [],
+   "want": [],
+   "why": "按 label 计数",
+   "ok": true
+  },
+  {
+   "label": "不许有 min=0 的恒真门",
+   "got": [],
+   "want": [],
+   "why": "min=0 永远成立",
+   "ok": true
+  },
+  {
+   "label": "每道门禁都自带可判谓词",
+   "got": [],
+   "want": [],
+   "why": "缺 min/equals/truthy",
+   "ok": true
+  },
+  {
+   "label": "散文占位全部解析成功",
+   "got": [],
+   "want": [],
+   "why": "件在盘上且路径可解",
+   "ok": true
+  },
+  {
+   "label": "空值占位必须由 equals 为空值的门禁作证",
+   "got": [],
+   "want": [],
+   "why": "空值 8 个，无佐证 0 个",
+   "ok": true
+  },
+  {
+   "label": "散文点名的件都在 artifacts 清单里",
+   "got": [],
+   "want": [],
+   "why": "按 basename 对齐",
+   "ok": true
+  },
+  {
+   "label": "artifacts 清单里的件都在盘上",
+   "got": [],
+   "want": [],
+   "why": "存在性（我这一份件在本轮第一次跑时本就还不存在）",
+   "ok": true
+  },
+  {
+   "label": "artifacts 清单不许有重复",
+   "got": [],
+   "want": [],
+   "why": "重复声明=口径含糊",
+   "ok": true
+  },
+  {
+   "label": "被引用的件不许带 refuse",
+   "got": [],
+   "want": [],
+   "why": "件里非空=门禁不绿",
+   "ok": true
+  },
+  {
+   "label": "本环件的时间戳不许早于环节窗口",
+   "got": [],
+   "want": [],
+   "why": "旧件当本轮证据",
+   "ok": true
+  },
+  {
+   "label": "未披露的过期件为零",
+   "got": [],
+   "want": [],
+   "why": "披露位=报告里要逐条写的例外",
+   "ok": true
+  },
+  {
+   "label": "canary：过期件必须被抓到",
+   "got": true,
+   "want": true,
+   "why": "py=1790563442077123900 json=1790563437075534500",
+   "ok": true
+  },
+  {
+   "label": "canary 不误抓：刚写出的件不许被判过期",
+   "got": false,
+   "want": false,
+   "why": "py=1790563442075534700 json=1790563442075534700",
+   "ok": true
+  },
+  {
+   "label": "合成违例目录清干净",
+   "got": [],
+   "want": [],
+   "why": "残留=下一轮把它当真件",
+   "ok": true
+  },
+  {
+   "label": "每条法都至少一道门禁",
+   "got": [],
+   "want": [],
+   "why": "{\"1\": 14, \"2\": 10, \"3\": 14, \"4\": 12, \"5\": 13, \"6\": 14, \"7\": 25, \"8\": 20}",
+   "ok": true
+  },
+  {
+   "label": "法声明的每件证据都有门禁认领（预检查的=报告认的）",
+   "got": [],
+   "want": [],
+   "why": "按 basename 对齐",
+   "ok": true
+  },
+  {
+   "label": "needle 严口径违例为零",
+   "got": [],
+   "want": [],
+   "why": "必须是被引件里的真键名",
+   "ok": true
+  },
+  {
+   "label": "canary：旧子串口径确实会放过 control（否则升级口径没有代价可谈）",
+   "got": true,
+   "want": true,
+   "why": 1,
+   "ok": true
+  },
+  {
+   "label": "canary：严口径必须拒掉 control",
+   "got": true,
+   "want": true,
+   "why": "control 在键名集里=False",
+   "ok": true
+  },
+  {
+   "label": "半径：产品码必须为空",
+   "got": [],
+   "want": [],
+   "why": "本环不改语义",
+   "ok": true
+  },
+  {
+   "label": "半径：冻结面必须为空",
+   "got": [],
+   "want": [],
+   "why": "冻结面交人工",
+   "ok": true
+  },
+  {
+   "label": "半径：tests 只许白名单内的新锁",
+   "got": [],
+   "want": [],
+   "why": "实测 ['tests/test_loop_20260927_polish_r4.py']",
+   "ok": true
+  },
+  {
+   "label": "半径：docs 只许白名单内的改写与补注",
+   "got": [],
+   "want": [],
+   "why": "实测 ['docs/APPENDIX_C_DEVIATIONS.md', 'docs/USAGE.md']",
+   "ok": true
+  },
+  {
+   "label": "§十 标题声明条数 == 正文编号条数",
+   "got": 19,
+   "want": 19,
+   "why": "## 十、本环我自己的失效（19 条，逐条：现象 → 我错在哪 → 改成什么才承重）",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T02:44:02+00:00"
+}

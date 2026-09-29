@@ -1,0 +1,1044 @@
+{
+ "refuse": [],
+ "files": {
+  "cypy_bridge/__init__.py": {
+   "snap_lines": 237,
+   "now_lines": 237,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/compiler.py": {
+   "snap_lines": 4033,
+   "now_lines": 4033,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/core.py": {
+   "snap_lines": 106,
+   "now_lines": 106,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/defer.py": {
+   "snap_lines": 188,
+   "now_lines": 188,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/enum.py": {
+   "snap_lines": 199,
+   "now_lines": 199,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/generics.py": {
+   "snap_lines": 240,
+   "now_lines": 240,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/memory.py": {
+   "snap_lines": 313,
+   "now_lines": 313,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/meta.py": {
+   "snap_lines": 279,
+   "now_lines": 279,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/nogil.py": {
+   "snap_lines": 285,
+   "now_lines": 285,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/pointer.py": {
+   "snap_lines": 597,
+   "now_lines": 597,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/struct.py": {
+   "snap_lines": 196,
+   "now_lines": 196,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/types.py": {
+   "snap_lines": 506,
+   "now_lines": 506,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_bridge/union.py": {
+   "snap_lines": 195,
+   "now_lines": 195,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_hook/__init__.py": {
+   "snap_lines": 4,
+   "now_lines": 4,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypy_hook/hook.py": {
+   "snap_lines": 1171,
+   "now_lines": 1171,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/__init__.py": {
+   "snap_lines": 6,
+   "now_lines": 6,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/__main__.py": {
+   "snap_lines": 14,
+   "now_lines": 14,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/analyzer/__init__.py": {
+   "snap_lines": 9,
+   "now_lines": 9,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/analyzer/build_block_checker.py": {
+   "snap_lines": 195,
+   "now_lines": 195,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/analyzer/comptime_evaluator.py": {
+   "snap_lines": 703,
+   "now_lines": 703,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/analyzer/cycle_detector.py": {
+   "snap_lines": 208,
+   "now_lines": 208,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/analyzer/defer_analyzer.py": {
+   "snap_lines": 91,
+   "now_lines": 91,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/analyzer/pointer_checker.py": {
+   "snap_lines": 349,
+   "now_lines": 349,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/analyzer/scope_analyzer.py": {
+   "snap_lines": 932,
+   "now_lines": 920,
+   "line_delta": -12,
+   "module_symbols_equal": true,
+   "multiplicity_changed": [
+    "ScopeAnalyzer._visit_MetaBlock:2->1"
+   ],
+   "removed_range": [
+    484,
+    495
+   ],
+   "removed_lines_claimed": 12,
+   "removed_sha8": "fee43efe",
+   "slice_from_snapshot_matches_removed_text": true,
+   "multiplicity_expected": "ScopeAnalyzer._visit_MetaBlock:2->1"
+  },
+  "cypyc/analyzer/type_checker.py": {
+   "snap_lines": 4064,
+   "now_lines": 4064,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/cli.py": {
+   "snap_lines": 786,
+   "now_lines": 786,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/codegen/__init__.py": {
+   "snap_lines": 7,
+   "now_lines": 7,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/codegen/bridge_generator.py": {
+   "snap_lines": 202,
+   "now_lines": 202,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/codegen/cython_generator.py": {
+   "snap_lines": 4147,
+   "now_lines": 4139,
+   "line_delta": -8,
+   "module_symbols_equal": true,
+   "multiplicity_changed": [
+    "CythonGenerator._visit_ExprStmt:2->1"
+   ],
+   "removed_range": [
+    1418,
+    1425
+   ],
+   "removed_lines_claimed": 8,
+   "removed_sha8": "659af698",
+   "slice_from_snapshot_matches_removed_text": true,
+   "multiplicity_expected": "CythonGenerator._visit_ExprStmt:2->1"
+  },
+  "cypyc/codegen/setup_generator.py": {
+   "snap_lines": 68,
+   "now_lines": 68,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/codegen/type_mapper.py": {
+   "snap_lines": 92,
+   "now_lines": 92,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/incremental/__init__.py": {
+   "snap_lines": 9,
+   "now_lines": 9,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/incremental/ast_differ.py": {
+   "snap_lines": 241,
+   "now_lines": 241,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/incremental/dependency_graph.py": {
+   "snap_lines": 258,
+   "now_lines": 258,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/incremental/file_monitor.py": {
+   "snap_lines": 188,
+   "now_lines": 188,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/incremental/hot_reload.py": {
+   "snap_lines": 617,
+   "now_lines": 617,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/incremental/incremental_manager.py": {
+   "snap_lines": 502,
+   "now_lines": 502,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/parser/__init__.py": {
+   "snap_lines": 6,
+   "now_lines": 6,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/parser/lexer.py": {
+   "snap_lines": 976,
+   "now_lines": 976,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/parser/macro_expander.py": {
+   "snap_lines": 567,
+   "now_lines": 567,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/parser/parser.py": {
+   "snap_lines": 4754,
+   "now_lines": 4754,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/parser/preprocessor.py": {
+   "snap_lines": 272,
+   "now_lines": 272,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/project/__init__.py": {
+   "snap_lines": 12,
+   "now_lines": 12,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/project/module_dependency_graph.py": {
+   "snap_lines": 267,
+   "now_lines": 267,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/project/project_compiler.py": {
+   "snap_lines": 874,
+   "now_lines": 874,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/project/type_registry.py": {
+   "snap_lines": 261,
+   "now_lines": 261,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/transformer/__init__.py": {
+   "snap_lines": 25,
+   "now_lines": 25,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/transformer/defer_transformer.py": {
+   "snap_lines": 56,
+   "now_lines": 56,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/transformer/enum_transformer.py": {
+   "snap_lines": 56,
+   "now_lines": 56,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/transformer/generic_transformer.py": {
+   "snap_lines": 56,
+   "now_lines": 56,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/transformer/struct_transformer.py": {
+   "snap_lines": 55,
+   "now_lines": 55,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/transformer/trait_transformer.py": {
+   "snap_lines": 59,
+   "now_lines": 59,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/utils/__init__.py": {
+   "snap_lines": 6,
+   "now_lines": 6,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/utils/ast_utils.py": {
+   "snap_lines": 60,
+   "now_lines": 60,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/utils/error_reporter.py": {
+   "snap_lines": 272,
+   "now_lines": 272,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "cypyc/utils/indent_detector.py": {
+   "snap_lines": 67,
+   "now_lines": 67,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "div-tools/__init__.py": {
+   "snap_lines": 8,
+   "now_lines": 8,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "div-tools/ast_utils.py": {
+   "snap_lines": 60,
+   "now_lines": 60,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "div-tools/error_reporter.py": {
+   "snap_lines": 68,
+   "now_lines": 68,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "omega/__init__.py": {
+   "snap_lines": 15,
+   "now_lines": 15,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "omega/check.py": {
+   "snap_lines": 39,
+   "now_lines": 39,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "omega/gate.py": {
+   "snap_lines": 43,
+   "now_lines": 43,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "omega/spec.py": {
+   "snap_lines": 88,
+   "now_lines": 88,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "scripts/run_tests.py": {
+   "snap_lines": 139,
+   "now_lines": 139,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "scripts/sync_demo.py": {
+   "snap_lines": 160,
+   "now_lines": 160,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "setup.py": {
+   "snap_lines": 45,
+   "now_lines": 45,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/__init__.py": {
+   "snap_lines": 20,
+   "now_lines": 20,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/core/__init__.py": {
+   "snap_lines": 10,
+   "now_lines": 10,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/core/assertions.py": {
+   "snap_lines": 157,
+   "now_lines": 157,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/core/runner.py": {
+   "snap_lines": 183,
+   "now_lines": 183,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/core/suite.py": {
+   "snap_lines": 132,
+   "now_lines": 132,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/core/test.py": {
+   "snap_lines": 115,
+   "now_lines": 115,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/fixtures/__init__.py": {
+   "snap_lines": 8,
+   "now_lines": 8,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/fixtures/compiler.py": {
+   "snap_lines": 157,
+   "now_lines": 157,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/fixtures/parser.py": {
+   "snap_lines": 113,
+   "now_lines": 113,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/suites/__init__.py": {
+   "snap_lines": 10,
+   "now_lines": 10,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/suites/analyzer_suite.py": {
+   "snap_lines": 225,
+   "now_lines": 225,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/suites/codegen_suite.py": {
+   "snap_lines": 218,
+   "now_lines": 218,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/suites/integration_suite.py": {
+   "snap_lines": 228,
+   "now_lines": 228,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/suites/parser_suite.py": {
+   "snap_lines": 269,
+   "now_lines": 269,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/utils/__init__.py": {
+   "snap_lines": 7,
+   "now_lines": 7,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "test_suite/utils/demo_writer.py": {
+   "snap_lines": 126,
+   "now_lines": 126,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/__init__.py": {
+   "snap_lines": 12,
+   "now_lines": 12,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/benchmark/test_performance_comparison.py": {
+   "snap_lines": 630,
+   "now_lines": 630,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/code_quality/test_code_quality.py": {
+   "snap_lines": 871,
+   "now_lines": 871,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/run_comprehensive_tests.py": {
+   "snap_lines": 845,
+   "now_lines": 845,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_analyzer.py": {
+   "snap_lines": 91,
+   "now_lines": 91,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_benchmark.py": {
+   "snap_lines": 344,
+   "now_lines": 344,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_boundary_comprehensive.py": {
+   "snap_lines": 1201,
+   "now_lines": 1201,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_bridge_integration.py": {
+   "snap_lines": 542,
+   "now_lines": 542,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_bridge_library.py": {
+   "snap_lines": 1433,
+   "now_lines": 1433,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_byte_diff_runner.py": {
+   "snap_lines": 214,
+   "now_lines": 214,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_cli.py": {
+   "snap_lines": 97,
+   "now_lines": 97,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_codegen.py": {
+   "snap_lines": 70,
+   "now_lines": 70,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_codegen_async.py": {
+   "snap_lines": 68,
+   "now_lines": 68,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_codegen_async_cython.py": {
+   "snap_lines": 72,
+   "now_lines": 72,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_codegen_cast.py": {
+   "snap_lines": 97,
+   "now_lines": 97,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_codegen_concurrent.py": {
+   "snap_lines": 75,
+   "now_lines": 75,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_codegen_guard.py": {
+   "snap_lines": 367,
+   "now_lines": 367,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_codegen_new_features.py": {
+   "snap_lines": 443,
+   "now_lines": 443,
+   "line_delta": 0
+  },
+  "tests/test_codegen_simd.py": {
+   "snap_lines": 89,
+   "now_lines": 89,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_codegen_verification.py": {
+   "snap_lines": 281,
+   "now_lines": 281,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_comptime_func.py": {
+   "snap_lines": 368,
+   "now_lines": 368,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_demos.py": {
+   "snap_lines": 597,
+   "now_lines": 597,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_duck.py": {
+   "snap_lines": 645,
+   "now_lines": 645,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_dynamic_awareness.py": {
+   "snap_lines": 322,
+   "now_lines": 322,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_e2e_new_features.py": {
+   "snap_lines": 312,
+   "now_lines": 312,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_extractor_pattern.py": {
+   "snap_lines": 443,
+   "now_lines": 443,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_generic_types.py": {
+   "snap_lines": 163,
+   "now_lines": 163,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_global_nonlocal.py": {
+   "snap_lines": 93,
+   "now_lines": 93,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_guarded_strategy.py": {
+   "snap_lines": 129,
+   "now_lines": 129,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_hook.py": {
+   "snap_lines": 156,
+   "now_lines": 156,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_hot_reload.py": {
+   "snap_lines": 633,
+   "now_lines": 633,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_implicit_strategy.py": {
+   "snap_lines": 61,
+   "now_lines": 61,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_integration_full_stack.py": {
+   "snap_lines": 181,
+   "now_lines": 181,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_integration_type_system.py": {
+   "snap_lines": 383,
+   "now_lines": 383,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_is_not_regression.py": {
+   "snap_lines": 60,
+   "now_lines": 60,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_lexer_new_keywords.py": {
+   "snap_lines": 100,
+   "now_lines": 100,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_loop_20260927_advance.py": {
+   "snap_lines": 162,
+   "now_lines": 162,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_loop_20260927_fix.py": {
+   "snap_lines": 142,
+   "now_lines": 142,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_loop_20260927_fix_r2.py": {
+   "snap_lines": 349,
+   "now_lines": 349,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_lz_features.py": {
+   "snap_lines": 149,
+   "now_lines": 149,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_lz_type_mapping.py": {
+   "snap_lines": 113,
+   "now_lines": 113,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_macro.py": {
+   "snap_lines": 132,
+   "now_lines": 132,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_macro_expansion.py": {
+   "snap_lines": 319,
+   "now_lines": 319,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_macro_features.py": {
+   "snap_lines": 357,
+   "now_lines": 357,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_module_magic_attrs.py": {
+   "snap_lines": 103,
+   "now_lines": 103,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_never_type.py": {
+   "snap_lines": 40,
+   "now_lines": 40,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_new_features.py": {
+   "snap_lines": 168,
+   "now_lines": 168,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_new_features_boundary.py": {
+   "snap_lines": 378,
+   "now_lines": 378,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_new_syntax_boundary.py": {
+   "snap_lines": 278,
+   "now_lines": 278,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_ownership.py": {
+   "snap_lines": 390,
+   "now_lines": 390,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser.py": {
+   "snap_lines": 90,
+   "now_lines": 90,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_async.py": {
+   "snap_lines": 62,
+   "now_lines": 62,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_buildblock.py": {
+   "snap_lines": 116,
+   "now_lines": 116,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_comptime.py": {
+   "snap_lines": 83,
+   "now_lines": 83,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_go.py": {
+   "snap_lines": 96,
+   "now_lines": 96,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_guard.py": {
+   "snap_lines": 108,
+   "now_lines": 108,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_integration.py": {
+   "snap_lines": 170,
+   "now_lines": 170,
+   "line_delta": 0
+  },
+  "tests/test_parser_macro.py": {
+   "snap_lines": 86,
+   "now_lines": 86,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_match.py": {
+   "snap_lines": 402,
+   "now_lines": 402,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_pipe.py": {
+   "snap_lines": 116,
+   "now_lines": 116,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_spawn.py": {
+   "snap_lines": 96,
+   "now_lines": 96,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_suite.py": {
+   "snap_lines": 121,
+   "now_lines": 121,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_parser_test.py": {
+   "snap_lines": 119,
+   "now_lines": 119,
+   "line_delta": 0
+  },
+  "tests/test_parser_union.py": {
+   "snap_lines": 92,
+   "now_lines": 92,
+   "line_delta": 0
+  },
+  "tests/test_parser_vec.py": {
+   "snap_lines": 116,
+   "now_lines": 116,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_pattern_matching.py": {
+   "snap_lines": 1818,
+   "now_lines": 1818,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_project_compiler.py": {
+   "snap_lines": 444,
+   "now_lines": 444,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_slice_codegen.py": {
+   "snap_lines": 74,
+   "now_lines": 74,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_square_bracket_types.py": {
+   "snap_lines": 134,
+   "now_lines": 134,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_stage2.py": {
+   "snap_lines": 97,
+   "now_lines": 97,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_stage3.py": {
+   "snap_lines": 73,
+   "now_lines": 73,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_stage4.py": {
+   "snap_lines": 64,
+   "now_lines": 64,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_stage5.py": {
+   "snap_lines": 112,
+   "now_lines": 112,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_syntax_integration.py": {
+   "snap_lines": 594,
+   "now_lines": 594,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_trait_system.py": {
+   "snap_lines": 220,
+   "now_lines": 220,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_transformer.py": {
+   "snap_lines": 52,
+   "now_lines": 52,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_type_checking.py": {
+   "snap_lines": 110,
+   "now_lines": 110,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_type_inference.py": {
+   "snap_lines": 679,
+   "now_lines": 679,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_type_promotion.py": {
+   "snap_lines": 286,
+   "now_lines": 286,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_union_type.py": {
+   "snap_lines": 141,
+   "now_lines": 141,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_union_type_checking.py": {
+   "snap_lines": 164,
+   "now_lines": 164,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_unit_test_modes.py": {
+   "snap_lines": 225,
+   "now_lines": 225,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_varargs.py": {
+   "snap_lines": 133,
+   "now_lines": 133,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  },
+  "tests/test_vec.py": {
+   "snap_lines": 114,
+   "now_lines": 114,
+   "line_delta": 0,
+   "module_symbols_equal": true
+  }
+ },
+ "dupes_after": {},
+ "tree_dupes": {},
+ "other_file_line_deltas": {},
+ "polish_tests": {
+  "rc": 0,
+  "line": "8 passed in 0.67s"
+ },
+ "bound_after": {
+  "_visit_ExprStmt": 2076,
+  "_visit_MetaBlock": 914
+ },
+ "concurrent_symbol_notes": {
+  "tests/test_codegen_new_features.py": [
+   "tests/test_codegen_new_features.py 解析破裂：invalid non-printable character U+FEFF (<unknown>, line 1)"
+  ],
+  "tests/test_parser_integration.py": [
+   "tests/test_parser_integration.py 解析破裂：invalid non-printable character U+FEFF (<unknown>, line 1)"
+  ],
+  "tests/test_parser_test.py": [
+   "tests/test_parser_test.py 解析破裂：invalid non-printable character U+FEFF (<unknown>, line 1)"
+  ],
+  "tests/test_parser_union.py": [
+   "tests/test_parser_union.py 解析破裂：invalid non-printable character U+FEFF (<unknown>, line 1)"
+  ]
+ }
+}

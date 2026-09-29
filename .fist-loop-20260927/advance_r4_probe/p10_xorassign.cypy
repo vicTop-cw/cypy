@@ -1,0 +1,8 @@
+def main() -> int:
+    let x: int = 10
+    x ^= 3
+    x |= 1
+    x &= 2
+    x <<= 1
+    print(x)
+    return 0

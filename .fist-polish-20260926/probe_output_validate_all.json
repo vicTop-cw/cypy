@@ -1,0 +1,1150 @@
+{
+  "schema": {
+    "name": "output_validate",
+    "description": "产出物验证（Did it work? 证据梯 L4 硬门）：按 artifacts 描述的交付产物做确定性验证——文件存在？非空？invariant 成立？外部 run_check 结果 ok？报告不是证据，只有交付产物的实际状态才能证明工作发生了。任一 artifact 失败即 verdict=fail。enforce 闭环：verdict=fail 时调用方可直接 report_bug(publish_task=true) 或 reject 打回。参数：task_id(可选, 用于取 project_dir)、project_dir(可选, 相对 CWD 路径如 .)、artifacts(必填, 数组：{path, contains?, not_contains?, min_chars?} 或 {check_key})、external_results(可选 Json, 外部 run_check 结果字典)、evidence(可选, agent 报告)、require_evidence(可选默认 false, 硬门全过时是否要求 evidence 非空)。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（可选, 用于取项目目录）"
+        },
+        "project_dir": {
+          "type": "string",
+          "description": "项目目录（可选, 相对路径如 ., 不传则依 task_id 或 CWD）"
+        },
+        "artifacts": {
+          "type": "array",
+          "description": "要验证的交付产物数组（必填）。每项：{path, contains?, not_contains?, min_chars?} 检查文件；或 {check_key} 引用 external_results 中的外部 run_check 结果"
+        },
+        "evidence": {
+          "type": "string",
+          "description": "agent 报告字符串（示意层弱证据；硬门全过时可选参考）"
+        },
+        "require_evidence": {
+          "type": "boolean",
+          "description": "是否要求 evidence 非空（默认 false）。硬门全过但 evidence 空且此为 true → verdict=fail"
+        }
+      },
+      "required": [
+        "artifacts"
+      ]
+    }
+  },
+  "stage": "all",
+  "results": [
+    {
+      "bug": "BUG-1",
+      "task": "T0r6",
+      "artifacts": [
+        {
+          "path": "cypy_bridge/compiler.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug1_clear_cache_does_not_claim_success_when_remove_fails",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [
+        "cypy_bridge/compiler.py: 交付物里没有可在该文件命中的 marker，只判存在/非空"
+      ],
+      "evidence_len": 0,
+      "reply": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypy_bridge/compiler.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypy_bridge/compiler.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      }
+    },
+    {
+      "bug": "BUG-2",
+      "task": "T0r7",
+      "artifacts": [
+        {
+          "path": "cypy_bridge/compiler.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug2_bridge_build_subprocess_run_passes_timeout",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [
+        "cypy_bridge/compiler.py: 交付物里没有可在该文件命中的 marker，只判存在/非空"
+      ],
+      "evidence_len": 0,
+      "reply": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypy_bridge/compiler.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypy_bridge/compiler.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      }
+    },
+    {
+      "bug": "BUG-3",
+      "task": "T0r8",
+      "artifacts": [
+        {
+          "path": "cypyc/project/project_compiler.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug3_reparse_failure_is_reported_not_swallowed",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [
+        "cypyc/project/project_compiler.py: 交付物里没有可在该文件命中的 marker，只判存在/非空"
+      ],
+      "evidence_len": 0,
+      "reply": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/project/project_compiler.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/project/project_compiler.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      }
+    },
+    {
+      "bug": "BUG-4",
+      "task": "T0r9",
+      "artifacts": [
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug4_transformer_recursion_is_outside_broad_try",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [
+        "_transformer.py: 花括号glob或不在盘上"
+      ],
+      "evidence_len": 0,
+      "reply": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 1
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 1
+      }
+    },
+    {
+      "bug": "BUG-5",
+      "task": "T0r10",
+      "artifacts": [
+        {
+          "path": "cypyc/incremental/hot_reload.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug5_state_snapshot_reports_getattr_failure",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [
+        "cypyc/incremental/hot_reload.py: 交付物里没有可在该文件命中的 marker，只判存在/非空"
+      ],
+      "evidence_len": 0,
+      "reply": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/incremental/hot_reload.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/incremental/hot_reload.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      }
+    },
+    {
+      "bug": "BUG-6",
+      "task": "T0r11",
+      "artifacts": [
+        {
+          "path": "cypyc/incremental/file_monitor.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里",
+          "check_key": "#!bin cypy"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug6_cypy_file_with_bom_is_still_detected",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [],
+      "evidence_len": 0,
+      "reply": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/incremental/file_monitor.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/incremental/file_monitor.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      }
+    },
+    {
+      "bug": "BUG-7",
+      "task": "T0r12",
+      "artifacts": [
+        {
+          "path": "cypy_hook/hook.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里"
+        },
+        {
+          "path": "cypy_bridge/compiler.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug7_corrupt_manifest_warns",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [
+        "cypy_hook/hook.py: 交付物里没有可在该文件命中的 marker，只判存在/非空",
+        "cypy_bridge/compiler.py: 交付物里没有可在该文件命中的 marker，只判存在/非空"
+      ],
+      "evidence_len": 0,
+      "reply": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypy_hook/hook.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "cypy_bridge/compiler.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 3,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 3
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypy_hook/hook.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "cypy_bridge/compiler.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 3,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 3
+      }
+    },
+    {
+      "bug": "BUG-8",
+      "task": "T0r13",
+      "artifacts": [
+        {
+          "path": "cypyc/parser/macro_expander.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug8_macro_reparse_degradation_is_reported",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [
+        "cypyc/parser/macro_expander.py: 交付物里没有可在该文件命中的 marker，只判存在/非空"
+      ],
+      "evidence_len": 220,
+      "reply": {
+        "verdict": "pass",
+        "checks": [
+          {
+            "artifact": "cypyc/parser/macro_expander.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass",
+        "evidence": "RED：修复前 `pytest tests/test_polish_20260926.py -q -k bug8` → 1 failed，capsys.err == ''；；GREEN：修复后同文件 16 passed，且 tests/test_macro_expansion.py 23 passed（合计 39 passed）。；证据文件: pytest tests/test_polish_20260926.py -q -k bug8",
+        "note": "全部 2 条产物检查通过（证据层: l4-pass）",
+        "parsed_artifacts": 2
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "RED：修复前 `pytest tests/test_polish_20260926.py -q -k bug8` → 1 failed，capsys.err == ''；；GREEN：修复后同文件 16 passed，且 tests/test_macro_expansion.py 23 passed（合计 39 passed）。；证据文件: pytest tests/test_polish_20260926.py -q -k bug8",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "pass",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass",
+        "evidence": "RED：修复前 `pytest tests/test_polish_20260926.py -q -k bug8` → 1 failed，capsys.err == ''；；GREEN：修复后同文件 16 passed，且 tests/test_macro_expansion.py 23 passed（合计 39 passed）。；证据文件: pytest tests/test_polish_20260926.py -q -k bug8",
+        "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/parser/macro_expander.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      }
+    },
+    {
+      "bug": "BUG-9",
+      "task": "T0r14",
+      "artifacts": [
+        {
+          "path": "cypyc/incremental/hot_reload.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里",
+          "check_key": "_warn_state"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug9_module_state_snapshot_warns",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [],
+      "evidence_len": 330,
+      "reply": {
+        "verdict": "pass",
+        "checks": [
+          {
+            "artifact": "cypyc/incremental/hot_reload.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass",
+        "evidence": "RED：改前 `pytest tests/test_polish_20260926.py -q -k 'bug9_module or bug10'` → 4 failed，capsys.err 为空串（证据 .fist-polish-20260926/pytest_second_sweep_red.log）；GREEN：改后 `pytest tests/test_polish_20260926.py -q` → 20 passed；证据文件: pytest tests/test_polish_20260926.py -q -k 'bug9_module or bug10', pytest tests/test_polish_20260926.py -q",
+        "note": "全部 2 条产物检查通过（证据层: l4-pass）",
+        "parsed_artifacts": 2
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "RED：改前 `pytest tests/test_polish_20260926.py -q -k 'bug9_module or bug10'` → 4 failed，capsys.err 为空串（证据 .fist-polish-20260926/pytest_second_sweep_red.log）；GREEN：改后 `pytest tests/test_polish_20260926.py -q` → 20 passed；证据文件: pytest tests/test_polish_20260926.py -q -k 'bug9_module or bug10', pytest tests/test_polish_20260926.py -q",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "pass",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass",
+        "evidence": "RED：改前 `pytest tests/test_polish_20260926.py -q -k 'bug9_module or bug10'` → 4 failed，capsys.err 为空串（证据 .fist-polish-20260926/pytest_second_sweep_red.log）；GREEN：改后 `pytest tests/test_polish_20260926.py -q` → 20 passed；证据文件: pytest tests/test_polish_20260926.py -q -k 'bug9_module or bug10', pytest tests/test_polish_20260926.py -q",
+        "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/incremental/hot_reload.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      }
+    },
+    {
+      "bug": "BUG-10",
+      "task": "T0r15",
+      "artifacts": [
+        {
+          "path": "cypyc/incremental/hot_reload.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug10_dependency_analysis_parse_failure_warns",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [
+        "cypyc/incremental/hot_reload.py: 交付物里没有可在该文件命中的 marker，只判存在/非空"
+      ],
+      "evidence_len": 262,
+      "reply": {
+        "verdict": "pass",
+        "checks": [
+          {
+            "artifact": "cypyc/incremental/hot_reload.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass",
+        "evidence": "RED：改前同 4 failed / stderr ''；缓存段这条还做了一次开关对照——把 :332 的告警退回 `pass` 后 `pytest -k cache_update` → 1 failed，恢复后 → 1 passed（证明判据真的绑定在该站点，而不是被失败分支提前 return 绕过）。；GREEN：改后 `pytest tests/test_polish_20260926.py -q` → 20 passed；证据文件: pytest tests/test_polish_20260926.py -q",
+        "note": "全部 2 条产物检查通过（证据层: l4-pass）",
+        "parsed_artifacts": 2
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "RED：改前同 4 failed / stderr ''；缓存段这条还做了一次开关对照——把 :332 的告警退回 `pass` 后 `pytest -k cache_update` → 1 failed，恢复后 → 1 passed（证明判据真的绑定在该站点，而不是被失败分支提前 return 绕过）。；GREEN：改后 `pytest tests/test_polish_20260926.py -q` → 20 passed；证据文件: pytest tests/test_polish_20260926.py -q",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "pass",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass",
+        "evidence": "RED：改前同 4 failed / stderr ''；缓存段这条还做了一次开关对照——把 :332 的告警退回 `pass` 后 `pytest -k cache_update` → 1 failed，恢复后 → 1 passed（证明判据真的绑定在该站点，而不是被失败分支提前 return 绕过）。；GREEN：改后 `pytest tests/test_polish_20260926.py -q` → 20 passed；证据文件: pytest tests/test_polish_20260926.py -q",
+        "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/incremental/hot_reload.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      }
+    },
+    {
+      "bug": "BUG-11",
+      "task": "T0r16",
+      "artifacts": [
+        {
+          "path": "cypyc/project/project_compiler.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里",
+          "check_key": "errors.extend(scope_analyzer.errors)"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug11_project_type_check_reports_scope_errors",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [],
+      "evidence_len": 1096,
+      "reply": {
+        "verdict": "pass",
+        "checks": [
+          {
+            "artifact": "cypyc/project/project_compiler.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass",
+        "evidence": "取证探针：python .fist-polish-20260926/probe_scope_drop.py → 三条 DROPPED（dup_func / dup_subtype_class / dup_type_constraint 的 type_check_module 返回 ok=True errors=[]），对照组 uses_undefined 一条不丢（TypeChecker 自己会报同一句）。；RED：改前 `pytest tests/test_polish_20260926.py -q -k bug11` → 2 failed, 20 deselected（证据 .fist-polish-20260926/pytest_third_sweep_red.log；两条用例各自带前提自证断言，先确认 ScopeAnalyzer 真的报出了该名字，再判调用面）；开关对照：把新增两行退回改前形态 → 同 2 failed 且失败用例名逐条相同（.fist-polish-20260926/pytest_switchoff_bug11.log），恢复后文件 md5 167b194f99634b280cc3096237bcddc7 与改前记录字节一致；GREEN：改后 `pytest tests/test_polish_20260926.py tests/test_project_compiler.py tests/test_cli.py tests/test_demos.py -q` → 414 passed, 0 failed；证据文件: pytest tests/test_polish_20260926.py -q -k bug11, pytest tests/test_polish_20260926.py tests/test_project_compiler.py tests/test_cli.py tests/test_demos.py -q, python .fist-polish-20260926/probe_cli_check_e2e.py, .fist-polish-20260926/probe_cli_check_e2e.out, .fist-polish-20260926/pytest_final_sweep4.log, examples/subtype_units.out, python scripts/run_tests.py, .fist-polish-20260926/test_suite_after_sweep3.log",
+        "note": "全部 2 条产物检查通过（证据层: l4-pass）",
+        "parsed_artifacts": 2
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "取证探针：python .fist-polish-20260926/probe_scope_drop.py → 三条 DROPPED（dup_func / dup_subtype_class / dup_type_constraint 的 type_check_module 返回 ok=True errors=[]），对照组 uses_undefined 一条不丢（TypeChecker 自己会报同一句）。；RED：改前 `pytest tests/test_polish_20260926.py -q -k bug11` → 2 failed, 20 deselected（证据 .fist-polish-20260926/pytest_third_sweep_red.log；两条用例各自带前提自证断言，先确认 ScopeAnalyzer 真的报出了该名字，再判调用面）；开关对照：把新增两行退回改前形态 → 同 2 failed 且失败用例名逐条相同（.fist-polish-20260926/pytest_switchoff_bug11.log），恢复后文件 md5 167b194f99634b280cc3096237bcddc7 与改前记录字节一致；GREEN：改后 `pytest tests/test_polish_20260926.py tests/test_project_compiler.py tests/test_cli.py tests/test_demos.py -q` → 414 passed, 0 failed；证据文件: pytest tests/test_polish_20260926.py -q -k bug11, pytest tests/test_polish_20260926.py tests/test_project_compiler.py tests/test_cli.py tests/test_demos.py -q, python .fist-polish-20260926/probe_cli_check_e2e.py, .fist-polish-20260926/probe_cli_check_e2e.out, .fist-polish-20260926/pytest_final_sweep4.log, examples/subtype_units.out, python scripts/run_tests.py, .fist-polish-20260926/test_suite_after_sweep3.log",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "pass",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass",
+        "evidence": "取证探针：python .fist-polish-20260926/probe_scope_drop.py → 三条 DROPPED（dup_func / dup_subtype_class / dup_type_constraint 的 type_check_module 返回 ok=True errors=[]），对照组 uses_undefined 一条不丢（TypeChecker 自己会报同一句）。；RED：改前 `pytest tests/test_polish_20260926.py -q -k bug11` → 2 failed, 20 deselected（证据 .fist-polish-20260926/pytest_third_sweep_red.log；两条用例各自带前提自证断言，先确认 ScopeAnalyzer 真的报出了该名字，再判调用面）；开关对照：把新增两行退回改前形态 → 同 2 failed 且失败用例名逐条相同（.fist-polish-20260926/pytest_switchoff_bug11.log），恢复后文件 md5 167b194f99634b280cc3096237bcddc7 与改前记录字节一致；GREEN：改后 `pytest tests/test_polish_20260926.py tests/test_project_compiler.py tests/test_cli.py tests/test_demos.py -q` → 414 passed, 0 failed；证据文件: pytest tests/test_polish_20260926.py -q -k bug11, pytest tests/test_polish_20260926.py tests/test_project_compiler.py tests/test_cli.py tests/test_demos.py -q, python .fist-polish-20260926/probe_cli_check_e2e.py, .fist-polish-20260926/probe_cli_check_e2e.out, .fist-polish-20260926/pytest_final_sweep4.log, examples/subtype_units.out, python scripts/run_tests.py, .fist-polish-20260926/test_suite_after_sweep3.log",
+        "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/project/project_compiler.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      }
+    },
+    {
+      "bug": "BUG-12",
+      "task": "T0r17",
+      "artifacts": [
+        {
+          "path": "cypy_bridge/nogil.py",
+          "invariant": "本单交付物声称的改动确实落在该文件里",
+          "check_key": "self.acquire()"
+        },
+        {
+          "path": "tests/test_polish_20260926.py",
+          "check_key": "test_bug12_gilstate_exit_does_not_replace_user_exception",
+          "invariant": "锁死本单缺陷的回归用例确实存在于回归文件里"
+        }
+      ],
+      "flagged": [],
+      "evidence_len": 1274,
+      "reply": {
+        "verdict": "pass",
+        "checks": [
+          {
+            "artifact": "cypy_bridge/nogil.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass",
+        "evidence": "取证探针：python .fist-polish-20260926/repro_sweep4_nogil.py → A 项 REPRODUCED（`escaped exception type = NoGilError`，即用户的 ValueError 被 __exit__ 顶掉）；同脚本 B 项（nogil_thread 一次性调用是否泄漏执行器线程）实测 not reproduced（12 次调用后 active_count 1→2、仅余 1 个临时 worker，会被回收），按红线判为误报、不入账。原始输出 .fist-polish-20260926/repro_sweep4_nogil.out；RED：改前 `pytest tests/test_polish_20260926.py -q -k bug12` → ================= 1 failed, 1 passed, 22 deselected in 0.45s ==================（`.fist-polish-20260926/pytest_fourth_sweep_red.log`，失败原文 `AssertionError: GIL 退出路径把用户的 ValueError 换成了 NoGilError`）；开关对照：摘掉本单修复（内存改写模块源码、不动磁盘文件）后同两条用例 → 1 failed, 1 passed，与 RED 的形状逐条一致（`.fist-polish-20260926/pytest_switchoff_bug12.log`），证明锁死点就在这两行守卫上；GREEN：改后 `pytest tests/test_polish_20260926.py -q` → ============================= 24 passed in 0.47s ==============================（`.fist-polish-20260926/pytest_green_bug12.log`）；证据文件: pytest tests/test_polish_20260926.py -q -k bug12, .fist-polish-20260926/pytest_fourth_sweep_red.log, .fist-polish-20260926/pytest_switchoff_bug12.log, pytest tests/test_polish_20260926.py -q, .fist-polish-20260926/pytest_green_bug12.log, .fist-polish-20260926/pytest_final_sweep6.log, examples/subtype_units.out, python scripts/run_tests.py, .fist-polish-20260926/test_suite_after_sweep4.log",
+        "note": "全部 2 条产物检查通过（证据层: l4-pass）",
+        "parsed_artifacts": 2
+      },
+      "neg_missing_file": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypyc/does_not_exist_zzz.py",
+            "ok": false,
+            "detail": "文件不存在: ./cypyc/does_not_exist_zzz.py"
+          }
+        ],
+        "passed": 0,
+        "failed": 1,
+        "evidence_layer": "l4-hard-failed",
+        "evidence": "取证探针：python .fist-polish-20260926/repro_sweep4_nogil.py → A 项 REPRODUCED（`escaped exception type = NoGilError`，即用户的 ValueError 被 __exit__ 顶掉）；同脚本 B 项（nogil_thread 一次性调用是否泄漏执行器线程）实测 not reproduced（12 次调用后 active_count 1→2、仅余 1 个临时 worker，会被回收），按红线判为误报、不入账。原始输出 .fist-polish-20260926/repro_sweep4_nogil.out；RED：改前 `pytest tests/test_polish_20260926.py -q -k bug12` → ================= 1 failed, 1 passed, 22 deselected in 0.45s ==================（`.fist-polish-20260926/pytest_fourth_sweep_red.log`，失败原文 `AssertionError: GIL 退出路径把用户的 ValueError 换成了 NoGilError`）；开关对照：摘掉本单修复（内存改写模块源码、不动磁盘文件）后同两条用例 → 1 failed, 1 passed，与 RED 的形状逐条一致（`.fist-polish-20260926/pytest_switchoff_bug12.log`），证明锁死点就在这两行守卫上；GREEN：改后 `pytest tests/test_polish_20260926.py -q` → ============================= 24 passed in 0.47s ==============================（`.fist-polish-20260926/pytest_green_bug12.log`）；证据文件: pytest tests/test_polish_20260926.py -q -k bug12, .fist-polish-20260926/pytest_fourth_sweep_red.log, .fist-polish-20260926/pytest_switchoff_bug12.log, pytest tests/test_polish_20260926.py -q, .fist-polish-20260926/pytest_green_bug12.log, .fist-polish-20260926/pytest_final_sweep6.log, examples/subtype_units.out, python scripts/run_tests.py, .fist-polish-20260926/test_suite_after_sweep4.log",
+        "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+        "parsed_artifacts": 1
+      },
+      "neg_bad_key": {
+        "verdict": "pass",
+        "checks": [
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 1,
+        "failed": 0,
+        "evidence_layer": "l4-pass",
+        "evidence": "取证探针：python .fist-polish-20260926/repro_sweep4_nogil.py → A 项 REPRODUCED（`escaped exception type = NoGilError`，即用户的 ValueError 被 __exit__ 顶掉）；同脚本 B 项（nogil_thread 一次性调用是否泄漏执行器线程）实测 not reproduced（12 次调用后 active_count 1→2、仅余 1 个临时 worker，会被回收），按红线判为误报、不入账。原始输出 .fist-polish-20260926/repro_sweep4_nogil.out；RED：改前 `pytest tests/test_polish_20260926.py -q -k bug12` → ================= 1 failed, 1 passed, 22 deselected in 0.45s ==================（`.fist-polish-20260926/pytest_fourth_sweep_red.log`，失败原文 `AssertionError: GIL 退出路径把用户的 ValueError 换成了 NoGilError`）；开关对照：摘掉本单修复（内存改写模块源码、不动磁盘文件）后同两条用例 → 1 failed, 1 passed，与 RED 的形状逐条一致（`.fist-polish-20260926/pytest_switchoff_bug12.log`），证明锁死点就在这两行守卫上；GREEN：改后 `pytest tests/test_polish_20260926.py -q` → ============================= 24 passed in 0.47s ==============================（`.fist-polish-20260926/pytest_green_bug12.log`）；证据文件: pytest tests/test_polish_20260926.py -q -k bug12, .fist-polish-20260926/pytest_fourth_sweep_red.log, .fist-polish-20260926/pytest_switchoff_bug12.log, pytest tests/test_polish_20260926.py -q, .fist-polish-20260926/pytest_green_bug12.log, .fist-polish-20260926/pytest_final_sweep6.log, examples/subtype_units.out, python scripts/run_tests.py, .fist-polish-20260926/test_suite_after_sweep4.log",
+        "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+        "parsed_artifacts": 1
+      },
+      "neg_no_evidence": {
+        "verdict": "fail",
+        "checks": [
+          {
+            "artifact": "cypy_bridge/nogil.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          },
+          {
+            "artifact": "tests/test_polish_20260926.py",
+            "ok": true,
+            "detail": "OK（存在/非空/invariant 全部通过）"
+          }
+        ],
+        "passed": 2,
+        "failed": 0,
+        "evidence_layer": "l4-pass-but-l1-missing",
+        "evidence": "",
+        "note": "硬门全过，但 evidence 为空且 require_evidence=true——标记 fail（报告不是证据，但至少要有）",
+        "parsed_artifacts": 2
+      }
+    }
+  ]
+}

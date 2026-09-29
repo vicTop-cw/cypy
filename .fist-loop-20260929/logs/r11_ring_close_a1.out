@@ -1,0 +1,2 @@
+REFUSED (开批门) local | 引用核验 failed=[]
+CONCLUSION refused=1 stage=close gate_reasons=1

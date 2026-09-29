@@ -1,0 +1,26 @@
+RED CTRL_scalar_mismatch     ok     n=1 :: Type mismatch: expected int, got str at 2:9
+RED CTRL_list_elem_wrong     ok     n=1 :: Element 1 type mismatch: expected int, got str at 2:9
+RED D01_value_wrong          ok     n=1 :: Dict value type mismatch: expected int, got str at 2:9
+RED D02_key_wrong            ok     n=1 :: Dict key type mismatch: expected int, got str at 2:9
+RED D03_return_value_wrong   ok     n=1 :: Return dict value type mismatch: expected int, got str at 3:1
+RED D04_nested_list_wrong    ok     n=1 :: Dict value type mismatch: expected int, got str at 2:9
+RED D05_alias_dict_wrong     ok     n=1 :: Dict value type mismatch: expected int, got str at 4:9
+RED D06_dict_of_dict_wrong   ok     n=1 :: Dict value type mismatch: expected int, got str at 2:9
+RED D07_bool_key_under_str   ok     n=1 :: Dict key type mismatch: expected str, got bool at 2:9
+RED D08_mixed_numeric_narrow ok     n=1 :: Dict value type mismatch: expected int, got float at 2:9
+ok  G14_hetero_both          ok     n=0 :: 
+ok  G15_mixed_numeric_widening_ok ok     n=0 :: 
+ok  G01_empty_literal        ok     n=0 :: 
+ok  G02_correct              ok     n=0 :: 
+ok  G03_hetero_values        ok     n=0 :: 
+ok  G04_widening_value       ok     n=0 :: 
+ok  G05_bool_widening        ok     n=0 :: 
+ok  G06_user_type_value      ok     n=0 :: 
+ok  G07_untyped_let          ok     n=0 :: 
+ok  G08_nested_correct       ok     n=0 :: 
+ok  G09_dict_of_dict_ok      ok     n=0 :: 
+ok  G10_param_annotation     ok     n=0 :: 
+ok  G11_empty_then_return    ok     n=0 :: 
+ok  G12_empty_untyped        ok     n=0 :: 
+ok  G13_scalar_alias_dict    ok     n=0 :: 
+CONCLUSION r14_dict_probe phase=after tag=c2 cases=25 must_be_red_but_silent=[] must_stay_green_now_red=[] read_channel_broken=[] flipped_vs_before=7 flipped_ids=['D01_value_wrong:0->1', 'D02_key_wrong:0->1', 'D03_return_value_wrong:0->1', 'D04_nested_list_wrong:0->1', 'D05_alias_dict_wrong:0->1', 'D06_dict_of_dict_wrong:0->1', 'D07_bool_key_under_str:0->1'] crashed=[] parse_failures=[] out=r14_dict_probe_c2.json

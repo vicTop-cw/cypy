@@ -1,0 +1,198 @@
+{
+ "refuse": [],
+ "checks": 27,
+ "all_equal": 1,
+ "mismatched": [],
+ "detail": [
+  {
+   "claim": "matrix_rows",
+   "reported": "6/6",
+   "recomputed": "6/6",
+   "source": "verify_r3_matrix.json:rows",
+   "equal": true
+  },
+  {
+   "claim": "sha_restored",
+   "reported": "6/6",
+   "recomputed": "6/6",
+   "source": "verify_r3_matrix.json:sha_verified_rows",
+   "equal": true
+  },
+  {
+   "claim": "identity",
+   "reported": "6",
+   "recomputed": 6,
+   "source": "verify_r3_matrix.json:identity",
+   "equal": true
+  },
+  {
+   "claim": "premise",
+   "reported": "17/17",
+   "recomputed": "17/17",
+   "source": "verify_r3_matrix.json:premise.passed",
+   "equal": true
+  },
+  {
+   "claim": "premise.collected",
+   "reported": "17",
+   "recomputed": 17,
+   "source": "verify_r3_matrix.json:premise.collected（--collect-only 实收）",
+   "equal": true
+  },
+  {
+   "claim": "callsite",
+   "reported": "16/16",
+   "recomputed": "16/16",
+   "source": "verify_r3_callsite.json:checks 与非空 failed_checks",
+   "equal": true
+  },
+  {
+   "claim": "report_audit_counts",
+   "reported": "23/23",
+   "recomputed": "23/23",
+   "source": "verify_r3_report_audit.json",
+   "equal": true
+  },
+  {
+   "claim": "refusal_table",
+   "reported": "6-verbatim",
+   "recomputed": "6-verbatim",
+   "source": "报告《被拒原文》表行数；missing/extra 均为空",
+   "equal": true
+  },
+  {
+   "claim": "ledger_reruns",
+   "reported": "6/6",
+   "recomputed": "6/6",
+   "source": "verify_r3_report_audit.json:repro_reruns*",
+   "equal": true
+  },
+  {
+   "claim": "carried_claims",
+   "reported": "6",
+   "recomputed": 6,
+   "source": "verify_r3_matrix.json:carried_claims",
+   "equal": true
+  },
+  {
+   "claim": "declared_side",
+   "reported": "6",
+   "recomputed": 6,
+   "source": "verify_r3_matrix.json:declared_side_still_true",
+   "equal": true
+  },
+  {
+   "claim": "radius",
+   "reported": "0",
+   "recomputed": 0,
+   "source": "verify_r3_baselines.json:radius.count",
+   "equal": true
+  },
+  {
+   "claim": "irreversible",
+   "reported": "10(live=9,manifest=1)",
+   "recomputed": "10(live=9,manifest=1)",
+   "source": "verify_r3_irreversible.json",
+   "equal": true
+  },
+  {
+   "claim": "executed",
+   "reported": "none",
+   "recomputed": "none",
+   "source": "verify_r3_irreversible.json:executed",
+   "equal": true
+  },
+  {
+   "claim": "pytest",
+   "reported": "1920",
+   "recomputed": 1920,
+   "source": "verify_r3_baselines.json:pytest.passed",
+   "equal": true
+  },
+  {
+   "claim": "pytest_collected",
+   "reported": "1920",
+   "recomputed": 1920,
+   "source": "verify_r3_baselines.json:pytest.collected",
+   "equal": true
+  },
+  {
+   "claim": "suite",
+   "reported": "47/47",
+   "recomputed": "47/47",
+   "source": "…:suite.fields",
+   "equal": true
+  },
+  {
+   "claim": "e2e",
+   "reported": "25/25",
+   "recomputed": "25/25",
+   "source": "…:e2e.fields（FAIL/WARN/UNREG 另判）",
+   "equal": true
+  },
+  {
+   "claim": "e2e_zero",
+   "reported": "000",
+   "recomputed": "000",
+   "source": "e2e 的三个零格拼接",
+   "equal": true
+  },
+  {
+   "claim": "baselines_run",
+   "reported": "2",
+   "recomputed": 2,
+   "source": "verify_r3_baselines.json + _run1.json 存在数（run1 必须是恒真格那一轮）",
+   "equal": true
+  },
+  {
+   "claim": "gates",
+   "reported": "56",
+   "recomputed": 56,
+   "source": "report_spec_r3_verify.json:gates 条数",
+   "equal": true
+  },
+  {
+   "claim": "lint_hard",
+   "reported": "0",
+   "recomputed": 0,
+   "source": "verify_r3_baselines.json:lint.hard_violations",
+   "equal": true
+  },
+  {
+   "claim": "root",
+   "reported": "T0r71",
+   "recomputed": "T0r71",
+   "source": "root_r3_verify.out.json:root",
+   "equal": true
+  },
+  {
+   "claim": "refused",
+   "reported": "6",
+   "recomputed": 6,
+   "source": "close_r3_verify_root.out.json:refused",
+   "equal": true
+  },
+  {
+   "claim": "leaves_done",
+   "reported": "16",
+   "recomputed": 16,
+   "source": "close_r3_verify_root.out.json:leaves_done",
+   "equal": true
+  },
+  {
+   "claim": "judge-defects",
+   "reported": "10",
+   "recomputed": 10,
+   "source": "报告《六》段『判据与工具类』编号条数",
+   "equal": true
+  },
+  {
+   "claim": "op-defects",
+   "reported": "4",
+   "recomputed": 4,
+   "source": "报告《六》段『操作』编号条数",
+   "equal": true
+  }
+ ],
+ "footer_raw": "[selfdrive-verify] round=R3 stage=第 3 轮第 3 环（寻虫→修复→验证→打磨→推进） root=T0r71 gates=56 refused=6 [selfdrive-verify] round=R3 stage=第 3 轮第 3 环（寻虫→修复→验证→打磨→推进） root=T0r71 gates=56 refused=6 leaves=16 matrix_rows=6/6 sha_restored=6/6 identity=6 premise=17/17 collected=17 carried_claims=6 declared_side=6 callsite=16/16 report_audit_counts=23/23 refusal_table=6-verbatim ledger_reruns=6/6 pytest=1920 pytest_collected=1920 suite=47/47 e2e=25/25 e2e_zero=000 radius=0 lint_hard=0 baselines_run=2 irreversible=10(live=9,manifest=1) executed=none judge-defects=10 op-defects=4 decisions=3 measured_window=2026-09-27T17:33:11Z->2026-09-27T17:43:38Z generated_at=2026-09-27T17:46:13+00:00 handoff=R4:非冻结generic形可解析+锁夹具换冻结形+importlib取模块+bridge生成setup入锁"
+}

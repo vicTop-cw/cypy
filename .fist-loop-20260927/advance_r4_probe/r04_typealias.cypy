@@ -1,0 +1,9 @@
+type Point = tuple<int, int>
+type Matrix = list<list<float>>
+
+def main() -> int:
+    let origin: Point = (0, 0)
+    let identity: Matrix = [[1.0, 0.0], [0.0, 1.0]]
+    print(origin)
+    print(identity)
+    return 0

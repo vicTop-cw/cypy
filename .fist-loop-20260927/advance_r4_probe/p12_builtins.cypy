@@ -1,0 +1,9 @@
+def main() -> int:
+    let s: str = "hi"
+    print(hash(s))
+    print(repr(s))
+    print(str(1))
+    print(len([1,2]))
+    print(abs(-1))
+    print(sum([1,2]))
+    return 0

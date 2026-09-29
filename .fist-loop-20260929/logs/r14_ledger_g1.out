@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\amend_r14_ledger.py", line 147, in <module>
+    D = derived()
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\amend_r14_ledger.py", line 74, in derived
+    silent = sorted(k for k in pr.MUST_RED if before[k]["n"] == 0)
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\amend_r14_ledger.py", line 74, in <genexpr>
+    silent = sorted(k for k in pr.MUST_RED if before[k]["n"] == 0)
+                                              ~~~~~~^^^
+KeyError: 'D08_mixed_numeric_narrow'

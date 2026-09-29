@@ -1,0 +1,403 @@
+{
+ "started_z": "2026-09-29T03:52:52Z",
+ "ns": "cypy-loop-20260929",
+ "root_reused": "T0r113",
+ "refusals": [],
+ "nodes": {
+  "T0r113.1.1": {
+   "deliverable_head": "规范面：SYNTAX/02 补「注解形态闭集」+ SYNTAX/17 补「位置模式的元数与槽位规则」（BUG-92/BUG-108 的前置；文档只增不删，两文件",
+   "kind": "face",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "SPEC OK 189 441\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r113.1.2": {
+   "deliverable_head": "分析器面：注解闭集校验（_validate_annotation_shapes/_check_annotation_shape，含 comptime 整类跳过）",
+   "kind": "face",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "\\test_annotation_shape.py ..............                            [ 41%]\r\ntests\\test_extractor_pattern.py ....................                     [100%]\r\n\r\n============================= 34 passed in 0.25s ==============================\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r113.2.1": {
+   "deliverable_head": "生成器面：_type_to_str 末路不再 `str(node)`，未知形态退化为 object；锁死「产物永不含 line= / Constant( 这类 ",
+   "kind": "face",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "est_loop_scope=function\r\ncollected 14 items / 12 deselected / 2 selected\r\n\r\ntests\\test_annotation_shape.py ..                                        [100%]\r\n\r\n====================== 2 passed, 12 deselected in 0.16s =======================\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r113.2.2": {
+   "deliverable_head": "判据面：既有用例 test_extractor_pattern.py::test_extractor_pattern_type_checker 从「断言无错误」",
+   "kind": "face",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "\\test_pattern_positional_struct.py ........                         [ 42%]\r\ntests\\test_fist_driver_protocol.py ...........                           [100%]\r\n\r\n============================= 19 passed in 0.23s ==============================\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r113.1.3": {
+   "deliverable_head": "注解面边界审视 15 格（空输入 `x: = 1`、6 条合法形态、4 条非法形态、12 层嵌套/200 元组/非类型字面量三种极值、comptime 行内排除",
+   "kind": "boundary-real",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "          \r\narity/nested_pattern                   exp=silent    surf=0  other=0  ok             \r\nCONCLUSION judge_ok=True crashes=0 silent=0 false_positive=0 syntax_caught=1 observed=3 rows_json=.fist-loop-20260929/hunt_r7_boundary.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r113.2.3": {
+   "deliverable_head": "元数面边界审视 8 格（0 实参/相符/欠元/超元/32 槽极值/未定义类型/字面量与绑定混写/嵌套模式）：超元与 32 槽都带 `行:列`；欠元与 0 实参按",
+   "kind": "boundary-real",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "          \r\narity/nested_pattern                   exp=silent    surf=0  other=0  ok             \r\nCONCLUSION judge_ok=True crashes=0 silent=0 false_positive=0 syntax_caught=1 observed=3 rows_json=.fist-loop-20260929/hunt_r7_boundary.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r113.3.3": {
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R7 的输入域四类用例集中在 .fist-loop-20260929/hun",
+   "kind": "boundary-declared-na",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "          \r\narity/nested_pattern                   exp=silent    surf=0  other=0  ok             \r\nCONCLUSION judge_ok=True crashes=0 silent=0 false_positive=0 syntax_caught=1 observed=3 rows_json=.fist-loop-20260929/hunt_r7_boundary.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r113.4.3": {
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R7 的输入域四类用例集中在 .fist-loop-20260929/hun",
+   "kind": "boundary-declared-na",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "          \r\narity/nested_pattern                   exp=silent    surf=0  other=0  ok             \r\nCONCLUSION judge_ok=True crashes=0 silent=0 false_positive=0 syntax_caught=1 observed=3 rows_json=.fist-loop-20260929/hunt_r7_boundary.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r113.5.1": {
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R7 的输入域四类用例集中在 .fist-loop-20260929/hun",
+   "kind": "boundary-declared-na",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "          \r\narity/nested_pattern                   exp=silent    surf=0  other=0  ok             \r\nCONCLUSION judge_ok=True crashes=0 silent=0 false_positive=0 syntax_caught=1 observed=3 rows_json=.fist-loop-20260929/hunt_r7_boundary.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r113.5.2": {
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R7 的输入域四类用例集中在 .fist-loop-20260929/hun",
+   "kind": "boundary-declared-na",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "          \r\narity/nested_pattern                   exp=silent    surf=0  other=0  ok             \r\nCONCLUSION judge_ok=True crashes=0 silent=0 false_positive=0 syntax_caught=1 observed=3 rows_json=.fist-loop-20260929/hunt_r7_boundary.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r113.5.3": {
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R7 的输入域四类用例集中在 .fist-loop-20260929/hun",
+   "kind": "boundary-declared-na",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "          \r\narity/nested_pattern                   exp=silent    surf=0  other=0  ok             \r\nCONCLUSION judge_ok=True crashes=0 silent=0 false_positive=0 syntax_caught=1 observed=3 rows_json=.fist-loop-20260929/hunt_r7_boundary.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  }
+ },
+ "ticks": [
+  {
+   "mode": "advance",
+   "reply": "{\"next_mode\": \"advance\", \"next_step_idx\": 1, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 0, \"next_mode\": \"advance\", \"to_idx\": 1, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 1, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:52:53Z\", \"updated_at\": \"2026-09-29T03:53:01Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 34}}"
+  },
+  {
+   "mode": "bugfind",
+   "reply": "{\"next_mode\": \"bugfind\", \"next_step_idx\": 2, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 1, \"next_mode\": \"bugfind\", \"to_idx\": 2, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 2, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:52:53Z\", \"updated_at\": \"2026-09-29T03:53:01Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 34}}"
+  },
+  {
+   "mode": "fix_and_merge",
+   "reply": "{\"next_mode\": \"fix_and_merge\", \"next_step_idx\": 3, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 2, \"next_mode\": \"fix_and_merge\", \"to_idx\": 3, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 3, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:52:53Z\", \"updated_at\": \"2026-09-29T03:53:01Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 34}}"
+  },
+  {
+   "mode": "verify",
+   "reply": "{\"next_mode\": \"verify\", \"next_step_idx\": 4, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 3, \"next_mode\": \"verify\", \"to_idx\": 4, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 4, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:52:53Z\", \"updated_at\": \"2026-09-29T03:53:01Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 34}}"
+  },
+  {
+   "mode": "polish",
+   "reply": "{\"next_mode\": \"polish\", \"next_step_idx\": 5, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 4, \"next_mode\": \"polish\", \"to_idx\": 5, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 5, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:52:53Z\", \"updated_at\": \"2026-09-29T03:53:01Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 34}}"
+  },
+  {
+   "mode": "advance",
+   "reply": "{\"next_mode\": \"advance\", \"next_step_idx\": 0, \"next_round\": 1, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 5, \"next_mode\": \"advance\", \"to_idx\": 0, \"round\": 1, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 1, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:52:53Z\", \"updated_at\": \"2026-09-29T03:53:01Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 34}}"
+  }
+ ],
+ "bugs": [
+  {
+   "skipped": "账本已有同 summary（幂等守卫）",
+   "summary": "[解析器:类型表达式] 注解位置没有类型表达式产生器，`[int]`/`(int,str)`/`{str:int}` 全被编成字面量节点"
+  },
+  {
+   "reply": "{\"bug_id\": \"BUG-110\", \"id\": \"BUG-110\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  },
+  {
+   "reply": "{\"bug_id\": \"BUG-111\", \"id\": \"BUG-111\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  }
+ ],
+ "tally": {
+  "by_tool": {
+   "bug_list": {
+    "ok": 1,
+    "refused": 0
+   },
+   "claim": {
+    "ok": 11,
+    "refused": 0
+   },
+   "execute": {
+    "ok": 11,
+    "refused": 0
+   },
+   "get": {
+    "ok": 22,
+    "refused": 0
+   },
+   "loop_create": {
+    "ok": 1,
+    "refused": 0
+   },
+   "loop_tick": {
+    "ok": 6,
+    "refused": 0
+   },
+   "omega_result_verify": {
+    "ok": 11,
+    "refused": 0
+   },
+   "omega_spec_create": {
+    "ok": 11,
+    "refused": 0
+   },
+   "omega_spec_review": {
+    "ok": 11,
+    "refused": 0
+   },
+   "report_bug": {
+    "ok": 2,
+    "refused": 0
+   },
+   "run_check": {
+    "ok": 11,
+    "refused": 0
+   },
+   "submit": {
+    "ok": 11,
+    "refused": 0
+   },
+   "verify": {
+    "ok": 11,
+    "refused": 0
+   }
+  },
+  "rpc_sent_by_tool": {
+   "laya_decide": 1,
+   "loop_create": 1,
+   "bug_list": 1,
+   "get": 22,
+   "claim": 11,
+   "omega_spec_create": 11,
+   "omega_spec_review": 11,
+   "execute": 11,
+   "run_check": 11,
+   "omega_result_verify": 11,
+   "submit": 11,
+   "verify": 11,
+   "loop_tick": 6,
+   "report_bug": 2
+  },
+  "rpc_sent_total": 121,
+  "sent_but_invisible_to_filter": [
+   "laya_decide"
+  ],
+  "rows_matching_filter": 120,
+  "refused_matching_filter": 0,
+  "filter_window_from": "2026-09-29T03:52:52Z",
+  "root_status": "拆分中",
+  "leaf_status_after": {
+   "已完成": 11,
+   "待领取": 4
+  },
+  "pending_leaf_ids": [
+   "T0r113.3.1",
+   "T0r113.3.2",
+   "T0r113.4.1",
+   "T0r113.4.2"
+  ],
+  "ns_total_task_rows": 50
+ },
+ "baseline_measured": {
+  "collected": 2158,
+  "passed": 2158,
+  "conclusion_line_verbatim": "====================== 2158 passed in 413.15s (0:06:53) =======================",
+  "native_log": ".fist-loop-20260929/logs/r7_native_r1.log",
+  "e2e_log": ".fist-loop-20260929/logs/r7_e2e_r1.log",
+  "ledger_open": 34,
+  "ledger_closed_sections": 76
+ },
+ "tree_readback": {
+  "rows": 21,
+  "leaves": 15,
+  "general_by_description": [
+   "T0r113.1.1",
+   "T0r113.1.2",
+   "T0r113.2.1",
+   "T0r113.2.2",
+   "T0r113.3.1",
+   "T0r113.3.2",
+   "T0r113.4.1",
+   "T0r113.4.2"
+  ],
+  "boundary_by_description": [
+   "T0r113.1.3",
+   "T0r113.2.3",
+   "T0r113.3.3",
+   "T0r113.4.3",
+   "T0r113.5.1",
+   "T0r113.5.2",
+   "T0r113.5.3"
+  ]
+ },
+ "laya": "{\"available\": false, \"sidecar\": \"skipped\", \"decision\": {\"source\": \"fallback\", \"complex\": false, \"feature_route\": \"拆解调度\", \"split_n\": 4, \"splits_per_family\": [{\"family\": \"拆解调度\", \"score\": 0}, {\"family\": \"深度验证\", \"score\": 0}, {\"family\": \"预算成本\", \"score\": 0}, {\"family\": \"可靠性容错\", \"score\": 0}, {\"family\": \"排程路由\", \"score\": 0}, {\"family\": \"目标校验\", \"score\": 0}, {\"family\": \"代码质量扫描\", \"score\": 0}, {\"family\": \"自进化强化\", \"score\": 0}], \"reasons\": [\"无 Laya 可用，采用规则式决策（词法子串打分，确定性可复现）\", \"feature_route 命中族 - 拆解调度\"]}, \"note\": \"调用方显式 no_sidecar=true：跳过 Laya 探测与 sidecar（BUG-18 延迟预算逃生门），直取内建规则式决策分支 laya_route；确定性、零延迟、可复现\"}",
+ "loop_create": "{\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:52:53Z\", \"updated_at\": \"2026-09-29T03:52:53Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 34}",
+ "bug_list_rows": 103
+}

@@ -1,0 +1,31 @@
+[FAIL] Execution failed:
+  - 编译错误: Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\output\setup.py", line 1, in <module>
+    from setuptools import setup, Extension
+  File "C:\Users\victo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\setuptools\__init__.py", line 21, in <module>
+    import _distutils_hack.override  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\victo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\_distutils_hack\override.py", line 1, in <module>
+    __import__('_distutils_hack').do_override()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\victo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\_distutils_hack\__init__.py", line 89, in do_override
+    ensure_local_distutils()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\victo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\_distutils_hack\__init__.py", line 75, in ensure_local_distutils
+    core = importlib.import_module('distutils.core')
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\victo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\setuptools\_distutils\core.py", line 16, in <module>
+    from .cmd import Command
+  File "C:\Users\victo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\setuptools\_distutils\cmd.py", line 17, in <module>
+    from . import _modified, archive_util, dir_util, file_util, util
+  File "C:\Users\victo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\setuptools\_distutils\archive_util.py", line 12, in <module>
+    import zipfile
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\zipfile\__init__.py", line 12, in <module>
+    import struct
+  File "struct.pyx", line 42, in init struct
+    area = calculate_area(rect)
+  File "struct.pyx", line 39, in struct.calculate_area
+    return rect.width * rect.height
+AttributeError: 'dict' object has no attribute 'width'

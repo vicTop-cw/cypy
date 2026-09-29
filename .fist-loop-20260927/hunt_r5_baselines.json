@@ -1,0 +1,226 @@
+{
+ "window": {
+  "start_utc": "2026-09-28T05:35:00+00:00",
+  "finished_at_utc": null
+ },
+ "floors": {
+  "pytest": 2002,
+  "collect": 2002,
+  "suite": 47,
+  "e2e_pass": 25
+ },
+ "floors_source": "advance_r4_baselines.json:{\"pytest\": 2002, \"collect\": 2002, \"suite\": 47, \"e2e_pass\": 25}",
+ "git_head_expected": "17d68b4",
+ "pytest": {
+  "rc": 0,
+  "passed": 2002,
+  "failed_sum": 0,
+  "collected_line": null,
+  "tail": [
+   "........................................................................ [ 93%]",
+   "........................................................................ [ 97%]",
+   "..........................................................               [100%]",
+   "2002 passed in 886.65s (0:14:46)"
+  ]
+ },
+ "collect": {
+  "rc": 0,
+  "nodeids": 2002,
+  "tail": [
+   "",
+   "2002 tests collected in 0.73s"
+  ]
+ },
+ "suite": {
+  "rc": 0,
+  "summary_line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": 47,
+   "Passed": 47,
+   "Failed": 0,
+   "Skipped": 0
+  },
+  "parsed_keys": 4,
+  "tail": [
+   "✗ Failed: 0",
+   "~ Skipped: 0",
+   "⏱  Elapsed: 125.43s"
+  ]
+ },
+ "e2e": {
+  "rc": 0,
+  "fields": {
+   "PASS": 25,
+   "FAIL": 0,
+   "UNREG/RUNFAIL": 0,
+   "WARN": 0
+  },
+  "summary_line": [
+   "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+  ],
+  "tail": [
+   "PASS  test_union.cypy",
+   "PASS  test_vec.cypy",
+   "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+  ]
+ },
+ "git": {
+  "head": "17d68b4",
+  "dirty_rows": 175,
+  "deleted_tracked": 10,
+  "staged": 0,
+  "ahead_of_upstream": "1",
+  "worktrees": [
+   "E:/IDEProjects/AI/Cypy",
+   "E:/IDEProjects/AI/_cypy_head_baseline"
+  ],
+  "foreign_worktree_present": true
+ },
+ "radius": {
+  "touched_forbidden": [],
+  "forbidden_total": 0,
+  "allowed_touched": 250,
+  "window_start": "2026-09-28T05:35:00+00:00",
+  "measured_at": "2026-09-28T07:12:37+00:00"
+ },
+ "finished_at_utc": "2026-09-28T07:12:37+00:00",
+ "three_systems_green": true,
+ "all_ok": true,
+ "self_checks": [
+  {
+   "label": "地板四栏齐且来自上一环实测件（缺一栏就是手打风险）",
+   "got": [
+    [
+     "collect",
+     "e2e_pass",
+     "pytest",
+     "suite"
+    ],
+    true
+   ],
+   "want": [
+    [
+     "collect",
+     "e2e_pass",
+     "pytest",
+     "suite"
+    ],
+    true
+   ],
+   "why": "advance_r4_baselines.json:{\"pytest\": 2002, \"collect\": 2002, \"suite\": 47, \"e2e_pass\": 25}",
+   "ok": true
+  },
+  {
+   "label": "pytest 达到上一环实测下限（只升不降）",
+   "got": true,
+   "want": true,
+   "why": "passed=2002 下限=2002",
+   "ok": true
+  },
+  {
+   "label": "pytest 无失败无错误",
+   "got": 0,
+   "want": 0,
+   "why": "摘要行里的 failed/error 计数",
+   "ok": true
+  },
+  {
+   "label": "pytest rc=0",
+   "got": 0,
+   "want": 0,
+   "why": "退出码",
+   "ok": true
+  },
+  {
+   "label": "收集数与通过数同量级（解析器没坏的下限证明）",
+   "got": true,
+   "want": true,
+   "why": "collect-only nodeid=2002",
+   "ok": true
+  },
+  {
+   "label": "自研套件达地板 47/47",
+   "got": "47/47",
+   "want": "47/47",
+   "why": "scripts/run_tests.py",
+   "ok": true
+  },
+  {
+   "label": "自研套件 rc=0",
+   "got": 0,
+   "want": 0,
+   "why": "退出码",
+   "ok": true
+  },
+  {
+   "label": "自研套件解析到 4 个字段且 Passed+Failed+Skipped == Total（基数自证）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "fields={'Total': 47, 'Passed': 47, 'Failed': 0, 'Skipped': 0}",
+   "ok": true
+  },
+  {
+   "label": "e2e 基准达地板",
+   "got": 25,
+   "want": 25,
+   "why": "summary 行",
+   "ok": true
+  },
+  {
+   "label": "e2e 三格为零",
+   "got": "000",
+   "want": "000",
+   "why": "summary 行的 FAIL/WARN/UNREG",
+   "ok": true
+  },
+  {
+   "label": "e2e rc=0",
+   "got": 0,
+   "want": 0,
+   "why": "退出码",
+   "ok": true
+  },
+  {
+   "label": "HEAD 未被改动",
+   "got": "17d68b4",
+   "want": "17d68b4",
+   "why": "git rev-parse（红线：本环不得提交）",
+   "ok": true
+  },
+  {
+   "label": "暂存区为空",
+   "got": 0,
+   "want": 0,
+   "why": "git diff --cached（红线：不得 git add）",
+   "ok": true
+  },
+  {
+   "label": "外部 HEAD 基线 worktree 仍在",
+   "got": true,
+   "want": true,
+   "why": "它不属于本环，被删掉就是半径事故",
+   "ok": true
+  },
+  {
+   "label": "产品/测试/冻结面改动半径为零",
+   "got": 0,
+   "want": 0,
+   "why": "mtime ≥ 2026-09-28T05:35:00+00:00 的文件：[]",
+   "ok": true
+  },
+  {
+   "label": "本轮只写了判据件与账本（正面计数 > 0 才算 mtime 口径活着）",
+   "got": true,
+   "want": true,
+   "why": "loop/memory 侧 250 个",
+   "ok": true
+  }
+ ],
+ "refuse": []
+}

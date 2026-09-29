@@ -1,0 +1,893 @@
+{
+ "started": "2026-09-28T10:58:53+00:00",
+ "closed_ids": [
+  74,
+  75,
+  76,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  91
+ ],
+ "closed_keys_len": 17,
+ "fixed_sections": [
+  "CLI_build_failure_reason_message_swallowed",
+  "CLI_check_only_ignores_entry_scope",
+  "CLI_global_option_overwritten_by_subparser",
+  "CODEGEN_augmented_xor_drops_left_operand",
+  "CODEGEN_binop_parens_dropped_changes_order",
+  "CODEGEN_header_docstring_backslash_escape",
+  "CODEGEN_module_identity_hardcoded_unknown",
+  "CODEGEN_nested_defer_runs_eagerly",
+  "COMPTIME_block_form_surfaces_internal_exception",
+  "COMPTIME_collection_literal_leaks_ast_repr",
+  "COMPTIME_string_result_emitted_unescaped",
+  "DEFER_nested_return_exit_skips_cleanup",
+  "HOOK_bom_marker_silently_not_compiled",
+  "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+  "LEXER_bitwise_xor_and_invert_unreachable",
+  "LEXER_declared_augassign_never_lexed",
+  "TYPES_documented_pointer_element_names_undefined"
+ ],
+ "not_fixed_sections": [
+  "BRIDGE_c_not_equivalent",
+  "BRIDGE_cache_side_effect",
+  "CODEGEN_named_conditions_unreachable",
+  "PYD_incremental_cache_not_reused",
+  "SLICE_typed_as_element"
+ ],
+ "leftover_ids": [
+  68,
+  69,
+  71,
+  72,
+  73
+ ],
+ "leftover_len": 5,
+ "cards": [
+  {
+   "bug_id": 88,
+   "root_cause_key": "CLI_build_failure_reason_message_swallowed",
+   "task_id": "T0r107",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r107\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r107\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r107\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r107\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 89,
+   "root_cause_key": "CLI_check_only_ignores_entry_scope",
+   "task_id": "T0r108",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r108\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r108\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r108\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r108\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 85,
+   "root_cause_key": "CLI_global_option_overwritten_by_subparser",
+   "task_id": "T0r104",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r104\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r104\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r104\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r104\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 74,
+   "root_cause_key": "CODEGEN_augmented_xor_drops_left_operand",
+   "task_id": "T0r91",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r91\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r91\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r91\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r91\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 78,
+   "root_cause_key": "CODEGEN_binop_parens_dropped_changes_order",
+   "task_id": "T0r97",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r97\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r97\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r97\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r97\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 91,
+   "root_cause_key": "CODEGEN_header_docstring_backslash_escape",
+   "task_id": "T0r111",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r111\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r111\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r111\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r111\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 90,
+   "root_cause_key": "CODEGEN_module_identity_hardcoded_unknown",
+   "task_id": "T0r109",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r109\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r109\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r109\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r109\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 80,
+   "root_cause_key": "CODEGEN_nested_defer_runs_eagerly",
+   "task_id": "T0r99",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r99\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r99\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r99\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r99\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 83,
+   "root_cause_key": "COMPTIME_block_form_surfaces_internal_exception",
+   "task_id": "T0r102",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r102\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r102\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r102\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r102\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 81,
+   "root_cause_key": "COMPTIME_collection_literal_leaks_ast_repr",
+   "task_id": "T0r100",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r100\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r100\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r100\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r100\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 82,
+   "root_cause_key": "COMPTIME_string_result_emitted_unescaped",
+   "task_id": "T0r101",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r101\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r101\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r101\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r101\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 76,
+   "root_cause_key": "DEFER_nested_return_exit_skips_cleanup",
+   "task_id": "T0r94",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r94\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r94\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r94\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r94\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 86,
+   "root_cause_key": "HOOK_bom_marker_silently_not_compiled",
+   "task_id": "T0r105",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r105\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r105\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r105\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r105\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 87,
+   "root_cause_key": "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+   "task_id": "T0r106",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r106\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r106\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r106\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r106\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 75,
+   "root_cause_key": "LEXER_bitwise_xor_and_invert_unreachable",
+   "task_id": "T0r92",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r92\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r92\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r92\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r92\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 79,
+   "root_cause_key": "LEXER_declared_augassign_never_lexed",
+   "task_id": "T0r98",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r98\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r98\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r98\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r98\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复 "
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  },
+  {
+   "bug_id": 84,
+   "root_cause_key": "TYPES_documented_pointer_element_names_undefined",
+   "task_id": "T0r103",
+   "steps": [
+    {
+     "call": "claim",
+     "ok": true,
+     "echo": "{\"id\": \"T0r103\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已领取\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "execute",
+     "ok": true,
+     "echo": "{\"id\": \"T0r103\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "submit",
+     "ok": true,
+     "echo": "{\"id\": \"T0r103\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"待验收\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    },
+    {
+     "call": "verify",
+     "ok": true,
+     "echo": "{\"id\": \"T0r103\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"bugs\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": \"cypy-fixer\", \"description\": \"修复"
+    }
+   ],
+   "final_status": "已完成",
+   "completed_by": "cypy-fixer"
+  }
+ ],
+ "appended": [
+  {
+   "key": "CLI_build_failure_reason_message_swallowed",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "CLI_check_only_ignores_entry_scope",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "CLI_global_option_overwritten_by_subparser",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "CODEGEN_augmented_xor_drops_left_operand",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "CODEGEN_binop_parens_dropped_changes_order",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "CODEGEN_header_docstring_backslash_escape",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "CODEGEN_module_identity_hardcoded_unknown",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "CODEGEN_nested_defer_runs_eagerly",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "COMPTIME_block_form_surfaces_internal_exception",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "COMPTIME_collection_literal_leaks_ast_repr",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "COMPTIME_string_result_emitted_unescaped",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "DEFER_nested_return_exit_skips_cleanup",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "HOOK_bom_marker_silently_not_compiled",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "LEXER_bitwise_xor_and_invert_unreachable",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "LEXER_declared_augassign_never_lexed",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "TYPES_documented_pointer_element_names_undefined",
+   "appended": true,
+   "why": ""
+  },
+  {
+   "key": "BRIDGE_c_not_equivalent",
+   "appended": true,
+   "why": "转结段"
+  },
+  {
+   "key": "BRIDGE_cache_side_effect",
+   "appended": true,
+   "why": "转结段"
+  },
+  {
+   "key": "CODEGEN_named_conditions_unreachable",
+   "appended": true,
+   "why": "转结段"
+  },
+  {
+   "key": "PYD_incremental_cache_not_reused",
+   "appended": true,
+   "why": "转结段"
+  },
+  {
+   "key": "SLICE_typed_as_element",
+   "appended": true,
+   "why": "转结段"
+  }
+ ],
+ "three_way": [
+  {
+   "key": "CLI_build_failure_reason_message_swallowed",
+   "bug_id": 88,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "CLI_check_only_ignores_entry_scope",
+   "bug_id": 89,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "CLI_global_option_overwritten_by_subparser",
+   "bug_id": 85,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "CODEGEN_augmented_xor_drops_left_operand",
+   "bug_id": 74,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "CODEGEN_binop_parens_dropped_changes_order",
+   "bug_id": 78,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "CODEGEN_header_docstring_backslash_escape",
+   "bug_id": 91,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "CODEGEN_module_identity_hardcoded_unknown",
+   "bug_id": 90,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "CODEGEN_nested_defer_runs_eagerly",
+   "bug_id": 80,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "COMPTIME_block_form_surfaces_internal_exception",
+   "bug_id": 83,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "COMPTIME_collection_literal_leaks_ast_repr",
+   "bug_id": 81,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "COMPTIME_string_result_emitted_unescaped",
+   "bug_id": 82,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "DEFER_nested_return_exit_skips_cleanup",
+   "bug_id": 76,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "HOOK_bom_marker_silently_not_compiled",
+   "bug_id": 86,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+   "bug_id": 87,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "LEXER_bitwise_xor_and_invert_unreachable",
+   "bug_id": 75,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "LEXER_declared_augassign_never_lexed",
+   "bug_id": 79,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "TYPES_documented_pointer_element_names_undefined",
+   "bug_id": 84,
+   "md_fixed": true,
+   "md_blank_line_before": true,
+   "sqlite_done": true,
+   "call_log_rows": 4
+  }
+ ],
+ "three_way_bad": [],
+ "leftover_marked": [
+  {
+   "key": "BRIDGE_c_not_equivalent",
+   "bug_id": 69,
+   "md_not_fixed": true
+  },
+  {
+   "key": "BRIDGE_cache_side_effect",
+   "bug_id": 68,
+   "md_not_fixed": true
+  },
+  {
+   "key": "CODEGEN_named_conditions_unreachable",
+   "bug_id": 72,
+   "md_not_fixed": true
+  },
+  {
+   "key": "PYD_incremental_cache_not_reused",
+   "bug_id": 73,
+   "md_not_fixed": true
+  },
+  {
+   "key": "SLICE_typed_as_element",
+   "bug_id": 71,
+   "md_not_fixed": true
+  }
+ ],
+ "out_of_radius_booked": [
+  {
+   "key": "TEST_vacuous_success_guard_hides_assertions",
+   "lane": "lane-tests",
+   "files": [
+    "tests/test_codegen_verification.py",
+    "tests/test_unit_test_modes.py"
+   ],
+   "appended": true
+  }
+ ],
+ "agree_total": 17,
+ "self_checks": [
+  {
+   "label": "本环改动的既有测试面必须逐张写进留档（不许悄悄改别人的钉档）",
+   "got": [],
+   "want": [],
+   "why": "既有测试面 2 个，追加后仍未点名 0 个：[]",
+   "ok": true
+  },
+  {
+   "label": "越出认领半径的车道改动必须逐条入账（OUT-OF-RADIUS 段数 = 这类车道卡数）",
+   "got": 1,
+   "want": 1,
+   "why": "越界车道卡 1 条，入账 1 条：[{\"key\": \"TEST_vacuous_success_guard_hides_assertions\", \"lane\": \"lane-tests\", \"files\": [\"tests/test_codegen_verification.py\", \"tests/test_unit_test_modes.py\"], \"appended\": true}]",
+   "ok": true
+  },
+  {
+   "label": "闭环集与留档条数一致",
+   "got": 17,
+   "want": 17,
+   "why": "追加 17 / 驱动 17",
+   "ok": true
+  },
+  {
+   "label": "转结栏逐张留档（一张都不许悄悄消失）",
+   "got": 5,
+   "want": 5,
+   "why": "转结 5 张：['BRIDGE_c_not_equivalent', 'BRIDGE_cache_side_effect', 'CODEGEN_named_conditions_unreachable', 'PYD_incremental_cache_not_reused', 'SLICE_typed_as_element']",
+   "ok": true
+  },
+  {
+   "label": "账本条目总数不因本轮追加而变化（只追加段落，不新增也不删除条目）",
+   "got": 91,
+   "want": 91,
+   "why": "追加前 91 条 / 追加后 91 条",
+   "ok": true
+  },
+  {
+   "label": "语料命中逐张进挂账（有命中就要有交代）",
+   "got": 0,
+   "want": 0,
+   "why": "adjudication=0",
+   "ok": true
+  }
+ ],
+ "self_checks_red": [],
+ "ledger_total": 91,
+ "ledger_open_total": 91,
+ "impact_adjudication": [],
+ "note": "闭环集是五件交集算出来的；bug 单没有 [omega:required] ⇒ Omega 三连对它不可用（既定语义），强度在锁 + 旧码复算 + 回退矩阵 + 影响面四件判据上。",
+ "refuse": [],
+ "at_utc": "2026-09-28T10:58:55+00:00"
+}

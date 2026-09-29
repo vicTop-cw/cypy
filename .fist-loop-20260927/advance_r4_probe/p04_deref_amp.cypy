@@ -1,0 +1,6 @@
+def main() -> int:
+    let x: int = 42
+    let ptr: *int = addr(x)
+    let value: int = &ptr
+    print(value)
+    return 0

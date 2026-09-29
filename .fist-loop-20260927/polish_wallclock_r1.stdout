@@ -1,0 +1,87 @@
+E:\IDEProjects\AI\Cypy\.fist-loop-20260927\polish_wallclock_r1.py:135: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  doc_probe = {"try1_log_mtime_utc": datetime.utcfromtimestamp(try1_mtime).isoformat() + "Z",
+{
+ "refuse": [],
+ "target": "tests/test_incremental.py::TestDigestCost::test_digest_cost_on_ten_thousand_line_module",
+ "load": {
+  "before": {
+   "foreign_lane": 0,
+   "unattributable": 0,
+   "measured_all": true,
+   "sample_count": 3
+  },
+  "after": {
+   "foreign_lane": 0,
+   "unattributable": 0,
+   "measured_all": true,
+   "sample_count": 3
+  },
+  "policy": "连续 3 次采样取最大值"
+ },
+ "solo": {
+  "passed": 1,
+  "failed": [],
+  "summary_line": "============================== 1 passed in 1.65s ==============================",
+  "rc": 0
+ },
+ "whole_file": {
+  "passed": 38,
+  "failed": [],
+  "summary_line": "============================= 38 passed in 6.74s ==============================",
+  "rc": 0
+ },
+ "timing_evidence": {
+  "found": true,
+  "body": [
+   {
+    "line": 537,
+    "text": "started = time.perf_counter()"
+   },
+   {
+    "line": 539,
+    "text": "parse_elapsed = time.perf_counter() - started"
+   },
+   {
+    "line": 545,
+    "text": "started = time.process_time()"
+   },
+   {
+    "line": 548,
+    "text": "digest_elapsed = time.process_time() - started"
+   },
+   {
+    "line": 550,
+    "text": "assert digest_elapsed < 2.0, \"digest cost too high: %.3fs\" % digest_elapsed"
+   },
+   {
+    "line": 553,
+    "text": "started = time.perf_counter()"
+   },
+   {
+    "line": 555,
+    "text": "compare_elapsed = time.perf_counter() - started"
+   },
+   {
+    "line": 556,
+    "text": "assert compare_elapsed < 5.0"
+   },
+   {
+    "line": 557,
+    "text": "assert parse_elapsed < 60.0"
+   }
+  ],
+  "has_wallclock_assert": true,
+  "has_cpu_time_usage": true
+ },
+ "product_unchanged_since_try1": {
+  "try1_log_mtime_utc": "2026-09-27T05:33:55.380943Z",
+  "product_py_files_checked": [
+   "cypyc",
+   "cypy_bridge",
+   "test_suite",
+   "scripts",
+   "tests"
+  ],
+  "product_files_newer_than_try1": []
+ }
+}

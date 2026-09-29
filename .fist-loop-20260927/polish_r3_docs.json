@@ -1,0 +1,103 @@
+{
+ "flags_three_way": true,
+ "per_subcommand": {
+  "transpile": {
+   "argparse": [
+    "--bridge",
+    "--check-only",
+    "--emit-ast",
+    "--emit-code",
+    "--emit-cython",
+    "--generate-setup",
+    "--output",
+    "--verbose"
+   ],
+   "documented": [
+    "--bridge",
+    "--check-only",
+    "--emit-ast",
+    "--emit-code",
+    "--emit-cython",
+    "--generate-setup"
+   ],
+   "help": [
+    "--bridge",
+    "--check-only",
+    "--emit-ast",
+    "--emit-code",
+    "--emit-cython",
+    "--generate-setup",
+    "--output",
+    "--verbose"
+   ]
+  },
+  "compile": {
+   "argparse": [
+    "--bridge",
+    "--output",
+    "--verbose"
+   ],
+   "documented": [
+    "--bridge"
+   ],
+   "help": [
+    "--bridge",
+    "--output",
+    "--verbose"
+   ]
+  },
+  "build": {
+   "argparse": [
+    "--check-only",
+    "--entry",
+    "--output",
+    "--verbose"
+   ],
+   "documented": [
+    "--check-only",
+    "--entry"
+   ],
+   "help": [
+    "--check-only",
+    "--entry",
+    "--output",
+    "--verbose"
+   ]
+  },
+  "run": {
+   "argparse": [
+    "--output",
+    "--verbose"
+   ],
+   "documented": [],
+   "help": [
+    "--output",
+    "--verbose"
+   ]
+  },
+  "watch": {
+   "argparse": [
+    "--debounce",
+    "--output",
+    "--verbose"
+   ],
+   "documented": [
+    "--debounce"
+   ],
+   "help": [
+    "--debounce",
+    "--output",
+    "--verbose"
+   ]
+  }
+ },
+ "phantom": [],
+ "undocumented": [],
+ "help_mismatch": [],
+ "universal_flags_documented_in_table": true,
+ "third_party_flag_lines_excluded": 0,
+ "guard_rerunnable": true,
+ "guard_run_line": "2 passed, 7 deselected in 0.92s",
+ "at_utc": "2026-09-27T18:12:10+00:00",
+ "refuse": []
+}

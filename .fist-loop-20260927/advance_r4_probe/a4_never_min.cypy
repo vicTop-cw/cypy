@@ -1,0 +1,6 @@
+def fatal(message: str) -> Never:
+    raise ValueError(message)
+
+def main() -> int:
+    print("start")
+    return 0

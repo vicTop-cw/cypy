@@ -1,0 +1,15 @@
+{
+ "mapping": [
+  {
+   "bug_id": "BUG-30",
+   "task_id": "T0r35",
+   "summary": "[codegen-coercion] cypyc/codegen/cython_generator.py:1170 声明式局部变量走 `name: <ctype> = value` 注解形式且不补隐式转换，于是 `let e: float = <int 表达式>` 的 e 在编译产物里仍是 Python int（type() 回 <class 'int'>），float 路径在 BUG-14 裁决落地后由 42.0 退化成了 42",
+   "severity": "high",
+   "fired": true
+  }
+ ],
+ "failures": [],
+ "missing": [],
+ "ledger_before": 29,
+ "ledger_after": 30
+}

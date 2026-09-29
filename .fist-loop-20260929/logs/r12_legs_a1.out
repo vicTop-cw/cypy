@@ -1,0 +1,10 @@
+SKIP BUG-129：本件那段已在账上（覆盖用 --refresh）
+CONCLUSION touched=0（已在账，幂等）
+amend_rc=0
+SWEEP_SELFTEST hard_on_sample=1 residue_on_sample=4 live={"dblstamp_lines": 0, "residue_lines": 0, "hard_bad_stamps": 0, "read_clock_no_Z": 17, "read_minute_precision": 1}
+CONCLUSION selftest=sweep ok=True（两份真实坏样本各打回一格，活台账三门归零）
+selftest_rc=0
+EVIDENCE .fist-loop-20260929\ring_r12_start_a2.json
+ROOT T0r118 tree {"root": "T0r118", "rows": 17, "branches": 4, "leaves": 12, "general": ["T0r118.1.1", "T0r118.1.2", "T0r118.2.1", "T0r118.2.2", "T0r118.3.1", "T0r118.3.2"], "boundary": ["T0r118.1.3", "T0r118.2.3", "T0r118.3.3", "T0r118.
+CONCLUSION stage=start root=T0r118 rows=17 leaves=12 faces_missing=0 calls=2 refused=0 benign=0 tag=a2
+start_rc=0

@@ -1,0 +1,24 @@
+{
+ "bug": "BUG-58",
+ "patches": 2,
+ "applied": 2,
+ "compiled": true,
+ "pos_red": [
+  "test_bug58_realloc_annotation_matches_return_shape"
+ ],
+ "ctl_red": [],
+ "collateral_red": [],
+ "restored": true,
+ "sha_before": {
+  "cypy_bridge/memory.py": "0dcd9c0291f007210509fb62ed55f87d994229c38e90ab3e8dc724854f366288"
+ },
+ "sha_after_restore": "0dcd9c0291f007210509fb62ed55f87d994229c38e90ab3e8dc724854f366288",
+ "sha_equal": true,
+ "touched_files": [
+  "cypy_bridge/memory.py"
+ ],
+ "workspace_untouched": true,
+ "matches_prev_head": null,
+ "reds_total": 1,
+ "seen_total": 17
+}

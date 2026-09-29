@@ -1,0 +1,31 @@
+{
+ "refuse": [],
+ "pytest": {
+  "passed": 1868,
+  "failed": [],
+  "summary_line": "1868 passed in 569.37s (0:09:29)"
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": "47",
+   "Passed": "47",
+   "Failed": "0",
+   "Skipped": "0"
+  },
+  "green": true
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+  "fields": {
+   "PASS": "25",
+   "FAIL": "0",
+   "RUNFAIL": "0",
+   "WARN": "0"
+  },
+  "green": true
+ },
+ "floor": 1868
+}

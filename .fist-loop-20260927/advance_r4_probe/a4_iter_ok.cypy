@@ -1,0 +1,4 @@
+def main() -> int:
+    xs = [1, 2]
+    it = iter(xs)
+    return 0

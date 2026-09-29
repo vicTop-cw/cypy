@@ -1,0 +1,889 @@
+{
+ "started": "2026-09-28T00:39:19+00:00",
+ "lock_file": "tests/test_loop_20260927_fix_r4.py",
+ "collateral_files": [
+  "tests/test_loop_20260927_fix_r3.py",
+  "tests/test_loop_20260927_polish_r3.py",
+  "tests/test_loop_20260927_advance_r3.py"
+ ],
+ "snapshot": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_snap",
+ "baseline_sha256": "ff9e8821cb226009ed89b340aed4de1bd7531bee84b552940ef1970e060908c8",
+ "identity": {
+  "cwd": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_snap",
+  "loaded": {
+   "pkg": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_snap\\cypyc\\__init__.py",
+   "mod": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_snap\\cypyc\\analyzer\\type_checker.py"
+  },
+  "under_snapshot": true,
+  "rc": 0,
+  "workspace_leak": false
+ },
+ "base_run": {
+  "cmd": "pytest tests/test_loop_20260927_fix_r4.py tests/test_loop_20260927_fix_r3.py tests/test_loop_20260927_polish_r3.py tests/test_loop_20260927_advance_r3.py",
+  "rc": 0,
+  "fields": {
+   "passed": 53,
+   "failed": 0,
+   "errors": 0,
+   "skipped": 0
+  },
+  "failed_names": [],
+  "collect_error": false,
+  "summary_line": "53 passed in 11.21s",
+  "tail": ".....................................................                    [100%]\n53 passed in 11.21s\n"
+ },
+ "base_target_run": {
+  "cmd": "pytest tests/test_loop_20260927_fix_r4.py",
+  "rc": 0,
+  "fields": {
+   "passed": 18,
+   "failed": 0,
+   "errors": 0,
+   "skipped": 0
+  },
+  "failed_names": [],
+  "collect_error": false,
+  "summary_line": "18 passed in 0.70s",
+  "tail": "..................                                                       [100%]\n18 passed in 0.70s\n"
+ },
+ "target_collected": 18,
+ "rc_mismatch": [],
+ "mutated": 22,
+ "rows_total": 22,
+ "sha_restored": 22,
+ "canary_caught": 1,
+ "bearing": [
+  "H00-whole-file",
+  "H105-insert",
+  "H543-insert",
+  "H563-replace",
+  "H806-replace",
+  "H834-insert",
+  "H880-replace",
+  "H998-insert",
+  "H1012-replace",
+  "H1028-replace",
+  "H1036-replace",
+  "H1043-replace",
+  "H1088-insert"
+ ],
+ "non_bearing": [
+  "H767-replace",
+  "H791-replace",
+  "H839-replace",
+  "H878-replace",
+  "H1019-insert",
+  "H1030-replace",
+  "H1096-insert",
+  "H2155-replace",
+  "X99-canary-comment"
+ ],
+ "broken_import": [],
+ "rows": [
+  {
+   "id": "H00-whole-file",
+   "kind": "whole_file",
+   "region": "整份文件",
+   "mutated": {
+    "sha": "27a3408faad21e9f409321edab810eb107f8b8ee6f50638d86193587c63f5aa0",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 14,
+    "passed": 39,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "14 failed, 39 passed in 10.48s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C09]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C10]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C11]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C12]",
+    "tests/test_loop_20260927_fix_r4.py::test_no_internal_repr_leaks_in_any_fixture_message"
+   ],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H105-insert",
+   "kind": "hunk",
+   "region": "cur 106-116 ← before 106-105 |         # 可调用签名注册表（BUG-61）：`type_map[函数名]` 存的是**返回类型**， ⏎         # 它没法回答「这个函数能接受几",
+   "mutated": {
+    "sha": "243b011963427f81d5aa76b54e02ca345c9b28ba93443106f653615b993e3444",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 27,
+    "passed": 26,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "27 failed, 26 passed in 9.37s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_arg_type_control_on_dynamic_value_stays_silent",
+    "tests/test_loop_20260927_fix_r4.py::test_arity_control_on_alias_callable_still_reports",
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08_ctl]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C12]"
+   ],
+   "failed_collateral": {
+    "tests/test_loop_20260927_advance_r3.py": [
+     "tests/test_loop_20260927_advance_r3.py::test_advance_alias_form_is_also_checked",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_arity_and_return_errors_coexist",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_violation_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_zero_args_passed_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_codegen_object_fallback_unchanged",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_correct_single_arg_call_stays_clean",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_keyword_arg_call_is_skipped",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_two_arg_and_zero_arg_forms_match"
+    ],
+    "tests/test_loop_20260927_fix_r3.py": [
+     "tests/test_loop_20260927_fix_r3.py::test_bug56_check_only_reports_and_generates_nothing",
+     "tests/test_loop_20260927_fix_r3.py::test_bug56_control_plain_transpile_writes_no_setup",
+     "tests/test_loop_20260927_fix_r3.py::test_bug56_emit_ast_prints_parsed_nodes",
+     "tests/test_loop_20260927_fix_r3.py::test_bug56_emit_cython_prints_cython_code",
+     "tests/test_loop_20260927_fix_r3.py::test_bug56_generate_setup_writes_buildable_script"
+    ],
+    "tests/test_loop_20260927_polish_r3.py": [
+     "tests/test_loop_20260927_polish_r3.py::test_polish_cypy_hook_exposes_public_analyze_only"
+    ]
+   },
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H543-insert",
+   "kind": "hunk",
+   "region": "cur 555-556 ← before 544-543 |         # BUG-61：函数名要有「可调用签名」，`type_map[名字]` 只有返回类型，判不了元数与实参 ⏎         self._regis",
+   "mutated": {
+    "sha": "3d9988ee48b122ed937a9cfd12fa7c353734442b6bbe3a41939ca6fd9d700e31",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 9,
+    "passed": 44,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "9 failed, 44 passed in 11.64s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]"
+   ],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H563-replace",
+   "kind": "hunk",
+   "region": "cur 577-583 ← before 564-565 |                 # 即使没有类型注解，也注册为 object 类型，确保参数在作用域中可见。 ⏎                 # 但 `self",
+   "mutated": {
+    "sha": "ff1acf27eb8cc5b686edd0a10ed79c1a4132d366c572856018998813665079b9",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 3,
+    "passed": 50,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "3 failed, 50 passed in 10.87s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C09]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C10]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C11]"
+   ],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H767-replace",
+   "kind": "hunk",
+   "region": "cur 786-786 ← before 768-768 |                         self._mismatch(\"Type mismatch\", declared_type, value_typ",
+   "mutated": {
+    "sha": "9c95f4ddb1ef422eaf80fa2e394efa3569b541749805441ddcae765e1c0712ca",
+    "differs_from_baseline": true
+   },
+   "rc": 0,
+   "fields": {
+    "passed": 53,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "53 passed in 10.63s",
+   "failed_target": [],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": false,
+   "status": "non_bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H791-replace",
+   "kind": "hunk",
+   "region": "cur 810-810 ← before 792-792 |                             self._mismatch(\"Type mismatch\", declared_type, value",
+   "mutated": {
+    "sha": "f3cba0f3964e42153f8fcb4416464e4ae1f8403cd168c2c26fa4a5abecdad2b7",
+    "differs_from_baseline": true
+   },
+   "rc": 0,
+   "fields": {
+    "passed": 53,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "53 passed in 11.56s",
+   "failed_target": [],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": false,
+   "status": "non_bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H806-replace",
+   "kind": "hunk",
+   "region": "cur 825-825 ← before 807-807 |                             self._mismatch(\"Type mismatch\", declared_type, value",
+   "mutated": {
+    "sha": "9afcf2de512df022f6e68a6b2e837e37c82f999215d006986ceacae67a2d8186",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 2,
+    "passed": 51,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "2 failed, 51 passed in 11.67s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C12]",
+    "tests/test_loop_20260927_fix_r4.py::test_no_internal_repr_leaks_in_any_fixture_message"
+   ],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H834-insert",
+   "kind": "hunk",
+   "region": "cur 853-855 ← before 835-834 |             # 声明要的是 Callable、返回的是函数名 ⇒ 比可调用签名而不是它的返回类型（BUG-61/C03） ⏎             v",
+   "mutated": {
+    "sha": "0fcd4d8c07a6fd30ce342e0098d382eaa151a7aabceee1c77186e1c702ea82f4",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 1,
+    "passed": 52,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "1 failed, 52 passed in 11.76s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]"
+   ],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H839-replace",
+   "kind": "hunk",
+   "region": "cur 861-862 ← before 840-840 |                     self._mismatch(\"Return type mismatch\", self.current_function",
+   "mutated": {
+    "sha": "c6122699dc26666363b8bbcf5fba1d8368a3daa7835027d59b98acdd334ecffa",
+    "differs_from_baseline": true
+   },
+   "rc": 0,
+   "fields": {
+    "passed": 53,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "53 passed in 12.01s",
+   "failed_target": [],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": false,
+   "status": "non_bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H878-replace",
+   "kind": "hunk",
+   "region": "cur 901-902 ← before 879-879 |                         self._mismatch(\"Return type mismatch\", self.current_func",
+   "mutated": {
+    "sha": "6a4216efa78a7afabc6cef72f0f330a8e1871e93af6197855445d42cf268689c",
+    "differs_from_baseline": true
+   },
+   "rc": 0,
+   "fields": {
+    "passed": 53,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "53 passed in 11.68s",
+   "failed_target": [],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": false,
+   "status": "non_bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H880-replace",
+   "kind": "hunk",
+   "region": "cur 904-905 ← before 881-881 |                     self._mismatch(\"Return type mismatch\", self.current_function",
+   "mutated": {
+    "sha": "6db310bfdbef9c76029547dac5343274fc8e893419c5de8f064926b2c87bef18",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 2,
+    "passed": 51,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "2 failed, 51 passed in 12.25s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C12]",
+    "tests/test_loop_20260927_fix_r4.py::test_no_internal_repr_leaks_in_any_fixture_message"
+   ],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H998-insert",
+   "kind": "hunk",
+   "region": "cur 1023-1164 ← before 999-998 |     def _value_type_for_declared(self, declared: Any, node: Any, visited: Option",
+   "mutated": {
+    "sha": "25f3532c27da040c547e576af339f44261877d116ca29d7552a651a499987cc4",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 31,
+    "passed": 22,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "31 failed, 22 passed in 9.96s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_arg_type_control_on_dynamic_value_stays_silent",
+    "tests/test_loop_20260927_fix_r4.py::test_arity_control_on_alias_callable_still_reports",
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08_ctl]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C09]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C09_ctl]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C10]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C11]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C12]"
+   ],
+   "failed_collateral": {
+    "tests/test_loop_20260927_advance_r3.py": [
+     "tests/test_loop_20260927_advance_r3.py::test_advance_alias_form_is_also_checked",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_arity_and_return_errors_coexist",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_violation_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_zero_args_passed_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_codegen_object_fallback_unchanged",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_correct_single_arg_call_stays_clean",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_keyword_arg_call_is_skipped",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_two_arg_and_zero_arg_forms_match"
+    ],
+    "tests/test_loop_20260927_fix_r3.py": [
+     "tests/test_loop_20260927_fix_r3.py::test_bug56_check_only_reports_and_generates_nothing",
+     "tests/test_loop_20260927_fix_r3.py::test_bug56_control_plain_transpile_writes_no_setup",
+     "tests/test_loop_20260927_fix_r3.py::test_bug56_emit_ast_prints_parsed_nodes",
+     "tests/test_loop_20260927_fix_r3.py::test_bug56_emit_cython_prints_cython_code",
+     "tests/test_loop_20260927_fix_r3.py::test_bug56_generate_setup_writes_buildable_script"
+    ],
+    "tests/test_loop_20260927_polish_r3.py": [
+     "tests/test_loop_20260927_polish_r3.py::test_polish_cypy_hook_exposes_public_analyze_only"
+    ]
+   },
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H1012-replace",
+   "kind": "hunk",
+   "region": "cur 1179-1179 ← before 1013-1013 |     def _check_callable_arity(self, node: Call, args, bounds=None) -> None: ⏎ ",
+   "mutated": {
+    "sha": "1fa9fe1c0438e72f7b7a80153b9244060189d486b2d70c5620cce583b960fa17",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 16,
+    "passed": 37,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "16 failed, 37 passed in 11.46s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_arg_type_control_on_dynamic_value_stays_silent",
+    "tests/test_loop_20260927_fix_r4.py::test_arity_control_on_alias_callable_still_reports",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08_ctl]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C11]"
+   ],
+   "failed_collateral": {
+    "tests/test_loop_20260927_advance_r3.py": [
+     "tests/test_loop_20260927_advance_r3.py::test_advance_alias_form_is_also_checked",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_arity_and_return_errors_coexist",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_violation_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_zero_args_passed_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_codegen_object_fallback_unchanged",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_correct_single_arg_call_stays_clean",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_keyword_arg_call_is_skipped",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_two_arg_and_zero_arg_forms_match"
+    ]
+   },
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H1019-insert",
+   "kind": "hunk",
+   "region": "cur 1186-1186 ← before 1020-1019 |         `bounds` 是 `(下界, 上界)`：带默认值的函数可以少给，缺省按精确匹配。 ⏎ ",
+   "mutated": {
+    "sha": "6dc314cacff5ea45ac2b3738e0d5aabd3dd87afc9fc116182fc1b8bccd908f6a",
+    "differs_from_baseline": true
+   },
+   "rc": 0,
+   "fields": {
+    "passed": 53,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "53 passed in 10.55s",
+   "failed_target": [],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": false,
+   "status": "non_bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H1028-replace",
+   "kind": "hunk",
+   "region": "cur 1196-1197 ← before 1029-1029 |         lo, hi = bounds if bounds else (len(declared), len(declared)) ⏎         if",
+   "mutated": {
+    "sha": "7cd1e7e7536eecb7e0934864f7f2d84f56700935abe50d51aa50d95c19295e20",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 10,
+    "passed": 43,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "10 failed, 43 passed in 11.42s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_arity_control_on_alias_callable_still_reports",
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C11]"
+   ],
+   "failed_collateral": {
+    "tests/test_loop_20260927_advance_r3.py": [
+     "tests/test_loop_20260927_advance_r3.py::test_advance_alias_form_is_also_checked",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_arity_and_return_errors_coexist",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_violation_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_zero_args_passed_reported"
+    ]
+   },
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H1030-replace",
+   "kind": "hunk",
+   "region": "cur 1199-1199 ← before 1031-1031 |                 f\"Callable arity mismatch: expected {lo if lo == hi else f'{lo}.",
+   "mutated": {
+    "sha": "fce093fa1396a4168f5e6bbd855c4ae7c520e6dc5ab1a6db7910220ceff3d6ab",
+    "differs_from_baseline": true
+   },
+   "rc": 0,
+   "fields": {
+    "passed": 53,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "53 passed in 11.92s",
+   "failed_target": [],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": false,
+   "status": "non_bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H1036-replace",
+   "kind": "hunk",
+   "region": "cur 1205-1206 ← before 1037-1037 |         # 处理参数：支持位置参数和关键字参数；位置实参的**类型**要留给元数/兼容判定 ⏎         arg_types: List[Option",
+   "mutated": {
+    "sha": "7cd31ef8853176c0da2b99e0634528a3480258ac2b9a2d43c05be7d6fb29b992",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 20,
+    "passed": 33,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "20 failed, 33 passed in 11.74s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_arg_type_control_on_dynamic_value_stays_silent",
+    "tests/test_loop_20260927_fix_r4.py::test_arity_control_on_alias_callable_still_reports",
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08_ctl]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C11]"
+   ],
+   "failed_collateral": {
+    "tests/test_loop_20260927_advance_r3.py": [
+     "tests/test_loop_20260927_advance_r3.py::test_advance_alias_form_is_also_checked",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_arity_and_return_errors_coexist",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_violation_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_zero_args_passed_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_codegen_object_fallback_unchanged",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_correct_single_arg_call_stays_clean",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_keyword_arg_call_is_skipped",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_two_arg_and_zero_arg_forms_match"
+    ]
+   },
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H1043-replace",
+   "kind": "hunk",
+   "region": "cur 1213-1225 ← before 1044-1044 |                 arg_types.append(self._visit(arg)) ⏎  ⏎         # 属性位上的可调用体（`self.cb",
+   "mutated": {
+    "sha": "c8ad60e6aaf71f30039b05fdd186984d7738b434bab7f6e168e5542c5bac2aba",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 4,
+    "passed": 49,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "4 failed, 49 passed in 13.99s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C11]"
+   ],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H1088-insert",
+   "kind": "hunk",
+   "region": "cur 1270-1281 ← before 1089-1088 |             # 用户定义的函数：判定走**可调用签名**（BUG-61/62），不再走 `type_map[名字]` ⏎             # —",
+   "mutated": {
+    "sha": "54b213a7d07a728993a67de662be6a50ca7a59843f1f92dce01d27d38ec7bc4e",
+    "differs_from_baseline": true
+   },
+   "rc": 1,
+   "fields": {
+    "failed": 8,
+    "passed": 45,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "8 failed, 45 passed in 13.74s",
+   "failed_target": [
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]"
+   ],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": true,
+   "status": "bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H1096-insert",
+   "kind": "hunk",
+   "region": "cur 1290-1292 ← before 1097-1096 |                         declared = self._callable_declared_params(args) ⏎         ",
+   "mutated": {
+    "sha": "5121d414985d55d47a9ba3b597a49d6b20793ef39a83624856fc8aa9ee25f105",
+    "differs_from_baseline": true
+   },
+   "rc": 0,
+   "fields": {
+    "passed": 53,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "53 passed in 23.95s",
+   "failed_target": [],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": false,
+   "status": "non_bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "H2155-replace",
+   "kind": "hunk",
+   "region": "cur 2352-2356 ← before 2156-2157 |  ⏎                 # 成员名不在字段表里（`self.x = ...` 在 `__init__` 里赋的隐式成员、方法名等） ⏎          ",
+   "mutated": {
+    "sha": "a53ad561f03351706f8c5874a4b6ed59aa9bf2e8b48bdf6dbd444ab32792272a",
+    "differs_from_baseline": true
+   },
+   "rc": 0,
+   "fields": {
+    "passed": 53,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "53 passed in 22.26s",
+   "failed_target": [],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": false,
+   "status": "non_bearing",
+   "sha_restored": true
+  },
+  {
+   "id": "X99-canary-comment",
+   "kind": "canary",
+   "region": "在 cur 第 1030 行前插入一条注释",
+   "mutated": {
+    "sha": "c91cfed4648db41af65cdcfc35df555b01b32732638e8d063edca7d4bee1c039",
+    "differs_from_baseline": true
+   },
+   "rc": 0,
+   "fields": {
+    "passed": 53,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "summary_line": "53 passed in 28.05s",
+   "failed_target": [],
+   "failed_collateral": {},
+   "collect_error": false,
+   "bearing": false,
+   "status": "non_bearing",
+   "sha_restored": true
+  }
+ ],
+ "note": "行按 difflib opcode 自动切片（不是修复环手点的 RC 列表）；bearing=摘掉该段后目标锁里至少 1 条用例变红；non_bearing=摘掉照旧绿（锁不认这段）；broken=摘成半成品不可导入，不算证据",
+ "self_checks": [
+  {
+   "label": "身份探针必须证明吃的是快照树",
+   "got": true,
+   "want": true,
+   "why": "loaded=E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_snap\\cypyc\\analyzer\\type_checker.py",
+   "ok": true
+  },
+  {
+   "label": "身份探针不得泄漏工作区",
+   "got": false,
+   "want": false,
+   "why": "见 loaded",
+   "ok": true
+  },
+  {
+   "label": "基线：目标锁单独跑必须全绿",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "18 passed in 0.70s",
+   "ok": true
+  },
+  {
+   "label": "基线：目标锁实跑条数必须等于收集到的条数（防空汇总行/防漏收）",
+   "got": 18,
+   "want": 18,
+   "why": "collect-only=18",
+   "ok": true
+  },
+  {
+   "label": "快照基线：含对照锁在内也必须全绿",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "53 passed in 11.21s",
+   "ok": true
+  },
+  {
+   "label": "快照基线：rc 与计数同向",
+   "got": true,
+   "want": true,
+   "why": "rc=0 53 passed in 11.21s",
+   "ok": true
+  },
+  {
+   "label": "每行 rc 与计数必须同向（防把「跑不动」读成「跑红」）",
+   "got": [],
+   "want": [],
+   "why": "见 rows",
+   "ok": true
+  },
+  {
+   "label": "每行 mutation 都必须真的改了文件",
+   "got": 22,
+   "want": 22,
+   "why": "22 行",
+   "ok": true
+  },
+  {
+   "label": "每行复原后 sha 必须逐字等于基线",
+   "got": 22,
+   "want": 22,
+   "why": "sha_restored 计数",
+   "ok": true
+  },
+  {
+   "label": "行数分类必须穷尽（bearing+non_bearing+broken）",
+   "got": 22,
+   "want": 22,
+   "why": "不许有未分类行",
+   "ok": true
+  },
+  {
+   "label": "全量摘回必须让锁变红（否则锁是装饰）",
+   "got": true,
+   "want": true,
+   "why": "H00",
+   "ok": true
+  },
+  {
+   "label": "canary 必须被矩阵归入 non_bearing（改了也不红）",
+   "got": [
+    "non_bearing"
+   ],
+   "want": [
+    "non_bearing"
+   ],
+   "why": "canary 若变红=锁对无关改动也尖叫",
+   "ok": true
+  },
+  {
+   "label": "canary 的 sha 复原同样要成立",
+   "got": [
+    true
+   ],
+   "want": [
+    true
+   ],
+   "why": "X99",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T00:45:03+00:00"
+}

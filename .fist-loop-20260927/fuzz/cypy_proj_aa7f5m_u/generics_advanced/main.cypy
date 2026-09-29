@@ -1,0 +1,54 @@
+# 泛型编程高级示例
+# Cypy 支持类型别名和泛型编程
+
+# 泛型函数
+def identity<T>(value: T) -> T:
+    """返回传入的值"""
+    return value
+
+def wrap_in_list<T>(value: T) -> list<T>:
+    """将值包装在列表中"""
+    return [value]
+
+# 泛型结构体
+struct Box<T>:
+    value: T
+    
+    def get(self) -> T:
+        return self.value
+    
+    def set(self, new_value: T) -> None:
+        self.value = new_value
+
+# 使用泛型
+def generic_usage():
+    # 基本泛型
+    int_result = identity<int>(42)
+    str_result = identity<str>("hello")
+    print(f"int identity: {int_result}")
+    print(f"str identity: {str_result}")
+    
+    # 泛型列表
+    int_list = wrap_in_list<int>(10)
+    print(f"int list: {int_list}")
+    
+    # 泛型结构体
+    int_box = Box<int>(value=100)
+    print(f"box value: {int_box.get()}")
+    int_box.set(200)
+    print(f"updated box: {int_box.get()}")
+
+# 泛型与类型推断
+def type_inference():
+    # Cypy 可以推断泛型参数
+    inferred = identity(3.14)  # 推断为 float
+    print(f"推断类型: {inferred}")
+    
+    # 列表类型推断
+    numbers = [1, 2, 3]  # 推断为 list<int>
+    print(f"列表类型推断: {numbers}")
+
+# 运行示例
+generic_usage()
+print("-" * 30)
+type_inference()

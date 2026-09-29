@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r69.1.1",
+   "law": "狩猎面清点与 CLI 对外承诺台账（五目录符号表 + transpile --help 实读旗标集）",
+   "artifact": ".fist-loop-20260927/hunt_r3_scan.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.1.2",
+   "law": "狩猎面清点与 CLI 对外承诺台账（五目录符号表 + transpile --help 实读旗标集）",
+   "artifact": ".fist-loop-20260927/hunt_r3_scan.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.2.1",
+   "law": "定位声明先读后判：每条候选必须带上它自己的文档/状态表原文，自述未实现者按 DESIGN 撤回不占号",
+   "artifact": ".fist-loop-20260927/hunt_r3_declared.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.2.2",
+   "law": "定位声明先读后判：每条候选必须带上它自己的文档/状态表原文，自述未实现者按 DESIGN 撤回不占号",
+   "artifact": ".fist-loop-20260927/hunt_r3_declared.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.3.1",
+   "law": "成对对照确诊：pos 现形 + ctl 不现形两档齐全才算 CONFIRMED，缺一档一律 UNSURE 不入账",
+   "artifact": ".fist-loop-20260927/hunt_r3_confirm.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.3.2",
+   "law": "成对对照确诊：pos 现形 + ctl 不现形两档齐全才算 CONFIRMED，缺一档一律 UNSURE 不入账",
+   "artifact": ".fist-loop-20260927/hunt_r3_confirm.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.4.1",
+   "law": "一键复现三态退出码台账：0=现形 / 1=不现形 / 2=夹具坏，入账件里承诺的复跑命令必须真跑过",
+   "artifact": ".fist-loop-20260927/hunt_r3_repro.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.4.2",
+   "law": "一键复现三态退出码台账：0=现形 / 1=不现形 / 2=夹具坏，入账件里承诺的复跑命令必须真跑过",
+   "artifact": ".fist-loop-20260927/hunt_r3_repro.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.5.1",
+   "law": "子代理主张逐条亲测对账，并把我自己两版探针的误判单独成栏（假绿与假红都要留字）",
+   "artifact": ".fist-loop-20260927/hunt_r3_subagent_claims.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.5.2",
+   "law": "子代理主张逐条亲测对账，并把我自己两版探针的误判单独成栏（假绿与假红都要留字）",
+   "artifact": ".fist-loop-20260927/hunt_r3_subagent_claims.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.6.1",
+   "law": "只确诊入账（BUG-55 起）：report_bug 回读 + 账本号增量必须等于入账条数，不在本环修产品码",
+   "artifact": ".fist-loop-20260927/hunt_r3_filed.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.6.2",
+   "law": "只确诊入账（BUG-55 起）：report_bug 回读 + 账本号增量必须等于入账条数，不在本环修产品码",
+   "artifact": ".fist-loop-20260927/hunt_r3_filed.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.7.1",
+   "law": "三套判据体系同一时刻复算且只升不降，git 红线 HEAD 未动，本环改动半径应为空",
+   "artifact": ".fist-loop-20260927/hunt_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.7.2",
+   "law": "三套判据体系同一时刻复算且只升不降，git 红线 HEAD 未动，本环改动半径应为空",
+   "artifact": ".fist-loop-20260927/hunt_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.8.1",
+   "law": "报告与账本同步：三向对照（md 条目 / FIXED 段 / sqlite bug 任务）+ 被拒原文逐字进报告",
+   "artifact": ".fist-loop-20260927/hunt_r3_ledger3way.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r69.8.2",
+   "law": "报告与账本同步：三向对照（md 条目 / FIXED 段 / sqlite bug 任务）+ 被拒原文逐字进报告",
+   "artifact": ".fist-loop-20260927/hunt_r3_ledger3way.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r69",
+ "stage": "R3-寻虫"
+}

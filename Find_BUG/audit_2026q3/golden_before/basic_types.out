@@ -1,0 +1,13 @@
+int: 42
+float: 3.14
+double: 2.71828
+bool: True
+auto(int to float): 42.0
+bool: True
+Hello, Cypy!
+Raw
+string
+list<int>: [1, 2, 3, 4, 5]
+point: (10, 20)
+data: ('test', 42, 3.14)
+inferred type: <class 'int'>

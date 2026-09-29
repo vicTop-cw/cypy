@@ -1,0 +1,313 @@
+{
+ "started": "2026-09-28T05:25:47+00:00",
+ "spec": "report_spec_r4_advance.json",
+ "report_name": "20260928.13.20.00",
+ "window_start_utc": "2026-09-28T03:00:00",
+ "gates_total": 112,
+ "gates_pass": 109,
+ "gates_self_deferred": [
+  "①-31",
+  "①-32",
+  "①-33"
+ ],
+ "gates_fail": [],
+ "gates_by_law": {
+  "1": 36,
+  "2": 4,
+  "3": 10,
+  "4": 8,
+  "5": 7,
+  "6": 6,
+  "7": 19,
+  "8": 6
+ },
+ "artifacts_declared": 34,
+ "artifacts_with_refuse": [],
+ "stale_timestamps": [],
+ "section10_items": {
+  "declared": 24,
+  "actual": 24
+ },
+ "placeholders_total": 141,
+ "placeholders_bad": [],
+ "placeholders_self_pending_first_run": [],
+ "placeholders_empty": [
+  "advance_r4_baselines.json|frozen_changed",
+  "advance_r4_baselines.json|frozen_dirt_in_ring",
+  "advance_r4_baselines.json|frozen_unexplained",
+  "advance_r4_baselines.json|radius.docs",
+  "advance_r4_codegen_diff.json|differing_unjustified",
+  "advance_r4_corpus.json|files_with_errors_gone",
+  "advance_r4_corpus.json|files_with_new_errors",
+  "advance_r4_irreversible.json|archive_targets",
+  "advance_r4_irreversible.json|product_bad_status",
+  "advance_r4_irreversible.json|product_untracked_new",
+  "advance_r4_irreversible.json|verdict.destructive_tools",
+  "advance_r4_irreversible.json|verdict.foreign_archive_targets"
+ ],
+ "placeholders_empty_unjustified": [],
+ "needle_strict_violations": [],
+ "needle_loose_only_hits": [],
+ "needle_canary": {
+  "substring_rule_would_pass_canary_prefix": true,
+  "strict_rule_rejects_canary_prefix": true,
+  "hit_is_a_prefix_of_another_real_key": true
+ },
+ "needle_rule": "needle 必须是被引件里的真键名；旧口径（值里含子串）会放过文件名与前缀命中",
+ "stale_undisclosed": [],
+ "stale_artifacts": [],
+ "stale_canary_caught": true,
+ "fixpoint": {
+  "close_spec": "close_r4_advance.json",
+  "keys": [
+   "gates_pass",
+   "gates_total",
+   "placeholders_total",
+   "stale_artifacts_len"
+  ],
+  "mismatch": [],
+  "converged": true,
+  "embedded": {
+   "gates_pass": 109,
+   "gates_total": 112,
+   "placeholders_total": 141,
+   "stale_artifacts_len": 0,
+   "at_utc": "2026-09-28T05:25:45+00:00"
+  },
+  "actual": {
+   "gates_pass": 109,
+   "gates_total": 112,
+   "placeholders_total": 141,
+   "stale_artifacts_len": 0
+  },
+  "note": "不动点已推到：收口 spec 引用的格数与其后一次自证实测逐格相同",
+  "canary_drift_caught": true
+ },
+ "body": ".fist-loop-20260927/r4_advance_body.md",
+ "self_checks": [
+  {
+   "label": "门禁 label 不重复",
+   "got": [],
+   "want": [],
+   "why": "按 label 计数",
+   "ok": true
+  },
+  {
+   "label": "不许有 min=0 的恒真门",
+   "got": [],
+   "want": [],
+   "why": "min=0 永远成立",
+   "ok": true
+  },
+  {
+   "label": "每道门禁都自带可判谓词",
+   "got": [],
+   "want": [],
+   "why": "缺 min/equals/truthy",
+   "ok": true
+  },
+  {
+   "label": "散文占位全部解析成功",
+   "got": [],
+   "want": [],
+   "why": "件在盘上且路径可解",
+   "ok": true
+  },
+  {
+   "label": "空值占位必须由 equals 为空值的门禁作证",
+   "got": [],
+   "want": [],
+   "why": "空值 12 个，无佐证 0 个",
+   "ok": true
+  },
+  {
+   "label": "散文点名的件都在 artifacts 清单里",
+   "got": [],
+   "want": [],
+   "why": "按 basename 对齐",
+   "ok": true
+  },
+  {
+   "label": "artifacts 清单里的件都在盘上",
+   "got": [],
+   "want": [],
+   "why": "存在性（我这一份件在本轮第一次跑时本就还不存在）",
+   "ok": true
+  },
+  {
+   "label": "artifacts 清单不许有重复",
+   "got": [],
+   "want": [],
+   "why": "重复声明=口径含糊",
+   "ok": true
+  },
+  {
+   "label": "被引用的件不许带 refuse",
+   "got": [],
+   "want": [],
+   "why": "件里非空=门禁不绿",
+   "ok": true
+  },
+  {
+   "label": "本环件的时间戳不许早于环节窗口",
+   "got": [],
+   "want": [],
+   "why": "旧件当本轮证据",
+   "ok": true
+  },
+  {
+   "label": "未披露的过期件为零",
+   "got": [],
+   "want": [],
+   "why": "披露位=报告里要逐条写的例外",
+   "ok": true
+  },
+  {
+   "label": "canary：过期件必须被抓到",
+   "got": true,
+   "want": true,
+   "why": "py=1790573147241171100 json=1790573142239660700",
+   "ok": true
+  },
+  {
+   "label": "canary 不误抓：刚写出的件不许被判过期",
+   "got": false,
+   "want": false,
+   "why": "py=1790573147239155300 json=1790573147239660800",
+   "ok": true
+  },
+  {
+   "label": "合成违例目录清干净",
+   "got": [],
+   "want": [],
+   "why": "残留=下一轮把它当真件",
+   "ok": true
+  },
+  {
+   "label": "每份 JSON 判据件都能 parse",
+   "got": [],
+   "want": [],
+   "why": "{\"advance_r4_baselines.json\": \"\", \"advance_r4_builtins.json\": \"\", \"advance_r4_calllog_tally.json\": \"\", \"advance_r4_codegen_diff.json\": \"\", \"advance_r4_corpus.json\": \"\", \"advance_r4_dormant.json\": \"\", \"advance_r4_drivers_lint.json\": \"\", \"advance_r4_filed.json\": \"\", \"advance_r4_irreversible.json\": \"\", \"advance_r4_lock_plan.json\": \"\", \"advance_r4_locks.json\": \"\", \"advance_r4_never.json\": \"\", \"advance",
+   "ok": true
+  },
+  {
+   "label": "parse 的覆盖面 = 报告声明的判据件数（基数门，不手数）",
+   "got": [
+    14,
+    14
+   ],
+   "want": [
+    14,
+    14
+   ],
+   "why": "声明 14 份 / 盘上 14 份",
+   "ok": true
+  },
+  {
+   "label": "盘上判据件不漏出报告清单（清单口径漏一个目录＝改动无人认领）",
+   "got": [],
+   "want": [],
+   "why": "盘上多出的：[]",
+   "ok": true
+  },
+  {
+   "label": "计划文件能 parse（派单与收口读的都是它）",
+   "got": "",
+   "want": "",
+   "why": "spec_r4_advance.json",
+   "ok": true
+  },
+  {
+   "label": "canary：parse 判据对「相邻字符串续行」这种真出过的违例必红",
+   "got": "JSONDecodeError",
+   "want": "JSONDecodeError",
+   "why": "不是恒绿的存在性检查",
+   "ok": true
+  },
+  {
+   "label": "canary：parse 判据不误抓合法 JSON",
+   "got": "",
+   "want": "",
+   "why": "同一把尺子的另一侧",
+   "ok": true
+  },
+  {
+   "label": "每条法都至少一道门禁",
+   "got": [],
+   "want": [],
+   "why": "{\"1\": 36, \"2\": 4, \"3\": 10, \"4\": 8, \"5\": 7, \"6\": 6, \"7\": 19, \"8\": 6}",
+   "ok": true
+  },
+  {
+   "label": "法声明的每件证据都有门禁认领（预检查的=报告认的）",
+   "got": [],
+   "want": [],
+   "why": "按 basename 对齐",
+   "ok": true
+  },
+  {
+   "label": "needle 严口径违例为零",
+   "got": [],
+   "want": [],
+   "why": "必须是被引件里的真键名",
+   "ok": true
+  },
+  {
+   "label": "canary：旧子串口径确实会放过这个前缀（否则升级口径没有代价可谈）",
+   "got": true,
+   "want": true,
+   "why": 2,
+   "ok": true
+  },
+  {
+   "label": "canary：严口径必须拒掉这个前缀",
+   "got": true,
+   "want": true,
+   "why": "它在键名集里=False",
+   "ok": true
+  },
+  {
+   "label": "半径：产品码逐字等于两档分析器",
+   "got": [
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py"
+   ],
+   "want": [
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py"
+   ],
+   "why": "实测 ['cypyc/analyzer/scope_analyzer.py', 'cypyc/analyzer/type_checker.py']",
+   "ok": true
+  },
+  {
+   "label": "半径：冻结面必须为空",
+   "got": [],
+   "want": [],
+   "why": "冻结面交人工",
+   "ok": true
+  },
+  {
+   "label": "半径：docs 栏本环必须为空（改文档不是推进环的活）",
+   "got": [],
+   "want": [],
+   "why": "实测 []",
+   "ok": true
+  },
+  {
+   "label": "半径：tests 只许白名单内的新锁",
+   "got": [],
+   "want": [],
+   "why": "实测 ['tests/test_codegen_verification.py', 'tests/test_loop_20260927_advance_r4.py']",
+   "ok": true
+  },
+  {
+   "label": "§十 标题声明条数 == 正文编号条数",
+   "got": 24,
+   "want": 24,
+   "why": "## 十、本环我自己的失效（24 条，逐条：现象 → 我错在哪 → 改成什么才承重）",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T05:25:47+00:00"
+}

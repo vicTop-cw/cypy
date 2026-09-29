@@ -1,0 +1,103 @@
+{
+ "started": "2026-09-28T00:17:48+00:00",
+ "filed": [
+  "BUG-71",
+  "BUG-72",
+  "BUG-73"
+ ],
+ "entries": [
+  {
+   "key": "SLICE_typed_as_element",
+   "rpc": {
+    "bug_id": "BUG-71",
+    "id": "BUG-71",
+    "task_id": "T0r87"
+   },
+   "ledger_number": "BUG-71",
+   "expected": "BUG-71",
+   "summary_on_disk": true,
+   "omega_marker_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "mechanism_on_disk": true,
+   "near_verdicts_on_disk": true
+  },
+  {
+   "key": "CODEGEN_named_conditions_unreachable",
+   "rpc": {
+    "bug_id": "BUG-72",
+    "id": "BUG-72",
+    "task_id": "T0r88"
+   },
+   "ledger_number": "BUG-72",
+   "expected": "BUG-72",
+   "summary_on_disk": true,
+   "omega_marker_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "mechanism_on_disk": true,
+   "near_verdicts_on_disk": true
+  },
+  {
+   "key": "PYD_incremental_cache_not_reused",
+   "rpc": {
+    "bug_id": "BUG-73",
+    "id": "BUG-73",
+    "task_id": "T0r89"
+   },
+   "ledger_number": "BUG-73",
+   "expected": "BUG-73",
+   "summary_on_disk": true,
+   "omega_marker_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "mechanism_on_disk": true,
+   "near_verdicts_on_disk": true
+  }
+ ],
+ "filed_total": 3,
+ "plan_total": 3,
+ "numbering_from_disk": {
+  "before_max": 70,
+  "first_new": 71
+ },
+ "ledger_before": 70,
+ "repro_gates": {
+  "SLICE_typed_as_element": {
+   "command": "python -X utf8 .fist-loop-20260927/verify_r4_repro.py SLICE_typed_as_element",
+   "exit_code": 0,
+   "stdout_tail": "{\n \"present\": true,\n \"probe\": {\n  \"rc\": 1,\n  \"diags\": [\n   \"Return type mismatch: expected list[int], got int at 4:1\"\n  ]\n },\n \"demo\": {\n  \"file\": \"examples/demos/upcoming_features/planned_features.cypy\",\n  \"rc\": 1,\n  \"diags_total\": 4,\n  \"first\": [\n   \"Type mismatch: expected list[int], got int at 60:9\",\n   \"Return type mismatch: expected list[int], got int at 67:1\"\n  ]\n },\n \"predicate\": \"探针 rc!=0 且诊断里有「expected list[int], got int」，并且仓内 DEMO 也过不了 --check-only\"\n}\n"
+  },
+  "CODEGEN_named_conditions_unreachable": {
+   "command": "python -X utf8 .fist-loop-20260927/verify_r4_repro.py CODEGEN_named_conditions_unreachable",
+   "exit_code": 0,
+   "stdout_tail": "{\n \"present\": true,\n \"call_hits\": {\n  \"_generate_tuple_condition\": 0,\n  \"_generate_array_condition\": 0,\n  \"_generate_dict_condition\": 0,\n  \"_extractor_pattern_condition\": 0,\n  \"_contains_extractor\": 0\n },\n \"behaviour_generated_inline\": true,\n \"predicate\": \"元组模式的判定条件确实出现在生成物里，而这五个名字的调用计数全为 0\"\n}\n"
+  },
+  "PYD_incremental_cache_not_reused": {
+   "command": "python -X utf8 .fist-loop-20260927/verify_r4_repro.py PYD_incremental_cache_not_reused",
+   "exit_code": 0,
+   "stdout_tail": "0260927\\\\verify_r4_tmp\\\\repro\\\\cache_src.cypy\",\n   \"增量编译: 缓存未命中，开始解析\",\n   \"增量编译: 受影响定义数: 1\",\n   \"基础转译模式开始\"\n  ],\n  \"steps2\": [\n   \"=== 一步到位编译模式 ===\",\n   \"开始处理文件: E:\\\\IDEProjects\\\\AI\\\\Cypy\\\\.fist-loop-20260927\\\\verify_r4_tmp\\\\repro\\\\cache_src.cypy\",\n   \"开始转译文件: E:\\\\IDEProjects\\\\AI\\\\Cypy\\\\.fist-loop-20260927\\\\verify_r4_tmp\\\\repro\\\\cache_src.cypy\",\n   \"增量编译: 缓存命中，使用缓存结果\",\n   \"增量编译: 缓存未命中，开始解析\",\n   \"增量编译: 受影响定义数: 0\"\n  ],\n  \"cached_after\": null,\n  \"stale_after\": false,\n  \"dur\": [\n   7.1,\n   7.65\n  ]\n },\n \"predicate\": \"两轮都 success、第二轮 .pyd 被重写（mtime 变了）、成功后 CypyCacheManager.get_cached_pyd 仍为 None\"\n}\n"
+  }
+ },
+ "sqlite_bug_rows": {
+  "before": 66,
+  "after": 69,
+  "delta": 3
+ },
+ "sqlite_recent": [
+  [
+   "T0r9",
+   "已完成",
+   "修复 bug: [silent-fail] cypyc/transformer 五个 transformer 把递归调用"
+  ],
+  [
+   "T0r89",
+   "待领取",
+   "修复 bug: [PYD_incremental_cache_not_reused] `compile_to_pyd` "
+  ],
+  [
+   "T0r88",
+   "待领取",
+   "修复 bug: [CODEGEN_named_conditions_unreachable] appendix-C 点名"
+  ]
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T00:18:06+00:00"
+}

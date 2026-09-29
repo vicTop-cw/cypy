@@ -1,0 +1,8 @@
+=== pytest ===
+pytest_rc=0
+=== suite ===
+suite_rc=0
+=== gate ===
+gate_rc=1
+=== golden ===
+golden_rc=0

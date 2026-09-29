@@ -1,0 +1,5 @@
+{
+ "refuse": [
+  "gate ⑧-6 路径失败：键 git_all_ok 不在件里（实际键：['all_ok', 'collect', 'e2e', 'finished_at_utc', 'floors', 'git', 'git_head_expected', 'pytest']）"
+ ]
+}

@@ -1,0 +1,84 @@
+{
+ "lock_file": "tests/test_loop_20260927_fix_r4.py",
+ "mode": "after",
+ "started": "2026-09-27T21:56:10+00:00",
+ "after": {
+  "rc": 0,
+  "fields": {
+   "passed": 18,
+   "failed": 0,
+   "errors": 0,
+   "skipped": 0
+  },
+  "failed_names": [],
+  "summary_line": "18 passed in 0.49s"
+ },
+ "before": {
+  "rc": 1,
+  "fields": {
+   "failed": 14,
+   "passed": 4
+  },
+  "failed_names": [
+   "test_call_face_reports_over_cli",
+   "test_fixture_matches_declared_expectation[C01]",
+   "test_fixture_matches_declared_expectation[C02]",
+   "test_fixture_matches_declared_expectation[C03]",
+   "test_fixture_matches_declared_expectation[C04]",
+   "test_fixture_matches_declared_expectation[C05]",
+   "test_fixture_matches_declared_expectation[C06]",
+   "test_fixture_matches_declared_expectation[C07]",
+   "test_fixture_matches_declared_expectation[C08]",
+   "test_fixture_matches_declared_expectation[C09]",
+   "test_fixture_matches_declared_expectation[C10]",
+   "test_fixture_matches_declared_expectation[C11]",
+   "test_fixture_matches_declared_expectation[C12]",
+   "test_no_internal_repr_leaks_in_any_fixture_message"
+  ],
+  "summary_line": "14 failed, 4 passed in 0.36s"
+ },
+ "self_checks": [
+  {
+   "label": "修后必须全绿",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "18 passed in 0.49s",
+   "ok": true
+  },
+  {
+   "label": "rc 与 failed+errors 必须同向",
+   "got": true,
+   "want": true,
+   "why": "rc=0 failed=0 errors=0",
+   "ok": true
+  },
+  {
+   "label": "全绿时 passed 条数必须等于锁文件里的用例数（防空汇总行）",
+   "got": true,
+   "want": true,
+   "why": "passed=18 行='18 passed in 0.49s'",
+   "ok": true
+  },
+  {
+   "label": "红绿集合不得重叠（同一条既红又绿=判据坏了）",
+   "got": [],
+   "want": [],
+   "why": "两态交集",
+   "ok": true
+  },
+  {
+   "label": "修前红的条数 ≥ 修后转绿的条数",
+   "got": true,
+   "want": true,
+   "why": "转绿集合",
+   "ok": true
+  }
+ ],
+ "refuse": []
+}

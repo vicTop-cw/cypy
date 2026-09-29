@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r11_locks.py", line 206, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r11_locks.py", line 107, in main
+    A1 = block(live_pa, "self._parse_type_param_list(name_token)", "bases = []", 3)
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r11_locks.py", line 41, in block
+    assert len(hits) == 1, f"起点针命中 {len(hits)} 次（应为 1）：{start_sub!r}"
+           ^^^^^^^^^^^^^^
+AssertionError: 起点针命中 2 次（应为 1）：'self._parse_type_param_list(name_token)'

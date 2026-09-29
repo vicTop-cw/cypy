@@ -1,0 +1,294 @@
+{
+ "started": "2026-09-28T10:58:56+00:00",
+ "self_checks": [
+  {
+   "label": "逐工具计数之和 = 前缀总行数（分组不吞行）",
+   "got": 18,
+   "want": 18,
+   "why": "两路回加",
+   "ok": true
+  },
+  {
+   "label": "refused 计数 = 逐字清单条数（拒收清单不是手数）",
+   "got": 0,
+   "want": 0,
+   "why": "两栏同数",
+   "ok": true
+  },
+  {
+   "label": "不存在前缀必须数出 0 行（过滤器不恒真）",
+   "got": 0,
+   "want": 0,
+   "why": "对照前缀",
+   "ok": true
+  },
+  {
+   "label": "按标签这一路的逐工具合计 = 标签行数（换了过滤器也不吞行）",
+   "got": 1,
+   "want": 1,
+   "why": "两路回加",
+   "ok": true
+  },
+  {
+   "label": "标签档对本环 0 行必须能换成指纹档：laya 的承担者 laya_decide 在本环确有成功调用，且指纹档与 ts 窗口档同数",
+   "got": [
+    1,
+    1,
+    1
+   ],
+   "want": [
+    1,
+    1,
+    1
+   ],
+   "why": "指纹 1 / 窗口 1 / 其中成功 1（窗口起 2026-09-28T08:07:06Z）",
+   "ok": true
+  },
+  {
+   "label": "publish（issue_up 的账面上报动作）指纹档与窗口档同数且 ≥1",
+   "got": [
+    1,
+    1
+   ],
+   "want": [
+    1,
+    1
+   ],
+   "why": "指纹 1 / 窗口 1",
+   "ok": true
+  },
+  {
+   "label": "report_bug（issue_up 的字面工具）三路同源：ts 窗口 = 环标签档 = 入账件自记的 call_log 增量，且本环 ≥1（修复途中立了 BUG-91）；同一按-工具过滤器在寻虫环窗口也必须数到 >0⇒ 指纹档对它 0 行是通道形状所致，不是没调用",
+   "got": "窗口1 / 标签1 / 入账件增量1 / 寻虫环 26 行",
+   "want": "三路相等 且 本环>=1 且 对照>0",
+   "why": "fp 档 0 行（params 里没有根描述首行，预期 0）",
+   "ok": true
+  },
+  {
+   "label": "指纹档的反例必须数出 0 行（这个过滤器不恒真）",
+   "got": 0,
+   "want": 0,
+   "why": "必然不存在的 needle",
+   "ok": true
+  },
+  {
+   "label": "标签档与指纹档不许同时为空：两档都看不见本环 ⇒ 对账失明（本环标签 0 行必须由指纹档补上）",
+   "got": "标签档 1 行 / 指纹档 2 行",
+   "want": "至少一档 >0",
+   "why": "环标签 [loop:20260927-loop:R5-修复] 在本环 params 里不出现 ⇒ 已列为失效条目",
+   "ok": true
+  },
+  {
+   "label": "call_log 工具本轮真打了一次且回包看得到本环号段",
+   "got": 1,
+   "want": 1,
+   "why": "sqlite 同口径 18 行 / 回包含 T0r110 18 行",
+   "ok": true
+  }
+ ],
+ "grouped_by": "params_json.task_id 前缀（不按标签、不按回忆）",
+ "stages": {
+  "T0r110": {
+   "label": "R5-修复（16 叶 × omega 全链 + 8 支 + 根上卷）",
+   "rows": 18,
+   "rows_ns_scoped": 18,
+   "ns": "cypy-loop-20260927",
+   "distinct_tasks": 17,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "task_plan_deep": {
+     "ok": 1,
+     "refused": 0
+    },
+    "omega_status": {
+     "ok": 16,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_total": 0,
+   "refused_detail": []
+  }
+ },
+ "control_absent_prefix_rows": 0,
+ "total_call_log_rows": 5066,
+ "stage_seed_rows": {
+  "needle": "%[loop:20260927-loop:R4-%",
+  "total": 27,
+  "by_tool": {
+   "publish": {
+    "ok": 5,
+    "refused": 0,
+    "examples": []
+   },
+   "laya_decide": {
+    "ok": 5,
+    "refused": 0,
+    "examples": []
+   },
+   "report_bug": {
+    "ok": 17,
+    "refused": 0,
+    "examples": []
+   }
+  },
+  "scope": "上一环（R4）号段：跨环正例对照，证明按标签过滤器找得到行；不是本环计数"
+ },
+ "ring_tag_calls": {
+  "tag": "[loop:20260927-loop:R5-修复]",
+  "by_tool": {
+   "report_bug": {
+    "ok": 1,
+    "refused": 0
+   }
+  },
+  "total": 1,
+  "ok": 1,
+  "refused": 0,
+  "absent_control_rows": 0,
+  "refused_detail": [],
+  "refusals_md": "| 被拒原文（逐字） | 工具 | 次数 | 首个见证 |\n| --- | --- | --- | --- |",
+  "distinct_refusal_texts": 0,
+  "note": "laya / issue_up 的 params 里没有 task_id，只有环标签 ⇒ 按前缀数它们恒为 0，这一栏才是本环真开过的次数；report_bug 的 refused 是服务端拒收那一批（不是没调）。call_log 工具的回包行数见 call_log_tool_probe（它的 params 不带环标签，不能按标签数）。"
+ },
+ "fingerprint_channel": {
+  "needle_source": "tasks(ns=cypy-loop-20260927, id=T0r110).description 首行（现读）",
+  "needle": "修复（fix）R5：认领 R5-寻虫 入账的 BUG-78..BUG-90 十三张新单 + 账本现数的未闭环旧单里本环可",
+  "rows": 2,
+  "row_ids": [
+   4977,
+   4979
+  ],
+  "by_tool": {
+   "publish": {
+    "ok": 1,
+    "refused": 0,
+    "row_ids": [
+     4977
+    ],
+    "errs": []
+   },
+   "laya_decide": {
+    "ok": 1,
+    "refused": 0,
+    "row_ids": [
+     4979
+    ],
+    "errs": []
+   }
+  },
+  "absent_control_rows": 0,
+  "windows": {
+   "fix_start_utc": "2026-09-28T08:07:06Z",
+   "hunt_start_utc": "2026-09-28T06:26:01Z",
+   "laya_decide": 1,
+   "publish": 1,
+   "report_bug_this_ring": 1,
+   "report_bug_hunt_ring": 26,
+   "report_bug_tag_channel": 1,
+   "report_bug_book_delta": 1
+  },
+  "note": "本环根描述里既没有环标签也没有 [omega:required]（发布时未拼进去），所以标签档对本环恒 0 行是**过滤器看不见**而不是没开过；指纹档用根描述首行把 laya_decide / publish 数出来，并按 ts 窗口独立复算第二路。report_bug 的 params 里没有根描述首行（立单只带 summary/detail），指纹档对它天生数不到，这一路改按「环标签写在卡片 detail 的来历行里」来对：标签档与 ts 窗口档必须同数。本环修复途中新立了一张单（BUG-91），所以『修复环 0 次』那句旧口径已作废。"
+ },
+ "call_log_tool_probe": {
+  "rows_returned": 2500,
+  "rows_containing_stage": 18,
+  "sqlite_rows": 18,
+  "error": ""
+ },
+ "named_tools_in_this_build": {
+  "laya": {
+   "exact": 0,
+   "substring": 24
+  },
+  "issue_up": {
+   "exact": 0,
+   "substring": 0
+  },
+  "omega_spec_create": {
+   "exact": 560,
+   "substring": 560
+  },
+  "omega_result_verify": {
+   "exact": 557,
+   "substring": 557
+  },
+  "report_bug": {
+   "exact": 119,
+   "substring": 119
+  },
+  "output_validate": {
+   "exact": 442,
+   "substring": 442
+  },
+  "submit": {
+   "exact": 418,
+   "substring": 418
+  },
+  "claim": {
+   "exact": 434,
+   "substring": 434
+  },
+  "verify": {
+   "exact": 629,
+   "substring": 1186
+  }
+ },
+ "spec_named_carriers": {
+  "laya": {
+   "carriers": {
+    "laya_decide": {
+     "whole_db": 24,
+     "this_stage_seed": 5,
+     "this_stage_prefix": 0,
+     "this_ring_fingerprint": 1
+    }
+   },
+   "whole_db_total": 24,
+   "this_stage_total": 5,
+   "this_ring_fingerprint_total": 1
+  },
+  "issue_up": {
+   "carriers": {
+    "publish": {
+     "whole_db": 26,
+     "this_stage_seed": 5,
+     "this_stage_prefix": 0,
+     "this_ring_fingerprint": 1
+    },
+    "report_bug": {
+     "whole_db": 119,
+     "this_stage_seed": 17,
+     "this_stage_prefix": 0,
+     "this_ring_fingerprint": 0
+    }
+   },
+   "whole_db_total": 145,
+   "this_stage_total": 22,
+   "this_ring_fingerprint_total": 1
+  },
+  "call_log": {
+   "carriers": {
+    "call_log": {
+     "whole_db": 44,
+     "this_stage_seed": 0,
+     "this_stage_prefix": 1,
+     "this_ring_fingerprint": 1,
+     "client_visible_T0r110_rows": 18,
+     "client_rows_returned": 2500
+    }
+   },
+   "whole_db_total": 44,
+   "this_stage_total": 1,
+   "this_ring_fingerprint_total": 1
+  }
+ },
+ "distinct_refusal_texts": 0,
+ "refusals_md": "| 被拒原文（逐字） | 工具 | 次数 | 首个见证 |\n| --- | --- | --- | --- |",
+ "note": "规格点名的 laya / issue_up 若在 call_log 里 0 命中，说明本 build 没有这两个工具名；等价能力由谁承担要写在报告里，不许写『已开启』。本环根描述里没有环标签也没有 [omega:required]（发布时未拼进去），所以按标签那一档对本环恒 0 行，改由「根描述首行指纹档 + ts 窗口档」两路对账；report_bug 的 params 里没有根描述首行，那一档改按「卡片 detail 来历行的环标签」与 ts 窗口两路对，第三路取入账件自记的 call_log 增量；本环修复途中立了 BUG-91，旧口径「修复环 0 次是设计后果」已作废，对照仍给寻虫环计数。",
+ "refuse": [],
+ "queried_at_utc": "2026-09-28T10:58:57+00:00"
+}

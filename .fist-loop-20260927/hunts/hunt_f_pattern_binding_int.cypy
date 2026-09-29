@@ -1,0 +1,9 @@
+struct Email:
+    address: str
+
+def classify(e: Email) -> str:
+    match e:
+        case Email(user, domain):
+            return user
+        case _:
+            return "none"

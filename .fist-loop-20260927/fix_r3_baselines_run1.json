@@ -1,0 +1,104 @@
+{
+ "refuse": [],
+ "pytest": {
+  "rc": 0,
+  "passed": 1920,
+  "floor": 1920,
+  "failed": [],
+  "collected": 1920,
+  "collect_rc": 0,
+  "other_counts": {},
+  "line": "1920 passed in 439.56s (0:07:19)"
+ },
+ "locks": {
+  "rc": 0,
+  "passed": 17,
+  "test_defs_in_file": 17,
+  "line": "17 passed in 2.81s"
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": "47",
+   "Passed": "47",
+   "Failed": "0",
+   "Skipped": "0"
+  },
+  "green": true
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+  "fields": {
+   "PASS": "25",
+   "FAIL": "0",
+   "WARN": "0",
+   "UNREG/RUNFAIL": "0"
+  },
+  "green": true
+ },
+ "git": {
+  "head": "17d68b4",
+  "head_rc": 0,
+  "staged": 0,
+  "dirty_rows": 166,
+  "worktrees": [
+   "[master]",
+   "HEAD)"
+  ]
+ },
+ "radius": {
+  "count": 7,
+  "rows": [
+   {
+    "file": "cypy_bridge/memory.py",
+    "attributed_to_this_lane": true,
+    "why": "BUG-58：realloc 注解/文档与返回值一致"
+   },
+   {
+    "file": "cypy_bridge/union.py",
+    "attributed_to_this_lane": true,
+    "why": "BUG-57：示例改成可用形状 + 内建类型给专属错误"
+   },
+   {
+    "file": "cypyc/analyzer/build_block_checker.py",
+    "attributed_to_this_lane": true,
+    "why": "BUG-60：docstring 规则 2 对齐 SYNTAX/04"
+   },
+   {
+    "file": "cypyc/cli.py",
+    "attributed_to_this_lane": true,
+    "why": "BUG-56：transpile 四个旗标落地"
+   },
+   {
+    "file": "cypyc/project/module_dependency_graph.py",
+    "attributed_to_this_lane": true,
+    "why": "BUG-59：环内模块排序确定化"
+   },
+   {
+    "file": "cypyc/transformer/generic_transformer.py",
+    "attributed_to_this_lane": true,
+    "why": "BUG-55：收集 generic_params"
+   },
+   {
+    "file": "tests/test_loop_20260927_fix_r3.py",
+    "attributed_to_this_lane": true,
+    "why": "本环 17 条回归锁"
+   }
+  ],
+  "unclaimed_by_this_lane": []
+ },
+ "lint": {
+  "rc": 1,
+  "rows_total": 158,
+  "hard_violations": 0,
+  "new_file_violations": 0,
+  "e501_by_file": {},
+  "legacy_e501_cap": {
+   "cypyc/cli.py": 1,
+   "cypyc/analyzer/build_block_checker.py": 3
+  },
+  "legacy_w293_by_file": {}
+ }
+}

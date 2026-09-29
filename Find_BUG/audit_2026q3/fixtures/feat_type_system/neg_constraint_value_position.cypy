@@ -1,0 +1,6 @@
+# 负例 N2：约束名出现在值类型位置。规定（SYNTAX/33 C-2.1）必须编译期报错并指名
+# "Numeric is a constraint, not a type"；今天报的是风马牛不相及的 Undefined name。
+constraint Numeric = int | float
+
+let x: Numeric = 1
+print(x)

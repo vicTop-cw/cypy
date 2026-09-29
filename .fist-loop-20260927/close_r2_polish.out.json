@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r60.1.1",
+   "law": "L1 生效性证据双口径咬合：AST 同名候选与运行时 co_firstlineno 互相印证，删前留档",
+   "artifact": ".fist-loop-20260927/polish_r2_evidence.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.1.2",
+   "law": "L1 生效性证据双口径咬合：AST 同名候选与运行时 co_firstlineno 互相印证，删前留档",
+   "artifact": ".fist-loop-20260927/polish_r2_evidence.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.2.1",
+   "law": "L2 删除驱动四条自证：锚点只出现一次、变异必须可证、绑定行号≠待删行号、重跑被幂等守卫拒绝",
+   "artifact": ".fist-loop-20260927/polish_r2_cut.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.2.2",
+   "law": "L2 删除驱动四条自证：锚点只出现一次、变异必须可证、绑定行号≠待删行号、重跑被幂等守卫拒绝",
+   "artifact": ".fist-loop-20260927/polish_r2_cut_guard.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.3.1",
+   "law": "L3 换一路口径从仓库外快照反解：符号集合不变、切片与驱动记的文本逐字相等、全树遮蔽归零",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.3.2",
+   "law": "L3 换一路口径从仓库外快照反解：符号集合不变、切片与驱动记的文本逐字相等、全树遮蔽归零",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.4.1",
+   "law": "L4 机制化结构判据（BUG-42 的形状回不来），并配一条合成违例证明它自己能被抓到",
+   "artifact": "tests/test_polish_20260927_r2.py",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.4.2",
+   "law": "L4 机制化结构判据（BUG-42 的形状回不来），并配一条合成违例证明它自己能被抓到",
+   "artifact": "tests/test_polish_20260927_r2.py",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.5.1",
+   "law": "L5 class 侧空白面补永久锁：@staticmethod 与绑定方法签名、classmethod 保留显式 cls（对齐 SYNTAX/08:123）",
+   "artifact": "tests/test_polish_20260927_r2.py",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.5.2",
+   "law": "L5 class 侧空白面补永久锁：@staticmethod 与绑定方法签名、classmethod 保留显式 cls（对齐 SYNTAX/08:123）",
+   "artifact": "tests/test_polish_20260927_r2.py",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.6.1",
+   "law": "L6 被删守卫的语义仍在调用面生效（成对：嵌套 meta 必被抓、模块级 meta 不误抓），且绑定的仍是活份实现",
+   "artifact": "tests/test_polish_20260927_r2.py",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.6.2",
+   "law": "L6 被删守卫的语义仍在调用面生效（成对：嵌套 meta 必被抓、模块级 meta 不误抓），且绑定的仍是活份实现",
+   "artifact": "tests/test_polish_20260927_r2.py",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.7.1",
+   "law": "L7 三套判据体系同一时刻复算且只升不降（1894/47/25），git 红线 HEAD 未动",
+   "artifact": ".fist-loop-20260927/polish_r2_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.7.2",
+   "law": "L7 三套判据体系同一时刻复算且只升不降（1894/47/25），git 红线 HEAD 未动",
+   "artifact": ".fist-loop-20260927/polish_r2_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.8.1",
+   "law": "L8 作用域化 lint 只判亲笔行，并把「本环只删不加」做成可机器否证的断言（含必然违例自检）",
+   "artifact": ".fist-loop-20260927/polish_r2_lint.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r60.8.2",
+   "law": "L8 作用域化 lint 只判亲笔行，并把「本环只删不加」做成可机器否证的断言（含必然违例自检）",
+   "artifact": ".fist-loop-20260927/polish_r2_lint.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r60",
+ "stage": "R2-打磨"
+}

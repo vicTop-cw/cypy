@@ -1,0 +1,31 @@
+{"root_final": "已归档", "refused_count": 30, "leaves_done": 16}
+REFUSED: {"call": "omega_spec_create", "task_id": "T0r56.1", "error": "语料 [spec:T0r56.1:r1] 已通过审核，无需重复创建"}
+REFUSED: {"call": "omega_spec_review", "task_id": "T0r56.1", "error": "语料 [spec:T0r56.1:r1] 当前状态为 [approved]，不是待审核状态"}
+REFUSED: {"call": "verify", "task_id": "T0r56.1", "error": "非法验收: 任务处于 [已完成]，需先 submit"}
+REFUSED: {"call": "omega_spec_create", "task_id": "T0r56.2", "error": "语料 [spec:T0r56.2:r1] 已通过审核，无需重复创建"}
+REFUSED: {"call": "omega_spec_review", "task_id": "T0r56.2", "error": "语料 [spec:T0r56.2:r1] 当前状态为 [approved]，不是待审核状态"}
+REFUSED: {"call": "verify", "task_id": "T0r56.2", "error": "非法验收: 任务处于 [已完成]，需先 submit"}
+REFUSED: {"call": "omega_spec_create", "task_id": "T0r56.3", "error": "语料 [spec:T0r56.3:r1] 已通过审核，无需重复创建"}
+REFUSED: {"call": "omega_spec_review", "task_id": "T0r56.3", "error": "语料 [spec:T0r56.3:r1] 当前状态为 [approved]，不是待审核状态"}
+REFUSED: {"call": "verify", "task_id": "T0r56.3", "error": "非法验收: 任务处于 [已完成]，需先 submit"}
+REFUSED: {"call": "omega_spec_create", "task_id": "T0r56.4", "error": "语料 [spec:T0r56.4:r1] 已通过审核，无需重复创建"}
+REFUSED: {"call": "omega_spec_review", "task_id": "T0r56.4", "error": "语料 [spec:T0r56.4:r1] 当前状态为 [approved]，不是待审核状态"}
+REFUSED: {"call": "verify", "task_id": "T0r56.4", "error": "非法验收: 任务处于 [已完成]，需先 submit"}
+REFUSED: {"call": "omega_spec_create", "task_id": "T0r56.5", "error": "语料 [spec:T0r56.5:r1] 已通过审核，无需重复创建"}
+REFUSED: {"call": "omega_spec_review", "task_id": "T0r56.5", "error": "语料 [spec:T0r56.5:r1] 当前状态为 [approved]，不是待审核状态"}
+REFUSED: {"call": "verify", "task_id": "T0r56.5", "error": "非法验收: 任务处于 [已完成]，需先 submit"}
+REFUSED: {"call": "omega_spec_create", "task_id": "T0r56.6", "error": "语料 [spec:T0r56.6:r1] 已通过审核，无需重复创建"}
+REFUSED: {"call": "omega_spec_review", "task_id": "T0r56.6", "error": "语料 [spec:T0r56.6:r1] 当前状态为 [approved]，不是待审核状态"}
+REFUSED: {"call": "verify", "task_id": "T0r56.6", "error": "非法验收: 任务处于 [已完成]，需先 submit"}
+REFUSED: {"call": "omega_spec_create", "task_id": "T0r56.7", "error": "语料 [spec:T0r56.7:r1] 已通过审核，无需重复创建"}
+REFUSED: {"call": "omega_spec_review", "task_id": "T0r56.7", "error": "语料 [spec:T0r56.7:r1] 当前状态为 [approved]，不是待审核状态"}
+REFUSED: {"call": "verify", "task_id": "T0r56.7", "error": "非法验收: 任务处于 [已完成]，需先 submit"}
+REFUSED: {"call": "omega_spec_create", "task_id": "T0r56.8", "error": "语料 [spec:T0r56.8:r1] 已通过审核，无需重复创建"}
+REFUSED: {"call": "omega_spec_review", "task_id": "T0r56.8", "error": "语料 [spec:T0r56.8:r1] 当前状态为 [approved]，不是待审核状态"}
+REFUSED: {"call": "verify", "task_id": "T0r56.8", "error": "非法验收: 任务处于 [已完成]，需先 submit"}
+REFUSED: {"call": "claim", "task_id": "T0r56", "error": "非法迁移: claim 要求状态 [待领取]，当前是 [待验收]"}
+REFUSED: {"call": "execute", "task_id": "T0r56", "error": "非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute"}
+REFUSED: {"call": "submit", "task_id": "T0r56", "error": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"}
+REFUSED: {"call": "omega_spec_create", "task_id": "T0r56", "error": "任务 [T0r56] 未开启 Omega 强验证（description 缺少 [omega:required] 标记），无需创建语料"}
+REFUSED: {"call": "omega_spec_review", "task_id": "T0r56", "error": "任务 [T0r56] 未开启 Omega 强验证，无语料可审"}
+REFUSED: {"call": "omega_result_verify", "task_id": "T0r56", "error": "任务 [T0r56] 未开启 Omega 强验证，无需成果复验"}

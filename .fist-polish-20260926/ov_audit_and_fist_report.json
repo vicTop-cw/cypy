@@ -1,0 +1,288 @@
+{
+  "part1_audit": {
+    "tickets_total": 13,
+    "audited": 12,
+    "pass": 12,
+    "not_pass": [],
+    "control_negative": {
+      "ticket": "BUG-1",
+      "expect": "fail",
+      "got": "fail",
+      "agree": true,
+      "detail_artifacts": [
+        "tests/test_polish_20260926.py"
+      ],
+      "note": "1/4 条产物检查失败（证据层: l4-hard-failed）"
+    },
+    "rows": [
+      {
+        "bug": "BUG-1",
+        "task_id": "T0r6",
+        "files": [
+          "cypy_bridge/compiler.py"
+        ],
+        "cases": [
+          "test_bug1_clear_cache_does_not_claim_success_when_remove_fails"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 3,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 3,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 3 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-2",
+        "task_id": "T0r7",
+        "files": [
+          "cypy_bridge/compiler.py"
+        ],
+        "cases": [
+          "test_bug2_bridge_build_subprocess_run_passes_timeout",
+          "test_bug2_build_timeout_is_shared_with_sibling_callers"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 4,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 4,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 4 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-3",
+        "task_id": "T0r8",
+        "files": [
+          "cypyc/project/project_compiler.py"
+        ],
+        "cases": [
+          "test_bug3_reparse_failure_is_reported_not_swallowed"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 3,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 3,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 3 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-4",
+        "task_id": "T0r9",
+        "files": [
+          "cypyc/transformer/defer_transformer.py",
+          "cypyc/transformer/enum_transformer.py",
+          "cypyc/transformer/generic_transformer.py",
+          "cypyc/transformer/struct_transformer.py",
+          "cypyc/transformer/trait_transformer.py"
+        ],
+        "cases": [
+          "test_bug4_transformer_recursion_is_outside_broad_try"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 7,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 7,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 7 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-5",
+        "task_id": "T0r10",
+        "files": [
+          "cypyc/incremental/hot_reload.py"
+        ],
+        "cases": [
+          "test_bug5_state_snapshot_reports_getattr_failure",
+          "test_bug5_state_restore_reports_setattr_failure"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 4,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 4,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 4 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-6",
+        "task_id": "T0r11",
+        "files": [
+          "cypyc/incremental/file_monitor.py"
+        ],
+        "cases": [
+          "test_bug6_cypy_file_with_bom_is_still_detected",
+          "test_bug6_unreadable_cypy_candidate_warns"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 4,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 4,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 4 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-7",
+        "task_id": "T0r12",
+        "files": [
+          "cypy_hook/hook.py",
+          "cypy_bridge/compiler.py"
+        ],
+        "cases": [
+          "test_bug7_corrupt_manifest_warns",
+          "test_bug7_corrupt_bridge_manifest_warns"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 5,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 5,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 5 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-8",
+        "task_id": "T0r13",
+        "files": [
+          "cypyc/parser/macro_expander.py"
+        ],
+        "cases": [
+          "test_bug8_macro_reparse_degradation_is_reported"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 3,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 3,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 3 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-9",
+        "task_id": "T0r14",
+        "files": [
+          "cypyc/incremental/hot_reload.py"
+        ],
+        "cases": [
+          "test_bug9_module_state_snapshot_warns",
+          "test_bug9_module_state_restore_warns"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 4,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 4,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 4 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-10",
+        "task_id": "T0r15",
+        "files": [
+          "cypyc/incremental/hot_reload.py"
+        ],
+        "cases": [
+          "test_bug10_dependency_analysis_parse_failure_warns",
+          "test_bug10_cache_update_parse_failure_warns"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 4,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 4,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 4 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-11",
+        "task_id": "T0r16",
+        "files": [
+          "cypyc/project/project_compiler.py"
+        ],
+        "cases": [
+          "test_bug11_project_type_check_reports_scope_errors",
+          "test_bug11_type_level_name_collision_is_reported"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 4,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 4,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 4 条产物检查通过（证据层: l4-pass）"
+      },
+      {
+        "bug": "BUG-12",
+        "task_id": "T0r17",
+        "files": [
+          "cypy_bridge/nogil.py"
+        ],
+        "cases": [
+          "test_bug12_gilstate_exit_does_not_replace_user_exception",
+          "test_bug12_gilstate_exit_still_restores_state"
+        ],
+        "fixed": true,
+        "db_status": "已完成",
+        "db_ns": "bugs",
+        "n_artifacts": 4,
+        "verdict": "pass",
+        "layer": "l4-pass",
+        "passed": 4,
+        "failed": 0,
+        "failed_artifacts": [],
+        "note": "全部 4 条产物检查通过（证据层: l4-pass）"
+      }
+    ],
+    "note": "BUG-13 无 FIXED 块（verify 未通过），本轮不纳入 L4 审计"
+  },
+  "part2_fist_report": {
+    "server_cwd": "E:\\IDEProjects\\AI\\FIST-Mbt",
+    "publish_task": false,
+    "ledger_before": 30,
+    "ledger_after": 31,
+    "reply": {
+      "bug_id": "BUG-31",
+      "status": "OPEN",
+      "path": "./memory/bugs.md",
+      "resolved_path": ".",
+      "project_dir": "."
+    },
+    "summary": "[contract] src/server/output_validate.mbt:63-90 parse_artifact 不校验未知字段：拼错/臆造的 artifact 键被静默降级为「文件存在+非空」，verdict 仍是 pass，且 detail 断言「invariant 全部通过」——L4 硬门可被空检查满足"
+  }
+}

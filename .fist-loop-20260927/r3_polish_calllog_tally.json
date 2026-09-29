@@ -1,0 +1,196 @@
+{
+ "grouped_by": "params_json.task_id 前缀（不按标签、不按回忆）",
+ "stages": {
+  "T0r71 验证": {
+   "total": 179,
+   "ok": 173,
+   "refused": 6,
+   "by_tool": {
+    "claim": {
+     "ok": 16,
+     "refused": 1
+    },
+    "omega_spec_create": {
+     "ok": 24,
+     "refused": 1
+    },
+    "omega_spec_review": {
+     "ok": 24,
+     "refused": 1
+    },
+    "execute": {
+     "ok": 16,
+     "refused": 1
+    },
+    "submit": {
+     "ok": 16,
+     "refused": 1
+    },
+    "output_validate": {
+     "ok": 17,
+     "refused": 0
+    },
+    "omega_result_verify": {
+     "ok": 24,
+     "refused": 1
+    },
+    "verify": {
+     "ok": 25,
+     "refused": 0
+    },
+    "get": {
+     "ok": 10,
+     "refused": 0
+    },
+    "archive": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused_detail": [
+    {
+     "tool": "claim",
+     "ts": "2026-09-27T17:45:52Z",
+     "task": "T0r71"
+    },
+    {
+     "tool": "execute",
+     "ts": "2026-09-27T17:45:52Z",
+     "task": "T0r71"
+    },
+    {
+     "tool": "submit",
+     "ts": "2026-09-27T17:45:52Z",
+     "task": "T0r71"
+    },
+    {
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T17:45:52Z",
+     "task": "T0r71"
+    },
+    {
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T17:45:52Z",
+     "task": "T0r71"
+    },
+    {
+     "tool": "omega_result_verify",
+     "ts": "2026-09-27T17:45:52Z",
+     "task": "T0r71"
+    }
+   ]
+  },
+  "无 task_id/其他": {
+   "total": 4,
+   "ok": 4,
+   "refused": 0,
+   "by_tool": {
+    "call_log": {
+     "ok": 2,
+     "refused": 0
+    },
+    "publish": {
+     "ok": 1,
+     "refused": 0
+    },
+    "laya_decide": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused_detail": []
+  },
+  "T0r72 打磨": {
+   "total": 197,
+   "ok": 191,
+   "refused": 6,
+   "by_tool": {
+    "claim": {
+     "ok": 17,
+     "refused": 1
+    },
+    "task_plan_deep": {
+     "ok": 1,
+     "refused": 0
+    },
+    "omega_status": {
+     "ok": 16,
+     "refused": 0
+    },
+    "omega_spec_create": {
+     "ok": 24,
+     "refused": 1
+    },
+    "omega_spec_review": {
+     "ok": 24,
+     "refused": 1
+    },
+    "execute": {
+     "ok": 16,
+     "refused": 1
+    },
+    "submit": {
+     "ok": 16,
+     "refused": 1
+    },
+    "output_validate": {
+     "ok": 17,
+     "refused": 0
+    },
+    "omega_result_verify": {
+     "ok": 24,
+     "refused": 1
+    },
+    "verify": {
+     "ok": 25,
+     "refused": 0
+    },
+    "get": {
+     "ok": 10,
+     "refused": 0
+    },
+    "archive": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused_detail": [
+    {
+     "tool": "claim",
+     "ts": "2026-09-27T18:29:42Z",
+     "task": "T0r72"
+    },
+    {
+     "tool": "execute",
+     "ts": "2026-09-27T18:29:42Z",
+     "task": "T0r72"
+    },
+    {
+     "tool": "submit",
+     "ts": "2026-09-27T18:29:42Z",
+     "task": "T0r72"
+    },
+    {
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T18:29:42Z",
+     "task": "T0r72"
+    },
+    {
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T18:29:42Z",
+     "task": "T0r72"
+    },
+    {
+     "tool": "omega_result_verify",
+     "ts": "2026-09-27T18:29:42Z",
+     "task": "T0r72"
+    }
+   ]
+  }
+ },
+ "first_T0r72_call_ts": "2026-09-27T17:48:27Z",
+ "issue_up_tool_rows": 0,
+ "laya_rows_total": 16,
+ "call_log_rows_now": 3407,
+ "note": "窗口 17:37:27 起同时含 R3-验证 的收口（17:45 前后）与 R3-打磨 的发布/收口 ⇒ 按 task_id 前缀分栏，不合并计数"
+}

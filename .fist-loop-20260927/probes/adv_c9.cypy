@@ -1,0 +1,10 @@
+struct Point:
+    x: int
+    y: int
+
+def q(p: Point) -> str:
+    match p:
+        case Point(x=0, y=0):
+            return "origin"
+        case _:
+            return "other"

@@ -1,0 +1,50 @@
+{
+  "ledger_before": 6,
+  "ledger_after": 11,
+  "log": [
+    {
+      "tag": "bug_list:before",
+      "count": 6
+    },
+    {
+      "tag": "report:[ledger-lifecycle] src/server/bugreport.",
+      "result": {
+        "bug_id": "BUG-8",
+        "status": "OPEN",
+        "path": "./memory/bugs.md",
+        "resolved_path": ".",
+        "project_dir": "."
+      }
+    },
+    {
+      "tag": "report:[ledger-lifecycle] 缺陷账本只写不销：无 bug 关闭/状态位",
+      "result": {
+        "bug_id": "BUG-9",
+        "status": "OPEN",
+        "path": "./memory/bugs.md",
+        "resolved_path": ".",
+        "project_dir": "."
+      }
+    },
+    {
+      "tag": "report:[lifecycle] archive 走 complete 且要求状态 [待验",
+      "result": {
+        "bug_id": "BUG-10",
+        "status": "OPEN",
+        "path": "./memory/bugs.md",
+        "resolved_path": ".",
+        "project_dir": "."
+      }
+    },
+    {
+      "tag": "report:[contract] report_bug 返回 `bug_id` 而 bug_",
+      "result": {
+        "bug_id": "BUG-11",
+        "status": "OPEN",
+        "path": "./memory/bugs.md",
+        "resolved_path": ".",
+        "project_dir": "."
+      }
+    }
+  ]
+}

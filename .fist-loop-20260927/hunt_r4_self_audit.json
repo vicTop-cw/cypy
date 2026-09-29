@@ -1,0 +1,232 @@
+{
+ "started": "2026-09-27T21:09:49+00:00",
+ "refuse": [],
+ "checks": [
+  {
+   "label": "三套体系全绿旗标",
+   "got": true,
+   "want": true,
+   "why": "baselines 件自报",
+   "ok": true
+  },
+  {
+   "label": "pytest 不低于上一环实测下限",
+   "got": true,
+   "want": true,
+   "why": "passed=1938",
+   "ok": true
+  },
+  {
+   "label": "pytest passed 与收集数同量（解析器活着）",
+   "got": true,
+   "want": true,
+   "why": "collect=1938 vs passed=1938",
+   "ok": true
+  },
+  {
+   "label": "自研套件 47/47",
+   "got": "47/47",
+   "want": "47/47",
+   "why": "baselines.suite",
+   "ok": true
+  },
+  {
+   "label": "e2e PASS=25 且 FAIL/WARN 为零",
+   "got": "25/0/0",
+   "want": "25/0/0",
+   "why": "baselines.e2e",
+   "ok": true
+  },
+  {
+   "label": "git 红线四项齐全",
+   "got": [
+    "17d68b4",
+    0,
+    true,
+    "1"
+   ],
+   "want": [
+    "17d68b4",
+    0,
+    true,
+    "1"
+   ],
+   "why": "head/暂存/外部树/领先数",
+   "ok": true
+  },
+  {
+   "label": "半径：产品面为零",
+   "got": 0,
+   "want": 0,
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "半径：本轮确实写了东西（正面计数）",
+   "got": true,
+   "want": true,
+   "why": "loop/memory 侧 129 个",
+   "ok": true
+  },
+  {
+   "label": "候选=确诊=入账根因映射一致",
+   "got": [
+    12,
+    12,
+    12
+   ],
+   "want": [
+    12,
+    12,
+    12
+   ],
+   "why": "faces 候选数 vs confirm 确诊数",
+   "ok": true
+  },
+  {
+   "label": "四根因都有确诊",
+   "got": 4,
+   "want": 4,
+   "why": "by_root_cause 键数",
+   "ok": true
+  },
+  {
+   "label": "入账条数=计划单数=三向一致数",
+   "got": [
+    10,
+    10,
+    10
+   ],
+   "want": [
+    10,
+    10,
+    10
+   ],
+   "why": "三处同数",
+   "ok": true
+  },
+  {
+   "label": "号段连续且从盘上现数",
+   "got": [
+    [
+     "BUG-61",
+     "BUG-62",
+     "BUG-63",
+     "BUG-64",
+     "BUG-65",
+     "BUG-66",
+     "BUG-67",
+     "BUG-68",
+     "BUG-69",
+     "BUG-70"
+    ],
+    61
+   ],
+   "want": [
+    [
+     "BUG-61",
+     "BUG-62",
+     "BUG-63",
+     "BUG-64",
+     "BUG-65",
+     "BUG-66",
+     "BUG-67",
+     "BUG-68",
+     "BUG-69",
+     "BUG-70"
+    ],
+    61
+   ],
+   "why": "filed.filed vs 计划",
+   "ok": true
+  },
+  {
+   "label": "账本增量=入账条数",
+   "got": 10,
+   "want": 10,
+   "why": "md 计数差",
+   "ok": true
+  },
+  {
+   "label": "DESIGN 撤回与未测都被点名",
+   "got": [
+    2,
+    2
+   ],
+   "want": [
+    2,
+    2
+   ],
+   "why": "撤回/未测栏",
+   "ok": true
+  },
+  {
+   "label": "复现三态各自可达",
+   "got": [
+    "0_all_reproduced",
+    "1_not_reproduced_selftest_rc",
+    "2_fixture_broken_unknown_key_rc"
+   ],
+   "want": [
+    "0_all_reproduced",
+    "1_not_reproduced_selftest_rc",
+    "2_fixture_broken_unknown_key_rc"
+   ],
+   "why": "0/1/2 三格",
+   "ok": true
+  },
+  {
+   "label": "零发现与看不见分栏（探针那一格不许糊）",
+   "got": [
+    1,
+    1
+   ],
+   "want": [
+    1,
+    1
+   ],
+   "why": "blind_spots 计数",
+   "ok": true
+  },
+  {
+   "label": "判据自证条数（每个件都要有自己的 self_checks，不许裸结论）",
+   "got": 49,
+   "want": true,
+   "why": "faces/confirm/witness/declared/baselines/ledger3way/dedup 合计",
+   "ok": true
+  },
+  {
+   "label": "恒绿门禁格（min: 0）必须为 0",
+   "got": 0,
+   "want": 0,
+   "why": "spec：[]",
+   "ok": true
+  },
+  {
+   "label": "每格都写了判定形状",
+   "got": 0,
+   "want": 0,
+   "why": "缺判定键的门禁：[]",
+   "ok": true
+  },
+  {
+   "label": "散文确实用了占位取数（空引用集会让下一条恒绿）",
+   "got": true,
+   "want": true,
+   "why": "引用 12 个件名",
+   "ok": true
+  },
+  {
+   "label": "散文引用的件都在 spec 清单里",
+   "got": [],
+   "want": [],
+   "why": "引用 12 个件名",
+   "ok": true
+  }
+ ],
+ "checks_total": 21,
+ "checks_failed": [],
+ "gates_total": 70,
+ "artifacts_total": 15,
+ "at_utc": "2026-09-27T21:09:49+00:00"
+}

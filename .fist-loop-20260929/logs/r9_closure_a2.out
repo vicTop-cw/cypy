@@ -1,0 +1,2 @@
+REFUSED (开批门) local | pytest_log=r9_pytest_r1.log bytes=225180 tail='====== 1 failed, 2211 passed in 359.56s (0:05:59) ==================\nPYTEST_RC=1'
+CONCLUSION refused=1 root=(未开批) reason=pytest 终版日志缺 RC 行

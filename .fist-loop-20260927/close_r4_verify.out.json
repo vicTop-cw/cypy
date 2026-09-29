@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r86.1.1",
+   "law": "逐单回退矩阵独立复算：R4 合并修的每个机制片在快照树里逐个摘回修前文本，该片锁必须变红且其余锁不连带（用与修复环不同的脚本）",
+   "artifact": ".fist-loop-20260927/verify_r4_matrix.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.1.2",
+   "law": "逐单回退矩阵独立复算：R4 合并修的每个机制片在快照树里逐个摘回修前文本，该片锁必须变红且其余锁不连带（用与修复环不同的脚本）",
+   "artifact": ".fist-loop-20260927/verify_r4_matrix.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.2.1",
+   "law": "矩阵的承重自证：每行 mutation 后文件 sha 逐字复原，且「摘了也不红 ⇒ 锁不承重」的反面 canary 必须被矩阵自己抓出来",
+   "artifact": ".fist-loop-20260927/verify_r4_matrix.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.2.2",
+   "law": "矩阵的承重自证：每行 mutation 后文件 sha 逐字复原，且「摘了也不红 ⇒ 锁不承重」的反面 canary 必须被矩阵自己抓出来",
+   "artifact": ".fist-loop-20260927/verify_r4_matrix.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.3.1",
+   "law": "BUG-61..64 调用面复算：只走 `python -m cypyc.cli transpile --check-only` 全链，每单两向实测 + 同族对照，命令与 rc 逐字入账",
+   "artifact": ".fist-loop-20260927/verify_r4_callsite.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.3.2",
+   "law": "BUG-61..64 调用面复算：只走 `python -m cypyc.cli transpile --check-only` 全链，每单两向实测 + 同族对照，命令与 rc 逐字入账",
+   "artifact": ".fist-loop-20260927/verify_r4_callsite.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.4.1",
+   "law": "appendix-C《已实现的限制修复》14 行逐行复测：每行现写真源现跑调用面，逐行给「文档说已实现」对「今天实测」的结论",
+   "artifact": ".fist-loop-20260927/verify_r4_appendixC.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.4.2",
+   "law": "appendix-C《已实现的限制修复》14 行逐行复测：每行现写真源现跑调用面，逐行给「文档说已实现」对「今天实测」的结论",
+   "artifact": ".fist-loop-20260927/verify_r4_appendixC.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.5.1",
+   "law": "转结的真编译实测：BUG-69 与 D18 在 scratch 目录真调用编译器，不落仓库源码、不重注册 golden；工具链不在场也要把「打不到」当主张重测",
+   "artifact": ".fist-loop-20260927/verify_r4_compile.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.5.2",
+   "law": "转结的真编译实测：BUG-69 与 D18 在 scratch 目录真调用编译器，不落仓库源码、不重注册 golden；工具链不在场也要把「打不到」当主张重测",
+   "artifact": ".fist-loop-20260927/verify_r4_compile.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.6.1",
+   "law": "三套判据体系同批复算且只升不降，git 红线与冻结面正面测：HEAD 不变、暂存 0、PROJECT-SPEC/SYNTAX 按 sha 自证未动，本轮半径按 mtime 分栏",
+   "artifact": ".fist-loop-20260927/verify_r4_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.6.2",
+   "law": "三套判据体系同批复算且只升不降，git 红线与冻结面正面测：HEAD 不变、暂存 0、PROJECT-SPEC/SYNTAX 按 sha 自证未动，本轮半径按 mtime 分栏",
+   "artifact": ".fist-loop-20260927/verify_r4_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.7.1",
+   "law": "锁的「必红」复核：HEAD 产品码 + 当前测试重跑 R4 锁必须至少 1 红，身份探针证明跑的是快照不是工作区",
+   "artifact": ".fist-loop-20260927/verify_r4_lockproof.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.7.2",
+   "law": "锁的「必红」复核：HEAD 产品码 + 当前测试重跑 R4 锁必须至少 1 红，身份探针证明跑的是快照不是工作区",
+   "artifact": ".fist-loop-20260927/verify_r4_lockproof.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.8.1",
+   "law": "账本三向对齐 + 挂账执行面证明：`### FIXED` 段可复跑命令当场再跑，不可逆动作逐条给「确实没执行」的正面测量，call_log 按前缀对账",
+   "artifact": ".fist-loop-20260927/verify_r4_ledger3way.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r86.8.2",
+   "law": "账本三向对齐 + 挂账执行面证明：`### FIXED` 段可复跑命令当场再跑，不可逆动作逐条给「确实没执行」的正面测量，call_log 按前缀对账",
+   "artifact": ".fist-loop-20260927/verify_r4_irreversible.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r86",
+ "stage": "R4-验证"
+}

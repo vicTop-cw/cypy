@@ -1,0 +1,91 @@
+{
+ "refuse": [],
+ "p1_shadowed_test_classes": {
+  "TestPointerBoundary": {
+   "defined_at": [
+    200,
+    420
+   ],
+   "methods_per_def": {
+    "200": 3,
+    "420": 5
+   },
+   "live_line": 420,
+   "shadowed_methods": 3,
+   "live_methods": 5
+  },
+  "TestPipelineBoundary": {
+   "defined_at": [
+    282,
+    910
+   ],
+   "methods_per_def": {
+    "282": 3,
+    "910": 7
+   },
+   "live_line": 910,
+   "shadowed_methods": 3,
+   "live_methods": 7
+  }
+ },
+ "p2_dead_visitors": {
+  "CythonGenerator._visit_ExprStmt": {
+   "defined_at": [
+    1399,
+    2065
+   ],
+   "live_line": 2065,
+   "sizes": {
+    "1399": 7,
+    "2065": 15
+   },
+   "dead_branches": [
+    {
+     "first_line": 1399,
+     "stmts": 3,
+     "lines": 7
+    }
+   ],
+   "note": "后定义覆盖前定义 ⇒ dead_branches 那份从不被调用；「哪份才是意图」不在此断言，交人类/缺陷单"
+  },
+  "ScopeAnalyzer._visit_MetaBlock": {
+   "defined_at": [
+    484,
+    926
+   ],
+   "live_line": 926,
+   "sizes": {
+    "484": 11,
+    "926": 6
+   },
+   "dead_branches": [
+    {
+     "first_line": 484,
+     "stmts": 5,
+     "lines": 11
+    }
+   ],
+   "note": "后定义覆盖前定义 ⇒ dead_branches 那份从不被调用；「哪份才是意图」不在此断言，交人类/缺陷单"
+  }
+ },
+ "p3_skip_experiments": [
+  {
+   "module": "tests.test_demos",
+   "expected_marks": 1,
+   "found_on_functions": 0,
+   "outcome": "标记数与函数上可读的 pytestmark 数不等：可能是类级标记或skipif 写在参数上 ⇒ 记为清单级，不猜结论"
+  },
+  {
+   "module": "tests.test_polish_20260926",
+   "expected_marks": 1,
+   "found_on_functions": 0,
+   "outcome": "标记数与函数上可读的 pytestmark 数不等：可能是类级标记或skipif 写在参数上 ⇒ 记为清单级，不猜结论"
+  },
+  {
+   "module": "tests.test_project_compiler",
+   "expected_marks": 1,
+   "found_on_functions": 0,
+   "outcome": "标记数与函数上可读的 pytestmark 数不等：可能是类级标记或skipif 写在参数上 ⇒ 记为清单级，不猜结论"
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+{
+ "started_z": "2026-09-29T10:48:48Z",
+ "stage": "start",
+ "tag": "c1",
+ "ns": "cypy-loop-20260929",
+ "refusals": [],
+ "benign": [],
+ "idempotent": [],
+ "nodes": {},
+ "obs": {
+  "corpus_cases": 28,
+  "fingerprint": "fnv1a64:7349f8d14b3fc9fc",
+  "locks": 31,
+  "matrix": {
+   "cells": 7,
+   "mutation_cells": 5,
+   "load_bearing": 5,
+   "all_mutation_red": true,
+   "all_gate_red": true,
+   "control_cells": 1,
+   "control_zero_red": true
+  },
+  "filed_new_ids": [],
+  "ledger": {
+   "headers": 141,
+   "open_blocks": 40,
+   "fixed_sections": 93,
+   "amend_sections": 1,
+   "residue_lines": 0,
+   "dblstamp_lines": 0,
+   "hard_bad_stamps": 0,
+   "soft_bad_stamps": 18
+  }
+ },
+ "root_reused": "T0r119",
+ "laya": "{\"available\": false, \"decision\": {\"source\": \"fallback\", \"complex\": true, \"feature_route\": \"拆解调度\", \"split_n\": 4, \"splits_per_family\": [{\"family\": \"拆解调度\", \"score\": 2}, {\"family\": \"深度验证\", \"score\": 0}, {\"family\": \"预算成本\", \"score\": 0}, {\"family\": \"可靠性容错\", \"score\": 0}, {\"family\": \"排程路由\", \"score\": 0}, {\"family\": \"目标校验\", \"score\": 0}, {\"family\": \"代码质量扫描\", \"score\": 0}, {\"family\": \"自进化强化\", \"score\": 0}], \"reasons\": [\"无 Laya 可用，采用规则式决策（词法子串打分，确定性可复现）\", \"feature_route 命中族 - 拆解调度\", \"任务复杂度高 → 建议拆分数 +1\"]}, \"note\": \"机器上未探测到 Laya（或探测失败/超出 5000ms 预算），已降级到内建规则式决策分支（laya_route）\"}",
+ "loop_create": "{\"name\": \"cypy-selfdrive-ring-r13\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T10:48:48Z\", \"updated_at\": \"2026-09-29T10:48:48Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2325, \"baseline_open_bug_count\": 40}",
+ "ledger_open_at_start": 40,
+ "baseline_test_count_used": 2325,
+ "tree_readback": {
+  "root": "T0r119",
+  "rows": 17,
+  "leaves": 12,
+  "boundary": 6
+ },
+ "faces_missing": []
+}

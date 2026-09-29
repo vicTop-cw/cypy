@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\close_r10_ring.py", line 388, in <module>
+    main()
+    ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\close_r10_ring.py", line 351, in main
+    rep["branch_final"] = {b: chain_up(b, f"R10 枝干：4 op/71 对、9 支锁、变异矩阵 9/9 门")[1]
+                              ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\close_r10_ring.py", line 329, in chain_up
+    trace["execute"] = json.dumps(call(node, "execute", {
+                                  ~~~~^^^^^^^^^^^^^^^^^^^
+        "task_id": node, "executor": "self",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "deliverable": f"{ROOT_PREFIX} 枝干/根收口：本轮交付物 = 产品修复（解析/生成/分析三处）"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                       f"+ Ω-spec 4 op/71 对 + 9 支锁 + 变异矩阵承重证明；出口件 {REPORT.name}"}),
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: main.<locals>.call() takes 2 positional arguments but 3 were given

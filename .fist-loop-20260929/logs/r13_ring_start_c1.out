@@ -1,0 +1,3 @@
+WROTE ring_r13_start_c1.json
+ROOT T0r119 tree {"root": "T0r119", "rows": 17, "leaves": 12, "boundary": 6}
+CONCLUSION stage=start root=T0r119 rows=17 leaves=12 faces_missing=0 calls=2 refused=0 benign=0 tag=c1

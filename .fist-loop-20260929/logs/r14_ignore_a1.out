@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\check_ignore_vs_readers.py", line 191, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\check_ignore_vs_readers.py", line 150, in main
+    refs.setdefault(c, set()).add(str(p.relative_to(ROOT).replace("\\", "/")))
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+TypeError: Path.replace() takes 2 positional arguments but 3 were given

@@ -1,0 +1,200 @@
+{
+ "key": "r4_verify",
+ "root_task": "T0r86",
+ "assignee": "cypy-verifier",
+ "stage": "R4-验证",
+ "forbid": "把工作区当快照树跑；用修复环的判据件当本轮证据；改产品码或测试来凑验证绿；弱化或删除既有测试；git add/commit/push；删文件或删别人的 worktree；改 PROJECT-SPEC 与 SYNTAX；重注册 golden；把 scratch 编译产物落进仓库源码树；把「没复验到」写成「已验证」；报告归档后再改交付物",
+ "laws": [
+  {
+   "name": "逐单回退矩阵独立复算：R4 合并修的每个机制片在快照树里逐个摘回修前文本，该片锁必须变红且其余锁不连带（用与修复环不同的脚本）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r4_matrix.json",
+     "mutated",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r4_matrix.json",
+     "identity",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "矩阵的承重自证：每行 mutation 后文件 sha 逐字复原，且「摘了也不红 ⇒ 锁不承重」的反面 canary 必须被矩阵自己抓出来",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r4_matrix.json",
+     "sha_restored",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r4_matrix.json",
+     "canary_caught",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "BUG-61..64 调用面复算：只走 `python -m cypyc.cli transpile --check-only` 全链，每单两向实测 + 同族对照，命令与 rc 逐字入账",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r4_callsite.json",
+     "cli_rows",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r4_callsite.json",
+     "control",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "appendix-C《已实现的限制修复》14 行逐行复测：每行现写真源现跑调用面，逐行给「文档说已实现」对「今天实测」的结论",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r4_appendixC.json",
+     "rows",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r4_appendixC.json",
+     "refuse",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "转结的真编译实测：BUG-69 与 D18 在 scratch 目录真调用编译器，不落仓库源码、不重注册 golden；工具链不在场也要把「打不到」当主张重测",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r4_compile.json",
+     "attempts",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r4_compile.json",
+     "golden_untouched",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "三套判据体系同批复算且只升不降，git 红线与冻结面正面测：HEAD 不变、暂存 0、PROJECT-SPEC/SYNTAX 按 sha 自证未动，本轮半径按 mtime 分栏",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r4_baselines.json",
+     "systems",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r4_baselines.json",
+     "radius",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "锁的「必红」复核：HEAD 产品码 + 当前测试重跑 R4 锁必须至少 1 红，身份探针证明跑的是快照不是工作区",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r4_lockproof.json",
+     "runs",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r4_lockproof.json",
+     "identity",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "账本三向对齐 + 挂账执行面证明：`### FIXED` 段可复跑命令当场再跑，不可逆动作逐条给「确实没执行」的正面测量，call_log 按前缀对账",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/verify_r4_ledger3way.json",
+     "cards",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r4_irreversible.json",
+     "not_executed",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/verify_r4_calllog_tally.json",
+     "rows",
+     3000
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "法1：逐单回退矩阵独立复算：R4 合并修的每个机制片在快照树里逐个摘回修前文本，该片锁必须变红且其余锁不连带（用与修复环不同的脚本）",
+   ".fist-loop-20260927/verify_r4_matrix.json",
+   "mutated"
+  ],
+  [
+   "法2：矩阵的承重自证：每行 mutation 后文件 sha 逐字复原，且「摘了也不红 ⇒ 锁不承重」的反面 canary 必须被矩阵自己抓出来",
+   ".fist-loop-20260927/verify_r4_matrix.json",
+   "sha_restored"
+  ],
+  [
+   "法3：BUG-61..64 调用面复算：只走 `python -m cypyc.cli transpile --check-only` 全链，每单两向实测 + 同族对照，命令与 rc 逐字入账",
+   ".fist-loop-20260927/verify_r4_callsite.json",
+   "cli_rows"
+  ],
+  [
+   "法4：appendix-C《已实现的限制修复》14 行逐行复测：每行现写真源现跑调用面，逐行给「文档说已实现」对「今天实测」的结论",
+   ".fist-loop-20260927/verify_r4_appendixC.json",
+   "rows"
+  ],
+  [
+   "法5：转结的真编译实测：BUG-69 与 D18 在 scratch 目录真调用编译器，不落仓库源码、不重注册 golden；工具链不在场也要把「打不到」当主张重测",
+   ".fist-loop-20260927/verify_r4_compile.json",
+   "attempts"
+  ],
+  [
+   "法6：三套判据体系同批复算且只升不降，git 红线与冻结面正面测：HEAD 不变、暂存 0、PROJECT-SPEC/SYNTAX 按 sha 自证未动，本轮半径按 mtime 分栏",
+   ".fist-loop-20260927/verify_r4_baselines.json",
+   "systems"
+  ],
+  [
+   "法7：锁的「必红」复核：HEAD 产品码 + 当前测试重跑 R4 锁必须至少 1 红，身份探针证明跑的是快照不是工作区",
+   ".fist-loop-20260927/verify_r4_lockproof.json",
+   "runs"
+  ],
+  [
+   "法8：账本三向对齐 + 挂账执行面证明：`### FIXED` 段可复跑命令当场再跑，不可逆动作逐条给「确实没执行」的正面测量，call_log 按前缀对账",
+   ".fist-loop-20260927/verify_r4_ledger3way.json",
+   "cards"
+  ]
+ ],
+ "root_deliverable": "R4-验证 交付：memory/reviews/20260928.09.25.00；半径=只看不动手（产品 0 / 测试 0 / docs 0 / 冻结 0 全空，改动只在 .fist-loop 判据件 259 个）。八条法全部独立复算：(1) 回退矩阵 22 行由 difflib opcode 自动切片，13 行承重、9 行不承重如实分栏，22/22 行 sha 逐字复原，反面 canary 被抓 1 次，身份探针 True 证明吃的是快照树；(2) 调用面 18 条只走 CLI 子进程，同族对照 4 条全数在报，内部表示外泄 0 条，换回修前产品码后翻转 13 条（含正确调用形状 2 条）；(3) 附录 C《已实现的限制修复》反解 14 行逐行现写真跑：10 行成立、1 行 claim-false、3 行 claim-half-true、没测到 0 行；(4) 真编译器三发：合法 C rc=0、合成违例 rc=2、bridge 生成物 rc=2 且拒在模块级 if 第 10 行 —— BUG-69 现形；D18 实测 no-reuse（.pyd 被重写 True、get_cached_pyd 全 None），文档那句「源未变会复用」不成立；产物全在 scratch True、golden 面 26 个文件前后 sha 相等 True；(5) 三套体系同批复算且只升不降：pytest 1956 通过/0 失败（地板 1956）、收集 1956、自研 {'Total': 47, 'Passed': 47, 'Failed': 0, 'Skipped': 0}、e2e {'PASS': 25, 'FAIL': 0, 'RUNFAIL': 0, 'WARN': 0}，HEAD 17d68b4、暂存 0；(6) 锁必红复核三档 green/red/red，HEAD 档 18 条红且 13 条红在本轮四单形状上；(7) 账面三向：md 73 卡 / sqlite 69 行，差 4 已由 md_only 8 张逐张点名对上恒等式，R4-修复 FIXED 6 张三向一致 6 张，每张单的复跑命令真跑 13 条，不再现形 4 张、仍现形 9 张、未交代半开 0 张；(8) 不可逆 7 条逐条带测量（canary True），裁决队列 8 条；新入账 3 张（BUG-71, BUG-72, BUG-73，sqlite 增量 3）；驱动面 17 个亲笔脚本硬错 0、软账 0（上一环基线 0，只降不升）；渲染前自证 141/152 道门禁与 162 个占位全部解出，件-脚本同源例外披露 1 条。发单前复算的账面 call_log：本环前缀 19 行 / 17 个任务，被拒 0 条（报告 §八 渲染前快照是 18 行，两次之间只多了本环自己的复算调用，没有收口 RPC；收口链的行数与被拒原文一律进 loop_progress.md）。",
+ "root_marker": "[selfdrive-verify]",
+ "root_law_marks_len": 8,
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/verify_r4_calllog_tally.json",
+   "spec_named_carriers",
+   1000
+  ],
+  [
+   ".fist-loop-20260927/verify_r4_self_audit.json",
+   "gates_pass",
+   1000
+  ]
+ ],
+ "root_verify_reason": "验证环最容易说谎的是「我复算过了」，所以每一层都配了反向证明：(1) 矩阵的切片来自 difflib 而不是修复环的 RC 清单，且纯注释行的反面 canary 必须被同一张矩阵判为不承重——没有它，「摘了也不红」既可能是锁不承重也可能是矩阵坏了；(2) 调用面只走 CLI 子进程并把命令逐字入账，再换回修前产品码测一遍敏感度（13 条翻转），V61a 这种「正确调用」形状也在翻转表里，才证明探针打的确实是 BUG-61 的假阳性而不是别的东西；(3) 文档行清单从冻结表体反解（14 行），逐行现写真源现跑，并配一条盘上绝不存在的 needle 作对照；(4) 真编译前先让合法 C 编得过（rc=0），否则「编译器拒了生成物」这句不成立；D18 先证明 .pyd 真落盘才谈复用，墙钟快慢一律不作主张（本机墙钟随负载摆动）；(5) 三套体系 + git 红线 + 半径同一时刻复算，地板取上一环实测件而不是手写目标，比较函数自己配「不可能的地板必须报违规」的 canary；(6) 锁复核拿 HEAD 码与修前码两棵树重跑，三档跑同一份测试文件（sha 集合=1），红还必须红在本轮四单的形状上；(7) 账面 md/sqlite/call_log 三向 + 每单复跑命令真跑，两口径的差用恒等式逐张点名；(8) 不可逆动作不是「我没做」而是 mtime/sha/行数三类谓词的正面测量，每类都配「确实改过的文件必须被抓到」的 canary；(9) 报告渲染前自证 141/152 道门禁，且件-脚本同源门把本环唯一一处「跑完又改脚本文本」的例外逼着披露在报告里。",
+ "embedded_self_audit": {
+  "gates_pass": 141,
+  "gates_total": 152,
+  "placeholders_total": 162,
+  "stale_artifacts_len": 1,
+  "at_utc": "2026-09-28T01:24:23+00:00"
+ },
+ "built_from_artifacts_at_utc": "2026-09-28T01:34:01+00:00"
+}

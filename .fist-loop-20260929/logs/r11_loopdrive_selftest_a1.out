@@ -1,0 +1,2 @@
+GATES_GOOD {"create_ok": true, "status_pre_ok": true, "all_ticks_ok": true, "status_post_ok": true, "cross_process_negative_confirmed": true, "round_advanced": true, "mode_sequence_matches_declared_steps": true, "current_idx_progression": true, "no_early_stop": true}
+CONCLUSION stage=selftest cases=8 bad=[]

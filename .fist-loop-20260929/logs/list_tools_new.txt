@@ -1,0 +1,129 @@
+archive	归档任务（仅限人类指挥官）。参数：task_id、by 操作者。
+atgc_old_compile	ATGC 双链虚拟机(全量参照 atgc-old)·编译：把 DNA 序列转录成 mRNA 并翻译成操作列表。参数：seq(必填) DNA 序列（仅允许 A/T/G/C/U 与空白/`;;` 注释，大小写不敏感）。返回 {transcription, ops, mode, antisense, ro
+atgc_old_run	ATGC 双链虚拟机(全量参照 atgc-old)·运行：执行 DNA 程序（含快照回滚）。参数：seq(必填)。返回 {output, stack_history, final_stack, result, rolled_back} JSON。
+atgc_old_talk	ATGC 双链虚拟机(全量参照 atgc-old)·叙事对话：把 DNA 程序讲成生物故事（转录→mRNA→翻译→酶执行）并输出最终数值；可选择性回答自由问题；无 seq 时返回双链虚拟机简介。参数：seq(可选)、question(可选)。
+audit_log	查看追加式审计日志。**注意：** audit_log 仅返回**本进程生命周期**内的内存记录（AuditLog 不落库，见 src/ops/audit.mbt 设计注）；跨进程查询请改用 call_log。返回体恒为 {scope:'process', entries, count, note}
+audit_permission	查询某角色是否可执行指定操作。参数：role(human_steward/leader/agent)、操作名(publish/archive/delete/claim)。
+board_ascii	返回当前命名空间的实时任务看板 ASCII：按状态分组 + 深度缩进，一眼看全貌（哪些任务、什么状态、在树哪层）。已完成一档在合计行里标出「(无交付物N)」——「已完成」不自动等于有成果（BUG-29 的探针/绕验收残留）。参数：namespace(可选，空=全部命名空间)。返回 { counts:
+bug_fix	批量把缺陷抬头标成 FIXED，并**同一笔**追加一条点名整批的 `### FIXED(<盖章时间> / BUG-a, BUG-b)` 小记（BUG-9 的控制面正身：账本此前只写不销，「还剩几条没修」只能人肉数）。为什么是一笔而不是两步：memory/bugs.md 的记账规则把「标 FIXED
+bug_list	列出 {project_dir}/memory/bugs.md 里的 bug 条目。**返回是对象不是裸数组**：{bugs:[{id,bug_id,ts,severity,status,summary,detail,task_id?,linked_task_id?,linked_task_stat
+bug_mark_status	就地改**一条**缺陷的抬头状态（BUG-9 控制面的另一半：改判，不是销账）。返回 {bug_id, id, status, from_status, changed, duplicate_of?, path}：**changed=false 表示目标状态与主编号都没变（幂等 no-op，一个字节
+call_log	查询最近的调用日志（call_log 表）。参数：limit(可选，默认50)。返回最近工具调用记录（seq/ts/tool/caller/ns/params/result/ok/runtime_ms，新的在前）。用于复盘'是哪次调用+入参+结果产生了 bug'。
+circuit_fail	熔断器·上报失败（R104，Nygard Release It! 2007 / Fowler / Azure 蒸馏）：外部调用失败后上报并推进三态状态机——Closed 窗口内失败计数达阈值 → Open（fail-fast 拒绝）；Half-Open 探测失败 → 回 Open 重启恢复定时器。参
+circuit_status	熔断器·查询状态（R104）：查三态并做 Half-Open 到期判定——Open 且 elapsed≥recovery_secs → 转 Half-Open（**只放行 probe_limit 次探测，默认 1**，配额用尽即 allow_call=false 继续快速失败；BUG-34：旧实现全
+circuit_succeed	熔断器·上报成功（R104）：外部调用成功后回灌——Closed 复位计数；Half-Open 探测成功 → Closed（恢复，节流配额随之解除）。参数：circuit 熔断器名（必填）（注：时间戳一律由服务端盖章，不接受调用方注入 now）、namespace（可选默认 default）。返回 
+claim	认领任务（待领取 -> 已领取；随后 execute 进入执行中）。参数：task_id、assignee 认领人、inject 可选逗号分隔档案资产关键词(命中则把 code/note 追加到返回 injected_assets)。
+conflicts_check	claim 冲突检测（AO --no-takeover）：认领前检查任务是否已被他人/本人持有。参数：task_id、assignee。
+cost_budget_check	预算超限告警。参数：limit(预算上限)、current(当前消耗)。返回：{exceeded, remaining, action}。
+cost_budget_split	预算按依赖图阶段切分（R81，ZEBRA 背包水填充蒸馏简化版）：给定总预算，按任务 DAG 阶段(slack 分析 earliest 层级)切分——每阶段份额=阶段难度权重(难3/中2/易1)占总量比例×总预算(余数补最大权重阶段)。返回 { verdict: ok|rejected|insuff
+cost_stats	执行成本聚合统计。参数：无。返回：total_records/total_cost/total_tokens_in/total_tokens_out/by_executor。
+dag_ascii	返回当前命名空间任务的 ASCII 依赖结构图。参数：namespace(可选，默认 default)。
+dag_check	检查某任务的依赖是否全部完成。参数：task_id。
+dag_cost_route	依赖图成本路由（R77，STAR 式蒸馏）：对 flexible(slack>0) 未认领任务按拓扑序贪心给建议执行者——执行成本(难度档易/中/难→1/2/3)+切换税(依赖执行者不同则+1，上下文切换成本)，能力约束过滤(描述命中的已注册能力标签)。返回 { cost_route:[{task_
+dag_critical_path	返回当前最长依赖链（关键路径）。无参数。
+dag_depend	给任务追加一条前置依赖（显式构建 DAG 依赖边，不只靠 plan_deep 隐式父子；供 dag_check/ready/critical_path/ascii 使用）。参数：task_id 任务(必经)、dep_id 前置依赖任务 id(必经)。幂等去重；校验两任务存在且非自身。返回追加后的任务
+dag_mc	Monte Carlo 概率式完工预测（R94，Van Slyke 1963 首倡 MCS 求网络完工分布）：对作用域内每个任务按难度档([难度梯度 X]→易/中/难)采样三点三角分布时长，整网模拟 samples 次，得完工时间分布(min/mean/p50/p90/max)+按期概率 P(完工≤
+dag_parallelism	返回当前可并行执行的任务数（待领取且依赖已满足）。无参数。
+dag_publish	发布带依赖关系的根任务。参数：project_dir、description、depends_on(依赖任务 id JSON 数组)、namespace、created_by。
+dag_ready	列出所有依赖满足、可领取的任务。参数：namespace(可选)。
+dag_schedule	排程视图（R75 负载感知，基于 dag_slack 落成可执行排程）：返回 { critical_batch:[{task_id,earliest,slack,assignee}](关键路径瓶颈,须串行盯紧), flexible_batch:[...](slack>0,按最早开始排序可并行,未认领
+dag_slack	瓶颈与松弛分析（PERT/CPM 硬核调度，R71）：对每个任务算 earliest/latest/slack（0=关键路径，>0=可灵活并行安排），返回 { makespan, critical:[关键任务], slack_map:{id:{earliest,latest,slack}}, cyc
+dag_sort	对任务列表按依赖深度拓扑排序。参数：task_ids(JSON 数组)。
+delete	删除已归档任务。参数：task_id。
+eval_feedback	反馈收敛（R111，Evaluator-Optimizer schema 蒸馏：Anthropic E/O 模式 + Self-Refine arXiv 2303.17651 + Reflexion arXiv 2303.11366 + zubi.ai 四段式）：把自由文本反馈归一为 Defects
+evolve_asset_register	DGM 演化·注册一个可选外部资产（如 code-review / superpowers 类 skill 库）：作为 Artifact 归档进档案库，goal 用 [asset]<来源名> 便于 plan/claim 的 inject 按关键词检索，note 放可注入提示词、code 放来源路径/
+evolve_critic	自进化·Critic 防漂移门禁（SAGE 论文落地，杜绝课程漂移）：把一条「拟入库的 principle/lesson/资产」的 note 交给 Critic 评审，复用 Archive::novelty + scoring 纯计算，返回是否放行 {admit} 与理由——与档案库最相似资产重合 
+evolve_distill	DGM 演化·自进化蒸馏（EvolveR 最小级）：把一次 verify 通过的任务交付物蒸馏成一条 principle 写入 DGM（goal 前加 [principle] 前缀标识，code 写蒸馏内容，复用既有 evolve_upsert 落库 + Archive 查重语义）。参数：task_
+evolve_lesson	自进化·失败回流学习（learn-from-reject）：把一次被打回/失败的原因归档成一条 [lesson]<类目> 资产入 DGM，让建档库能「学教训」——note 存失败原因、code 存纠偏提示，plan/claim 的 inject 可按类目命中「踩过的坑」。参数：cat 类目(必填，检
+evolve_sample	DGM 演化·按 p∝s·h 多样性加权采样父代产物（子代越少/性能越高越可能被选）。参数：rand(可选)。
+evolve_snapshot	DGM 演化·查看档案库快照（含 best/lineage/summaries/dead_ends）。参数：无。
+evolve_submit	DGM 演化·归档一个产物（Artifact）：把本轮设计/代码/目标加入档案库，自动递增父代子代数。参数：id、goal、note、code、score、parent_id(可选)、parts(可选 JSON 对象)。
+execute	记录执行交付物（向后兼容）。合法前态：拆分中/已领取/**执行中**→执行中（BUG-2 收口：执行中重复 execute = 追加/覆盖交付物，因此 reject→retry（→执行中）后可以直接原地更新交付物，无需 pause→resume 绕行；被拒时错误文案会给出当前状态的可用出路）。必填：
+executor_auction	Marketplace·置信度校准拍卖（Agora arXiv 2607.09600 蒸馏，R87）：把执行者分派从排序推荐升级为按出价竞拍——每个已注册执行者对任务所需能力 need 出价（显式 bid，缺省按能力覆盖率自动出价），经校准系数 1-|出价-历史验收通过率| 折扣防胜者诅咒（过度自信
+executor_clear	Marketplace·清空全部执行者能力注册（重置/整洁，R31）：清空 store executors 表（进程内注册表以 store 为空为基准重建）。无参数。返回 {persisted}。
+executor_register	Marketplace·执行者能力注册（Dynamic/Marketplace 雏形，R30）：为执行者登记能力标签集合（如 [编排,json]），供 executor_route 按任务所需能力做专长路由。参数：name 执行者标识(必)、abilities 能力标签数组(可选)。返回 {name
+executor_route	Marketplace·能力路由推荐（Dynamic/Marketplace 雏形，R30；R80 历史信任轴）：给定任务所需能力 need，从已注册执行者中按 { 能力覆盖率 desc → 历史信任(名下已完成/名下总数，验收通过率，无历史 0.5 中性) desc → 负载(名下活跃任务数) a
+executor_run	把任务交给外部编码执行器真跑（宿主命令能力，默认收紧）：执行器名**只能**是已登记集合 aider | atomcode，argv 形状由 src/executor/cli_argv.mbt 固定（不经过 shell，提示词里的 ; $() 反引号都只是字面量），可执行文件名由登记表推导——调用方
+get	查询单个任务详情。参数：task_id。
+gitcode_env_check	检查 GitCode issue 同步的环境变量配置状态——读 FIST_GITCODE_ENABLED / FIST_GITCODE_PROJECT_ID / FIST_GITCODE_TOKEN，返回 enabled/project_id_set/token_present/ready/hint
+gitcode_flush_plan	生成 GitCode issue 同步计划——为每条 pending bug 生成一条 curl 命令（PRIVATE-TOKEN: ${FIST_GITCODE_TOKEN}，URL: https://gitcode.com/api/v4/projects/{id}/issues）。不执行任何网络
+gitcode_queue_mark_sent	标记一批 bug_id 已同步至 GitCode issue（写入 sent_at + gitcode_issue_iid）。curl 执行成功后调此工具回写队列，幂等安全。参数：project_dir(必填)、bug_ids(必填数组)、sent_at(可选，缺省自动回退)、gitcode_iss
+gitcode_queue_status	查看待同步 GitCode issue 队列状态。返回 {total, pending, sent, oldest_pending_ts, by_severity, pending_list, path}。纯计算读 JSONL 队列，不碰网络。**两栏不许混读**（同 github_queue_st
+github_env_check	检查 GitHub issue 同步的环境变量配置状态——读 FIST_GITHUB_ENABLED / FIST_GITHUB_REPO / FIST_GITHUB_TOKEN，返回 enabled/repo/token_present/ready 四元组。纯计算只读环境变量，不碰网络。外部 AI
+github_flush_execute	一键执行 github_flush_plan 生成的 curl 命令，直接在队列上发 GitHub issue。硬门控——force 必须显式为 true 才执行，防误操作。JS target 下真实执行 curl；native target 返回跳过提示。成功后自动回写 github_queue_
+github_flush_plan	生成 GitHub issue 同步计划——为每条 pending bug 生成一条 curl 命令（含 FIST_GITHUB_TOKEN 占位符）。不执行任何网络调用，外部拿到后手动/脚本执行 curl，成功后调 github_queue_mark_sent 标记。参数：project_dir(
+github_issue_close	根据 bug_id -> issue_number 映射，批量关闭 GitHub issue（PUT state=closed）。硬门控——force 必须为 true。通常在 FIST 任务归档/完成后触发。参数：project_dir(必填)、force(必填=true)、issue_numbe
+github_issue_comment	给指定 bug_id 对应的 GitHub issue 追加评论（POST comments API）。硬门控——force 必须为 true。先从队列找到 bug_id 对应的 github_issue_number（bug 必须已经 flush 成功过），再执行 comment curl。参数：
+github_issue_webhook_parse	解析 GitHub issue comment webhook payload，提取 @fist-bot 指令。纯计算正则匹配，零 LLM、零网络。支持指令：'@fist-bot reopen <task_id>' / '@fist-bot challenge' / '@fist-bot close
+github_queue_mark_sent	标记一批 bug_id 已同步至 GitHub issue（写入 sent_at + github_issue_number）。curl 执行成功后调此工具回写队列，幂等安全。参数：project_dir(必填)、bug_ids(必填数组)、sent_at(可选，缺省自动回退)、issue_numb
+github_queue_status	查看待同步 GitHub issue 队列状态。返回 {total, pending, sent, oldest_pending_ts, by_severity, pending_list, path}。纯计算读 JSONL 队列，不碰网络。**两栏不许混读**（BUG-74 同族，实测撞过）：to
+goal_drift_check	全局目标校验（R100，goal drift arXiv 2505.02709 / Repetitiveness Rate 2603.12710 / IntentCUA 2602.17049 / HiMAP ICML2026 蒸馏）：**advisory 判据，不是打回硬门**（BUG-25 标定，
+heal	no_signal 看护（AO watchdog）：心跳超时静默的活跃任务（执行中/已领取/拆分中）回滚为已领取待重派。参数：timeout_sec(可选默认600)、namespace(可选)。**namespace 不传时扫全库所有命名空间**（BUG-81：多 ns 共用同一个 fist-mb
+health_check	四金信号健康巡检（R102，Google SRE Book 2016「Monitoring Distributed Systems」蒸馏）：project_health 从「一个等级」升级为「四个信号」——latency（最近已完成任务完成周期 created_at→updated_at 秒，p50
+heartbeat	活动信号上报（AO ActivityState）：任务执行前/执行中周期性上报，超时静默将触发 heal 回滚。参数：task_id、signal(可选默认 active)。
+issue_scan	规则驱动源码扫描（打磨收尾引入的自驱能力）：递归收集 {dir} 下 .mbt 文件，用内建 10 条 MoonBit 高危规则逐行匹配（除零/空数组下标/无保护 unwrap/unsafe_get/无保护整除/substring 越界/ignore 丢错/字符串下标/潜在溢出/空集合单例），产出 
+laya_decide	Laya 决策工具（自动探测 + 确定性回退）：用 Laya（Python ML 决策模型）对任务/文本快速分类并给出「该用哪些功能机制 + 建议拆分数」决策；**机器无 Laya 或探测失败时，自动降级到内建规则式决策分支**（laya_route 纯计算：按任务描述关键词对机制族打分选最匹配 f
+list	列出任务，可按状态与命名空间过滤。参数：status(可选，中文状态名)、namespace(可选，按命名空间过滤；不传则列出全库所有命名空间)。
+loop_create	创建组合环（Phase 6 组合环编排层）：给定环名 + steps 数组或预设名（fix-iterate/build-verify/full-iterate），创建并注册到进程内 LoopRegistry。
+loop_status	查询组合环状态（Phase 6）。无 name 参数时列出所有已注册环的摘要；有 name 参数时返回单个环完整 JSON。
+loop_tick	推进一环（Phase 6）：从 LoopRegistry 取出当前 PipelineLoop，调 loop_tick 纯函数推进，更新 registry，返回 LoopTickResult JSON（含 next_mode / should_stop / stop_reason / loop_aft
+memory_consolidate	自我记忆·收敛写回：verify 通过后把交付物/结论收敛写回 memory/{kind}.md（kind 缺省 target；thinking 为 append-only 带时间戳，其余覆盖写）。参数：project_dir(必填)、task_id(必填)、kind(可选默认 target)、co
+memory_gc	自我记忆·上限+软降权归档（不硬删）：超 max_chars 时把 memory/{kind}.md 末尾（老人）条目移入 memory/archive/ 归档保留，正文只保留最新 max_chars 个字符。kind 缺省对四件套全部处理。参数：project_dir(必填)、kind(可选)、m
+memory_link	自我记忆·A-Mem 式关联：在 memory/links.md 追加一条 `from -> to  note` 关联记录（不存在则创建），供 plan/claim 前检索注入。参数：project_dir(必填)、from(必填)、to(必填)、note(可选)。返回 {linked, from,
+mode_list	返回 6 种自驱编程开发模式的完整信息（mode / name / description / constraints / template_path / forbidden_tools）。纯计算只读，供 AI 选择模式。
+mode_templates	检查 templates/pipeline_mode_*.md 全部存在性，返回 {templates:{advance:true,...}, missing:[...]}。mode 参数预检用。
+model_route	模型路由决策（免费优先 + 达阈值切付费 + 每模型 5h 滚动窗口）。纯决策来自 src/router（确定性、可单测），用量状态落盘 {project_dir}/memory/model-router-{ns}.json 跨进程复现。**时间戳由服务端盖章，不接受调用方注入 now**（BUG-
+model_router_reset	清模型路由窗口：把所有模型的 used 与 window_start 归零（等价于'这 5 小时重新开始'）。hard=true 时连当前档位/轮询游标/切换计数一起复位。参数：project_dir(必填)、namespace(可选)、hard(可选默认 false)。
+model_router_status	查当前模型路由状态（每模型 used/limit/占比/是否超阈值 + 当前档位 + 切换次数 + 状态文件路径与是否存在）。只读：不改配额不落盘。参数：project_dir(必填)、namespace(可选默认 default)。
+omega_result_verify	Omega 强验证·验证者复验成果：执行者完成后，复验成果与语料是否达标。verdict=pass 达标（可提交验收），其它值打回重做；超过 max_rounds 自动升级人工裁决。参数：task_id、reviewer、verdict、reason、max_rounds。
+omega_spec_create	Omega 强验证·语料创建者：为已开启强验证的任务创建本轮语料，并真正持久化写入 specs 表。参数：task_id、author 语料创建者(默认 spec_author)、content 语料内容(必填)、max_rounds 打回上限(默认3，最大10)。
+omega_spec_review	Omega 强验证·验证者审语料：审核本轮语料。verdict=approve 通过（放行执行），其它值视为打回重做；打回次数超过 max_rounds 自动升级人工裁决，禁止死循环。参数：task_id、reviewer 验证者(默认 verifier)、verdict、reason 审核意见、m
+omega_status	Omega 强验证状态查询：返回该任务是否开启强验证、语料/复验轮次、打回次数、是否已升级人工。参数：task_id。
+omega_verify	批量验证 spec JSON：schema + fingerprint 校验，accuracy < 100% 一票否决。参数：specs(JSON数组，每项 {file_name, content})。
+omega_verify_fix	对失败 spec 做根因分类 → 定向修复 → 回归验证（3 轮循环）。参数：specs(JSON数组，每项 {file_name, content})、max_rounds(可选默认3)。
+output_validate	产出物验证（Did it work? 证据梯 L4 硬门）：按 artifacts 描述的交付产物做确定性验证——文件存在？非空？invariant 成立？外部 run_check 结果 ok？报告不是证据，只有交付产物的实际状态才能证明工作发生了。任一 artifact 失败即 verdict=f
+pause	暂停任务（任意活跃状态 -> 已暂停）。参数：task_id。
+phi_accrual	Phi Accrual 概率式故障检测（R89，Hayashibara 2004 经典算法）：按心跳间隔历史分布算怀疑度 φ=-log10(P(心跳晚于 elapsed 到达))，替代固定 timeout——窗口内间隔均值 μ + 标准差 σ 建模（σ≈0 回退指数分布；|z|≥3 用尾部渐近展开保
+pipeline_tick	提示词流水线状态机单入口（仅用于定时任务/无人值守命名空间，不用于人工指挥流程）：以 project_dir/currentState.txt 为唯一状态源，按四分支推进——空闲(Creating/Closed)生成新提示词、提示词已落盘(Pending)发布根任务、执行中(Running)缺报告且
+plan	对指定任务拆分生成一层子任务（非原子任务才可拆）。参数：task_id 任务id、split_n 拆分数量(默认3)、by 执行者、inject 可选逗号分隔的档案资产关键词(命中则把资产 code/note 追加到返回 injected_assets)。
+plan_revise	反馈驱动的计划修订（R98，ReAct arXiv 2210.03629 / CoPAL arXiv 2310.07263 蒸馏）：把「拆完即弃」升级为「执行中持续修订」——给定根任务及子任务执行反馈，计算计划三分：keep（已证有效、承诺保留）/ rework（失败或其依赖链受牵连，需返工，控级联
+progress_gate	进度预算路由门控（R88，PROGROUTER arXiv 2608.25992 蒸馏）：对任务子树按已消耗预算(难度权重 易/中/难→1/2/3，自动估算或手动注入 spent) 与 完成进度(已完成+已归档/子树任务数) 做双路径剩余成本预测——线性=燃尽率×剩余工作量、保守=1.2×线性，元门
+project_health	项目健康卡（单次调用看全项目健康）：返回 { version, grade:empty/attention/stalled/healthy, total_tasks, in_flight(执行中+已领取+拆分中), ready(待领取), done(已完成), done_no_artifact, d
+project_standards	AI 项目开发规范（默认内置 5 条 + FIST 专项 5 条）。纯计算、零依赖，只**下发清单**、不扫描文件也不修改文档（要扫描请用 issue_scan / check_doc_surface.py）。规范性正文真源 = AI-DEVELOPMENT-STANDARD.md，本工具是它的机器
+publish	发布根任务（仅限人类指挥官）。参数：project_dir 项目目录、description 任务描述、namespace 命名空间(默认 default)、created_by 创建者身份(默认 human_steward)。返回 {task_id, namespace, message}，其中 
+publish_parallel	并行追加独立根任务（不要求命名空间为空、不续轮不归档）：在已有任务的命名空间追加新的独立根任务，供自驱/定时命名空间连续发布多根使用。参数：project_dir、description(必填)、namespace(必填，非 default)、created_by(默认 selfdrive)。
+reject	验收拒绝（待验收 -> 已打回）。参数：task_id、reason 打回原因、by 操作者。
+reopen_task	重开/重派任务：任意非归档任务回滚为已领取（M4 heal/运维重派用）。参数：task_id。
+report_bug	上报一个运行时 bug：追加到 {project_dir}/memory/bugs.md（OPEN 状态账本）。**注意：** project_dir 必须是**相对 server 进程 cwd** 的相对路径（拒绝绝对路径/盘符/..）。返回值含 resolved_path（绝对 + normal
+reserve_check	查询某工作作用域是否可编辑（空闲可用）。参数：scope。
+reserve_release	释放自己的工作作用域（仅持有者有效）。参数：scope、agent。
+reserve_scope	预订一个工作作用域（文件/目录/资源）防多 agent 并发编辑冲突。若作用域空闲（未被他人活体预订）则由本 agent 占据，否则返回持有者。TTL 由 ttl_until(ISO-8601 未来时间戳串)给定；到时自动视为可让渡。参数：scope、agent、ttl_until(必)。
+resume	恢复任务（已暂停 -> 已领取）。参数：task_id。
+retry	打回后重试（已打回 -> 执行中）。参数：task_id。
+run_check	外部判据检查（**宿主命令执行能力**：服务端真实 spawn 进程，防自写自测恒绿；请勿暴露给不可信客户端）。自 Round 2 起执行面**默认收紧**（BUG-4 收口，判定在 src/server/run_check_guard.mbt）：① cmd 必须在白名单内——默认只放项目脚本解释器
+saga_register	Saga 补偿登记（R92，durable action log）：多步骤任务链的每个前向步骤成功后，登记其「可补偿动作」（业务逆转描述）——失败时按 LIFO 优雅收尾，而非卡死/整树重来。幂等：同 (namespace, root_task_id, step) 重登记会重置为 pending 并
+saga_repair	Saga 局部补偿（R96，Plan Commitment / scope-aware repair 蒸馏）：给定失败步骤，计算最小补偿切片——失败步骤 + 其依赖下游（任务 depends_on 传递闭包中仍 pending 的步骤，无 task_id 时按注册序保守兜底）——只补偿切片（LIFO
+saga_rollback	Saga 补偿序列（R92）：按 LIFO（严格倒序，后登记先补偿）返回某根任务待补偿步骤序列。mark=true（默认）返回后即标记 done（幂等：重复调用已补偿步骤不再出现，防重复回滚）；mark=false 仅预览不消费。补偿是业务逆转动作，由调用方（指挥官/agent）按 pending 
+schedule	调度预览：根据任务描述自适应计算分级/拆分/成本档/执行器（不落库）。参数：description(必填)、n_files(可选默认1)。
+selfdrive_append	自驱式编程·追加/更新 memory 条目。参数：project_dir(必填)、kind(必填 thinking/product/target/task)、content(必填)、namespace。thinking 为 append-only 流水带时间戳；其余覆盖写。
+selfdrive_dispatch	Marketplace·能力路由自动派单（R32/R33，把 R30/R31 的'路由推荐'落到动作）：先 `task_triage` 取顶部可领取任务，确定所需能力——显式 `want` 优先，否则**从任务描述自动抽取**已注册执行者的能力标签（R33 免手传）——经 `executor_rou
+selfdrive_export_tasks	自驱式编程·从任务库导出任务清单到 task.md（视图覆盖写）。参数：project_dir(必填)、namespace(可选默认 default)。
+selfdrive_get	自驱式编程·读取指定 memory 文件。参数：project_dir(必填)、kind(必填 thinking/product/target/task)、namespace。返回 {exists, content}。
+selfdrive_init	自驱式编程·初始化 memory 四件套（product/target/task/thinking + reviews 目录），幂等不覆盖。参数：project_dir(必填)、namespace(可选默认 default)。
+selfdrive_parse_next_tasks	自驱式编程·纯解析审视报告文本中的 `## Next Tasks` 段（调试/校验用）。参数：content(必填)、max_tasks(可选默认10)。
+selfdrive_pick_next	自驱·按推荐自动取下一单：对指定命名空间取 task_triage 的顶部推荐并认领给 agent（待领取→已领取；能力匹配 want 优先），让无人值守可按能力推荐自推进。复用 triage 排行 + claim，只动一条推荐任务、不动看门狗主流程（零回归）。参数：namespace(可选)、ag
+selfdrive_publish_next	自驱式编程·解析最新审视报告 `## Next Tasks` 段并将待办任务并行发布为同命名空间下独立根任务（幂等，description 内嵌 [review:<file>:<idx>] 标记防重）。参数：project_dir(必填)、namespace(可选默认 default)、max_ta
+selfdrive_review_ready	自驱式编程·审视收口：确认 memory/reviews/ 最新审视报告已落盘并推进已审视轮次（报告先行，无报告拒绝推进）。参数：project_dir(必填)、namespace。
+selfdrive_review_tick	自驱式编程·审视轮判定：Reports/ 报告数 - 已审视轮次 >= review_every 触发审视返回 action=review（附最近报告+memory 摘要），否则返回 idle/no_memory/safe_exit。参数：project_dir(必填)、review_every(可
+status_summary	项目脉冲摘要：返回 { version, total_tasks, by_status:{状态:数量}, done_no_artifact, by_difficulty:{易/中/难/无:数量}, active_namespaces }。by_difficulty 统计待领取任务的难度结构（复用难度
+store_close	关闭指定命名空间（不删除物理库文件）。参数：namespace。
+store_list	列出当前已打开的命名空间及任务数。无参数。
+store_open	打开（或复用）一个命名空间。参数：namespace、data_dir(可选，默认当前目录；**只接受相对 server 进程 cwd 的相对路径**——含 .. / 前导分隔符 / 盘符一律拒。BUG-78：过去 data_dir 原样拼接，指到哪就往哪建 .db，『命名空间物理隔离』形同虚设)、
+submit	提交验收（执行中 -> 待验收）。参数：task_id。
+task_challenge	自进化·Challenger 进阶变体（SAGE 四专家环另一半，与 R12 梯度/R13 Critic 互补）：对一条【已完成/已归档】任务按策略发布上一档『更难变体』—新根任务带 [challenge] 标记 + from 溯源 + 重要度升一档，构成『由易到难』自推进序列，让复杂能力持续上探而
+task_cleanup	归档清理：删除超过保留期的已归档任务。参数：retention_days(可选默认30)。
+task_plan_deep	AO 式递归拆解：对指定任务拆出整棵多层子任务树并写库。参数：task_id 任务id、split_n 每层默认拆分数(默认3)、by 拆解拳长、spec 可选 omega spec JSON(laws 作切割依据、fingerprint 作验收基准)、omega_strong_verify 是否开
+task_triage	下一步该做啥（推荐式挑选 + 能力偏好路由）：对指定命名空间（namespace 缺省全量）把『待领取且依赖已满足』的任务按 能力匹配(want)→优先级(高>中>低)→重要度(高>中>低)→深度(叶可执行单元优先)→id 排出序，并给出一条 suggestion（此刻建议先领哪条及理由），供 ag
+tx_contract	迁移契约检查（R109，Design by Contract 蒸馏：Bertrand Meyer Eiffel 1986/1997 precondition/invariant/postcondition 三件套 + PMAT ch59 work-item 契约先例）：对 (task, action
+verify	验收通过（待验收 -> 已完成，父任务自动上卷）。[gate:required] 任务须先有新鲜通过的 run_check 记录；可选 docs_check 开启「文档即实现」门禁（校验 README/CHANGELOG/reports 存在性与交付物回传五段式，不达标打回）。参数：task_id、
+watchdog_tick	定时任务看门狗编排单入口（推荐仅用于定时任务/无人值守场景，不用于人工指挥流程）：扫描活跃任务，心跳超时则回滚重派；检测到上一轮根任务已完成且提供了 next_description（或可由 meta_prompt_path 读取元提示词）时自动发布下一轮。参数：timeout_sec(可选默认60

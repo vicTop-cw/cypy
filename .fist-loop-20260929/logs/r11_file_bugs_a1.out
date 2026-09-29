@@ -1,0 +1,7 @@
+FILED R11-DIAG-LINE-OFF-BY-ONE | {"bug_id": "BUG-126", "id": "BUG-126", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+FILED R11-CDEF-CLASS-MISPARSE | {"bug_id": "BUG-127", "id": "BUG-127", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+FILED R11-STRUCT-METHOD-NO-SUBST | {"bug_id": "BUG-128", "id": "BUG-128", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+FILED R11-DECLARED-CONSTRAINT-NOT-CHECKED | {"bug_id": "BUG-129", "id": "BUG-129", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+NEW_IDS ["BUG-126", "BUG-127", "BUG-128", "BUG-129"]
+KEYS_PRESENT_AFTER {"R11-DIAG-LINE-OFF-BY-ONE": true, "R11-CDEF-CLASS-MISPARSE": true, "R11-STRUCT-METHOD-NO-SUBST": true, "R11-DECLARED-CONSTRAINT-NOT-CHECKED": true}
+CONCLUSION filed=4 refused=0 new_ids=4 headers=130 unique=129 open_narrow=37 call_log_error_rows=0 tasks_bugs_rows=0

@@ -1,0 +1,137 @@
+#!bin cypy
+# ============================================================
+# agent.cypy — Agent orchestrator with LLM + SQL loop
+# ============================================================
+
+from user import User, RequestContext
+from tool import Tool, ToolContext, ToolResult
+from registry import ToolRegistry
+from components import UiComponent
+from errors import AgentError, MaxIterationsError
+from llm import Llm, LlmMessage, LlmConfig, LlmResponse
+
+struct AgentConfig:
+    # Configuration for agent behavior
+    max_iterations: int
+    temperature: float
+    system_prompt: str
+    enable_streaming: bool
+    llm_config: LlmConfig
+
+    def __init__(self, max_iterations: int = 10, temperature: float = 0.7, system_prompt: str = "", enable_streaming: bool = True, llm_config: LlmConfig = LlmConfig()):
+        self.max_iterations = max_iterations
+        self.temperature = temperature
+        self.system_prompt = system_prompt
+        self.enable_streaming = enable_streaming
+        self.llm_config = llm_config
+
+
+struct AgentMessage:
+    # A single message in the agent conversation
+    role: str
+    content: str
+    tool_name: str
+    tool_result: ToolResult
+
+    def __init__(self, role: str, content: str = "", tool_name: str = "", tool_result: ToolResult = ToolResult.ok("")):
+        self.role = role
+        self.content = content
+        self.tool_name = tool_name
+        self.tool_result = tool_result
+
+
+struct AgentResponse:
+    # Final response from the agent
+    messages: list<AgentMessage>
+    sql: str
+    summary: str
+    success: bool
+    error: str
+    ui_components: list<UiComponent>
+
+    def __init__(self, messages: list<AgentMessage> = [], sql: str = "", summary: str = "", success: bool = True, error: str = "", ui_components: list<UiComponent> = []):
+        self.messages = messages
+        self.sql = sql
+        self.summary = summary
+        self.success = success
+        self.error = error
+        self.ui_components = ui_components
+
+
+struct Agent:
+    # Main agent orchestrator — drives the LLM + SQL + visualization loop
+    tool_registry: ToolRegistry
+    config: AgentConfig
+    _llm: Llm
+    _conversation: list<AgentMessage>
+
+    def __init__(self, tool_registry: ToolRegistry, llm: Llm, config: AgentConfig = AgentConfig()):
+        self.tool_registry = tool_registry
+        self._llm = llm
+        self.config = config
+        self._conversation = []
+
+    def reset(self) -> None:
+        self._conversation = []
+
+    def build_system_prompt(self) -> str:
+        let lines: list<str> = []
+        if self.config.system_prompt:
+            lines.append(self.config.system_prompt)
+        lines.append("You are a helpful data assistant. You can run SQL queries and visualize results.")
+        lines.append("")
+        lines.append("Available tools:")
+        for desc in self.tool_registry.tool_descriptions():
+            lines.append(f"- {desc['name']}: {desc['description']}")
+        return "\n".join(lines)
+
+    def build_tool_context(self, request_context: RequestContext) -> ToolContext:
+        return ToolContext(request_context=request_context, conversation_history=self._history_as_dicts(), system_prompt=self.build_system_prompt())
+
+    def _history_as_dicts(self) -> list<dict<str, str>>:
+        let result: list<dict<str, str>> = []
+        for msg in self._conversation:
+            result.append({"role": msg.role, "content": msg.content})
+        return result
+
+    def add_user_message(self, content: str) -> None:
+        self._conversation.append(AgentMessage(role="user", content=content))
+
+    def add_assistant_message(self, content: str) -> None:
+        self._conversation.append(AgentMessage(role="assistant", content=content))
+
+    def add_tool_result(self, tool_name: str, result: ToolResult) -> None:
+        self._conversation.append(AgentMessage(role="tool", content=result.result_for_llm, tool_name=tool_name, tool_result=result))
+
+    def _check_iteration(self, iteration: int) -> bool:
+        if iteration >= self.config.max_iterations:
+            raise MaxIterationsError(self.config.max_iterations)
+        return True
+
+    def generate_sql(self, question: str, context: str = "") -> str:
+        # Use the LLM to generate SQL from a natural language question
+        return self._llm.generate_sql(question, context, self.config.llm_config)
+
+    def generate_summary(self, question: str, sql: str, data: str) -> str:
+        # Use the LLM to generate a natural language summary of query results
+        return self._llm.generate_summary(question, sql, data, self.config.llm_config)
+
+    def run_sql(self, sql: str, request_context: RequestContext) -> ToolResult:
+        let context: ToolContext = self.build_tool_context(request_context)
+        let args: dict<str, str> = {"sql": sql}
+        return self.tool_registry.execute("run_sql", context, args)
+
+    def ask(self, question: str, request_context: RequestContext) -> AgentResponse:
+        # End-to-end: question -> SQL -> execute -> summary -> response
+        self.add_user_message(question)
+        let sql: str = self.generate_sql(question)
+        self.add_assistant_message(sql)
+        let sql_result: ToolResult = self.run_sql(sql, request_context)
+        self.add_tool_result("run_sql", sql_result)
+        let summary: str = ""
+        if sql_result.success:
+            let summary = self.generate_summary(question, sql, sql_result.result_for_llm)
+            self.add_assistant_message(summary)
+        let components: list<UiComponent> = []
+        components.append(sql_result.ui_component)
+        return AgentResponse(messages=self._conversation, sql=sql, summary=summary, success=sql_result.success, error=sql_result.error, ui_components=components)

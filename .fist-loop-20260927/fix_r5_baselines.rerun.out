@@ -1,0 +1,53 @@
+{
+ "refuse": [],
+ "three_systems_green": [
+  true,
+  true,
+  true
+ ],
+ "pytest": {
+  "rc": 0,
+  "passed": 2119,
+  "failed_sum": 0,
+  "collected_line": null,
+  "tail": [
+   "........................................................................ [ 95%]",
+   "........................................................................ [ 98%]",
+   "...............................                                          [100%]",
+   "2119 passed in 727.03s (0:12:07)"
+  ]
+ },
+ "collect": 2119,
+ "suite": {
+  "Total": 47,
+  "Passed": 47,
+  "Failed": 0,
+  "Skipped": 0
+ },
+ "e2e": {
+  "PASS": 25,
+  "FAIL": 0,
+  "UNREG/RUNFAIL": 0,
+  "WARN": 0
+ },
+ "git": {
+  "head": "17d68b4",
+  "dirty_rows": 180,
+  "deleted_tracked": 10,
+  "staged": 0,
+  "ahead_of_upstream": "1",
+  "worktrees": [
+   "E:/IDEProjects/AI/Cypy",
+   "E:/IDEProjects/AI/_cypy_head_baseline"
+  ],
+  "foreign_worktree_present": true
+ },
+ "radius": {
+  "forbidden_total": 0,
+  "allowed_touched": 123,
+  "window_start": "2026-09-28T08:07:06Z",
+  "measured_at": "2026-09-28T10:33:58+00:00"
+ },
+ "self_checks": "16/16"
+}
+BASELINES_EXIT=0

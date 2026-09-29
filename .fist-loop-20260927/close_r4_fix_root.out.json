@@ -1,0 +1,56 @@
+{
+ "refused": [
+  {
+   "call": "claim",
+   "task_id": "T0r85",
+   "error": "非法迁移: claim 要求状态 [待领取]，当前是 [待验收]"
+  },
+  {
+   "call": "execute",
+   "task_id": "T0r85",
+   "error": "Omega 强验证门禁：任务 [T0r85] 尚未创建语料，请先由语料创建者执行 omega_spec_create"
+  },
+  {
+   "call": "submit",
+   "task_id": "T0r85",
+   "error": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"
+  }
+ ],
+ "root_final": "已归档",
+ "leaves_done": 16,
+ "call_log_rows": 400,
+ "call_log_tally": {
+  "archive": 2,
+  "call_log": 6,
+  "claim": 31,
+  "execute": 29,
+  "get": 36,
+  "laya_decide": 1,
+  "omega_result_verify": 54,
+  "omega_spec_create": 55,
+  "omega_spec_review": 55,
+  "omega_status": 16,
+  "output_validate": 23,
+  "publish": 1,
+  "submit": 29,
+  "task_plan_deep": 1,
+  "verify": 61
+ },
+ "root_output_validate": [
+  {
+   "path": "memory/reviews/20260928.06.15.00.md",
+   "contains": "[selfdrive-fix]",
+   "min_chars": 1500
+  },
+  {
+   "path": ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "contains": "omega_marked",
+   "min_chars": 800
+  },
+  {
+   "path": ".fist-loop-20260927/fix_r4_self_audit.json",
+   "contains": "gates_pass",
+   "min_chars": 800
+  }
+ ]
+}

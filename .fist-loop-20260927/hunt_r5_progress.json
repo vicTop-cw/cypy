@@ -1,0 +1,121 @@
+{
+ "mark": "### R5-寻虫",
+ "block_replaced": true,
+ "prior_block_chars": 3685,
+ "block_chars": 4093,
+ "ring_minutes": 104,
+ "report_sha256": "85933483343615b2b0df27bd5addb8af8b0224549ce2ff68dd5f49fd70a28a23",
+ "self_checks": [
+  {
+   "label": "号段：本环新增的张数与账本现读的尾段能对上（张数与起号都从件里反解，不写死 13/78）",
+   "got": true,
+   "want": true,
+   "why": "账本尾 13 号 [78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90] / 起号反解 78",
+   "ok": true
+  },
+  {
+   "label": "入账件的 ledger_after_max = 账本现读最大值（两路独立）",
+   "got": 90,
+   "want": 90,
+   "why": "件里自报 vs 盘上现读",
+   "ok": true
+  },
+  {
+   "label": "渲染次数按见证件的记录数自比，且门禁表全绿（红行数 0）",
+   "got": [
+    2,
+    2,
+    116,
+    116,
+    0
+   ],
+   "want": [
+    2,
+    2,
+    116,
+    116,
+    0
+   ],
+   "why": "次数=记录数、绿=表行数、红=0；三对都自比",
+   "ok": true
+  },
+  {
+   "label": "§八 失效条数（标题声明 = 渲染后实数）",
+   "got": {
+    "declared": 16,
+    "actual": 16
+   },
+   "want": {
+    "declared": 16,
+    "actual": 16
+   },
+   "why": "见证件已把不等判成红",
+   "ok": true
+  },
+  {
+   "label": "needle 严口径：全部是真键名",
+   "got": 24,
+   "want": 24,
+   "why": "24/24",
+   "ok": true
+  },
+  {
+   "label": "驱动面软账不回升",
+   "got": 0,
+   "want": 0,
+   "why": "硬错 0",
+   "ok": true
+  },
+  {
+   "label": "自证门未过条数为 0",
+   "got": 0,
+   "want": 0,
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "账本基数自证：未闭环 + 已闭环 = 账本现读的 BUG 条目数（分栏不能吞行）",
+   "got": [
+    90,
+    90
+   ],
+   "want": [
+    90,
+    90
+   ],
+   "why": "open=35 closed=55 条目=90",
+   "ok": true
+  },
+  {
+   "label": "取数失败的痕迹不许进正文（None 或孤立的「 — 」都是键路径没解析出来，不是测量值）",
+   "got": [],
+   "want": [],
+   "why": "命中 [] 处",
+   "ok": true
+  },
+  {
+   "label": "转结行的新单号段是反解出来的（号段最大值必须等于账本现读最大值）",
+   "got": true,
+   "want": true,
+   "why": "max_id=90 / 账本现读=[86, 87, 88, 89, 90]",
+   "ok": true
+  },
+  {
+   "label": "写完后本环标记在文件里只有一处",
+   "got": 1,
+   "want": 1,
+   "why": "实得 1 处",
+   "ok": true
+  },
+  {
+   "label": "盘上的本环记录与本次生成的正文逐字相等（重写不是拼接）",
+   "got": true,
+   "want": true,
+   "why": "body 4093 字符 / 覆盖旧块 3685 字符 / replaced=True",
+   "ok": true
+  }
+ ],
+ "self_checks_red": [],
+ "at_utc": "2026-09-28T07:59:44+00:00",
+ "refuse": []
+}

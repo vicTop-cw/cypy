@@ -1,0 +1,171 @@
+{
+ "key": "r3_hunt",
+ "root_task": "T0r69",
+ "assignee": "cypy-hunter",
+ "stage": "R3-寻虫",
+ "forbid": "在本环修产品码或改测试；改 PROJECT-SPEC/SYNTAX 冻结语义；git push/删文件/暂存别人的改动；把没做的写成 done；把子代理主张原样入账；替另一条 lane 的主张签完成",
+ "laws": [
+  {
+   "name": "狩猎面清点与 CLI 对外承诺台账（五目录符号表 + transpile --help 实读旗标集）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r3_scan.json",
+     "transpile_flags",
+     300
+    ],
+    [
+     ".fist-loop-20260927/hunt_r3_scan.json",
+     "transpile_flags",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "定位声明先读后判：每条候选必须带上它自己的文档/状态表原文，自述未实现者按 DESIGN 撤回不占号",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r3_declared.json",
+     "syntax_self_declared",
+     300
+    ],
+    [
+     ".fist-loop-20260927/hunt_r3_declared.json",
+     "syntax_self_declared",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "成对对照确诊：pos 现形 + ctl 不现形两档齐全才算 CONFIRMED，缺一档一律 UNSURE 不入账",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r3_confirm.json",
+     "all_confirmed_pairs_ok",
+     300
+    ],
+    [
+     ".fist-loop-20260927/hunt_r3_confirm.json",
+     "all_confirmed_pairs_ok",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "一键复现三态退出码台账：0=现形 / 1=不现形 / 2=夹具坏，入账件里承诺的复跑命令必须真跑过",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r3_repro.json",
+     "all_confirmed_rc0",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "子代理主张逐条亲测对账，并把我自己两版探针的误判单独成栏（假绿与假红都要留字）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r3_subagent_claims.json",
+     "subagent_confirmed_by_me",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "只确诊入账（BUG-55 起）：report_bug 回读 + 账本号增量必须等于入账条数，不在本环修产品码",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r3_filed.json",
+     "rpc_bug_id",
+     300
+    ],
+    [
+     ".fist-loop-20260927/hunt_r3_filed.json",
+     "rpc_bug_id",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "三套判据体系同一时刻复算且只升不降，git 红线 HEAD 未动，本环改动半径应为空",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r3_baselines.json",
+     "1903 passed",
+     300
+    ],
+    [
+     ".fist-loop-20260927/hunt_r3_baselines.json",
+     "1903 passed",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "报告与账本同步：三向对照（md 条目 / FIXED 段 / sqlite bug 任务）+ 被拒原文逐字进报告",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r3_ledger3way.json",
+     "entries",
+     300
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "狩猎面清点：五目录符号台账与 CLI 承诺旗标",
+   ".fist-loop-20260927/hunt_r3_scan.json",
+   "transpile_flags"
+  ],
+  [
+   "定位声明清点：SYNTAX 状态表与模块 docstring 自述",
+   ".fist-loop-20260927/hunt_r3_declared.json",
+   "syntax_self_declared"
+  ],
+  [
+   "成对确诊探针：pos 现形与 ctl 不现形两档",
+   ".fist-loop-20260927/hunt_r3_confirm.json",
+   "all_confirmed_pairs_ok"
+  ],
+  [
+   "一键复现件：三态退出码逐条实跑",
+   ".fist-loop-20260927/hunt_r3_repro.json",
+   "all_confirmed_rc0"
+  ],
+  [
+   "子代理主张对账：亲测结论与自探针误判",
+   ".fist-loop-20260927/hunt_r3_subagent_claims.json",
+   "subagent_confirmed_by_me"
+  ],
+  [
+   "入账与撤回：BUG-55..60 落地、DESIGN/REJECTED 点名",
+   ".fist-loop-20260927/hunt_r3_filed.json",
+   "rpc_bug_id"
+  ],
+  [
+   "基线与红线：三套体系同一时刻 + 半径为空",
+   ".fist-loop-20260927/hunt_r3_baselines.json",
+   "1903 passed"
+  ],
+  [
+   "收口与账本：三向对照 + 报告逐字被拒",
+   ".fist-loop-20260927/hunt_r3_ledger3way.json",
+   "entries"
+  ]
+ ],
+ "root_deliverable": "R3-寻虫 交付：{REPORT}；狩猎面=声明面矛盾（transformer/analyzer/project/cypy_bridge/CLI 旗标），先清点 32 档符号台账与 `transpile --help` 实读旗标集，再对 8 条候选逐条读其定位声明、跑成对对照与一键复现（三态退出码）。确诊 6 条并入账 BUG-55..60（泛型注册恒空 / transpile 四旗标无人读 / CUnion 文档示例即抛 / realloc 注解与返回值互斥 / 环内编译序随哈希种子漂移 / 构建块规则 2 未实现）；撤回 2 条：C2 comptime 默认值（SYNTAX/19 自述『未实现』⇒ DESIGN，不占号）、C7 死码主张（AST 口径实测不成立 ⇒ REJECTED）。本环改动半径为空（按 mtime 正面测出），三套基线 1903/47/25 未回落，HEAD 仍 17d68b4、暂存 0",
+ "root_marker": "[selfdrive-hunt]",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/hunt_r3_filed.json",
+   "rpc_bug_id",
+   300
+  ],
+  [
+   ".fist-loop-20260927/hunt_r3_repro.json",
+   "all_confirmed_rc0",
+   300
+  ]
+ ],
+ "root_verify_reason": "六条入账缺陷都有：与它矛盾的那句声明的 file:line、pos/ctl 两条判据实测、可一键复跑的退出码三态命令、以及『什么现象不算证明』；两条撤回各给理由（一条撞自述未实现、一条被 AST 口径推翻）；三套基线当场复算未回落且本环半径为空"
+}

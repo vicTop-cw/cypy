@@ -1,0 +1,25 @@
+{
+ "rc_at_check": null,
+ "banner_seen": true,
+ "budget_s": 30,
+ "events": {
+  "modify_event_line": true,
+  "modify_elapsed_s": 0.82,
+  "add_produced_or_reloaded": true,
+  "add_elapsed_s": 6.85
+ },
+ "outputs_in_out_dir": [],
+ "log_lines_total": 18,
+ "grep": {
+  "file_changed": 3,
+  "successfully_reloaded": 2,
+  "failed_to_reload": 0,
+  "monitor_found": true,
+  "callback_error": 0,
+  "traceback": 0
+ },
+ "monitor_found_line": "[CypyFileMonitor] Found 1 Cypy files to monitor",
+ "tail": "============================================================\n  Cypy Hot Reload Development Server\n============================================================\n\nWatching directory: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\nOutput directory: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\out\nDebounce delay: 0.2s\n\nPress Ctrl+C to stop\n\n[CypyFileMonitor] Found 1 Cypy files to monitor\n[CypyFileMonitor] Started monitoring 1 directories\n[HotReload] Engine started, monitoring 1 directories\n[HotReload] File changed: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\a.cypy\n[HotReload] Affected modules: {'a'}\n[HotReload] File changed: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\a.cypy\n[HotReload] Affected modules: {'a'}\n[HotReload] Successfully reloaded: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\a.cypy\n[HotReload] File changed: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\b.cypy\n[HotReload] Affected modules: {'b'}\n[HotReload] Successfully reloaded: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\r2advance\\src\\a.cypy\n",
+ "rc_final_before_terminate": null,
+ "rc_after_terminate": 1
+}

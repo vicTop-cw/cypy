@@ -1,0 +1,65 @@
+{
+ "refuse": [],
+ "full_tree": {
+  "rc": 0,
+  "failed": [],
+  "passed": [
+   "test_bug_adv1_control_no_cause_raise_unchanged",
+   "test_bug_adv1_raise_from_keeps_cause_in_emit",
+   "test_bug_adv1_runtime_chain_visible_at_cli",
+   "test_bug_adv2_control_plain_let_still_works",
+   "test_bug_adv2_let_and_bare_forms_emit_identically",
+   "test_bug_adv2_let_build_block_form_parses"
+  ],
+  "collected": 6,
+  "line": "============================== 6 passed in 7.36s =============================="
+ },
+ "reverts": [
+  {
+   "who": "ADV-1",
+   "red_locks": [
+    "test_bug_adv1_raise_from_keeps_cause_in_emit",
+    "test_bug_adv1_runtime_chain_visible_at_cli"
+   ],
+   "mixed_cause_with_other": [],
+   "tree_result": {
+    "rc": 1,
+    "failed": [
+     "test_bug_adv1_raise_from_keeps_cause_in_emit",
+     "test_bug_adv1_runtime_chain_visible_at_cli"
+    ],
+    "passed": [
+     "test_bug_adv1_control_no_cause_raise_unchanged",
+     "test_bug_adv2_control_plain_let_still_works",
+     "test_bug_adv2_let_and_bare_forms_emit_identically",
+     "test_bug_adv2_let_build_block_form_parses"
+    ],
+    "collected": 6,
+    "line": "========================= 2 failed, 4 passed in 7.19s ========================="
+   }
+  },
+  {
+   "who": "ADV-2",
+   "red_locks": [
+    "test_bug_adv2_let_build_block_form_parses",
+    "test_bug_adv2_let_and_bare_forms_emit_identically"
+   ],
+   "mixed_cause_with_other": [],
+   "tree_result": {
+    "rc": 1,
+    "failed": [
+     "test_bug_adv2_let_and_bare_forms_emit_identically",
+     "test_bug_adv2_let_build_block_form_parses"
+    ],
+    "passed": [
+     "test_bug_adv1_control_no_cause_raise_unchanged",
+     "test_bug_adv1_raise_from_keeps_cause_in_emit",
+     "test_bug_adv1_runtime_chain_visible_at_cli",
+     "test_bug_adv2_control_plain_let_still_works"
+    ],
+    "collected": 6,
+    "line": "========================= 2 failed, 4 passed in 7.90s ========================="
+   }
+  }
+ ]
+}

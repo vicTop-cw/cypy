@@ -1,0 +1,7 @@
+struct Point:
+    x: int
+
+    def shifted(dx: int) -> int:
+        return self.x + dx
+
+print(Point(x=1).shifted(2))

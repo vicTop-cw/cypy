@@ -1,0 +1,275 @@
+{
+ "started_z": "2026-09-29T05:41:43Z",
+ "nodes": {
+  "T0r113": {
+   "before": "拆分中",
+   "execute": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r113] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+   "submit": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+   "after": "拆分中"
+  },
+  "T0r113.1": {
+   "before": "待验收",
+   "after": "已完成"
+  },
+  "T0r113.2": {
+   "before": "待验收",
+   "after": "已完成"
+  },
+  "T0r113.3": {
+   "before": "拆分中",
+   "execute": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r113.3] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+   "submit": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+   "after": "拆分中"
+  },
+  "T0r113.4": {
+   "before": "拆分中",
+   "execute": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r113.4] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+   "submit": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+   "after": "拆分中"
+  },
+  "T0r113.5": {
+   "before": "待验收",
+   "after": "已完成"
+  },
+  "T0r113.3.1": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r113.3.2": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r113.4.1": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r113.4.2": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112": {
+   "before": "拆分中",
+   "execute": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+   "submit": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+   "after": "拆分中"
+  },
+  "T0r112.1": {
+   "before": "待验收",
+   "after": "已完成"
+  },
+  "T0r112.2": {
+   "before": "待验收",
+   "after": "已完成"
+  },
+  "T0r112.3": {
+   "before": "拆分中",
+   "execute": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112.3] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+   "submit": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+   "after": "拆分中"
+  },
+  "T0r112.4": {
+   "before": "拆分中",
+   "execute": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112.4] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+   "submit": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+   "after": "拆分中"
+  },
+  "T0r112.5": {
+   "before": "拆分中",
+   "execute": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112.5] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+   "submit": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+   "after": "拆分中"
+  },
+  "T0r112.6": {
+   "before": "拆分中",
+   "execute": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112.6] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+   "submit": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+   "after": "拆分中"
+  },
+  "T0r112.7": {
+   "before": "拆分中",
+   "execute": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112.7] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+   "submit": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+   "after": "拆分中"
+  },
+  "T0r112.3.1": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.3.2": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.3.3": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.4.1": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.4.2": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.4.3": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.5.1": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.5.2": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.5.3": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.6.1": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.6.2": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.6.3": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.7.1": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.7.2": {
+   "before": "待领取",
+   "after": "待领取"
+  },
+  "T0r112.7.3": {
+   "before": "待领取",
+   "after": "待领取"
+  }
+ },
+ "refusals": [
+  {
+   "node": "T0r113",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r113] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}"
+  },
+  {
+   "node": "T0r113",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}"
+  },
+  {
+   "node": "T0r113.3",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r113.3] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}"
+  },
+  {
+   "node": "T0r113.3",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}"
+  },
+  {
+   "node": "T0r113.4",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r113.4] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}"
+  },
+  {
+   "node": "T0r113.4",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}"
+  },
+  {
+   "node": "T0r112",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}"
+  },
+  {
+   "node": "T0r112",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}"
+  },
+  {
+   "node": "T0r112.3",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112.3] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}"
+  },
+  {
+   "node": "T0r112.3",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}"
+  },
+  {
+   "node": "T0r112.4",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112.4] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}"
+  },
+  {
+   "node": "T0r112.4",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}"
+  },
+  {
+   "node": "T0r112.5",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112.5] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}"
+  },
+  {
+   "node": "T0r112.5",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}"
+  },
+  {
+   "node": "T0r112.6",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112.6] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}"
+  },
+  {
+   "node": "T0r112.6",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}"
+  },
+  {
+   "node": "T0r112.7",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r112.7] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}"
+  },
+  {
+   "node": "T0r112.7",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}"
+  }
+ ],
+ "gates": {
+  "T0r113": {
+   "report": "T0r113-cypy-selfdrive-r7-report.md",
+   "report_on_disk": true,
+   "report_bytes": 16939,
+   "pending_leaves": 4
+  },
+  "T0r112": {
+   "report": "T0r112-cypy-selfdrive-r6-report.md",
+   "report_on_disk": true,
+   "report_bytes": 18120,
+   "pending_leaves": 15
+  }
+ },
+ "rollup": {
+  "T0r113": {
+   "已完成": 14,
+   "待领取": 4,
+   "拆分中": 3
+  },
+  "T0r112": {
+   "已完成": 8,
+   "待领取": 15,
+   "拆分中": 6
+  }
+ },
+ "call_log_error_rows": 0,
+ "calls": 38
+}

@@ -1,0 +1,5 @@
+def main() -> int:
+    let a: int = 0b1010
+    let b: int = 0b1100
+    print(a ^ b)
+    return 0

@@ -1,0 +1,174 @@
+{
+ "key": "r3_fix",
+ "round": "R3",
+ "stage": "修复",
+ "filed_in": "R3-寻虫（BUG-55..BUG-60，T0r63..T0r68）",
+ "refuse": [],
+ "per_bug": [
+  {
+   "bug": "BUG-55",
+   "task_id": "T0r63",
+   "claim": "generic_transformer 读 type_params，parser 的泛型节点带的是 generic_params ⇒ 泛型收集恒为空",
+   "declared_face": "cypyc/transformer/generic_transformer.py:5『注册泛型参数』",
+   "chosen_fix": "_collect_generics 同时认 generic_params 与 type_params（前者是 FuncDef/StructDef 的叫法，后者是 DuckDef 的叫法，两族都得收）",
+   "rejected_alternative": "把 parser 的属性改名成 type_params：会撞 SYNTAX/11-generics 的既有语义面与 3 个 analyzer + 1 个 codegen 读取点，改一处牵四文件",
+   "files": [
+    "cypyc/transformer/generic_transformer.py"
+   ],
+   "locks": [
+    "test_bug55_generic_params_nodes_are_collected",
+    "test_bug55_duck_def_type_params_still_collected"
+   ],
+   "repro": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C1",
+   "flipped": true,
+   "ctl_locks": [
+    "test_bug55_duck_def_type_params_still_collected"
+   ],
+   "pos_locks": [
+    "test_bug55_generic_params_nodes_are_collected"
+   ]
+  },
+  {
+   "bug": "BUG-56",
+   "task_id": "T0r64",
+   "claim": "cypyc transpile 的 --check-only/--emit-ast/--generate-setup/--emit-cython 只印给用户，run_transpile 一个都不读",
+   "declared_face": "docs/USAGE.md:66-70 与 `transpile --help`；四条承诺逐字可对照",
+   "chosen_fix": "在 run_transpile 里落地四个旗标：check_only 走 CypyHook._parse_and_analyze 且不产码；emit_ast 打印解析后的节点树；emit_cython 打印 .pyx 文本；generate_setup 用 SetupGenerator 在产物目录写 setup.py。bridge 模式下 emit_cython 明确回话『这里产的是 C』而不是静默",
+   "rejected_alternative": "把四个旗标从 CLI 上摘掉：手册与 --help 已对外承诺，摘旗是缩对外接口面，且违反指挥官裁定「接线而不是砍 CLI」",
+   "files": [
+    "cypyc/cli.py"
+   ],
+   "locks": [
+    "test_bug56_check_only_reports_and_generates_nothing",
+    "test_bug56_check_only_fails_on_broken_source",
+    "test_bug56_emit_ast_prints_parsed_nodes",
+    "test_bug56_emit_cython_prints_cython_code",
+    "test_bug56_generate_setup_writes_buildable_script",
+    "test_bug56_control_plain_transpile_writes_no_setup"
+   ],
+   "repro": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C3",
+   "flipped": true,
+   "extra_measurement": "生成的 setup.py 实测能走完 build_ext 产出 .pyd（2026-09-28 00:08 本地，产物在 .fist-loop-20260927/tmp_r3/out）",
+   "ctl_locks": [
+    "test_bug56_control_plain_transpile_writes_no_setup"
+   ],
+   "pos_locks": [
+    "test_bug56_check_only_fails_on_broken_source",
+    "test_bug56_check_only_reports_and_generates_nothing",
+    "test_bug56_emit_ast_prints_parsed_nodes",
+    "test_bug56_emit_cython_prints_cython_code",
+    "test_bug56_generate_setup_writes_buildable_script"
+   ]
+  },
+  {
+   "bug": "BUG-57",
+   "task_id": "T0r65",
+   "claim": "CUnion/union 的 docstring 示例 CUnion(int, float) 一跑就抛 TypeError（对 Python 内建类型取 ctypes.sizeof）",
+   "declared_face": "cypy_bridge/union.py:23-31 与 :179 的示例文本；同文件 __init__ 自述『可以是ctypes类型或类型名称字符串』",
+   "chosen_fix": "示例改成文档自己承诺的两种可用形状（ctypes 类型 / C 类型名字符串）；对 Python 内建类型给 UnionTypeError 并写清可接受形状，不再让 ctypes 抛『this type has no size』这种看不懂的错",
+   "rejected_alternative": "把 int/float 隐式映射到 c_int/c_double：Cython 的 int/float 宽度（32 位）与 CPython 的 int（64 位）不同，选哪个都是新的语义决定，SYNTAX/26 未对 bridge 侧 CUnion 定宽 ⇒ 属裁决面，本轮不代作",
+   "files": [
+    "cypy_bridge/union.py"
+   ],
+   "locks": [
+    "test_bug57_documented_member_shapes_work",
+    "test_bug57_builtin_member_type_is_diagnosed",
+    "test_bug57_union_docstrings_advertise_only_runnable_shapes"
+   ],
+   "repro": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C4",
+   "flipped": true,
+   "ctl_locks": [
+    "test_bug57_documented_member_shapes_work"
+   ],
+   "pos_locks": [
+    "test_bug57_builtin_member_type_is_diagnosed",
+    "test_bug57_union_docstrings_advertise_only_runnable_shapes"
+   ]
+  },
+  {
+   "bug": "BUG-58",
+   "task_id": "T0r66",
+   "claim": "realloc(ptr, 0) 先 free 再 return None，而签名是 -> int、文档只说返回地址",
+   "declared_face": "cypy_bridge/memory.py:195-216",
+   "chosen_fix": "注解改 Optional[int]，docstring 写明 size<=0 走 C 的 realloc(p,0) 口径（释放并返回 None），并说明它与 malloc(0) 抛 MemoryError 不是同一条规则",
+   "rejected_alternative": "改成返回 0 或抛 MemoryError：既有 tests/test_bridge_library.py::test_realloc_zero_size 断言 assertIsNone(result)，改返回值必须弱化/删除既有测试 ⇒ 撞红线。行为半边的不对称留裁决",
+   "files": [
+    "cypy_bridge/memory.py"
+   ],
+   "locks": [
+    "test_bug58_realloc_annotation_matches_return_shape",
+    "test_bug58_realloc_zero_size_still_returns_none_and_frees",
+    "test_bug58_control_malloc_zero_still_raises"
+   ],
+   "repro": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C5",
+   "flipped": false,
+   "still_red_reason": "C5 的现形判据钉的是『返回 None』这一半，那半边被既有测试钉住；本环只消除注解/文档与返回值的互斥，observed 里 annotation 已从 int 变 Optional",
+   "adjudication_left": "realloc(p,0) 是否应改为返回 0（并与 malloc(0) 对称）——若改，须同轮改既有测试并记为口径变更",
+   "ctl_locks": [
+    "test_bug58_control_malloc_zero_still_raises",
+    "test_bug58_realloc_zero_size_still_returns_none_and_frees"
+   ],
+   "pos_locks": [
+    "test_bug58_realloc_annotation_matches_return_shape"
+   ]
+  },
+  {
+   "bug": "BUG-59",
+   "task_id": "T0r67",
+   "claim": "get_compilation_order 把环内模块塞进 set 再 extend ⇒ 环存在时推荐编译序随进程哈希种子变化",
+   "declared_face": "cypyc/project/module_dependency_graph.py:200-212（文档只说『跳过循环中的模块』）",
+   "chosen_fix": "extend(sorted(cycle_modules)) ⇒ 同一张图在任何 PYTHONHASHSEED 下给同一推荐序，环内模块仍排在最后且按名字定序",
+   "rejected_alternative": "只改文档补一句『环内顺序不定』：把不可重现构建写成规格，等于放弃 topological_sort 那半边已经保证的确定性",
+   "files": [
+    "cypyc/project/module_dependency_graph.py"
+   ],
+   "locks": [
+    "test_bug59_compilation_order_stable_across_hash_seeds"
+   ],
+   "repro": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C6",
+   "flipped": true,
+   "ctl_locks": [],
+   "pos_locks": [
+    "test_bug59_compilation_order_stable_across_hash_seeds"
+   ],
+   "paired_inside": "单条锁里成对：同一断言既查环内模块按名字排在最后（pos），又查纯无环图仍给 z,y,x 的确定序（ctl）"
+  },
+  {
+   "bug": "BUG-60",
+   "task_id": "T0r68",
+   "claim": "BuildBlockChecker 的 docstring 规则 2（指针语法只能在构建块内部使用）没有实现",
+   "declared_face": "cypyc/analyzer/build_block_checker.py:5-6 对 :75-84",
+   "chosen_fix": "规则 2 按 SYNTAX/04-pointer-types.md『指针使用限制』重写：指针声明的合法位置是函数作用域，构建块只是其中一种；并写明指针寻址合法性/所有权检查在 pointer_checker，本模块不重复把关",
+   "rejected_alternative": "补实现（块外指针就报错）：会打断仓库里 36 处 `: *t` 的合法写法，且与冻结层 SYNTAX/04 直接冲突——冻结语义优先于模块 docstring",
+   "files": [
+    "cypyc/analyzer/build_block_checker.py"
+   ],
+   "locks": [
+    "test_bug60_docstring_rule2_aligns_with_frozen_syntax",
+    "test_bug60_control_other_rules_still_enforced"
+   ],
+   "repro": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C8",
+   "flipped": false,
+   "still_red_reason": "C8 的现形判据是『块外指针不报错』，而按 SYNTAX/04 那正是期望行为：入账主张里的『要么补实现』半边经冻结层核对后不成立，只有 docstring 那半边是真缺陷",
+   "adjudication_left": "是否把『结构体字段不能是指针』这条 SYNTAX 限制落成检查（本环未做）",
+   "ctl_locks": [
+    "test_bug60_control_other_rules_still_enforced"
+   ],
+   "pos_locks": [
+    "test_bug60_docstring_rule2_aligns_with_frozen_syntax"
+   ]
+  }
+ ],
+ "locks_total": 17,
+ "pos_total": 11,
+ "ctl_total": 6,
+ "derived": {
+  "task_ids_match_filed": true,
+  "all_have_rejected_alternative": true,
+  "all_have_declared_face": true,
+  "all_have_pos_lock": true,
+  "all_paired": true,
+  "flip_flags_match_evidence": true,
+  "rejected_alternative_min_chars": 24
+ }
+}

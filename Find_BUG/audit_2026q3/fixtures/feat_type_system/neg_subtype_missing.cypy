@@ -1,0 +1,8 @@
+# 负例 N3：名义子类型声明。规定（SYNTAX/33 S-1）必须解析出 SubtypeDef 并给出
+# Meter -> float 隐式、float -> Meter 需 as Meter；今天是
+# "Unexpected token SUBTYPE at 1:15"（<: token 在 lexer.py:32/786 已存在，parser 从不消费）。
+subtype Meter <: float
+
+let v: float = 1.5
+let m: Meter = v
+print(m)

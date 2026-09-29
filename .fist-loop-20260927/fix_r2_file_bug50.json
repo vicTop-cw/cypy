@@ -1,0 +1,81 @@
+{
+ "filed": [
+  {
+   "title": "操作者把两档存量未格式化的产品文件交给 black 整档重写，改动不可回滚且淹没真实 diff",
+   "resp": {
+    "bug_id": "BUG-50",
+    "id": "BUG-50",
+    "status": "OPEN",
+    "path": "./memory/bugs.md",
+    "resolved_path": ".",
+    "project_dir": ".",
+    "task_namespace": ""
+   }
+  },
+  {
+   "title": "BUG-39 的顶层 return 守卫首版吃掉宏体/宏展开片段里的 return，全量 pytes",
+   "resp": {
+    "bug_id": "BUG-51",
+    "id": "BUG-51",
+    "status": "OPEN",
+    "path": "./memory/bugs.md",
+    "resolved_path": ".",
+    "project_dir": ".",
+    "task_namespace": ""
+   }
+  }
+ ],
+ "tail": [
+  "BUG-1|OPEN|[cache] cypy_bridge/compiler.py:3656 cle",
+  "BUG-2|OPEN|[subprocess] cypy_bridge/compiler.py:379",
+  "BUG-3|OPEN|[silent-fail] cypyc/project/project_comp",
+  "BUG-4|OPEN|[silent-fail] cypyc/transformer 五个 trans",
+  "BUG-5|OPEN|[silent-fail] cypyc/incremental/hot_relo",
+  "BUG-6|OPEN|[silent-fail] cypyc/incremental/file_mon",
+  "BUG-7|OPEN|[diagnostics] cypy_hook/hook.py:926 与 cy",
+  "BUG-8|OPEN|[silent-fail] cypyc/parser/macro_expande",
+  "BUG-9|OPEN|[silent-fail] cypyc/incremental/hot_relo",
+  "BUG-10|OPEN|[silent-fail] cypyc/incremental/hot_relo",
+  "BUG-11|OPEN|[silent-fail] cypyc/project/project_comp",
+  "BUG-12|OPEN|[error-masking] cypy_bridge/nogil.py:73 ",
+  "BUG-13|OPEN|[judge-brittleness] tests/test_increment",
+  "BUG-14|OPEN|[float-width] cypyc/codegen/type_mapper.",
+  "BUG-15|OPEN|[lexer-truncation] cypyc/parser/lexer.py",
+  "BUG-16|OPEN|[parser-decorators] cypyc/parser/parser.",
+  "BUG-17|OPEN|[diagnostics] cypyc/project/project_comp",
+  "BUG-18|OPEN|[cache-invalidation] cypyc/incremental/i",
+  "BUG-19|OPEN|[codegen-directives] cypyc/codegen/cytho",
+  "BUG-20|OPEN|[comptime] cypyc/analyzer/comptime_evalu",
+  "BUG-21|OPEN|[type-checker] cypyc/analyzer/type_check",
+  "BUG-22|OPEN|[lexer] cypyc/parser/lexer.py:651-652 f-",
+  "BUG-23|OPEN|[pointer] cypy_bridge/pointer.py:322 `ad",
+  "BUG-24|OPEN|[cache] cypy_hook/hook.py:1020-1024 `cle",
+  "BUG-25|OPEN|[encoding] cypy_bridge/compiler.py:3766 ",
+  "BUG-26|OPEN|[portability] cypy_bridge/compiler.py:38",
+  "BUG-27|OPEN|[hot-reload] cypyc/incremental/hot_reloa",
+  "BUG-28|OPEN|[reformat] cypyc/utils/indent_detector.p",
+  "BUG-29|OPEN|[cli-diagnostics] cypy_hook/hook.py:836 ",
+  "BUG-30|OPEN|[codegen-coercion] cypyc/codegen/cython_",
+  "BUG-31|OPEN|[type-width-divergence] cypy_bridge/type",
+  "BUG-32|OPEN|[codegen-echo-fidelity] cypyc/codegen/cy",
+  "BUG-33|OPEN|[对抗样例:词法] lexer 对未闭合字符串不诊断，静默吞掉后续源码",
+  "BUG-34|OPEN|[对抗样例:类型标注] 非法标注形态把 AST 节点的 repr 写进产物（xs",
+  "BUG-35|OPEN|[读码+对抗] parse/lex 阶段的一切异常在用户面被归入「读取文件错误」",
+  "BUG-36|OPEN|[转结确诊:模式匹配] 位置模式不调用 __unapply__，产物访问不存在的",
+  "BUG-37|OPEN|[类型检查假阳性] 位置模式把绑定名判成 int，有效程序被判「Return t",
+  "BUG-38|OPEN|[变异fuzz:词法] 源文件以空格结尾且无末换行时，词法器抛 TypeErro",
+  "BUG-39|OPEN|[变异fuzz:语法] 顶层 return 被静默接受并原样写进产物，生成的 .",
+  "BUG-40|OPEN|[构建/规范配置] pyproject 的 [tool.flake8] 对 fl",
+  "BUG-41|OPEN|tests/test_boundary_comprehensive.py 两组测",
+  "BUG-42|OPEN|产品码里 _visit_ExprStmt / _visit_MetaBlock ",
+  "BUG-43|OPEN|[静态检查配置] mypy 按声明的 python_version=3.9 跑测",
+  "BUG-44|OPEN|struct 里的 @staticmethod 生成时仍注入 self，产物签名",
+  "BUG-45|OPEN|struct 的 __implicit_default__ 默认值生成成裸名字，",
+  "BUG-46|OPEN|hook install 打印 [OK] 但不做任何持久化，紧接着 status",
+  "BUG-47|OPEN|docs 声明的 cypy_hook 包级 API（install_hook/u",
+  "BUG-48|OPEN|cypyc watch 只打印横幅：改动或新增被监控文件后 16s 内无任何重编",
+  "BUG-49|OPEN|SYNTAX/33 的实现状态栏说 constraint 未实现，但同一文件与实",
+  "BUG-50|OPEN|操作者把两档存量未格式化的产品文件交给 black 整档重写，改动不可回滚且淹没",
+  "BUG-51|OPEN|BUG-39 的顶层 return 守卫首版吃掉宏体/宏展开片段里的 retur"
+ ]
+}

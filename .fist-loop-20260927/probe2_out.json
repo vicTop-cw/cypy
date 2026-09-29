@@ -1,0 +1,26 @@
+[
+  {
+    "tool": "github_env_check",
+    "result": {
+      "enabled": false,
+      "repo": "",
+      "repo_set": false,
+      "token_present": false,
+      "ready": false,
+      "hints": [
+        "set FIST_GITHUB_ENABLED=true to enable auto-sync",
+        "set FIST_GITHUB_REPO=owner/repo",
+        "set FIST_GITHUB_TOKEN=ghp_xxx for curl execution"
+      ]
+    }
+  },
+  {
+    "tool": "reserve_check",
+    "result": {
+      "__error__": {
+        "code": -32000,
+        "message": "reserve_check: 缺必填参数 scope（schema.required 已声明，BUG-19 硬门）。全部可用参数见 tools/list 的 inputSchema.properties"
+      }
+    }
+  }
+]

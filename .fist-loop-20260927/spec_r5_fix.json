@@ -1,0 +1,209 @@
+{
+ "key": "r5_fix",
+ "tag": "[loop:20260927-loop:R5-修复]",
+ "assignee": "cypy-fixer",
+ "title": "修复（fix）R5",
+ "description": "修复（fix）R5：认领 R5-寻虫 入账的 BUG-78..BUG-90 十三张新单 + 账本现数的未闭环旧单里本环可修的那批。\n① 认领表从盘上反解：本环 13 张新单 + 账本现数的未闭环旧单逐张分栏「本环可修／交人工／已闭环不复修」，每张单的归属理由逐条点名，交人工的一律不占修、不改账本状态\n② 锁先行：每单一条会失败的锁测试，跑到**断言级红**才动实现；红必须由「HEAD 产品码 + 本轮测试」在独立快照树里复算出来，不是收集错、不是夹具崩、不是 import 错\n③ 根因合并修：改动点用 file:line + 符号引用正面指认；同族根因（binop 优先级表 / defer 搬迁 / comptime 求值契约 / builtin 名集 / argparse 播种 / hook 首行读取）共用同一处修法，不许一堆补丁冒充根因\n④ 回退矩阵：每单把自己的改动摘回 HEAD 原文，该单锁必须变红且其余锁不牵连；摘完逐文件 sha 复原并自证，矩阵条数 = 认领单数\n⑤ 语义变更影响面：存量语料逐档在 HEAD 树与当前树各跑一遍分析/转译，「修前无诊断→修后有诊断」「修前可编译→修后被拒」两张清单实测；有命中就挂账交裁决，不放宽不放行\n⑥ 三套体系同批全量复算且地板只升不降（pytest ≥ 上一环实测、自研套件全过、e2e golden 达地板且 FAIL/WARN/UNREG 三格零），冻结面与 git 红线按 mtime + sha 正面测出改动半径\n⑦ 账面闭环：每单 claim→execute→submit→verify、账本追加 `### FIXED(...)` 段、服务端回读 + 账本 + sqlite 三向对照一致；未修完的如实留 OPEN 并逐字写明卡在哪；被拒原文进件\n⑧ 驱动面与顺序自证：本环亲笔脚本硬码 lint 为零并配注入对照；渲染次数按见证件记录数而不是文件存在性；call_log 按号段 + 环标签两档现数，规格点名工具的实际承担者逐条给数",
+ "difficulty": "hard",
+ "laws": [
+  {
+   "name": "认领表从盘上反解：本环 13 张新单 + 账本现数的未闭环旧单逐张分栏「本环可修／交人工／已闭环不复修」，每张单的归属理由逐条点名，交人工的一律不占修、不改账本状态",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_intake.json",
+     "planned_keys",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_intake.json",
+     "split_columns",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_intake.json",
+     "legacy_open_ids",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "锁先行：每单一条会失败的锁测试，跑到**断言级红**才动实现；红必须由「HEAD 产品码 + 本轮测试」在独立快照树里复算出来，不是收集错、不是夹具崩、不是 import 错",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_locks.json",
+     "lock_red_before",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_locks.json",
+     "lock_green_after",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_locks.json",
+     "assertion_level_red_only",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "根因合并修：改动点用 file:line + 符号引用正面指认；同族根因（binop 优先级表 / defer 搬迁 / comptime 求值契约 / builtin 名集 / argparse 播种 / hook 首行读取）共用同一处修法，不许一堆补丁冒充根因",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_rc.json",
+     "change_points",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_rc.json",
+     "merged_root_causes",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_rc.json",
+     "symbols_referenced",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "回退矩阵：每单把自己的改动摘回 HEAD 原文，该单锁必须变红且其余锁不牵连；摘完逐文件 sha 复原并自证，矩阵条数 = 认领单数",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_revert.json",
+     "matrix",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_revert.json",
+     "sha_restored",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_revert.json",
+     "collateral",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "语义变更影响面：存量语料逐档在 HEAD 树与当前树各跑一遍分析/转译，「修前无诊断→修后有诊断」「修前可编译→修后被拒」两张清单实测；有命中就挂账交裁决，不放宽不放行",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_impact.json",
+     "new_diagnostics",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_impact.json",
+     "new_rejections",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_impact.json",
+     "corpus_total",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "三套体系同批全量复算且地板只升不降（pytest ≥ 上一环实测、自研套件全过、e2e golden 达地板且 FAIL/WARN/UNREG 三格零），冻结面与 git 红线按 mtime + sha 正面测出改动半径",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_baselines.json",
+     "floors",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_baselines.json",
+     "three_systems_green",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_baselines.json",
+     "radius",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "账面闭环：每单 claim→execute→submit→verify、账本追加 `### FIXED(...)` 段、服务端回读 + 账本 + sqlite 三向对照一致；未修完的如实留 OPEN 并逐字写明卡在哪；被拒原文进件",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_ledger.json",
+     "closed_ids",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_ledger.json",
+     "fixed_sections",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_ledger.json",
+     "three_way",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "驱动面与顺序自证：本环亲笔脚本硬码 lint 为零并配注入对照；渲染次数按见证件记录数而不是文件存在性；call_log 按号段 + 环标签两档现数，规格点名工具的实际承担者逐条给数",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_drivers_lint.json",
+     "hard_violations",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_drivers_lint.json",
+     "previous_round_soft_baseline",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_drivers_lint.json",
+     "canary",
+     2000
+    ]
+   ]
+  }
+ ],
+ "fingerprint": {
+  "必须": [
+   "只改产品码与新增测试；每单一条会失败的锁",
+   "三套体系同批全量复算",
+   "每单账面闭环或如实留 OPEN",
+   "被拒原文逐字进件"
+  ],
+  "禁止": [
+   "删除/放宽/skip/xfail 既有测试或改期望值迁就实现",
+   "改 PROJECT-SPEC/ 与 SYNTAX/ 冻结语义",
+   "git add/commit/push",
+   "删文件、重注册 golden",
+   "把没做的写成 done",
+   "把「文档没写」当成不修语义缺陷的理由"
+  ],
+  "半径": "产品码 + 新增测试 + 账本；语义变更影响面只挂账不自行放行",
+  "地板": "pytest / 自研套件 / e2e 三套均取上一环实测值，只升不降"
+ },
+ "needle_verification": {
+  "checked_len": 24,
+  "missing_before": 0,
+  "false_substring_before": 0,
+  "artifacts_pending": [],
+  "artifacts_declared": [
+   "fix_r5_baselines.json",
+   "fix_r5_drivers_lint.json",
+   "fix_r5_impact.json",
+   "fix_r5_intake.json",
+   "fix_r5_ledger.json",
+   "fix_r5_locks.json",
+   "fix_r5_rc.json",
+   "fix_r5_revert.json"
+  ],
+  "off_ring_artifacts": [],
+  "pending_stub_artifacts": [],
+  "strict_rule_rejected_len": 0,
+  "canary_prefixes": 24,
+  "measured_at_utc": "2026-09-28T10:58:58+00:00"
+ }
+}

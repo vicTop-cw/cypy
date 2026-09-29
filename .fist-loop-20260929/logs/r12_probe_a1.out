@@ -1,0 +1,23 @@
+=== S1 构造位不写类型实参（struct）
+    AST: Assign@5 -> Call(func=Name.One, args=kw v=Constant, type_args=[])
+    errors=0 违界=0
+=== S2 构造位不写类型实参（class）
+    AST: Assign@8 -> Call(func=Name.OneC, args=kw v=Constant, type_args=[])
+    errors=0 违界=0
+=== S3 注解位写违界实参
+    AST: LetStmt@5 -> Call(func=Name.One, args=kw v=Constant, type_args=[])
+    errors=1 违界=1
+      - Generic constraint violation: type 'str' does not satisfy constraint 'int' (allowed: int) for parameter 'T', in call to '<unknown>', reported at line 5, col 12
+=== S4 构造位写显式违界实参
+    AST: Assign@5 -> Call(func=Name.One, args=kw v=Constant, type_args=[Name(line=5, col=13)])
+    errors=1 违界=1
+      - Generic constraint violation: type 'str' does not satisfy constraint 'int' (allowed: int) for parameter 'T', in call to 'One', reported at line 5, col 9
+=== S5 成员读取的类型代入（class）
+    AST: (没找到行号 9 的语句节点)
+    errors=2 违界=1
+      - Generic constraint violation: type 'str' does not satisfy constraint 'int' (allowed: int) for parameter 'T', in call to '<unknown>', reported at line 8, col 12
+      - Return type mismatch: expected int, got str at 10:1
+=== S6 合界的对照面（struct，必须 0 诊断）
+    AST: LetStmt@5 -> Call(func=Name.One, args=kw v=Constant, type_args=[])
+    errors=0 违界=0
+CONCLUSION probe=r12_ctor shapes=6 与预期形态不符=0

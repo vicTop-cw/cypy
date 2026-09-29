@@ -1,0 +1,59 @@
+{
+ "refuse": [],
+ "appended": [
+  "BUG-71",
+  "BUG-98",
+  "BUG-101",
+  "BUG-104",
+  "('BUG-96', '非法标注形态')",
+  "BUG-99",
+  "BUG-116",
+  "('BUG-96', '无 __unapply__')",
+  "('BUG-102', '无 __unapply__')"
+ ],
+ "skipped_existing": [],
+ "header_counts": {
+  "BUG-96": 2
+ },
+ "written_at_utc": "2026-09-29T05:31:29+00:00",
+ "recheck": {
+  "headers": 117,
+  "distinct_ids": 116,
+  "closed_blocks": 92,
+  "open_blocks": 25,
+  "open_ids": [
+   "BUG-100",
+   "BUG-103",
+   "BUG-105",
+   "BUG-106",
+   "BUG-109",
+   "BUG-110",
+   "BUG-111",
+   "BUG-114",
+   "BUG-115",
+   "BUG-116",
+   "BUG-40",
+   "BUG-43",
+   "BUG-49",
+   "BUG-50",
+   "BUG-52",
+   "BUG-54",
+   "BUG-65",
+   "BUG-68",
+   "BUG-69",
+   "BUG-70",
+   "BUG-72",
+   "BUG-73",
+   "BUG-94",
+   "BUG-97",
+   "BUG-99"
+  ],
+  "fixed_sections": 83,
+  "duplicate_sections": 8,
+  "amendment_sections": 5,
+  "insert_only_verified": true,
+  "spec14_lines": 377,
+  "spec17_lines": 457
+ }
+}
+CONCLUSION appended=9 open_blocks=25 open_distinct=25 headers=117 insert_only=True rc=0

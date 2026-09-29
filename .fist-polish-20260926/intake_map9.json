@@ -1,0 +1,15 @@
+{
+ "mapping": [
+  {
+   "bug_id": "BUG-31",
+   "task_id": "T0r36",
+   "summary": "[type-width-divergence] cypy_bridge/types.py:43 仍把 Cypy 的 `float` 映射到 ctypes.c_float（4 字节），而 BUG-14 裁决后 cypyc 的两张表都出 double（8 字节）——同一个声明类型在两个包里仍然两种宽度，经 cypy_bridge 存取时出现 float32 精度损失",
+   "severity": "medium",
+   "fired": true
+  }
+ ],
+ "failures": [],
+ "missing": [],
+ "ledger_before": 30,
+ "ledger_after": 31
+}

@@ -1,0 +1,50 @@
+#!bin cypy
+# ============================================================
+# registry.cypy — ToolRegistry
+# ============================================================
+
+from tool import Tool, ToolContext, ToolResult
+from errors import ToolNotFoundError, AuthorizationError, ToolValidationError
+
+struct ToolEntry:
+    # Internal record for a registered tool
+    tool: object
+    name: str
+
+struct ToolRegistry:
+    # Typed tool registry — registers tools and dispatches execution
+    _tools: dict<str, object>
+
+    def __init__(self):
+        self._tools = {}
+
+    def register(self, tool: object) -> None:
+        let tool_name: str = tool.name()
+        self._tools[tool_name] = tool
+
+    def get(self, tool_name: str) -> object:
+        if tool_name not in self._tools:
+            raise ToolNotFoundError(tool_name)
+        return self._tools[tool_name]
+
+    def has(self, tool_name: str) -> bool:
+        return tool_name in self._tools
+
+    def list_tools(self) -> list<str>:
+        let names: list<str> = []
+        for name in self._tools:
+            names.append(name)
+        return names
+
+    def tool_descriptions(self) -> list<dict<str, str>>:
+        let result: list<dict<str, str>> = []
+        for name in self._tools:
+            let t: object = self._tools[name]
+            result.append({"name": t.name(), "description": t.description()})
+        return result
+
+    def execute(self, tool_name: str, context: ToolContext, args: object) -> ToolResult:
+        let tool: object = self.get(tool_name)
+        if not tool.check_access(context):
+            raise AuthorizationError(message=f"User '{context.user().id}' lacks access to tool '{tool_name}'")
+        return tool.execute(context, args)

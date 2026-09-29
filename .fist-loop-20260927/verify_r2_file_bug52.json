@@ -1,0 +1,39 @@
+{
+ "refuse": [],
+ "measure": {
+  "rc": 1,
+  "reformat": 142,
+  "unchanged": 14,
+  "py_files": 156
+ },
+ "filed": {
+  "bug_id": "BUG-52",
+  "task_id": "T0r58",
+  "severity": "medium",
+  "reused": true
+ },
+ "matches": [
+  "BUG-52",
+  "BUG-53"
+ ],
+ "dup_marked": 1,
+ "task_row": [
+  "T0r58",
+  "bugs",
+  "待领取"
+ ],
+ "bug_list_hits": 2,
+ "black_noise_split": {
+  "cypyc/parser/parser.py": {
+   "vs_head_raw": 1893,
+   "vs_head_after_black": 460,
+   "attributable_to_formatting": 1433
+  },
+  "cypyc/parser/macro_expander.py": {
+   "vs_head_raw": 365,
+   "vs_head_after_black": 185,
+   "attributable_to_formatting": 194
+  }
+ },
+ "detail_head_on_disk": "## BUG-52 [2026-09-27T10:24:13Z] [medium] OPEN\n- summary: [构建/规范配置] pyproject 声明了 [tool.black] line-length=100，但 156 个 .py 里 142 个不满足，照 PROJECT-SPEC/02 跑 format"
+}

@@ -1,0 +1,8 @@
+def main() -> int:
+    let v: object = 42
+    match v:
+        case int x:
+            print(x)
+        case _:
+            print(0)
+    return 0

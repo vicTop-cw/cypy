@@ -1,0 +1,7 @@
+struct Point:
+    x: int
+    y: int
+
+def main() -> int:
+    let p: Point = Point(x=1, y="nope")
+    return 0

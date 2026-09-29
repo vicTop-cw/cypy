@@ -1,0 +1,4 @@
+SPEC cypy.annotation.shape cases=24 passed=24
+SPEC cypy.pattern.positional cases=19 passed=19
+SPEC cypy.type.slice cases=8 passed=8
+CONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0

@@ -1,0 +1,42 @@
+{
+ "files_scanned": 79,
+ "samples_scanned": 79,
+ "files_changed": 0,
+ "witness": {
+  "ok_in_scan": true,
+  "bad_in_scan": true,
+  "ok_restored": [],
+  "bad_restored": [
+   "Callable arity mismatch: expected 2, got 1 at 3:12"
+  ],
+  "ok_mutation": [],
+  "bad_mutation": []
+ },
+ "changed": {},
+ "new_errors_outside_locks": [],
+ "arity_errors_after": 0,
+ "changes_only_through_the_check": true,
+ "sensitivity_probe": {
+  "files_scanned": 79,
+  "new_error_kinds": 1,
+  "witness_ok_gained": [
+   "Callable arity mismatch: expected 2, got 1 at 3:12"
+  ],
+  "all_through_the_check": true,
+  "sample": [
+   "Callable arity mismatch: expected 2, got 1 at 3:12"
+  ]
+ },
+ "refuse": [],
+ "scan_dirs": [
+  "examples",
+  "tests",
+  "docs",
+  "scripts",
+  "cypyc",
+  "cypy_hook",
+  "cypy_bridge"
+ ],
+ "scan_script": ".fist-loop-20260927/advance_r3_corpus_scan.py",
+ "at_utc": "2026-09-27T19:22:17+00:00"
+}

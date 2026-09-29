@@ -1,0 +1,46 @@
+{
+ "refused": [],
+ "root_final": "已归档",
+ "root_status_before": "待验收",
+ "root_steps": [
+  "get=待验收",
+  "omega_spec_create/spec_review"
+ ],
+ "leaves_done": 16,
+ "call_log_rows": 400,
+ "call_log_tally": {
+  "archive": 2,
+  "call_log": 7,
+  "claim": 33,
+  "execute": 32,
+  "get": 23,
+  "laya_decide": 1,
+  "omega_result_verify": 50,
+  "omega_spec_create": 50,
+  "omega_spec_review": 50,
+  "omega_status": 31,
+  "output_validate": 34,
+  "publish": 1,
+  "report_bug": 3,
+  "submit": 32,
+  "task_plan_deep": 1,
+  "verify": 50
+ },
+ "root_output_validate": [
+  {
+   "path": "memory/reviews/20260928.10.35.00.md",
+   "contains": "[selfdrive-polish]",
+   "min_chars": 1500
+  },
+  {
+   "path": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "contains": "spec_named_carriers",
+   "min_chars": 1000
+  },
+  {
+   "path": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "contains": "needle_strict_violations",
+   "min_chars": 1000
+  }
+ ]
+}

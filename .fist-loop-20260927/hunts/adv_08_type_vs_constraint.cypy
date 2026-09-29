@@ -1,0 +1,3 @@
+type Len = float
+
+constraint Len = int | float

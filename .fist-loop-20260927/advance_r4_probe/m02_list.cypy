@@ -1,0 +1,12 @@
+let items: list<int> = [1, 2, 3, 4, 5]
+
+def main() -> int:
+    match items:
+        case []:
+            print("Empty")
+        case [first]:
+            print(first)
+        case [first, *rest]:
+            print(first)
+            print(rest)
+    return 0

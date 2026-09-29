@@ -1,0 +1,47 @@
+{
+ "A_basic_alias": {
+  "stage": "ok",
+  "errors_n": 0,
+  "first_two": [],
+  "code_lines": 0,
+  "class_fields": []
+ },
+ "B_generic_alias": {
+  "stage": "ok",
+  "errors_n": 0,
+  "first_two": [],
+  "code_lines": 0,
+  "class_fields": []
+ },
+ "C_alias_bound_use": {
+  "stage": "parse",
+  "errors_n": 1,
+  "first_two": [
+   "Expected IDENTIFIER, got COLON at 1:11"
+  ],
+  "code_lines": 0,
+  "class_fields": []
+ },
+ "D_two_uses": {
+  "stage": "ok",
+  "errors_n": 0,
+  "first_two": [],
+  "code_lines": 0,
+  "class_fields": []
+ },
+ "E_alias_to_generic_class": {
+  "stage": "ok",
+  "errors_n": 0,
+  "first_two": [],
+  "code_lines": 0,
+  "class_fields": []
+ },
+ "F_alias_codegen": {
+  "stage": "ok",
+  "errors_n": 0,
+  "first_two": [],
+  "code_lines": 31,
+  "class_fields": []
+ }
+}
+CONCLUSION cases=6 parse_or_crash=['C_alias_bound_use'] zero_diag=['A_basic_alias', 'B_generic_alias', 'D_two_uses', 'E_alias_to_generic_class', 'F_alias_codegen']

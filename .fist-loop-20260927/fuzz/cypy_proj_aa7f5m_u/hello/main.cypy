@@ -1,0 +1,10 @@
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+
+def main() -> int:
+    let message = greet("World")
+    print(message)
+    return 0
+
+if __name__ == "__main__":
+    main()

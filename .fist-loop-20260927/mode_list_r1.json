@@ -1,0 +1,84 @@
+[
+ {
+  "mode": "advance",
+  "name": "持续开发新功能",
+  "description": "默认模式：持续推进新功能开发。phase 流转 Creating→Pending→Running→Closed。",
+  "constraints": {
+   "forbid_new_features": false,
+   "require_issue_scan": false,
+   "require_github_token": false
+  },
+  "template_path": "templates/pipeline_mode_advance.md",
+  "forbidden_tools": []
+ },
+ {
+  "mode": "polish",
+  "name": "打磨完善（不加新功能）",
+  "description": "打磨模式：完善已有功能、重构、性能调优。禁止发布新功能任务。",
+  "constraints": {
+   "forbid_new_features": true,
+   "require_issue_scan": false,
+   "require_github_token": false
+  },
+  "template_path": "templates/pipeline_mode_polish.md",
+  "forbidden_tools": [
+   "publish",
+   "publish_parallel",
+   "dag_publish"
+  ]
+ },
+ {
+  "mode": "verify",
+  "name": "API 枚举与完备性验证",
+  "description": "验证模式：枚举 API、检查完备性、文档自洽。phase 增加 Enumerate/Verify。",
+  "constraints": {
+   "forbid_new_features": false,
+   "require_issue_scan": false,
+   "require_api_enum": true,
+   "require_doc_check": true
+  },
+  "template_path": "templates/pipeline_mode_verify.md",
+  "forbidden_tools": []
+ },
+ {
+  "mode": "bugfind",
+  "name": "寻虫：issue_scan + 边界语料",
+  "description": "寻虫模式：issue_scan 规则驱动扫描 + 边界语料构造 + open-code-review。",
+  "constraints": {
+   "forbid_new_features": false,
+   "require_issue_scan": true,
+   "require_test_corpus": true,
+   "require_ocr": true
+  },
+  "template_path": "templates/pipeline_mode_bugfind.md",
+  "forbidden_tools": []
+ },
+ {
+  "mode": "fix_and_merge",
+  "name": "修复 issues + 合并分支",
+  "description": "修复与合并模式：从 issue 池拉取、派发修复、PR 合并。需要 GitHub token。",
+  "constraints": {
+   "forbid_new_features": false,
+   "require_issue_scan": false,
+   "require_github_token": true
+  },
+  "template_path": "templates/pipeline_mode_fix_and_merge.md",
+  "forbidden_tools": []
+ },
+ {
+  "mode": "tidy",
+  "name": "项目打扫清整",
+  "description": "清整模式：项目打扫——清理 dead code、归档过期文件、清理依赖。禁止新增代码。",
+  "constraints": {
+   "forbid_new_code": true,
+   "require_issue_scan": false,
+   "require_github_token": false
+  },
+  "template_path": "templates/pipeline_mode_tidy.md",
+  "forbidden_tools": [
+   "publish",
+   "publish_parallel",
+   "dag_publish"
+  ]
+ }
+]

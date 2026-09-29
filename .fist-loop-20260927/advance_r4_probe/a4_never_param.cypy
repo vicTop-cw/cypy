@@ -1,0 +1,2 @@
+def needs_never(x: Never) -> int:
+    return 1

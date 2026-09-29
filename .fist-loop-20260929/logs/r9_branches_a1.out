@@ -1,0 +1,13 @@
+T0r115 | after_execute= 执行中 | final= 执行中
+T0r115.3 | after_execute= 执行中 | final= 执行中
+T0r115.4 | after_execute= 执行中 | final= 执行中
+T0r115.5 | after_execute= 执行中 | final= 执行中
+CONCLUSION root=执行中 rollup={'已完成': 16, '待领取': 5, '执行中': 4} calls=20 refused=12 call_log_error_rows=0
+REFUSED T0r115 omega_spec_create | {"__error__": {"code": -32000, "message": "语料 [spec:T0r115:r1] 已通过审核，无需重复创建"}}
+REFUSED T0r115 omega_spec_review | {"__error__": {"code": -32000, "message": "语料 [spec:T0r115:r1] 当前状态为 [approved]，不是待审核状态"}}
+REFUSED T0r115 verify | {"__error__": {"code": -32000, "message": "非法验收: 任务处于 [执行中]，需先 submit"}}
+REFUSED T0r115.3 omega_spec_create | {"__error__": {"code": -32000, "message": "语料 [spec:T0r115.3:r1] 已通过审核，无需重复创建"}}
+REFUSED T0r115.3 omega_spec_review | {"__error__": {"code": -32000, "message": "语料 [spec:T0r115.3:r1] 当前状态为 [approved]，不是待审核状态"}}
+REFUSED T0r115.3 verify | {"__error__": {"code": -32000, "message": "非法验收: 任务处于 [执行中]，需先 submit"}}
+REFUSED T0r115.4 omega_spec_create | {"__error__": {"code": -32000, "message": "语料 [spec:T0r115.4:r1] 已通过审核，无需重复创建"}}
+REFUSED T0r115.4 omega_spec_review | {"__error__": {"code": -32000, "message": "语料 [spec:T0r115.4:r1] 当前状态为 [approved]，不是待审核状态"}}

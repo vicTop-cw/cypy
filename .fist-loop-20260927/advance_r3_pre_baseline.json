@@ -1,0 +1,19 @@
+{
+ "at_utc": "2026-09-27T18:42:05+00:00",
+ "before_snapshot": "cypyc/analyzer/type_checker.py -> tmp_advance/before/",
+ "type_checker_sha_before": "4db6e1f3bfc2c7d3",
+ "analyzer_errors_before": {
+  "alias_use_param": [],
+  "direct_annot": [],
+  "ctl_callable_arity_bad": [],
+  "ctl_callable_type_bad": [
+   "Return type mismatch: expected int, got str at 3:1"
+  ],
+  "examples/demos/data_structures/type_alias_demo.cypy": [],
+  "examples/demos/boundary_cases/combined_features.cypy": []
+ },
+ "stage_start_utc": "2026-09-27T18:41:40+00:00",
+ "pytest_floor_before": 1929,
+ "suite_total": "47",
+ "e2e_pass": "25"
+}

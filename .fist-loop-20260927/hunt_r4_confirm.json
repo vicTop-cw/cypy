@@ -1,0 +1,432 @@
+{
+ "started": "2026-09-27T20:35:08+00:00",
+ "rows": [
+  {
+   "id": "C01",
+   "rc": "RC1_func_symbol_typed_as_return",
+   "family": "F1",
+   "case": "correct_two_arg_call_of_local_function",
+   "kind": "false_positive",
+   "phenomenon": "正确程序被判「Callable arity mismatch: expected 1, got 2」",
+   "want": "clean",
+   "observed_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 9:5"
+   ],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "return_mismatch_reported",
+   "ctl_spec": "mismatch",
+   "ctl_observed_errors": [
+    "Return type mismatch: expected int, got str at 3:1"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "false_positive_on_correct_program"
+  },
+  {
+   "id": "C02",
+   "rc": "RC1_func_symbol_typed_as_return",
+   "family": "F1",
+   "case": "missing_arg_call_of_local_function",
+   "kind": "false_negative",
+   "phenomenon": "少传一个实参的调用完全静默",
+   "want": "error",
+   "observed_errors": [],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "return_mismatch_reported",
+   "ctl_spec": "mismatch",
+   "ctl_observed_errors": [
+    "Return type mismatch: expected int, got str at 3:1"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "silent_on_wrong_program"
+  },
+  {
+   "id": "C03",
+   "rc": "RC1_func_symbol_typed_as_return",
+   "family": "F1",
+   "case": "function_with_matching_signature_returned_as_alias",
+   "kind": "false_positive",
+   "phenomenon": "签名相符的函数被当成它的返回类型（got str）而拒绝",
+   "want": "clean",
+   "observed_errors": [
+    "Return type mismatch: expected Callable[tuple[int], str], got str at 7:1"
+   ],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "alias_identity_clean",
+   "ctl_spec": "clean",
+   "ctl_observed_errors": [],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "false_positive_on_correct_program"
+  },
+  {
+   "id": "C04",
+   "rc": "RC1_func_symbol_typed_as_return",
+   "family": "F2",
+   "case": "plain_fn_called_with_extra_arg",
+   "kind": "false_negative",
+   "phenomenon": "普通函数多传实参不判（只有形参声明为 Callable 时才判元数）",
+   "want": "error",
+   "observed_errors": [],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "callback_arity_reported",
+   "ctl_spec": "arity",
+   "ctl_observed_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 3:12"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "silent_on_wrong_program"
+  },
+  {
+   "id": "C05",
+   "rc": "RC1_func_symbol_typed_as_return",
+   "family": "F2",
+   "case": "plain_fn_called_with_missing_arg",
+   "kind": "false_negative",
+   "phenomenon": "普通函数少传实参不判",
+   "want": "error",
+   "observed_errors": [],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "callback_arity_reported",
+   "ctl_spec": "arity",
+   "ctl_observed_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 3:12"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "silent_on_wrong_program"
+  },
+  {
+   "id": "C06",
+   "rc": "RC2_no_argument_type_check",
+   "family": "F3",
+   "case": "wrong_signature_passed_to_callback_param",
+   "kind": "false_negative",
+   "phenomenon": "两参函数被传给 Callable[[int], str] 形参不判",
+   "want": "error",
+   "observed_errors": [],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "assignment_mismatch_reported",
+   "ctl_spec": "mismatch",
+   "ctl_observed_errors": [
+    "Type mismatch: expected int, got str at 2:9"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "silent_on_wrong_program"
+  },
+  {
+   "id": "C07",
+   "rc": "RC2_no_argument_type_check",
+   "family": "F3",
+   "case": "non_callable_passed_to_callback_param",
+   "kind": "false_negative",
+   "phenomenon": "整型字面量被传给 Callable 形参不判",
+   "want": "error",
+   "observed_errors": [],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "assignment_mismatch_reported",
+   "ctl_spec": "mismatch",
+   "ctl_observed_errors": [
+    "Type mismatch: expected int, got str at 2:9"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "silent_on_wrong_program"
+  },
+  {
+   "id": "C08",
+   "rc": "RC2_no_argument_type_check",
+   "family": "F3",
+   "case": "str_arg_to_annotated_int_param",
+   "kind": "false_negative",
+   "phenomenon": "字符串实参传给 int 形参不判（同族 `let x: int = \"s\"` 却报）",
+   "want": "error",
+   "observed_errors": [],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "assignment_mismatch_reported",
+   "ctl_spec": "mismatch",
+   "ctl_observed_errors": [
+    "Type mismatch: expected int, got str at 2:9"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "silent_on_wrong_program"
+  },
+  {
+   "id": "C09",
+   "rc": "RC3_struct_field_type_unresolved",
+   "family": "F4",
+   "case": "int_field_returned_from_str_method",
+   "kind": "false_negative",
+   "phenomenon": "struct 成员的声明类型在方法体里不被解析（同族局部变量却解析）",
+   "want": "error",
+   "observed_errors": [],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "local_let_flows_to_return",
+   "ctl_spec": "mismatch",
+   "ctl_observed_errors": [
+    "Return type mismatch: expected str, got int at 4:1"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "silent_on_wrong_program"
+  },
+  {
+   "id": "C10",
+   "rc": "RC3_struct_field_type_unresolved",
+   "family": "F4",
+   "case": "nested_field_wrong_type",
+   "kind": "false_negative",
+   "phenomenon": "嵌套成员链的类型同样不被解析",
+   "want": "error",
+   "observed_errors": [],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "local_let_flows_to_return",
+   "ctl_spec": "mismatch",
+   "ctl_observed_errors": [
+    "Return type mismatch: expected str, got int at 4:1"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "silent_on_wrong_program"
+  },
+  {
+   "id": "C11",
+   "rc": "RC3_struct_field_type_unresolved",
+   "family": "F4",
+   "case": "field_used_with_wrong_arity_call",
+   "kind": "false_negative",
+   "phenomenon": "成员当回调调用时元数不判（局部变量同形状会判）",
+   "want": "error",
+   "observed_errors": [],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": true,
+   "ctl": "callback_arity_reported",
+   "ctl_spec": "arity",
+   "ctl_observed_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 3:12"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "silent_on_wrong_program"
+  },
+  {
+   "id": "C12",
+   "rc": "RC4_internal_repr_in_message",
+   "family": "F5",
+   "case": "alias_mismatch_message_is_source_shape",
+   "kind": "message_shape",
+   "phenomenon": "用户可见文案写的是 `Callable[tuple[int], str]`，不是源语法 `Callable[[int], str]`",
+   "want": "clean_message",
+   "observed_errors": [
+    "Type mismatch: expected Callable[tuple[int], str], got int at 3:9",
+    "Return type mismatch: expected int, got Callable[tuple[int], str] at 5:1"
+   ],
+   "pos_phenomenon_visible": true,
+   "pos_by_expectation_negation": true,
+   "pos_encodings_comparable": false,
+   "ctl": "plain_message_shape_ok",
+   "ctl_spec": "clean_message",
+   "ctl_observed_errors": [
+    "Type mismatch: expected int, got str at 2:9"
+   ],
+   "ctl_ok": true,
+   "verdict": "CONFIRMED",
+   "agrees_with_faces_battery": true,
+   "faces_classification": "internal_repr_in_user_message"
+  }
+ ],
+ "confirmed": [
+  "C01",
+  "C02",
+  "C03",
+  "C04",
+  "C05",
+  "C06",
+  "C07",
+  "C08",
+  "C09",
+  "C10",
+  "C11",
+  "C12"
+ ],
+ "unsure": [],
+ "confirmed_total": 12,
+ "unsure_total": 0,
+ "by_root_cause": {
+  "RC1_func_symbol_typed_as_return": [
+   "C01",
+   "C02",
+   "C03",
+   "C04",
+   "C05"
+  ],
+  "RC2_no_argument_type_check": [
+   "C06",
+   "C07",
+   "C08"
+  ],
+  "RC3_struct_field_type_unresolved": [
+   "C09",
+   "C10",
+   "C11"
+  ],
+  "RC4_internal_repr_in_message": [
+   "C12"
+  ]
+ },
+ "identity": "e:/ideprojects/ai/cypy/cypyc/analyzer/type_checker.py",
+ "ctl_observations": {
+  "alias_identity_clean": [],
+  "assignment_mismatch_reported": [
+   "Type mismatch: expected int, got str at 2:9"
+  ],
+  "callback_arity_reported": [
+   "Callable arity mismatch: expected 1, got 2 at 3:12"
+  ],
+  "int_field_as_int_clean": [],
+  "local_let_flows_to_return": [
+   "Return type mismatch: expected str, got int at 4:1"
+  ],
+  "plain_message_shape_ok": [
+   "Type mismatch: expected int, got str at 2:9"
+  ],
+  "return_mismatch_reported": [
+   "Return type mismatch: expected int, got str at 3:1"
+  ]
+ },
+ "self_checks": [
+  {
+   "label": "两次独立跑（本脚本 vs faces 电池）对同一批夹具给出同一偏差集合",
+   "got": [
+    "F1/correct_two_arg_call_of_local_function",
+    "F1/function_with_matching_signature_returned_as_alias",
+    "F1/missing_arg_call_of_local_function",
+    "F2/plain_fn_called_with_extra_arg",
+    "F2/plain_fn_called_with_missing_arg",
+    "F3/non_callable_passed_to_callback_param",
+    "F3/str_arg_to_annotated_int_param",
+    "F3/wrong_signature_passed_to_callback_param",
+    "F4/field_used_with_wrong_arity_call",
+    "F4/int_field_returned_from_str_method",
+    "F4/nested_field_wrong_type",
+    "F5/alias_mismatch_message_is_source_shape"
+   ],
+   "want": [
+    "F1/correct_two_arg_call_of_local_function",
+    "F1/function_with_matching_signature_returned_as_alias",
+    "F1/missing_arg_call_of_local_function",
+    "F2/plain_fn_called_with_extra_arg",
+    "F2/plain_fn_called_with_missing_arg",
+    "F3/non_callable_passed_to_callback_param",
+    "F3/str_arg_to_annotated_int_param",
+    "F3/wrong_signature_passed_to_callback_param",
+    "F4/field_used_with_wrong_arity_call",
+    "F4/int_field_returned_from_str_method",
+    "F4/nested_field_wrong_type",
+    "F5/alias_mismatch_message_is_source_shape"
+   ],
+   "why": "faces 侧 12 条",
+   "ok": true
+  },
+  {
+   "label": "每条候选都有对照，且对照今天行为正确",
+   "got": [],
+   "want": [],
+   "why": "ctl_ok=False",
+   "ok": true
+  },
+  {
+   "label": "对照库全部实测过（每键都拿到了观察，含应为空的那条）",
+   "got": [
+    "alias_identity_clean",
+    "assignment_mismatch_reported",
+    "callback_arity_reported",
+    "int_field_as_int_clean",
+    "local_let_flows_to_return",
+    "plain_message_shape_ok",
+    "return_mismatch_reported"
+   ],
+   "want": [
+    "alias_identity_clean",
+    "assignment_mismatch_reported",
+    "callback_arity_reported",
+    "int_field_as_int_clean",
+    "local_let_flows_to_return",
+    "plain_message_shape_ok",
+    "return_mismatch_reported"
+   ],
+   "why": "7 条对照",
+   "ok": true
+  },
+  {
+   "label": "确诊+未确认 = 候选总数",
+   "got": 12,
+   "want": 12,
+   "why": "两栏回加",
+   "ok": true
+  },
+  {
+   "label": "确诊集合非空（否则是本判据看不见，不是产品干净）",
+   "got": true,
+   "want": true,
+   "why": "确诊 12 条",
+   "ok": true
+  },
+  {
+   "label": "每个根因至少一条确诊",
+   "got": [
+    "RC1_func_symbol_typed_as_return",
+    "RC2_no_argument_type_check",
+    "RC3_struct_field_type_unresolved",
+    "RC4_internal_repr_in_message"
+   ],
+   "want": [
+    "RC1_func_symbol_typed_as_return",
+    "RC2_no_argument_type_check",
+    "RC3_struct_field_type_unresolved",
+    "RC4_internal_repr_in_message"
+   ],
+   "why": "RC 集合两边比",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "rule": "pos=现象与『文档声明的语义』不符；ctl=同族里今天行为正确的形状。两档齐全才 CONFIRMED",
+ "at_utc": "2026-09-27T20:35:08+00:00"
+}

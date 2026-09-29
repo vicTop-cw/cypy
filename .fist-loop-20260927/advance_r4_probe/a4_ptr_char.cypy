@@ -1,0 +1,3 @@
+def allocate_buffer(size: int) -> *char:
+    let buffer: *char = malloc(size)
+    return buffer

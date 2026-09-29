@@ -1,0 +1,143 @@
+{
+  "db": "E:/IDEProjects/AI/Cypy/fist-mbt.db",
+  "read_mode": "sqlite3 mode=ro",
+  "tickets": [
+    {
+      "bug": "BUG-1",
+      "task_id": "T0r6",
+      "id": "T0r6",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 305
+    },
+    {
+      "bug": "BUG-2",
+      "task_id": "T0r7",
+      "id": "T0r7",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 453
+    },
+    {
+      "bug": "BUG-3",
+      "task_id": "T0r8",
+      "id": "T0r8",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 268
+    },
+    {
+      "bug": "BUG-4",
+      "task_id": "T0r9",
+      "id": "T0r9",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 361
+    },
+    {
+      "bug": "BUG-5",
+      "task_id": "T0r10",
+      "id": "T0r10",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 308
+    },
+    {
+      "bug": "BUG-6",
+      "task_id": "T0r11",
+      "id": "T0r11",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 324
+    },
+    {
+      "bug": "BUG-7",
+      "task_id": "T0r12",
+      "id": "T0r12",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 320
+    },
+    {
+      "bug": "BUG-8",
+      "task_id": "T0r13",
+      "id": "T0r13",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 445
+    },
+    {
+      "bug": "BUG-9",
+      "task_id": "T0r14",
+      "id": "T0r14",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 583
+    },
+    {
+      "bug": "BUG-10",
+      "task_id": "T0r15",
+      "id": "T0r15",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 1057
+    },
+    {
+      "bug": "BUG-11",
+      "task_id": "T0r16",
+      "id": "T0r16",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 1923
+    },
+    {
+      "bug": "BUG-12",
+      "task_id": "T0r17",
+      "id": "T0r17",
+      "ns": "bugs",
+      "status": "已完成",
+      "parent_id": "",
+      "dl_len": 1851
+    },
+    {
+      "bug": "BUG-13",
+      "task_id": "T0r18",
+      "id": "T0r18",
+      "ns": "bugs",
+      "status": "待领取",
+      "parent_id": "",
+      "dl_len": 0
+    }
+  ],
+  "tickets_done": 12,
+  "tickets_total": 13,
+  "root": {
+    "id": "T0",
+    "ns": "cypy-polish-20260926",
+    "status": "已归档",
+    "parent_id": "",
+    "dl_len": 0
+  },
+  "ghost_T0r1": null,
+  "status_counts": {
+    "已完成": 18,
+    "已归档": 1,
+    "已暂停": 16,
+    "待领取": 1
+  },
+  "ns_counts": {
+    "bugs": 17,
+    "cypy-polish-20260926": 19
+  }
+}

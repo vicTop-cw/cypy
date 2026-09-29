@@ -1,0 +1,9 @@
+CONCLUSION leaves_closed=13/13 by_kind={'face': 5, 'boundary-real': 2, 'boundary-declared-na': 6} branches={'T0r115.1': '已完成', 'T0r115.2': '已完成', 'T0r115.3': '拆分中', 'T0r115.4': '拆分中', 'T0r115.5': '拆分中', 'T0r115.6': '已完成'} root=拆分中 rollup={'已完成': 16, '待领取': 5, '拆分中': 4} calls=142 refused=8 call_log_error_rows=0
+REFUSED T0r115.3 omega_result_verify | {"__error__": {"code": -32000, "message": "任务 [T0r115.3] 尚无交付物（deliverable 为空），无可复验成果"}}
+REFUSED T0r115.3 verify | {"__error__": {"code": -32000, "message": "Omega 强验证门禁：任务 [T0r115.3] 尚未做成果复验，请先由验证者执行 omega_result_verify"}}
+REFUSED T0r115.4 omega_result_verify | {"__error__": {"code": -32000, "message": "任务 [T0r115.4] 尚无交付物（deliverable 为空），无可复验成果"}}
+REFUSED T0r115.4 verify | {"__error__": {"code": -32000, "message": "Omega 强验证门禁：任务 [T0r115.4] 尚未做成果复验，请先由验证者执行 omega_result_verify"}}
+REFUSED T0r115.5 omega_result_verify | {"__error__": {"code": -32000, "message": "任务 [T0r115.5] 尚无交付物（deliverable 为空），无可复验成果"}}
+REFUSED T0r115.5 verify | {"__error__": {"code": -32000, "message": "Omega 强验证门禁：任务 [T0r115.5] 尚未做成果复验，请先由验证者执行 omega_result_verify"}}
+REFUSED T0r115 omega_result_verify | {"__error__": {"code": -32000, "message": "任务 [T0r115] 尚无交付物（deliverable 为空），无可复验成果"}}
+REFUSED T0r115 verify | {"__error__": {"code": -32000, "message": "Omega 强验证门禁：任务 [T0r115] 尚未做成果复验，请先由验证者执行 omega_result_verify"}}

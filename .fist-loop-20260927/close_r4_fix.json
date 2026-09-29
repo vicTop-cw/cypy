@@ -1,0 +1,187 @@
+{
+ "key": "r4_fix",
+ "root_task": "T0r85",
+ "assignee": "cypy-fixer",
+ "stage": "R4-修复",
+ "forbid": "改 PROJECT-SPEC/SYNTAX 冻结语义；重注册 golden；git add/commit/push/删文件；为了让测试绿而放宽或删既有断言；把「新增诊断让存量程序报错」偷偷放行或偷偷压掉；用「源码里出现某字样」代替调用面判据；把没做的写成 done；报告归档后再改交付物",
+ "laws": [
+  {
+   "name": "逐单认领并分栏（本环可修／交人工）：认领表从盘上账本反解，每张单的理由与归属逐条点名，交人工的不占修",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_claim.json",
+     "root_cause_key",
+     1200
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_claim.json",
+     "handoff",
+     1200
+    ]
+   ]
+  },
+  {
+   "name": "锁先行：每单一条「修前必红」的锁，跑到红才动实现；红必须是断言级红，不是收集错或夹具崩",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_locks.json",
+     "failed_names",
+     1200
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_locks.json",
+     "self_checks",
+     1200
+    ]
+   ]
+  },
+  {
+   "name": "根因合并修：RC1/RC2/RC3/RC4 的改动点共用同一处签名结构与兼容谓词，用 file:line 与符号引用正面证明，不是四个补丁",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_rc.json",
+     "shared_symbols",
+     1500
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_rc.json",
+     "per_rc_symbol_refs",
+     1500
+    ]
+   ]
+  },
+  {
+   "name": "回退矩阵：每单把实现摘回修前原文，该单锁必须变红且其余锁不牵连；摘完逐文件 sha 复原并自证",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_revert.json",
+     "expected_red_hit",
+     1500
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_revert.json",
+     "collateral",
+     1500
+    ]
+   ]
+  },
+  {
+   "name": "语义变更影响面：存量语料逐档跑分析器，「修前无诊断→修后有诊断」清单实测；有命中就挂账交裁决，不放宽不放行",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_impact.json",
+     "newly_rejected",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_impact.json",
+     "unadjudicated",
+     4000
+    ]
+   ]
+  },
+  {
+   "name": "三套体系同批全量复算且只升不降（pytest ≥1938 / 自研 47/47 / e2e 25/25 且 FAIL/WARN/UNREG 三格零），冻结面与 git 红线按 mtime+sha 正面测",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_baselines.json",
+     "three_systems_green",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_baselines.json",
+     "frozen_sha",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "账面闭环：修复单逐单 claim→execute→submit→verify、md 追加 FIXED 段、三向对照一致；被拒原文逐字进报告",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_ledger.json",
+     "three_way",
+     1500
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_ledger_check.json",
+     "md_fixed",
+     800
+    ]
+   ]
+  },
+  {
+   "name": "驱动面与顺序自计：本轮新写脚本硬码 lint 为零并配注入对照；报告渲染次数与「渲染后未再改」正面测",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_drivers_lint.json",
+     "canary",
+     700
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_render_order.json",
+     "renders",
+     700
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "八法之首：十张单逐张有归属，交人工的不占修",
+   ".fist-loop-20260927/fix_r4_claim.json",
+   "disposition"
+  ],
+  [
+   "锁承重与红绿互斥：修前 14 红、修后全绿、两态不重叠",
+   ".fist-loop-20260927/fix_r4_locks.json",
+   "failed_names"
+  ],
+  [
+   "合并修机制：共享符号 + 41 处调用点，不是四个补丁",
+   ".fist-loop-20260927/fix_r4_rc.json",
+   "call_sites"
+  ],
+  [
+   "回退矩阵承重：四条腿各自摘掉必红、对照零误伤、sha 复原",
+   ".fist-loop-20260927/fix_r4_revert.json",
+   "controls_green"
+  ],
+  [
+   "影响面 203 档差分：零新增诊断、零消失诊断、零说不清",
+   ".fist-loop-20260927/fix_r4_impact.json",
+   "newly_accepted"
+  ],
+  [
+   "三套体系 + git 红线 + 冻结面 mtime/sha 同批复算",
+   ".fist-loop-20260927/fix_r4_baselines.json",
+   "radius"
+  ],
+  [
+   "账面闭环三向一致 + 渲染后独立复核",
+   ".fist-loop-20260927/fix_r4_ledger.json",
+   "agree_total"
+  ],
+  [
+   "驱动面 lint 清零 + 报告渲染次序与 sha 留档",
+   ".fist-loop-20260927/fix_r4_drivers_lint.json",
+   "previous_round_soft_baseline"
+  ]
+ ],
+ "root_deliverable": "R4-修复 交付：memory/reviews/20260928.06.15.00；十张单按「本环可修 / 下一环 / 交人工」三栏分派（10 行归属全部从 memory/bugs.md 反解，反解条目数 10 == 盘上标题数）。产品码改动只落 `cypyc/analyzer/type_checker.py`：+214 / -15，新增 9 个定义、共享 3 个符号、调用点 41 处 —— RC1/RC2/RC3/RC4 共用同一张 `callable_sigs` 表与同一个兼容谓词 `_callable_arg_mismatch`，不是四个补丁。锁先行：修前 `14 failed, 4 passed in 0.36s`（14 条红、退出码 1）→ 修后 `18 passed in 0.49s`；回退矩阵四腿（RC1, RC2, RC3, RC4）各自摘回原样必红、对照组零误伤、复原 sha == 基线 sha。语义影响面按 203 档存量语料逐档差分：新增诊断 0、消失诊断 0、待裁决 0（中途真出现过 9 档 14 条误报，分因后由三处越界改动的收敛打掉，不是先验断言）。文档面 6 行按 argparse/dataclass 实读对齐、半开 1 条如实转结、冻结面只读探针仍为 stale （sha 3e78de517b56）。账面：六张修复单 claim→execute→submit→verify 全部「已完成」，三向对照 6/6 一致，追加 FIXED 段后账本仍 70 条不多生条目，驱动格式化后另以只读复核件独立重读 6/6。三套体系同批复算：pytest 1956 通过 / 0 失败 / 0 错误、收集 1956（地板 1938/1938 未降）、自研{'Total': 47, 'Passed': 47, 'Failed': 0, 'Skipped': 0}、e2e {'PASS': 25, 'FAIL': 0, 'RUNFAIL': 0, 'WARN': 0}；HEAD 17d68b4、暂存 0 行、外部基线 worktree 仍在；改动半径 产品 1 / 测试 2 / 文档 1 / 冻结 0 / 判据件 60。驱动面 14 个本轮亲笔脚本硬错 0、软账 0（上一环基线 112，只降不升）。调用面账面截于渲染前：任务树 18 行、修复单 24 行，被拒 0 + 0 条，Omega 标记 叶 16/16、根 1/1。本环判据自伤 8 条已逐条写进报告《八》；时间盒 100 分钟被超（实耗见 loop_progress），按纪律如实记账、门禁未缩。",
+ "root_marker": "[selfdrive-fix]",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "omega_marked",
+   800
+  ],
+  [
+   ".fist-loop-20260927/fix_r4_self_audit.json",
+   "gates_pass",
+   800
+  ]
+ ],
+ "root_verify_reason": "修复环最容易说谎的是『修好了』这三个字，所以每一层都配了反向证明：(1) 锁先跑到红（14 条）才动实现，红是断言级红而不是收集错；(2) 回退矩阵把四条腿分别摘回原文，该族必须变红且对照组不变红——摘不动就是锁不承重；(3) 合并修用共享符号与调用点计数正面证明，而不是四张单各自加补丁；(4) 影响面跑满 203 档存量语料，差分两侧都数（新增与消失），本轮中途真出现过的 9 档误报被记录并收敛，没有为了让绿而放宽；(5) 文档面每条都按 argparse / dataclass 实读判，还配一条『实现里没有的旗标不许出现在文档』的反向对照；冻结面用『它必须仍然错着』的只读探针证明我没动刀；(6) 三套体系 + git 红线 + 半径同批复算，porcelain 的索引位与工作区位分栏（上一版把 ' D' 当成 staged，本轮实测 0 行才算对上红线）；(7) 账面三向（md 段 / sqlite 终态 / call_log 逐调用）一致，驱动件落盘后又被格式化的那一份用只读复核件重读，不引用旧绿灯；(8) 唯一一条被改的既有测试是把比较面从静态 AST 切片换到调用面 --help，并新增反向断言（AST 声明过的必须在 --help 里），净效果更严；这条判断已列进报告《九》交指挥官复核，不自评为合规。",
+ "built_from_artifacts_at_utc": "2026-09-27T23:30:41+00:00"
+}

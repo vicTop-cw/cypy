@@ -1,0 +1,4 @@
+{"key":"r1_fix","tag":"[loop:20260927-loop:R1-修复]","assignee":"cypy-fixer","difficulty":"难",
+ "description":"[loop:20260927-loop:R1-修复] 修复与合并（fix_and_merge）R1：按指挥官裁决清 4 单——BUG-30（声明浮点接 int 不浮点化：补 <double> 强转 + 端到端基准重注册）、BUG-31（cypy_bridge 宽度表自述口径：改「Cypy 类型」措辞；改名半程因与「不动既有测试」互斥，交回裁决）、BUG-33（未闭合字符串静默吞源码）、BUG-38（EOF 尾随空格 TypeError）。合并面=无（本机 github_env_check token_present=false，不 push、不 PR）。每单一条锁死回归并在「只回退本单」的临时树上证红；基线双套不回落。开关 omega/laya/issue_up/call_log 全开。",
+ "laws":["BUG-30 生成码补隐式 <double> 强转","BUG-31 bridge 宽度表口径措辞","BUG-33 未闭合字符串必须诊断","BUG-38 词法器 EOF 尾随空白不得崩","每单锁死回归 + 回退树证红","端到端基准先快照再重注册","双套基线复跑与账本 FIXED 留档","修复报告与转结"],
+ "fingerprint":{"必须":"4 单各有锁死回归且回退树上转红；自研套件 47/47；定向 pytest 全绿；基准重注册前后逐行差只落在数字上；memory/bugs.md 追加 FIXED 段","禁止":"弱化或删除既有测试；动 PROJECT-SPEC/SYNTAX 冻结语义；git push/删文件；把没修的单元写成已闭环"}}

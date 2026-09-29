@@ -1,0 +1,73 @@
+{
+ "started": "2026-09-27T22:02:25+00:00",
+ "rows": [
+  {
+   "id": "D09 python 下限",
+   "doc": "docs/USAGE.md: Python ≥ 3.9",
+   "measured": "pyproject: requires-python=>=3.9",
+   "verdict": "agreed",
+   "note": ""
+  },
+  {
+   "id": "D08 入口点",
+   "doc": "{\"cypyc\": \"cypyc.cli:main\", \"cypy-hook\": \"cypy_hook.hook:main\"}",
+   "measured": "{\"cypyc\": \"cypyc.cli:main\", \"cypy-hook\": \"cypy_hook.hook:main\"}",
+   "verdict": "agreed",
+   "note": ""
+  },
+  {
+   "id": "D10 hook 选项清单",
+   "doc": "文档列出的 hook 选项：--compile, --eval, --help, --run, --transpile-only",
+   "measured": "--help 里出现=['--compile', '--eval', '--help', '--run', '--transpile-only']；文档有而 help 没有=[]",
+   "verdict": "agreed",
+   "note": ""
+  },
+  {
+   "id": "对照 不存在的旗标不得出现在文档",
+   "doc": "--incremental / --compile 是否仍被 USAGE 引用",
+   "measured": {
+    "incremental_in_usage": false,
+    "compile_in_usage": true
+   },
+   "verdict": "agreed",
+   "note": "`hook --compile` 是真实选项（--help 现读），所以 --compile 可以出现；`build --incremental` 不是 ⇒ 反向对照钉的是 incremental"
+  },
+  {
+   "id": "D11 构建产物字段",
+   "doc": "文档引用 result.['success', 'pyd_paths', 'errors']",
+   "measured": "ProjectCompileResult 实际字段=['success', 'compiled_modules', 'failed_modules', 'errors', 'pyd_paths', 'warnings', 'compilation_order', 'cycles_detected', 'total_time', 'type_registry_stats']",
+   "verdict": "agreed",
+   "note": "文档示例里的每个属性都要在 dataclass 上真存在"
+  },
+  {
+   "id": "D12 eval 返回值",
+   "doc": "文档现在对 eval 示例的说明：改写成「返回 import 进来的模块对象」",
+   "measured": {
+    "写侧产出 __result__": false,
+    "读侧只认 __result__": true,
+    "今天落到 return module": true
+   },
+   "verdict": "agreed",
+   "note": "「写侧从不产出 __result__」这一半是产品缺口，本轮只改文档口径，生成侧补不在本单授权内 ⇒ 记为 half-open 转结"
+  }
+ ],
+ "agreed": [
+  "D09 python 下限",
+  "D08 入口点",
+  "D10 hook 选项清单",
+  "对照 不存在的旗标不得出现在文档",
+  "D11 构建产物字段",
+  "D12 eval 返回值"
+ ],
+ "still_open": [],
+ "frozen_control": {
+  "appendix_still_claims_compile": true
+ },
+ "frozen_bytes_sha": "3e78de517b56",
+ "half_open": [
+  "D12：写侧 `__result__` 从不产出（生成侧缺口，交裁决）"
+ ],
+ "note": "冻结面只读探针：appendix-C 的 stale 行必须仍然 stale，它变一致了就说明本环动了冻结面",
+ "refuse": [],
+ "at_utc": "2026-09-27T22:02:25+00:00"
+}

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\hunt_r8_extractor_family.py", line 156, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\hunt_r8_extractor_family.py", line 134, in main
+    r = probe(src)
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\hunt_r8_extractor_family.py", line 117, in probe
+    row["slot_types"][tn] = got
+    ~~~~~~~~~~~~~~~~~^^^^
+TypeError: list indices must be integers or slices, not str

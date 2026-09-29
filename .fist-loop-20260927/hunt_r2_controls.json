@@ -1,0 +1,68 @@
+{
+ "hook_durability": {
+  "before_install": {
+   "rc": 1,
+   "out": "",
+   "err": "Traceback (most recent call last):\n  File \"<string>\", line 2, in <module>\n    print('FRESH_PROC_INSTALLED=' + str(cypy_hook.is_hook_installed()))\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'cypy_hook' has no attribute 'is_hook_installed'"
+  },
+  "install_cli": {
+   "rc": 0,
+   "out": "[OK] Cypy import hook installed successfully\n  Now you can import .py files with '#!bin cypy' header directly",
+   "err": ""
+  },
+  "fresh_process_after_install": {
+   "rc": 1,
+   "out": "",
+   "err": "Traceback (most recent call last):\n  File \"<string>\", line 2, in <module>\n    print('FRESH_PROC_INSTALLED=' + str(cypy_hook.is_hook_installed()))\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'cypy_hook' has no attribute 'is_hook_installed'"
+  },
+  "same_process_api": {
+   "rc": 1,
+   "out": "",
+   "err": "Traceback (most recent call last):\n  File \"<string>\", line 2, in <module>\n    cypy_hook.install_hook()\n    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'cypy_hook' has no attribute 'install_hook'"
+  },
+  "uninstall_cli": {
+   "rc": 0,
+   "out": "[OK] Cypy import hook uninstalled successfully",
+   "err": ""
+  },
+  "user_site": {
+   "rc": 0,
+   "out": "C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages",
+   "err": ""
+  },
+  "verdict": "install 只在退出即销毁的进程里改了 sys.meta_path，新进程仍判未装"
+ },
+ "watch_triggers": {
+  "files_at_start": [
+   "a.cypy",
+   "lib.cypy"
+  ],
+  "files_after_modify": [
+   "a.cypy",
+   "lib.cypy"
+  ],
+  "files_after_add": [
+   "a.cypy",
+   "b.cypy",
+   "lib.cypy"
+  ],
+  "modify_recompiled": false,
+  "add_recompiled": false,
+  "stdout_lines": [
+   "============================================================",
+   "Cypy Hot Reload Development Server",
+   "============================================================",
+   "Watching directory: C:\\Users\\victo\\AppData\\Local\\Temp\\r2watch3_9orho837",
+   "Output directory: output",
+   "Debounce delay: 0.2s",
+   "Press Ctrl+C to stop",
+   "[CypyFileMonitor] Found 2 Cypy files to monitor",
+   "[CypyFileMonitor] Started monitoring 1 directories",
+   "[HotReload] Engine started, monitoring 1 directories",
+   "[HotReload] File changed: C:\\Users\\victo\\AppData\\Local\\Temp\\r2watch3_9orho837\\a.cypy",
+   "[HotReload] Affected modules: {'a'}",
+   "[HotReload] File changed: C:\\Users\\victo\\AppData\\Local\\Temp\\r2watch3_9orho837\\b.cypy",
+   "[HotReload] Affected modules: {'b'}"
+  ]
+ }
+}

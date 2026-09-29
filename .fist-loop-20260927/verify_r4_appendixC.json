@@ -1,0 +1,381 @@
+{
+ "started": "2026-09-28T00:39:24+00:00",
+ "doc": "SYNTAX/appendix-C-features.md:598《已实现的限制修复》",
+ "face": "python -X utf8 -m cypyc.cli transpile …（真出 .pyx）",
+ "rows_total": 14,
+ "rows": [
+  {
+   "n": 1,
+   "doc_row_verbatim": "| 切片语法 `list[a:b]` | v0.2 |",
+   "matched_key": "切片语法",
+   "kind": "slice",
+   "codegen": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r1_codegen.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "codegen_evidence_missing": [],
+   "typeface": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r1_typeface.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out --check-only",
+    "rc": 1,
+    "diags": [
+     "Return type mismatch: expected list[int], got int at 4:1"
+    ]
+   },
+   "demo_face": {
+    "file": "examples/demos/upcoming_features/planned_features.cypy",
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\examples\\demos\\upcoming_features\\planned_features.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out --check-only",
+    "rc": 1,
+    "diags": [
+     "Type mismatch: expected list[int], got int at 60:9",
+     "Return type mismatch: expected list[int], got int at 67:1",
+     "Return type mismatch: expected list[int], got int at 71:1",
+     "Return type mismatch: expected list[int], got int at 80:1"
+    ]
+   },
+   "verdict": "claim-false",
+   "reason": "生成面 .pyx 证据缺 []；类型面把切片表达式的类型判成容器**元素**类型：实测 ['Return type mismatch: expected list[int], got int at 4:1']；仓内自带 DEMO examples/demos/upcoming_features/planned_features.cypy 走 --check-only 得 1 码、4 条诊断 ⇒ 文档「已实现 v0.2」在调用面不成立"
+  },
+  {
+   "n": 2,
+   "doc_row_verbatim": "| `not in` 操作符 | v0.2 |",
+   "matched_key": "`not in`",
+   "kind": "plain",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r2.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "version__ = '1.0.0'\n__name__ = \"unknown\"\n__file__ = \"\"\n__package__ = \"\"\n__path__ = None\n__compile_time__ = \"2026-09-28T08:39:25\"\n__target__ = \"AMD64-windows\"\n__profile__ = \"debug\"\n__all__ = [\"f\"]\n__private__ = []\n__deps__ = []\ndef f(xs):\n    return 5 not in xs",
+   "evidence_missing": [],
+   "call_counts": {},
+   "named_method_calls": -1,
+   "verdict": "verified",
+   "reason": ""
+  },
+  {
+   "n": 3,
+   "doc_row_verbatim": "| `not is` 操作符 | v0.2 |",
+   "matched_key": "`not is`",
+   "kind": "plain",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r3.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "ersion__ = '1.0.0'\n__name__ = \"unknown\"\n__file__ = \"\"\n__package__ = \"\"\n__path__ = None\n__compile_time__ = \"2026-09-28T08:39:25\"\n__target__ = \"AMD64-windows\"\n__profile__ = \"debug\"\n__all__ = [\"f\"]\n__private__ = []\n__deps__ = []\ndef f(a, b):\n    return a is not b",
+   "evidence_missing": [],
+   "call_counts": {},
+   "named_method_calls": -1,
+   "verdict": "verified",
+   "reason": ""
+  },
+  {
+   "n": 4,
+   "doc_row_verbatim": "| Codegen `_generate_tuple_condition` | v0.2 |",
+   "matched_key": "_generate_tuple_condition",
+   "kind": "counted",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r4.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "[0] == 0 and _match_subject_1[1] == 0:\n        return 0\n    elif isinstance(_match_subject_1, (list, tuple)) and len(_match_subject_1) == 2 and True and _match_subject_1[1] == 0:\n        x = _match_subject_1[0]\n        return x\n    elif True:\n        return -1",
+   "evidence_missing": [],
+   "call_counts": {
+    "counts": {},
+    "len": 1123,
+    "analyze_errors": []
+   },
+   "named_method_calls": 0,
+   "verdict": "claim-half-true",
+   "reason": "行为面成立（生成物含 ['isinstance(_match_subject_1, (list, tuple))', 'len(_match_subject_1) == 2']），但文档点名的私有方法 `_generate_tuple_condition` 调用计数为 0 ⇒ 该名字不在活路径上（活路径在 `_pattern_match_info`，把同样的条件就地拼出来）"
+  },
+  {
+   "n": 5,
+   "doc_row_verbatim": "| Codegen `_generate_array_condition` | v0.2 |",
+   "matched_key": "_generate_array_condition",
+   "kind": "counted",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r5.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "s__ = []\ndef f(xs):\n    _match_subject_1 = xs\n    if isinstance(_match_subject_1, (list, tuple)) and len(_match_subject_1) >= 1 and True:\n        head = _match_subject_1[0]\n        rest = _match_subject_1[1:]\n        return head\n    elif True:\n        return 0",
+   "evidence_missing": [],
+   "call_counts": {
+    "counts": {},
+    "len": 977,
+    "analyze_errors": []
+   },
+   "named_method_calls": 0,
+   "verdict": "claim-half-true",
+   "reason": "行为面成立（生成物含 ['isinstance(_match_subject_1, (list, tuple))', 'len(_match_subject_1) >= 1', 'rest = _match_subject_1[1:]']），但文档点名的私有方法 `_generate_array_condition` 调用计数为 0 ⇒ 该名字不在活路径上（活路径在 `_pattern_match_info`，把同样的条件就地拼出来）"
+  },
+  {
+   "n": 6,
+   "doc_row_verbatim": "| Codegen `_generate_dict_condition` | v0.2 |",
+   "matched_key": "_generate_dict_condition",
+   "kind": "counted",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r6.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "s\"\n__profile__ = \"debug\"\n__all__ = [\"f\"]\n__private__ = []\n__deps__ = []\ndef f(d):\n    _match_subject_1 = d\n    if isinstance(_match_subject_1, dict) and 'a' in _match_subject_1:\n        v = _match_subject_1['a']\n        return v\n    elif True:\n        return 0",
+   "evidence_missing": [],
+   "call_counts": {
+    "counts": {},
+    "len": 914,
+    "analyze_errors": []
+   },
+   "named_method_calls": 0,
+   "verdict": "claim-half-true",
+   "reason": "行为面成立（生成物含 ['isinstance(_match_subject_1, dict)', \"'a' in _match_subject_1\"]），但文档点名的私有方法 `_generate_dict_condition` 调用计数为 0 ⇒ 该名字不在活路径上（活路径在 `_pattern_match_info`，把同样的条件就地拼出来）"
+  },
+  {
+   "n": 7,
+   "doc_row_verbatim": "| 三元条件表达式 `x if c else y` | v0.3 |",
+   "matched_key": "三元条件表达式",
+   "kind": "plain",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r7.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "0.0'\n__name__ = \"unknown\"\n__file__ = \"\"\n__package__ = \"\"\n__path__ = None\n__compile_time__ = \"2026-09-28T08:39:28\"\n__target__ = \"AMD64-windows\"\n__profile__ = \"debug\"\n__all__ = [\"f\"]\n__private__ = []\n__deps__ = []\ndef f(x):\n    return ('pos' if x > 0 else 'neg')",
+   "evidence_missing": [],
+   "call_counts": {},
+   "named_method_calls": -1,
+   "verdict": "verified",
+   "reason": ""
+  },
+  {
+   "n": 8,
+   "doc_row_verbatim": "| `*args`/`**kwargs` 可变参数 | v0.3 |",
+   "matched_key": "*args",
+   "kind": "plain",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r8.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "__package__ = \"\"\n__path__ = None\n__compile_time__ = \"2026-09-28T08:39:28\"\n__target__ = \"AMD64-windows\"\n__profile__ = \"debug\"\n__all__ = [\"f\"]\n__private__ = []\n__deps__ = []\ndef f(*args, **kwargs):\n    n: int = 0\n    for a in args:\n        n = n + 1\n    return n",
+   "evidence_missing": [],
+   "call_counts": {},
+   "named_method_calls": -1,
+   "verdict": "verified",
+   "reason": ""
+  },
+  {
+   "n": 9,
+   "doc_row_verbatim": "| 整除运算符 `//` | v0.3 |",
+   "matched_key": "整除运算符",
+   "kind": "plain",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r9.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "le_version__ = '1.0.0'\n__name__ = \"unknown\"\n__file__ = \"\"\n__package__ = \"\"\n__path__ = None\n__compile_time__ = \"2026-09-28T08:39:29\"\n__target__ = \"AMD64-windows\"\n__profile__ = \"debug\"\n__all__ = [\"f\"]\n__private__ = []\n__deps__ = []\ndef f(a, b):\n    return a // b",
+   "evidence_missing": [],
+   "call_counts": {},
+   "named_method_calls": -1,
+   "verdict": "verified",
+   "reason": ""
+  },
+  {
+   "n": 10,
+   "doc_row_verbatim": "| 复合赋值 `//=`、`%=` | v0.3 |",
+   "matched_key": "复合赋值",
+   "kind": "plain",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r10.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "'\n__name__ = \"unknown\"\n__file__ = \"\"\n__package__ = \"\"\n__path__ = None\n__compile_time__ = \"2026-09-28T08:39:29\"\n__target__ = \"AMD64-windows\"\n__profile__ = \"debug\"\n__all__ = [\"f\"]\n__private__ = []\n__deps__ = []\ndef f(x):\n    x = x // 3\n    x = x % 5\n    return x",
+   "evidence_missing": [],
+   "call_counts": {},
+   "named_method_calls": -1,
+   "verdict": "verified",
+   "reason": "生成物把 `//=`/`%=` 脱糖成 `x = x // 3` 形式"
+  },
+  {
+   "n": 11,
+   "doc_row_verbatim": "| `global`/`nonlocal` 声明 | v0.4 |",
+   "matched_key": "global",
+   "kind": "plain",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r11.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "= [\"bump\", \"outer\"]\n__private__ = []\n__deps__ = []\ncounter = 0\ndef bump():\n    global counter\n    global counter\n    counter = counter + 1\ndef outer():\n    total = 0\n    def inner():\n        nonlocal total\n        total = total + 1\n    inner()\n    return total",
+   "evidence_missing": [],
+   "call_counts": {},
+   "named_method_calls": -1,
+   "verdict": "verified",
+   "reason": ""
+  },
+  {
+   "n": 12,
+   "doc_row_verbatim": "| CythonGenerator `await` 表达式 | v0.4 |",
+   "matched_key": "`await` 表达式",
+   "kind": "plain",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r12.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "age__ = \"\"\n__path__ = None\n__compile_time__ = \"2026-09-28T08:39:30\"\n__target__ = \"AMD64-windows\"\n__profile__ = \"debug\"\n__all__ = [\"helper\", \"drive\"]\n__private__ = []\n__deps__ = []\nasync def helper(v):\n    return v\nasync def drive(v):\n    return await helper(v)",
+   "evidence_missing": [],
+   "call_counts": {},
+   "named_method_calls": -1,
+   "verdict": "verified",
+   "reason": ""
+  },
+  {
+   "n": 13,
+   "doc_row_verbatim": "| CythonGenerator `async def` 函数 | v0.4 |",
+   "matched_key": "`async def`",
+   "kind": "plain",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r13.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "on__ = '1.0.0'\n__name__ = \"unknown\"\n__file__ = \"\"\n__package__ = \"\"\n__path__ = None\n__compile_time__ = \"2026-09-28T08:39:31\"\n__target__ = \"AMD64-windows\"\n__profile__ = \"debug\"\n__all__ = [\"helper\"]\n__private__ = []\n__deps__ = []\nasync def helper(v):\n    return v",
+   "evidence_missing": [],
+   "call_counts": {},
+   "named_method_calls": -1,
+   "verdict": "verified",
+   "reason": ""
+  },
+  {
+   "n": 14,
+   "doc_row_verbatim": "| CythonGenerator BacktickBlock | v0.4 |",
+   "matched_key": "BacktickBlock",
+   "kind": "plain",
+   "probe": {
+    "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\r14.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\appendixC\\out",
+    "rc": 0,
+    "diags": []
+   },
+   "pyx_exists": true,
+   "pyx_tail": "odule_version__ = '1.0.0'\n__name__ = \"unknown\"\n__file__ = \"\"\n__package__ = \"\"\n__path__ = None\n__compile_time__ = \"2026-09-28T08:39:31\"\n__target__ = \"AMD64-windows\"\n__profile__ = \"debug\"\n__all__ = [\"f\"]\n__private__ = []\n__deps__ = []\ndef f():\n    s = 'print(1)'",
+   "evidence_missing": [],
+   "call_counts": {},
+   "named_method_calls": -1,
+   "verdict": "verified",
+   "reason": ""
+  }
+ ],
+ "verified": [
+  2,
+  3,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14
+ ],
+ "claim_false": [
+  1
+ ],
+ "claim_half_true": [
+  4,
+  5,
+  6
+ ],
+ "unverified": [],
+ "deviations": [
+  {
+   "n": 1,
+   "doc_row": "| 切片语法 `list[a:b]` | v0.2 |",
+   "verdict": "claim-false",
+   "reason": "生成面 .pyx 证据缺 []；类型面把切片表达式的类型判成容器**元素**类型：实测 ['Return type mismatch: expected list[int], got int at 4:1']；仓内自带 DEMO examples/demos/upcoming_features/planned_features.cypy 走 --check-only 得 1 码、4 条诊断 ⇒ 文档「已实现 v0.2」在调用面不成立"
+  },
+  {
+   "n": 4,
+   "doc_row": "| Codegen `_generate_tuple_condition` | v0.2 |",
+   "verdict": "claim-half-true",
+   "reason": "行为面成立（生成物含 ['isinstance(_match_subject_1, (list, tuple))', 'len(_match_subject_1) == 2']），但文档点名的私有方法 `_generate_tuple_condition` 调用计数为 0 ⇒ 该名字不在活路径上（活路径在 `_pattern_match_info`，把同样的条件就地拼出来）"
+  },
+  {
+   "n": 5,
+   "doc_row": "| Codegen `_generate_array_condition` | v0.2 |",
+   "verdict": "claim-half-true",
+   "reason": "行为面成立（生成物含 ['isinstance(_match_subject_1, (list, tuple))', 'len(_match_subject_1) >= 1', 'rest = _match_subject_1[1:]']），但文档点名的私有方法 `_generate_array_condition` 调用计数为 0 ⇒ 该名字不在活路径上（活路径在 `_pattern_match_info`，把同样的条件就地拼出来）"
+  },
+  {
+   "n": 6,
+   "doc_row": "| Codegen `_generate_dict_condition` | v0.2 |",
+   "verdict": "claim-half-true",
+   "reason": "行为面成立（生成物含 ['isinstance(_match_subject_1, dict)', \"'a' in _match_subject_1\"]），但文档点名的私有方法 `_generate_dict_condition` 调用计数为 0 ⇒ 该名字不在活路径上（活路径在 `_pattern_match_info`，把同样的条件就地拼出来）"
+  }
+ ],
+ "canary_caught": 1,
+ "note": "行清单从冻结文档反解；`claim-false` 是「文档说已实现而调用面不成立」，`claim-half-true` 是「行为成立但文档点名的私有方法不在活路径上」；本环不改文档（冻结面）、不改产品码，只入账交裁决",
+ "self_checks": [
+  {
+   "label": "文档行清单必须当场反解到 14 行",
+   "got": 14,
+   "want": 14,
+   "why": "《已实现的限制修复》表体",
+   "ok": true
+  },
+  {
+   "label": "每行都要有对应探针（映射漏行=无人认领）",
+   "got": [],
+   "want": [],
+   "why": "见 rows",
+   "ok": true
+  },
+  {
+   "label": "canary：必然缺失的证据必须被判为缺失（否则匹配器恒真）",
+   "got": 1,
+   "want": 1,
+   "why": "rc=0 pyx_len=773",
+   "ok": true
+  },
+  {
+   "label": "每行结论必须四档之一",
+   "got": true,
+   "want": true,
+   "why": "见 verdict",
+   "ok": true
+  },
+  {
+   "label": "行数分类必须穷尽",
+   "got": 14,
+   "want": 14,
+   "why": "verified+claim-false+claim-half-true+unverified",
+   "ok": true
+  },
+  {
+   "label": "「名字在活路径上」不得被算成 verified",
+   "got": [],
+   "want": [],
+   "why": "counted 行的 method 调用为 0 却进了 verified",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T00:39:32+00:00"
+}

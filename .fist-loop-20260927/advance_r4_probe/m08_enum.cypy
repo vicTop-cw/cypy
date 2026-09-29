@@ -1,0 +1,11 @@
+enum Shape:
+    CIRCLE(radius: float)
+    RECTANGLE(width: float, height: float)
+
+let shape: Shape = Shape.CIRCLE(radius=5.0)
+
+def main() -> int:
+    match shape:
+        case Shape.CIRCLE(r):
+            print(r)
+    return 0

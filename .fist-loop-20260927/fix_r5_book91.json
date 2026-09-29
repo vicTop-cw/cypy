@@ -1,0 +1,139 @@
+{
+  "started_at_utc": "2026-09-28T10:13:59Z",
+  "ring": "R5-修复",
+  "bug_num": "BUG-91",
+  "expected_num": "BUG-91",
+  "rpc": {
+    "bug_id": "BUG-91",
+    "raw_keys": [
+      "bug_id",
+      "id",
+      "path",
+      "project_dir",
+      "resolved_path",
+      "status",
+      "task_id",
+      "task_namespace"
+    ]
+  },
+  "measurement": {
+    "before": {
+      "tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal": "",
+      "tests/test_project_compiler.py::TestProjectCompiler::test_single_module_compile": ""
+    },
+    "red_while_removed": {
+      "tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal": "E       AssertionError:\nE         Cython module compiled from Cypy source\nE         Source file: C:\\Users\\who\\proj\\main.cypy\nE       assert '\\\\\\\\Users' in '\\nCython module compiled from Cypy source\\nSource file: C:\\\\Users\\\\who\\\\proj\\\\main.cypy\\n'\ntests\\codegen\\test_r5_fix_codegen.py:503: AssertionError\nFAILED tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal",
+      "tests/test_project_compiler.py::TestProjectCompiler::test_single_module_compile": "E           AssertionError: assert 'main' in []\nE            +  where [] = ProjectCompileResult(success=False, compiled_modules=[], failed_modules=['main'], errors={'main': ['Build failed: honS...cted=[], total_time=1.5839195251464844, type_registry_stats={'modules': 1, 'total_exports': 1, 'unique_type_names': 1}).compiled_modules\ntests\\test_project_compiler.py:161: AssertionError\nFAILED tests/test_project_compiler.py::TestProjectCompiler::test_single_module_compile"
+    },
+    "green_after_restore": {
+      "tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal": "",
+      "tests/test_project_compiler.py::TestProjectCompiler::test_single_module_compile": ""
+    },
+    "generator_sha": "34866deeeb68"
+  },
+  "targets": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal",
+    "tests/test_project_compiler.py::TestProjectCompiler::test_single_module_compile"
+  ],
+  "ledger_before": 90,
+  "ledger_after": 91,
+  "sqlite_bugs": [
+    86,
+    87
+  ],
+  "calllog_report_bug": [
+    118,
+    119
+  ],
+  "checks": [
+    {
+      "label": "锚点唯一：产品码里那条 replace 只有一处",
+      "ok": true,
+      "got": 1,
+      "want": 1,
+      "why": "命中 1 处"
+    },
+    {
+      "label": "摘除前两条锁都必须绿",
+      "ok": true,
+      "got": [
+        0,
+        0
+      ],
+      "want": [
+        0,
+        0
+      ],
+      "why": "{'tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal': (0, ''), 'tests/test_project_compiler.py::TestProjectCompiler::test_single_module_compile': (0, '')}"
+    },
+    {
+      "label": "摘除后两条锁都必须红",
+      "ok": true,
+      "got": [
+        1,
+        1
+      ],
+      "want": [
+        1,
+        1
+      ],
+      "why": "{'tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal': (1, \"E       AssertionError:\\nE         Cython module compiled from Cypy source\\nE         Source file: C:\\\\Users\\\\who\\\\proj\\\\main.cypy\\nE       assert '\\\\\\\\\\\\\\\\Users' in '\\\\nCython module compiled from Cypy source\\\\nSource file: C:\\\\\\\\Users\\\\\\\\who\\\\\\\\proj\\\\\\\\main.cypy\\\\n'\\ntests\\\\codegen\\\\test_r5_fix_codegen.py:503: AssertionError\\nFAILED tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal\"), 'tests/test_project_compiler.py::TestProjectCompiler::test_single_module_compile': (1, \"E           AssertionError: assert 'main' in []\\nE            +  where [] = ProjectCompileResult(success=False, compiled_modules=[], failed_modules=['main'], errors={'main': ['Build failed: honS...cted=[], total_time=1.5839195251464844, type_registry_stats={'modules': 1, 'total_exports': 1, 'unique_type_names': 1}).compiled_modules\\ntests\\\\test_project_compiler.py:161: AssertionError\\nFAILED tests/test_project_compiler.py::TestProjectCompiler::test_single_module_compile\")}"
+    },
+    {
+      "label": "装回后两条锁都必须绿",
+      "ok": true,
+      "got": [
+        0,
+        0
+      ],
+      "want": [
+        0,
+        0
+      ],
+      "why": "{'tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal': (0, ''), 'tests/test_project_compiler.py::TestProjectCompiler::test_single_module_compile': (0, '')}"
+    },
+    {
+      "label": "装回按字节一致（没顺手改坏别处）",
+      "ok": true,
+      "got": "34866deeeb68",
+      "want": "34866deeeb68",
+      "why": "sha 前 12 位"
+    },
+    {
+      "label": "账本新条目号就是预期的下一号",
+      "ok": true,
+      "got": "BUG-91",
+      "want": "BUG-91",
+      "why": "现有 [86, 87, 88, 89, 90, 91]"
+    },
+    {
+      "label": "新单标题进了账本正文",
+      "ok": true,
+      "got": true,
+      "want": true,
+      "why": "机制签名"
+    },
+    {
+      "label": "sqlite bugs 树 +1",
+      "ok": true,
+      "got": 1,
+      "want": 1,
+      "why": "86→87"
+    },
+    {
+      "label": "call_log report_bug +1",
+      "ok": true,
+      "got": 1,
+      "want": 1,
+      "why": "118→119"
+    },
+    {
+      "label": "RPC 回了单号（不能只靠账本）",
+      "ok": true,
+      "got": true,
+      "want": true,
+      "why": "{\"bug_id\": \"BUG-91\", \"id\": \"BUG-91\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"bugs\", \"task_id\": \"T0r111\"}"
+    }
+  ],
+  "refuse": []
+}

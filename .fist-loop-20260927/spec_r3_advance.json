@@ -1,0 +1,134 @@
+{
+ "key": "r3_advance",
+ "tag": "[loop:20260927-loop:R3-推进]",
+ "assignee": "cypy-advancer",
+ "difficulty": "难",
+ "description": "[loop:20260927-loop:R3-推进] 推进（advance）R3，半径严格限在**文档已声明、代码未实现**这一条：SYNTAX/12-type-alias.md 第 11 行把 `type Callback = Callable[[int], str]` 与 `def process(callback: Callback)` 写成受支持语法，SYNTAX/appendix-C-features.md:594 又把 `Callable[[T], R] 函数类型标注` 列进「已知限制（尚未实现）」。当场实测（tmp_advance/probe2.py，五格）：① `Callable[[int], str]` 的**返回类型推断已经生效**（`def apply(f: Callable[[int], str]) -> int` 报 Return type mismatch ⇒ type_checker.py:1054-1065 那条分支活着）；② 但**入参形状完全不查**（`f(1, 2)` 对 `Callable[[int], str]` rc=0 静默出码）；③ 类型别名那一层 `type Callback = Callable[...]` 塌成 `ctypedef object Callback`，参数签名丢类型（`def process(cb)`）。本环只补 ② —— 在分析层实现 `Callable[[T1,...,Tn], R]` 的**元数检查**（arity），形状不认识就宁可不判（不误判）；③ 的别名塌缩与 `Callable[..., R]` 的变长形态（实测 parser 直接 `Unexpected token DOT_DOT`，且 SYNTAX 未声明该形）**不进本环半径**，只点名挂账。codegen 产物形状必须一字不变（用同一源的改前/改后 .pyx 差分证明）；三套判据体系与 git 红线同批复算，基线只升不降（pytest 地板从 1929 起随新锁上调）；omega 强验证 / call_log 全开，不可逆动作一律挂账。",
+ "fingerprint": {
+  "必须": "新行为有『违例必红 + 正确调用必不红』成对锁；形状不认识的 Callable 必须跳过而非误判；codegen 产物逐字差分（除时间戳行）；全量语料与三套体系复算；半径逐档归属本单；页脚每格从判据件反解且自审含注入自测",
+  "禁止": "改 SYNTAX/PROJECT-SPEC 冻结文档；实现未在文档声明的形态（`Callable[..., R]`）；动 codegen 的 object 回退语义；弱化/删除既有测试；git add/commit/push；把『已声明未实现』的其余条目顺手做掉"
+ },
+ "split_n": 8,
+ "laws": [
+  {
+   "name": "元数检查落地：`Callable[[T1..Tn], R]` 被以 m≠n 调用时必报 arity 错，形状不认识则跳过不误判",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r3_arity.json",
+     "violation_cases",
+     1
+    ],
+    [
+     ".fist-loop-20260927/advance_r3_arity.json",
+     "clean_cases_green",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "成对回归锁：每条新锁都要『摘掉实现就红』且『只改注释仍绿』，与既有两条 Callable 锁不得互相顶包",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r3_locks.json",
+     "new_locks",
+     1
+    ],
+    [
+     ".fist-loop-20260927/advance_r3_locks.json",
+     "each_new_lock_red_when_reverted",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "产物面不动：同一源在改动前/后的 .pyx 逐字差分（除 `__compile_time__`/`__generated_at__` 两行），证明本环没动 codegen",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r3_codegen_diff.json",
+     "cases",
+     1
+    ],
+    [
+     ".fist-loop-20260927/advance_r3_codegen_diff.json",
+     "all_textual_identical",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "语料零新增红：examples/ 与两套测试体系在改动后复算，既有 Callable 用法（正确元数）不得被误判",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r3_corpus.json",
+     "samples_scanned",
+     1
+    ],
+    [
+     ".fist-loop-20260927/advance_r3_corpus.json",
+     "new_errors_outside_locks",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "半径外形状点名挂账：别名塌缩成 object、`Callable[..., R]` parser 直接拒绝且 SYNTAX 未声明该形 ⇒ 只记不 implement",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r3_scope_face.json",
+     "outside_radius",
+     1
+    ],
+    [
+     ".fist-loop-20260927/advance_r3_scope_face.json",
+     "frozen_doc_rows",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "三套判据体系与红线复算：pytest 地板随新锁上调且收集数同步，套件 47/47、e2e 25/25，git 红线未动",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r3_baselines.json",
+     "pytest",
+     1
+    ],
+    [
+     ".fist-loop-20260927/advance_r3_baselines.json",
+     "three_systems_green",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "改动半径逐档归属本单：mtime 反解与清单双向对表（多一档越界、少一档未落地都算红）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r3_baselines.json",
+     "radius",
+     1
+    ],
+    [
+     ".fist-loop-20260927/advance_r3_baselines.json",
+     "radius_exact",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "不可逆面零执行且判据通道自测必红：逐条 live/derived/manifest 分级，注入假违例必须被抓住",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r3_irreversible.json",
+     "self_test",
+     1
+    ],
+    [
+     ".fist-loop-20260927/advance_r3_irreversible.json",
+     "executed_none",
+     1
+    ]
+   ]
+  }
+ ]
+}

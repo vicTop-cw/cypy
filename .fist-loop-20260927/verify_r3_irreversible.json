@@ -1,0 +1,172 @@
+{
+ "refuse": [],
+ "items": 10,
+ "live_probe_items": 9,
+ "manifest_items": 1,
+ "executed_none": 1,
+ "executed": [],
+ "probes": {
+  "probe_commit": true,
+  "probe_index": true,
+  "probe_push": true,
+  "probe_branch_delete": true,
+  "probe_file_deletion": true,
+  "probe_db_purge": true,
+  "probe_frozen_docs": true,
+  "probe_pr_and_external": true,
+  "probe_worktrees": true
+ },
+ "detail": [
+  {
+   "action": "git commit（本地提交）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "head": "17d68b436962",
+    "expected": "17d68b4",
+    "reflog_top": "17d68b4 HEAD@{2026-09-02T17:59:02+08:00}: reset: moving to HEAD",
+    "reflog_entries_after_stage_start": []
+   },
+   "note": "实测判据：HEAD 仍是本轮底树 17d68b4，且 HEAD 的 reflog 在本环开工时刻之后没有新条目"
+  },
+  {
+   "action": "git add / 暂存区写入",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "staged_files": [],
+    "staged_count": 0,
+    "dirty_rows": 166
+   },
+   "note": "暂存区必须为空；工作树的 163~166 条脏行是历轮未提交成果（红线禁止提交，只挂账）"
+  },
+  {
+   "action": "git push / 任何远端写入",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "remote_refs_checked": 4,
+    "remote_refs_moved_after_stage_start": [],
+    "upstream": [
+     "origin/master"
+    ]
+   },
+   "note": "只读 ref 元信息（名字/commit/时间）；不读 .env、不探测也不回显任何凭据"
+  },
+  {
+   "action": "删分支 / 分支迁移",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "local_branches": [
+     "master"
+    ],
+    "suspicious_reflog_after_stage_start": []
+   },
+   "note": "本地分支数与名字当场列出；开工后 reflog 里不得出现 delete/reset"
+  },
+  {
+   "action": "删文件（tracked）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "tracked_files": 330,
+    "tracked_absent_on_disk": 10,
+    "sample": [
+     "examples/demos/legacy/analyzer/type_checking.cypy",
+     "examples/demos/legacy/builtins/defer_and_guard.cypy",
+     "examples/demos/legacy/builtins/generics.cypy",
+     "examples/demos/legacy/builtins/pointer_operations.cypy",
+     "examples/demos/legacy/codegen/cdef_class_generation.cypy",
+     "examples/demos/legacy/codegen/module_magic_attrs.cypy"
+    ],
+    "note": "这些 D 条目是本环开工之前就存在的历轮删除（未提交），本环没有新增删除：半径判据见 verify_r3_baselines.json（count=0）"
+   },
+   "note": "删除数只作前后对照基线；本环的「没删东西」由半径 mtime 判据与 git 状态共同承重"
+  },
+  {
+   "action": "清空/回退 FIST 任务库",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "db": "fist-mbt.db",
+    "row_counts": {
+     "tasks": 401,
+     "specs": 594,
+     "runs": 0,
+     "call_log": 3027,
+     "memory": null
+    },
+    "call_log_rows_at_fix_closure": 400,
+    "shrink_vs_previous_stage": {}
+   },
+   "note": "call_log 只增不减 ⇒ 只读探针比对上一环收口时的行数"
+  },
+  {
+   "action": "改冻结文档（PROJECT-SPEC / SYNTAX）——本环窗口内",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "diff_vs_HEAD_files": [
+     "SYNTAX/01-basic-types.md",
+     "SYNTAX/appendix-A-keywords.md"
+    ],
+    "git_stderr_notes": [
+     "warning: in the working copy of 'SYNTAX/appendix-A-keywords.md', LF will be replaced by CRLF the next time Git touches it"
+    ],
+    "newest_file": "E:\\IDEProjects\\AI\\Cypy\\SYNTAX\\01-basic-types.md",
+    "newest_mtime_utc": "2026-09-26T14:40:23.643865+00:00",
+    "stage_start_utc": "2026-09-27T17:01:14+00:00",
+    "any_file_mtime_after_stage_start": false
+   },
+   "note": "判据只看本环窗口：目录里最新 mtime 必须早于开工时刻（mtime 与 HEAD 差异是两回事，既存漂移另立一条并写明归属，不在这里冒充零漂移）"
+  },
+  {
+   "action": "冻结文档相对 HEAD 的既存漂移（非本环所为）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "files": [
+     "SYNTAX/01-basic-types.md",
+     "SYNTAX/appendix-A-keywords.md"
+    ],
+    "changed_lines": 52,
+    "attribution": "mtime 全在 2026-09-27 本环开工之前；appendix-A-keywords.md 正文自带『实测快照（2026-09-26 11:24）』字样并写明是补齐 constraint/subtype/true/false 四行的口径修正 ⇒ 归 R2 特性轮的未提交成果，不是本环动作",
+    "status": "挂账待裁决（红线：不改冻结语义；已改的部分要不要回退只有 owner 能定）"
+   },
+   "note": "本条不是『本环做了不可逆动作』，而是把红线相关面当下真实状态点名——写成零漂移会是假话，写成本环违规同样是不诚实"
+  },
+  {
+   "action": "合并 PR / 开 Issue 等外部可见动作",
+   "executed": false,
+   "method": "manifest",
+   "evidence": {
+    "commands_this_stage_are_local_only": true,
+    "external_write_tools_used": [
+     "FIST-Mbt 任务链 RPC（claim/omega/submit/verify，属流程内、可复核、不删数据）"
+    ],
+    "evidence_source": "本环判据件的命令字段（verify_r3_*.json 的 how/detail 全为本地命令）"
+   },
+   "note": "外部动作只能给清单级证据：盘面上没有「没推送的 PR」这种可探针对象，故不冒充 live_probe"
+  },
+  {
+   "action": "删别人家的 worktree / 留自己的快照树不清",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "worktrees": [
+     "E:/IDEProjects/AI/Cypy",
+     "E:/IDEProjects/AI/_cypy_head_baseline"
+    ],
+    "foreign_present": true,
+    "own_snapshot_dirs_left": [
+     "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_verify\\snap_50172",
+     "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_verify\\snap_8940"
+    ]
+   },
+   "note": "foreign_present 必须 True（没删别人的）；自己的快照树在收口步删除，本条记录当下还剩哪些"
+  }
+ ],
+ "stage_start_utc": "2026-09-27T17:01:14+00:00",
+ "measured_at_utc": "2026-09-27T17:20:15.349500+00:00"
+}

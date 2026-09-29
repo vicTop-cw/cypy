@@ -1,0 +1,7495 @@
+{
+ "started": "2026-09-28T10:58:25+00:00",
+ "ring_start_utc": "2026-09-28T08:07:06Z",
+ "root_status_at_rc": "拆分中",
+ "ring_tag_rows": 1,
+ "self_checks": [
+  {
+   "label": "反例：车道自报一个盘上没有的文件必须被 B 通道抓到",
+   "got": [
+    "cypyc/不存在的文件.py"
+   ],
+   "want": [
+    "cypyc/不存在的文件.py"
+   ],
+   "why": "实得 ['cypyc/不存在的文件.py']",
+   "ok": true
+  },
+  {
+   "label": "反例：认领面里不许混进盘上不存在的文件（intake 已挡，这里复算一遍）",
+   "got": [],
+   "want": [],
+   "why": "混进来的：[]",
+   "ok": true
+  },
+  {
+   "label": "改动点守恒：每个文件归到符号的改动行数必须等于 diff 新增行段数（不吞行也不造行）",
+   "got": {},
+   "want": {},
+   "why": "对不齐的样本：[] / 参与守恒的文件 17 个",
+   "ok": true
+  },
+  {
+   "label": "本环改过的每个文件要么被车道报出要么逐张点名（改了没人报=清单口径漏面）",
+   "got": [],
+   "want": [],
+   "why": "无人报的改动文件：[]（共 0 个）",
+   "ok": true
+  },
+  {
+   "label": "车道报出的文件必须在 diff 里数得到（说了不算，要看盘）",
+   "got": [],
+   "want": [],
+   "why": "报了但 diff 里没有：[]",
+   "ok": true
+  }
+ ],
+ "self_checks_red": [],
+ "planned_keys": [
+  "BRIDGE_cache_side_effect",
+  "BRIDGE_c_not_equivalent",
+  "SLICE_typed_as_element",
+  "CODEGEN_named_conditions_unreachable",
+  "PYD_incremental_cache_not_reused",
+  "CODEGEN_augmented_xor_drops_left_operand",
+  "LEXER_bitwise_xor_and_invert_unreachable",
+  "DEFER_nested_return_exit_skips_cleanup",
+  "CODEGEN_binop_parens_dropped_changes_order",
+  "LEXER_declared_augassign_never_lexed",
+  "CODEGEN_nested_defer_runs_eagerly",
+  "COMPTIME_collection_literal_leaks_ast_repr",
+  "COMPTIME_string_result_emitted_unescaped",
+  "COMPTIME_block_form_surfaces_internal_exception",
+  "TYPES_documented_pointer_element_names_undefined",
+  "CLI_global_option_overwritten_by_subparser",
+  "HOOK_bom_marker_silently_not_compiled",
+  "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+  "CLI_build_failure_reason_message_swallowed",
+  "CLI_check_only_ignores_entry_scope",
+  "CODEGEN_module_identity_hardcoded_unknown",
+  "CODEGEN_header_docstring_backslash_escape"
+ ],
+ "change_points": 522,
+ "change_point_rows": [
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "<模块级>",
+   "changed_lines": 28,
+   "line_span": [
+    3,
+    175
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CacheClearReport",
+   "changed_lines": 12,
+   "line_span": [
+    176,
+    187
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CacheClearReport.ok",
+   "changed_lines": 2,
+   "line_span": [
+    188,
+    189
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyCacheManager",
+   "changed_lines": 7,
+   "line_span": [
+    1063,
+    1139
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyCacheManager._base_cache_dir_for",
+   "changed_lines": 4,
+   "line_span": [
+    1096,
+    1099
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyCacheManager._clear_single",
+   "changed_lines": 38,
+   "line_span": [
+    1101,
+    1138
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyCacheManager._clear_tree",
+   "changed_lines": 18,
+   "line_span": [
+    1064,
+    1081
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyCacheManager._find_cache_roots",
+   "changed_lines": 10,
+   "line_span": [
+    1084,
+    1093
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyCacheManager._load_manifest",
+   "changed_lines": 4,
+   "line_span": [
+    967,
+    970
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyCacheManager._remove_file",
+   "changed_lines": 9,
+   "line_span": [
+    1054,
+    1062
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyCacheManager.clear_cache",
+   "changed_lines": 15,
+   "line_span": [
+    1140,
+    1155
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyCacheManager.is_cypy_file",
+   "changed_lines": 9,
+   "line_span": [
+    981,
+    992
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyHook",
+   "changed_lines": 1,
+   "line_span": [
+    309,
+    309
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyHook.analyze_only",
+   "changed_lines": 7,
+   "line_span": [
+    302,
+    308
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyHook.compile_and_import",
+   "changed_lines": 2,
+   "line_span": [
+    754,
+    755
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyHook.compile_to_pyd",
+   "changed_lines": 41,
+   "line_span": [
+    518,
+    608
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyHook.run",
+   "changed_lines": 5,
+   "line_span": [
+    691,
+    695
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyHook.run_cli",
+   "changed_lines": 7,
+   "line_span": [
+    870,
+    876
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyHook.run_module",
+   "changed_lines": 24,
+   "line_span": [
+    632,
+    666
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyHook.transpile",
+   "changed_lines": 6,
+   "line_span": [
+    310,
+    333
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "CypyHook.transpile_file",
+   "changed_lines": 10,
+   "line_span": [
+    352,
+    447
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "FunctionNotFoundError",
+   "changed_lines": 2,
+   "line_span": [
+    171,
+    172
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "_path_under",
+   "changed_lines": 9,
+   "line_span": [
+    104,
+    112
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "_safe_rmtree",
+   "changed_lines": 17,
+   "line_span": [
+    115,
+    131
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "build_isolated_command",
+   "changed_lines": 20,
+   "line_span": [
+    75,
+    94
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "build_isolated_env",
+   "changed_lines": 5,
+   "line_span": [
+    97,
+    101
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "extension_filename",
+   "changed_lines": 3,
+   "line_span": [
+    32,
+    34
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "extension_suffix",
+   "changed_lines": 16,
+   "line_span": [
+    14,
+    29
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "extension_suffixes",
+   "changed_lines": 6,
+   "line_span": [
+    37,
+    42
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "module_name_from_filename",
+   "changed_lines": 28,
+   "line_span": [
+    45,
+    72
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "pick_built_extension",
+   "changed_lines": 31,
+   "line_span": [
+    134,
+    168
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "pick_built_extension.is_prefer_dir",
+   "changed_lines": 2,
+   "line_span": [
+    153,
+    154
+   ]
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "symbol": "pick_built_extension.stem",
+   "changed_lines": 2,
+   "line_span": [
+    156,
+    157
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "<模块级>",
+   "changed_lines": 20,
+   "line_span": [
+    25,
+    789
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "ComptimeEvaluator",
+   "changed_lines": 5,
+   "line_span": [
+    219,
+    558
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "ComptimeEvaluator._evaluate_constant",
+   "changed_lines": 10,
+   "line_span": [
+    307,
+    316
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "ComptimeEvaluator._evaluate_for_statement",
+   "changed_lines": 24,
+   "line_span": [
+    521,
+    555
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "ComptimeEvaluator._evaluate_literal",
+   "changed_lines": 14,
+   "line_span": [
+    318,
+    331
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "ComptimeEvaluator._evaluate_node",
+   "changed_lines": 46,
+   "line_span": [
+    220,
+    304
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "ComptimeEvaluator._for_target_names",
+   "changed_lines": 9,
+   "line_span": [
+    559,
+    567
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "ComptimeEvaluator.evaluate",
+   "changed_lines": 6,
+   "line_span": [
+    208,
+    218
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "ComptimeNotImplementedError",
+   "changed_lines": 8,
+   "line_span": [
+    39,
+    46
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "ComptimeNotImplementedError.__init__",
+   "changed_lines": 7,
+   "line_span": [
+    47,
+    53
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "_find_ast_nodes",
+   "changed_lines": 13,
+   "line_span": [
+    94,
+    106
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "_first_position",
+   "changed_lines": 9,
+   "line_span": [
+    56,
+    64
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "_looks_like_ast_node",
+   "changed_lines": 10,
+   "line_span": [
+    82,
+    91
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "_require_pure_value",
+   "changed_lines": 12,
+   "line_span": [
+    109,
+    120
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "comptime_block_not_implemented",
+   "changed_lines": 13,
+   "line_span": [
+    67,
+    79
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "symbol": "evaluate_comptime",
+   "changed_lines": 11,
+   "line_span": [
+    792,
+    811
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/scope_analyzer.py",
+   "symbol": "ScopeAnalyzer",
+   "changed_lines": 3,
+   "line_span": [
+    495,
+    584
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/scope_analyzer.py",
+   "symbol": "ScopeAnalyzer.__init__",
+   "changed_lines": 9,
+   "line_span": [
+    43,
+    62
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/scope_analyzer.py",
+   "symbol": "ScopeAnalyzer._check_redefinition",
+   "changed_lines": 34,
+   "line_span": [
+    151,
+    188
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/scope_analyzer.py",
+   "symbol": "ScopeAnalyzer._extract_names",
+   "changed_lines": 15,
+   "line_span": [
+    604,
+    634
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/scope_analyzer.py",
+   "symbol": "ScopeAnalyzer._register_builtins",
+   "changed_lines": 13,
+   "line_span": [
+    82,
+    139
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/scope_analyzer.py",
+   "symbol": "ScopeAnalyzer._visit_ConstraintDef",
+   "changed_lines": 14,
+   "line_span": [
+    552,
+    565
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/scope_analyzer.py",
+   "symbol": "ScopeAnalyzer._visit_SubtypeDef",
+   "changed_lines": 17,
+   "line_span": [
+    567,
+    583
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/scope_analyzer.py",
+   "symbol": "ScopeAnalyzer._visit_TypeAlias",
+   "changed_lines": 3,
+   "line_span": [
+    543,
+    545
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "<模块级>",
+   "changed_lines": 2,
+   "line_span": [
+    2,
+    3
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "Type",
+   "changed_lines": 5,
+   "line_span": [
+    28,
+    32
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "Type.__eq__",
+   "changed_lines": 5,
+   "line_span": [
+    23,
+    27
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker",
+   "changed_lines": 80,
+   "line_span": [
+    747,
+    3545
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker.__init__",
+   "changed_lines": 41,
+   "line_span": [
+    106,
+    152
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._bare_container_type",
+   "changed_lines": 2,
+   "line_span": [
+    3543,
+    3544
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._bound_member_satisfied",
+   "changed_lines": 28,
+   "line_span": [
+    3513,
+    3540
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._bound_names_of_pattern",
+   "changed_lines": 42,
+   "line_span": [
+    705,
+    746
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._call_is_judgable",
+   "changed_lines": 8,
+   "line_span": [
+    1135,
+    1142
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._callable_arg_mismatch",
+   "changed_lines": 26,
+   "line_span": [
+    1108,
+    1133
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._callable_declared_params",
+   "changed_lines": 13,
+   "line_span": [
+    1165,
+    1177
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._callable_signature_assignable",
+   "changed_lines": 15,
+   "line_span": [
+    1092,
+    1106
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._check_bound_satisfaction",
+   "changed_lines": 58,
+   "line_span": [
+    3452,
+    3511
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._check_callable_arg_types",
+   "changed_lines": 20,
+   "line_span": [
+    1144,
+    1163
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._check_callable_arity",
+   "changed_lines": 23,
+   "line_span": [
+    1179,
+    1201
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._check_constraint_definition",
+   "changed_lines": 44,
+   "line_span": [
+    1842,
+    1885
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._check_generic_constraint",
+   "changed_lines": 12,
+   "line_span": [
+    3366,
+    3450
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._check_impl_on_subtype",
+   "changed_lines": 22,
+   "line_span": [
+    2237,
+    2258
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._check_isinstance_on_subtype",
+   "changed_lines": 15,
+   "line_span": [
+    2221,
+    2235
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._check_subtype_definition",
+   "changed_lines": 83,
+   "line_span": [
+    2045,
+    2127
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._common_subtype_base",
+   "changed_lines": 7,
+   "line_span": [
+    2002,
+    2017
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._common_subtype_base.chain_of",
+   "changed_lines": 9,
+   "line_span": [
+    2004,
+    2012
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._comparison_override_result_type",
+   "changed_lines": 21,
+   "line_span": [
+    998,
+    1018
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._constraint_member_text",
+   "changed_lines": 14,
+   "line_span": [
+    1887,
+    1900
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._expand_constraint_members",
+   "changed_lines": 32,
+   "line_span": [
+    1794,
+    1825
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._extract_bind_names",
+   "changed_lines": 1,
+   "line_span": [
+    2441,
+    2441
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._finalize_subtype_edges",
+   "changed_lines": 18,
+   "line_span": [
+    2019,
+    2036
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._get_type_from_node",
+   "changed_lines": 7,
+   "line_span": [
+    3726,
+    3732
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._is_declared_type_name",
+   "changed_lines": 16,
+   "line_span": [
+    1777,
+    1792
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._is_fresh_literal",
+   "changed_lines": 13,
+   "line_span": [
+    2136,
+    2148
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._is_unpack_target",
+   "changed_lines": 6,
+   "line_span": [
+    2498,
+    2503
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._member_type_name",
+   "changed_lines": 9,
+   "line_span": [
+    1767,
+    1775
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._mismatch",
+   "changed_lines": 5,
+   "line_span": [
+    1062,
+    1066
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._nominal_subtype_assignment",
+   "changed_lines": 58,
+   "line_span": [
+    2150,
+    2207
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._register_callable",
+   "changed_lines": 31,
+   "line_span": [
+    1030,
+    1060
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._report_bound_violation",
+   "changed_lines": 30,
+   "line_span": [
+    3546,
+    3575
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._report_constraint_in_value_position",
+   "changed_lines": 14,
+   "line_span": [
+    1827,
+    1840
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._report_subtype_has_no_runtime_identity",
+   "changed_lines": 9,
+   "line_span": [
+    2211,
+    2219
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._subtype_ancestor_chain",
+   "changed_lines": 26,
+   "line_span": [
+    1950,
+    1975
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._subtype_base_kind",
+   "changed_lines": 26,
+   "line_span": [
+    1923,
+    1948
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._subtype_chain_status",
+   "changed_lines": 12,
+   "line_span": [
+    1977,
+    1988
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._subtype_direct_base",
+   "changed_lines": 2,
+   "line_span": [
+    1990,
+    1991
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._subtype_error",
+   "changed_lines": 6,
+   "line_span": [
+    2038,
+    2043
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._subtype_runtime_name",
+   "changed_lines": 8,
+   "line_span": [
+    1993,
+    2000
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._type_display",
+   "changed_lines": 23,
+   "line_span": [
+    1068,
+    1090
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._type_satisfies_duck",
+   "changed_lines": 11,
+   "line_span": [
+    3279,
+    3289
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._value_type_for_declared",
+   "changed_lines": 6,
+   "line_span": [
+    1023,
+    1028
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_Assign",
+   "changed_lines": 12,
+   "line_span": [
+    2483,
+    2494
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_Attribute",
+   "changed_lines": 5,
+   "line_span": [
+    2357,
+    2361
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_BinOp",
+   "changed_lines": 10,
+   "line_span": [
+    917,
+    928
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_Call",
+   "changed_lines": 39,
+   "line_span": [
+    1205,
+    1365
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_CastExpr",
+   "changed_lines": 17,
+   "line_span": [
+    2990,
+    3006
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_ComptimeStmt",
+   "changed_lines": 15,
+   "line_span": [
+    2560,
+    2576
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_ConstraintDef",
+   "changed_lines": 4,
+   "line_span": [
+    1902,
+    1905
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_ForStmt",
+   "changed_lines": 13,
+   "line_span": [
+    2508,
+    2521
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_FuncDef",
+   "changed_lines": 9,
+   "line_span": [
+    555,
+    583
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_ImplStmt",
+   "changed_lines": 5,
+   "line_span": [
+    1522,
+    1526
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_LetStmt",
+   "changed_lines": 15,
+   "line_span": [
+    749,
+    825
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_Module",
+   "changed_lines": 39,
+   "line_span": [
+    387,
+    493
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_Name",
+   "changed_lines": 8,
+   "line_span": [
+    1383,
+    1394
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_ReturnStmt",
+   "changed_lines": 17,
+   "line_span": [
+    853,
+    905
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_SubtypeDef",
+   "changed_lines": 4,
+   "line_span": [
+    2129,
+    2132
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker._visit_TypePattern",
+   "changed_lines": 7,
+   "line_span": [
+    4057,
+    4063
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "symbol": "TypeChecker.check",
+   "changed_lines": 4,
+   "line_span": [
+    318,
+    321
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "<模块级>",
+   "changed_lines": 20,
+   "line_span": [
+    28,
+    1012
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "_check_scope",
+   "changed_lines": 18,
+   "line_span": [
+    874,
+    891
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "_read_cli_source",
+   "changed_lines": 8,
+   "line_span": [
+    488,
+    495
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "_report_build_failures",
+   "changed_lines": 26,
+   "line_span": [
+    985,
+    1010
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "_report_cache_clear",
+   "changed_lines": 26,
+   "line_span": [
+    369,
+    394
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "_transpile_check_only",
+   "changed_lines": 17,
+   "line_span": [
+    539,
+    555
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "_transpile_emit_ast",
+   "changed_lines": 39,
+   "line_span": [
+    498,
+    536
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "_transpile_generate_setup",
+   "changed_lines": 17,
+   "line_span": [
+    558,
+    574
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "main",
+   "changed_lines": 11,
+   "line_span": [
+    416,
+    439
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "parse_args",
+   "changed_lines": 37,
+   "line_span": [
+    98,
+    366
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "run_build",
+   "changed_lines": 18,
+   "line_span": [
+    928,
+    981
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "run_run",
+   "changed_lines": 4,
+   "line_span": [
+    753,
+    756
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "run_transpile",
+   "changed_lines": 23,
+   "line_span": [
+    591,
+    670
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "run_watch",
+   "changed_lines": 5,
+   "line_span": [
+    836,
+    852
+   ]
+  },
+  {
+   "file": "cypyc/cli.py",
+   "symbol": "run_watch.report_reload",
+   "changed_lines": 10,
+   "line_span": [
+    839,
+    848
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "<模块级>",
+   "changed_lines": 10,
+   "line_span": [
+    2,
+    30
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator",
+   "changed_lines": 24,
+   "line_span": [
+    159,
+    4143
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator.__init__",
+   "changed_lines": 22,
+   "line_span": [
+    39,
+    93
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._collect_defer_stmts",
+   "changed_lines": 12,
+   "line_span": [
+    1445,
+    1476
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._collect_defer_stmts.scan",
+   "changed_lines": 20,
+   "line_span": [
+    1453,
+    1472
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._collect_method_names",
+   "changed_lines": 14,
+   "line_span": [
+    535,
+    548
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._collect_module_info",
+   "changed_lines": 23,
+   "line_span": [
+    438,
+    506
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._collect_subtypes",
+   "changed_lines": 9,
+   "line_span": [
+    160,
+    168
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._collect_type_aliases",
+   "changed_lines": 3,
+   "line_span": [
+    145,
+    149
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._constraint_member_name",
+   "changed_lines": 15,
+   "line_span": [
+    3556,
+    3570
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._declared_cython_type_of",
+   "changed_lines": 2,
+   "line_span": [
+    1390,
+    1391
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._decorator_names",
+   "changed_lines": 5,
+   "line_span": [
+    680,
+    684
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._emit_defer_stmts",
+   "changed_lines": 8,
+   "line_span": [
+    1478,
+    1485
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._emit_trait_isinstance_support",
+   "changed_lines": 42,
+   "line_span": [
+    566,
+    607
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._ensure_owned_import",
+   "changed_lines": 13,
+   "line_span": [
+    1349,
+    1361
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._float_widen_if_integral",
+   "changed_lines": 15,
+   "line_span": [
+    1416,
+    1430
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._fold_comptime_result",
+   "changed_lines": 35,
+   "line_span": [
+    2570,
+    2604
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._for_target_to_str",
+   "changed_lines": 12,
+   "line_span": [
+    1532,
+    1543
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._generate_guard_else_block",
+   "changed_lines": 6,
+   "line_span": [
+    2535,
+    2540
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._generate_module_magic_attrs",
+   "changed_lines": 21,
+   "line_span": [
+    612,
+    648
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._generate_param_strings",
+   "changed_lines": 7,
+   "line_span": [
+    745,
+    751
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._is_integral_value_expr",
+   "changed_lines": 22,
+   "line_span": [
+    1393,
+    1414
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._is_selfless_method",
+   "changed_lines": 2,
+   "line_span": [
+    686,
+    687
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._param_default_str",
+   "changed_lines": 7,
+   "line_span": [
+    689,
+    695
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._pattern_bound_names",
+   "changed_lines": 52,
+   "line_span": [
+    369,
+    420
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._pattern_match_info",
+   "changed_lines": 31,
+   "line_span": [
+    1641,
+    1673
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._record_declared_var",
+   "changed_lines": 4,
+   "line_span": [
+    1385,
+    1388
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._render_comptime_item",
+   "changed_lines": 12,
+   "line_span": [
+    2606,
+    2617
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._subtype_to_base",
+   "changed_lines": 18,
+   "line_span": [
+    4060,
+    4077
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._trait_ancestors",
+   "changed_lines": 15,
+   "line_span": [
+    550,
+    564
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._trait_class_ref",
+   "changed_lines": 9,
+   "line_span": [
+    4134,
+    4142
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._type_to_str",
+   "changed_lines": 14,
+   "line_span": [
+    4082,
+    4123
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_Assign",
+   "changed_lines": 9,
+   "line_span": [
+    2255,
+    2273
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_BinOp",
+   "changed_lines": 26,
+   "line_span": [
+    3618,
+    3664
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_Call",
+   "changed_lines": 15,
+   "line_span": [
+    3775,
+    3789
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_ComptimeStmt",
+   "changed_lines": 10,
+   "line_span": [
+    2553,
+    2567
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_ConstraintDef",
+   "changed_lines": 16,
+   "line_span": [
+    3539,
+    3554
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_DeferStmt",
+   "changed_lines": 10,
+   "line_span": [
+    1487,
+    1496
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_ForStmt",
+   "changed_lines": 2,
+   "line_span": [
+    1523,
+    1524
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_FuncDef",
+   "changed_lines": 35,
+   "line_span": [
+    808,
+    1043
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_ImplStmt",
+   "changed_lines": 19,
+   "line_span": [
+    2981,
+    2999
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_LetStmt",
+   "changed_lines": 6,
+   "line_span": [
+    1223,
+    1313
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_Module",
+   "changed_lines": 8,
+   "line_span": [
+    331,
+    364
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_RaiseStmt",
+   "changed_lines": 3,
+   "line_span": [
+    3339,
+    3341
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_ReturnStmt",
+   "changed_lines": 5,
+   "line_span": [
+    1499,
+    1503
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_StructDef",
+   "changed_lines": 26,
+   "line_span": [
+    2337,
+    2370
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_SubtypeDef",
+   "changed_lines": 14,
+   "line_span": [
+    3572,
+    3585
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator._visit_TraitDef",
+   "changed_lines": 1,
+   "line_span": [
+    2819,
+    2819
+   ]
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "symbol": "CythonGenerator.generate",
+   "changed_lines": 2,
+   "line_span": [
+    119,
+    120
+   ]
+  },
+  {
+   "file": "cypyc/parser/lexer.py",
+   "symbol": "Lexer",
+   "changed_lines": 11,
+   "line_span": [
+    191,
+    311
+   ]
+  },
+  {
+   "file": "cypyc/parser/lexer.py",
+   "symbol": "Lexer.__init__",
+   "changed_lines": 1,
+   "line_span": [
+    251,
+    251
+   ]
+  },
+  {
+   "file": "cypyc/parser/lexer.py",
+   "symbol": "Lexer._caret_is_infix",
+   "changed_lines": 35,
+   "line_span": [
+    276,
+    310
+   ]
+  },
+  {
+   "file": "cypyc/parser/lexer.py",
+   "symbol": "Lexer._current_line_starts_with",
+   "changed_lines": 5,
+   "line_span": [
+    265,
+    269
+   ]
+  },
+  {
+   "file": "cypyc/parser/lexer.py",
+   "symbol": "Lexer._handle_newline",
+   "changed_lines": 4,
+   "line_span": [
+    510,
+    513
+   ]
+  },
+  {
+   "file": "cypyc/parser/lexer.py",
+   "symbol": "Lexer._skip_whitespace",
+   "changed_lines": 3,
+   "line_span": [
+    323,
+    325
+   ]
+  },
+  {
+   "file": "cypyc/parser/lexer.py",
+   "symbol": "Lexer._tokenize_string",
+   "changed_lines": 7,
+   "line_span": [
+    334,
+    374
+   ]
+  },
+  {
+   "file": "cypyc/parser/lexer.py",
+   "symbol": "Lexer.tokenize",
+   "changed_lines": 50,
+   "line_span": [
+    592,
+    1037
+   ]
+  },
+  {
+   "file": "cypyc/parser/lexer.py",
+   "symbol": "TokenType",
+   "changed_lines": 10,
+   "line_span": [
+    37,
+    101
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "<模块级>",
+   "changed_lines": 4,
+   "line_span": [
+    369,
+    389
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ASTCache",
+   "changed_lines": 7,
+   "line_span": [
+    16,
+    68
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ASTCache.get",
+   "changed_lines": 3,
+   "line_span": [
+    29,
+    38
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ASTCache.get_stats",
+   "changed_lines": 3,
+   "line_span": [
+    72,
+    74
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ASTCache.set",
+   "changed_lines": 3,
+   "line_span": [
+    44,
+    52
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ArrayPattern",
+   "changed_lines": 1,
+   "line_span": [
+    698,
+    698
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ArrayPattern.__init__",
+   "changed_lines": 3,
+   "line_span": [
+    699,
+    701
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "AsPattern",
+   "changed_lines": 1,
+   "line_span": [
+    750,
+    750
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "AsPattern.__init__",
+   "changed_lines": 1,
+   "line_span": [
+    754,
+    754
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "AwaitExpr",
+   "changed_lines": 1,
+   "line_span": [
+    452,
+    452
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "BacktickBlock",
+   "changed_lines": 1,
+   "line_span": [
+    1010,
+    1010
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "BacktickBlock.__init__",
+   "changed_lines": 1,
+   "line_span": [
+    1014,
+    1014
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "BuildBlockExpr",
+   "changed_lines": 7,
+   "line_span": [
+    860,
+    872
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "BuildValueExpr",
+   "changed_lines": 1,
+   "line_span": [
+    881,
+    881
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Call.__init__",
+   "changed_lines": 3,
+   "line_span": [
+    651,
+    653
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "CaseClause",
+   "changed_lines": 1,
+   "line_span": [
+    515,
+    515
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "CaseClause.__init__",
+   "changed_lines": 1,
+   "line_span": [
+    519,
+    519
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "CastExpr",
+   "changed_lines": 1,
+   "line_span": [
+    813,
+    813
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "CastExpr.__init__",
+   "changed_lines": 1,
+   "line_span": [
+    816,
+    816
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ClassDef.__init__",
+   "changed_lines": 9,
+   "line_span": [
+    330,
+    338
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ComptimeFuncDef",
+   "changed_lines": 1,
+   "line_span": [
+    986,
+    986
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ComptimeFuncDef.__init__",
+   "changed_lines": 9,
+   "line_span": [
+    987,
+    995
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ComptimeStmt",
+   "changed_lines": 1,
+   "line_span": [
+    978,
+    978
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ConstraintDef",
+   "changed_lines": 9,
+   "line_span": [
+    356,
+    364
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ConstraintDef.__init__",
+   "changed_lines": 4,
+   "line_span": [
+    365,
+    368
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "DictLiteral",
+   "changed_lines": 1,
+   "line_span": [
+    1073,
+    1073
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "DictPattern",
+   "changed_lines": 1,
+   "line_span": [
+    726,
+    726
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "DictPattern.__init__",
+   "changed_lines": 9,
+   "line_span": [
+    727,
+    736
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "DuckDef",
+   "changed_lines": 3,
+   "line_span": [
+    919,
+    929
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "DuckDef.__init__",
+   "changed_lines": 8,
+   "line_span": [
+    930,
+    937
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "DuckRequirement",
+   "changed_lines": 1,
+   "line_span": [
+    896,
+    896
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "DuckRequirement.__init__",
+   "changed_lines": 11,
+   "line_span": [
+    897,
+    907
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ExceptionDef",
+   "changed_lines": 1,
+   "line_span": [
+    226,
+    226
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ExceptionDef.__init__",
+   "changed_lines": 8,
+   "line_span": [
+    227,
+    234
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ExtractorPattern",
+   "changed_lines": 1,
+   "line_span": [
+    761,
+    761
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ExtractorPattern.__init__",
+   "changed_lines": 1,
+   "line_span": [
+    765,
+    765
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "FuncDef.__init__",
+   "changed_lines": 15,
+   "line_span": [
+    276,
+    290
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "GoStmt",
+   "changed_lines": 1,
+   "line_span": [
+    1036,
+    1036
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "GoStmt.__init__",
+   "changed_lines": 8,
+   "line_span": [
+    1037,
+    1044
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "GuardStmt",
+   "changed_lines": 1,
+   "line_span": [
+    419,
+    419
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "GuardStmt.__init__",
+   "changed_lines": 13,
+   "line_span": [
+    420,
+    433
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "IfExp",
+   "changed_lines": 1,
+   "line_span": [
+    635,
+    635
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "IfStmt.__init__",
+   "changed_lines": 8,
+   "line_span": [
+    473,
+    480
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ImplStmt.__init__",
+   "changed_lines": 9,
+   "line_span": [
+    836,
+    844
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "LambdaExpr",
+   "changed_lines": 1,
+   "line_span": [
+    602,
+    602
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "LambdaExpr.__init__",
+   "changed_lines": 1,
+   "line_span": [
+    606,
+    606
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "LetStmt.__init__",
+   "changed_lines": 11,
+   "line_span": [
+    391,
+    401
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ListComp",
+   "changed_lines": 1,
+   "line_span": [
+    611,
+    611
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "ListComp.__init__",
+   "changed_lines": 1,
+   "line_span": [
+    614,
+    614
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "MacroCall",
+   "changed_lines": 1,
+   "line_span": [
+    958,
+    958
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "MacroDef",
+   "changed_lines": 1,
+   "line_span": [
+    946,
+    946
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "MacroDef.__init__",
+   "changed_lines": 3,
+   "line_span": [
+    947,
+    949
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "MatchExpr",
+   "changed_lines": 1,
+   "line_span": [
+    506,
+    506
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "MatchExpr.__init__",
+   "changed_lines": 1,
+   "line_span": [
+    510,
+    510
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "MatchStmt",
+   "changed_lines": 1,
+   "line_span": [
+    489,
+    489
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "MatchStmt.__init__",
+   "changed_lines": 10,
+   "line_span": [
+    490,
+    501
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Param.__init__",
+   "changed_lines": 15,
+   "line_span": [
+    305,
+    326
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser",
+   "changed_lines": 41,
+   "line_span": [
+    1089,
+    4734
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser.__init__",
+   "changed_lines": 4,
+   "line_span": [
+    1080,
+    1088
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._bound_text",
+   "changed_lines": 19,
+   "line_span": [
+    3283,
+    3301
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._consume",
+   "changed_lines": 3,
+   "line_span": [
+    1142,
+    1144
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._is_destructure_target",
+   "changed_lines": 4,
+   "line_span": [
+    3465,
+    3468
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_bitwise_and",
+   "changed_lines": 5,
+   "line_span": [
+    3724,
+    3729
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_bitwise_or",
+   "changed_lines": 5,
+   "line_span": [
+    3704,
+    3709
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_bitwise_xor",
+   "changed_lines": 7,
+   "line_span": [
+    3711,
+    3717
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_block",
+   "changed_lines": 5,
+   "line_span": [
+    4480,
+    4484
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_build_block",
+   "changed_lines": 7,
+   "line_span": [
+    4510,
+    4516
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_call",
+   "changed_lines": 60,
+   "line_span": [
+    3845,
+    4073
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_cast_expr",
+   "changed_lines": 1,
+   "line_span": [
+    3836,
+    3836
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_class_def",
+   "changed_lines": 3,
+   "line_span": [
+    1611,
+    1613
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_comparison",
+   "changed_lines": 11,
+   "line_span": [
+    3649,
+    3659
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_comparison_expr",
+   "changed_lines": 10,
+   "line_span": [
+    3746,
+    3755
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_comptime_func_def",
+   "changed_lines": 10,
+   "line_span": [
+    4600,
+    4628
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_comptime_stmt",
+   "changed_lines": 15,
+   "line_span": [
+    4630,
+    4672
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_const_stmt",
+   "changed_lines": 10,
+   "line_span": [
+    2015,
+    2024
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_constraint",
+   "changed_lines": 45,
+   "line_span": [
+    3339,
+    3383
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_decorator",
+   "changed_lines": 5,
+   "line_span": [
+    2123,
+    2145
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_defer_stmt",
+   "changed_lines": 2,
+   "line_span": [
+    2742,
+    2757
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_duck_def",
+   "changed_lines": 9,
+   "line_span": [
+    2960,
+    3001
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_duck_params",
+   "changed_lines": 4,
+   "line_span": [
+    3173,
+    3194
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_duck_requirement",
+   "changed_lines": 72,
+   "line_span": [
+    3006,
+    3169
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_enum_def",
+   "changed_lines": 5,
+   "line_span": [
+    1737,
+    1741
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_expr_stmt",
+   "changed_lines": 32,
+   "line_span": [
+    3475,
+    3580
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_for_stmt",
+   "changed_lines": 3,
+   "line_span": [
+    2568,
+    2570
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_for_target",
+   "changed_lines": 20,
+   "line_span": [
+    2579,
+    2598
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_for_target_element",
+   "changed_lines": 13,
+   "line_span": [
+    2600,
+    2612
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_from_import",
+   "changed_lines": 10,
+   "line_span": [
+    3229,
+    3238
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_func_def",
+   "changed_lines": 37,
+   "line_span": [
+    1332,
+    1455
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_generic_bound",
+   "changed_lines": 26,
+   "line_span": [
+    3312,
+    3337
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_go_stmt",
+   "changed_lines": 4,
+   "line_span": [
+    4707,
+    4727
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_guard_stmt",
+   "changed_lines": 20,
+   "line_span": [
+    2762,
+    2831
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_impl_stmt",
+   "changed_lines": 23,
+   "line_span": [
+    2846,
+    2920
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_inline_suite",
+   "changed_lines": 20,
+   "line_span": [
+    4458,
+    4477
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_lambda",
+   "changed_lines": 8,
+   "line_span": [
+    4284,
+    4316
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_let_stmt",
+   "changed_lines": 16,
+   "line_span": [
+    1895,
+    1926
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_macro_def",
+   "changed_lines": 10,
+   "line_span": [
+    4555,
+    4595
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_match_expr",
+   "changed_lines": 28,
+   "line_span": [
+    2220,
+    2298
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_match_stmt",
+   "changed_lines": 13,
+   "line_span": [
+    2165,
+    2212
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_meta_block",
+   "changed_lines": 14,
+   "line_span": [
+    2936,
+    2953
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_multiplicative_expr",
+   "changed_lines": 6,
+   "line_span": [
+    3785,
+    3790
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_mut_stmt",
+   "changed_lines": 10,
+   "line_span": [
+    1960,
+    1969
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_owned_stmt",
+   "changed_lines": 10,
+   "line_span": [
+    1989,
+    1998
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_param_for_lambda",
+   "changed_lines": 7,
+   "line_span": [
+    4321,
+    4343
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_params",
+   "changed_lines": 67,
+   "line_span": [
+    1459,
+    1588
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_pattern",
+   "changed_lines": 34,
+   "line_span": [
+    2304,
+    2527
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_pattern_with_or",
+   "changed_lines": 2,
+   "line_span": [
+    2533,
+    2542
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_pipeline_expr",
+   "changed_lines": 1,
+   "line_span": [
+    3766,
+    3766
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_primary",
+   "changed_lines": 15,
+   "line_span": [
+    4102,
+    4277
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_raise_stmt",
+   "changed_lines": 3,
+   "line_span": [
+    2724,
+    2736
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_return_stmt",
+   "changed_lines": 2,
+   "line_span": [
+    2048,
+    2049
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_setup_stmt",
+   "changed_lines": 3,
+   "line_span": [
+    1874,
+    1878
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_single_expr_block",
+   "changed_lines": 3,
+   "line_span": [
+    4521,
+    4526
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_spawn_stmt",
+   "changed_lines": 4,
+   "line_span": [
+    4677,
+    4697
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_statement",
+   "changed_lines": 16,
+   "line_span": [
+    1162,
+    1328
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_struct_def",
+   "changed_lines": 49,
+   "line_span": [
+    1619,
+    1719
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_subtype_def",
+   "changed_lines": 67,
+   "line_span": [
+    3390,
+    3456
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_suite_stmt",
+   "changed_lines": 4,
+   "line_span": [
+    1831,
+    1850
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_teardown_stmt",
+   "changed_lines": 3,
+   "line_span": [
+    1886,
+    1890
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_test_stmt",
+   "changed_lines": 4,
+   "line_span": [
+    1855,
+    1866
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_trait_def",
+   "changed_lines": 6,
+   "line_span": [
+    1752,
+    1772
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_try_stmt",
+   "changed_lines": 9,
+   "line_span": [
+    2672,
+    2716
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_type",
+   "changed_lines": 2,
+   "line_span": [
+    4347,
+    4357
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_type_alias",
+   "changed_lines": 5,
+   "line_span": [
+    3253,
+    3269
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_type_element",
+   "changed_lines": 11,
+   "line_span": [
+    4371,
+    4434
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_typeclass_def",
+   "changed_lines": 20,
+   "line_span": [
+    1776,
+    1827
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_typed_var",
+   "changed_lines": 10,
+   "line_span": [
+    2036,
+    2045
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_unary_expr",
+   "changed_lines": 7,
+   "line_span": [
+    3801,
+    3807
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_vec_literal",
+   "changed_lines": 8,
+   "line_span": [
+    4737,
+    4775
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._parse_with_stmt",
+   "changed_lines": 8,
+   "line_span": [
+    2084,
+    2118
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._pop_scope",
+   "changed_lines": 3,
+   "line_span": [
+    1100,
+    1102
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._push_scope",
+   "changed_lines": 1,
+   "line_span": [
+    1093,
+    1093
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._reject_multiple_bounds",
+   "changed_lines": 8,
+   "line_span": [
+    3303,
+    3310
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._require_function_scope",
+   "changed_lines": 4,
+   "line_span": [
+    1118,
+    1121
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._require_module_level",
+   "changed_lines": 3,
+   "line_span": [
+    1112,
+    1114
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Parser._type_node_to_str",
+   "changed_lines": 2,
+   "line_span": [
+    2839,
+    2840
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "Pattern",
+   "changed_lines": 1,
+   "line_span": [
+    682,
+    682
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "PipeExpr",
+   "changed_lines": 1,
+   "line_span": [
+    779,
+    779
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "PipeExpr.__init__",
+   "changed_lines": 2,
+   "line_span": [
+    782,
+    783
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "RangePattern",
+   "changed_lines": 1,
+   "line_span": [
+    770,
+    770
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "SetupStmt",
+   "changed_lines": 1,
+   "line_span": [
+    261,
+    261
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "SlicePattern",
+   "changed_lines": 1,
+   "line_span": [
+    690,
+    690
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "SpawnStmt",
+   "changed_lines": 1,
+   "line_span": [
+    1019,
+    1019
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "SpawnStmt.__init__",
+   "changed_lines": 8,
+   "line_span": [
+    1020,
+    1027
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "StopExpressionParsing",
+   "changed_lines": 1,
+   "line_span": [
+    9,
+    9
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "StructDef.__init__",
+   "changed_lines": 11,
+   "line_span": [
+    118,
+    128
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "StructField.__init__",
+   "changed_lines": 9,
+   "line_span": [
+    139,
+    147
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "StructLiteral",
+   "changed_lines": 1,
+   "line_span": [
+    967,
+    967
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "StructLiteral.__init__",
+   "changed_lines": 4,
+   "line_span": [
+    968,
+    973
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "StructPattern",
+   "changed_lines": 1,
+   "line_span": [
+    709,
+    709
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "StructPattern.__init__",
+   "changed_lines": 10,
+   "line_span": [
+    710,
+    721
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "SubtypeDef",
+   "changed_lines": 13,
+   "line_span": [
+    371,
+    383
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "SubtypeDef.__init__",
+   "changed_lines": 4,
+   "line_span": [
+    384,
+    387
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "SuiteDef",
+   "changed_lines": 1,
+   "line_span": [
+    243,
+    243
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TeardownStmt",
+   "changed_lines": 1,
+   "line_span": [
+    269,
+    269
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TestDef",
+   "changed_lines": 1,
+   "line_span": [
+    252,
+    252
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TraitDef.__init__",
+   "changed_lines": 9,
+   "line_span": [
+    170,
+    178
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TryStmt.__init__",
+   "changed_lines": 8,
+   "line_span": [
+    572,
+    579
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TypeAlias.__init__",
+   "changed_lines": 3,
+   "line_span": [
+    347,
+    349
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TypeClassDef",
+   "changed_lines": 1,
+   "line_span": [
+    188,
+    188
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TypeClassDef.__init__",
+   "changed_lines": 9,
+   "line_span": [
+    189,
+    197
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TypeClassImpl",
+   "changed_lines": 1,
+   "line_span": [
+    207,
+    207
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TypeClassImpl.__init__",
+   "changed_lines": 9,
+   "line_span": [
+    208,
+    216
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TypePattern",
+   "changed_lines": 1,
+   "line_span": [
+    741,
+    741
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "TypePattern.__init__",
+   "changed_lines": 1,
+   "line_span": [
+    745,
+    745
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "UnionType",
+   "changed_lines": 1,
+   "line_span": [
+    829,
+    829
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "VecLiteral",
+   "changed_lines": 1,
+   "line_span": [
+    1062,
+    1062
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "VecLiteral.__init__",
+   "changed_lines": 3,
+   "line_span": [
+    1063,
+    1065
+   ]
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "symbol": "VecType",
+   "changed_lines": 1,
+   "line_span": [
+    1053,
+    1053
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler",
+   "changed_lines": 5,
+   "line_span": [
+    161,
+    672
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler.__init__",
+   "changed_lines": 11,
+   "line_span": [
+    60,
+    70
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler._get_type_str",
+   "changed_lines": 43,
+   "line_span": [
+    477,
+    524
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler._is_package_module",
+   "changed_lines": 3,
+   "line_span": [
+    158,
+    160
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler._note_import_diagnostic",
+   "changed_lines": 5,
+   "line_span": [
+    269,
+    273
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler._pick_extension",
+   "changed_lines": 25,
+   "line_span": [
+    643,
+    671
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler._pick_extension.score",
+   "changed_lines": 4,
+   "line_span": [
+    659,
+    662
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler._resolve_import_target",
+   "changed_lines": 42,
+   "line_span": [
+    276,
+    320
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler._resolve_relative_import",
+   "changed_lines": 40,
+   "line_span": [
+    323,
+    362
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler.build",
+   "changed_lines": 52,
+   "line_span": [
+    696,
+    804
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler.compile_module",
+   "changed_lines": 15,
+   "line_span": [
+    574,
+    631
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler.discover_modules",
+   "changed_lines": 65,
+   "line_span": [
+    79,
+    153
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler.get_incremental_changes",
+   "changed_lines": 5,
+   "line_span": [
+    834,
+    838
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler.parse_all_modules",
+   "changed_lines": 3,
+   "line_span": [
+    195,
+    213
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "symbol": "ProjectCompiler.type_check_module",
+   "changed_lines": 3,
+   "line_span": [
+    541,
+    555
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "<模块级>",
+   "changed_lines": 125,
+   "line_span": [
+    1,
+    292
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "_analyze_errors",
+   "changed_lines": 8,
+   "line_span": [
+    76,
+    83
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "_ast_nodes",
+   "changed_lines": 13,
+   "line_span": [
+    61,
+    73
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "_comptime_block",
+   "changed_lines": 7,
+   "line_span": [
+    52,
+    58
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "_comptime_expr",
+   "changed_lines": 6,
+   "line_span": [
+    44,
+    49
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "_not_implemented_error",
+   "changed_lines": 8,
+   "line_span": [
+    199,
+    206
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "_parse",
+   "changed_lines": 2,
+   "line_span": [
+    40,
+    41
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug81_collection_elements_are_evaluated_not_copied",
+   "changed_lines": 6,
+   "line_span": [
+    106,
+    111
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug81_control_scalar_comptime_unchanged",
+   "changed_lines": 4,
+   "line_span": [
+    174,
+    177
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug81_evaluate_contract_returns_no_ast_node",
+   "changed_lines": 5,
+   "line_span": [
+    167,
+    171
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug81_list_concatenation_is_pure",
+   "changed_lines": 5,
+   "line_span": [
+    121,
+    125
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug81_list_literal_evaluates_to_pure_python_values",
+   "changed_lines": 5,
+   "line_span": [
+    91,
+    95
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug81_mixed_scalar_collection_is_pure",
+   "changed_lines": 5,
+   "line_span": [
+    128,
+    132
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug81_nested_collection_literal_is_pure",
+   "changed_lines": 5,
+   "line_span": [
+    114,
+    118
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug81_nested_unresolvable_element_is_whole_evaluation_failure",
+   "changed_lines": 5,
+   "line_span": [
+    144,
+    148
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug81_tuple_literal_evaluates_to_pure_python_values",
+   "changed_lines": 6,
+   "line_span": [
+    98,
+    103
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug81_unresolvable_element_is_whole_evaluation_failure",
+   "changed_lines": 7,
+   "line_span": [
+    135,
+    141
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug82_control_int_comptime_on_same_path",
+   "changed_lines": 3,
+   "line_span": [
+    193,
+    195
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug82_string_comptime_value_is_correct_on_evaluator_side",
+   "changed_lines": 10,
+   "line_span": [
+    181,
+    190
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug83_block_form_evaluate_entry_also_reports_not_implemented",
+   "changed_lines": 8,
+   "line_span": [
+    225,
+    232
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug83_block_form_raises_structured_not_implemented_diagnostic",
+   "changed_lines": 14,
+   "line_span": [
+    209,
+    222
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug83_block_form_surfaces_diagnostic_through_analyzer_face",
+   "changed_lines": 8,
+   "line_span": [
+    238,
+    245
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug83_inline_form_control_still_clean",
+   "changed_lines": 5,
+   "line_span": [
+    248,
+    252
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug84_both_analyzer_channels_agree_on_pointer_element_name",
+   "changed_lines": 10,
+   "line_span": [
+    293,
+    302
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug84_control_documented_pointer_names_stay_clean",
+   "changed_lines": 5,
+   "line_span": [
+    276,
+    280
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug84_documented_char_pointer_return_annotation_resolves",
+   "changed_lines": 5,
+   "line_span": [
+    263,
+    267
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug84_documented_void_pointer_name_resolves",
+   "changed_lines": 4,
+   "line_span": [
+    270,
+    273
+   ]
+  },
+  {
+   "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+   "symbol": "test_bug84_undocumented_c_integer_names_stay_undefined",
+   "changed_lines": 8,
+   "line_span": [
+    283,
+    290
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "<模块级>",
+   "changed_lines": 127,
+   "line_span": [
+    1,
+    369
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "_cli",
+   "changed_lines": 14,
+   "line_span": [
+    38,
+    51
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "_marker_file",
+   "changed_lines": 4,
+   "line_span": [
+    147,
+    150
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "_plant_cache_tree",
+   "changed_lines": 8,
+   "line_span": [
+    209,
+    216
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "_source",
+   "changed_lines": 4,
+   "line_span": [
+    54,
+    57
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_85_output_dir_after_subcommand_still_used",
+   "changed_lines": 8,
+   "line_span": [
+    100,
+    107
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_85_output_dir_before_subcommand_is_used",
+   "changed_lines": 10,
+   "line_span": [
+    88,
+    97
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_85_output_dir_both_sides_subcommand_wins",
+   "changed_lines": 9,
+   "line_span": [
+    110,
+    118
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_85_parse_args_global_after_subcommand_still_works",
+   "changed_lines": 6,
+   "line_span": [
+    72,
+    77
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_85_parse_args_global_before_subcommand",
+   "changed_lines": 6,
+   "line_span": [
+    64,
+    69
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_85_parse_args_global_default_unchanged",
+   "changed_lines": 6,
+   "line_span": [
+    80,
+    85
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_85_verbose_before_subcommand_prints_steps",
+   "changed_lines": 7,
+   "line_span": [
+    121,
+    127
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_85_verbose_control_without_flag_stays_quiet",
+   "changed_lines": 7,
+   "line_span": [
+    130,
+    136
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_86_bom_marker_still_recognised_as_cypy",
+   "changed_lines": 9,
+   "line_span": [
+    153,
+    161
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_86_bom_source_still_transpiles",
+   "changed_lines": 11,
+   "line_span": [
+    182,
+    192
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_86_finder_does_not_silently_pass_bom_file_through",
+   "changed_lines": 8,
+   "line_span": [
+    164,
+    171
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_86_plain_python_file_is_not_hijacked",
+   "changed_lines": 6,
+   "line_span": [
+    174,
+    179
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_87_clear_cache_removes_every_artifact_and_reports_count",
+   "changed_lines": 11,
+   "line_span": [
+    219,
+    229
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_87_clear_cache_reports_undeletable_file_in_report",
+   "changed_lines": 19,
+   "line_span": [
+    232,
+    254
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_87_clear_cache_reports_undeletable_file_in_report.refusing",
+   "changed_lines": 4,
+   "line_span": [
+    240,
+    243
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers",
+   "changed_lines": 22,
+   "line_span": [
+    257,
+    280
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers.refuse_all",
+   "changed_lines": 2,
+   "line_span": [
+    265,
+    266
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_88_cycle_reason_reaches_user",
+   "changed_lines": 15,
+   "line_span": [
+    312,
+    326
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_88_no_cypy_files_reason_reaches_user",
+   "changed_lines": 8,
+   "line_span": [
+    302,
+    309
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_88_rejected_entry_name_reaches_user",
+   "changed_lines": 9,
+   "line_span": [
+    291,
+    299
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_89_check_only_honours_entry_scope",
+   "changed_lines": 20,
+   "line_span": [
+    337,
+    356
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_89_check_only_with_unknown_entry_fails_loudly",
+   "changed_lines": 16,
+   "line_span": [
+    370,
+    385
+   ]
+  },
+  {
+   "file": "tests/cli/test_r5_fix_cli_hook.py",
+   "symbol": "test_r5_89_check_only_without_entry_still_checks_everything",
+   "changed_lines": 9,
+   "line_span": [
+    359,
+    367
+   ]
+  },
+  {
+   "file": "tests/codegen/__init__.py",
+   "symbol": "<模块级>",
+   "changed_lines": 1,
+   "line_span": [
+    1,
+    1
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "<模块级>",
+   "changed_lines": 192,
+   "line_span": [
+    1,
+    493
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "_assert_compilable",
+   "changed_lines": 7,
+   "line_span": [
+    147,
+    153
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "_fn_lines",
+   "changed_lines": 9,
+   "line_span": [
+    136,
+    144
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "_fn_slice",
+   "changed_lines": 13,
+   "line_span": [
+    121,
+    133
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "_identity_lines",
+   "changed_lines": 8,
+   "line_span": [
+    450,
+    457
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "_lower",
+   "changed_lines": 4,
+   "line_span": [
+    115,
+    118
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug74_augmented_xor_lowers_to_declared_equivalent",
+   "changed_lines": 5,
+   "line_span": [
+    157,
+    161
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug74_augmented_xor_with_variable_rhs_keeps_both_operands",
+   "changed_lines": 3,
+   "line_span": [
+    164,
+    166
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug74_build_value_in_value_position_unchanged",
+   "changed_lines": 4,
+   "line_span": [
+    176,
+    179
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug74_plain_assignment_not_touched",
+   "changed_lines": 5,
+   "line_span": [
+    169,
+    173
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug76_defer_in_loop_return_emitted_once_per_exit",
+   "changed_lines": 15,
+   "line_span": [
+    203,
+    217
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug76_multiple_defers_keep_reverse_order_at_every_exit",
+   "changed_lines": 10,
+   "line_span": [
+    227,
+    236
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug76_nested_return_exit_runs_defer_cleanup",
+   "changed_lines": 18,
+   "line_span": [
+    183,
+    200
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug76_single_exit_still_emits_cleanup_once",
+   "changed_lines": 5,
+   "line_span": [
+    220,
+    224
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug78_equal_precedence_right_operand_keeps_parens",
+   "changed_lines": 5,
+   "line_span": [
+    241,
+    245
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug78_left_associative_chain_not_over_parenthesized",
+   "changed_lines": 5,
+   "line_span": [
+    249,
+    253
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug78_power_stays_right_associative",
+   "changed_lines": 5,
+   "line_span": [
+    256,
+    260
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug80_defer_in_nested_function_belongs_to_that_function",
+   "changed_lines": 26,
+   "line_span": [
+    307,
+    332
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug80_defer_only_block_stays_compilable",
+   "changed_lines": 3,
+   "line_span": [
+    280,
+    282
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug80_nested_defer_in_for_runs_once_at_exit",
+   "changed_lines": 7,
+   "line_span": [
+    271,
+    277
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug80_nested_defer_in_if_runs_at_function_exit",
+   "changed_lines": 5,
+   "line_span": [
+    264,
+    268
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug80_nested_defer_in_loop_block_stays_compilable",
+   "changed_lines": 13,
+   "line_span": [
+    285,
+    297
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug80_top_level_defer_still_moved_to_exit",
+   "changed_lines": 5,
+   "line_span": [
+    300,
+    304
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug81_codegen_renders_container_results_structurally",
+   "changed_lines": 16,
+   "line_span": [
+    345,
+    360
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug81_comptime_collection_product_is_a_compilable_literal",
+   "changed_lines": 7,
+   "line_span": [
+    336,
+    342
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug81_scalar_folding_unchanged",
+   "changed_lines": 4,
+   "line_span": [
+    363,
+    366
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug82_comptime_string_cannot_hijack_docstring",
+   "changed_lines": 11,
+   "line_span": [
+    384,
+    394
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug82_comptime_string_result_is_not_interpolated_raw",
+   "changed_lines": 12,
+   "line_span": [
+    370,
+    381
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug82_comptime_string_with_backslash_not_emitted_as_broken_literal",
+   "changed_lines": 6,
+   "line_span": [
+    397,
+    402
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug90_hook_transpile_file_carries_real_identity",
+   "changed_lines": 20,
+   "line_span": [
+    460,
+    479
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug90_hook_transpile_without_path_fabricates_nothing",
+   "changed_lines": 9,
+   "line_span": [
+    482,
+    490
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug90_identity_literals_round_trip_for_nasty_paths",
+   "changed_lines": 15,
+   "line_span": [
+    424,
+    438
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug90_other_module_metadata_still_emitted",
+   "changed_lines": 7,
+   "line_span": [
+    441,
+    447
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug90_placeholder_identity_not_emitted",
+   "changed_lines": 8,
+   "line_span": [
+    406,
+    413
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug90_real_identity_when_source_path_known",
+   "changed_lines": 6,
+   "line_span": [
+    416,
+    421
+   ]
+  },
+  {
+   "file": "tests/codegen/test_r5_fix_codegen.py",
+   "symbol": "test_bug91_windows_path_in_header_docstring_is_a_valid_literal",
+   "changed_lines": 15,
+   "line_span": [
+    494,
+    508
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "<模块级>",
+   "changed_lines": 115,
+   "line_span": [
+    1,
+    196
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "_body",
+   "changed_lines": 4,
+   "line_span": [
+    64,
+    67
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "_lower",
+   "changed_lines": 9,
+   "line_span": [
+    53,
+    61
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "_parse",
+   "changed_lines": 6,
+   "line_span": [
+    45,
+    50
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "_returned_expr",
+   "changed_lines": 5,
+   "line_span": [
+    70,
+    74
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "_tok",
+   "changed_lines": 2,
+   "line_span": [
+    37,
+    38
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "_types",
+   "changed_lines": 2,
+   "line_span": [
+    41,
+    42
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "test_bug75_bitwise_ops_lower",
+   "changed_lines": 5,
+   "line_span": [
+    197,
+    201
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "test_bug75_frozen_caret_lexemes_untouched",
+   "changed_lines": 12,
+   "line_span": [
+    144,
+    155
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "test_bug75_infix_xor_parses_to_binop",
+   "changed_lines": 6,
+   "line_span": [
+    158,
+    163
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "test_bug75_lexer_emits_infix_caret_token",
+   "changed_lines": 5,
+   "line_span": [
+    137,
+    141
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "test_bug75_unary_invert_parses_to_unaryop",
+   "changed_lines": 6,
+   "line_span": [
+    166,
+    171
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "test_bug75_xor_precedence_sits_between_bitwise_and_and_or",
+   "changed_lines": 10,
+   "line_span": [
+    174,
+    183
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "test_bug79_augassign_family_still_lexed",
+   "changed_lines": 3,
+   "line_span": [
+    111,
+    113
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "test_bug79_augassign_lowers_to_doc_equivalent",
+   "changed_lines": 5,
+   "line_span": [
+    125,
+    129
+   ]
+  },
+  {
+   "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+   "symbol": "test_bug79_lexer_emits_declared_augassign_token",
+   "changed_lines": 6,
+   "line_span": [
+    90,
+    95
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "<模块级>",
+   "changed_lines": 1,
+   "line_span": [
+    3,
+    3
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification",
+   "changed_lines": 20,
+   "line_span": [
+    9,
+    274
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_compile_time_constants",
+   "changed_lines": 2,
+   "line_span": [
+    282,
+    283
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_comptime_expression",
+   "changed_lines": 1,
+   "line_span": [
+    157,
+    157
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_const_generation",
+   "changed_lines": 1,
+   "line_span": [
+    108,
+    108
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_cython_directives",
+   "changed_lines": 1,
+   "line_span": [
+    169,
+    169
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_defer_statement",
+   "changed_lines": 9,
+   "line_span": [
+    140,
+    148
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_enum_generation",
+   "changed_lines": 1,
+   "line_span": [
+    87,
+    87
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_fstring",
+   "changed_lines": 1,
+   "line_span": [
+    223,
+    223
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_function_with_types",
+   "changed_lines": 1,
+   "line_span": [
+    71,
+    71
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_generic_struct",
+   "changed_lines": 1,
+   "line_span": [
+    98,
+    98
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_go_statement",
+   "changed_lines": 1,
+   "line_span": [
+    182,
+    182
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_let_statement",
+   "changed_lines": 1,
+   "line_span": [
+    258,
+    258
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_list_comprehension",
+   "changed_lines": 6,
+   "line_span": [
+    233,
+    238
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_match_statement",
+   "changed_lines": 1,
+   "line_span": [
+    210,
+    210
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_pipeline_operator",
+   "changed_lines": 1,
+   "line_span": [
+    126,
+    126
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_pointer_operations",
+   "changed_lines": 1,
+   "line_span": [
+    269,
+    269
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_spawn_statement",
+   "changed_lines": 1,
+   "line_span": [
+    195,
+    195
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_struct_generation",
+   "changed_lines": 1,
+   "line_span": [
+    21,
+    21
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_struct_with_default_values",
+   "changed_lines": 1,
+   "line_span": [
+    56,
+    56
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_struct_with_methods",
+   "changed_lines": 2,
+   "line_span": [
+    32,
+    38
+   ]
+  },
+  {
+   "file": "tests/test_codegen_verification.py",
+   "symbol": "TestCodegenVerification.test_type_alias",
+   "changed_lines": 1,
+   "line_span": [
+    246,
+    246
+   ]
+  },
+  {
+   "file": "tests/test_loop_20260927_advance_r4.py",
+   "symbol": "<模块级>",
+   "changed_lines": 269,
+   "line_span": [
+    1,
+    354
+   ]
+  },
+  {
+   "file": "tests/test_loop_20260927_advance_r4.py",
+   "symbol": "_func_slice",
+   "changed_lines": 7,
+   "line_span": [
+    307,
+    313
+   ]
+  },
+  {
+   "file": "tests/test_loop_20260927_advance_r4.py",
+   "symbol": "_plain",
+   "changed_lines": 2,
+   "line_span": [
+    202,
+    203
+   ]
+  },
+  {
+   "file": "tests/test_loop_20260927_advance_r4.py",
+   "symbol": "_run_cli",
+   "changed_lines": 8,
+   "line_span": [
+    192,
+    199
+   ]
+  },
+  {
+   "file": "tests/test_loop_20260927_advance_r4.py",
+   "symbol": "test_declared_builtins_still_cited_in_syntax_docs",
+   "changed_lines": 7,
+   "line_span": [
+    244,
+    250
+   ]
+  },
+  {
+   "file": "tests/test_loop_20260927_advance_r4.py",
+   "symbol": "test_defer_declared_shape",
+   "changed_lines": 36,
+   "line_span": [
+    318,
+    353
+   ]
+  },
+  {
+   "file": "tests/test_loop_20260927_advance_r4.py",
+   "symbol": "test_doc_worked_example_maps_to_noreturn",
+   "changed_lines": 9,
+   "line_span": [
+    222,
+    230
+   ]
+  },
+  {
+   "file": "tests/test_loop_20260927_advance_r4.py",
+   "symbol": "test_name_face_at_cli_entry",
+   "changed_lines": 13,
+   "line_span": [
+    207,
+    219
+   ]
+  },
+  {
+   "file": "tests/test_loop_20260927_advance_r4.py",
+   "symbol": "test_pinned_defects_still_have_a_card",
+   "changed_lines": 3,
+   "line_span": [
+    234,
+    236
+   ]
+  },
+  {
+   "file": "tests/test_unit_test_modes.py",
+   "symbol": "<模块级>",
+   "changed_lines": 1,
+   "line_span": [
+    3,
+    3
+   ]
+  },
+  {
+   "file": "tests/test_unit_test_modes.py",
+   "symbol": "TestCLIModes.test_cli_transpile_command",
+   "changed_lines": 2,
+   "line_span": [
+    198,
+    202
+   ]
+  },
+  {
+   "file": "tests/test_unit_test_modes.py",
+   "symbol": "TestCompileMode.test_compile_to_pyd_basic",
+   "changed_lines": 8,
+   "line_span": [
+    103,
+    110
+   ]
+  },
+  {
+   "file": "tests/test_unit_test_modes.py",
+   "symbol": "TestCompileMode.test_run_module",
+   "changed_lines": 3,
+   "line_span": [
+    126,
+    128
+   ]
+  },
+  {
+   "file": "tests/test_unit_test_modes.py",
+   "symbol": "TestHookIntegrationMode.test_compile_and_import",
+   "changed_lines": 1,
+   "line_span": [
+    160,
+    160
+   ]
+  }
+ ],
+ "files_this_ring": {
+  "cypy_hook/hook.py": {
+   "added": 399,
+   "removed": 89,
+   "mtime_utc": "2026-09-28T10:03:32+00:00"
+  },
+  "cypyc/analyzer/comptime_evaluator.py": {
+   "added": 217,
+   "removed": 26,
+   "mtime_utc": "2026-09-28T08:27:31+00:00"
+  },
+  "cypyc/analyzer/scope_analyzer.py": {
+   "added": 107,
+   "removed": 22,
+   "mtime_utc": "2026-09-28T08:19:18+00:00"
+  },
+  "cypyc/analyzer/type_checker.py": {
+   "added": 1186,
+   "removed": 51,
+   "mtime_utc": "2026-09-28T08:24:33+00:00"
+  },
+  "cypyc/cli.py": {
+   "added": 279,
+   "removed": 45,
+   "mtime_utc": "2026-09-28T08:39:23+00:00"
+  },
+  "cypyc/codegen/cython_generator.py": {
+   "added": 710,
+   "removed": 109,
+   "mtime_utc": "2026-09-28T10:13:46+00:00"
+  },
+  "cypyc/parser/lexer.py": {
+   "added": 126,
+   "removed": 13,
+   "mtime_utc": "2026-09-28T08:16:48+00:00"
+  },
+  "cypyc/parser/parser.py": {
+   "added": 1423,
+   "removed": 489,
+   "mtime_utc": "2026-09-28T08:17:14+00:00"
+  },
+  "cypyc/project/project_compiler.py": {
+   "added": 319,
+   "removed": 48,
+   "mtime_utc": "2026-09-28T10:03:32+00:00"
+  },
+  "tests/analyzer/test_r5_fix_comptime_types.py": {
+   "added": 302,
+   "removed": 0,
+   "mtime_utc": "2026-09-28T08:28:02+00:00"
+  },
+  "tests/cli/test_r5_fix_cli_hook.py": {
+   "added": 385,
+   "removed": 0,
+   "mtime_utc": "2026-09-28T08:31:49+00:00"
+  },
+  "tests/codegen/__init__.py": {
+   "added": 1,
+   "removed": 0,
+   "mtime_utc": "2026-09-28T08:22:58+00:00"
+  },
+  "tests/codegen/test_r5_fix_codegen.py": {
+   "added": 508,
+   "removed": 0,
+   "mtime_utc": "2026-09-28T10:09:56+00:00"
+  },
+  "tests/parser/test_r5_fix_lexer_tokens.py": {
+   "added": 201,
+   "removed": 0,
+   "mtime_utc": "2026-09-28T08:21:43+00:00"
+  },
+  "tests/test_codegen_verification.py": {
+   "added": 55,
+   "removed": 51,
+   "mtime_utc": "2026-09-28T08:19:50+00:00"
+  },
+  "tests/test_loop_20260927_advance_r4.py": {
+   "added": 354,
+   "removed": 0,
+   "mtime_utc": "2026-09-28T09:23:59+00:00"
+  },
+  "tests/test_unit_test_modes.py": {
+   "added": 14,
+   "removed": 15,
+   "mtime_utc": "2026-09-28T08:19:58+00:00"
+  }
+ },
+ "symbols_referenced": [
+  "<模块级>",
+  "ASTCache",
+  "ASTCache.get",
+  "ASTCache.get_stats",
+  "ASTCache.set",
+  "ArrayPattern",
+  "ArrayPattern.__init__",
+  "AsPattern",
+  "AsPattern.__init__",
+  "AwaitExpr",
+  "BacktickBlock",
+  "BacktickBlock.__init__",
+  "BuildBlockExpr",
+  "BuildValueExpr",
+  "CacheClearReport",
+  "CacheClearReport.ok",
+  "Call.__init__",
+  "CaseClause",
+  "CaseClause.__init__",
+  "CastExpr",
+  "CastExpr.__init__",
+  "ClassDef.__init__",
+  "ComptimeEvaluator",
+  "ComptimeEvaluator._evaluate_constant",
+  "ComptimeEvaluator._evaluate_for_statement",
+  "ComptimeEvaluator._evaluate_literal",
+  "ComptimeEvaluator._evaluate_node",
+  "ComptimeEvaluator._for_target_names",
+  "ComptimeEvaluator.evaluate",
+  "ComptimeFuncDef",
+  "ComptimeFuncDef.__init__",
+  "ComptimeNotImplementedError",
+  "ComptimeNotImplementedError.__init__",
+  "ComptimeStmt",
+  "ConstraintDef",
+  "ConstraintDef.__init__",
+  "CypyCacheManager",
+  "CypyCacheManager._base_cache_dir_for",
+  "CypyCacheManager._clear_single",
+  "CypyCacheManager._clear_tree",
+  "CypyCacheManager._find_cache_roots",
+  "CypyCacheManager._load_manifest",
+  "CypyCacheManager._remove_file",
+  "CypyCacheManager.clear_cache",
+  "CypyCacheManager.is_cypy_file",
+  "CypyHook",
+  "CypyHook.analyze_only",
+  "CypyHook.compile_and_import",
+  "CypyHook.compile_to_pyd",
+  "CypyHook.run",
+  "CypyHook.run_cli",
+  "CypyHook.run_module",
+  "CypyHook.transpile",
+  "CypyHook.transpile_file",
+  "CythonGenerator",
+  "CythonGenerator.__init__",
+  "CythonGenerator._collect_defer_stmts",
+  "CythonGenerator._collect_defer_stmts.scan",
+  "CythonGenerator._collect_method_names",
+  "CythonGenerator._collect_module_info",
+  "CythonGenerator._collect_subtypes",
+  "CythonGenerator._collect_type_aliases",
+  "CythonGenerator._constraint_member_name",
+  "CythonGenerator._declared_cython_type_of",
+  "CythonGenerator._decorator_names",
+  "CythonGenerator._emit_defer_stmts",
+  "CythonGenerator._emit_trait_isinstance_support",
+  "CythonGenerator._ensure_owned_import",
+  "CythonGenerator._float_widen_if_integral",
+  "CythonGenerator._fold_comptime_result",
+  "CythonGenerator._for_target_to_str",
+  "CythonGenerator._generate_guard_else_block",
+  "CythonGenerator._generate_module_magic_attrs",
+  "CythonGenerator._generate_param_strings",
+  "CythonGenerator._is_integral_value_expr",
+  "CythonGenerator._is_selfless_method",
+  "CythonGenerator._param_default_str",
+  "CythonGenerator._pattern_bound_names",
+  "CythonGenerator._pattern_match_info",
+  "CythonGenerator._record_declared_var",
+  "CythonGenerator._render_comptime_item",
+  "CythonGenerator._subtype_to_base",
+  "CythonGenerator._trait_ancestors",
+  "CythonGenerator._trait_class_ref",
+  "CythonGenerator._type_to_str",
+  "CythonGenerator._visit_Assign",
+  "CythonGenerator._visit_BinOp",
+  "CythonGenerator._visit_Call",
+  "CythonGenerator._visit_ComptimeStmt",
+  "CythonGenerator._visit_ConstraintDef",
+  "CythonGenerator._visit_DeferStmt",
+  "CythonGenerator._visit_ForStmt",
+  "CythonGenerator._visit_FuncDef",
+  "CythonGenerator._visit_ImplStmt",
+  "CythonGenerator._visit_LetStmt",
+  "CythonGenerator._visit_Module",
+  "CythonGenerator._visit_RaiseStmt",
+  "CythonGenerator._visit_ReturnStmt",
+  "CythonGenerator._visit_StructDef",
+  "CythonGenerator._visit_SubtypeDef",
+  "CythonGenerator._visit_TraitDef",
+  "CythonGenerator.generate",
+  "DictLiteral",
+  "DictPattern",
+  "DictPattern.__init__",
+  "DuckDef",
+  "DuckDef.__init__",
+  "DuckRequirement",
+  "DuckRequirement.__init__",
+  "ExceptionDef",
+  "ExceptionDef.__init__",
+  "ExtractorPattern",
+  "ExtractorPattern.__init__",
+  "FuncDef.__init__",
+  "FunctionNotFoundError",
+  "GoStmt",
+  "GoStmt.__init__",
+  "GuardStmt",
+  "GuardStmt.__init__",
+  "IfExp",
+  "IfStmt.__init__",
+  "ImplStmt.__init__",
+  "LambdaExpr",
+  "LambdaExpr.__init__",
+  "LetStmt.__init__",
+  "Lexer",
+  "Lexer.__init__",
+  "Lexer._caret_is_infix",
+  "Lexer._current_line_starts_with",
+  "Lexer._handle_newline",
+  "Lexer._skip_whitespace",
+  "Lexer._tokenize_string",
+  "Lexer.tokenize",
+  "ListComp",
+  "ListComp.__init__",
+  "MacroCall",
+  "MacroDef",
+  "MacroDef.__init__",
+  "MatchExpr",
+  "MatchExpr.__init__",
+  "MatchStmt",
+  "MatchStmt.__init__",
+  "Param.__init__",
+  "Parser",
+  "Parser.__init__",
+  "Parser._bound_text",
+  "Parser._consume",
+  "Parser._is_destructure_target",
+  "Parser._parse_bitwise_and",
+  "Parser._parse_bitwise_or",
+  "Parser._parse_bitwise_xor",
+  "Parser._parse_block",
+  "Parser._parse_build_block",
+  "Parser._parse_call",
+  "Parser._parse_cast_expr",
+  "Parser._parse_class_def",
+  "Parser._parse_comparison",
+  "Parser._parse_comparison_expr",
+  "Parser._parse_comptime_func_def",
+  "Parser._parse_comptime_stmt",
+  "Parser._parse_const_stmt",
+  "Parser._parse_constraint",
+  "Parser._parse_decorator",
+  "Parser._parse_defer_stmt",
+  "Parser._parse_duck_def",
+  "Parser._parse_duck_params",
+  "Parser._parse_duck_requirement",
+  "Parser._parse_enum_def",
+  "Parser._parse_expr_stmt",
+  "Parser._parse_for_stmt",
+  "Parser._parse_for_target",
+  "Parser._parse_for_target_element",
+  "Parser._parse_from_import",
+  "Parser._parse_func_def",
+  "Parser._parse_generic_bound",
+  "Parser._parse_go_stmt",
+  "Parser._parse_guard_stmt",
+  "Parser._parse_impl_stmt",
+  "Parser._parse_inline_suite",
+  "Parser._parse_lambda",
+  "Parser._parse_let_stmt",
+  "Parser._parse_macro_def",
+  "Parser._parse_match_expr",
+  "Parser._parse_match_stmt",
+  "Parser._parse_meta_block",
+  "Parser._parse_multiplicative_expr",
+  "Parser._parse_mut_stmt",
+  "Parser._parse_owned_stmt",
+  "Parser._parse_param_for_lambda",
+  "Parser._parse_params",
+  "Parser._parse_pattern",
+  "Parser._parse_pattern_with_or",
+  "Parser._parse_pipeline_expr",
+  "Parser._parse_primary",
+  "Parser._parse_raise_stmt",
+  "Parser._parse_return_stmt",
+  "Parser._parse_setup_stmt",
+  "Parser._parse_single_expr_block",
+  "Parser._parse_spawn_stmt",
+  "Parser._parse_statement",
+  "Parser._parse_struct_def",
+  "Parser._parse_subtype_def",
+  "Parser._parse_suite_stmt",
+  "Parser._parse_teardown_stmt",
+  "Parser._parse_test_stmt",
+  "Parser._parse_trait_def",
+  "Parser._parse_try_stmt",
+  "Parser._parse_type",
+  "Parser._parse_type_alias",
+  "Parser._parse_type_element",
+  "Parser._parse_typeclass_def",
+  "Parser._parse_typed_var",
+  "Parser._parse_unary_expr",
+  "Parser._parse_vec_literal",
+  "Parser._parse_with_stmt",
+  "Parser._pop_scope",
+  "Parser._push_scope",
+  "Parser._reject_multiple_bounds",
+  "Parser._require_function_scope",
+  "Parser._require_module_level",
+  "Parser._type_node_to_str",
+  "Pattern",
+  "PipeExpr",
+  "PipeExpr.__init__",
+  "ProjectCompiler",
+  "ProjectCompiler.__init__",
+  "ProjectCompiler._get_type_str",
+  "ProjectCompiler._is_package_module",
+  "ProjectCompiler._note_import_diagnostic",
+  "ProjectCompiler._pick_extension",
+  "ProjectCompiler._pick_extension.score",
+  "ProjectCompiler._resolve_import_target",
+  "ProjectCompiler._resolve_relative_import",
+  "ProjectCompiler.build",
+  "ProjectCompiler.compile_module",
+  "ProjectCompiler.discover_modules",
+  "ProjectCompiler.get_incremental_changes",
+  "ProjectCompiler.parse_all_modules",
+  "ProjectCompiler.type_check_module",
+  "RangePattern",
+  "ScopeAnalyzer",
+  "ScopeAnalyzer.__init__",
+  "ScopeAnalyzer._check_redefinition",
+  "ScopeAnalyzer._extract_names",
+  "ScopeAnalyzer._register_builtins",
+  "ScopeAnalyzer._visit_ConstraintDef",
+  "ScopeAnalyzer._visit_SubtypeDef",
+  "ScopeAnalyzer._visit_TypeAlias",
+  "SetupStmt",
+  "SlicePattern",
+  "SpawnStmt",
+  "SpawnStmt.__init__",
+  "StopExpressionParsing",
+  "StructDef.__init__",
+  "StructField.__init__",
+  "StructLiteral",
+  "StructLiteral.__init__",
+  "StructPattern",
+  "StructPattern.__init__",
+  "SubtypeDef",
+  "SubtypeDef.__init__",
+  "SuiteDef",
+  "TeardownStmt",
+  "TestCLIModes.test_cli_transpile_command",
+  "TestCodegenVerification",
+  "TestCodegenVerification.test_compile_time_constants",
+  "TestCodegenVerification.test_comptime_expression",
+  "TestCodegenVerification.test_const_generation",
+  "TestCodegenVerification.test_cython_directives",
+  "TestCodegenVerification.test_defer_statement",
+  "TestCodegenVerification.test_enum_generation",
+  "TestCodegenVerification.test_fstring",
+  "TestCodegenVerification.test_function_with_types",
+  "TestCodegenVerification.test_generic_struct",
+  "TestCodegenVerification.test_go_statement",
+  "TestCodegenVerification.test_let_statement",
+  "TestCodegenVerification.test_list_comprehension",
+  "TestCodegenVerification.test_match_statement",
+  "TestCodegenVerification.test_pipeline_operator",
+  "TestCodegenVerification.test_pointer_operations",
+  "TestCodegenVerification.test_spawn_statement",
+  "TestCodegenVerification.test_struct_generation",
+  "TestCodegenVerification.test_struct_with_default_values",
+  "TestCodegenVerification.test_struct_with_methods",
+  "TestCodegenVerification.test_type_alias",
+  "TestCompileMode.test_compile_to_pyd_basic",
+  "TestCompileMode.test_run_module",
+  "TestDef",
+  "TestHookIntegrationMode.test_compile_and_import",
+  "TokenType",
+  "TraitDef.__init__",
+  "TryStmt.__init__",
+  "Type",
+  "Type.__eq__",
+  "TypeAlias.__init__",
+  "TypeChecker",
+  "TypeChecker.__init__",
+  "TypeChecker._bare_container_type",
+  "TypeChecker._bound_member_satisfied",
+  "TypeChecker._bound_names_of_pattern",
+  "TypeChecker._call_is_judgable",
+  "TypeChecker._callable_arg_mismatch",
+  "TypeChecker._callable_declared_params",
+  "TypeChecker._callable_signature_assignable",
+  "TypeChecker._check_bound_satisfaction",
+  "TypeChecker._check_callable_arg_types",
+  "TypeChecker._check_callable_arity",
+  "TypeChecker._check_constraint_definition",
+  "TypeChecker._check_generic_constraint",
+  "TypeChecker._check_impl_on_subtype",
+  "TypeChecker._check_isinstance_on_subtype",
+  "TypeChecker._check_subtype_definition",
+  "TypeChecker._common_subtype_base",
+  "TypeChecker._common_subtype_base.chain_of",
+  "TypeChecker._comparison_override_result_type",
+  "TypeChecker._constraint_member_text",
+  "TypeChecker._expand_constraint_members",
+  "TypeChecker._extract_bind_names",
+  "TypeChecker._finalize_subtype_edges",
+  "TypeChecker._get_type_from_node",
+  "TypeChecker._is_declared_type_name",
+  "TypeChecker._is_fresh_literal",
+  "TypeChecker._is_unpack_target",
+  "TypeChecker._member_type_name",
+  "TypeChecker._mismatch",
+  "TypeChecker._nominal_subtype_assignment",
+  "TypeChecker._register_callable",
+  "TypeChecker._report_bound_violation",
+  "TypeChecker._report_constraint_in_value_position",
+  "TypeChecker._report_subtype_has_no_runtime_identity",
+  "TypeChecker._subtype_ancestor_chain",
+  "TypeChecker._subtype_base_kind",
+  "TypeChecker._subtype_chain_status",
+  "TypeChecker._subtype_direct_base",
+  "TypeChecker._subtype_error",
+  "TypeChecker._subtype_runtime_name",
+  "TypeChecker._type_display",
+  "TypeChecker._type_satisfies_duck",
+  "TypeChecker._value_type_for_declared",
+  "TypeChecker._visit_Assign",
+  "TypeChecker._visit_Attribute",
+  "TypeChecker._visit_BinOp",
+  "TypeChecker._visit_Call",
+  "TypeChecker._visit_CastExpr",
+  "TypeChecker._visit_ComptimeStmt",
+  "TypeChecker._visit_ConstraintDef",
+  "TypeChecker._visit_ForStmt",
+  "TypeChecker._visit_FuncDef",
+  "TypeChecker._visit_ImplStmt",
+  "TypeChecker._visit_LetStmt",
+  "TypeChecker._visit_Module",
+  "TypeChecker._visit_Name",
+  "TypeChecker._visit_ReturnStmt",
+  "TypeChecker._visit_SubtypeDef",
+  "TypeChecker._visit_TypePattern",
+  "TypeChecker.check",
+  "TypeClassDef",
+  "TypeClassDef.__init__",
+  "TypeClassImpl",
+  "TypeClassImpl.__init__",
+  "TypePattern",
+  "TypePattern.__init__",
+  "UnionType",
+  "VecLiteral",
+  "VecLiteral.__init__",
+  "VecType",
+  "_analyze_errors",
+  "_assert_compilable",
+  "_ast_nodes",
+  "_body",
+  "_check_scope",
+  "_cli",
+  "_comptime_block",
+  "_comptime_expr",
+  "_find_ast_nodes",
+  "_first_position",
+  "_fn_lines",
+  "_fn_slice",
+  "_func_slice",
+  "_identity_lines",
+  "_looks_like_ast_node",
+  "_lower",
+  "_marker_file",
+  "_not_implemented_error",
+  "_parse",
+  "_path_under",
+  "_plain",
+  "_plant_cache_tree",
+  "_read_cli_source",
+  "_report_build_failures",
+  "_report_cache_clear",
+  "_require_pure_value",
+  "_returned_expr",
+  "_run_cli",
+  "_safe_rmtree",
+  "_source",
+  "_tok",
+  "_transpile_check_only",
+  "_transpile_emit_ast",
+  "_transpile_generate_setup",
+  "_types",
+  "build_isolated_command",
+  "build_isolated_env",
+  "comptime_block_not_implemented",
+  "evaluate_comptime",
+  "extension_filename",
+  "extension_suffix",
+  "extension_suffixes",
+  "main",
+  "module_name_from_filename",
+  "parse_args",
+  "pick_built_extension",
+  "pick_built_extension.is_prefer_dir",
+  "pick_built_extension.stem",
+  "run_build",
+  "run_run",
+  "run_transpile",
+  "run_watch",
+  "run_watch.report_reload",
+  "test_bug74_augmented_xor_lowers_to_declared_equivalent",
+  "test_bug74_augmented_xor_with_variable_rhs_keeps_both_operands",
+  "test_bug74_build_value_in_value_position_unchanged",
+  "test_bug74_plain_assignment_not_touched",
+  "test_bug75_bitwise_ops_lower",
+  "test_bug75_frozen_caret_lexemes_untouched",
+  "test_bug75_infix_xor_parses_to_binop",
+  "test_bug75_lexer_emits_infix_caret_token",
+  "test_bug75_unary_invert_parses_to_unaryop",
+  "test_bug75_xor_precedence_sits_between_bitwise_and_and_or",
+  "test_bug76_defer_in_loop_return_emitted_once_per_exit",
+  "test_bug76_multiple_defers_keep_reverse_order_at_every_exit",
+  "test_bug76_nested_return_exit_runs_defer_cleanup",
+  "test_bug76_single_exit_still_emits_cleanup_once",
+  "test_bug78_equal_precedence_right_operand_keeps_parens",
+  "test_bug78_left_associative_chain_not_over_parenthesized",
+  "test_bug78_power_stays_right_associative",
+  "test_bug79_augassign_family_still_lexed",
+  "test_bug79_augassign_lowers_to_doc_equivalent",
+  "test_bug79_lexer_emits_declared_augassign_token",
+  "test_bug80_defer_in_nested_function_belongs_to_that_function",
+  "test_bug80_defer_only_block_stays_compilable",
+  "test_bug80_nested_defer_in_for_runs_once_at_exit",
+  "test_bug80_nested_defer_in_if_runs_at_function_exit",
+  "test_bug80_nested_defer_in_loop_block_stays_compilable",
+  "test_bug80_top_level_defer_still_moved_to_exit",
+  "test_bug81_codegen_renders_container_results_structurally",
+  "test_bug81_collection_elements_are_evaluated_not_copied",
+  "test_bug81_comptime_collection_product_is_a_compilable_literal",
+  "test_bug81_control_scalar_comptime_unchanged",
+  "test_bug81_evaluate_contract_returns_no_ast_node",
+  "test_bug81_list_concatenation_is_pure",
+  "test_bug81_list_literal_evaluates_to_pure_python_values",
+  "test_bug81_mixed_scalar_collection_is_pure",
+  "test_bug81_nested_collection_literal_is_pure",
+  "test_bug81_nested_unresolvable_element_is_whole_evaluation_failure",
+  "test_bug81_scalar_folding_unchanged",
+  "test_bug81_tuple_literal_evaluates_to_pure_python_values",
+  "test_bug81_unresolvable_element_is_whole_evaluation_failure",
+  "test_bug82_comptime_string_cannot_hijack_docstring",
+  "test_bug82_comptime_string_result_is_not_interpolated_raw",
+  "test_bug82_comptime_string_with_backslash_not_emitted_as_broken_literal",
+  "test_bug82_control_int_comptime_on_same_path",
+  "test_bug82_string_comptime_value_is_correct_on_evaluator_side",
+  "test_bug83_block_form_evaluate_entry_also_reports_not_implemented",
+  "test_bug83_block_form_raises_structured_not_implemented_diagnostic",
+  "test_bug83_block_form_surfaces_diagnostic_through_analyzer_face",
+  "test_bug83_inline_form_control_still_clean",
+  "test_bug84_both_analyzer_channels_agree_on_pointer_element_name",
+  "test_bug84_control_documented_pointer_names_stay_clean",
+  "test_bug84_documented_char_pointer_return_annotation_resolves",
+  "test_bug84_documented_void_pointer_name_resolves",
+  "test_bug84_undocumented_c_integer_names_stay_undefined",
+  "test_bug90_hook_transpile_file_carries_real_identity",
+  "test_bug90_hook_transpile_without_path_fabricates_nothing",
+  "test_bug90_identity_literals_round_trip_for_nasty_paths",
+  "test_bug90_other_module_metadata_still_emitted",
+  "test_bug90_placeholder_identity_not_emitted",
+  "test_bug90_real_identity_when_source_path_known",
+  "test_bug91_windows_path_in_header_docstring_is_a_valid_literal",
+  "test_declared_builtins_still_cited_in_syntax_docs",
+  "test_defer_declared_shape",
+  "test_doc_worked_example_maps_to_noreturn",
+  "test_name_face_at_cli_entry",
+  "test_pinned_defects_still_have_a_card",
+  "test_r5_85_output_dir_after_subcommand_still_used",
+  "test_r5_85_output_dir_before_subcommand_is_used",
+  "test_r5_85_output_dir_both_sides_subcommand_wins",
+  "test_r5_85_parse_args_global_after_subcommand_still_works",
+  "test_r5_85_parse_args_global_before_subcommand",
+  "test_r5_85_parse_args_global_default_unchanged",
+  "test_r5_85_verbose_before_subcommand_prints_steps",
+  "test_r5_85_verbose_control_without_flag_stays_quiet",
+  "test_r5_86_bom_marker_still_recognised_as_cypy",
+  "test_r5_86_bom_source_still_transpiles",
+  "test_r5_86_finder_does_not_silently_pass_bom_file_through",
+  "test_r5_86_plain_python_file_is_not_hijacked",
+  "test_r5_87_clear_cache_removes_every_artifact_and_reports_count",
+  "test_r5_87_clear_cache_reports_undeletable_file_in_report",
+  "test_r5_87_clear_cache_reports_undeletable_file_in_report.refusing",
+  "test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers",
+  "test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers.refuse_all",
+  "test_r5_88_cycle_reason_reaches_user",
+  "test_r5_88_no_cypy_files_reason_reaches_user",
+  "test_r5_88_rejected_entry_name_reaches_user",
+  "test_r5_89_check_only_honours_entry_scope",
+  "test_r5_89_check_only_with_unknown_entry_fails_loudly",
+  "test_r5_89_check_only_without_entry_still_checks_everything"
+ ],
+ "symbols_referenced_len": 507,
+ "per_file_change_points": {
+  "cypy_hook/hook.py": 33,
+  "cypyc/analyzer/comptime_evaluator.py": 16,
+  "cypyc/analyzer/scope_analyzer.py": 8,
+  "cypyc/analyzer/type_checker.py": 64,
+  "cypyc/cli.py": 15,
+  "cypyc/codegen/cython_generator.py": 49,
+  "cypyc/parser/lexer.py": 9,
+  "cypyc/parser/parser.py": 168,
+  "cypyc/project/project_compiler.py": 15,
+  "tests/analyzer/test_r5_fix_comptime_types.py": 28,
+  "tests/cli/test_r5_fix_cli_hook.py": 28,
+  "tests/codegen/__init__.py": 1,
+  "tests/codegen/test_r5_fix_codegen.py": 36,
+  "tests/parser/test_r5_fix_lexer_tokens.py": 16,
+  "tests/test_codegen_verification.py": 22,
+  "tests/test_loop_20260927_advance_r4.py": 9,
+  "tests/test_unit_test_modes.py": 5
+ },
+ "merged_root_causes": {
+  "cypy_hook/hook.py::<模块级>": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CacheClearReport": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CacheClearReport.ok": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyCacheManager": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyCacheManager._base_cache_dir_for": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyCacheManager._clear_single": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyCacheManager._clear_tree": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyCacheManager._find_cache_roots": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyCacheManager._load_manifest": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyCacheManager._remove_file": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyCacheManager.clear_cache": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyCacheManager.is_cypy_file": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyHook": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyHook.analyze_only": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyHook.compile_and_import": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyHook.compile_to_pyd": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyHook.run": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyHook.run_cli": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyHook.run_module": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyHook.transpile": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::CypyHook.transpile_file": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::FunctionNotFoundError": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::_path_under": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::_safe_rmtree": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::build_isolated_command": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::build_isolated_env": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::extension_filename": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::extension_suffix": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::extension_suffixes": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::module_name_from_filename": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::pick_built_extension": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::pick_built_extension.is_prefer_dir": [
+   73,
+   86,
+   87
+  ],
+  "cypy_hook/hook.py::pick_built_extension.stem": [
+   73,
+   86,
+   87
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::<模块级>": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::ComptimeEvaluator": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::ComptimeEvaluator._evaluate_constant": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::ComptimeEvaluator._evaluate_for_statement": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::ComptimeEvaluator._evaluate_literal": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::ComptimeEvaluator._evaluate_node": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::ComptimeEvaluator._for_target_names": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::ComptimeEvaluator.evaluate": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::ComptimeNotImplementedError": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::ComptimeNotImplementedError.__init__": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::_find_ast_nodes": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::_first_position": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::_looks_like_ast_node": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::_require_pure_value": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::comptime_block_not_implemented": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/comptime_evaluator.py::evaluate_comptime": [
+   81,
+   83
+  ],
+  "cypyc/analyzer/type_checker.py::<模块级>": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::Type": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::Type.__eq__": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker.__init__": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._bare_container_type": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._bound_member_satisfied": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._bound_names_of_pattern": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._call_is_judgable": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._callable_arg_mismatch": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._callable_declared_params": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._callable_signature_assignable": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._check_bound_satisfaction": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._check_callable_arg_types": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._check_callable_arity": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._check_constraint_definition": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._check_generic_constraint": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._check_impl_on_subtype": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._check_isinstance_on_subtype": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._check_subtype_definition": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._common_subtype_base": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._common_subtype_base.chain_of": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._comparison_override_result_type": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._constraint_member_text": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._expand_constraint_members": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._extract_bind_names": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._finalize_subtype_edges": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._get_type_from_node": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._is_declared_type_name": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._is_fresh_literal": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._is_unpack_target": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._member_type_name": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._mismatch": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._nominal_subtype_assignment": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._register_callable": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._report_bound_violation": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._report_constraint_in_value_position": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._report_subtype_has_no_runtime_identity": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._subtype_ancestor_chain": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._subtype_base_kind": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._subtype_chain_status": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._subtype_direct_base": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._subtype_error": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._subtype_runtime_name": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._type_display": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._type_satisfies_duck": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._value_type_for_declared": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_Assign": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_Attribute": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_BinOp": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_Call": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_CastExpr": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_ComptimeStmt": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_ConstraintDef": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_ForStmt": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_FuncDef": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_ImplStmt": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_LetStmt": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_Module": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_Name": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_ReturnStmt": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_SubtypeDef": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker._visit_TypePattern": [
+   71,
+   84
+  ],
+  "cypyc/analyzer/type_checker.py::TypeChecker.check": [
+   71,
+   84
+  ],
+  "cypyc/cli.py::<模块级>": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::_check_scope": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::_read_cli_source": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::_report_build_failures": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::_report_cache_clear": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::_transpile_check_only": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::_transpile_emit_ast": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::_transpile_generate_setup": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::main": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::parse_args": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::run_build": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::run_run": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::run_transpile": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::run_watch": [
+   85,
+   89
+  ],
+  "cypyc/cli.py::run_watch.report_reload": [
+   85,
+   89
+  ],
+  "cypyc/codegen/cython_generator.py::<模块级>": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator.__init__": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._collect_defer_stmts": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._collect_defer_stmts.scan": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._collect_method_names": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._collect_module_info": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._collect_subtypes": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._collect_type_aliases": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._constraint_member_name": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._declared_cython_type_of": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._decorator_names": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._emit_defer_stmts": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._emit_trait_isinstance_support": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._ensure_owned_import": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._float_widen_if_integral": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._fold_comptime_result": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._for_target_to_str": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._generate_guard_else_block": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._generate_module_magic_attrs": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._generate_param_strings": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._is_integral_value_expr": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._is_selfless_method": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._param_default_str": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._pattern_bound_names": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._pattern_match_info": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._record_declared_var": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._render_comptime_item": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._subtype_to_base": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._trait_ancestors": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._trait_class_ref": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._type_to_str": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_Assign": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_BinOp": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_Call": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_ComptimeStmt": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_ConstraintDef": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_DeferStmt": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_ForStmt": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_FuncDef": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_ImplStmt": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_LetStmt": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_Module": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_RaiseStmt": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_ReturnStmt": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_StructDef": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_SubtypeDef": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator._visit_TraitDef": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/codegen/cython_generator.py::CythonGenerator.generate": [
+   72,
+   74,
+   76,
+   78,
+   80,
+   81,
+   82,
+   90,
+   91
+  ],
+  "cypyc/parser/lexer.py::Lexer": [
+   74,
+   75,
+   79
+  ],
+  "cypyc/parser/lexer.py::Lexer.__init__": [
+   74,
+   75,
+   79
+  ],
+  "cypyc/parser/lexer.py::Lexer._caret_is_infix": [
+   74,
+   75,
+   79
+  ],
+  "cypyc/parser/lexer.py::Lexer._current_line_starts_with": [
+   74,
+   75,
+   79
+  ],
+  "cypyc/parser/lexer.py::Lexer._handle_newline": [
+   74,
+   75,
+   79
+  ],
+  "cypyc/parser/lexer.py::Lexer._skip_whitespace": [
+   74,
+   75,
+   79
+  ],
+  "cypyc/parser/lexer.py::Lexer._tokenize_string": [
+   74,
+   75,
+   79
+  ],
+  "cypyc/parser/lexer.py::Lexer.tokenize": [
+   74,
+   75,
+   79
+  ],
+  "cypyc/parser/lexer.py::TokenType": [
+   74,
+   75,
+   79
+  ],
+  "cypyc/parser/parser.py::<模块级>": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ASTCache": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ASTCache.get": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ASTCache.get_stats": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ASTCache.set": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ArrayPattern": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ArrayPattern.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::AsPattern": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::AsPattern.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::AwaitExpr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::BacktickBlock": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::BacktickBlock.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::BuildBlockExpr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::BuildValueExpr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Call.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::CaseClause": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::CaseClause.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::CastExpr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::CastExpr.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ClassDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ComptimeFuncDef": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ComptimeFuncDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ComptimeStmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ConstraintDef": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ConstraintDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::DictLiteral": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::DictPattern": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::DictPattern.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::DuckDef": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::DuckDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::DuckRequirement": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::DuckRequirement.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ExceptionDef": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ExceptionDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ExtractorPattern": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ExtractorPattern.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::FuncDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::GoStmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::GoStmt.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::GuardStmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::GuardStmt.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::IfExp": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::IfStmt.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ImplStmt.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::LambdaExpr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::LambdaExpr.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::LetStmt.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ListComp": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::ListComp.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::MacroCall": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::MacroDef": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::MacroDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::MatchExpr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::MatchExpr.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::MatchStmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::MatchStmt.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Param.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._bound_text": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._consume": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._is_destructure_target": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_bitwise_and": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_bitwise_or": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_bitwise_xor": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_block": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_build_block": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_call": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_cast_expr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_class_def": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_comparison": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_comparison_expr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_comptime_func_def": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_comptime_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_const_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_constraint": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_decorator": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_defer_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_duck_def": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_duck_params": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_duck_requirement": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_enum_def": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_expr_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_for_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_for_target": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_for_target_element": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_from_import": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_func_def": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_generic_bound": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_go_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_guard_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_impl_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_inline_suite": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_lambda": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_let_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_macro_def": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_match_expr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_match_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_meta_block": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_multiplicative_expr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_mut_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_owned_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_param_for_lambda": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_params": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_pattern": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_pattern_with_or": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_pipeline_expr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_primary": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_raise_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_return_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_setup_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_single_expr_block": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_spawn_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_statement": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_struct_def": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_subtype_def": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_suite_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_teardown_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_test_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_trait_def": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_try_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_type": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_type_alias": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_type_element": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_typeclass_def": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_typed_var": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_unary_expr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_vec_literal": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._parse_with_stmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._pop_scope": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._push_scope": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._reject_multiple_bounds": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._require_function_scope": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._require_module_level": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Parser._type_node_to_str": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::Pattern": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::PipeExpr": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::PipeExpr.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::RangePattern": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::SetupStmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::SlicePattern": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::SpawnStmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::SpawnStmt.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::StopExpressionParsing": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::StructDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::StructField.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::StructLiteral": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::StructLiteral.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::StructPattern": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::StructPattern.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::SubtypeDef": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::SubtypeDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::SuiteDef": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TeardownStmt": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TestDef": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TraitDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TryStmt.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TypeAlias.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TypeClassDef": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TypeClassDef.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TypeClassImpl": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TypeClassImpl.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TypePattern": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::TypePattern.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::UnionType": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::VecLiteral": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::VecLiteral.__init__": [
+   74,
+   75
+  ],
+  "cypyc/parser/parser.py::VecType": [
+   74,
+   75
+  ]
+ },
+ "merged_root_cause_len": 354,
+ "cards_sharing_a_symbol_len": 1093,
+ "card_change_files": {
+  "68": [],
+  "69": [],
+  "71": [
+   "cypyc/analyzer/type_checker.py"
+  ],
+  "72": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "73": [
+   "cypy_hook/hook.py"
+  ],
+  "74": [
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/lexer.py",
+   "cypyc/parser/parser.py"
+  ],
+  "75": [
+   "cypyc/parser/lexer.py",
+   "cypyc/parser/parser.py"
+  ],
+  "76": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "78": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "79": [
+   "cypyc/parser/lexer.py"
+  ],
+  "80": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "81": [
+   "cypyc/analyzer/comptime_evaluator.py",
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "82": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "83": [
+   "cypyc/analyzer/comptime_evaluator.py",
+   "tests/analyzer/test_r5_fix_comptime_types.py"
+  ],
+  "84": [
+   "cypyc/analyzer/type_checker.py"
+  ],
+  "85": [
+   "cypyc/cli.py"
+  ],
+  "86": [
+   "cypy_hook/hook.py"
+  ],
+  "87": [
+   "cypy_hook/hook.py"
+  ],
+  "88": [
+   "cypyc/project/project_compiler.py"
+  ],
+  "89": [
+   "cypyc/cli.py"
+  ],
+  "90": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "91": [
+   "cypyc/codegen/cython_generator.py",
+   "tests/codegen/__init__.py",
+   "tests/codegen/test_r5_fix_codegen.py",
+   "tests/test_codegen_verification.py"
+  ]
+ },
+ "card_product_files": {
+  "68": [],
+  "69": [],
+  "71": [
+   "cypyc/analyzer/type_checker.py"
+  ],
+  "72": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "73": [
+   "cypy_hook/hook.py"
+  ],
+  "74": [
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/lexer.py",
+   "cypyc/parser/parser.py"
+  ],
+  "75": [
+   "cypyc/parser/lexer.py",
+   "cypyc/parser/parser.py"
+  ],
+  "76": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "78": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "79": [
+   "cypyc/parser/lexer.py"
+  ],
+  "80": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "81": [
+   "cypyc/analyzer/comptime_evaluator.py",
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "82": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "83": [
+   "cypyc/analyzer/comptime_evaluator.py",
+   "tests/analyzer/test_r5_fix_comptime_types.py"
+  ],
+  "84": [
+   "cypyc/analyzer/type_checker.py"
+  ],
+  "85": [
+   "cypyc/cli.py"
+  ],
+  "86": [
+   "cypy_hook/hook.py"
+  ],
+  "87": [
+   "cypy_hook/hook.py"
+  ],
+  "88": [
+   "cypyc/project/project_compiler.py"
+  ],
+  "89": [
+   "cypyc/cli.py"
+  ],
+  "90": [
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "91": [
+   "cypyc/codegen/cython_generator.py",
+   "tests/codegen/__init__.py",
+   "tests/codegen/test_r5_fix_codegen.py",
+   "tests/test_codegen_verification.py"
+  ]
+ },
+ "product_files_without_card": [
+  "cypyc/analyzer/scope_analyzer.py"
+ ],
+ "ring_files_all_len": 17,
+ "unfixed_claimed": [
+  68,
+  69,
+  73
+ ],
+ "lane_receipts": [
+  {
+   "lane": "lane-lexer",
+   "status": "completed",
+   "cards": [
+    79,
+    75
+   ],
+   "files_reported": [
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "tests/parser/test_r5_fix_lexer_tokens.py"
+   ],
+   "scope_declared": [
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "tests/parser/"
+   ],
+   "not_seen_in_diff": [],
+   "exists_but_not_this_ring": []
+  },
+  {
+   "lane": "lane-tests",
+   "status": "completed",
+   "cards": [
+    77
+   ],
+   "files_reported": [
+    "tests/test_codegen_verification.py",
+    "tests/test_unit_test_modes.py"
+   ],
+   "scope_declared": [
+    "tests/test_codegen_verification.py",
+    "tests/test_unit_test_modes.py"
+   ],
+   "not_seen_in_diff": [],
+   "exists_but_not_this_ring": []
+  },
+  {
+   "lane": "lane-analyzer",
+   "status": "completed",
+   "cards": [
+    81,
+    82,
+    83,
+    84
+   ],
+   "files_reported": [
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "tests/analyzer/test_r5_fix_comptime_types.py"
+   ],
+   "scope_declared": [
+    "cypyc/analyzer/",
+    "tests/analyzer/"
+   ],
+   "not_seen_in_diff": [],
+   "exists_but_not_this_ring": []
+  },
+  {
+   "lane": "lane-codegen",
+   "status": "failed：达到 150 轮上限，没有交付报告",
+   "cards": [
+    74,
+    76,
+    78,
+    80,
+    81,
+    82,
+    90
+   ],
+   "files_reported": [],
+   "scope_declared": [
+    "cypyc/codegen/",
+    "tests/codegen/"
+   ],
+   "not_seen_in_diff": [],
+   "exists_but_not_this_ring": []
+  },
+  {
+   "lane": "lane-cli-hook",
+   "status": "completed",
+   "cards": [
+    73,
+    85,
+    86,
+    87,
+    88,
+    89
+   ],
+   "files_reported": [
+    "cypyc/cli.py",
+    "cypy_hook/hook.py",
+    "tests/cli/test_r5_fix_cli_hook.py"
+   ],
+   "scope_declared": [
+    "cypyc/cli.py",
+    "cypy_hook/",
+    "tests/cli/"
+   ],
+   "not_seen_in_diff": [],
+   "exists_but_not_this_ring": []
+  },
+  {
+   "lane": "lane-commander",
+   "status": "completed",
+   "cards": [
+    76
+   ],
+   "files_reported": [
+    "tests/test_loop_20260927_advance_r4.py"
+   ],
+   "scope_declared": [
+    "tests/test_loop_20260927_advance_r4.py"
+   ],
+   "not_seen_in_diff": [],
+   "exists_but_not_this_ring": []
+  },
+  {
+   "lane": "lane-commander-identity",
+   "status": "completed",
+   "cards": [
+    90,
+    91
+   ],
+   "files_reported": [
+    "cypyc/codegen/cython_generator.py",
+    "cypy_hook/hook.py",
+    "cypyc/project/project_compiler.py",
+    "tests/codegen/test_r5_fix_codegen.py"
+   ],
+   "scope_declared": [
+    "BUG-90 的另一半：调用方把源路径交给生成器（hook + project 两个入口）",
+    "BUG-91：接上真路径之后产物头注里的反斜杠没转义 ⇒ Cython 就地语法错误（本环新入账）"
+   ],
+   "not_seen_in_diff": [],
+   "exists_but_not_this_ring": []
+  }
+ ],
+ "unattributed_changes": [],
+ "covered_only_by_scope": [
+  "tests/codegen/__init__.py"
+ ],
+ "reported_files_len": 16,
+ "note": "根因合并=落在同一 (文件, 符号) 的单数，不代表它们是同一个缺陷；unfixed_claimed 里的单仍按 OPEN 转结，不写成本环修掉。",
+ "refuse": [],
+ "at_utc": "2026-09-28T10:58:27+00:00"
+}

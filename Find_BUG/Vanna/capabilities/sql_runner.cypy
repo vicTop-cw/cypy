@@ -1,0 +1,54 @@
+#!bin cypy
+# ============================================================
+# sql_runner.cypy — SqlRunner capability trait
+# ============================================================
+
+from user import RequestContext
+
+struct RunSqlArgs:
+    # Arguments for SQL execution
+    sql: str
+
+    def __init__(self, sql: str):
+        self.sql = sql
+
+
+trait SqlRunner:
+    # Abstract capability for executing SQL queries against a database
+
+    def run_sql(self, args: RunSqlArgs, context: RequestContext) -> object
+
+
+struct SqlResult:
+    # Structured result from SQL execution
+    columns: list<str>
+    rows: list<dict<str, str>>
+    row_count: int
+    query_type: str
+
+    def __init__(self, columns: list<str> = [], rows: list<dict<str, str>> = [], query_type: str = "SELECT"):
+        self.columns = columns
+        self.rows = rows
+        self.row_count = len(rows)
+        self.query_type = query_type
+
+    def empty(self) -> bool:
+        return self.row_count == 0
+
+    def to_csv(self) -> str:
+        guard len(self.columns) > 0 else return ""
+        let lines: list<str> = []
+        lines.append(",".join(self.columns))
+        for row in self.rows:
+            let values: list<str> = []
+            for col in self.columns:
+                let val: str = str(row.get(col, ""))
+                values.append(val)
+            lines.append(",".join(values))
+        return "\n".join(lines)
+
+    def from_dicts(data: list<dict<str, str>>, query_type: str = "SELECT") -> SqlResult:
+        let cols: list<str> = []
+        if len(data) > 0:
+            cols = list(data[0].keys())
+        return SqlResult(columns=cols, rows=data, query_type=query_type)

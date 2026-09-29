@@ -1,0 +1,11 @@
+struct Point:
+    x: int
+
+    def shifted(self, dx: int) -> int:
+        return self.x + dx
+
+    @staticmethod
+    def zero() -> int:
+        return 0
+
+print(Point(x=1).shifted(2))

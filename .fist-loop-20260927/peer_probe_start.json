@@ -1,0 +1,936 @@
+{
+"cypy_bridge/__init__.py": [
+1790480762.917,
+3587
+],
+"cypy_bridge/compiler.py": [
+1790429683.863,
+170737
+],
+"cypy_bridge/core.py": [
+1784720291.483,
+2595
+],
+"cypy_bridge/defer.py": [
+1790328799.185,
+5432
+],
+"cypy_bridge/enum.py": [
+1784721416.901,
+5130
+],
+"cypy_bridge/generics.py": [
+1784722815.369,
+6895
+],
+"cypy_bridge/memory.py": [
+1790328210.997,
+9737
+],
+"cypy_bridge/meta.py": [
+1790329073.523,
+9725
+],
+"cypy_bridge/nogil.py": [
+1790411105.806,
+8648
+],
+"cypy_bridge/pointer.py": [
+1790429683.798,
+19892
+],
+"cypy_bridge/struct.py": [
+1784719783.855,
+5059
+],
+"cypy_bridge/types.py": [
+1790483418.618,
+16247
+],
+"cypy_bridge/union.py": [
+1790330283.397,
+6551
+],
+"cypy_hook/__init__.py": [
+1784698803.481,
+51
+],
+"cypy_hook/hook.py": [
+1790429683.917,
+47025
+],
+"cypyc/__init__.py": [
+1784698203.124,
+80
+],
+"cypyc/__main__.py": [
+1790385038.757,
+508
+],
+"cypyc/analyzer/__init__.py": [
+1784706870.506,
+376
+],
+"cypyc/analyzer/build_block_checker.py": [
+1786501717.775,
+8064
+],
+"cypyc/analyzer/comptime_evaluator.py": [
+1790430033.387,
+25965
+],
+"cypyc/analyzer/cycle_detector.py": [
+1784707143.391,
+7830
+],
+"cypyc/analyzer/defer_analyzer.py": [
+1789588563.038,
+3200
+],
+"cypyc/analyzer/pointer_checker.py": [
+1790329169.723,
+14997
+],
+"cypyc/analyzer/scope_analyzer.py": [
+1790399696.562,
+42459
+],
+"cypyc/analyzer/type_checker.py": [
+1790485883.339,
+201135
+],
+"cypyc/cli.py": [
+1790332530.619,
+24146
+],
+"cypyc/codegen/__init__.py": [
+1784773309.06,
+300
+],
+"cypyc/codegen/bridge_generator.py": [
+1784809800.755,
+7137
+],
+"cypyc/codegen/cython_generator.py": [
+1790488655.884,
+200522
+],
+"cypyc/codegen/setup_generator.py": [
+1785393484.077,
+2109
+],
+"cypyc/codegen/type_mapper.py": [
+1790433611.911,
+3007
+],
+"cypyc/incremental/__init__.py": [
+1785033775.14,
+541
+],
+"cypyc/incremental/ast_differ.py": [
+1790325551.254,
+10014
+],
+"cypyc/incremental/dependency_graph.py": [
+1790324882.427,
+11195
+],
+"cypyc/incremental/file_monitor.py": [
+1790401051.573,
+6818
+],
+"cypyc/incremental/hot_reload.py": [
+1790429683.875,
+26469
+],
+"cypyc/incremental/incremental_manager.py": [
+1790429824.639,
+20228
+],
+"cypyc/parser/__init__.py": [
+1784698233.841,
+138
+],
+"cypyc/parser/lexer.py": [
+1790479442.443,
+40417
+],
+"cypyc/parser/macro_expander.py": [
+1790402889.423,
+22193
+],
+"cypyc/parser/parser.py": [
+1790488950.207,
+185596
+],
+"cypyc/parser/preprocessor.py": [
+1790325670.218,
+11710
+],
+"cypyc/project/__init__.py": [
+1785398078.998,
+424
+],
+"cypyc/project/module_dependency_graph.py": [
+1785398154.178,
+9210
+],
+"cypyc/project/project_compiler.py": [
+1790429683.753,
+38065
+],
+"cypyc/project/type_registry.py": [
+1785398119.62,
+10684
+],
+"cypyc/transformer/__init__.py": [
+1785296006.143,
+535
+],
+"cypyc/transformer/defer_transformer.py": [
+1790401051.578,
+1494
+],
+"cypyc/transformer/enum_transformer.py": [
+1790401051.586,
+1492
+],
+"cypyc/transformer/generic_transformer.py": [
+1790401051.6,
+1521
+],
+"cypyc/transformer/struct_transformer.py": [
+1790401051.611,
+1472
+],
+"cypyc/transformer/trait_transformer.py": [
+1790401051.621,
+1614
+],
+"cypyc/utils/__init__.py": [
+1784698737.617,
+177
+],
+"cypyc/utils/ast_utils.py": [
+1784698751.044,
+1809
+],
+"cypyc/utils/error_reporter.py": [
+1785064991.484,
+9346
+],
+"cypyc/utils/indent_detector.py": [
+1790429683.904,
+2669
+],
+"div-tools/__init__.py": [
+1784864464.054,
+230
+],
+"div-tools/ast_utils.py": [
+1784864448.344,
+1910
+],
+"div-tools/error_reporter.py": [
+1784864461.837,
+2075
+],
+"examples/basic_types.cypy": [
+1785719198.306,
+1049
+],
+"examples/concurrency.cypy": [
+1785148886.047,
+624
+],
+"examples/control_flow.cypy": [
+1785722226.238,
+1311
+],
+"examples/defer.cypy": [
+1785199680.815,
+497
+],
+"examples/demos/basics/control_flow.cypy": [
+1785465061.258,
+7876
+],
+"examples/demos/basics/hello.cypy": [
+1785463661.368,
+805
+],
+"examples/demos/basics/types.cypy": [
+1785465346.043,
+5158
+],
+"examples/demos/basics/variables.cypy": [
+1785464681.894,
+2187
+],
+"examples/demos/boundary_cases/boundary_values.cypy": [
+1785725818.563,
+6907
+],
+"examples/demos/boundary_cases/combined_features.cypy": [
+1785726717.885,
+6778
+],
+"examples/demos/boundary_cases/composite_declarations.cypy": [
+1785726988.253,
+8484
+],
+"examples/demos/boundary_cases/exception_edges.cypy": [
+1785725708.973,
+7955
+],
+"examples/demos/boundary_cases/nested_syntax.cypy": [
+1785725398.13,
+6537
+],
+"examples/demos/boundary_cases/special_operators.cypy": [
+1785726962.296,
+7662
+],
+"examples/demos/concurrency_advanced/async_await.cypy": [
+1785736950.379,
+4270
+],
+"examples/demos/concurrency_advanced/exceptions_demo.cypy": [
+1786692131.606,
+6394
+],
+"examples/demos/concurrency_advanced/magic_properties.cypy": [
+1785463890.953,
+4592
+],
+"examples/demos/concurrency_advanced/simd_vector.cypy": [
+1785463871.418,
+3890
+],
+"examples/demos/concurrency_advanced/spawn_go.cypy": [
+1785463805.262,
+3455
+],
+"examples/demos/concurrency_advanced/union_type.cypy": [
+1785736962.903,
+3157
+],
+"examples/demos/data_structures/class_demo.cypy": [
+1785467762.459,
+10267
+],
+"examples/demos/data_structures/enum_demo.cypy": [
+1785467643.148,
+8681
+],
+"examples/demos/data_structures/struct_demo.cypy": [
+1785467288.059,
+7124
+],
+"examples/demos/data_structures/type_alias_demo.cypy": [
+1785467863.865,
+7688
+],
+"examples/demos/legacy/analyzer/scope_usage.cypy": [
+1790328239.256,
+265
+],
+"examples/demos/legacy/analyzer/type_checking.cypy": "MISSING",
+"examples/demos/legacy/builtins/defer_and_guard.cypy": "MISSING",
+"examples/demos/legacy/builtins/generics.cypy": "MISSING",
+"examples/demos/legacy/builtins/pointer_operations.cypy": "MISSING",
+"examples/demos/legacy/codegen/cdef_class_generation.cypy": "MISSING",
+"examples/demos/legacy/codegen/codegen_struct.cypy": [
+1790328239.257,
+275
+],
+"examples/demos/legacy/codegen/module_magic_attrs.cypy": "MISSING",
+"examples/demos/legacy/integration/array_operations.cypy": [
+1790328239.26,
+236
+],
+"examples/demos/legacy/parser/build_blocks.cypy": "MISSING",
+"examples/demos/legacy/parser/implicit_policy.cypy": "MISSING",
+"examples/demos/legacy/parser/struct_definition.cypy": "MISSING",
+"examples/demos/legacy/parser/type_conversion.cypy": [
+1790328239.254,
+152
+],
+"examples/demos/macros/macro_examples.cypy": [
+1785734226.804,
+2877
+],
+"examples/demos/memory_metaprogramming/comptime_demo.cypy": [
+1785463684.321,
+4320
+],
+"examples/demos/memory_metaprogramming/defer_demo.cypy": [
+1785466688.837,
+4198
+],
+"examples/demos/memory_metaprogramming/macros.cypy": [
+1786538593.624,
+2606
+],
+"examples/demos/memory_metaprogramming/meta_blocks.cypy": [
+1785466917.175,
+5549
+],
+"examples/demos/memory_metaprogramming/pointers.cypy": [
+1786593359.873,
+4171
+],
+"examples/demos/patterns_operators/build_blocks.cypy": [
+1785468590.35,
+7816
+],
+"examples/demos/patterns_operators/extractor_patterns.cypy": [
+1785468287.543,
+8881
+],
+"examples/demos/patterns_operators/pattern_matching.cypy": [
+1785467560.163,
+10385
+],
+"examples/demos/patterns_operators/pipe_operator.cypy": [
+1785467867.238,
+6378
+],
+"examples/demos/patterns_operators/syntax_sugar.cypy": [
+1785467390.5,
+8808
+],
+"examples/demos/simd_vectors/vec_examples.cypy": [
+1785734207.462,
+3400
+],
+"examples/demos/traits_duck/duck_advanced.cypy": [
+1786693380.785,
+7892
+],
+"examples/demos/traits_duck/duck_basic.cypy": [
+1785466855.501,
+4142
+],
+"examples/demos/traits_duck/trait_advanced.cypy": [
+1786597098.099,
+4876
+],
+"examples/demos/traits_duck/trait_basic.cypy": [
+1785463579.787,
+3225
+],
+"examples/demos/type_system/union_type_examples.cypy": [
+1785736965.503,
+4729
+],
+"examples/demos/upcoming_features/planned_features.cypy": [
+1785731590.36,
+4957
+],
+"examples/functions.cypy": [
+1785148635.43,
+899
+],
+"examples/generic.cypy": [
+1789698086.163,
+545
+],
+"examples/generics_advanced.cypy": [
+1785410635.512,
+1270
+],
+"examples/hello.cypy": [
+1784698963.145,
+182
+],
+"examples/list_comprehension.cypy": [
+1785199706.28,
+616
+],
+"examples/meta.cypy": [
+1785199776.745,
+688
+],
+"examples/metaprogramming.cypy": [
+1785199793.838,
+517
+],
+"examples/minimal_test.cypy": [
+1790386053.68,
+670
+],
+"examples/new_syntax_features.cypy": [
+1790385861.224,
+3381
+],
+"examples/pipe_operator.cypy": [
+1785410641.042,
+1052
+],
+"examples/pointers.cypy": [
+1785199755.002,
+688
+],
+"examples/struct.cypy": "MISSING",
+"examples/struct_enum.cypy": [
+1790386301.876,
+2530
+],
+"examples/test_duck.cypy": [
+1790387269.871,
+3371
+],
+"examples/test_macro.cypy": [
+1790386077.75,
+431
+],
+"examples/test_meta.cypy": [
+1790386224.651,
+881
+],
+"examples/test_new_features.cypy": [
+1790386243.283,
+810
+],
+"examples/test_project/geometry.cypy": [
+1785410654.558,
+370
+],
+"examples/test_project/main.cypy": [
+1785398864.504,
+289
+],
+"examples/test_project/types.cypy": [
+1785410655.375,
+259
+],
+"examples/test_union.cypy": [
+1790386077.706,
+634
+],
+"examples/test_vec.cypy": [
+1790386067.914,
+674
+],
+"omega/__init__.py": [
+1786887463.923,
+725
+],
+"omega/check.py": [
+1786882458.86,
+1550
+],
+"omega/gate.py": [
+1786882458.847,
+1665
+],
+"omega/spec.py": [
+1786882458.835,
+2849
+],
+"pyproject.toml": [
+1788335025.506,
+1730
+],
+"scripts/run_tests.py": [
+1786935995.924,
+4137
+],
+"scripts/sync_demo.py": [
+1790328708.835,
+5234
+],
+"setup.py": [
+1788343143.592,
+1443
+],
+"test_suite/__init__.py": [
+1784878744.587,
+530
+],
+"test_suite/core/__init__.py": [
+1784878746.13,
+262
+],
+"test_suite/core/assertions.py": [
+1784878266.055,
+5429
+],
+"test_suite/core/runner.py": [
+1784878302.337,
+5656
+],
+"test_suite/core/suite.py": [
+1790327758.84,
+4163
+],
+"test_suite/core/test.py": [
+1790327730.493,
+3467
+],
+"test_suite/fixtures/__init__.py": [
+1784878366.291,
+147
+],
+"test_suite/fixtures/compiler.py": [
+1790327767.812,
+4826
+],
+"test_suite/fixtures/parser.py": [
+1790325525.644,
+3039
+],
+"test_suite/suites/__init__.py": [
+1784878815.391,
+283
+],
+"test_suite/suites/analyzer_suite.py": [
+1790328130.401,
+7447
+],
+"test_suite/suites/codegen_suite.py": [
+1790443177.217,
+7417
+],
+"test_suite/suites/integration_suite.py": [
+1790327936.976,
+6423
+],
+"test_suite/suites/parser_suite.py": [
+1790328102.598,
+8174
+],
+"test_suite/utils/__init__.py": [
+1784878317.217,
+89
+],
+"test_suite/utils/demo_writer.py": [
+1784878337.945,
+4598
+],
+"tests/__init__.py": [
+1784698853.202,
+252
+],
+"tests/benchmark/test_performance_comparison.py": [
+1785380184.493,
+20128
+],
+"tests/code_quality/test_code_quality.py": [
+1786890353.219,
+31302
+],
+"tests/run_comprehensive_tests.py": [
+1785375984.569,
+32107
+],
+"tests/test_analyzer.py": [
+1786612170.285,
+2857
+],
+"tests/test_benchmark.py": [
+1786783941.292,
+10585
+],
+"tests/test_boundary_comprehensive.py": [
+1790325861.394,
+40376
+],
+"tests/test_bridge_integration.py": [
+1790329962.772,
+18278
+],
+"tests/test_bridge_library.py": [
+1790480772.436,
+48317
+],
+"tests/test_byte_diff_runner.py": [
+1786430556.435,
+7054
+],
+"tests/test_cli.py": [
+1790332610.224,
+3275
+],
+"tests/test_codegen.py": [
+1790437540.148,
+2296
+],
+"tests/test_codegen_async.py": [
+1784792384.485,
+1916
+],
+"tests/test_codegen_async_cython.py": [
+1785734168.339,
+2471
+],
+"tests/test_codegen_cast.py": [
+1790437569.077,
+2523
+],
+"tests/test_codegen_concurrent.py": [
+1784792784.707,
+2033
+],
+"tests/test_codegen_guard.py": [
+1785392207.841,
+10140
+],
+"tests/test_codegen_new_features.py": [
+1790329636.12,
+12786
+],
+"tests/test_codegen_simd.py": [
+1784793339.76,
+2281
+],
+"tests/test_codegen_verification.py": [
+1786670417.619,
+9633
+],
+"tests/test_comptime_func.py": [
+1790330347.727,
+12238
+],
+"tests/test_demos.py": [
+1785735902.919,
+23883
+],
+"tests/test_duck.py": [
+1786612180.858,
+17399
+],
+"tests/test_dynamic_awareness.py": [
+1784717058.012,
+11014
+],
+"tests/test_e2e_new_features.py": [
+1785396814.941,
+8669
+],
+"tests/test_extractor_pattern.py": [
+1786672712.239,
+12129
+],
+"tests/test_generic_types.py": [
+1785411259.25,
+3790
+],
+"tests/test_global_nonlocal.py": [
+1785734156.434,
+3339
+],
+"tests/test_guarded_strategy.py": [
+1785724858.625,
+3698
+],
+"tests/test_hook.py": [
+1790329715.63,
+6420
+],
+"tests/test_hot_reload.py": [
+1785059412.887,
+22874
+],
+"tests/test_implicit_strategy.py": [
+1785724798.321,
+1619
+],
+"tests/test_integration_full_stack.py": [
+1786672710.1,
+6541
+],
+"tests/test_integration_type_system.py": [
+1785724640.524,
+9788
+],
+"tests/test_is_not_regression.py": [
+1786430092.414,
+1931
+],
+"tests/test_lexer_new_keywords.py": [
+1784801681.155,
+2641
+],
+"tests/test_lz_features.py": [
+1786673683.074,
+5379
+],
+"tests/test_lz_type_mapping.py": [
+1786673616.784,
+4292
+],
+"tests/test_macro.py": [
+1785406551.804,
+3119
+],
+"tests/test_macro_expansion.py": [
+1790325775.527,
+13123
+],
+"tests/test_macro_features.py": [
+1790325905.784,
+9613
+],
+"tests/test_module_magic_attrs.py": [
+1785223488.845,
+2774
+],
+"tests/test_never_type.py": [
+1784703568.5,
+1499
+],
+"tests/test_new_features.py": [
+1786672596.917,
+5090
+],
+"tests/test_new_features_boundary.py": [
+1790329677.636,
+11330
+],
+"tests/test_new_syntax_boundary.py": [
+1785396756.303,
+7269
+],
+"tests/test_ownership.py": [
+1790329760.814,
+14141
+],
+"tests/test_parser.py": [
+1784698873.875,
+3190
+],
+"tests/test_parser_async.py": [
+1784791351.92,
+1765
+],
+"tests/test_parser_buildblock.py": [
+1784783850.658,
+2956
+],
+"tests/test_parser_comptime.py": [
+1784800668.861,
+2257
+],
+"tests/test_parser_go.py": [
+1784780237.808,
+2511
+],
+"tests/test_parser_guard.py": [
+1784779575.071,
+2766
+],
+"tests/test_parser_integration.py": [
+1785221811.169,
+4543
+],
+"tests/test_parser_macro.py": [
+1784800692.025,
+2349
+],
+"tests/test_parser_match.py": [
+1786672655.822,
+11122
+],
+"tests/test_parser_pipe.py": [
+1784781638.844,
+3037
+],
+"tests/test_parser_spawn.py": [
+1784780146.313,
+2619
+],
+"tests/test_parser_suite.py": [
+1785045449.045,
+3174
+],
+"tests/test_parser_test.py": [
+1785222929.979,
+3262
+],
+"tests/test_parser_union.py": [
+1785222931.605,
+2618
+],
+"tests/test_parser_vec.py": [
+1784780447.227,
+3128
+],
+"tests/test_pattern_matching.py": [
+1786671773.137,
+55870
+],
+"tests/test_project_compiler.py": [
+1790329902.946,
+19839
+],
+"tests/test_slice_codegen.py": [
+1786019733.61,
+2255
+],
+"tests/test_square_bracket_types.py": [
+1786775629.098,
+4090
+],
+"tests/test_stage2.py": [
+1786672151.241,
+3387
+],
+"tests/test_stage3.py": [
+1790437540.184,
+2835
+],
+"tests/test_stage4.py": [
+1785412291.69,
+2545
+],
+"tests/test_stage5.py": [
+1785724649.473,
+3455
+],
+"tests/test_syntax_integration.py": [
+1786670806.691,
+16933
+],
+"tests/test_trait_system.py": [
+1785411080.957,
+8550
+],
+"tests/test_transformer.py": [
+1784698903.359,
+1636
+],
+"tests/test_type_checking.py": [
+1785203042.809,
+2622
+],
+"tests/test_type_inference.py": [
+1785298290.662,
+17685
+],
+"tests/test_type_promotion.py": [
+1785202972.489,
+6049
+],
+"tests/test_union_type.py": [
+1786672970.432,
+4068
+],
+"tests/test_union_type_checking.py": [
+1790325810.177,
+6887
+],
+"tests/test_unit_test_modes.py": [
+1786672153.733,
+7289
+],
+"tests/test_varargs.py": [
+1785732083.994,
+4481
+],
+"tests/test_vec.py": [
+1786670299.165,
+3262
+]
+}

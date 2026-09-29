@@ -1,0 +1,29 @@
+{
+ "refuse": [],
+ "reads": [
+  {
+   "where": "tests/test_demos.py:35",
+   "quote": "pytest.skip(f\"DEMO 文件不存在: {file_path}\")",
+   "shape": "机制型 skip：读 DEMO 前先看文件在不在",
+   "verdict": "风险型（本轮未触发）：文件被删时用例静默跳过而非失败。全量运行里这条 skip **一次都没走**（R1-验证 的 pytest 汇总行是 `1862 passed`，无 skipped、日志里 SKIPPED 出现 0 次）⇒ 现在没有任何 DEMO 缺失被掩盖；但机制仍在：R1-验证 记到 examples/demos/legacy/** 有 9 项删除无人认领，将来若有测试改读这些路径，就会静默跳掉。建议由'清单必须完整'的断言承担（交人类裁决）",
+   "cross_ref": ".fist-loop-20260927/verify_dirt_r1.json 的 deleted 列表"
+  },
+  {
+   "where": "tests/test_polish_20260926.py:179",
+   "quote": "pytest.skip(\"平台允许写 property，回滚未失败\")",
+   "shape": "平台条件型 skip：只有在 setattr 不抛 AttributeError 时才跳",
+   "verdict": "平台条件型（合法，且本轮未触发）：被测行为依赖 CPython 对同名 property 覆写的容忍度；全量 1862 passed / 0 skipped ⇒ 本机走的是 setattr 真的失败那条分支，断言被执行了，不是被跳过的绿。跳过条件由当场判定得出，不钉缺陷号 ⇒ 形状正确",
+   "cross_ref": "同文件的 bug 号引用是我第一版扫描器的误挂（±4 行窗口把下一个函数头上的 `# ---- BUG-6` 算了进来），修正为按所属函数体取号后本条不再引用任何缺陷"
+  },
+  {
+   "where": "tests/test_project_compiler.py:361",
+   "quote": "pytest.skip(\"该源码在当前 parser 下仍能解析，无法验证解析失败诊断\")",
+   "shape": "自证型 skip：只有解析失败时才有断言可跑",
+   "verdict": "分支型弱断言（本轮未触发 skip 分支）：只有解析失败时才有断言可跑；全量 0 skipped ⇒ 本机走到的是 `pc._parse_errors` 非空的那一支，所以它当前确实在断言而不是恒跳。但另一支（解析成功 ⇒ skip）意味着若解析器放宽，这条用例会静默失去意义 ⇒ 建议改成显式必坏源码的夹具（本轮不动既有测试）",
+   "cross_ref": "skip 未触发的依据：.fist-loop-20260927/verify_pytest_full_r1.log 的汇总行（`1862 passed`，日志内 SKIPPED 计数 0），与 polish 轮基线复跑互证"
+  }
+ ],
+ "count": 3,
+ "evidence_summary_line": "====================== 1862 passed in 619.86s (0:10:19) =======================",
+ "skipped_tokens_in_log": 0
+}

@@ -1,0 +1,39 @@
+PASS every_verbatim_quote_landed_in_evidence | 0 条形如只在报告里（逐条见 ORPHAN_QUOTE 行）
+PASS cited_bug_ids_exist | missing=[] cited=12
+PASS BUG-137_closed_this_round | fixed=True
+PASS BUG-138_closed_this_round | fixed=True
+PASS BUG-139_closed_this_round | fixed=True
+PASS BUG-136_still_open_with_amendment | fixed=False amend=True
+PASS anchors_point_at_what_they_claim | []
+PASS corpus_cases_and_fingerprint_quoted | cases=28 fp=fnv1a64:7349f8d14b3fc9fc
+PASS corpus_total_matches_gate_reading | 151
+PASS lock_counts_derived_not_handadded | def test_ = 31
+PASS suite_total_quoted_with_source | r13_suite_b2.log
+PASS gate_quoted_from_the_valid_run | r13_subleg_b1.out -> ('7', '151', '151', '0')
+PASS void_gate_reading_stays_marked_void | 报告须自证 b2 那一次不可采信
+PASS golden_quoted | r13_golden_b2.log
+PASS final_pytest_count_and_wallclock_quoted | ('2390', '378.86')
+PASS matrix_table_cells_match_json | cells=7
+PASS matrix_table_numbers_match_json | {'L0 现树（应全绿）': (0, 0), 'M1 摘掉赋值位调用': (20, 9), 'M2 摘掉返回位调用': (5, 2), 'M3 逐位扫描短路': (21, 10), 'M4 撤掉 UnionType 代入（BUG-139）': (2, 1), 'M5 撤掉别名展开（BUG-138）': (4, 2), 'M6 只改注释（对照格，必须 0 红）': (0, 0)}
+PASS matrix_all_mutations_red_and_control_zero | L0 也必须绿
+PASS matrix_l0_green | 
+PASS ledger_counts_quoted | {'headers': 141, 'unique': 140, 'open': 40, 'fixed': 93, 'amend': 1}
+PASS unique_equals_headers_minus_dups | headers=141 unique=140 dup=['BUG-96']
+PASS duplicate_ids_declared_and_filed | ['BUG-96']
+PASS open_generics_family_named_as_derived_set | open family=[120, 121, 122, 128, 134, 135, 136]
+PASS close_receipt_present_and_unique | copies=1
+PASS close_receipt_root_closed | CONCLUSION stage=close root=T0r119 root_status=已完成
+PASS close_receipt_verbatim_in_evidence | 回执行必须能在 ring 日志/回执件里逐字找到
+PASS ring_root_closed_now_in_db | live=已完成 not_closed=0 nodes=17
+PASS omega_strong_verify_rows_cover_tree | omega={'check': 12, 'result': 17, 'spec': 17} nodes=17 leaves=12（spec/result 要覆盖整棵树，含根与枝干）
+PASS check_rows_equal_leaf_count | check=12 leaves=12
+PASS close_entry_gate_reading_quoted | 放行时 checks=33 failed=0（报告须带上这个份数）
+PASS stalled_roots_counts_derived_from_db | {"T0r112": {"已完成": 8, "待领取": 15, "拆分中": 6}, "T0r113": {"已完成": 14, "待领取": 4, "拆分中": 3}}
+PASS self_caught_defect_list_not_empty | count=15
+PASS self_caught_items_name_real_artifacts | count=15 机器抓=15 自读=5 无渠道=[]
+PASS self_caught_channel_split_declared_in_header | 自读 5 条 ⇒ 小节标题必须写明这条渠道，不能都算成门的功劳
+PASS own_writes_are_black_clean | 13 份，脏=[]
+PASS black_failure_is_attributable | rc=0 dirty=0（红且无清单 ⇒ 尺子坏了）
+PASS style_claim_is_two_tier | 
+PASS cited_files_exist_on_disk | 点名 49 份，解析不到=[]
+CONCLUSION checks=38 failed=0 ledger_open=40 bug_ids=12 corpus_total=151 rc=0

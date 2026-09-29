@@ -1,0 +1,75 @@
+{
+ "started_z": "2026-09-29T10:41:54Z",
+ "ns": "cypy-loop-20260929",
+ "readings": {
+  "before_cases": 22,
+  "after_cases": 39,
+  "silent_before": 15,
+  "now_red": [
+   "A01_alias_inner_wrong",
+   "A02_alias_flag_wrong",
+   "P01_tuple_inner_wrong",
+   "P02_tuple_flag_wrong",
+   "P03_list_elem_wrong",
+   "P07_list_of_list_wrong",
+   "P08_tuple_arity_wrong"
+  ],
+  "still_silent": [
+   "A03_alias_ok",
+   "A04_alias_unknown_arg",
+   "A05_alias_bare_use",
+   "A08_alias_in_param",
+   "P05_dict_val_wrong",
+   "P06_unknown_in_tuple"
+  ],
+  "green_now": [
+   "A03_alias_ok",
+   "A04_alias_unknown_arg",
+   "A05_alias_bare_use",
+   "A08_alias_in_param",
+   "G01_empty_ctor",
+   "G02_nested_hetero",
+   "G03_tuple_none",
+   "G04_mixed_collapse",
+   "G05_widening",
+   "G06_set_noarg",
+   "G07_return_ok",
+   "G08_user_types_lenient",
+   "G09_trait_elem_lenient",
+   "G10_dict_still_lenient",
+   "G11_union_alias_use",
+   "N01_nested_alias_ok",
+   "P05_dict_val_wrong",
+   "P06_unknown_in_tuple",
+   "U02_maybe_ok",
+   "U03_maybe_int_ok",
+   "U04_listorset_elem_wrong"
+  ],
+  "iso_identical": true,
+  "iso_cases": 2
+ },
+ "before": {
+  "headers": 140,
+  "open": 140,
+  "fixed": 93
+ },
+ "filed": [],
+ "skipped_existing": [
+  "R13-CONTAINER-ELEMENT-NO-CHECK",
+  "R13-NESTED-ALIAS-NOT-EXPANDED",
+  "R13-UNION-SHAPED-ALIAS-NO-SUBST"
+ ],
+ "refusals": [],
+ "bug_list_shape": "dict",
+ "bug_list_count": 140,
+ "after": {
+  "headers": 140,
+  "open": 140,
+  "fixed": 93
+ },
+ "new_ids": [],
+ "summaries_in_bug_list": {},
+ "db_path": "fist-mbt.db(exists)",
+ "call_log_report_bug_rows": 42,
+ "call_log_error_rows": 253
+}

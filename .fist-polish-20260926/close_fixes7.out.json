@@ -1,0 +1,407 @@
+[
+ {
+  "bug": "BUG-15",
+  "task_id": "T0r20",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r20', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [lexer-truncation] cypyc/parser/lexer.py:538 三反引号判定用 2 字符切片 `source[pos:pos+2]==\"``\"` 却连推 3 "
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r20', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [lexer-truncation] cypyc/parser/lexer.py:538 三反引号判定用 2 字符切片 `source[pos:pos+2]==\"``\"` 却连推 3 "
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r20', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [lexer-truncation] cypyc/parser/lexer.py:538 三反引号判定用 2 字符切片 `source[pos:pos+2]==\"``\"` 却连推 3 "
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r20', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [lexer-truncation] cypyc/parser/lexer.py:538 三反引号判定用 2 字符切片 `source[pos:pos+2]==\"``\"` 却连推 3 "
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-16",
+  "task_id": "T0r21",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r21', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [parser-decorators] cypyc/parser/parser.py:1375 成员级 `decorators = []` 重绑了 :1326 形参持有的结构体自身装饰"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r21', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [parser-decorators] cypyc/parser/parser.py:1375 成员级 `decorators = []` 重绑了 :1326 形参持有的结构体自身装饰"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r21', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [parser-decorators] cypyc/parser/parser.py:1375 成员级 `decorators = []` 重绑了 :1326 形参持有的结构体自身装饰"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r21', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [parser-decorators] cypyc/parser/parser.py:1375 成员级 `decorators = []` 重绑了 :1326 形参持有的结构体自身装饰"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-17",
+  "task_id": "T0r22",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r22', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [diagnostics] cypyc/project/project_compiler.py:666 `_pick_extension` 名字全不匹配时 `return sorted"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r22', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [diagnostics] cypyc/project/project_compiler.py:666 `_pick_extension` 名字全不匹配时 `return sorted"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r22', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [diagnostics] cypyc/project/project_compiler.py:666 `_pick_extension` 名字全不匹配时 `return sorted"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r22', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [diagnostics] cypyc/project/project_compiler.py:666 `_pick_extension` 名字全不匹配时 `return sorted"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-18",
+  "task_id": "T0r23",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r23', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cache-invalidation] cypyc/incremental/incremental_manager.py:311-320 「检查导入模块是否变化」只看 `is_cac"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r23', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cache-invalidation] cypyc/incremental/incremental_manager.py:311-320 「检查导入模块是否变化」只看 `is_cac"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r23', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cache-invalidation] cypyc/incremental/incremental_manager.py:311-320 「检查导入模块是否变化」只看 `is_cac"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r23', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cache-invalidation] cypyc/incremental/incremental_manager.py:311-320 「检查导入模块是否变化」只看 `is_cac"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-19",
+  "task_id": "T0r24",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r24', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [codegen-directives] cypyc/codegen/cython_generator.py:1287 `_ensure_owned_import` 用 `output"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r24', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [codegen-directives] cypyc/codegen/cython_generator.py:1287 `_ensure_owned_import` 用 `output"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r24', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [codegen-directives] cypyc/codegen/cython_generator.py:1287 `_ensure_owned_import` 用 `output"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r24', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [codegen-directives] cypyc/codegen/cython_generator.py:1287 `_ensure_owned_import` 用 `output"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-20",
+  "task_id": "T0r25",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r25', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [comptime] cypyc/analyzer/comptime_evaluator.py:455-461 `_get_func_name` 对 `x.upper()` 这类 At"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r25', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [comptime] cypyc/analyzer/comptime_evaluator.py:455-461 `_get_func_name` 对 `x.upper()` 这类 At"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r25', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [comptime] cypyc/analyzer/comptime_evaluator.py:455-461 `_get_func_name` 对 `x.upper()` 这类 At"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r25', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [comptime] cypyc/analyzer/comptime_evaluator.py:455-461 `_get_func_name` 对 `x.upper()` 这类 At"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-21",
+  "task_id": "T0r26",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r26', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [type-checker] cypyc/analyzer/type_checker.py:432（同族 :1283、:2008）用 `getattr(stmt.for_type,\\'"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r26', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [type-checker] cypyc/analyzer/type_checker.py:432（同族 :1283、:2008）用 `getattr(stmt.for_type,\\'"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r26', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [type-checker] cypyc/analyzer/type_checker.py:432（同族 :1283、:2008）用 `getattr(stmt.for_type,\\'"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r26', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [type-checker] cypyc/analyzer/type_checker.py:432（同族 :1283、:2008）用 `getattr(stmt.for_type,\\'"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-22",
+  "task_id": "T0r27",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r27', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [lexer] cypyc/parser/lexer.py:651-652 f-string 前缀判定集合是 (`\"`, `\\'`, f, F)，注释 :650 声称支持 f/F/rf"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r27', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [lexer] cypyc/parser/lexer.py:651-652 f-string 前缀判定集合是 (`\"`, `\\'`, f, F)，注释 :650 声称支持 f/F/rf"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r27', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [lexer] cypyc/parser/lexer.py:651-652 f-string 前缀判定集合是 (`\"`, `\\'`, f, F)，注释 :650 声称支持 f/F/rf"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r27', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [lexer] cypyc/parser/lexer.py:651-652 f-string 前缀判定集合是 (`\"`, `\\'`, f, F)，注释 :650 声称支持 f/F/rf"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-23",
+  "task_id": "T0r28",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r28', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': \"修复 bug: [pointer] cypy_bridge/pointer.py:322 `addr()` 先判 `hasattr(obj,'value')`，而每个 c_void_p 都有 `.va"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r28', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': \"修复 bug: [pointer] cypy_bridge/pointer.py:322 `addr()` 先判 `hasattr(obj,'value')`，而每个 c_void_p 都有 `.va"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r28', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': \"修复 bug: [pointer] cypy_bridge/pointer.py:322 `addr()` 先判 `hasattr(obj,'value')`，而每个 c_void_p 都有 `.va"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r28', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': \"修复 bug: [pointer] cypy_bridge/pointer.py:322 `addr()` 先判 `hasattr(obj,'value')`，而每个 c_void_p 都有 `.va"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-24",
+  "task_id": "T0r29",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r29', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cache] cypy_hook/hook.py:1020-1024 `clear_cache()` 无参分支走 `os.walk(os.getcwd())` 却要求 `os.pat"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r29', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cache] cypy_hook/hook.py:1020-1024 `clear_cache()` 无参分支走 `os.walk(os.getcwd())` 却要求 `os.pat"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r29', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cache] cypy_hook/hook.py:1020-1024 `clear_cache()` 无参分支走 `os.walk(os.getcwd())` 却要求 `os.pat"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r29', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cache] cypy_hook/hook.py:1020-1024 `clear_cache()` 无参分支走 `os.walk(os.getcwd())` 却要求 `os.pat"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-25",
+  "task_id": "T0r30",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r30', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [encoding] cypy_bridge/compiler.py:3766 与 :3807 把生成的 .c 和 setup.py 用 `open(path,\\'w\\')` 按本地编"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r30', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [encoding] cypy_bridge/compiler.py:3766 与 :3807 把生成的 .c 和 setup.py 用 `open(path,\\'w\\')` 按本地编"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r30', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [encoding] cypy_bridge/compiler.py:3766 与 :3807 把生成的 .c 和 setup.py 用 `open(path,\\'w\\')` 按本地编"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r30', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [encoding] cypy_bridge/compiler.py:3766 与 :3807 把生成的 .c 和 setup.py 用 `open(path,\\'w\\')` 按本地编"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-26",
+  "task_id": "T0r31",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r31', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [portability] cypy_bridge/compiler.py:3833 编译产物扫描只认 `endswith(\\'.pyd\\')`，而 :3704-3707 的 `_de"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r31', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [portability] cypy_bridge/compiler.py:3833 编译产物扫描只认 `endswith(\\'.pyd\\')`，而 :3704-3707 的 `_de"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r31', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [portability] cypy_bridge/compiler.py:3833 编译产物扫描只认 `endswith(\\'.pyd\\')`，而 :3704-3707 的 `_de"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r31', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [portability] cypy_bridge/compiler.py:3833 编译产物扫描只认 `endswith(\\'.pyd\\')`，而 :3704-3707 的 `_de"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-27",
+  "task_id": "T0r32",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r32', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [hot-reload] cypyc/incremental/hot_reload.py:530 `set.union(*[...])` 在 results 为空（纯删除批次）时抛 T"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r32', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [hot-reload] cypyc/incremental/hot_reload.py:530 `set.union(*[...])` 在 results 为空（纯删除批次）时抛 T"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r32', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [hot-reload] cypyc/incremental/hot_reload.py:530 `set.union(*[...])` 在 results 为空（纯删除批次）时抛 T"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r32', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [hot-reload] cypyc/incremental/hot_reload.py:530 `set.union(*[...])` 在 results 为空（纯删除批次）时抛 T"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-28",
+  "task_id": "T0r33",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r33', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [reformat] cypyc/utils/indent_detector.py:30-34 detect() 观测到多种缩进宽度时一律取 4（没有取公因数），:56-58 再以 `"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r33', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [reformat] cypyc/utils/indent_detector.py:30-34 detect() 观测到多种缩进宽度时一律取 4（没有取公因数），:56-58 再以 `"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r33', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [reformat] cypyc/utils/indent_detector.py:30-34 detect() 观测到多种缩进宽度时一律取 4（没有取公因数），:56-58 再以 `"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r33', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [reformat] cypyc/utils/indent_detector.py:30-34 detect() 观测到多种缩进宽度时一律取 4（没有取公因数），:56-58 再以 `"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-29",
+  "task_id": "T0r34",
+  "steps": [
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r34', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cli-diagnostics] cypy_hook/hook.py:836 对可能为 None 的 `parsed_args.source` 直接 `os.path.isfile("
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r34', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cli-diagnostics] cypy_hook/hook.py:836 对可能为 None 的 `parsed_args.source` 直接 `os.path.isfile("
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r34', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cli-diagnostics] cypy_hook/hook.py:836 对可能为 None 的 `parsed_args.source` 直接 `os.path.isfile("
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r34', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [cli-diagnostics] cypy_hook/hook.py:836 对可能为 None 的 `parsed_args.source` 直接 `os.path.isfile("
+   }
+  ],
+  "green": true
+ }
+]

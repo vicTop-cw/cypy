@@ -1,0 +1,11 @@
+[31m[FAIL] Transpile failed:[0m
+[1m
+============================================================[0m
+[1m  Cypy Transpiler[0m
+[1m============================================================
+[0m
+[36m[1/3][0m Source: .fist-loop-20260927/hunts/adv_10_slice_step_zero.cypy
+[36m[2/3][0m Output: .fist-loop-20260929/out_r7
+[36m[3/3][0m Using Cython compiler mode
+[34m[INFO] Transpiling to Cython code...[0m
+  [31m-[0m Invalid type annotation at 2:9 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际是 Constant 字面量形态)

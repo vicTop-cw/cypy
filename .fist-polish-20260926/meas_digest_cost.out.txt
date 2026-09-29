@@ -1,0 +1,12 @@
+python: 3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]
+executable: C:\Users\victo\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\python.exe
+cpu_count: 20
+PYTHONHASHSEED: None
+cwd: E:\IDEProjects\AI\Cypy
+source lines: 11000
+source md5: 339007772848c4f4990070185c2be951
+rep0 calib wall=1.565 cpu=1.203 ratio=1.30 | digest wall=0.708 cpu=0.406 ratio=1.74 stmts=1100
+rep1 calib wall=1.507 cpu=1.078 ratio=1.40 | digest wall=0.510 cpu=0.391 ratio=1.31 stmts=1100
+rep2 calib wall=1.421 cpu=1.109 ratio=1.28 | digest wall=0.530 cpu=0.422 ratio=1.26 stmts=1100
+threshold in test: digest wall < 2.0
+gc counts: (1802, 1, 2)

@@ -1,0 +1,307 @@
+{
+ "started": "2026-09-28T05:21:29+00:00",
+ "law": "Never 类型名在分析器名称面落地（含文档工作例与负对照）",
+ "doc_quote": "### Never 类型注解\n\n```python\n# 返回 Never 的函数\ndef fatal_error(message: str) -> Never:\n    raise RuntimeError(message)\n\n# 不会到达的代码路径\ndef safe_divide(a: float, b: float) -> float:\n    if b == 0:\n        fatal_error(\"Division by zero\")  # 返回 Never\n    return a / b  # 类型检查通过",
+ "doc_source": "SYNTAX/02-type-annotations.md",
+ "edited_files": [
+  {
+   "path": "cypyc/analyzer/scope_analyzer.py",
+   "before_sha": "df476769e3e0",
+   "after_sha": "b7a14e5a5521"
+  },
+  {
+   "path": "cypyc/analyzer/type_checker.py",
+   "before_sha": "ff9e8821cb22",
+   "after_sha": "cbac2bfb44c7"
+  }
+ ],
+ "trees": {
+  "before": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_before_tree",
+   "py_files": 56,
+   "edited_shas": {
+    "scope_analyzer.py": "df476769e3e0",
+    "type_checker.py": "ff9e8821cb22"
+   }
+  },
+  "after": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_after_tree",
+   "py_files": 56,
+   "edited_shas": {
+    "scope_analyzer.py": "b7a14e5a5521",
+    "type_checker.py": "cbac2bfb44c7"
+   }
+  },
+  "identity_before": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_before_tree",
+   "inside": true,
+   "cypyc": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_before_tree\\cypyc\\__init__.py",
+   "scope": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_before_tree\\cypyc\\analyzer\\scope_analyzer.py",
+   "exe": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe"
+  },
+  "identity_after": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_after_tree",
+   "inside": true,
+   "cypyc": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_after_tree\\cypyc\\__init__.py",
+   "scope": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_after_tree\\cypyc\\analyzer\\scope_analyzer.py",
+   "exe": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe"
+  }
+ },
+ "cases": [
+  {
+   "case": "doc_worked_example",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_doc_never.cypy",
+   "doc_lines": [
+    125,
+    133
+   ],
+   "expect": "expect_green",
+   "before": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'Never' at 1:34"
+    ],
+    "duplicate_error_lines": 1
+   },
+   "after": {
+    "rc": 0,
+    "undefined_names": [],
+    "duplicate_error_lines": 0
+   },
+   "after_pyx_signature": "def fatal_error(message) -> NoReturn:"
+  },
+  {
+   "case": "never_min_return",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_never_min.cypy",
+   "doc_lines": [],
+   "expect": "expect_green",
+   "before": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'Never' at 1:28"
+    ],
+    "duplicate_error_lines": 1
+   },
+   "after": {
+    "rc": 0,
+    "undefined_names": [],
+    "duplicate_error_lines": 0
+   },
+   "after_pyx_signature": "def fatal(message) -> NoReturn:"
+  },
+  {
+   "case": "never_in_param_position",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_never_param.cypy",
+   "doc_lines": [],
+   "expect": "expect_green_no_claim",
+   "before": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'Never' at 1:20"
+    ],
+    "duplicate_error_lines": 1
+   },
+   "after": {
+    "rc": 0,
+    "undefined_names": [],
+    "duplicate_error_lines": 0
+   },
+   "after_pyx_signature": "def needs_never(x):",
+   "annotation_kept_in_pyx": false
+  },
+  {
+   "case": "bogus_type_name_control",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_neg_bogus_type.cypy",
+   "doc_lines": [],
+   "expect": "expect_red_undefined",
+   "before": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'NeverX' at 1:12"
+    ],
+    "duplicate_error_lines": 1
+   },
+   "after": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'NeverX' at 1:12"
+    ],
+    "duplicate_error_lines": 1
+   },
+   "after_pyx_signature": ""
+  },
+  {
+   "case": "bogus_function_control",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_neg_bogus_fn.cypy",
+   "doc_lines": [],
+   "expect": "expect_red_undefined",
+   "before": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'repx' at 2:11"
+    ],
+    "duplicate_error_lines": 2
+   },
+   "after": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'repx' at 2:11"
+    ],
+    "duplicate_error_lines": 2
+   },
+   "after_pyx_signature": ""
+  }
+ ],
+ "negative_controls": [
+  {
+   "case": "bogus_type_name_control",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_neg_bogus_type.cypy",
+   "doc_lines": [],
+   "expect": "expect_red_undefined",
+   "before": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'NeverX' at 1:12"
+    ],
+    "duplicate_error_lines": 1
+   },
+   "after": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'NeverX' at 1:12"
+    ],
+    "duplicate_error_lines": 1
+   },
+   "after_pyx_signature": ""
+  },
+  {
+   "case": "bogus_function_control",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_neg_bogus_fn.cypy",
+   "doc_lines": [],
+   "expect": "expect_red_undefined",
+   "before": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'repx' at 2:11"
+    ],
+    "duplicate_error_lines": 2
+   },
+   "after": {
+    "rc": 1,
+    "undefined_names": [
+     "- Undefined name 'repx' at 2:11"
+    ],
+    "duplicate_error_lines": 2
+   },
+   "after_pyx_signature": ""
+  }
+ ],
+ "worked_example_from_doc": {
+  "case": "doc_worked_example",
+  "probe": ".fist-loop-20260927/advance_r4_probe/a4_doc_never.cypy",
+  "doc_lines": [
+   125,
+   133
+  ],
+  "expect": "expect_green",
+  "before": {
+   "rc": 1,
+   "undefined_names": [
+    "- Undefined name 'Never' at 1:34"
+   ],
+   "duplicate_error_lines": 1
+  },
+  "after": {
+   "rc": 0,
+   "undefined_names": [],
+   "duplicate_error_lines": 0
+  },
+  "after_pyx_signature": "def fatal_error(message) -> NoReturn:"
+ },
+ "duplicate_error_lines_delta": [
+  0,
+  0,
+  0,
+  0,
+  1
+ ],
+ "canary": {
+  "never_now_accepted": true,
+  "bogus_names_still_rejected": true,
+  "red_moves_only_in_name_table": true
+ },
+ "self_checks": [
+  {
+   "label": "doc_worked_example：改后必绿",
+   "got": 0,
+   "want": 0,
+   "why": "undefined=[]",
+   "ok": true
+  },
+  {
+   "label": "doc_worked_example：改前必红（红在 Undefined name 上）",
+   "got": true,
+   "want": true,
+   "why": "before={'rc': 1, 'undefined_names': [\"- Undefined name 'Never' at 1:34\"], 'duplicate_error_lines': 1, 'products': [], 'stdout_tail': ['[INFO] Transpiling to Cython code...', \"  - Undefined name 'Never' at 1:34\", '[FAIL] Transpile failed:'], 'pyx_has_error_banner': True}",
+   "ok": true
+  },
+  {
+   "label": "never_min_return：改后必绿",
+   "got": 0,
+   "want": 0,
+   "why": "undefined=[]",
+   "ok": true
+  },
+  {
+   "label": "never_min_return：改前必红（红在 Undefined name 上）",
+   "got": true,
+   "want": true,
+   "why": "before={'rc': 1, 'undefined_names': [\"- Undefined name 'Never' at 1:28\"], 'duplicate_error_lines': 1, 'products': [], 'stdout_tail': ['[INFO] Transpiling to Cython code...', \"  - Undefined name 'Never' at 1:28\", '[FAIL] Transpile failed:'], 'pyx_has_error_banner': True}",
+   "ok": true
+  },
+  {
+   "label": "never_in_param_position：名称面放行后不再报 Undefined name",
+   "got": 0,
+   "want": 0,
+   "why": "undefined=[]",
+   "ok": true
+  },
+  {
+   "label": "bogus_type_name_control：没在文档里的名字改后仍须被拒",
+   "got": true,
+   "want": true,
+   "why": "after=[\"- Undefined name 'NeverX' at 1:12\"]",
+   "ok": true
+  },
+  {
+   "label": "bogus_function_control：没在文档里的名字改后仍须被拒",
+   "got": true,
+   "want": true,
+   "why": "after=[\"- Undefined name 'repx' at 2:11\"]",
+   "ok": true
+  },
+  {
+   "label": "文档工作例的产物签名必须映射成 NoReturn（codegen 未动）",
+   "got": true,
+   "want": true,
+   "why": "产物 def fatal_error(message) -> NoReturn:；codegen 侧 type_mapper 早已支持 Never→NoReturn，本环只在名称面补齐",
+   "ok": true
+  },
+  {
+   "label": "canary：两格必须同时成立（放行新名 + 不放行任意名）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "{\"never_now_accepted\": true, \"bogus_names_still_rejected\": true, \"red_moves_only_in_name_table\": true}",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "note": "参数位只判「名称面不再报 Undefined name」，产物是否保留注解按实测记录（annotation_kept_in_pyx），不写成「已支持参数位 Never」的语义主张",
+ "at_utc": "2026-09-28T05:21:34+00:00"
+}

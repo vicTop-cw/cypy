@@ -1,0 +1,3 @@
+[{"tool":"mode_list","args":{}},
+ {"tool":"project_standards","args":{"include_checklist":true}},
+ {"tool":"laya_decide","args":{"context":"Cypy 编译器：对 cypyc/codegen 与 cypy_bridge 做多轮 寻虫-修复-验证-打磨-推进 循环，需拆解任务树并逐叶闭环","split_n_hint":3}}]

@@ -1,0 +1,1966 @@
+[
+  {
+    "tag": "BUG-1:claim",
+    "tool": "claim",
+    "args": {
+      "task_id": "T0r6",
+      "assignee": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r6",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已领取",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [cache] cypy_bridge/compiler.py:3656 clear_cache 把 .pyd 删除失败当成功：裸 except 吞掉后仍从 manifest 删条目",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-1:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0r6"
+    },
+    "result": {
+      "id": "T0r6",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "执行中",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [cache] cypy_bridge/compiler.py:3656 clear_cache 把 .pyd 删除失败当成功：裸 except 吞掉后仍从 manifest 删条目",
+      "deliverable": "BUG-1 -> T0r6\n改动文件：cypy_bridge/compiler.py (BridgeCacheManager.clear_cache)\n新增回归：tests/test_polish_20260926.py::test_bug1_clear_cache_does_not_claim_success_when_remove_fails\n修复口径：删除失败时不再摘 manifest 条目并保留磁盘现状；返回 {removed, failed} 并打 [cypy][warn]。RED：修复前该用例断言『.pyd 仍在但条目被删』失败（8 failed 之一），GREEN：现 15 passed。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-1:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0r6"
+    },
+    "result": {
+      "id": "T0r6",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "待验收",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [cache] cypy_bridge/compiler.py:3656 clear_cache 把 .pyd 删除失败当成功：裸 except 吞掉后仍从 manifest 删条目",
+      "deliverable": "BUG-1 -> T0r6\n改动文件：cypy_bridge/compiler.py (BridgeCacheManager.clear_cache)\n新增回归：tests/test_polish_20260926.py::test_bug1_clear_cache_does_not_claim_success_when_remove_fails\n修复口径：删除失败时不再摘 manifest 条目并保留磁盘现状；返回 {removed, failed} 并打 [cypy][warn]。RED：修复前该用例断言『.pyd 仍在但条目被删』失败（8 failed 之一），GREEN：现 15 passed。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-1:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0r6",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r6",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [cache] cypy_bridge/compiler.py:3656 clear_cache 把 .pyd 删除失败当成功：裸 except 吞掉后仍从 manifest 删条目",
+      "deliverable": "BUG-1 -> T0r6\n改动文件：cypy_bridge/compiler.py (BridgeCacheManager.clear_cache)\n新增回归：tests/test_polish_20260926.py::test_bug1_clear_cache_does_not_claim_success_when_remove_fails\n修复口径：删除失败时不再摘 manifest 条目并保留磁盘现状；返回 {removed, failed} 并打 [cypy][warn]。RED：修复前该用例断言『.pyd 仍在但条目被删』失败（8 failed 之一），GREEN：现 15 passed。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-2:claim",
+    "tool": "claim",
+    "args": {
+      "task_id": "T0r7",
+      "assignee": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r7",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已领取",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [subprocess] cypy_bridge/compiler.py:3795 subprocess.run 无 timeout；同仓做同一件事的另外两处都有 timeout=120",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-2:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0r7"
+    },
+    "result": {
+      "id": "T0r7",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "执行中",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [subprocess] cypy_bridge/compiler.py:3795 subprocess.run 无 timeout；同仓做同一件事的另外两处都有 timeout=120",
+      "deliverable": "BUG-2 -> T0r7\n改动文件：cypy_bridge/compiler.py (BUILD_TIMEOUT=120 + subprocess.run(timeout=) + except subprocess.TimeoutExpired)\n新增回归：tests/test_polish_20260926.py::test_bug2_bridge_build_subprocess_run_passes_timeout / test_bug2_build_timeout_is_shared_with_sibling_callers\n修复口径：build_ext 子进程补 timeout=120，与 cypy_hook/hook.py:516、cypyc/project/project_compiler.py:602 同口径；超时转 BridgeError 而不是永挂。判据为 AST 级（扫描全部 subprocess.run 的 timeout 关键字），RED 时报告缺失行号 3795。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-2:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0r7"
+    },
+    "result": {
+      "id": "T0r7",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "待验收",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [subprocess] cypy_bridge/compiler.py:3795 subprocess.run 无 timeout；同仓做同一件事的另外两处都有 timeout=120",
+      "deliverable": "BUG-2 -> T0r7\n改动文件：cypy_bridge/compiler.py (BUILD_TIMEOUT=120 + subprocess.run(timeout=) + except subprocess.TimeoutExpired)\n新增回归：tests/test_polish_20260926.py::test_bug2_bridge_build_subprocess_run_passes_timeout / test_bug2_build_timeout_is_shared_with_sibling_callers\n修复口径：build_ext 子进程补 timeout=120，与 cypy_hook/hook.py:516、cypyc/project/project_compiler.py:602 同口径；超时转 BridgeError 而不是永挂。判据为 AST 级（扫描全部 subprocess.run 的 timeout 关键字），RED 时报告缺失行号 3795。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-2:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0r7",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r7",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [subprocess] cypy_bridge/compiler.py:3795 subprocess.run 无 timeout；同仓做同一件事的另外两处都有 timeout=120",
+      "deliverable": "BUG-2 -> T0r7\n改动文件：cypy_bridge/compiler.py (BUILD_TIMEOUT=120 + subprocess.run(timeout=) + except subprocess.TimeoutExpired)\n新增回归：tests/test_polish_20260926.py::test_bug2_bridge_build_subprocess_run_passes_timeout / test_bug2_build_timeout_is_shared_with_sibling_callers\n修复口径：build_ext 子进程补 timeout=120，与 cypy_hook/hook.py:516、cypyc/project/project_compiler.py:602 同口径；超时转 BridgeError 而不是永挂。判据为 AST 级（扫描全部 subprocess.run 的 timeout 关键字），RED 时报告缺失行号 3795。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-3:claim",
+    "tool": "claim",
+    "args": {
+      "task_id": "T0r8",
+      "assignee": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r8",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已领取",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/project/project_compiler.py:826 增量重解析异常被吞：失败后仍用陈旧 AST 计算影响集并报告已传播",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-3:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0r8"
+    },
+    "result": {
+      "id": "T0r8",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "执行中",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/project/project_compiler.py:826 增量重解析异常被吞：失败后仍用陈旧 AST 计算影响集并报告已传播",
+      "deliverable": "BUG-3 -> T0r8\n改动文件：cypyc/project/project_compiler.py (get_incremental_changes)\n新增回归：tests/test_polish_20260926.py::test_bug3_reparse_failure_is_reported_not_swallowed\n修复口径：_reparse_module 失败不再 `except Exception: pass`：打 [cypy][warn] 点名模块，并说明本次仍用陈旧 AST、需全量重编确认。返回值语义未改。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-3:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0r8"
+    },
+    "result": {
+      "id": "T0r8",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "待验收",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/project/project_compiler.py:826 增量重解析异常被吞：失败后仍用陈旧 AST 计算影响集并报告已传播",
+      "deliverable": "BUG-3 -> T0r8\n改动文件：cypyc/project/project_compiler.py (get_incremental_changes)\n新增回归：tests/test_polish_20260926.py::test_bug3_reparse_failure_is_reported_not_swallowed\n修复口径：_reparse_module 失败不再 `except Exception: pass`：打 [cypy][warn] 点名模块，并说明本次仍用陈旧 AST、需全量重编确认。返回值语义未改。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-3:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0r8",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r8",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/project/project_compiler.py:826 增量重解析异常被吞：失败后仍用陈旧 AST 计算影响集并报告已传播",
+      "deliverable": "BUG-3 -> T0r8\n改动文件：cypyc/project/project_compiler.py (get_incremental_changes)\n新增回归：tests/test_polish_20260926.py::test_bug3_reparse_failure_is_reported_not_swallowed\n修复口径：_reparse_module 失败不再 `except Exception: pass`：打 [cypy][warn] 点名模块，并说明本次仍用陈旧 AST、需全量重编确认。返回值语义未改。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-4:claim",
+    "tool": "claim",
+    "args": {
+      "task_id": "T0r9",
+      "assignee": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r9",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已领取",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/transformer 五个 transformer 把递归调用包进 except (AttributeError, TypeError)，子树真实异常被吞、收集静默截断",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-4:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0r9"
+    },
+    "result": {
+      "id": "T0r9",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "执行中",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/transformer 五个 transformer 把递归调用包进 except (AttributeError, TypeError)，子树真实异常被吞、收集静默截断",
+      "deliverable": "BUG-4 -> T0r9\n改动文件：cypyc/transformer/{defer,enum,generic,struct,trait}_transformer.py\n新增回归：tests/test_polish_20260926.py::test_bug4_transformer_recursion_is_outside_broad_try (5 参数化)\n修复口径：只把 getattr 留在 try/except(AttributeError,TypeError) 内，递归 _collect_* 移出静默区；子节点真实缺陷不再被当成遍历正常结束（defer/struct/trait 静默漏收集）。判据开关对照：旧形 synthetic 命中 ['_collect_defers']，新形与实文件命中 []。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-4:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0r9"
+    },
+    "result": {
+      "id": "T0r9",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "待验收",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/transformer 五个 transformer 把递归调用包进 except (AttributeError, TypeError)，子树真实异常被吞、收集静默截断",
+      "deliverable": "BUG-4 -> T0r9\n改动文件：cypyc/transformer/{defer,enum,generic,struct,trait}_transformer.py\n新增回归：tests/test_polish_20260926.py::test_bug4_transformer_recursion_is_outside_broad_try (5 参数化)\n修复口径：只把 getattr 留在 try/except(AttributeError,TypeError) 内，递归 _collect_* 移出静默区；子节点真实缺陷不再被当成遍历正常结束（defer/struct/trait 静默漏收集）。判据开关对照：旧形 synthetic 命中 ['_collect_defers']，新形与实文件命中 []。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-4:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0r9",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r9",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/transformer 五个 transformer 把递归调用包进 except (AttributeError, TypeError)，子树真实异常被吞、收集静默截断",
+      "deliverable": "BUG-4 -> T0r9\n改动文件：cypyc/transformer/{defer,enum,generic,struct,trait}_transformer.py\n新增回归：tests/test_polish_20260926.py::test_bug4_transformer_recursion_is_outside_broad_try (5 参数化)\n修复口径：只把 getattr 留在 try/except(AttributeError,TypeError) 内，递归 _collect_* 移出静默区；子节点真实缺陷不再被当成遍历正常结束（defer/struct/trait 静默漏收集）。判据开关对照：旧形 synthetic 命中 ['_collect_defers']，新形与实文件命中 []。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-5:claim",
+    "tool": "claim",
+    "args": {
+      "task_id": "T0r10",
+      "assignee": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r10",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已领取",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/incremental/hot_reload.py:110 与 :125 状态快照/回滚吞掉 getattr/setattr 异常（含用户 property 执行失败）",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-5:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0r10"
+    },
+    "result": {
+      "id": "T0r10",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "执行中",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/incremental/hot_reload.py:110 与 :125 状态快照/回滚吞掉 getattr/setattr 异常（含用户 property 执行失败）",
+      "deliverable": "BUG-5 -> T0r10\n改动文件：cypyc/incremental/hot_reload.py (_warn_state + _save_state/_restore_state)\n新增回归：tests/test_polish_20260926.py::test_bug5_state_snapshot_reports_getattr_failure / test_bug5_state_restore_reports_setattr_failure\n修复口径：状态快照/回滚失败改为点名告警（原 6 处 except Exception: pass 中的 2 处状态面），热重载后模块带状态空洞不再不可见。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-5:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0r10"
+    },
+    "result": {
+      "id": "T0r10",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "待验收",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/incremental/hot_reload.py:110 与 :125 状态快照/回滚吞掉 getattr/setattr 异常（含用户 property 执行失败）",
+      "deliverable": "BUG-5 -> T0r10\n改动文件：cypyc/incremental/hot_reload.py (_warn_state + _save_state/_restore_state)\n新增回归：tests/test_polish_20260926.py::test_bug5_state_snapshot_reports_getattr_failure / test_bug5_state_restore_reports_setattr_failure\n修复口径：状态快照/回滚失败改为点名告警（原 6 处 except Exception: pass 中的 2 处状态面），热重载后模块带状态空洞不再不可见。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-5:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0r10",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r10",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/incremental/hot_reload.py:110 与 :125 状态快照/回滚吞掉 getattr/setattr 异常（含用户 property 执行失败）",
+      "deliverable": "BUG-5 -> T0r10\n改动文件：cypyc/incremental/hot_reload.py (_warn_state + _save_state/_restore_state)\n新增回归：tests/test_polish_20260926.py::test_bug5_state_snapshot_reports_getattr_failure / test_bug5_state_restore_reports_setattr_failure\n修复口径：状态快照/回滚失败改为点名告警（原 6 处 except Exception: pass 中的 2 处状态面），热重载后模块带状态空洞不再不可见。",
+      "created_at": "2026-09-26T05:31:45Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-6:claim",
+    "tool": "claim",
+    "args": {
+      "task_id": "T0r11",
+      "assignee": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r11",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已领取",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/incremental/file_monitor.py:58 读不到 .py 首行即判定「不是 Cypy 文件」，变更被静默漏掉",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:31:46Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-6:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0r11"
+    },
+    "result": {
+      "id": "T0r11",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "执行中",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/incremental/file_monitor.py:58 读不到 .py 首行即判定「不是 Cypy 文件」，变更被静默漏掉",
+      "deliverable": "BUG-6 -> T0r11\n改动文件：cypyc/incremental/file_monitor.py (_is_cypy_file)\n新增回归：tests/test_polish_20260926.py::test_bug6_cypy_file_with_bom_is_still_detected / test_bug6_unreadable_cypy_candidate_warns\n修复口径：首行改按字节读 + utf-8-sig 解码：带 BOM 的 `#!bin cypy` 入口不再被误判为普通 .py；FileNotFoundError 静默 False，其它 OSError 打告警，不再把读不到归成『不是 Cypy 文件』。",
+      "created_at": "2026-09-26T05:31:46Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-6:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0r11"
+    },
+    "result": {
+      "id": "T0r11",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "待验收",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/incremental/file_monitor.py:58 读不到 .py 首行即判定「不是 Cypy 文件」，变更被静默漏掉",
+      "deliverable": "BUG-6 -> T0r11\n改动文件：cypyc/incremental/file_monitor.py (_is_cypy_file)\n新增回归：tests/test_polish_20260926.py::test_bug6_cypy_file_with_bom_is_still_detected / test_bug6_unreadable_cypy_candidate_warns\n修复口径：首行改按字节读 + utf-8-sig 解码：带 BOM 的 `#!bin cypy` 入口不再被误判为普通 .py；FileNotFoundError 静默 False，其它 OSError 打告警，不再把读不到归成『不是 Cypy 文件』。",
+      "created_at": "2026-09-26T05:31:46Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-6:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0r11",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r11",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/incremental/file_monitor.py:58 读不到 .py 首行即判定「不是 Cypy 文件」，变更被静默漏掉",
+      "deliverable": "BUG-6 -> T0r11\n改动文件：cypyc/incremental/file_monitor.py (_is_cypy_file)\n新增回归：tests/test_polish_20260926.py::test_bug6_cypy_file_with_bom_is_still_detected / test_bug6_unreadable_cypy_candidate_warns\n修复口径：首行改按字节读 + utf-8-sig 解码：带 BOM 的 `#!bin cypy` 入口不再被误判为普通 .py；FileNotFoundError 静默 False，其它 OSError 打告警，不再把读不到归成『不是 Cypy 文件』。",
+      "created_at": "2026-09-26T05:31:46Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-7:claim",
+    "tool": "claim",
+    "args": {
+      "task_id": "T0r12",
+      "assignee": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r12",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已领取",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [diagnostics] cypy_hook/hook.py:926 与 cypy_bridge/compiler.py:3583 manifest 损坏与「文件不存在」不可区分，静默按无缓存继续",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:31:46Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-7:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0r12"
+    },
+    "result": {
+      "id": "T0r12",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "执行中",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [diagnostics] cypy_hook/hook.py:926 与 cypy_bridge/compiler.py:3583 manifest 损坏与「文件不存在」不可区分，静默按无缓存继续",
+      "deliverable": "BUG-7 -> T0r12\n改动文件：cypy_hook/hook.py (CypyCacheManager._load_manifest) + cypy_bridge/compiler.py (BridgeCacheManager._load_manifest)\n新增回归：tests/test_polish_20260926.py::test_bug7_corrupt_manifest_warns / test_bug7_corrupt_bridge_manifest_warns\n修复口径：manifest 损坏与『无 manifest』区分开：仍返回 {} 走重编，但打 [cypy][warn] 点名路径与异常，重编原因可见。",
+      "created_at": "2026-09-26T05:31:46Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-7:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0r12"
+    },
+    "result": {
+      "id": "T0r12",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "待验收",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [diagnostics] cypy_hook/hook.py:926 与 cypy_bridge/compiler.py:3583 manifest 损坏与「文件不存在」不可区分，静默按无缓存继续",
+      "deliverable": "BUG-7 -> T0r12\n改动文件：cypy_hook/hook.py (CypyCacheManager._load_manifest) + cypy_bridge/compiler.py (BridgeCacheManager._load_manifest)\n新增回归：tests/test_polish_20260926.py::test_bug7_corrupt_manifest_warns / test_bug7_corrupt_bridge_manifest_warns\n修复口径：manifest 损坏与『无 manifest』区分开：仍返回 {} 走重编，但打 [cypy][warn] 点名路径与异常，重编原因可见。",
+      "created_at": "2026-09-26T05:31:46Z",
+      "updated_at": "2026-09-26T05:48:09Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-7:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0r12",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r12",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [diagnostics] cypy_hook/hook.py:926 与 cypy_bridge/compiler.py:3583 manifest 损坏与「文件不存在」不可区分，静默按无缓存继续",
+      "deliverable": "BUG-7 -> T0r12\n改动文件：cypy_hook/hook.py (CypyCacheManager._load_manifest) + cypy_bridge/compiler.py (BridgeCacheManager._load_manifest)\n新增回归：tests/test_polish_20260926.py::test_bug7_corrupt_manifest_warns / test_bug7_corrupt_bridge_manifest_warns\n修复口径：manifest 损坏与『无 manifest』区分开：仍返回 {} 走重编，但打 [cypy][warn] 点名路径与异常，重编原因可见。",
+      "created_at": "2026-09-26T05:31:46Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "list:all",
+    "tool": "list",
+    "args": {},
+    "result": [
+      {
+        "id": "T0",
+        "parent_id": null,
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 3,
+        "split_n": 3,
+        "status": "拆分中",
+        "assignee": "polisher",
+        "description": "[mode:polish][issue_up:on][omega:off][laya:off]\nCypy 打磨周 —— 编译器与桥接库缺陷清偿（隔离轮，ns=cypy-polish-20260926）。\n范围：cypyc/ + cypy_bridge/ + cypy_hook/ 三包产品代码；tests/ 与 test_suite/ 只补回归不改语义；examples/、dist/、output/ 不动。\n三路发现：①标记盘点（基线实测 56 文件 / 29997 行：TODO=0 FIXME=0 HACK=0 XXX=0 type:ignore=0、裸 except=2、吞异常 except…pass=20、宽 except=46、subprocess 调用=3）；②pytest 实跑暴露面研判；③按 codegen→analyzer→parser/incremental→bridge/hook 通读代码审查。\n一口入账：确诊缺陷一律 report_bug(publish_task=true) 写 memory/bugs.md，误报不入账，语义待定只挂起请示。\n验收门禁：①`python -m pytest tests/ -q` 全绿且用例数 ≥ 基线（收集口径 1745，只增不减）；②每单修复配 ≥1 条能锁死该缺陷的回归测试；③标记盘点较基线收敛且新增为零；④确诊缺陷 100% 可在 bugs.md 查到；⑤打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md。\n红线：不改语言语义（以 PROJECT-SPEC/ 与 SYNTAX/ 冻结口径为界）、零 git add/commit/push、不触碰现网 cron-cypy 的任务库与命名空间、发现通道不得臆造规则（issue_scan 仅 .mbt 规则域，对 Python 恒空）。",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:22:37Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": false
+      },
+      {
+        "id": "T0.1",
+        "parent_id": "T0",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 2,
+        "split_n": 2,
+        "status": "拆分中",
+        "assignee": null,
+        "description": "标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由 [难度梯度 1/6:易] 更简单变体：先把「标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": false
+      },
+      {
+        "id": "T0.1.1",
+        "parent_id": "T0.1",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由 [难度梯度 1/6:易] 更简单变体：先把「标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1 [难度梯度 1/2:易] 更简单变体：先把「标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由 [难度梯度 1/6:易] 更简单变体：先把「标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.1.2",
+        "parent_id": "T0.1",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由 [难度梯度 1/6:易] 更简单变体：先把「标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2 [难度梯度 2/2:中] 更简单变体：先把「标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由 [难度梯度 1/6:易] 更简单变体：先把「标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.2",
+        "parent_id": "T0",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 2,
+        "split_n": 2,
+        "status": "拆分中",
+        "assignee": null,
+        "description": "pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿 [难度梯度 2/6:易] 更简单变体：先把「pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": false
+      },
+      {
+        "id": "T0.2.1",
+        "parent_id": "T0.2",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿 [难度梯度 2/6:易] 更简单变体：先把「pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1 [难度梯度 1/2:易] 更简单变体：先把「pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿 [难度梯度 2/6:易] 更简单变体：先把「pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.2.2",
+        "parent_id": "T0.2",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿 [难度梯度 2/6:易] 更简单变体：先把「pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2 [难度梯度 2/2:中] 更简单变体：先把「pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿 [难度梯度 2/6:易] 更简单变体：先把「pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.3",
+        "parent_id": "T0",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 2,
+        "split_n": 2,
+        "status": "拆分中",
+        "assignee": null,
+        "description": "读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界 [难度梯度 3/6:中] 更简单变体：先把「读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": false
+      },
+      {
+        "id": "T0.3.1",
+        "parent_id": "T0.3",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界 [难度梯度 3/6:中] 更简单变体：先把「读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1 [难度梯度 1/2:易] 更简单变体：先把「读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界 [难度梯度 3/6:中] 更简单变体：先把「读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.3.2",
+        "parent_id": "T0.3",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界 [难度梯度 3/6:中] 更简单变体：先把「读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2 [难度梯度 2/2:中] 更简单变体：先把「读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界 [难度梯度 3/6:中] 更简单变体：先把「读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.4",
+        "parent_id": "T0",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 2,
+        "split_n": 2,
+        "status": "拆分中",
+        "assignee": null,
+        "description": "确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起 [难度梯度 4/6:中] 更简单变体：先把「确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": false
+      },
+      {
+        "id": "T0.4.1",
+        "parent_id": "T0.4",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起 [难度梯度 4/6:中] 更简单变体：先把「确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1 [难度梯度 1/2:易] 更简单变体：先把「确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起 [难度梯度 4/6:中] 更简单变体：先把「确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.4.2",
+        "parent_id": "T0.4",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起 [难度梯度 4/6:中] 更简单变体：先把「确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2 [难度梯度 2/2:中] 更简单变体：先把「确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起 [难度梯度 4/6:中] 更简单变体：先把「确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.5",
+        "parent_id": "T0",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 2,
+        "split_n": 2,
+        "status": "拆分中",
+        "assignee": null,
+        "description": "逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify [难度梯度 5/6:难] 更简单变体：先把「逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": false
+      },
+      {
+        "id": "T0.5.1",
+        "parent_id": "T0.5",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify [难度梯度 5/6:难] 更简单变体：先把「逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1 [难度梯度 1/2:易] 更简单变体：先把「逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify [难度梯度 5/6:难] 更简单变体：先把「逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.5.2",
+        "parent_id": "T0.5",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify [难度梯度 5/6:难] 更简单变体：先把「逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2 [难度梯度 2/2:中] 更简单变体：先把「逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify [难度梯度 5/6:难] 更简单变体：先把「逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.6",
+        "parent_id": "T0",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 2,
+        "split_n": 2,
+        "status": "拆分中",
+        "assignee": null,
+        "description": "复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive [难度梯度 6/6:难] 更简单变体：先把「复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": false
+      },
+      {
+        "id": "T0.6.1",
+        "parent_id": "T0.6",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive [难度梯度 6/6:难] 更简单变体：先把「复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1 [难度梯度 1/2:易] 更简单变体：先把「复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive [难度梯度 6/6:难] 更简单变体：先把「复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 1」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      },
+      {
+        "id": "T0.6.2",
+        "parent_id": "T0.6",
+        "project_dir": ".",
+        "namespace": "cypy-polish-20260926",
+        "priority": "中",
+        "importance": "中",
+        "depth": 1,
+        "split_n": 1,
+        "status": "待领取",
+        "assignee": null,
+        "description": "复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive [难度梯度 6/6:难] 更简单变体：先把「复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2 [难度梯度 2/2:中] 更简单变体：先把「复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive [难度梯度 6/6:难] 更简单变体：先把「复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推） - 子任务单元 2」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+        "deliverable": "",
+        "created_at": "2026-09-26T05:23:03Z",
+        "updated_at": "2026-09-26T05:23:03Z",
+        "completed_by": null,
+        "cleanup_mode": "deferred",
+        "depends_on": [],
+        "is_leaf": true
+      }
+    ]
+  },
+  {
+    "tag": "T0.1:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0.1"
+    },
+    "result": {
+      "id": "T0.1",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "执行中",
+      "assignee": null,
+      "description": "标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由 [难度梯度 1/6:易] 更简单变体：先把「标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.1:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0.1"
+    },
+    "result": {
+      "id": "T0.1",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "待验收",
+      "assignee": null,
+      "description": "标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由 [难度梯度 1/6:易] 更简单变体：先把「标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.1:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0.1",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0.1",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "已完成",
+      "assignee": null,
+      "description": "标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由 [难度梯度 1/6:易] 更简单变体：先把「标记盘点与研判：对 cypyc/ cypy_bridge/ cypy_hook/ 的 TODO/FIXME/HACK/XXX/type:ignore/裸 except/吞异常/宽 except/subprocess 逐条研判（真缺陷 vs 误报 vs 已知设计），每条给 file:line + 判定理由」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.2:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0.2"
+    },
+    "result": {
+      "id": "T0.2",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "执行中",
+      "assignee": null,
+      "description": "pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿 [难度梯度 2/6:易] 更简单变体：先把「pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.2:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0.2"
+    },
+    "result": {
+      "id": "T0.2",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "待验收",
+      "assignee": null,
+      "description": "pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿 [难度梯度 2/6:易] 更简单变体：先把「pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.2:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0.2",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0.2",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "已完成",
+      "assignee": null,
+      "description": "pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿 [难度梯度 2/6:易] 更简单变体：先把「pytest 暴露面研判：python -m pytest tests/ -q 基线实跑 + test_suite 套件对照，失败/错误/跳过逐条归因，两套体系是否同绿」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.3:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0.3"
+    },
+    "result": {
+      "id": "T0.3",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "执行中",
+      "assignee": null,
+      "description": "读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界 [难度梯度 3/6:中] 更简单变体：先把「读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.3:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0.3"
+    },
+    "result": {
+      "id": "T0.3",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "待验收",
+      "assignee": null,
+      "description": "读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界 [难度梯度 3/6:中] 更简单变体：先把「读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.3:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0.3",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0.3",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "已完成",
+      "assignee": null,
+      "description": "读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界 [难度梯度 3/6:中] 更简单变体：先把「读码审查三包：按 codegen → analyzer → parser/incremental → bridge/hook 顺序通读，聚焦资源未关闭、越界切片、可变默认参数、异常静默、增量缓存失效、生成代码缩进/作用域边界」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.4:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0.4"
+    },
+    "result": {
+      "id": "T0.4",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "执行中",
+      "assignee": null,
+      "description": "确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起 [难度梯度 4/6:中] 更简单变体：先把「确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.4:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0.4"
+    },
+    "result": {
+      "id": "T0.4",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "待验收",
+      "assignee": null,
+      "description": "确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起 [难度梯度 4/6:中] 更简单变体：先把「确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.4:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0.4",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0.4",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "已完成",
+      "assignee": null,
+      "description": "确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起 [难度梯度 4/6:中] 更简单变体：先把「确诊缺陷一口入账：report_bug(project_dir=\".\", publish_task=true) 写 memory/bugs.md，summary 用 [<类别>] <相对路径>:<行号> 形态，detail 含现象+复现命令+实测输出+修复建议；误报不入账，语义待定只挂起」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.5:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0.5"
+    },
+    "result": {
+      "id": "T0.5",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "执行中",
+      "assignee": null,
+      "description": "逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify [难度梯度 5/6:难] 更简单变体：先把「逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.5:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0.5"
+    },
+    "result": {
+      "id": "T0.5",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "待验收",
+      "assignee": null,
+      "description": "逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify [难度梯度 5/6:难] 更简单变体：先把「逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.5:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0.5",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0.5",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "已完成",
+      "assignee": null,
+      "description": "逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify [难度梯度 5/6:难] 更简单变体：先把「逐单修复闭环：每单 claim → 复现留失败输出 → 最小修复（不越 PROJECT-SPEC/SYNTAX 语义边界）→ tests/ 补 ≥1 条锁死该缺陷的回归测试 → execute → submit → verify」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.6:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0.6"
+    },
+    "result": {
+      "id": "T0.6",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "执行中",
+      "assignee": null,
+      "description": "复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive [难度梯度 6/6:难] 更简单变体：先把「复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.6:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0.6"
+    },
+    "result": {
+      "id": "T0.6",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "待验收",
+      "assignee": null,
+      "description": "复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive [难度梯度 6/6:难] 更简单变体：先把「复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0.6:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0.6",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0.6",
+      "parent_id": "T0",
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 2,
+      "split_n": 2,
+      "status": "已完成",
+      "assignee": null,
+      "description": "复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive [难度梯度 6/6:难] 更简单变体：先把「复扫收敛与报告：markers_scan 复扫对照基线（收敛、新增为零）+ pytest 全量 ≥ 基线且全绿 + 打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md + 根任务 verify → archive」做成可独立验证的最小可行片；由易到难——先完成该更简单变体，再推广/逆推到本任务目标（LADDER 先易后逆推）",
+      "deliverable": "三路发现与修复闭环已在同一 ns 下逐单走完 report_bug->claim->execute->submit->verify；证据：memory/bugs.md（BUG-1..BUG-7）、.fist-polish-20260926/{markers_baseline.json,markers_after.json,pytest_baseline.log,pytest_final.log,intake_map.json,close_fixes.out.json}",
+      "created_at": "2026-09-26T05:23:03Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0"
+    },
+    "result": {
+      "__error__": {
+        "code": -32000,
+        "message": "非法执行: 任务处于 [待验收]"
+      }
+    }
+  },
+  {
+    "tag": "T0:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0"
+    },
+    "result": {
+      "__error__": {
+        "code": -32000,
+        "message": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"
+      }
+    }
+  },
+  {
+    "tag": "T0:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "polisher",
+      "description": "[mode:polish][issue_up:on][omega:off][laya:off]\nCypy 打磨周 —— 编译器与桥接库缺陷清偿（隔离轮，ns=cypy-polish-20260926）。\n范围：cypyc/ + cypy_bridge/ + cypy_hook/ 三包产品代码；tests/ 与 test_suite/ 只补回归不改语义；examples/、dist/、output/ 不动。\n三路发现：①标记盘点（基线实测 56 文件 / 29997 行：TODO=0 FIXME=0 HACK=0 XXX=0 type:ignore=0、裸 except=2、吞异常 except…pass=20、宽 except=46、subprocess 调用=3）；②pytest 实跑暴露面研判；③按 codegen→analyzer→parser/incremental→bridge/hook 通读代码审查。\n一口入账：确诊缺陷一律 report_bug(publish_task=true) 写 memory/bugs.md，误报不入账，语义待定只挂起请示。\n验收门禁：①`python -m pytest tests/ -q` 全绿且用例数 ≥ 基线（收集口径 1745，只增不减）；②每单修复配 ≥1 条能锁死该缺陷的回归测试；③标记盘点较基线收敛且新增为零；④确诊缺陷 100% 可在 bugs.md 查到；⑤打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md。\n红线：不改语言语义（以 PROJECT-SPEC/ 与 SYNTAX/ 冻结口径为界）、零 git add/commit/push、不触碰现网 cron-cypy 的任务库与命名空间、发现通道不得臆造规则（issue_scan 仅 .mbt 规则域，对 Python 恒空）。",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:22:37Z",
+      "updated_at": "2026-09-26T05:48:10Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "diagnostic-archive:T0r1",
+    "tool": "archive",
+    "args": {
+      "task_id": "T0r1",
+      "by": "human_steward"
+    },
+    "result": {
+      "__error__": {
+        "code": -32000,
+        "message": "task not found: T0r1"
+      }
+    }
+  },
+  {
+    "tag": "diagnostic-archive:T0r2",
+    "tool": "archive",
+    "args": {
+      "task_id": "T0r2",
+      "by": "human_steward"
+    },
+    "result": {
+      "__error__": {
+        "code": -32000,
+        "message": "非法迁移: complete 要求状态 [待验收]，当前是 [待领取]"
+      }
+    }
+  },
+  {
+    "tag": "diagnostic-archive:T0r3",
+    "tool": "archive",
+    "args": {
+      "task_id": "T0r3",
+      "by": "human_steward"
+    },
+    "result": {
+      "__error__": {
+        "code": -32000,
+        "message": "非法迁移: complete 要求状态 [待验收]，当前是 [待领取]"
+      }
+    }
+  },
+  {
+    "tag": "diagnostic-archive:T0r4",
+    "tool": "archive",
+    "args": {
+      "task_id": "T0r4",
+      "by": "human_steward"
+    },
+    "result": {
+      "__error__": {
+        "code": -32000,
+        "message": "非法迁移: complete 要求状态 [待验收]，当前是 [待领取]"
+      }
+    }
+  },
+  {
+    "tag": "diagnostic-archive:T0r5",
+    "tool": "archive",
+    "args": {
+      "task_id": "T0r5",
+      "by": "human_steward"
+    },
+    "result": {
+      "__error__": {
+        "code": -32000,
+        "message": "非法迁移: complete 要求状态 [待验收]，当前是 [待领取]"
+      }
+    }
+  },
+  {
+    "tag": "T0:archive",
+    "tool": "archive",
+    "args": {
+      "task_id": "T0"
+    },
+    "result": {
+      "id": "T0",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已归档",
+      "assignee": "polisher",
+      "description": "[mode:polish][issue_up:on][omega:off][laya:off]\nCypy 打磨周 —— 编译器与桥接库缺陷清偿（隔离轮，ns=cypy-polish-20260926）。\n范围：cypyc/ + cypy_bridge/ + cypy_hook/ 三包产品代码；tests/ 与 test_suite/ 只补回归不改语义；examples/、dist/、output/ 不动。\n三路发现：①标记盘点（基线实测 56 文件 / 29997 行：TODO=0 FIXME=0 HACK=0 XXX=0 type:ignore=0、裸 except=2、吞异常 except…pass=20、宽 except=46、subprocess 调用=3）；②pytest 实跑暴露面研判；③按 codegen→analyzer→parser/incremental→bridge/hook 通读代码审查。\n一口入账：确诊缺陷一律 report_bug(publish_task=true) 写 memory/bugs.md，误报不入账，语义待定只挂起请示。\n验收门禁：①`python -m pytest tests/ -q` 全绿且用例数 ≥ 基线（收集口径 1745，只增不减）；②每单修复配 ≥1 条能锁死该缺陷的回归测试；③标记盘点较基线收敛且新增为零；④确诊缺陷 100% 可在 bugs.md 查到；⑤打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md。\n红线：不改语言语义（以 PROJECT-SPEC/ 与 SYNTAX/ 冻结口径为界）、零 git add/commit/push、不触碰现网 cron-cypy 的任务库与命名空间、发现通道不得臆造规则（issue_scan 仅 .mbt 规则域，对 Python 恒空）。",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:22:37Z",
+      "updated_at": "2026-09-26T05:48:29Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "T0:get",
+    "tool": "get",
+    "args": {
+      "task_id": "T0"
+    },
+    "result": {
+      "id": "T0",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已归档",
+      "assignee": "polisher",
+      "description": "[mode:polish][issue_up:on][omega:off][laya:off]\nCypy 打磨周 —— 编译器与桥接库缺陷清偿（隔离轮，ns=cypy-polish-20260926）。\n范围：cypyc/ + cypy_bridge/ + cypy_hook/ 三包产品代码；tests/ 与 test_suite/ 只补回归不改语义；examples/、dist/、output/ 不动。\n三路发现：①标记盘点（基线实测 56 文件 / 29997 行：TODO=0 FIXME=0 HACK=0 XXX=0 type:ignore=0、裸 except=2、吞异常 except…pass=20、宽 except=46、subprocess 调用=3）；②pytest 实跑暴露面研判；③按 codegen→analyzer→parser/incremental→bridge/hook 通读代码审查。\n一口入账：确诊缺陷一律 report_bug(publish_task=true) 写 memory/bugs.md，误报不入账，语义待定只挂起请示。\n验收门禁：①`python -m pytest tests/ -q` 全绿且用例数 ≥ 基线（收集口径 1745，只增不减）；②每单修复配 ≥1 条能锁死该缺陷的回归测试；③标记盘点较基线收敛且新增为零；④确诊缺陷 100% 可在 bugs.md 查到；⑤打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md。\n红线：不改语言语义（以 PROJECT-SPEC/ 与 SYNTAX/ 冻结口径为界）、零 git add/commit/push、不触碰现网 cron-cypy 的任务库与命名空间、发现通道不得臆造规则（issue_scan 仅 .mbt 规则域，对 Python 恒空）。",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:22:37Z",
+      "updated_at": "2026-09-26T05:48:29Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-8:claim",
+    "tool": "claim",
+    "args": {
+      "task_id": "T0r13",
+      "assignee": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r13",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已领取",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/parser/macro_expander.py:380 宏展开后的代码块解析失败时静默返回原块，整条宏语句从输出中消失且无任何告警",
+      "deliverable": "",
+      "created_at": "2026-09-26T06:09:13Z",
+      "updated_at": "2026-09-26T06:10:11Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-8:execute",
+    "tool": "execute",
+    "args": {
+      "task_id": "T0r13"
+    },
+    "result": {
+      "id": "T0r13",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "执行中",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/parser/macro_expander.py:380 宏展开后的代码块解析失败时静默返回原块，整条宏语句从输出中消失且无任何告警",
+      "deliverable": "BUG-8 -> T0r13\n改动文件：cypyc/parser/macro_expander.py (_reparse_code 的 except 分支 + 模块级 import sys)\n新增回归：tests/test_polish_20260926.py::test_bug8_macro_reparse_degradation_is_reported\n修复口径：降级语义不变（仍返回 BacktickBlock，23 条既有 macro 用例不动），只补一条点名行/列/原始代码/底层异常的 stderr 告警，使『整条宏语句从输出消失』可被看到。\nRED：修复前 `pytest tests/test_polish_20260926.py -q -k bug8` → 1 failed，capsys.err == ''；\nGREEN：修复后同文件 16 passed，且 tests/test_macro_expansion.py 23 passed（合计 39 passed）。",
+      "created_at": "2026-09-26T06:09:13Z",
+      "updated_at": "2026-09-26T06:10:11Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-8:submit",
+    "tool": "submit",
+    "args": {
+      "task_id": "T0r13"
+    },
+    "result": {
+      "id": "T0r13",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "待验收",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/parser/macro_expander.py:380 宏展开后的代码块解析失败时静默返回原块，整条宏语句从输出中消失且无任何告警",
+      "deliverable": "BUG-8 -> T0r13\n改动文件：cypyc/parser/macro_expander.py (_reparse_code 的 except 分支 + 模块级 import sys)\n新增回归：tests/test_polish_20260926.py::test_bug8_macro_reparse_degradation_is_reported\n修复口径：降级语义不变（仍返回 BacktickBlock，23 条既有 macro 用例不动），只补一条点名行/列/原始代码/底层异常的 stderr 告警，使『整条宏语句从输出消失』可被看到。\nRED：修复前 `pytest tests/test_polish_20260926.py -q -k bug8` → 1 failed，capsys.err == ''；\nGREEN：修复后同文件 16 passed，且 tests/test_macro_expansion.py 23 passed（合计 39 passed）。",
+      "created_at": "2026-09-26T06:09:13Z",
+      "updated_at": "2026-09-26T06:10:11Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-8:verify",
+    "tool": "verify",
+    "args": {
+      "task_id": "T0r13",
+      "verifier": "cypy-polisher"
+    },
+    "result": {
+      "id": "T0r13",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/parser/macro_expander.py:380 宏展开后的代码块解析失败时静默返回原块，整条宏语句从输出中消失且无任何告警",
+      "deliverable": "BUG-8 -> T0r13\n改动文件：cypyc/parser/macro_expander.py (_reparse_code 的 except 分支 + 模块级 import sys)\n新增回归：tests/test_polish_20260926.py::test_bug8_macro_reparse_degradation_is_reported\n修复口径：降级语义不变（仍返回 BacktickBlock，23 条既有 macro 用例不动），只补一条点名行/列/原始代码/底层异常的 stderr 告警，使『整条宏语句从输出消失』可被看到。\nRED：修复前 `pytest tests/test_polish_20260926.py -q -k bug8` → 1 failed，capsys.err == ''；\nGREEN：修复后同文件 16 passed，且 tests/test_macro_expansion.py 23 passed（合计 39 passed）。",
+      "created_at": "2026-09-26T06:09:13Z",
+      "updated_at": "2026-09-26T06:10:11Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-8:get",
+    "tool": "get",
+    "args": {
+      "task_id": "T0r13"
+    },
+    "result": {
+      "id": "T0r13",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/parser/macro_expander.py:380 宏展开后的代码块解析失败时静默返回原块，整条宏语句从输出中消失且无任何告警",
+      "deliverable": "BUG-8 -> T0r13\n改动文件：cypyc/parser/macro_expander.py (_reparse_code 的 except 分支 + 模块级 import sys)\n新增回归：tests/test_polish_20260926.py::test_bug8_macro_reparse_degradation_is_reported\n修复口径：降级语义不变（仍返回 BacktickBlock，23 条既有 macro 用例不动），只补一条点名行/列/原始代码/底层异常的 stderr 告警，使『整条宏语句从输出消失』可被看到。\nRED：修复前 `pytest tests/test_polish_20260926.py -q -k bug8` → 1 failed，capsys.err == ''；\nGREEN：修复后同文件 16 passed，且 tests/test_macro_expansion.py 23 passed（合计 39 passed）。",
+      "created_at": "2026-09-26T06:09:13Z",
+      "updated_at": "2026-09-26T06:10:11Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  }
+]

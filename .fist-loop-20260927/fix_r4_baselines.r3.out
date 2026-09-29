@@ -1,0 +1,34 @@
+{
+ "refuse": [
+  "自证未过：pytest 零失败零错误（实得 [1, 0]）"
+ ],
+ "pytest": [
+  1955,
+  1,
+  0
+ ],
+ "collect": 1956,
+ "suite": {
+  "Total": 47,
+  "Passed": 47,
+  "Failed": 0,
+  "Skipped": 0
+ },
+ "e2e": {
+  "PASS": 25,
+  "FAIL": 0,
+  "RUNFAIL": 0,
+  "WARN": 0
+ },
+ "git_head": "17d68b4",
+ "radius": {
+  "product": 1,
+  "tests": 2,
+  "docs": 1,
+  "frozen": 0,
+  "loop": 58,
+  "ledger": 1,
+  "other": 58
+ },
+ "three_green": false
+}

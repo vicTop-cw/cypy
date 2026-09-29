@@ -1,0 +1,198 @@
+{
+ "name": "20260927.18.32.00",
+ "title": "R2-验证（verify）环节报告",
+ "stage": "第 2 轮第 3 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R2",
+ "root_task": "T0r57",
+ "assignee": "cypy-verifier",
+ "marker": "[selfdrive-verify]",
+ "footer": "confirmed=BUG-44,BUG-45,BUG-39,BUG-51,BUG-35,BUG-46,BUG-47 new=BUG-52 dup=BUG-53 probes=27 judge-defects=4 op-defects=4 carry=BUG-48,BUG-49,BUG-40,BUG-41,BUG-42,BUG-43,class侧非绑定方法无锁,struct隐式self观察,local位__implicit_default__观察 decisions=4",
+ "fragment": ".fist-loop-20260927/r2_verify_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/verify_r2_probe.json",
+  ".fist-loop-20260927/verify_r2_baselines.json",
+  ".fist-loop-20260927/verify_r2_ledger3way.json",
+  ".fist-loop-20260927/verify_r2_file_bug52.json"
+ ],
+ "gates": [
+  {
+   "label": "①",
+   "claim": "27 条对抗探针零拒绝 ⇒ 6 单在本环自己构造的形状下未被推翻",
+   "artifact": ".fist-loop-20260927/verify_r2_probe.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "②",
+   "claim": "探针条目数不是手写：实际跑了 ≥25 条",
+   "artifact": ".fist-loop-20260927/verify_r2_probe.json",
+   "path": "probes",
+   "min": 25
+  },
+  {
+   "label": "③",
+   "claim": "struct 侧：非绑定方法无 self，binding(False) 只挂绑定方法",
+   "artifact": ".fist-loop-20260927/verify_r2_probe.json",
+   "path": "probes['P1.binding_only_on_bound'].ok",
+   "equals": true
+  },
+  {
+   "label": "④",
+   "claim": "class 侧（修复环未覆盖的面）：staticmethod 无 self、classmethod 保留显式 cls",
+   "artifact": ".fist-loop-20260927/verify_r2_probe.json",
+   "path": "probes['P2.classmethod_keeps_cls'].ok",
+   "equals": true
+  },
+  {
+   "label": "⑤",
+   "claim": "宏体里的 return 仍合法（守卫不过头）",
+   "artifact": ".fist-loop-20260927/verify_r2_probe.json",
+   "path": "probes['P4.macro_return_legal'].ok",
+   "equals": true
+  },
+  {
+   "label": "⑥",
+   "claim": "class 体内的 return 被诊断（守卫不缺失）",
+   "artifact": ".fist-loop-20260927/verify_r2_probe.json",
+   "path": "probes['P4.class_return_diagnosed'].ok",
+   "equals": true
+  },
+  {
+   "label": "⑦",
+   "claim": "语法错误不再被归进「读取文件错误」桶",
+   "artifact": ".fist-loop-20260927/verify_r2_probe.json",
+   "path": "probes['P5.syntax_error_not_read_bucket'].ok",
+   "equals": true
+  },
+  {
+   "label": "⑧",
+   "claim": "cypy_hook 包级 API 在第三方进程里真可用",
+   "artifact": ".fist-loop-20260927/verify_r2_probe.json",
+   "path": "probes['P6.package_api'].ok",
+   "equals": true
+  },
+  {
+   "label": "⑨",
+   "claim": "三套基线独立复算零拒绝",
+   "artifact": ".fist-loop-20260927/verify_r2_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑩",
+   "claim": "pytest 全量 passed ≥ 1886（只升不降）",
+   "artifact": ".fist-loop-20260927/verify_r2_baselines.json",
+   "path": "pytest.passed",
+   "min": 1886
+  },
+  {
+   "label": "⑪",
+   "claim": "收集数与通过数同窗取齐 ⇒ 1885/1886 之谜是并发少收",
+   "artifact": ".fist-loop-20260927/verify_r2_baselines.json",
+   "path": "pytest.collected",
+   "min": 1886
+  },
+  {
+   "label": "⑫",
+   "claim": "自研套件 47/47",
+   "artifact": ".fist-loop-20260927/verify_r2_baselines.json",
+   "path": "suite.green",
+   "equals": true
+  },
+  {
+   "label": "⑬",
+   "claim": "e2e golden PASS=25 FAIL=0",
+   "artifact": ".fist-loop-20260927/verify_r2_baselines.json",
+   "path": "e2e.green",
+   "equals": true
+  },
+  {
+   "label": "⑭",
+   "claim": "HEAD 仍是 17d68b4（红线：不 add/commit/push）",
+   "artifact": ".fist-loop-20260927/verify_r2_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "⑮",
+   "claim": "暂存区 0 文件",
+   "artifact": ".fist-loop-20260927/verify_r2_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "⑬b",
+   "claim": "账本条目数 53（收口前后不变，双发已标注而非删除）",
+   "artifact": ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "path": "ledger.entries",
+   "min": 53
+  },
+  {
+   "label": "⑭b",
+   "claim": "服务端 ns bugs 的 task 行数（含本环新发 2 行）",
+   "artifact": ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "path": "server.bug_tasks",
+   "min": 49
+  },
+  {
+   "label": "⑮b",
+   "claim": "8 单是「只发卡未派生任务」——由 call_log 回执反解，不靠回忆",
+   "artifact": ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "path": "cross.bug_card_only_no_task",
+   "min": 8
+  },
+  {
+   "label": "⑯",
+   "claim": "双发检测抓到本环的 BUG-52/53 并已处置",
+   "artifact": ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "path": "cross.duplicate_summaries",
+   "min": 1
+  },
+  {
+   "label": "⑰",
+   "claim": "BUG-52 口径复跑：≥100 个文件不满足声明的 formatter",
+   "artifact": ".fist-loop-20260927/verify_r2_file_bug52.json",
+   "path": "measure.reformat",
+   "min": 100
+  },
+  {
+   "label": "⑱",
+   "claim": "BUG-52 的入账自证零拒绝（正身 BUG-52/T0r58，bug_list 可回读）",
+   "artifact": ".fist-loop-20260927/verify_r2_file_bug52.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑲",
+   "claim": "入账的正身编号是 BUG-52 而非重发的那张",
+   "artifact": ".fist-loop-20260927/verify_r2_file_bug52.json",
+   "path": "filed.bug_id",
+   "equals": "BUG-52"
+  },
+  {
+   "label": "⑳",
+   "claim": "收口链 16 张叶子全部走完 claim→omega→execute→submit→output_validate→verify",
+   "artifact": ".fist-loop-20260927/close_r2_verify.out.json",
+   "path": "leaves",
+   "min": 16
+  },
+  {
+   "label": "㉑",
+   "claim": "收口链零失败叶子",
+   "artifact": ".fist-loop-20260927/close_r2_verify.out.json",
+   "path": "failed",
+   "equals": []
+  },
+  {
+   "label": "㉒",
+   "claim": "P7：对 HEAD 的 AST 直方图差 ≥100 ⇒ HEAD 不含 09-26/R1 未提交工作（不能当 pre-black 底）",
+   "artifact": ".fist-loop-20260927/verify_r2_probe.json",
+   "path": "probes['P7.semantic_vs_text'].parser_py.ast_hist_delta",
+   "min": 100
+  }
+ ],
+ "closure": {
+  "stage": "close_r2_verify.out.json",
+  "root": "close_r2_verify_root.out.json"
+ }
+}

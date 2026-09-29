@@ -1,0 +1,299 @@
+{
+ "hunt_dirs": [
+  "cypyc/transformer",
+  "cypyc/analyzer",
+  "cypyc/project",
+  "cypy_bridge",
+  "cypyc/cli.py"
+ ],
+ "files": 32,
+ "rows": [
+  {
+   "file": "cypyc/transformer/__init__.py",
+   "classes": 0,
+   "module_funcs": 0,
+   "public_symbols": 0,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/transformer/defer_transformer.py",
+   "classes": 1,
+   "module_funcs": 0,
+   "public_symbols": 1,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/transformer/enum_transformer.py",
+   "classes": 1,
+   "module_funcs": 0,
+   "public_symbols": 1,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/transformer/generic_transformer.py",
+   "classes": 1,
+   "module_funcs": 0,
+   "public_symbols": 1,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/transformer/struct_transformer.py",
+   "classes": 1,
+   "module_funcs": 0,
+   "public_symbols": 1,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/transformer/trait_transformer.py",
+   "classes": 1,
+   "module_funcs": 0,
+   "public_symbols": 1,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/analyzer/__init__.py",
+   "classes": 0,
+   "module_funcs": 0,
+   "public_symbols": 0,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/analyzer/build_block_checker.py",
+   "classes": 1,
+   "module_funcs": 0,
+   "public_symbols": 1,
+   "module_doc_declared_rules": [
+    "1. 构建块内部默认unsafe，允许指针语法",
+    "2. 指针语法只能在构建块内部使用",
+    "3. BuildParams trait 约束验证",
+    "4. guard 语句和提前返回检查",
+    "5. yield 语句只能在生成器构建块中使用"
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "classes": 1,
+   "module_funcs": 2,
+   "public_symbols": 3,
+   "module_doc_declared_rules": [
+    "1. 支持基本算术运算（+、-、*、/、%、**）",
+    "2. 支持比较运算（==、!=、<、>、<=、>=）",
+    "3. 支持逻辑运算（and、or、not）",
+    "4. 支持位运算（&、|、^、~、<<、>>）",
+    "5. 支持字符串操作（+、*、upper、lower、replace、split、join 等）",
+    "6. 支持列表操作（append、extend、insert、remove、sort、reverse 等）",
+    "7. 支持常量表达式和字面量",
+    "8. 支持丰富的内置函数调用（len、abs、round、min、max、sum、range 等）",
+    "9. 支持编译期函数调用（comptime def）",
+    "10. 支持语句执行（LetStmt、ReturnStmt、IfStmt、ForStmt、WhileStmt）",
+    "11. 支持条件编译（if comptime）",
+    "12. 支持范围操作（range）"
+   ]
+  },
+  {
+   "file": "cypyc/analyzer/cycle_detector.py",
+   "classes": 1,
+   "module_funcs": 0,
+   "public_symbols": 1,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/analyzer/defer_analyzer.py",
+   "classes": 1,
+   "module_funcs": 0,
+   "public_symbols": 1,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/analyzer/pointer_checker.py",
+   "classes": 1,
+   "module_funcs": 0,
+   "public_symbols": 1,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/analyzer/scope_analyzer.py",
+   "classes": 3,
+   "module_funcs": 0,
+   "public_symbols": 3,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "classes": 2,
+   "module_funcs": 0,
+   "public_symbols": 2,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/project/__init__.py",
+   "classes": 0,
+   "module_funcs": 0,
+   "public_symbols": 0,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/project/module_dependency_graph.py",
+   "classes": 2,
+   "module_funcs": 0,
+   "public_symbols": 2,
+   "module_doc_declared_rules": [
+    "1. 从 AST 构建模块依赖图",
+    "2. 拓扑排序确定编译顺序",
+    "3. 传递依赖分析",
+    "4. 循环依赖检测"
+   ]
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "classes": 2,
+   "module_funcs": 0,
+   "public_symbols": 2,
+   "module_doc_declared_rules": [
+    "1. 扫描项目目录下的所有 .cypy 文件",
+    "2. 解析 import/from 语句，构建模块依赖图",
+    "3. 拓扑排序确定编译顺序",
+    "4. 第一遍：收集所有模块的类型导出到 TypeRegistry",
+    "5. 第二遍：按依赖顺序逐模块进行类型检查和代码生成",
+    "6. 输出编译产物 (.pyd 文件)"
+   ]
+  },
+  {
+   "file": "cypyc/project/type_registry.py",
+   "classes": 3,
+   "module_funcs": 0,
+   "public_symbols": 3,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/__init__.py",
+   "classes": 0,
+   "module_funcs": 0,
+   "public_symbols": 0,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/compiler.py",
+   "classes": 5,
+   "module_funcs": 2,
+   "public_symbols": 7,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/core.py",
+   "classes": 5,
+   "module_funcs": 7,
+   "public_symbols": 12,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/defer.py",
+   "classes": 3,
+   "module_funcs": 3,
+   "public_symbols": 6,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/enum.py",
+   "classes": 2,
+   "module_funcs": 3,
+   "public_symbols": 5,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/generics.py",
+   "classes": 3,
+   "module_funcs": 2,
+   "public_symbols": 5,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/memory.py",
+   "classes": 0,
+   "module_funcs": 13,
+   "public_symbols": 10,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/meta.py",
+   "classes": 5,
+   "module_funcs": 6,
+   "public_symbols": 7,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/nogil.py",
+   "classes": 5,
+   "module_funcs": 4,
+   "public_symbols": 9,
+   "module_doc_declared_rules": [
+    "1. 使用线程池在独立线程中执行CPU密集型任务",
+    "2. 使用ctypes调用C函数时释放GIL",
+    "3. 提供上下文管理器和装饰器来标记nogil区域"
+   ]
+  },
+  {
+   "file": "cypy_bridge/pointer.py",
+   "classes": 3,
+   "module_funcs": 12,
+   "public_symbols": 12,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/struct.py",
+   "classes": 2,
+   "module_funcs": 5,
+   "public_symbols": 7,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/types.py",
+   "classes": 4,
+   "module_funcs": 6,
+   "public_symbols": 10,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypy_bridge/union.py",
+   "classes": 2,
+   "module_funcs": 2,
+   "public_symbols": 4,
+   "module_doc_declared_rules": []
+  },
+  {
+   "file": "cypyc/cli.py",
+   "classes": 1,
+   "module_funcs": 15,
+   "public_symbols": 15,
+   "module_doc_declared_rules": []
+  }
+ ],
+ "cli_declared": {
+  "top_help_rc": 0,
+  "subcommands": [
+   "transpile,compile,build,run,watch,hook"
+  ],
+  "transpile_help_rc": 0,
+  "transpile_flags": [
+   "--bridge",
+   "--check-only",
+   "--emit-ast",
+   "--emit-code",
+   "--emit-cython",
+   "--generate-setup",
+   "--help",
+   "--output",
+   "--verbose"
+  ]
+ },
+ "candidates_total": 8,
+ "confirmed_ids": [
+  "C1",
+  "C3",
+  "C4",
+  "C5",
+  "C6",
+  "C8"
+ ],
+ "refuse": []
+}

@@ -1,0 +1,107 @@
+{
+ "refuse": [],
+ "load": {
+  "measured": true,
+  "unattributable": 0,
+  "unattributable_pids": [],
+  "total_python": 1,
+  "cypy_lane": 1,
+  "foreign_lane": 0,
+  "foreign_names": [],
+  "foreign_sample": [],
+  "mine_sample": [
+   "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -X utf8 .fist-loop-20260927/advance_baselines_r1.py"
+  ]
+ },
+ "pytest": {
+  "rc": 0,
+  "passed": 1868,
+  "failed_or_error": [],
+  "failed_tests": [],
+  "skipped_lines": 0,
+  "summary_line": "====================== 1868 passed in 324.91s (0:05:24) ======================="
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "green": true,
+  "verdict": "绿"
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+ },
+ "collection": {
+  "rc": 0,
+  "count": 6,
+  "file": "tests/test_loop_20260927_advance.py"
+ },
+ "doc_example": {
+  "where": "SYNTAX/13-build-blocks.md（含 `let result =:` 的原文块，逐字送进 CLI）",
+  "quoted": [
+   "# 变量构建块 :=",
+   "let result =:",
+   "    let x: int = 10",
+   "    let y: int = 20",
+   "    x + y  # 最后一个表达式作为返回值",
+   ""
+  ],
+  "rc": 0,
+  "cli_error": "",
+  "emit_has_block_call": true
+ },
+ "radius": {
+  "attribution": "mtime ≥ 本轮起点（不是 git diff——工作树里还有上一轮的未提交改动）",
+  "since": "polish 收口之后",
+  "product_files_touched_this_stage": [
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/parser.py"
+  ],
+  "expected": [
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/parser.py"
+  ],
+  "new_token_or_class_defs_in_my_hunks": []
+ },
+ "lint": {
+  "scanned_files": 11,
+  "authored_whole": 8,
+  "preexisting_with_hunk_ranges": {
+   "cypyc/codegen/cython_generator.py": [
+    3193,
+    3194,
+    3195,
+    3196,
+    3197,
+    3198,
+    3199,
+    3200
+   ],
+   "cypyc/parser/parser.py": [
+    1592,
+    1593,
+    1594,
+    1595,
+    1596,
+    1597,
+    1598,
+    1599,
+    1600,
+    1601
+   ]
+  },
+  "total_in_scope_files": 671,
+  "attributable_to_this_round": [],
+  "e501_only_exempted_files": [
+   ".fist-loop-20260927/gen_report_r1_advance.py"
+  ],
+  "exempted_hits": 12
+ },
+ "black": {
+  "rc": 0,
+  "files": 8,
+  "line": [
+   "8 files would be left unchanged."
+  ]
+ }
+}

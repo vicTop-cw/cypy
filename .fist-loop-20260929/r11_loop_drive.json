@@ -1,0 +1,367 @@
+{
+ "loop": "cypy-selfdrive-ring-r11",
+ "replayed_create_params": {
+  "name": "cypy-selfdrive-ring-r11",
+  "steps": [
+   "advance",
+   "bugfind",
+   "fix_and_merge",
+   "verify",
+   "polish",
+   "advance"
+  ],
+  "max_rounds": 6,
+  "baseline_test_count": 2241,
+  "baseline_open_bug_count": 36,
+  "stop_on_goal": false,
+  "stop_on_exceeded": false
+ },
+ "tick_args": {
+  "project_health_grade": "attention",
+  "blocked_tasks": 0,
+  "current_test_count": 2284,
+  "current_open_bug_count": 37
+ },
+ "steps": [
+  {
+   "i": 1,
+   "expect_mode": "advance",
+   "refused": false,
+   "picked": {
+    "next_mode": "advance",
+    "should_stop": false,
+    "stop_reason": "",
+    "loop_after": {
+     "name": "cypy-selfdrive-ring-r11",
+     "steps": [
+      "advance",
+      "bugfind",
+      "fix_and_merge",
+      "verify",
+      "polish",
+      "advance"
+     ],
+     "current_idx": 1,
+     "round": 0,
+     "max_rounds": 6,
+     "stop_on_goal": false,
+     "stop_on_exceeded": false,
+     "created_at": "2026-09-29T08:15:33Z",
+     "updated_at": "2026-09-29T08:15:33Z",
+     "status": "active",
+     "stop_reason": "",
+     "goal_reached": false,
+     "exceeded": false,
+     "baseline_test_count": 2241,
+     "baseline_open_bug_count": 36
+    },
+    "history": {
+     "loop_id": "cypy-selfdrive-ring-r11",
+     "action": "tick",
+     "from_idx": 0,
+     "next_mode": "advance",
+     "to_idx": 1,
+     "round": 0,
+     "should_stop": false,
+     "stop_reason": ""
+    }
+   },
+   "raw": ""
+  },
+  {
+   "i": 2,
+   "expect_mode": "bugfind",
+   "refused": false,
+   "picked": {
+    "next_mode": "bugfind",
+    "should_stop": false,
+    "stop_reason": "",
+    "loop_after": {
+     "name": "cypy-selfdrive-ring-r11",
+     "steps": [
+      "advance",
+      "bugfind",
+      "fix_and_merge",
+      "verify",
+      "polish",
+      "advance"
+     ],
+     "current_idx": 2,
+     "round": 0,
+     "max_rounds": 6,
+     "stop_on_goal": false,
+     "stop_on_exceeded": false,
+     "created_at": "2026-09-29T08:15:33Z",
+     "updated_at": "2026-09-29T08:15:33Z",
+     "status": "active",
+     "stop_reason": "",
+     "goal_reached": false,
+     "exceeded": false,
+     "baseline_test_count": 2241,
+     "baseline_open_bug_count": 36
+    },
+    "history": {
+     "loop_id": "cypy-selfdrive-ring-r11",
+     "action": "tick",
+     "from_idx": 1,
+     "next_mode": "bugfind",
+     "to_idx": 2,
+     "round": 0,
+     "should_stop": false,
+     "stop_reason": ""
+    }
+   },
+   "raw": ""
+  },
+  {
+   "i": 3,
+   "expect_mode": "fix_and_merge",
+   "refused": false,
+   "picked": {
+    "next_mode": "fix_and_merge",
+    "should_stop": false,
+    "stop_reason": "",
+    "loop_after": {
+     "name": "cypy-selfdrive-ring-r11",
+     "steps": [
+      "advance",
+      "bugfind",
+      "fix_and_merge",
+      "verify",
+      "polish",
+      "advance"
+     ],
+     "current_idx": 3,
+     "round": 0,
+     "max_rounds": 6,
+     "stop_on_goal": false,
+     "stop_on_exceeded": false,
+     "created_at": "2026-09-29T08:15:33Z",
+     "updated_at": "2026-09-29T08:15:33Z",
+     "status": "active",
+     "stop_reason": "",
+     "goal_reached": false,
+     "exceeded": false,
+     "baseline_test_count": 2241,
+     "baseline_open_bug_count": 36
+    },
+    "history": {
+     "loop_id": "cypy-selfdrive-ring-r11",
+     "action": "tick",
+     "from_idx": 2,
+     "next_mode": "fix_and_merge",
+     "to_idx": 3,
+     "round": 0,
+     "should_stop": false,
+     "stop_reason": ""
+    }
+   },
+   "raw": ""
+  },
+  {
+   "i": 4,
+   "expect_mode": "verify",
+   "refused": false,
+   "picked": {
+    "next_mode": "verify",
+    "should_stop": false,
+    "stop_reason": "",
+    "loop_after": {
+     "name": "cypy-selfdrive-ring-r11",
+     "steps": [
+      "advance",
+      "bugfind",
+      "fix_and_merge",
+      "verify",
+      "polish",
+      "advance"
+     ],
+     "current_idx": 4,
+     "round": 0,
+     "max_rounds": 6,
+     "stop_on_goal": false,
+     "stop_on_exceeded": false,
+     "created_at": "2026-09-29T08:15:33Z",
+     "updated_at": "2026-09-29T08:15:33Z",
+     "status": "active",
+     "stop_reason": "",
+     "goal_reached": false,
+     "exceeded": false,
+     "baseline_test_count": 2241,
+     "baseline_open_bug_count": 36
+    },
+    "history": {
+     "loop_id": "cypy-selfdrive-ring-r11",
+     "action": "tick",
+     "from_idx": 3,
+     "next_mode": "verify",
+     "to_idx": 4,
+     "round": 0,
+     "should_stop": false,
+     "stop_reason": ""
+    }
+   },
+   "raw": ""
+  },
+  {
+   "i": 5,
+   "expect_mode": "polish",
+   "refused": false,
+   "picked": {
+    "next_mode": "polish",
+    "should_stop": false,
+    "stop_reason": "",
+    "loop_after": {
+     "name": "cypy-selfdrive-ring-r11",
+     "steps": [
+      "advance",
+      "bugfind",
+      "fix_and_merge",
+      "verify",
+      "polish",
+      "advance"
+     ],
+     "current_idx": 5,
+     "round": 0,
+     "max_rounds": 6,
+     "stop_on_goal": false,
+     "stop_on_exceeded": false,
+     "created_at": "2026-09-29T08:15:33Z",
+     "updated_at": "2026-09-29T08:15:33Z",
+     "status": "active",
+     "stop_reason": "",
+     "goal_reached": false,
+     "exceeded": false,
+     "baseline_test_count": 2241,
+     "baseline_open_bug_count": 36
+    },
+    "history": {
+     "loop_id": "cypy-selfdrive-ring-r11",
+     "action": "tick",
+     "from_idx": 4,
+     "next_mode": "polish",
+     "to_idx": 5,
+     "round": 0,
+     "should_stop": false,
+     "stop_reason": ""
+    }
+   },
+   "raw": ""
+  },
+  {
+   "i": 6,
+   "expect_mode": "advance",
+   "refused": false,
+   "picked": {
+    "next_mode": "advance",
+    "should_stop": false,
+    "stop_reason": "",
+    "loop_after": {
+     "name": "cypy-selfdrive-ring-r11",
+     "steps": [
+      "advance",
+      "bugfind",
+      "fix_and_merge",
+      "verify",
+      "polish",
+      "advance"
+     ],
+     "current_idx": 0,
+     "round": 1,
+     "max_rounds": 6,
+     "stop_on_goal": false,
+     "stop_on_exceeded": false,
+     "created_at": "2026-09-29T08:15:33Z",
+     "updated_at": "2026-09-29T08:15:33Z",
+     "status": "active",
+     "stop_reason": "",
+     "goal_reached": false,
+     "exceeded": false,
+     "baseline_test_count": 2241,
+     "baseline_open_bug_count": 36
+    },
+    "history": {
+     "loop_id": "cypy-selfdrive-ring-r11",
+     "action": "tick",
+     "from_idx": 5,
+     "next_mode": "advance",
+     "to_idx": 0,
+     "round": 1,
+     "should_stop": false,
+     "stop_reason": ""
+    }
+   },
+   "raw": ""
+  }
+ ],
+ "create": {
+  "refused": false,
+  "raw": "{\"name\": \"cypy-selfdrive-ring-r11\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T08:15:33Z\", \"updated_at\": \"2026-09-29T08:15:33Z\", \"status\": "
+ },
+ "status_pre": {
+  "refused": false,
+  "picked": {
+   "round": 0,
+   "stop_reason": "",
+   "max_rounds": 6
+  }
+ },
+ "status_post": {
+  "refused": false,
+  "picked": {
+   "round": 1,
+   "stop_reason": "",
+   "max_rounds": 6
+  },
+  "raw": ""
+ },
+ "cross_process_negative": {
+  "refused_as_expected": true,
+  "raw": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-ring-r11\"}}"
+ },
+ "gates": {
+  "create_ok": true,
+  "status_pre_ok": true,
+  "all_ticks_ok": true,
+  "status_post_ok": true,
+  "cross_process_negative_confirmed": true,
+  "round_advanced": true,
+  "mode_sequence_matches_declared_steps": true,
+  "current_idx_progression": true,
+  "no_early_stop": true
+ },
+ "observed": {
+  "pre_round": 0,
+  "post_round": 1,
+  "next_mode_seq": [
+   "advance",
+   "bugfind",
+   "fix_and_merge",
+   "verify",
+   "polish",
+   "advance"
+  ],
+  "current_idx_seq": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   0
+  ],
+  "tick_args": {
+   "project_health_grade": "attention",
+   "blocked_tasks": 0,
+   "current_test_count": 2284,
+   "current_open_bug_count": 37
+  },
+  "create_params_replayed": {
+   "name": "cypy-selfdrive-ring-r11",
+   "max_rounds": 6,
+   "baseline_test_count": 2241,
+   "baseline_open_bug_count": 36,
+   "stop_on_goal": false,
+   "stop_on_exceeded": false
+  }
+ }
+}

@@ -1,0 +1,174 @@
+{
+ "started": "2026-09-28T05:22:50+00:00",
+ "law": "本环零不可逆动作：产品面只改两档分析器，账本面只有 append 与本环号段归档",
+ "ring_start": "2026-09-28T03:00:00",
+ "product_dirs_scanned": [
+  "cypyc",
+  "cypy_hook",
+  "cypy_bridge",
+  "scripts"
+ ],
+ "product_diff_status": [
+  "M\tcypy_bridge/__init__.py",
+  "M\tcypy_bridge/compiler.py",
+  "M\tcypy_bridge/defer.py",
+  "M\tcypy_bridge/memory.py",
+  "M\tcypy_bridge/meta.py",
+  "M\tcypy_bridge/nogil.py",
+  "M\tcypy_bridge/pointer.py",
+  "M\tcypy_bridge/types.py",
+  "M\tcypy_bridge/union.py",
+  "M\tcypy_hook/__init__.py",
+  "M\tcypy_hook/hook.py",
+  "M\tcypyc/__main__.py",
+  "M\tcypyc/analyzer/build_block_checker.py",
+  "M\tcypyc/analyzer/comptime_evaluator.py",
+  "M\tcypyc/analyzer/defer_analyzer.py",
+  "M\tcypyc/analyzer/pointer_checker.py",
+  "M\tcypyc/analyzer/scope_analyzer.py",
+  "M\tcypyc/analyzer/type_checker.py",
+  "M\tcypyc/cli.py",
+  "M\tcypyc/codegen/cython_generator.py",
+  "M\tcypyc/codegen/type_mapper.py",
+  "M\tcypyc/incremental/ast_differ.py",
+  "M\tcypyc/incremental/dependency_graph.py",
+  "M\tcypyc/incremental/file_monitor.py",
+  "M\tcypyc/incremental/hot_reload.py",
+  "M\tcypyc/incremental/incremental_manager.py",
+  "M\tcypyc/parser/lexer.py",
+  "M\tcypyc/parser/macro_expander.py",
+  "M\tcypyc/parser/parser.py",
+  "M\tcypyc/parser/preprocessor.py",
+  "M\tcypyc/project/module_dependency_graph.py",
+  "M\tcypyc/project/project_compiler.py",
+  "M\tcypyc/transformer/defer_transformer.py",
+  "M\tcypyc/transformer/enum_transformer.py",
+  "M\tcypyc/transformer/generic_transformer.py",
+  "M\tcypyc/transformer/struct_transformer.py",
+  "M\tcypyc/transformer/trait_transformer.py",
+  "M\tcypyc/utils/indent_detector.py",
+  "M\tscripts/sync_demo.py"
+ ],
+ "product_bad_status": [],
+ "product_untracked_new": [],
+ "product_untracked_all": [
+  "scripts/e2e_golden.sh",
+  "scripts/fist.py"
+ ],
+ "product_untracked_note": "未跟踪但非本环所写（mtime 早于本环起点）的一律照列不拒判，拒判只会逼人删别人的文件",
+ "rpc_tools_since_start": [
+  "call_log",
+  "claim",
+  "laya_decide",
+  "list",
+  "omega_status",
+  "publish",
+  "report_bug",
+  "task_plan_deep"
+ ],
+ "rpc_rows": 27,
+ "archive_targets": [],
+ "destructive_pattern": [
+  "delete",
+  "purge",
+  "reset",
+  "truncate",
+  "drop",
+  "unlink",
+  "remove",
+  "destroy"
+ ],
+ "verdict": {
+  "destructive_tools": [],
+  "foreign_archive_targets": []
+ },
+ "canary": {
+  "two_negative_controls_caught": true,
+  "own_prefix_not_flagged": true,
+  "real_run_clean": true
+ },
+ "executed_irreversible": 0,
+ "renamed_verbatim": [],
+ "product_files_touched_this_ring": 2,
+ "self_checks": [
+  {
+   "label": "对照三之二：`??` 行必须被算作新增，` M` 行不得被算作新增",
+   "got": [
+    "cypyc/sneaky.py"
+   ],
+   "want": [
+    "cypyc/sneaky.py"
+   ],
+   "why": "过滤口径写反了就会把全部未提交历史当成新文件",
+   "ok": true
+  },
+  {
+   "label": "对照三之三：归因层要能红——把起点推到未来就不许还数到今天写的文件",
+   "got": [
+    [
+     "tests/test_loop_20260927_advance_r4.py"
+    ],
+    []
+   ],
+   "want": [
+    [
+     "tests/test_loop_20260927_advance_r4.py"
+    ],
+    []
+   ],
+   "why": "未跟踪全集 ['scripts/e2e_golden.sh', 'scripts/fist.py']",
+   "ok": true
+  },
+  {
+   "label": "产品面只允许修改（M），不许删除/改名/新增未跟踪文件",
+   "got": [
+    [],
+    []
+   ],
+   "want": [
+    [],
+    []
+   ],
+   "why": "diff=[['M', 'cypy_bridge/__init__.py'], ['M', 'cypy_bridge/compiler.py'], ['M', 'cypy_bridge/defer.py'], ['M', 'cypy_bridge/memory.py']] untracked=[]",
+   "ok": true
+  },
+  {
+   "label": "本环起点以来的 RPC 工具清单里不含毁灭型动作",
+   "got": [],
+   "want": [],
+   "why": "清单 ['call_log', 'claim', 'laya_decide', 'list', 'omega_status', 'publish', 'report_bug', 'task_plan_deep']",
+   "ok": true
+  },
+  {
+   "label": "对照一：合成 delete_task 必被抓到",
+   "got": [
+    "delete_task"
+   ],
+   "want": [
+    "delete_task"
+   ],
+   "why": "抓不到就是检测器坏了",
+   "ok": true
+  },
+  {
+   "label": "对照二：合成别人的 archive 目标必被抓到",
+   "got": [
+    "T0z99"
+   ],
+   "want": [
+    "T0z99"
+   ],
+   "why": "抓不到就是号段判定坏了",
+   "ok": true
+  },
+  {
+   "label": "对照三：本环号段的 archive 不得被误判为越权",
+   "got": [],
+   "want": [],
+   "why": "误抓会让本环收口自己过不去",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T05:22:50+00:00"
+}

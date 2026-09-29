@@ -1,0 +1,3 @@
+def main() -> int:
+    s: str = "abc
+    return 0

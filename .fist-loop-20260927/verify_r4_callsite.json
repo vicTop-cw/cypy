@@ -1,0 +1,813 @@
+{
+ "started": "2026-09-28T00:48:41+00:00",
+ "face": "python -X utf8 -m cypyc.cli transpile … --check-only",
+ "identity": {
+  "loaded_cypyc": "E:\\IDEProjects\\AI\\Cypy\\cypyc\\__init__.py",
+  "cwd": "E:\\IDEProjects\\AI\\Cypy"
+ },
+ "cli_rows": [
+  {
+   "id": "V61a",
+   "bug": "BUG-61",
+   "role": "proper",
+   "src": "type F = Callable[[int], int]\ndef wrap(cb: F, n: int) -> F:\n    return cb\n\ndef thrice(a: int) -> int:\n    return a\n\ndef run() -> F:\n    return wrap(thrice, 1)\n",
+   "want": "clean",
+   "why": "返回类型是 Callable 的函数按自身元数被正确调用，不该被判错（旧症状 C01：`mk(one, 1)` 被报 expected 1, got 2）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V61a.cypy",
+   "got": "clean",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V61a.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 0,
+   "diags": [],
+   "stdout_tail": "e\\V61a.cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[32m[OK] Static analysis passed (no code generated)\u001b[0m\n",
+   "stderr_tail": "<frozen runpy>:130: RuntimeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n",
+   "ok_banner": true,
+   "fail_banner": false
+  },
+  {
+   "id": "V61b",
+   "bug": "BUG-61",
+   "role": "violation",
+   "src": "def pair(a: int, b: int) -> int:\n    return a\n\ndef run(g: int) -> int:\n    return pair(g)\n",
+   "want": "error",
+   "contains": [
+    "arity",
+    "expected 2, got 1"
+   ],
+   "why": "少传一个实参必须报元数（旧症状 C02/C05 零诊断）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V61b.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V61b.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Callable arity mismatch: expected 2, got 1 at 5:12"
+   ],
+   "stdout_tail": "cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Callable arity mismatch: expected 2, got 1 at 5:12\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V61c",
+   "bug": "BUG-61",
+   "role": "proper",
+   "src": "type F = Callable[[int], int]\ndef twice(a: int) -> int:\n    return a\n\ndef mk() -> F:\n    return twice\n",
+   "want": "clean",
+   "why": "函数作值返回不该被当成返回类型不符（旧症状 C03）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V61c.cypy",
+   "got": "clean",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V61c.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 0,
+   "diags": [],
+   "stdout_tail": "e\\V61c.cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[32m[OK] Static analysis passed (no code generated)\u001b[0m\n",
+   "stderr_tail": "<frozen runpy>:130: RuntimeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n",
+   "ok_banner": true,
+   "fail_banner": false
+  },
+  {
+   "id": "V61d",
+   "bug": "BUG-61",
+   "role": "control",
+   "src": "type F = Callable[[int], int]\ndef use(f: F) -> int:\n    return f(1, 2)\n",
+   "want": "error",
+   "contains": [
+    "arity"
+   ],
+   "why": "对照：别名 Callable 变量上的元数判定不得因 RC1 修法失效",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V61d.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V61d.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Callable arity mismatch: expected 1, got 2 at 3:12"
+   ],
+   "stdout_tail": "cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Callable arity mismatch: expected 1, got 2 at 3:12\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V61e",
+   "bug": "BUG-61",
+   "role": "violation",
+   "src": "def pair(a: int, b: int) -> int:\n    return a\n\ndef run(g: int) -> int:\n    return pair(g, 1, 2)\n",
+   "want": "error",
+   "contains": [
+    "arity",
+    "expected 2, got 3"
+   ],
+   "why": "多传一个实参必须报元数（旧症状 C04 零诊断）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V61e.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V61e.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Callable arity mismatch: expected 2, got 3 at 5:12"
+   ],
+   "stdout_tail": "cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Callable arity mismatch: expected 2, got 3 at 5:12\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V62a",
+   "bug": "BUG-62",
+   "role": "violation",
+   "src": "def apply(n: int) -> int:\n    return n\n\ndef run() -> int:\n    return apply(\"s\")\n",
+   "want": "error",
+   "contains": [
+    "mismatch"
+   ],
+   "why": "str 传给 int 形参必须报（旧症状 C08 零诊断）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V62a.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V62a.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Argument 1 type mismatch: expected int, got str at 5:12"
+   ],
+   "stdout_tail": "\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Argument 1 type mismatch: expected int, got str at 5:12\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V62b",
+   "bug": "BUG-62",
+   "role": "violation",
+   "src": "def apply(s: str) -> str:\n    return s\n\ndef run() -> str:\n    return apply(42)\n",
+   "want": "error",
+   "contains": [
+    "mismatch"
+   ],
+   "why": "int 传给 str 形参必须报",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V62b.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V62b.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Argument 1 type mismatch: expected str, got int at 5:12"
+   ],
+   "stdout_tail": "\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Argument 1 type mismatch: expected str, got int at 5:12\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V62c",
+   "bug": "BUG-62",
+   "role": "proper",
+   "src": "def apply(n: int) -> int:\n    return n\n\ndef run() -> int:\n    return apply(7)\n",
+   "want": "clean",
+   "why": "类型相符的调用不得误报",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V62c.cypy",
+   "got": "clean",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V62c.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 0,
+   "diags": [],
+   "stdout_tail": "e\\V62c.cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[32m[OK] Static analysis passed (no code generated)\u001b[0m\n",
+   "stderr_tail": "<frozen runpy>:130: RuntimeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n",
+   "ok_banner": true,
+   "fail_banner": false
+  },
+  {
+   "id": "V62d",
+   "bug": "BUG-62",
+   "role": "control",
+   "src": "def apply(n: int) -> int:\n    return n\n\nlet dyn: object = 1\n\ndef run() -> int:\n    return apply(dyn)\n",
+   "want": "clean",
+   "why": "对照：动态值走宽松分支是设计，不得误报",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V62d.cypy",
+   "got": "clean",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V62d.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 0,
+   "diags": [],
+   "stdout_tail": "e\\V62d.cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[32m[OK] Static analysis passed (no code generated)\u001b[0m\n",
+   "stderr_tail": "<frozen runpy>:130: RuntimeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n",
+   "ok_banner": true,
+   "fail_banner": false
+  },
+  {
+   "id": "V62e",
+   "bug": "BUG-62",
+   "role": "violation",
+   "src": "type F = Callable[[int], int]\ndef applyf(f: F) -> int:\n    return 0\n\ndef thrice(a: int, b: int) -> int:\n    return a\n\ndef run() -> int:\n    return applyf(thrice)\n",
+   "want": "error",
+   "contains": [
+    "mismatch"
+   ],
+   "why": "两参函数传给一参 Callback 形参必须报（旧症状 C06）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V62e.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V62e.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Argument 1 type mismatch: expected Callable[[int], int], got Callable[[int, int], int] at 9:12"
+   ],
+   "stdout_tail": "I\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Argument 1 type mismatch: expected Callable[[int], int], got Callable[[int, int], int] at 9:12\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V63a",
+   "bug": "BUG-63",
+   "role": "violation",
+   "src": "struct K:\n    n: int\n\n    def f(self) -> str:\n        return self.n\n",
+   "want": "error",
+   "contains": [
+    "Return type mismatch"
+   ],
+   "why": "self.n 是 int 却声明返回 str（旧症状 C09 静默）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V63a.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V63a.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Return type mismatch: expected str, got int at 6:1"
+   ],
+   "stdout_tail": "cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Return type mismatch: expected str, got int at 6:1\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V63b",
+   "bug": "BUG-63",
+   "role": "violation",
+   "src": "struct Inner:\n    n: int\n\nstruct Outer:\n    i: Inner\n\n    def f(self) -> str:\n        return self.i.n\n",
+   "want": "error",
+   "contains": [
+    "Return type mismatch"
+   ],
+   "why": "嵌套成员链同样要解析",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V63b.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V63b.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Return type mismatch: expected str, got int at 9:1"
+   ],
+   "stdout_tail": "cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Return type mismatch: expected str, got int at 9:1\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V63c",
+   "bug": "BUG-63",
+   "role": "violation",
+   "src": "type F = Callable[[int], int]\nstruct S:\n    cb: F\n\n    def f(self) -> int:\n        return self.cb(1, 2)\n",
+   "want": "error",
+   "contains": [
+    "arity"
+   ],
+   "why": "成员是 Callable 时元数要判（旧症状 C11）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V63c.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V63c.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Callable arity mismatch: expected 1, got 2 at 0:0"
+   ],
+   "stdout_tail": ".cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Callable arity mismatch: expected 1, got 2 at 0:0\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V63d",
+   "bug": "BUG-63",
+   "role": "control",
+   "src": "struct K:\n    n: int\n\n    def f(self) -> int:\n        return self.n\n",
+   "want": "clean",
+   "why": "对照：类型相符的成员返回不得误报",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V63d.cypy",
+   "got": "clean",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V63d.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 0,
+   "diags": [],
+   "stdout_tail": "e\\V63d.cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[32m[OK] Static analysis passed (no code generated)\u001b[0m\n",
+   "stderr_tail": "<frozen runpy>:130: RuntimeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n",
+   "ok_banner": true,
+   "fail_banner": false
+  },
+  {
+   "id": "V64a",
+   "bug": "BUG-64",
+   "role": "violation",
+   "src": "type F = Callable[[int], int]\ndef run() -> int:\n    let x: F = 1\n    return x\n",
+   "want": "error",
+   "contains": [
+    "Callable[[int], int]"
+   ],
+   "forbidden": [
+    "tuple["
+   ],
+   "why": "文案必须给源语法名而不是内部表示（旧症状 C12）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V64a.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V64a.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Type mismatch: expected Callable[[int], int], got int at 3:9",
+    "Return type mismatch: expected int, got Callable[[int], int] at 5:1"
+   ],
+   "stdout_tail": "te\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Type mismatch: expected Callable[[int], int], got int at 3:9\n  \u001b[31m-\u001b[0m Return type mismatch: expected int, got Callable[[int], int] at 5:1\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 2 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V64b",
+   "bug": "BUG-64",
+   "role": "violation",
+   "src": "def run() -> int:\n    let x: int = \"s\"\n    return x\n",
+   "want": "error",
+   "contains": [
+    "Type mismatch"
+   ],
+   "forbidden": [
+    "tuple[",
+    "object at 0x"
+   ],
+   "why": "基本类型的文案形状不得被共用件带偏",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V64b.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V64b.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Type mismatch: expected int, got str at 2:9"
+   ],
+   "stdout_tail": "e\\V64b.cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Type mismatch: expected int, got str at 2:9\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V64c",
+   "bug": "BUG-64",
+   "role": "violation",
+   "src": "type F = Callable[[int], int]\ndef run() -> int:\n    let x: F = 1\n    return 0\n",
+   "want": "error",
+   "contains": [
+    "Callable[[int], int]"
+   ],
+   "forbidden": [
+    "tuple["
+   ],
+   "why": "同一份源里第二条诊断也不许外泄",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V64c.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V64c.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Type mismatch: expected Callable[[int], int], got int at 3:9"
+   ],
+   "stdout_tail": "[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Type mismatch: expected Callable[[int], int], got int at 3:9\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V64d",
+   "bug": "BUG-64",
+   "role": "control",
+   "src": "struct P:\n    x: int\n\ndef use(p: P) -> int:\n    return p.x\n\ndef run() -> int:\n    return use(1)\n",
+   "want": "error",
+   "contains": [
+    "P"
+   ],
+   "forbidden": [
+    "tuple[",
+    "object at 0x"
+   ],
+   "why": "对照：用户类型名必须原样出现在文案里（共用显示件不得把 struct 也糊掉）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V64d.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V64d.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Argument 1 type mismatch: expected P, got int at 8:12"
+   ],
+   "stdout_tail": "y\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Argument 1 type mismatch: expected P, got int at 8:12\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  }
+ ],
+ "rows_total": 18,
+ "control": [
+  {
+   "id": "V61d",
+   "bug": "BUG-61",
+   "role": "control",
+   "src": "type F = Callable[[int], int]\ndef use(f: F) -> int:\n    return f(1, 2)\n",
+   "want": "error",
+   "contains": [
+    "arity"
+   ],
+   "why": "对照：别名 Callable 变量上的元数判定不得因 RC1 修法失效",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V61d.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V61d.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Callable arity mismatch: expected 1, got 2 at 3:12"
+   ],
+   "stdout_tail": "cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Callable arity mismatch: expected 1, got 2 at 3:12\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  },
+  {
+   "id": "V62d",
+   "bug": "BUG-62",
+   "role": "control",
+   "src": "def apply(n: int) -> int:\n    return n\n\nlet dyn: object = 1\n\ndef run() -> int:\n    return apply(dyn)\n",
+   "want": "clean",
+   "why": "对照：动态值走宽松分支是设计，不得误报",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V62d.cypy",
+   "got": "clean",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V62d.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 0,
+   "diags": [],
+   "stdout_tail": "e\\V62d.cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[32m[OK] Static analysis passed (no code generated)\u001b[0m\n",
+   "stderr_tail": "<frozen runpy>:130: RuntimeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n",
+   "ok_banner": true,
+   "fail_banner": false
+  },
+  {
+   "id": "V63d",
+   "bug": "BUG-63",
+   "role": "control",
+   "src": "struct K:\n    n: int\n\n    def f(self) -> int:\n        return self.n\n",
+   "want": "clean",
+   "why": "对照：类型相符的成员返回不得误报",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V63d.cypy",
+   "got": "clean",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V63d.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 0,
+   "diags": [],
+   "stdout_tail": "e\\V63d.cypy\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[32m[OK] Static analysis passed (no code generated)\u001b[0m\n",
+   "stderr_tail": "<frozen runpy>:130: RuntimeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n",
+   "ok_banner": true,
+   "fail_banner": false
+  },
+  {
+   "id": "V64d",
+   "bug": "BUG-64",
+   "role": "control",
+   "src": "struct P:\n    x: int\n\ndef use(p: P) -> int:\n    return p.x\n\ndef run() -> int:\n    return use(1)\n",
+   "want": "error",
+   "contains": [
+    "P"
+   ],
+   "forbidden": [
+    "tuple[",
+    "object at 0x"
+   ],
+   "why": "对照：用户类型名必须原样出现在文案里（共用显示件不得把 struct 也糊掉）",
+   "file": ".fist-loop-20260927/verify_r4_tmp/callsite/V64d.cypy",
+   "got": "error",
+   "problems": [],
+   "pass": true,
+   "command_verbatim": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -X utf8 -m cypyc.cli transpile E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\\V64d.cypy -o E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite --check-only",
+   "rc": 1,
+   "diags": [
+    "Argument 1 type mismatch: expected P, got int at 8:12"
+   ],
+   "stdout_tail": "y\n\u001b[36m[2/3]\u001b[0m Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\callsite\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n  \u001b[31m-\u001b[0m Argument 1 type mismatch: expected P, got int at 8:12\n",
+   "stderr_tail": "'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n\u001b[31m[FAIL] Static analysis found 1 problem(s):\u001b[0m\n",
+   "ok_banner": false,
+   "fail_banner": true
+  }
+ ],
+ "controls_pass": 4,
+ "sensitivity": {
+  "snapshot": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap",
+  "identity": {
+   "cwd": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap",
+   "loaded": {
+    "pkg": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap\\cypyc\\__init__.py",
+    "mod": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap\\cypyc\\analyzer\\type_checker.py"
+   },
+   "under_snapshot": true,
+   "rc": 0,
+   "workspace_leak": false
+  },
+  "flips": [
+   {
+    "id": "V61a",
+    "role": "proper",
+    "bug": "BUG-61",
+    "prefix_got": "error",
+    "prefix_diags": [
+     "Callable arity mismatch: expected 1, got 2 at 9:12",
+     "Return type mismatch: expected Callable[tuple[int], int], got int at 10:1"
+    ],
+    "now_got": "clean",
+    "now_diags": []
+   },
+   {
+    "id": "V61b",
+    "role": "violation",
+    "bug": "BUG-61",
+    "prefix_got": "clean",
+    "prefix_diags": [],
+    "now_got": "error",
+    "now_diags": [
+     "Callable arity mismatch: expected 2, got 1 at 5:12"
+    ]
+   },
+   {
+    "id": "V61c",
+    "role": "proper",
+    "bug": "BUG-61",
+    "prefix_got": "error",
+    "prefix_diags": [
+     "Return type mismatch: expected Callable[tuple[int], int], got int at 7:1"
+    ],
+    "now_got": "clean",
+    "now_diags": []
+   },
+   {
+    "id": "V61e",
+    "role": "violation",
+    "bug": "BUG-61",
+    "prefix_got": "clean",
+    "prefix_diags": [],
+    "now_got": "error",
+    "now_diags": [
+     "Callable arity mismatch: expected 2, got 3 at 5:12"
+    ]
+   },
+   {
+    "id": "V62a",
+    "role": "violation",
+    "bug": "BUG-62",
+    "prefix_got": "clean",
+    "prefix_diags": [],
+    "now_got": "error",
+    "now_diags": [
+     "Argument 1 type mismatch: expected int, got str at 5:12"
+    ]
+   },
+   {
+    "id": "V62b",
+    "role": "violation",
+    "bug": "BUG-62",
+    "prefix_got": "clean",
+    "prefix_diags": [],
+    "now_got": "error",
+    "now_diags": [
+     "Argument 1 type mismatch: expected str, got int at 5:12"
+    ]
+   },
+   {
+    "id": "V62e",
+    "role": "violation",
+    "bug": "BUG-62",
+    "prefix_got": "clean",
+    "prefix_diags": [],
+    "now_got": "error",
+    "now_diags": [
+     "Argument 1 type mismatch: expected Callable[[int], int], got Callable[[int, int], int] at 9:12"
+    ]
+   },
+   {
+    "id": "V63a",
+    "role": "violation",
+    "bug": "BUG-63",
+    "prefix_got": "clean",
+    "prefix_diags": [],
+    "now_got": "error",
+    "now_diags": [
+     "Return type mismatch: expected str, got int at 6:1"
+    ]
+   },
+   {
+    "id": "V63b",
+    "role": "violation",
+    "bug": "BUG-63",
+    "prefix_got": "clean",
+    "prefix_diags": [],
+    "now_got": "error",
+    "now_diags": [
+     "Return type mismatch: expected str, got int at 9:1"
+    ]
+   },
+   {
+    "id": "V63c",
+    "role": "violation",
+    "bug": "BUG-63",
+    "prefix_got": "clean",
+    "prefix_diags": [],
+    "now_got": "error",
+    "now_diags": [
+     "Callable arity mismatch: expected 1, got 2 at 0:0"
+    ]
+   },
+   {
+    "id": "V64a",
+    "role": "violation",
+    "bug": "BUG-64",
+    "prefix_got": "error",
+    "prefix_diags": [
+     "Type mismatch: expected Callable[tuple[int], int], got int at 3:9",
+     "Return type mismatch: expected int, got Callable[tuple[int], int] at 5:1"
+    ],
+    "now_got": "error",
+    "now_diags": [
+     "Type mismatch: expected Callable[[int], int], got int at 3:9",
+     "Return type mismatch: expected int, got Callable[[int], int] at 5:1"
+    ]
+   },
+   {
+    "id": "V64c",
+    "role": "violation",
+    "bug": "BUG-64",
+    "prefix_got": "error",
+    "prefix_diags": [
+     "Type mismatch: expected Callable[tuple[int], int], got int at 3:9"
+    ],
+    "now_got": "error",
+    "now_diags": [
+     "Type mismatch: expected Callable[[int], int], got int at 3:9"
+    ]
+   },
+   {
+    "id": "V64d",
+    "role": "control",
+    "bug": "BUG-64",
+    "prefix_got": "clean",
+    "prefix_diags": [],
+    "now_got": "error",
+    "now_diags": [
+     "Argument 1 type mismatch: expected P, got int at 8:12"
+    ]
+   }
+  ],
+  "flips_total": 13,
+  "proper_flips": [
+   "V61a",
+   "V61c"
+  ]
+ },
+ "by_bug": {
+  "BUG-61": [
+   "V61a",
+   "V61b",
+   "V61c",
+   "V61d",
+   "V61e"
+  ],
+  "BUG-62": [
+   "V62a",
+   "V62b",
+   "V62c",
+   "V62d",
+   "V62e"
+  ],
+  "BUG-63": [
+   "V63a",
+   "V63b",
+   "V63c",
+   "V63d"
+  ],
+  "BUG-64": [
+   "V64a",
+   "V64b",
+   "V64c",
+   "V64d"
+  ]
+ },
+ "internal_repr_leaks": {},
+ "failed_rows": [],
+ "note": "本件只走子进程 CLI，不 import 判据件、不 import 锁文件里的夹具；rc 与诊断数同向是硬门（rc=0 却带诊断=调用面自相矛盾）",
+ "self_checks": [
+  {
+   "label": "调用面身份：CLI 必须吃工作区 cypyc",
+   "got": true,
+   "want": true,
+   "why": "loaded=E:\\IDEProjects\\AI\\Cypy\\cypyc\\__init__.py",
+   "ok": true
+  },
+  {
+   "label": "调用面身份：不得落在快照树里",
+   "got": false,
+   "want": false,
+   "why": "loaded=E:\\IDEProjects\\AI\\Cypy\\cypyc\\__init__.py",
+   "ok": true
+  },
+  {
+   "label": "敏感度树身份：吃的是修前快照",
+   "got": true,
+   "want": true,
+   "why": "loaded=E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap\\cypyc\\analyzer\\type_checker.py",
+   "ok": true
+  },
+  {
+   "label": "每条被拒/不符都必须点名（不许静默放行）",
+   "got": [],
+   "want": [],
+   "why": "见 rows[].problems",
+   "ok": true
+  },
+  {
+   "label": "内部表示外泄必须为 0",
+   "got": {},
+   "want": {},
+   "why": "逐条扫 tuple[<cypyc / object at 0x / tuple[int]",
+   "ok": true
+  },
+  {
+   "label": "每个 bug 编号都要有实测行",
+   "got": [
+    "BUG-61",
+    "BUG-62",
+    "BUG-63",
+    "BUG-64"
+   ],
+   "want": [
+    "BUG-61",
+    "BUG-62",
+    "BUG-63",
+    "BUG-64"
+   ],
+   "why": "覆盖四单",
+   "ok": true
+  },
+  {
+   "label": "对照行数≥4（每单一条同族对照）",
+   "got": true,
+   "want": true,
+   "why": "control=4",
+   "ok": true
+  },
+  {
+   "label": "违规行数≥6（旧缺陷放行的那些形状）",
+   "got": true,
+   "want": true,
+   "why": "violation=11",
+   "ok": true
+  },
+  {
+   "label": "正确程序行≥4",
+   "got": true,
+   "want": true,
+   "why": "proper=3",
+   "ok": true
+  },
+  {
+   "label": "每行都要留逐字命令",
+   "got": 18,
+   "want": 18,
+   "why": "command_verbatim 计数",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T00:48:54+00:00"
+}

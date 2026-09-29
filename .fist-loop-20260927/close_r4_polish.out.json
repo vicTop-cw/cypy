@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r90.1.1",
+   "law": "非冻结文档按调用面实读改写（USAGE.md 的 .pyd 复用那句必须与实测一致），并配「改前措辞与实测相违」的反向对照",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.1.2",
+   "law": "非冻结文档按调用面实读改写（USAGE.md 的 .pyd 复用那句必须与实测一致），并配「改前措辞与实测相违」的反向对照",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.2.1",
+   "law": "附录 C 的 4 条形差只出两栏（交人工 / 非冻结补注），冻结面 sha 逐字未动并有反例 canary",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.2.2",
+   "law": "附录 C 的 4 条形差只出两栏（交人工 / 非冻结补注），冻结面 sha 逐字未动并有反例 canary",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.3.1",
+   "law": "账面卫生以「只增不改」为准：差分逐行证明零删改，缺 task_id 的卡片逐张补记",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.3.2",
+   "law": "账面卫生以「只增不改」为准：差分逐行证明零删改，缺 task_id 的卡片逐张补记",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.4.1",
+   "law": "判据件债务收敛到共用件，且收敛后关键格数（承重行数/翻转数/体系数）逐字不变",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.4.2",
+   "law": "判据件债务收敛到共用件，且收敛后关键格数（承重行数/翻转数/体系数）逐字不变",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.5.1",
+   "law": "调用面探针固化成 tests/ 永久锁：先红后绿 + mutation 证承重，既有测试一条不动",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.5.2",
+   "law": "调用面探针固化成 tests/ 永久锁：先红后绿 + mutation 证承重，既有测试一条不动",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.6.1",
+   "law": "结构债与不可逆项逐条测量后挂账（3000 行拆分、type_checker 体量、hook.eval 写侧）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.6.2",
+   "law": "结构债与不可逆项逐条测量后挂账（3000 行拆分、type_checker 体量、hook.eval 写侧）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.7.1",
+   "law": "三套判据体系同批复算只升不降，红线与冻结面正面测，半径按 mtime 分栏",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.7.2",
+   "law": "三套判据体系同批复算只升不降，红线与冻结面正面测，半径按 mtime 分栏",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.8.1",
+   "law": "账面三向与 call_log 前缀对账，被拒原文逐字入账，收口顺序纪律照旧",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r90.8.2",
+   "law": "账面三向与 call_log 前缀对账，被拒原文逐字入账，收口顺序纪律照旧",
+   "artifact": ".fist-loop-20260927/polish_r4_drivers_lint.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r90",
+ "stage": "R4-打磨"
+}

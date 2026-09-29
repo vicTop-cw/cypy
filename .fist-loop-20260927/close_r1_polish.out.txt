@@ -1,0 +1,17 @@
+T0r49.1.1 law=模式约束实测与账本口径定死 ov=pass verify=ok err=none
+T0r49.1.2 law=模式约束实测与账本口径定死 ov=pass verify=ok err=none
+T0r49.2.1 law=skip 标记逐条定性 ov=pass verify=ok err=none
+T0r49.2.2 law=skip 标记逐条定性 ov=pass verify=ok err=none
+T0r49.3.1 law=mypy 可裁边界与存量清单 ov=pass verify=ok err=none
+T0r49.3.2 law=mypy 可裁边界与存量清单 ov=pass verify=ok err=none
+T0r49.4.1 law=技术债标记收敛 ov=pass verify=ok err=none
+T0r49.4.2 law=技术债标记收敛 ov=pass verify=ok err=none
+T0r49.5.1 law=死代码与重复分支清理 ov=pass verify=ok err=none
+T0r49.5.2 law=死代码与重复分支清理 ov=pass verify=ok err=none
+T0r49.6.1 law=quick win 判定与当场闭环 ov=pass verify=ok err=none
+T0r49.6.2 law=quick win 判定与当场闭环 ov=pass verify=ok err=none
+T0r49.7.1 law=双套基线与端到端基准复跑 ov=pass verify=ok err=none
+T0r49.7.2 law=双套基线与端到端基准复跑 ov=pass verify=ok err=none
+T0r49.8.1 law=打磨报告与转结 ov=pass verify=ok err=none
+T0r49.8.2 law=打磨报告与转结 ov=pass verify=ok err=none
+closed=16/16 failed=none

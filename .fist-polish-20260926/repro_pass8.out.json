@@ -1,0 +1,18 @@
+{
+ "run_exit": 0,
+ "generated_declarations": [
+  "e: double = a",
+  "d: double = a",
+  "g: double = 1.5"
+ ],
+ "uses_annotation_form": true,
+ "emits_cdef_form": false,
+ "runtime": [
+  "float-from-int: value=42 type=<class 'int'>",
+  "double-from-int: value=42 type=<class 'int'>",
+  "float-from-float-lit: value=1.5 type=<class 'float'>"
+ ],
+ "float_and_double_agree": true,
+ "float_literal_still_float": true,
+ "site": "cypyc/codegen/cython_generator.py:1170 / :1255（`name: <ctype> = value` 注解形式），对照 :1168 / :1253 的 `cdef <ctype> name = value`"
+}

@@ -1,0 +1,254 @@
+[
+ {
+  "id": "adv_01_empty",
+  "sample": ".fist-loop-20260927/hunts/adv_01_empty.cypy",
+  "expect": "空文件：应正常产出模块头或给诊断，不得抛",
+  "outcome_class": "静默成功",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [],
+  "artifact_len": 721,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_02_comments_only",
+  "sample": ".fist-loop-20260927/hunts/adv_02_comments_only.cypy",
+  "expect": "同上",
+  "outcome_class": "静默成功",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [],
+  "artifact_len": 721,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_03_unterminated_string",
+  "sample": ".fist-loop-20260927/hunts/adv_03_unterminated_string.cypy",
+  "expect": "未闭合字符串：语法诊断（带行列），不得裸 SyntaxError/IndexError",
+  "outcome_class": "静默成功",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [],
+  "artifact_len": 774,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_04_non_utf8_bytes",
+  "sample": ".fist-loop-20260927/hunts/adv_04_non_utf8_bytes.cypy",
+  "expect": "含非 ASCII 注释：应能处理或诊断；不得 UnicodeDecodeError",
+  "outcome_class": "静默成功",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [],
+  "artifact_len": 752,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_05_deep_nesting",
+  "sample": ".fist-loop-20260927/hunts/adv_05_deep_nesting.cypy",
+  "expect": "200 层括号：应诊断或成功，不得 RecursionError",
+  "outcome_class": "候选：未声明异常逃逸",
+  "exception": "RecursionError",
+  "msg": "maximum recursion depth exceeded",
+  "diagnostics": [],
+  "artifact_len": 0,
+  "trace_tail": [
+   "  File \"E:\\IDEProjects\\AI\\Cypy\\cypyc\\parser\\parser.py\", line 3314, in _parse_call",
+   "    func = self._parse_primary()",
+   "RecursionError: maximum recursion depth exceeded"
+  ]
+ },
+ {
+  "id": "adv_06_dup_def",
+  "sample": ".fist-loop-20260927/hunts/adv_06_dup_def.cypy",
+  "expect": "SYNTAX/33 C-3.1：同名 def 应作为作用域诊断上报",
+  "outcome_class": "带诊断产出",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [
+   "Name 'a' is already declared in this scope (line 4, col 5)"
+  ],
+  "artifact_len": 773,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_07_subtype_vs_class",
+  "sample": ".fist-loop-20260927/hunts/adv_07_subtype_vs_class.cypy",
+  "expect": "C-3.1：subtype 撞 class 名应诊断（BUG-11 修过的上送面）",
+  "outcome_class": "候选：未声明异常逃逸",
+  "exception": "ValueError",
+  "msg": "subtype declaration 'Meter' expects '<:' before its base type, e.g. 'subtype Meter <: float' at 1:9",
+  "diagnostics": [],
+  "artifact_len": 0,
+  "trace_tail": [
+   "    ...<2 lines>...",
+   "        % (name_token.value, name_token.value, name_token.line, name_token.col))",
+   "ValueError: subtype declaration 'Meter' expects '<:' before its base type, e.g. 'subtype Meter <: float' at 1:9"
+  ]
+ },
+ {
+  "id": "adv_08_type_vs_constraint",
+  "sample": ".fist-loop-20260927/hunts/adv_08_type_vs_constraint.cypy",
+  "expect": "C-3.1：type 撞 constraint 名应诊断",
+  "outcome_class": "带诊断产出",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [
+   "redefinition of 'Len': it is already declared as a type at line 1, col 6. A constraint and a type alias cannot share a name -- 'type Len = ...' is transparent to assignability, 'constraint Len = ...' is not (SYNTAX/33 C-3.1) (line 3, col 12)"
+  ],
+  "artifact_len": 772,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_09_empty_struct",
+  "sample": ".fist-loop-20260927/hunts/adv_09_empty_struct.cypy",
+  "expect": "空 struct：应成功或诊断",
+  "outcome_class": "静默成功",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [],
+  "artifact_len": 780,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_10_slice_step_zero",
+  "sample": ".fist-loop-20260927/hunts/adv_10_slice_step_zero.cypy",
+  "expect": "step=0 切片：应诊断，不得把 ZeroDivisionError 留给运行期或编译期裸抛",
+  "outcome_class": "静默成功",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [],
+  "artifact_len": 815,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_11_const_div_zero",
+  "sample": ".fist-loop-20260927/hunts/adv_11_const_div_zero.cypy",
+  "expect": "常量除零：诊断或产物内保护，不得编译期裸抛",
+  "outcome_class": "静默成功",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [],
+  "artifact_len": 786,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_12_huge_int_literal",
+  "sample": ".fist-loop-20260927/hunts/adv_12_huge_int_literal.cypy",
+  "expect": "超 int64 字面量赋给 int：应诊断宽度溢出（SYNTAX/01 宽度面）",
+  "outcome_class": "静默成功",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [],
+  "artifact_len": 789,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_13_undefined_name",
+  "sample": ".fist-loop-20260927/hunts/adv_13_undefined_name.cypy",
+  "expect": "未定义名：应诊断",
+  "outcome_class": "带诊断产出",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [
+   "Undefined name 'notdefined' at 2:12",
+   "Undefined name 'notdefined' at 2:12"
+  ],
+  "artifact_len": 761,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_14_cast_to_nontype",
+  "sample": ".fist-loop-20260927/hunts/adv_14_cast_to_nontype.cypy",
+  "expect": "as 到未知类型：应诊断，不得 KeyError 于类型表",
+  "outcome_class": "带诊断产出",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [
+   "Undefined name 'NotAType' at 3:14"
+  ],
+  "artifact_len": 787,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_15_include_missing",
+  "sample": ".fist-loop-20260927/hunts/adv_15_include_missing.cypy",
+  "expect": "include 不存在：IncludeNotFound 或诊断（不得静默 skip 后成功）",
+  "outcome_class": "带诊断产出",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [
+   "Undefined name 'include' at 1:1",
+   "Undefined name 'include' at 1:1"
+  ],
+  "artifact_len": 791,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_16_defer_top_level",
+  "sample": ".fist-loop-20260927/hunts/adv_16_defer_top_level.cypy",
+  "expect": "顶层 defer：应诊断位置非法",
+  "outcome_class": "候选：未声明异常逃逸",
+  "exception": "ValueError",
+  "msg": "defer must be used inside a function, found at 1:7",
+  "diagnostics": [],
+  "artifact_len": 0,
+  "trace_tail": [
+   "  File \"E:\\IDEProjects\\AI\\Cypy\\cypyc\\parser\\parser.py\", line 880, in _require_function_scope",
+   "    raise ValueError(f\"{construct_name} must be used inside a function, found at {token.line}:{token.col}\")",
+   "ValueError: defer must be used inside a function, found at 1:7"
+  ]
+ },
+ {
+  "id": "adv_17_pipe_to_nonfunc",
+  "sample": ".fist-loop-20260927/hunts/adv_17_pipe_to_nonfunc.cypy",
+  "expect": "pipe 右端不是可调用：应诊断",
+  "outcome_class": "静默成功",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [],
+  "artifact_len": 767,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_18_nested_fstring",
+  "sample": ".fist-loop-20260927/hunts/adv_18_nested_fstring.cypy",
+  "expect": "嵌套 f-string：应诊断或成功，不得切片越界",
+  "outcome_class": "候选：未声明异常逃逸",
+  "exception": "ValueError",
+  "msg": "Expected RPAREN, got IDENTIFIER at 2:17",
+  "diagnostics": [],
+  "artifact_len": 0,
+  "trace_tail": [
+   "  File \"E:\\IDEProjects\\AI\\Cypy\\cypyc\\parser\\parser.py\", line 901, in _consume",
+   "    raise ValueError(f\"Expected {expected_type}, got {token.type} at {token.line}:{token.col}\")",
+   "ValueError: Expected RPAREN, got IDENTIFIER at 2:17"
+  ]
+ },
+ {
+  "id": "adv_19_negative_index_const",
+  "sample": ".fist-loop-20260927/hunts/adv_19_negative_index_const.cypy",
+  "expect": "空列表取 -1：诊断或运行期保护，不得编译期崩",
+  "outcome_class": "静默成功",
+  "exception": null,
+  "msg": null,
+  "diagnostics": [],
+  "artifact_len": 794,
+  "trace_tail": ""
+ },
+ {
+  "id": "adv_20_unbalanced_bracket",
+  "sample": ".fist-loop-20260927/hunts/adv_20_unbalanced_bracket.cypy",
+  "expect": "未闭合中括号：语法诊断，不得 IndexError",
+  "outcome_class": "候选：未声明异常逃逸",
+  "exception": "ValueError",
+  "msg": "Expected RBRACKET, got NEWLINE at 3:5",
+  "diagnostics": [],
+  "artifact_len": 0,
+  "trace_tail": [
+   "  File \"E:\\IDEProjects\\AI\\Cypy\\cypyc\\parser\\parser.py\", line 901, in _consume",
+   "    raise ValueError(f\"Expected {expected_type}, got {token.type} at {token.line}:{token.col}\")",
+   "ValueError: Expected RBRACKET, got NEWLINE at 3:5"
+  ]
+ }
+]

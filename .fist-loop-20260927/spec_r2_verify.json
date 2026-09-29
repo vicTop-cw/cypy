@@ -1,0 +1,21 @@
+{
+ "key": "r2_verify",
+ "tag": "[loop:20260927-loop:R2-验证]",
+ "assignee": "cypy-verifier",
+ "difficulty": "难",
+ "description": "[loop:20260927-loop:R2-验证] 验证（verify）R2：不复用修复环自己的判据，独立取数。五路验证：a) 三套基线各起干净子进程复算（pytest 全量 / scripts/run_tests.py / scripts/e2e_golden.sh），下限取上一环实测值且只升不降；b) 对 R2-修复 的 6 单逐单做**对抗复测**——不看修复环的锁，自己从调用面重新构造正例与反例（含修复环没试过的边界：嵌套 struct 内的 staticmethod、继承而来的 classmethod、宏体里带 return 的分支、非 UTF-8 源文件、hook 与 CLI 两条入口的一致性）；c) 账本三向对照（memory/bugs.md 条目 / sqlite ns=bugs 的 task 行 / 环节报告里的编号与状态）逐号点名；d) 作用域化 lint 的口径复核（亲笔行 vs 整档存量债分栏，附一条必然违例自检）；e) BUG-50 的损害面复核（parser.py/macro_expander.py 相对 HEAD 的改动行数、是否存在行为差异的反证用例）。发现问题按 report_bug 入账（BUG-52 起），不在本环修产品码；不可逆动作只挂账。开关 omega/laya/issue_up/call_log 全开。",
+ "laws": [
+  "三套基线独立复算（各自干净子进程，末行逐字进报告，不与修复环的数字互相抵扣）",
+  "BUG-44/45 的对抗复测（struct 非绑定方法的没试过的形状：继承、多层嵌套、带默认参数的 classmethod）",
+  "BUG-39/51 的对抗复测（return 作用域守卫不过头也不足：宏体/展开片段合法、模块级与 class 体非法）",
+  "BUG-35/46/47 的调用面复测（分桶文案、hook 与 CLI 两条入口一致、包级 API 真实可导入可装卸）",
+  "账本三向对照（bugs.md 条目 / sqlite bugs 树 / 报告编号与状态），逐 ns 点名不靠无参 list",
+  "lint 口径复核（亲笔行零违例 + 整档存量债单列 + 必然违例自检被抓到）",
+  "BUG-50 损害面复核（改动行数实测、行为等价性反证、快照工具自证 copied/names/missing）",
+  "验证报告与转结（新缺陷入账号段、未闭环项去向、交人类裁决项）"
+ ],
+ "fingerprint": {
+  "必须": "三套基线的末行逐字引用且 rc 明确；每单对抗复测给出自己的构造输入文件路径与实测 rc/产物片段（不用修复环的夹具）；账本三向对照逐号点名（编号、状态、task_id 三者一致才记 ✅）；lint 复核附必然违例对照的抓取证据；新缺陷从 BUG-52 起按 report_bug 入账并能从 bug_list 回读；报告落 memory/reviews/；HEAD 仍为 17d68b4",
+  "禁止": "在本环修产品码或改既有测试（属修复/打磨半径）；改 PROJECT-SPEC/SYNTAX 冻结语义；git add/commit/push；把修复环的判据结果当自己的证据；用「产物里出现了某字样」代替调用面判据；把没做的写成 done"
+ }
+}

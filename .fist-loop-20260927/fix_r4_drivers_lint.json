@@ -1,0 +1,110 @@
+{
+ "started": "2026-09-27T23:30:21+00:00",
+ "window_start_utc": "2026-09-27T21:16:43",
+ "scanned": [
+  "fix_r4_baselines.py",
+  "fix_r4_calllog_tally.py",
+  "fix_r4_claim.py",
+  "fix_r4_close_spec.py",
+  "fix_r4_docs.py",
+  "fix_r4_drivers_lint.py",
+  "fix_r4_impact.py",
+  "fix_r4_ledger.py",
+  "fix_r4_locks.py",
+  "fix_r4_progress.py",
+  "fix_r4_rc.py",
+  "fix_r4_render_order.py",
+  "fix_r4_revert.py",
+  "fix_r4_self_audit.py"
+ ],
+ "detail": [
+  {
+   "file": "fix_r4_baselines.py",
+   "bytes": 10450,
+   "mtime_utc": "2026-09-27T22:36:30+00:00"
+  },
+  {
+   "file": "fix_r4_calllog_tally.py",
+   "bytes": 13558,
+   "mtime_utc": "2026-09-27T22:16:32+00:00"
+  },
+  {
+   "file": "fix_r4_claim.py",
+   "bytes": 7049,
+   "mtime_utc": "2026-09-27T22:04:00+00:00"
+  },
+  {
+   "file": "fix_r4_close_spec.py",
+   "bytes": 7965,
+   "mtime_utc": "2026-09-27T23:18:51+00:00"
+  },
+  {
+   "file": "fix_r4_docs.py",
+   "bytes": 7475,
+   "mtime_utc": "2026-09-27T22:00:16+00:00"
+  },
+  {
+   "file": "fix_r4_drivers_lint.py",
+   "bytes": 5600,
+   "mtime_utc": "2026-09-27T21:59:00+00:00"
+  },
+  {
+   "file": "fix_r4_impact.py",
+   "bytes": 6612,
+   "mtime_utc": "2026-09-27T21:37:19+00:00"
+  },
+  {
+   "file": "fix_r4_ledger.py",
+   "bytes": 14212,
+   "mtime_utc": "2026-09-27T22:02:12+00:00"
+  },
+  {
+   "file": "fix_r4_locks.py",
+   "bytes": 4924,
+   "mtime_utc": "2026-09-27T21:56:04+00:00"
+  },
+  {
+   "file": "fix_r4_progress.py",
+   "bytes": 8770,
+   "mtime_utc": "2026-09-27T23:20:45+00:00"
+  },
+  {
+   "file": "fix_r4_rc.py",
+   "bytes": 5719,
+   "mtime_utc": "2026-09-27T21:47:00+00:00"
+  },
+  {
+   "file": "fix_r4_render_order.py",
+   "bytes": 5817,
+   "mtime_utc": "2026-09-27T22:04:49+00:00"
+  },
+  {
+   "file": "fix_r4_revert.py",
+   "bytes": 7001,
+   "mtime_utc": "2026-09-27T21:47:32+00:00"
+  },
+  {
+   "file": "fix_r4_self_audit.py",
+   "bytes": 9679,
+   "mtime_utc": "2026-09-27T23:30:10+00:00"
+  }
+ ],
+ "drivers_scanned": 14,
+ "hard_violations": 0,
+ "hard_lines": [],
+ "soft_total": 0,
+ "soft_codes": {},
+ "canary": {
+  "bad_caught": 1,
+  "clean_false_positive": 0,
+  "bad_line_preview": [
+   "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\fixr4canary_ycc5qha8\\canary_bad.py:2:101: E501 line too long (185 > 100 characters)"
+  ],
+  "leftover": []
+ },
+ "line_length_declared": 100,
+ "note": "软账条数只降不升：上一环 hunt_r4_drivers_lint.json 的 soft_total 是基线",
+ "refuse": [],
+ "at_utc": "2026-09-27T23:30:25+00:00",
+ "previous_round_soft_baseline": 112
+}

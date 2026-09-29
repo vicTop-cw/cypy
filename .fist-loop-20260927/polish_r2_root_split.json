@@ -1,0 +1,49 @@
+{
+ "root_task": null,
+ "root_final": "已归档",
+ "refused_total": 30,
+ "by_scope": {
+  "branch": 24,
+  "root": 6
+ },
+ "by_call": {
+  "omega_spec_create": 9,
+  "omega_spec_review": 9,
+  "verify": 8,
+  "claim": 1,
+  "execute": 1,
+  "submit": 1,
+  "omega_result_verify": 1
+ },
+ "distinct_shapes": [
+  "branch/verify: 非法验收: 任务处于 [已完成]，需先 submit ×8",
+  "branch/omega_spec_create: 语料 [spec:T0r60.1:r1] 已通过审核，无需重复创建 ×1",
+  "branch/omega_spec_review: 语料 [spec:T0r60.1:r1] 当前状态为 [approv ×1",
+  "branch/omega_spec_create: 语料 [spec:T0r60.2:r1] 已通过审核，无需重复创建 ×1",
+  "branch/omega_spec_review: 语料 [spec:T0r60.2:r1] 当前状态为 [approv ×1",
+  "branch/omega_spec_create: 语料 [spec:T0r60.3:r1] 已通过审核，无需重复创建 ×1",
+  "branch/omega_spec_review: 语料 [spec:T0r60.3:r1] 当前状态为 [approv ×1",
+  "branch/omega_spec_create: 语料 [spec:T0r60.4:r1] 已通过审核，无需重复创建 ×1",
+  "branch/omega_spec_review: 语料 [spec:T0r60.4:r1] 当前状态为 [approv ×1",
+  "branch/omega_spec_create: 语料 [spec:T0r60.5:r1] 已通过审核，无需重复创建 ×1",
+  "branch/omega_spec_review: 语料 [spec:T0r60.5:r1] 当前状态为 [approv ×1",
+  "branch/omega_spec_create: 语料 [spec:T0r60.6:r1] 已通过审核，无需重复创建 ×1",
+  "branch/omega_spec_review: 语料 [spec:T0r60.6:r1] 当前状态为 [approv ×1",
+  "branch/omega_spec_create: 语料 [spec:T0r60.7:r1] 已通过审核，无需重复创建 ×1",
+  "branch/omega_spec_review: 语料 [spec:T0r60.7:r1] 当前状态为 [approv ×1",
+  "branch/omega_spec_create: 语料 [spec:T0r60.8:r1] 已通过审核，无需重复创建 ×1",
+  "branch/omega_spec_review: 语料 [spec:T0r60.8:r1] 当前状态为 [approv ×1",
+  "root/claim: 非法迁移: claim 要求状态 [待领取]，当前是 [待验收] ×1",
+  "root/execute: 非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 re ×1",
+  "root/submit: 非法迁移: submit 要求状态 [执行中]，当前是 [待验收] ×1",
+  "root/omega_spec_create: 任务 [T0r60] 未开启 Omega 强验证（descripti ×1",
+  "root/omega_spec_review: 任务 [T0r60] 未开启 Omega 强验证，无语料可审 ×1",
+  "root/omega_result_verify: 任务 [T0r60] 未开启 Omega 强验证，无需成果复验 ×1"
+ ],
+ "single_run_baseline": {
+  "claim": "一次未中断的上卷应当只有根任务那 6 条结构性拒绝（R2-验证实测 6）",
+  "root_structural": 6,
+  "branch_reentrancy": 24
+ },
+ "cause": "第一次跑 close_root_generic 在**分支循环之后**才撞 L4 产物门（报告未落盘）而中止：那一次已经把 8 个枝干的 omega 语料建好并审核通过，第二次重跑就吃 3×8 条重入拒绝。"
+}

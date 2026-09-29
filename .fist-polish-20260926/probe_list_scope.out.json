@@ -1,0 +1,25 @@
+{
+  "all_rows": 19,
+  "all_namespaces": [
+    "cypy-polish-20260926"
+  ],
+  "polish_rows": 19,
+  "bugs_rows": 15,
+  "bugs_ids_missing_from_all": [
+    "T0r10",
+    "T0r11",
+    "T0r12",
+    "T0r13",
+    "T0r14",
+    "T0r15",
+    "T0r16",
+    "T0r2",
+    "T0r3",
+    "T0r4",
+    "T0r5",
+    "T0r6",
+    "T0r7",
+    "T0r8",
+    "T0r9"
+  ]
+}

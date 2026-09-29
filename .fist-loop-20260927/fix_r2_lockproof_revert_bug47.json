@@ -1,0 +1,36 @@
+{
+ "who": "bug47",
+ "red_locks": [
+  "test_bug47_package_level_hook_api_exists",
+  "test_bug47_in_process_install_then_uninstall"
+ ],
+ "mixed_cause": [],
+ "own_controls_red": [],
+ "tree_result": {
+  "rc": 1,
+  "failed": [
+   "test_bug47_in_process_install_then_uninstall",
+   "test_bug47_package_level_hook_api_exists"
+  ],
+  "passed": [
+   "test_bug35_control_missing_file_still_reports_read_error",
+   "test_bug35_parse_diagnosis_is_not_bucketed_as_read_error",
+   "test_bug39_control_fragment_without_body_scope_still_rejected",
+   "test_bug39_control_return_inside_function_still_builds",
+   "test_bug39_expanded_fragment_return_stays_legal",
+   "test_bug39_macro_body_return_stays_legal",
+   "test_bug39_toplevel_return_is_diagnosed_at_cli",
+   "test_bug44_at_cli_product_is_transpiled_without_self",
+   "test_bug44_control_bound_struct_method_keeps_self_and_binding",
+   "test_bug44_struct_selfless_methods_drop_injected_self",
+   "test_bug45_control_ordinary_default_untouched",
+   "test_bug45_implicit_default_desugars_to_typed_call",
+   "test_bug45_implicit_default_without_annotation_is_diagnosed",
+   "test_bug46_fresh_process_reports_not_active",
+   "test_bug46_install_and_status_agree_on_process_scope",
+   "test_bug46_usage_doc_matches_the_narrowed_claim"
+  ],
+  "collected": 18,
+  "line": "======================== 2 failed, 16 passed in 3.80s ========================="
+ }
+}

@@ -1,0 +1,57 @@
+#!bin cypy
+# ============================================================
+# base_model.cypy — BaseModel (Pydantic core port)
+# ============================================================
+
+from fields import FieldInfo
+from validation import validate_value
+from errors import ValidationError
+from registry import register
+
+struct BaseModel:
+    # Cypy version of Pydantic BaseModel base class.
+    # Subclasses override fields() and optionally _custom_validate().
+    _values: dict<str, object>
+
+    def __init__(self):
+        self._values = {}
+
+    def fields(self) -> dict<str, FieldInfo>:
+        # Subclass override: return {field_name: FieldInfo}
+        return {}
+
+    def _init_from_data(self, data: dict<str, object>) -> None:
+        # Initialize fields from a data dict (replaces **kwargs pattern)
+        let schema: dict<str, FieldInfo> = self.fields()
+        for name in schema:
+            let fi: FieldInfo = schema[name]
+            if name in data:
+                self._values[name] = self._validate_one(fi, data[name])
+            elif fi.has_default:
+                self._values[name] = self._validate_one(fi, fi.default)
+            elif fi.required:
+                raise ValidationError([{"loc": name, "msg": "field required", "type": "missing"}])
+            else:
+                self._values[name] = None
+
+    def _validate_one(self, fi: FieldInfo, raw: object) -> object:
+        let v: object = validate_value(fi, raw)
+        v = self._custom_validate(fi.name, v)
+        return v
+
+    def _custom_validate(self, name: str, value: object) -> object:
+        # Subclass override: per-field custom validation
+        return value
+
+    def get(self, name: str) -> object:
+        if name in self._values:
+            return self._values[name]
+        return None
+
+    def model_dump(self) -> dict<str, object>:
+        return self._values
+
+    def model_validate(data: dict<str, object>) -> BaseModel:
+        let m: BaseModel = BaseModel()
+        m._init_from_data(data)
+        return m

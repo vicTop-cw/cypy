@@ -1,0 +1,19 @@
+{
+ "refuse": [],
+ "identity": {
+  "rc": 0,
+  "cypyc_file": "E:\\IDEProjects\\AI\\Cypy\\cypyc\\__init__.py"
+ },
+ "run": {
+  "rc": 0,
+  "tail": [
+   "[OK] Execution successful",
+   "  Output: 0"
+  ],
+  "stdout": "Running C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_cli_r1_dag7b4v0\\cli_check.cypy...\nOutput directory: output\nv 3.0\n[OK] Execution successful\n  Output: 0\n"
+ },
+ "help_rc": 0,
+ "artifacts": [
+  "cli_check.pyx"
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "key": "r5_hunt_renders",
+ "renders": 2,
+ "records": [
+  {
+   "seq": 1,
+   "at_utc": "2026-09-28T07:35:12+00:00",
+   "report": "memory/reviews/20260928.15.10.00.md",
+   "report_sha256": "a4d80a653c369303fcce32d41f7e915247b5bf1870e2775ae9681eaa670f88f6",
+   "report_bytes": 34708,
+   "gates_total": 109,
+   "spec_name": "20260928.15.10.00",
+   "spec_marker": "[selfdrive-hunt]",
+   "note": "首渲（记录器 hunt_r5_render_witness.py 是事后补的；本条数值取自补记前一份 hunt_r5_render_order.json 的 report_sha256/report_bytes 实测值，不是回忆）"
+  },
+  {
+   "seq": 2,
+   "at_utc": "2026-09-28T07:56:55+00:00",
+   "report": "memory/reviews/20260928.15.10.00.md",
+   "report_sha256": "85933483343615b2b0df27bd5addb8af8b0224549ce2ff68dd5f49fd70a28a23",
+   "report_bytes": 36069,
+   "gates_total": 116,
+   "spec_name": "20260928.15.10.00",
+   "spec_marker": "[selfdrive-hunt]",
+   "note": "更正后重渲：首渲 §八 15 引用了当时不存在的门禁号 ⑪-10/⑪-11/⑪-13/⑪-14；补成 ⑪-10…⑪-16 七道真门后重渲，同时把『渲染次数』从文件存在性改成按记录数"
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T07:56:55+00:00"
+}

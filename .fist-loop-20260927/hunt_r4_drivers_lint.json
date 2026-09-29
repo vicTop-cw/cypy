@@ -1,0 +1,18 @@
+{
+ "refuse": [],
+ "drivers_scanned": 11,
+ "hard_violations": 0,
+ "hard_lines": [],
+ "soft_total": 112,
+ "soft_codes": {
+  "E128": 5,
+  "E501": 91,
+  "E741": 16
+ },
+ "canary": {
+  "bad_caught": 1,
+  "clean_false_positive": 0
+ },
+ "line_length_declared": 100,
+ "canary_left": []
+}

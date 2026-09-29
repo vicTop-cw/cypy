@@ -1,0 +1,28 @@
+# 实测原文（2026-09-26），生成命令:
+#   cd <tmp copy of these .cypy> && PYTHONPATH=<repo> python -m cypyc transpile <file>
+# ANSI 颜色码已剥离; 注意 python -m cypyc 的进程退出码恒为 0 (cypyc/__main__.py:4)，
+# 所以判据只能读下面的诊断文本，不能读退出码。
+
+======== python -m cypyc transpile neg_constraint_silently_swallowed.cypy
+[FAIL] Transpile failed:
+  - Undefined name 'constraint' at 8:1
+  - Undefined name 'constraint' at 8:1
+  - Generic constraint violation: type 'int' does not satisfy constraint 'Numeric' for parameter 'T' at 0:0
+
+======== python -m cypyc transpile neg_constraint_value_position.cypy
+[FAIL] Transpile failed:
+  - Undefined name 'constraint' at 3:1
+  - Undefined name 'constraint' at 3:1
+
+======== python -m cypyc transpile neg_subtype_missing.cypy
+[FAIL] Transpile failed:
+  - 读取文件错误: Unexpected token SUBTYPE at 4:15
+
+======== python -m cypyc transpile neg_dispatch_missing.cypy
+[FAIL] Transpile failed:
+  - 读取文件错误: Expected RPAREN, got COLON at 4:16
+
+======== python -m cypyc run pos_inline_union_bound.cypy (正例基准)
+1
+2.5
+3

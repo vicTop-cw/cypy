@@ -1,0 +1,485 @@
+{
+ "started": "2026-09-27T20:23:21+00:00",
+ "plan": [
+  {
+   "key": "RC1_func_symbol_typed_as_return",
+   "title": "函数名被登记成它的**返回类型**（没有可调用签名）⇒ 元数判定挂错表：正确调用被判错、错误调用被放行",
+   "mechanism": "type_checker.py:523-525（同族 :393-395、:473-475）`self.type_map[node.name] = return_type`；`_visit_Call`(:1035) 之后只看 `type_map[名字]` 是不是 Callable，于是函数自身的参数表 (:546-547 `old_type_map[node.name] = return_type`) 全程不参与判定",
+   "symptoms": [
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "C05"
+   ],
+   "severity": "high",
+   "owner": "下一环修（分析器内部，不涉冻结面）"
+  },
+  {
+   "key": "RC2_no_argument_type_check",
+   "title": "实参类型与形参声明类型从不做兼容性比对：`apply(\"s\")`（形参 `n: int`）零诊断，而同族 `let x: int = \"s\"` 会报",
+   "mechanism": "`_visit_Call`(:1039-1043) 对每个 arg 只 `_visit(arg)` 求类型后丢弃，赋值处(:768/792/807)才比类型；两边没有共用同一个兼容性谓词",
+   "symptoms": [
+    "C06",
+    "C07",
+    "C08"
+   ],
+   "severity": "high",
+   "owner": "下一环修（需与 SYNTAX/01 的『有注解的参数进行类型检查』口径对齐）"
+  },
+  {
+   "key": "RC3_struct_field_type_unresolved",
+   "title": "struct 成员的声明类型在方法体里解析不出来：`self.n`/`self.i.n`/`self.cb(1,2)` 三类全部静默，同族局部变量与形参都会判",
+   "mechanism": "`_visit_Attribute`(:2122) 不查 struct 登记表 ⇒ `self.<field>` 得 Optional[None]，后续类型/元数判定按『不知道』放行",
+   "symptoms": [
+    "C09",
+    "C10",
+    "C11"
+   ],
+   "severity": "high",
+   "owner": "下一环修"
+  },
+  {
+   "key": "RC4_internal_repr_in_message",
+   "title": "类型不符的用户可见文案直接内插 `Type` 对象 ⇒ 打印 `Callable[tuple[int], str]`，与源语法 `Callable[[int], str]` 两种写法都不对应",
+   "mechanism": "f-string 里 `{declared_type}`（:768/:792/:807/:840…）走 `Type.__repr__`，泛型参数位用的是 python `tuple[...]` 的 repr",
+   "symptoms": [
+    "C12"
+   ],
+   "severity": "medium",
+   "owner": "下一环修（文案层，行为不变）"
+  },
+  {
+   "key": "DOC_status_stale_rows",
+   "title": "文档宣称的形态与今天实现不符（appendix-C 特性表 5 行 + USAGE 未实现清单 + 实现状态表 1 行 + 主类型表 i32 一族）",
+   "mechanism": "状态表按 v0.5 计划手写，实现落地后无人回写。落地证据（符号级）：`constraint` 与 `subtype` 已在 parser 里走 `_parse_subtype_def` 建 `SubtypeDef`、codegen 侧登记 `subtype_defs`，`DispatchDecl` 只剩 bridge 里的死 handler；而主类型表宣称的 `i32` 在 `type_mapper` 里 0 命中",
+   "symptoms": [
+    "D01",
+    "D02",
+    "D04",
+    "D05",
+    "D07",
+    "D13",
+    "D14"
+   ],
+   "severity": "medium",
+   "owner": "人工（SYNTAX/ 与状态表属冻结面 ⇒ 只挂账）"
+  },
+  {
+   "key": "DOC_cli_face_mismatch",
+   "title": "CLI 用法文档与实读不符：`cypyc --compile` / `build --incremental` 不存在，`hook` 有 6 个未记选项，入口点与 Python 下限两处转述错",
+   "mechanism": "argparse 的子命令 choices 是唯一事实源，文档手抄：`--incremental` 不在 `build` 的 parser 里、`transpile-only` 与 `--run`/`--eval` 只在 `hook` 的 help 里出现；入口点由 `requires-python` 与 `cypyc =` 两处声明，USAGE 转述成了另一个程序",
+   "symptoms": [
+    "D06",
+    "D08",
+    "D09",
+    "D10"
+   ],
+   "severity": "medium",
+   "owner": "下一环修（docs 非冻结）"
+  },
+  {
+   "key": "DOC_example_fails",
+   "title": "文档示例引用实现里不存在的符号：`ProjectCompileResult.output_files`（无此字段）、`hook.eval(...)` 承诺返回值（读侧要 `__result__`，写侧从不产出）",
+   "mechanism": "`dataclass ProjectCompileResult`(project_compiler.py:25) 字段集里没有 output_files；`cypy_hook/hook.py:759` 只认 `__result__`，`cypyc/` 全仓 0 处生成",
+   "symptoms": [
+    "D11",
+    "D12"
+   ],
+   "severity": "high",
+   "owner": "下一环修（示例改口径或生成侧补，交裁决）"
+  },
+  {
+   "key": "BRIDGE_cache_side_effect",
+   "title": "`BridgeCacheManager` 的只读查询在**调用方 CWD** 造出 `__pycache__/cypy/py313/`（`_get_base_cache_dir(None)` 回落 `os.getcwd()`）",
+   "mechanism": "cypy_bridge/compiler.py:3545-3560 目录不存在即 `mkdir`，`get_cached_pyd`/`is_stale`(:3599/:3621) 都走它",
+   "symptoms": [
+    "D16"
+   ],
+   "severity": "medium",
+   "owner": "下一环修"
+  },
+  {
+   "key": "BRIDGE_c_not_equivalent",
+   "title": "bridge 生成的 C 里有**模块级** `if ((__name__ == \"__main__\")) {…}`（花括号净深 0 处），与 `cypy_bridge/__init__.py:4` 自述的「与 Cython 等价」不符，MSVC 必拒",
+   "mechanism": "`BridgeCompiler._generate_c_code`(:3756) 把入口分派写在函数体外",
+   "symptoms": [
+    "D17"
+   ],
+   "severity": "high",
+   "owner": "下一环修（真编译验证转结 R4-验证）"
+  },
+  {
+   "key": "SPEC_file_size_redline",
+   "title": "PROJECT-SPEC 自己的 3000 行（不含注释）红线被 parser.py=3444、cython_generator.py=3108 越过，规范要求的\"当时就拆\"没有发生",
+   "mechanism": "口径是 `code_lines`（剔注释与字符串后 token 覆盖的行数，不是 `wc -l`）：`parser` 3444、`cython_generator` 3108 越过阈值 ⇒ 规范要求的「当时就拆」没有发生；纯存量规模，没有单点代码机制可指（这就是签名薄的地方，比对结果要如实标注）",
+   "symptoms": [
+    "D15"
+   ],
+   "severity": "low",
+   "owner": "人工（跨文件拆分不可逆 ⇒ 只挂账）"
+  }
+ ],
+ "plan_total": 10,
+ "compared_with": [
+  "memory/bugs.md",
+  "fist-mbt.db:ns=bugs"
+ ],
+ "ledger_cards": 60,
+ "ledger_max": 60,
+ "sqlite_bug_rows": 56,
+ "sqlite_stage_rows": 401,
+ "reconciliation": "md 有 60 个 BUG-NN 标题，sqlite ns=bugs 只有 56 行且**行内不带 BUG-NN**（只有 `[类别] 主张` 文本）⇒ 两轨按内容对齐，号只存在于 md 账本；差额 4 由『探针单/合并单』解释，逐条点名见 ledger3way",
+ "existing_numbers": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60
+ ],
+ "numbering_from_disk": 61,
+ "duplicates": [],
+ "near_miss_notes": {
+  "BUG-42": "它讲 `_visit_ExprStmt`/`_visit_MetaBlock` 各定义两次 ⇒ 前一份是死代码（重复定义）；本条 SPEC_file_size_redline 讲的是 `parser`/`cython_generator` 两个文件规模越过 3000 行阈值。共享的只是**文件名**（我这边的签名里带路径段）⇒ 不判重；真正的相关性是：将来拆分这两个文件时应顺手消掉 BUG-42 的重复定义",
+  "BUG-32": "它讲**codegen 注释渲染**把成员名过一遍 `type_mapper` ⇒ 产物里丢用户原文；本环真正与它同族的是 **RC4**（诊断文案走 `Type.__repr__`），已单列一卡并在 RC4 里点名交叉复核；DOC_status_stale_rows 与它只共享名词（`constraint`/`type_mapper` 字样），机制不同 ⇒ 不判重",
+  "BUG-54": "它讲 `build/` 中间产物在**进程间**共享导致 watch 互踩（setuptools 落在调用方 CWD）；DOC_cli_face_mismatch 讲的是 `build --incremental` 这个旗标在 argparse 里根本不存在 ⇒ 不判重。但 **BRIDGE_cache_side_effect**（`_get_base_cache_dir` 在调用方 CWD 建目录）与它同属「中间/缓存路径落到调用方 CWD」一族、代码点与修法不同 ⇒ 不判重，两单互相引用",
+  "BUG-49": "同『状态表过期』一类，但它钉的是 `SYNTAX/33` 的 constraint 行且仍 OPEN 未修；本环 DOC_status_stale_rows 覆盖 appendix-C/USAGE/STATUS 另 7 行，行不重叠 ⇒ 不判重，两单互相引用",
+  "BUG-56": "它讲『旗标注册了但没人读』(cli.py:435-516)，本环 DOC_cli_face_mismatch 讲『文档写了不存在的旗标＋未记选项＋转述错』，机制在 argparse 与文档两侧 ⇒ 不判重",
+  "BUG-46": "hook install/status 互相否定（CLI 行为），与入口点转述错不是一处代码 ⇒ 不判重",
+  "BUG-47": "cypy_hook 包级 API 未再导出（AttributeError 于 import），与 D08 的 scripts 入口点是两回事 ⇒ 不判重",
+  "BUG-21": "同为 type_checker 里『把内部表示当名字用』，但那是 trait 登记表 (`getattr(...,str(node))`)，本环 RC4 是诊断文案内插 `Type` 对象，修法不同（一个剥节点 repr，一个加显示层格式化）⇒ 不判重",
+  "BUG-40": "同族『内部表示外泄』，但那要求**非法标注形态**且外泄到 codegen 产物；RC4 在正常路径外泄到诊断文案⇒ 不判重，修 RC4 时需一并复核 BUG-40",
+  "BUG-45": "struct 的 `__implicit_default__` 默认值生成（codegen 侧符号缺失），RC3 是**分析侧**成员类型解析⇒ 不判重",
+  "BUG-48": "`cypyc watch` 不产出（运行时热重载），与本环四组静态分析根因无交集 ⇒ 不判重",
+  "BUG-11": "项目模式丢弃 ScopeAnalyzer 诊断（入口口径分叉），RC1/RC2 是分析器内部不判 ⇒ 不判重"
+ },
+ "unclaimed_symptoms": [
+  "D03",
+  "D18"
+ ],
+ "unclaimed_reason": {
+  "D03": "文档自述未实现且今天仍未实现 ⇒ design 撤回，不占号",
+  "D18": "要两次真编译才能定 ⇒ not_measured，转结 R4-验证，本轮不写结论"
+ },
+ "rows": [
+  {
+   "key": "RC1_func_symbol_typed_as_return",
+   "title": "函数名被登记成它的**返回类型**（没有可调用签名）⇒ 元数判定挂错表：正确调用被判错、错误调用被放行",
+   "symptoms": [
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "C05"
+   ],
+   "mechanism": "type_checker.py:523-525（同族 :393-395、:473-475）`self.type_map[node.name] = return_type`；`_visit_Call`(:1035) 之后只看 `type_map[名字]` 是不是 Callable，于是函数自身的参数表 (:546-547 `old_type_map[node.name] = return_type`) 全程不参与判定",
+   "mechanism_symbols": [
+    "_visit_call",
+    "old_type_map",
+    "return_type",
+    "type_map"
+   ],
+   "severity": "high",
+   "owner": "下一环修（分析器内部，不涉冻结面）",
+   "duplicate_of": [],
+   "symbol_overlap_hits": [],
+   "adjudication": "盘上 60 单的机制签名与本条不共享同一处代码符号 ⇒ 占新号"
+  },
+  {
+   "key": "RC2_no_argument_type_check",
+   "title": "实参类型与形参声明类型从不做兼容性比对：`apply(\"s\")`（形参 `n: int`）零诊断，而同族 `let x: int = \"s\"` 会报",
+   "symptoms": [
+    "C06",
+    "C07",
+    "C08"
+   ],
+   "mechanism": "`_visit_Call`(:1039-1043) 对每个 arg 只 `_visit(arg)` 求类型后丢弃，赋值处(:768/792/807)才比类型；两边没有共用同一个兼容性谓词",
+   "mechanism_symbols": [
+    "_visit",
+    "_visit_call"
+   ],
+   "severity": "high",
+   "owner": "下一环修（需与 SYNTAX/01 的『有注解的参数进行类型检查』口径对齐）",
+   "duplicate_of": [],
+   "symbol_overlap_hits": [],
+   "adjudication": "盘上 60 单的机制签名与本条不共享同一处代码符号 ⇒ 占新号"
+  },
+  {
+   "key": "RC3_struct_field_type_unresolved",
+   "title": "struct 成员的声明类型在方法体里解析不出来：`self.n`/`self.i.n`/`self.cb(1,2)` 三类全部静默，同族局部变量与形参都会判",
+   "symptoms": [
+    "C09",
+    "C10",
+    "C11"
+   ],
+   "mechanism": "`_visit_Attribute`(:2122) 不查 struct 登记表 ⇒ `self.<field>` 得 Optional[None]，后续类型/元数判定按『不知道』放行",
+   "mechanism_symbols": [
+    "_visit_attribute",
+    "field"
+   ],
+   "severity": "high",
+   "owner": "下一环修",
+   "duplicate_of": [],
+   "symbol_overlap_hits": [],
+   "adjudication": "盘上 60 单的机制签名与本条不共享同一处代码符号 ⇒ 占新号"
+  },
+  {
+   "key": "RC4_internal_repr_in_message",
+   "title": "类型不符的用户可见文案直接内插 `Type` 对象 ⇒ 打印 `Callable[tuple[int], str]`，与源语法 `Callable[[int], str]` 两种写法都不对应",
+   "symptoms": [
+    "C12"
+   ],
+   "mechanism": "f-string 里 `{declared_type}`（:768/:792/:807/:840…）走 `Type.__repr__`，泛型参数位用的是 python `tuple[...]` 的 repr",
+   "mechanism_symbols": [
+    "__repr__",
+    "declared_type",
+    "tuple"
+   ],
+   "severity": "medium",
+   "owner": "下一环修（文案层，行为不变）",
+   "duplicate_of": [],
+   "symbol_overlap_hits": [],
+   "adjudication": "盘上 60 单的机制签名与本条不共享同一处代码符号 ⇒ 占新号"
+  },
+  {
+   "key": "DOC_status_stale_rows",
+   "title": "文档宣称的形态与今天实现不符（appendix-C 特性表 5 行 + USAGE 未实现清单 + 实现状态表 1 行 + 主类型表 i32 一族）",
+   "symptoms": [
+    "D01",
+    "D02",
+    "D04",
+    "D05",
+    "D07",
+    "D13",
+    "D14"
+   ],
+   "mechanism": "状态表按 v0.5 计划手写，实现落地后无人回写。落地证据（符号级）：`constraint` 与 `subtype` 已在 parser 里走 `_parse_subtype_def` 建 `SubtypeDef`、codegen 侧登记 `subtype_defs`，`DispatchDecl` 只剩 bridge 里的死 handler；而主类型表宣称的 `i32` 在 `type_mapper` 里 0 命中",
+   "mechanism_symbols": [
+    "_parse_subtype_def",
+    "constraint",
+    "dispatchdecl",
+    "subtype",
+    "subtype_defs",
+    "subtypedef",
+    "type_mapper"
+   ],
+   "severity": "medium",
+   "owner": "人工（SYNTAX/ 与状态表属冻结面 ⇒ 只挂账）",
+   "duplicate_of": [],
+   "symbol_overlap_hits": [
+    {
+     "bug": "BUG-32",
+     "shared_symbols": [
+      "constraint",
+      "subtype",
+      "type_mapper"
+     ],
+     "adjudication": "它讲**codegen 注释渲染**把成员名过一遍 `type_mapper` ⇒ 产物里丢用户原文；本环真正与它同族的是 **RC4**（诊断文案走 `Type.__repr__`），已单列一卡并在 RC4 里点名交叉复核；DOC_status_stale_rows 与它只共享名词（`constraint`/`type_mapper` 字样），机制不同 ⇒ 不判重"
+    },
+    {
+     "bug": "BUG-49",
+     "shared_symbols": [
+      "constraint",
+      "subtype"
+     ],
+     "adjudication": "同『状态表过期』一类，但它钉的是 `SYNTAX/33` 的 constraint 行且仍 OPEN 未修；本环 DOC_status_stale_rows 覆盖 appendix-C/USAGE/STATUS 另 7 行，行不重叠 ⇒ 不判重，两单互相引用"
+    }
+   ],
+   "adjudication": "盘上 60 单的机制签名与本条不共享同一处代码符号 ⇒ 占新号"
+  },
+  {
+   "key": "DOC_cli_face_mismatch",
+   "title": "CLI 用法文档与实读不符：`cypyc --compile` / `build --incremental` 不存在，`hook` 有 6 个未记选项，入口点与 Python 下限两处转述错",
+   "symptoms": [
+    "D06",
+    "D08",
+    "D09",
+    "D10"
+   ],
+   "mechanism": "argparse 的子命令 choices 是唯一事实源，文档手抄：`--incremental` 不在 `build` 的 parser 里、`transpile-only` 与 `--run`/`--eval` 只在 `hook` 的 help 里出现；入口点由 `requires-python` 与 `cypyc =` 两处声明，USAGE 转述成了另一个程序",
+   "mechanism_symbols": [
+    "build",
+    "eval",
+    "incremental",
+    "only",
+    "requires",
+    "transpile"
+   ],
+   "severity": "medium",
+   "owner": "下一环修（docs 非冻结）",
+   "duplicate_of": [],
+   "symbol_overlap_hits": [
+    {
+     "bug": "BUG-48",
+     "shared_symbols": [
+      "build",
+      "incremental"
+     ],
+     "adjudication": "`cypyc watch` 不产出（运行时热重载），与本环四组静态分析根因无交集 ⇒ 不判重"
+    },
+    {
+     "bug": "BUG-54",
+     "shared_symbols": [
+      "build",
+      "transpile"
+     ],
+     "adjudication": "它讲 `build/` 中间产物在**进程间**共享导致 watch 互踩（setuptools 落在调用方 CWD）；DOC_cli_face_mismatch 讲的是 `build --incremental` 这个旗标在 argparse 里根本不存在 ⇒ 不判重。但 **BRIDGE_cache_side_effect**（`_get_base_cache_dir` 在调用方 CWD 建目录）与它同属「中间/缓存路径落到调用方 CWD」一族、代码点与修法不同 ⇒ 不判重，两单互相引用"
+    }
+   ],
+   "adjudication": "盘上 60 单的机制签名与本条不共享同一处代码符号 ⇒ 占新号"
+  },
+  {
+   "key": "DOC_example_fails",
+   "title": "文档示例引用实现里不存在的符号：`ProjectCompileResult.output_files`（无此字段）、`hook.eval(...)` 承诺返回值（读侧要 `__result__`，写侧从不产出）",
+   "symptoms": [
+    "D11",
+    "D12"
+   ],
+   "mechanism": "`dataclass ProjectCompileResult`(project_compiler.py:25) 字段集里没有 output_files；`cypy_hook/hook.py:759` 只认 `__result__`，`cypyc/` 全仓 0 处生成",
+   "mechanism_symbols": [
+    "__result__",
+    "projectcompileresult"
+   ],
+   "severity": "high",
+   "owner": "下一环修（示例改口径或生成侧补，交裁决）",
+   "duplicate_of": [],
+   "symbol_overlap_hits": [],
+   "adjudication": "盘上 60 单的机制签名与本条不共享同一处代码符号 ⇒ 占新号"
+  },
+  {
+   "key": "BRIDGE_cache_side_effect",
+   "title": "`BridgeCacheManager` 的只读查询在**调用方 CWD** 造出 `__pycache__/cypy/py313/`（`_get_base_cache_dir(None)` 回落 `os.getcwd()`）",
+   "symptoms": [
+    "D16"
+   ],
+   "mechanism": "cypy_bridge/compiler.py:3545-3560 目录不存在即 `mkdir`，`get_cached_pyd`/`is_stale`(:3599/:3621) 都走它",
+   "mechanism_symbols": [
+    "get_cached_pyd",
+    "is_stale",
+    "mkdir"
+   ],
+   "severity": "medium",
+   "owner": "下一环修",
+   "duplicate_of": [],
+   "symbol_overlap_hits": [],
+   "adjudication": "盘上 60 单的机制签名与本条不共享同一处代码符号 ⇒ 占新号"
+  },
+  {
+   "key": "BRIDGE_c_not_equivalent",
+   "title": "bridge 生成的 C 里有**模块级** `if ((__name__ == \"__main__\")) {…}`（花括号净深 0 处），与 `cypy_bridge/__init__.py:4` 自述的「与 Cython 等价」不符，MSVC 必拒",
+   "symptoms": [
+    "D17"
+   ],
+   "mechanism": "`BridgeCompiler._generate_c_code`(:3756) 把入口分派写在函数体外",
+   "mechanism_symbols": [
+    "_generate_c_code",
+    "bridgecompiler"
+   ],
+   "severity": "high",
+   "owner": "下一环修（真编译验证转结 R4-验证）",
+   "duplicate_of": [],
+   "symbol_overlap_hits": [],
+   "adjudication": "盘上 60 单的机制签名与本条不共享同一处代码符号 ⇒ 占新号"
+  },
+  {
+   "key": "SPEC_file_size_redline",
+   "title": "PROJECT-SPEC 自己的 3000 行（不含注释）红线被 parser.py=3444、cython_generator.py=3108 越过，规范要求的\"当时就拆\"没有发生",
+   "symptoms": [
+    "D15"
+   ],
+   "mechanism": "口径是 `code_lines`（剔注释与字符串后 token 覆盖的行数，不是 `wc -l`）：`parser` 3444、`cython_generator` 3108 越过阈值 ⇒ 规范要求的「当时就拆」没有发生；纯存量规模，没有单点代码机制可指（这就是签名薄的地方，比对结果要如实标注）",
+   "mechanism_symbols": [
+    "code_lines",
+    "cython_generator",
+    "parser"
+   ],
+   "severity": "low",
+   "owner": "人工（跨文件拆分不可逆 ⇒ 只挂账）",
+   "duplicate_of": [],
+   "symbol_overlap_hits": [
+    {
+     "bug": "BUG-42",
+     "shared_symbols": [
+      "cython_generator",
+      "parser"
+     ],
+     "adjudication": "它讲 `_visit_ExprStmt`/`_visit_MetaBlock` 各定义两次 ⇒ 前一份是死代码（重复定义）；本条 SPEC_file_size_redline 讲的是 `parser`/`cython_generator` 两个文件规模越过 3000 行阈值。共享的只是**文件名**（我这边的签名里带路径段）⇒ 不判重；真正的相关性是：将来拆分这两个文件时应顺手消掉 BUG-42 的重复定义"
+    },
+    {
+     "bug": "BUG-45",
+     "shared_symbols": [
+      "cython_generator",
+      "parser"
+     ],
+     "adjudication": "struct 的 `__implicit_default__` 默认值生成（codegen 侧符号缺失），RC3 是**分析侧**成员类型解析⇒ 不判重"
+    },
+    {
+     "bug": "BUG-49",
+     "shared_symbols": [
+      "cython_generator",
+      "parser"
+     ],
+     "adjudication": "同『状态表过期』一类，但它钉的是 `SYNTAX/33` 的 constraint 行且仍 OPEN 未修；本环 DOC_status_stale_rows 覆盖 appendix-C/USAGE/STATUS 另 7 行，行不重叠 ⇒ 不判重，两单互相引用"
+    }
+   ],
+   "adjudication": "盘上 60 单的机制签名与本条不共享同一处代码符号 ⇒ 占新号"
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-27T20:23:21+00:00"
+}

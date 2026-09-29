@@ -1,0 +1,13 @@
+# 结构体和枚举示例
+# 演示 Cypy 的 struct 和 enum 定义
+
+struct Point:
+    x: int
+    y: int
+    
+    def __init__(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
+    
+    def __add__(self, other: Point) -> Point:
+        return Point(x=self.x �����

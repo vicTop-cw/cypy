@@ -1,0 +1,4 @@
+include "does_not_exist_anywhere.cypy"
+
+def main() -> int:
+    return 0

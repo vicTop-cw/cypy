@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r74.1.1",
+   "law": "狩猎面清点：三块新面（函数类型其余缺口 / docs 与实现的陈旧 / bridge+hook 生成调用面）逐条入表，并与 R1–R3 已入账单按根因去重",
+   "artifact": ".fist-loop-20260927/hunt_r4_faces.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.1.2",
+   "law": "狩猎面清点：三块新面（函数类型其余缺口 / docs 与实现的陈旧 / bridge+hook 生成调用面）逐条入表，并与 R1–R3 已入账单按根因去重",
+   "artifact": ".fist-loop-20260927/hunt_r4_dedup.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.2.1",
+   "law": "定位声明先读后判：每条候选带上它自己的文档/状态表原文与 file:line，自述未实现者按 DESIGN 撤回不占号",
+   "artifact": ".fist-loop-20260927/hunt_r4_declared.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.2.2",
+   "law": "定位声明先读后判：每条候选带上它自己的文档/状态表原文与 file:line，自述未实现者按 DESIGN 撤回不占号",
+   "artifact": ".fist-loop-20260927/hunt_r4_declared.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.3.1",
+   "law": "成对对照确诊：pos 现形 + ctl 不现形两档齐全才算 CONFIRMED，缺一档一律 UNSURE 不入账",
+   "artifact": ".fist-loop-20260927/hunt_r4_confirm.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.3.2",
+   "law": "成对对照确诊：pos 现形 + ctl 不现形两档齐全才算 CONFIRMED，缺一档一律 UNSURE 不入账",
+   "artifact": ".fist-loop-20260927/hunt_r4_confirm.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.4.1",
+   "law": "判据可观察性硬门：每条确诊判据自带一条『如果判据坏了就一定会红』的见证对照（零发现必须与看不见分家）",
+   "artifact": ".fist-loop-20260927/hunt_r4_witness.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.4.2",
+   "law": "判据可观察性硬门：每条确诊判据自带一条『如果判据坏了就一定会红』的见证对照（零发现必须与看不见分家）",
+   "artifact": ".fist-loop-20260927/hunt_r4_witness.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.5.1",
+   "law": "一键复现三态退出码台账：0=现形 / 1=不现形 / 2=夹具坏，入账件里承诺的复跑命令必须真跑过",
+   "artifact": ".fist-loop-20260927/hunt_r4_repro.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.5.2",
+   "law": "一键复现三态退出码台账：0=现形 / 1=不现形 / 2=夹具坏，入账件里承诺的复跑命令必须真跑过",
+   "artifact": ".fist-loop-20260927/hunt_r4_repro.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.6.1",
+   "law": "只确诊入账（号从盘上现数）：report_bug 回读 + 账本号增量必须等于入账条数，不在本环修产品码",
+   "artifact": ".fist-loop-20260927/hunt_r4_filed.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.6.2",
+   "law": "只确诊入账（号从盘上现数）：report_bug 回读 + 账本号增量必须等于入账条数，不在本环修产品码",
+   "artifact": ".fist-loop-20260927/hunt_r4_filed.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.7.1",
+   "law": "三套判据体系同一批复算且只升不降（pytest 1938 / 套件 47/47 / e2e 25/25），git 红线 HEAD 未动，本环改动半径按 mtime 正面测出为空",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.7.2",
+   "law": "三套判据体系同一批复算且只升不降（pytest 1938 / 套件 47/47 / e2e 25/25），git 红线 HEAD 未动，本环改动半径按 mtime 正面测出为空",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.8.1",
+   "law": "报告与账本同步：三向对照（md 条目 / FIXED 段 / sqlite bug 任务）+ 被拒原文逐字进报告",
+   "artifact": ".fist-loop-20260927/hunt_r4_ledger3way.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r74.8.2",
+   "law": "报告与账本同步：三向对照（md 条目 / FIXED 段 / sqlite bug 任务）+ 被拒原文逐字进报告",
+   "artifact": ".fist-loop-20260927/hunt_r4_ledger3way.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r74",
+ "stage": "R4-寻虫"
+}

@@ -1,0 +1,6 @@
+const MAX_SIZE: int = 1000
+
+def main() -> int:
+    let a: int = MAX_SIZE
+    print(a)
+    return 0

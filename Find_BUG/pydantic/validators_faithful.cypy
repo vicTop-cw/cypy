@@ -1,0 +1,22 @@
+#!bin cypy
+# ============================================================
+# validators_faithful.cypy — @field_validator / @model_validator（选项 B）
+# STRESS: 装饰器工厂 + 闭包捕获 + 装饰器应用到方法。
+# ============================================================
+
+def field_validator(*fields: str, mode: str = "after") -> object:
+    # STRESS: 返回装饰器；闭包捕获 fields / mode
+    def deco(func: object) -> object:
+        func._pydantic_fields = fields
+        func._pydantic_mode = mode
+        func._pydantic_kind = "field_validator"
+        return func
+    return deco
+
+
+def model_validator(mode: str = "after") -> object:
+    def deco(func: object) -> object:
+        func._pydantic_mode = mode
+        func._pydantic_kind = "model_validator"
+        return func
+    return deco

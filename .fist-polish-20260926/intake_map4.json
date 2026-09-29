@@ -1,0 +1,14 @@
+{
+  "mapping": [
+    {
+      "bug_id": "BUG-12",
+      "task_id": "T0r17",
+      "summary": "[error-masking] cypy_bridge/nogil.py:73 GilState.__exit__ 无条件 acquire，with 体内提前归还 GIL 后再抛用户异常时，退出路径用 NoGilError('GIL is not released') 顶掉用户异常——同一族的嵌套覆盖问题本模块已在 NoGilContext 修过，GilState 这条退出路径漏修",
+      "fired": true
+    }
+  ],
+  "failures": [],
+  "missing": [],
+  "ledger_before": 11,
+  "ledger_after": 12
+}

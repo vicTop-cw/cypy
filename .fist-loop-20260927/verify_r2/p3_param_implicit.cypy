@@ -1,0 +1,7 @@
+
+struct Point:
+    x: int
+    y: int
+
+def implicit_sum(cfg: Point = __implicit_default__) -> int:
+    return cfg.x + cfg.y

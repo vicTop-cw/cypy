@@ -1,0 +1,66 @@
+#!bin cypy
+# ============================================================
+# visualize_data.cypy — Data visualization tool
+# ============================================================
+
+from tool import Tool, ToolContext, ToolResult
+from components import UiComponent, ChartComponent, SimpleTextComponent
+
+struct VisualizeDataArgs:
+    # Arguments for data visualization
+    file_name: str
+    chart_type: str
+    x_column: str
+    y_column: str
+    title: str
+
+    def __init__(self, file_name: str = "", chart_type: str = "auto", x_column: str = "", y_column: str = "", title: str = "Chart"):
+        self.file_name = file_name
+        self.chart_type = chart_type
+        self.x_column = x_column
+        self.y_column = y_column
+        self.title = title
+
+
+struct VisualizeDataTool:
+    # Tool that creates chart visualizations from query result files
+    _custom_name: str
+    _custom_description: str
+
+    def __init__(self, custom_name: str = "", custom_description: str = ""):
+        self._custom_name = custom_name
+        self._custom_description = custom_description
+
+    def name(self) -> str:
+        guard self._custom_name else return "visualize_data"
+        return self._custom_name
+
+    def description(self) -> str:
+        guard self._custom_description else return "Create chart visualizations from SQL query result files"
+        return self._custom_description
+
+    def get_args_schema(self) -> object:
+        return VisualizeDataArgs
+
+    def access_groups(self) -> list<str>:
+        return []
+
+    def check_access(self, context: ToolContext) -> bool:
+        return True
+
+    def execute(self, context: ToolContext, args: VisualizeDataArgs) -> ToolResult:
+        try:
+            guard args.file_name else return ToolResult.fail("file_name is required")
+            let chart_type: str = self._detect_chart_type(args)
+            let chart_data: dict<str, str> = {"file_name": args.file_name, "x_column": args.x_column, "y_column": args.y_column}
+            let chart = ChartComponent(chart_type=chart_type, data=chart_data, title=args.title, x_label=args.x_column, y_label=args.y_column)
+            let result_text: str = f"Chart created: {args.title} ({chart_type})"
+            let ui = UiComponent.text(result_text)
+            return ToolResult(success=True, result_for_llm=result_text, ui_component=ui, metadata={"chart_type": chart_type, "file_name": args.file_name})
+        except Exception as e:
+            let error_msg: str = f"Error creating visualization: {str(e)}"
+            return ToolResult(success=False, result_for_llm=error_msg, ui_component=UiComponent.error(error_msg), error=str(e))
+
+    def _detect_chart_type(self, args: VisualizeDataArgs) -> str:
+        guard args.chart_type == "auto" else return args.chart_type
+        return "bar"

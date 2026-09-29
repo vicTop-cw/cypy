@@ -1,0 +1,4 @@
+subtype Meter of float
+
+class Meter:
+    x: int = 1

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r7_locks.py", line 171, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r7_locks.py", line 129, in main
+    assert anchor not in back and replacement in back, name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: C 对照：只动一行注释

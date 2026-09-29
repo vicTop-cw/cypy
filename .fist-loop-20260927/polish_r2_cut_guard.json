@@ -1,0 +1,22 @@
+{
+ "control": "重跑已删除的档必须被幂等守卫拒绝（负向对照：判据不恒绿）",
+ "rc_line": "rc=1",
+ "observed": {
+  "dry_run": true,
+  "bound_lines_before": {
+   "_visit_ExprStmt": 2076,
+   "_visit_ExprStmt__module": "cypyc.codegen.cython_generator",
+   "_visit_MetaBlock": 914,
+   "_visit_MetaBlock__module": "cypyc.analyzer.scope_analyzer"
+  },
+  "bound_lines_after": {},
+  "removed_lines": {
+   "bug42_expr_stmt": null,
+   "bug42_meta_block": null
+  },
+  "refuse": [
+   "cypyc/codegen/cython_generator.py 期望 2 处同名 def，实测 [2076] ⇒ 幂等守卫：本目标已不处于待删状态",
+   "cypyc/analyzer/scope_analyzer.py 期望 2 处同名 def，实测 [914] ⇒ 幂等守卫：本目标已不处于待删状态"
+  ]
+ }
+}

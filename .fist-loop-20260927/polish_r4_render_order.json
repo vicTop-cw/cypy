@@ -1,0 +1,33 @@
+{
+ "started": "2026-09-28T02:44:02+00:00",
+ "report": "memory/reviews/20260928.10.35.00.md",
+ "report_bytes": 40843,
+ "report_sha256": "97d48afe9cb2486672c75945aa0fa61a5f0c3f5440e2429b55e1a709217ebdad",
+ "renders": 1,
+ "same_name_files": [
+  "20260928.10.35.00.md"
+ ],
+ "refused_attempts": 0,
+ "refuse_file_present": false,
+ "gates_in_table": 149,
+ "gates_green": 149,
+ "gates_red": 0,
+ "gates_label_misaligned": [],
+ "gates_label_dupes": [],
+ "gates_canary": {
+  "rows_after_dropping_one": 148,
+  "declared": 149,
+  "caught": true
+ },
+ "unresolved_placeholders": [],
+ "law_heads_expected": 8,
+ "law_heads_missing": [],
+ "section10_rendered": {
+  "declared": 19,
+  "actual": 19
+ },
+ "laws_declared": 8,
+ "note": "renders=1 是说报告文件只被写过一次；被拒的重试只留 refuse 件、不写报告",
+ "refuse": [],
+ "at_utc": "2026-09-28T02:44:02+00:00"
+}

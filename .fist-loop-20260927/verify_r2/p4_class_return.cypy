@@ -1,0 +1,4 @@
+
+class Box:
+    w: int
+    return 1

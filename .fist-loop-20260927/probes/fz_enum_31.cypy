@@ -1,0 +1,5 @@
+num Color:
+    RED
+    GREEN
+
+print(Color.RED)

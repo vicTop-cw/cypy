@@ -1,0 +1,18 @@
+=== subleg pytest (R13 locks + corpus floor) ===
+tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.type.slice.json#4] PASSED [ 98%]
+tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.type.slice.json#5] PASSED [ 98%]
+tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.type.slice.json#6] PASSED [ 99%]
+tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.type.slice.json#7] PASSED [100%]
+
+============================= 191 passed in 0.58s =============================
+=== collect-only 计数 ===
+        <Function test_corpus_pair[cypy.type.slice.json#7]>
+
+======================== 191 tests collected in 0.09s =========================
+=== omega_gate all ===
+CONCLUSION specs=7 cases=151 passed=151 failed=0 refused=0 accuracy=100.00% rc=0
+=== run_tests inhouse ===
+✓ Passed: 47
+✗ Failed: 0
+~ Skipped: 0
+⏱  Elapsed: 54.94s

@@ -1,0 +1,532 @@
+{
+ "grouped_by": "params_json.task_id 前缀（不按标签、不按回忆）",
+ "stages": {
+  "T0r74": {
+   "label": "R4-寻虫（16 叶 × omega 全链 + 8 支 + 根上卷）",
+   "rows": 284,
+   "distinct_tasks": 25,
+   "by_tool": {
+    "claim": {
+     "ok": 17,
+     "refused": 3
+    },
+    "task_plan_deep": {
+     "ok": 1,
+     "refused": 0
+    },
+    "omega_status": {
+     "ok": 16,
+     "refused": 0
+    },
+    "omega_spec_create": {
+     "ok": 24,
+     "refused": 18
+    },
+    "omega_spec_review": {
+     "ok": 24,
+     "refused": 18
+    },
+    "execute": {
+     "ok": 16,
+     "refused": 2
+    },
+    "submit": {
+     "ok": 16,
+     "refused": 2
+    },
+    "output_validate": {
+     "ok": 18,
+     "refused": 0
+    },
+    "omega_result_verify": {
+     "ok": 40,
+     "refused": 1
+    },
+    "verify": {
+     "ok": 25,
+     "refused": 16
+    },
+    "get": {
+     "ok": 26,
+     "refused": 0
+    },
+    "archive": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused": 60,
+   "refused_total": 60,
+   "refused_detail": [
+    {
+     "task": "T0r74",
+     "tool": "claim",
+     "ts": "2026-09-27T20:57:34Z",
+     "err": "非法迁移: claim 要求状态 [待领取]，当前是 [待验收]"
+    },
+    {
+     "task": "T0r74.1",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "语料 [spec:T0r74.1:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.1",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "语料 [spec:T0r74.1:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.1",
+     "tool": "verify",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.2",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "语料 [spec:T0r74.2:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.2",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "语料 [spec:T0r74.2:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.2",
+     "tool": "verify",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.3",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "语料 [spec:T0r74.3:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.3",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "语料 [spec:T0r74.3:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.3",
+     "tool": "verify",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.4",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "语料 [spec:T0r74.4:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.4",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "语料 [spec:T0r74.4:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.4",
+     "tool": "verify",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.5",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "语料 [spec:T0r74.5:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.5",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T20:58:05Z",
+     "err": "语料 [spec:T0r74.5:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.5",
+     "tool": "verify",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.6",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "语料 [spec:T0r74.6:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.6",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "语料 [spec:T0r74.6:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.6",
+     "tool": "verify",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.7",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "语料 [spec:T0r74.7:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.7",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "语料 [spec:T0r74.7:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.7",
+     "tool": "verify",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.8",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "语料 [spec:T0r74.8:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.8",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "语料 [spec:T0r74.8:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.8",
+     "tool": "verify",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74",
+     "tool": "claim",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "非法迁移: claim 要求状态 [待领取]，当前是 [待验收]"
+    },
+    {
+     "task": "T0r74",
+     "tool": "execute",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute"
+    },
+    {
+     "task": "T0r74",
+     "tool": "submit",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"
+    },
+    {
+     "task": "T0r74",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "任务 [T0r74] 未开启 Omega 强验证（description 缺少 [omega:required] 标记），无需创建语料"
+    },
+    {
+     "task": "T0r74",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T20:58:06Z",
+     "err": "任务 [T0r74] 未开启 Omega 强验证，无语料可审"
+    },
+    {
+     "task": "T0r74.1",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.1:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.1",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.1:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.1",
+     "tool": "verify",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.2",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.2:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.2",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.2:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.2",
+     "tool": "verify",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.3",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.3:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.3",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.3:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.3",
+     "tool": "verify",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.4",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.4:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.4",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.4:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.4",
+     "tool": "verify",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.5",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.5:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.5",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.5:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.5",
+     "tool": "verify",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.6",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.6:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.6",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.6:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.6",
+     "tool": "verify",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.7",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.7:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.7",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.7:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.7",
+     "tool": "verify",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74.8",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.8:r1] 已通过审核，无需重复创建"
+    },
+    {
+     "task": "T0r74.8",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "语料 [spec:T0r74.8:r1] 当前状态为 [approved]，不是待审核状态"
+    },
+    {
+     "task": "T0r74.8",
+     "tool": "verify",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法验收: 任务处于 [已完成]，需先 submit"
+    },
+    {
+     "task": "T0r74",
+     "tool": "claim",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法迁移: claim 要求状态 [待领取]，当前是 [待验收]"
+    },
+    {
+     "task": "T0r74",
+     "tool": "execute",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute"
+    },
+    {
+     "task": "T0r74",
+     "tool": "submit",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"
+    },
+    {
+     "task": "T0r74",
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T21:00:57Z",
+     "err": "任务 [T0r74] 未开启 Omega 强验证（description 缺少 [omega:required] 标记），无需创建语料"
+    },
+    {
+     "task": "T0r74",
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T21:00:58Z",
+     "err": "任务 [T0r74] 未开启 Omega 强验证，无语料可审"
+    },
+    {
+     "task": "T0r74",
+     "tool": "omega_result_verify",
+     "ts": "2026-09-27T21:00:58Z",
+     "err": "任务 [T0r74] 未开启 Omega 强验证，无需成果复验"
+    }
+   ]
+  }
+ },
+ "control_absent_prefix_rows": 0,
+ "total_call_log_rows": 3906,
+ "stage_seed_rows": {
+  "needle": "%[loop:20260927-loop:R4-%",
+  "total": 12,
+  "by_tool": {
+   "publish": {
+    "ok": 1,
+    "refused": 0,
+    "examples": []
+   },
+   "laya_decide": {
+    "ok": 1,
+    "refused": 0,
+    "examples": []
+   },
+   "report_bug": {
+    "ok": 10,
+    "refused": 0,
+    "examples": []
+   }
+  }
+ },
+ "named_tools_in_this_build": {
+  "laya": {
+   "exact": 0,
+   "substring": 18
+  },
+  "issue_up": {
+   "exact": 0,
+   "substring": 0
+  },
+  "omega_spec_create": {
+   "exact": 435,
+   "substring": 435
+  },
+  "omega_result_verify": {
+   "exact": 432,
+   "substring": 432
+  },
+  "report_bug": {
+   "exact": 85,
+   "substring": 85
+  },
+  "output_validate": {
+   "exact": 357,
+   "substring": 357
+  },
+  "submit": {
+   "exact": 314,
+   "substring": 314
+  },
+  "claim": {
+   "exact": 324,
+   "substring": 324
+  },
+  "verify": {
+   "exact": 481,
+   "substring": 913
+  }
+ },
+ "spec_named_carriers": {
+  "laya": {
+   "carriers": {
+    "laya_decide": {
+     "whole_db": 18,
+     "this_stage_seed": 1,
+     "this_stage_prefix": 0
+    }
+   },
+   "whole_db_total": 18,
+   "this_stage_total": 1
+  },
+  "issue_up": {
+   "carriers": {
+    "publish": {
+     "whole_db": 20,
+     "this_stage_seed": 1,
+     "this_stage_prefix": 0
+    },
+    "report_bug": {
+     "whole_db": 85,
+     "this_stage_seed": 10,
+     "this_stage_prefix": 0
+    }
+   },
+   "whole_db_total": 105,
+   "this_stage_total": 11
+  },
+  "call_log": {
+   "carriers": {
+    "call_log": {
+     "whole_db": 20,
+     "this_stage_seed": 0,
+     "this_stage_prefix": 1,
+     "client_visible_T0r74_rows": 284,
+     "client_rows_returned": 2500
+    }
+   },
+   "whole_db_total": 20,
+   "this_stage_total": 1
+  }
+ },
+ "distinct_refusal_texts": 23,
+ "refusals_md": "| 被拒原文（逐字） | 工具 | 次数 | 首个见证 |\n| --- | --- | --- | --- |\n| `非法迁移: claim 要求状态 [待领取]，当前是 [待验收]` | claim | 3 | T0r74 @ 2026-09-27T20:57:34Z |\n| `语料 [spec:T0r74.1:r1] 已通过审核，无需重复创建` | omega_spec_create | 2 | T0r74.1 @ 2026-09-27T20:58:05Z |\n| `语料 [spec:T0r74.1:r1] 当前状态为 [approved]，不是待审核状态` | omega_spec_review | 2 | T0r74.1 @ 2026-09-27T20:58:05Z |\n| `非法验收: 任务处于 [已完成]，需先 submit` | verify | 16 | T0r74.1 @ 2026-09-27T20:58:05Z |\n| `语料 [spec:T0r74.2:r1] 已通过审核，无需重复创建` | omega_spec_create | 2 | T0r74.2 @ 2026-09-27T20:58:05Z |\n| `语料 [spec:T0r74.2:r1] 当前状态为 [approved]，不是待审核状态` | omega_spec_review | 2 | T0r74.2 @ 2026-09-27T20:58:05Z |\n| `语料 [spec:T0r74.3:r1] 已通过审核，无需重复创建` | omega_spec_create | 2 | T0r74.3 @ 2026-09-27T20:58:05Z |\n| `语料 [spec:T0r74.3:r1] 当前状态为 [approved]，不是待审核状态` | omega_spec_review | 2 | T0r74.3 @ 2026-09-27T20:58:05Z |\n| `语料 [spec:T0r74.4:r1] 已通过审核，无需重复创建` | omega_spec_create | 2 | T0r74.4 @ 2026-09-27T20:58:05Z |\n| `语料 [spec:T0r74.4:r1] 当前状态为 [approved]，不是待审核状态` | omega_spec_review | 2 | T0r74.4 @ 2026-09-27T20:58:05Z |\n| `语料 [spec:T0r74.5:r1] 已通过审核，无需重复创建` | omega_spec_create | 2 | T0r74.5 @ 2026-09-27T20:58:05Z |\n| `语料 [spec:T0r74.5:r1] 当前状态为 [approved]，不是待审核状态` | omega_spec_review | 2 | T0r74.5 @ 2026-09-27T20:58:05Z |\n| `语料 [spec:T0r74.6:r1] 已通过审核，无需重复创建` | omega_spec_create | 2 | T0r74.6 @ 2026-09-27T20:58:06Z |\n| `语料 [spec:T0r74.6:r1] 当前状态为 [approved]，不是待审核状态` | omega_spec_review | 2 | T0r74.6 @ 2026-09-27T20:58:06Z |\n| `语料 [spec:T0r74.7:r1] 已通过审核，无需重复创建` | omega_spec_create | 2 | T0r74.7 @ 2026-09-27T20:58:06Z |\n| `语料 [spec:T0r74.7:r1] 当前状态为 [approved]，不是待审核状态` | omega_spec_review | 2 | T0r74.7 @ 2026-09-27T20:58:06Z |\n| `语料 [spec:T0r74.8:r1] 已通过审核，无需重复创建` | omega_spec_create | 2 | T0r74.8 @ 2026-09-27T20:58:06Z |\n| `语料 [spec:T0r74.8:r1] 当前状态为 [approved]，不是待审核状态` | omega_spec_review | 2 | T0r74.8 @ 2026-09-27T20:58:06Z |\n| `非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute` | execute | 2 | T0r74 @ 2026-09-27T20:58:06Z |\n| `非法迁移: submit 要求状态 [执行中]，当前是 [待验收]` | submit | 2 | T0r74 @ 2026-09-27T20:58:06Z |\n| `任务 [T0r74] 未开启 Omega 强验证（description 缺少 [omega:required] 标记），无需创建语料` | omega_spec_create | 2 | T0r74 @ 2026-09-27T20:58:06Z |\n| `任务 [T0r74] 未开启 Omega 强验证，无语料可审` | omega_spec_review | 2 | T0r74 @ 2026-09-27T20:58:06Z |\n| `任务 [T0r74] 未开启 Omega 强验证，无需成果复验` | omega_result_verify | 1 | T0r74 @ 2026-09-27T21:00:58Z |",
+ "note": "规格点名的 laya / issue_up 若在 call_log 里 0 命中，说明本 build 没有这两个工具名；等价能力由谁承担要写在报告里，不许写『已开启』",
+ "refuse": [],
+ "queried_at_utc": "2026-09-27T21:04:49+00:00"
+}

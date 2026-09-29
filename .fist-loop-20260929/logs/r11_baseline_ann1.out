@@ -1,0 +1,2123 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\baseline_r11_generic_ann.py", line 94, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\baseline_r11_generic_ann.py", line 54, in main
+    ast = og.compile_src(src)
+  File "E:\IDEProjects\AI\Cypy\scripts\omega_gate.py", line 53, in compile_src
+    return Parser(list(Lexer(src).tokenize())).parse()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 1157, in parse
+    stmt = self._parse_statement()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 1210, in _parse_statement
+    return self._parse_func_def(decorators, signature_only=signature_only)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 1441, in _parse_func_def
+    body = self._parse_block()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4508, in _parse_block
+    stmt = self._parse_statement(signature_only=signature_only)
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 1247, in _parse_statement
+    return self._parse_return_stmt()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 2054, in _parse_return_stmt
+    value = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3647, in _parse_not_expr
+    return self._parse_comparison()
+           ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3650, in _parse_comparison
+    left = self._parse_bitwise_or()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3706, in _parse_bitwise_or
+    left = self._parse_bitwise_xor()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3718, in _parse_bitwise_xor
+    left = self._parse_bitwise_and()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3730, in _parse_bitwise_and
+    left = self._parse_shift_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3738, in _parse_shift_expr
+    left = self._parse_additive_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3778, in _parse_additive_expr
+    left = self._parse_multiplicative_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3786, in _parse_multiplicative_expr
+    left = self._parse_unary_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3819, in _parse_unary_expr
+    return self._parse_cast_expr()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3835, in _parse_cast_expr
+    base = self._parse_power_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3822, in _parse_power_expr
+    base = self._parse_call()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3846, in _parse_call
+    func = self._parse_primary()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 4141, in _parse_primary
+    first_expr = self._parse_expression()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3596, in _parse_expression
+    expr = self._parse_pipeline_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3764, in _parse_pipeline_expr
+    left = self._parse_or_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3622, in _parse_or_expr
+    left = self._parse_and_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3630, in _parse_and_expr
+    left = self._parse_not_expr()
+  File "E:\IDEProjects\AI\Cypy\cypyc\parser\parser.py", line 3638, in _parse_not_expr
+    if self._current().type == TokenType.NOT:
+       ~~~~~~~~~~~~~^^
+RecursionError: maximum recursion depth exceeded

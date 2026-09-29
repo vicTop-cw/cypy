@@ -1,0 +1,52 @@
+{
+ "key": "r4_advance",
+ "tag": "[loop:20260927-loop:R4-推进]",
+ "assignee": "cypy-advancer",
+ "difficulty": "难",
+ "description": "[omega:required] [loop:20260927-loop:R4-推进] 推进（advance）R4：在指挥官已裁的半径「只补已声明未实现」内自主推进本项目，半径外一律量化挂账、零不可逆动作。\n① `Never` 类型名落到分析器名称面：以 `SYNTAX/02-type-annotations.md:125-133` 文档自己给的工作例为夹具，两棵树（改前/改后）逐字节同夹具对跑 CLI，改前必红且红因只能是 `Undefined name 'Never'`，改后必绿，产物必须出现既有 codegen 的 `-> NoReturn` 映射（本环不动 codegen）；负对照 `NeverX` 改后仍须被拒。\n② `repr/open/iter` 三个「文档在用、名称表缺席」的内建名补齐：声明面由 `SYNTAX/**` + `PROJECT-SPEC/**` 的实测引用行证明（行号量出来，不是抄），未声明的六个内建名（chr/hex/pow/round/divmod/bytes）在同一棵改后树必须仍被拒，作为「白名单没整片放开」的反向证据。\n③ 半径外的运算子与类型面量化成表：12 条复合赋值 + 10 条二元/一元表达式 + `*char` + `let` 重赋值，规格取文档自己的等价式（`x = x <op> 3`）与产物逐字比，三态可判（ok / rejected / silent_wrong），`silent_wrong` 与 `declared_rejected` 两个集合钉成逐字名单，挂账项逐条给去向，两条已知缺陷真入账成卡。\n④ 补口要有永久回归锁：新增 `tests/test_loop_20260927_advance_r4.py`，工作区全绿、改前码树必红，两棵树 sha 与模块解析身份自证，收集数与「过+红+错」基数自证。\n⑤ 产物面不动：77 档 `examples/*.cypy` 在两棵树上各转译一遍，剔除时间戳类行后 `.pyx` 必须逐字相同；允许不同的只有文本里出现本环新放行名调用点的文件，且逐行点名。\n⑥ 语料零新增红：同一趟扫描里改后相对改前新增的诊断行必须为空，并配两支见证夹具（用 `Never` 的必须两态不同、用 `NeverX` 的必须两态都报），否则「零新增」可能是空集蒙出来的。\n⑦ 三套判据体系同刻为绿且地板取自上一环实测件；冻结面（`PROJECT-SPEC/**`、`SYNTAX/**`）porcelain 与 43 个 sha 两栏都不许动；半径按 mtime 归因到本环，产品面只许两档分析器。\n⑧ 不可逆动作零执行：产品面无删除/改名/本环新增，账本面无毁灭型工具、`archive` 只允许本环号段；检测器自带合成违例对照，抓不到即自判坏。",
+ "fingerprint": {
+  "必须": "每条主张配一个可复跑判据件（键名必须是被引件里真实存在的键）；改前/改后两棵树对照并自带身份探针；半径外形状量化成表且逐条给去向；已知缺陷真入账成卡并双向对齐号；三套体系地板取上一环实测件；被拒原文逐字入账",
+  "禁止": "改 PROJECT-SPEC / SYNTAX 冻结语义；重注册 golden；git add/commit/push；删文件或删他人 worktree；删除或放宽既有测试；为了让绿而降低判据；把「没做到」写成「已做」；把半径外的形状顺手实现",
+  "半径": "产品面只允许 `cypyc/analyzer/scope_analyzer.py` 与 `cypyc/analyzer/type_checker.py` 两档（名称表补口）；账本面只允许新增卡与本轮环节记录；tests/ 只新增不改动既有用例",
+  "地板": "pytest/collect 取 polish_r4_baselines.json 实测 1976 + 本环新增锁数；自研套件 47；e2e PASS 25；驱动件软账只降不升"
+ },
+ "needle_verification": {
+  "why": "派单之前逐条验过：计划里 16 个 needle（每条法 2 个）必须是被引件里真实存在的键名，不接受子串命中——上一环实测有 8 个键名盘上不存在、2 个是撞文件名的假命中，本环不重复那个错，所以自证件把这条做成会红的门",
+  "checked_len": 16, "missing_before": 0, "false_substring_before": 0,
+  "rule": "needle ∈ 被引件的键集合（递归取 dict/list 里的所有键名）；不在即拒派单"
+ },
+ "laws": [
+  {
+   "name": "`Never` 在分析器名称面落地：文档工作例真跑 CLI、改前必红改后必绿、产物走既有 NoReturn 映射，且没在文档里的名字仍被拒",
+   "artifacts": [[".fist-loop-20260927/advance_r4_never.json", "cases", 7000], [".fist-loop-20260927/advance_r4_never.json", "canary", 7000]]
+  },
+  {
+   "name": "`repr/open/iter` 按文档引用行补齐名称面，六个未声明内建名在同一棵改后树仍被拒（白名单没有整片放开）",
+   "artifacts": [[".fist-loop-20260927/advance_r4_builtins.json", "added", 12000], [".fist-loop-20260927/advance_r4_builtins.json", "doc_evidence", 12000]]
+  },
+  {
+   "name": "半径外的运算子与类型面量化成三态表并逐条给去向，两条已知缺陷真入账且卡号与量表双向对齐",
+   "artifacts": [[".fist-loop-20260927/advance_r4_scope_face.json", "augmented_matrix", 8000], [".fist-loop-20260927/advance_r4_filed.json", "filed", 1800]]
+  },
+  {
+   "name": "补口配永久回归锁：工作区全绿、改前码树必红，两棵树身份自证、收集数与「过+红+错」基数自证",
+   "artifacts": [[".fist-loop-20260927/advance_r4_locks.json", "lane_prefix_code", 4000], [".fist-loop-20260927/advance_r4_locks.json", "identity", 4000]]
+  },
+  {
+   "name": "产物面不动：77 档语料两态转译剔除时间戳行后逐字相同，不同处只允许出现在用了新放行名调用点的文件上",
+   "artifacts": [[".fist-loop-20260927/advance_r4_codegen_diff.json", "all_textual_identical", 15000], [".fist-loop-20260927/advance_r4_codegen_diff.json", "differing_unjustified", 15000]]
+  },
+  {
+   "name": "语料零新增红，且两支见证夹具证明这把尺子看得见被测形状（零不是空集蒙出来的）",
+   "artifacts": [[".fist-loop-20260927/advance_r4_corpus.json", "samples_scanned", 15000], [".fist-loop-20260927/advance_r4_corpus.json", "witnesses", 15000]]
+  },
+  {
+   "name": "三套判据体系同刻为绿、地板来自上一环实测件，冻结面两栏未动，半径按 mtime 只到两档分析器，驱动件 lint 硬错零容忍",
+   "artifacts": [[".fist-loop-20260927/advance_r4_baselines.json", "systems", 3000], [".fist-loop-20260927/advance_r4_drivers_lint.json", "hard_violations", 2000]]
+  },
+  {
+   "name": "零不可逆动作：产品面无删除/改名/本环新增，账本面无毁灭型工具且 archive 只在本环号段，检测器自带合成违例对照",
+   "artifacts": [[".fist-loop-20260927/advance_r4_irreversible.json", "verdict", 3500], [".fist-loop-20260927/advance_r4_irreversible.json", "canary", 3500]]
+  }
+ ]
+}

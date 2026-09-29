@@ -1,0 +1,121 @@
+{
+ "CTRL_scalar_mismatch": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Type mismatch: expected int, got str at 2:9"
+  ]
+ },
+ "CTRL_list_elem_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Element 1 type mismatch: expected int, got str at 2:9"
+  ]
+ },
+ "D01_value_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "D02_key_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "D03_return_value_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "D04_nested_list_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "D05_alias_dict_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "D06_dict_of_dict_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "D07_bool_key_under_str": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G14_hetero_both": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G01_empty_literal": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G02_correct": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G03_hetero_values": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G04_widening_value": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G05_bool_widening": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G06_user_type_value": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G07_untyped_let": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G08_nested_correct": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G09_dict_of_dict_ok": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G10_param_annotation": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G11_empty_then_return": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G12_empty_untyped": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G13_scalar_alias_dict": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "ledger": {
+  "entries": 60,
+  "open_titles": 60,
+  "fixed_this_round": 6,
+  "fixed_sections_total": 6
+ },
+ "server": {
+  "bug_tasks": 56,
+  "referenced": 52,
+  "bug_card_only": 8,
+  "bug_card_only_ids": [
+   "BUG-44",
+   "BUG-45",
+   "BUG-46",
+   "BUG-47",
+   "BUG-48",
+   "BUG-49",
+   "BUG-50",
+   "BUG-51"
+  ],
+  "orphans": [
+   "T0r2",
+   "T0r3",
+   "T0r4",
+   "T0r5"
+  ],
+  "orphans_match_known_whitelist": true
+ },
+ "report": {
+  "fragment": "r3_fix_body.md",
+  "exists": true,
+  "bytes": 20815
+ },
+ "refuse": []
+}

@@ -1,0 +1,2 @@
+REFUSED (开批门) local | 账上查无根单 T0r999-不存在的根单前缀
+CONCLUSION refused=1 stage=close gate_reasons=1

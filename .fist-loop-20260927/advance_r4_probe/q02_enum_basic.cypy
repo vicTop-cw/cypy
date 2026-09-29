@@ -1,0 +1,10 @@
+enum Color:
+    RED
+    GREEN
+    BLUE
+
+def main() -> int:
+    let c: Color = Color.RED
+    print(c)
+    print(c.name)
+    return 0

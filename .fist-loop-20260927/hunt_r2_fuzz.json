@@ -1,0 +1,329 @@
+{
+ "refuse": [],
+ "budget": 72,
+ "mutants_run": 43,
+ "silent_defects": [],
+ "explicit_failures": 30,
+ "clean_rows": 16,
+ "rows": [
+  {
+   "case": "struct:unmutated",
+   "rc": 0,
+   "silent": false,
+   "baseline_ok": true
+  },
+  {
+   "case": "struct:delchar0",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:delchar11",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:cut11",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:delchar22",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:cut22",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:delchar33",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:cut33",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:delchar44",
+   "rc": 0,
+   "banner": true,
+   "bytes": 794,
+   "silent": false
+  },
+  {
+   "case": "struct:cut44",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:delchar55",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:cut55",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:delchar66",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:cut66",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:unbalanced_paren",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "struct:keyword_case",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "generic:unmutated",
+   "rc": 0,
+   "silent": false,
+   "baseline_ok": true
+  },
+  {
+   "case": "generic:delchar0",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "generic:delchar10",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "generic:cut10",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "generic:delchar20",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "generic:cut20",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "generic:delchar30",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "generic:cut30",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "generic:delchar40",
+   "rc": 0,
+   "banner": true,
+   "bytes": 780,
+   "silent": false
+  },
+  {
+   "case": "generic:cut40",
+   "rc": 0,
+   "banner": true,
+   "bytes": 761,
+   "silent": false
+  },
+  {
+   "case": "generic:delchar50",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "generic:cut50",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "generic:delchar60",
+   "rc": 0,
+   "banner": true,
+   "bytes": 780,
+   "silent": false
+  },
+  {
+   "case": "generic:cut60",
+   "rc": 0,
+   "banner": true,
+   "bytes": 780,
+   "silent": false
+  },
+  {
+   "case": "generic:unbalanced_paren",
+   "rc": 0,
+   "banner": true,
+   "bytes": 780,
+   "silent": false
+  },
+  {
+   "case": "generic:keyword_case",
+   "rc": 0,
+   "banner": true,
+   "bytes": 780,
+   "silent": false
+  },
+  {
+   "case": "enum:unmutated",
+   "rc": 0,
+   "silent": false,
+   "baseline_ok": true
+  },
+  {
+   "case": "enum:delchar0",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "enum:delchar8",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "enum:cut8",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "enum:delchar16",
+   "rc": 0,
+   "banner": true,
+   "bytes": 833,
+   "silent": false
+  },
+  {
+   "case": "enum:cut16",
+   "rc": 0,
+   "banner": true,
+   "bytes": 781,
+   "silent": false
+  },
+  {
+   "case": "enum:delchar24",
+   "rc": 0,
+   "banner": true,
+   "bytes": 833,
+   "silent": false
+  },
+  {
+   "case": "enum:cut24",
+   "rc": 0,
+   "banner": true,
+   "bytes": 798,
+   "silent": false
+  },
+  {
+   "case": "enum:delchar32",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "enum:cut32",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "enum:delchar40",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "enum:cut40",
+   "rc": 1,
+   "banner": false,
+   "bytes": 0,
+   "silent": false
+  },
+  {
+   "case": "enum:unbalanced_paren",
+   "rc": 0,
+   "banner": true,
+   "bytes": 834,
+   "silent": false
+  },
+  {
+   "case": "enum:keyword_case",
+   "rc": 0,
+   "banner": true,
+   "bytes": 834,
+   "silent": false
+  }
+ ]
+}

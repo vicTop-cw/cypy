@@ -1,0 +1,121 @@
+#!bin cypy
+# ============================================================
+# errors.cypy — Core error types for Vanna
+# ============================================================
+
+# --- Base error hierarchy ---
+
+class VannaError(Exception):
+    """Base error for all Vanna errors."""
+
+    def __init__(self, message: str):
+        super().__init__(message)
+        self.message = message
+
+    def __str__(self) -> str:
+        return self.message
+
+
+# --- Authentication / authorization errors ---
+
+class AuthenticationError(VannaError):
+    """Raised when user authentication fails."""
+
+    def __init__(self, message: str = "Authentication required"):
+        super().__init__(message)
+
+
+class AuthorizationError(VannaError):
+    """Raised when user lacks required permissions."""
+
+    def __init__(self, message: str = "Insufficient permissions", required_groups: list<str> = []):
+        super().__init__(message)
+        self.required_groups = required_groups
+
+
+# --- Tool errors ---
+
+class ToolError(VannaError):
+    """Raised when a tool execution fails."""
+
+    def __init__(self, tool_name: str, message: str):
+        super().__init__(f"Tool '{tool_name}' failed: {message}")
+        self.tool_name = tool_name
+
+
+class ToolNotFoundError(VannaError):
+    """Raised when a requested tool is not registered."""
+
+    def __init__(self, tool_name: str):
+        super().__init__(f"Tool not found: '{tool_name}'")
+        self.tool_name = tool_name
+
+
+class ToolValidationError(ToolError):
+    """Raised when tool arguments fail validation."""
+
+    def __init__(self, tool_name: str, message: str):
+        super().__init__(tool_name, f"Validation error: {message}")
+
+
+# --- SQL errors ---
+
+class SqlError(VannaError):
+    """Raised when SQL execution fails."""
+
+    def __init__(self, message: str, sql: str = "", query_type: str = ""):
+        super().__init__(message)
+        self.sql = sql
+        self.query_type = query_type
+
+
+class SqlSecurityError(SqlError):
+    """Raised when a SQL query violates security policy."""
+
+    def __init__(self, message: str = "Query violates security policy", sql: str = ""):
+        super().__init__(message, sql, "SECURITY")
+
+
+# --- Agent errors ---
+
+class AgentError(VannaError):
+    """Raised when the agent encounters an unrecoverable error."""
+
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class MaxIterationsError(AgentError):
+    """Raised when the agent exceeds maximum iteration count."""
+
+    def __init__(self, max_iterations: int):
+        super().__init__(f"Agent exceeded maximum iterations: {max_iterations}")
+        self.max_iterations = max_iterations
+
+
+# --- LLM errors ---
+
+class LlmError(VannaError):
+    """Raised when an LLM call fails."""
+
+    def __init__(self, message: str, model: str = ""):
+        super().__init__(message)
+        self.model = model
+
+
+class RateLimitError(LlmError):
+    """Raised when LLM rate limit is hit."""
+
+    def __init__(self, model: str = "", retry_after: float = 0.0):
+        super().__init__(f"Rate limit exceeded for model '{model}'", model)
+        self.retry_after = retry_after
+
+
+# --- Storage errors ---
+
+class StorageError(VannaError):
+    """Raised when a storage operation fails."""
+
+    def __init__(self, message: str, operation: str = ""):
+        super().__init__(message)
+        self.operation = operation

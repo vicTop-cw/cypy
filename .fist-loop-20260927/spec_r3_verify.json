@@ -1,0 +1,69 @@
+{
+ "key": "r3_verify",
+ "tag": "[loop:20260927-loop:R3-验证]",
+ "assignee": "cypy-verifier",
+ "difficulty": "难",
+ "description": "[loop:20260927-loop:R3-验证] 验证（verify）R3：不复用修复环自己的结论，独立出题复算三件事。(1) 逐单回退矩阵：在 `git worktree` 切出的快照树里（HEAD 码 + 本轮产品码 + 本轮测试），把六件修复**逐个**改回修前文本，要求该件的锁必须变红、其余锁不受牵连，改回后 sha 必须逐字复原——这是『锁真的在拦这条缺陷』的正面证据，比『今天全绿』强。(2) 调用面独立复验：`cypyc transpile` 四旗标、`cypy_bridge` 的 CUnion/realloc 真实构造、`get_compilation_order` 的多哈希种子子进程、`build_block_checker` 真实 AST，都用与修复环不同的脚本重跑一遍（不 import 判据件，只读盘面）。(3) 账本与报告自洽审计：报告正文每条计数与《被拒原文》逐字对表，`### FIXED` 段里的每个可复跑命令当场再跑。另附三套判据体系（pytest / 自研套件 / e2e golden）与 git 红线的同一时刻复算，基线只升不降。omega/laya/issue_up/call_log 全开，不可逆动作一律挂账不执行（不 push、不 commit、不改冻结文档）。",
+ "fingerprint": {
+  "必须": "六件各有『改回修前 ⇒ 该件锁变红』的矩阵行与复原证明（前后 sha 逐字相等）；调用面复验用与修复环不同的脚本且只读盘面；报告每条计数能从判据件反解；三套体系同一时刻复算且不低于 1920/47/25；快照树自证身份（跑的是快照不是工作区）",
+  "禁止": "把工作区当快照树跑（身份探针必须拦）；改产品码或测试来凑验证绿；弱化/删除既有测试；git add/commit/push/删别人的 worktree/改 PROJECT-SPEC 与 SYNTAX；把『没复验到』写成『已验证』；拿上一环的判据件当本轮证据"
+ },
+ "laws": [
+  {
+   "name": "逐单回退矩阵：六件逐个改回修前文本，该件锁必须变红且其余锁不连带",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_matrix.json", "rows", 6],
+    [".fist-loop-20260927/verify_r3_matrix.json", "identity", 4]
+   ]
+  },
+  {
+   "name": "矩阵的复原自证：每行 mutation 后文件 sha 必须逐字回到 mutation 前",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_matrix.json", "sha_verified_rows", 6],
+    [".fist-loop-20260927/verify_r3_matrix.json", "all_restored", 1]
+   ]
+  },
+  {
+   "name": "调用面独立复验（与修复环不同脚本、只读盘面）：CLI 四旗标 + bridge 真实构造 + 多哈希种子",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_callsite.json", "checks", 8],
+    [".fist-loop-20260927/verify_r3_callsite.json", "checks_all_true", 1]
+   ]
+  },
+  {
+   "name": "报告与账本自洽审计：正文计数反解 + 逐字被拒对表 + FIXED 段里的复跑命令当场再跑",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_report_audit.json", "counts", 6],
+    [".fist-loop-20260927/verify_r3_report_audit.json", "repro_reruns", 6]
+   ]
+  },
+  {
+   "name": "三套判据体系同一时刻复算且不低于 1920 / 47 / 25，git 红线未动",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_baselines.json", "pytest", 8],
+    [".fist-loop-20260927/verify_r3_baselines.json", "git", 5]
+   ]
+  },
+  {
+   "name": "负面主张也要正面测：本轮改动半径应为空（验证环不修产品码），mtime 反解而不是自述",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_baselines.json", "radius", 3],
+    [".fist-loop-20260927/verify_r3_baselines.json", "radius_claim_ok", 1]
+   ]
+  },
+  {
+   "name": "不可逆动作零执行、只挂账：push/commit/删分支/改冻结文档/合并 PR 逐条点名并给当下状态",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_irreversible.json", "items", 5],
+    [".fist-loop-20260927/verify_r3_irreversible.json", "executed_none", 1]
+   ]
+  },
+  {
+   "name": "上一环遗留主张的回算：四件翻没翻、两件声明侧、以及『报告说过但盘面变了』的漂移",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_matrix.json", "declared_side_still_true", 4],
+    [".fist-loop-20260927/verify_r3_matrix.json", "carried_claims", 6]
+   ]
+  }
+ ]
+}

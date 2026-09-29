@@ -1,0 +1,191 @@
+{
+ "key": "r2_polish",
+ "root_task": "T0r60",
+ "assignee": "cypy-polisher",
+ "stage": "R2-打磨",
+ "forbid": "改既有测试的断言或数量（只能加不能减）；对本环没写的行做排版动作；把 142 个文件的 formatter 债一次清掉；动 PROJECT-SPEC/ 与 SYNTAX/ 冻结语义；git add/commit/push；用三套行为基线全绿代替生效性证据；重跑非幂等的入账/上卷脚本；把「产物里出现了某字样」当调用面判据",
+ "laws": [
+  {
+   "name": "L1 生效性证据双口径咬合：AST 同名候选与运行时 co_firstlineno 互相印证，删前留档",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r2_evidence.json",
+     "live_firstlineno",
+     900
+    ],
+    [
+     ".fist-loop-20260927/polish_r2_evidence.json",
+     "class_dict_identity",
+     900
+    ]
+   ]
+  },
+  {
+   "name": "L2 删除驱动四条自证：锚点只出现一次、变异必须可证、绑定行号≠待删行号、重跑被幂等守卫拒绝",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r2_cut.json",
+     "removed_text",
+     1500
+    ],
+    [
+     ".fist-loop-20260927/polish_r2_cut_guard.json",
+     "期望 2 处同名 def",
+     600
+    ]
+   ]
+  },
+  {
+   "name": "L3 换一路口径从仓库外快照反解：符号集合不变、切片与驱动记的文本逐字相等、全树遮蔽归零",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r2_after.json",
+     "slice_from_snapshot_matches_removed_text",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/polish_r2_after.json",
+     "tree_dupes",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "L4 机制化结构判据（BUG-42 的形状回不来），并配一条合成违例证明它自己能被抓到",
+   "artifacts": [
+    [
+     "tests/test_polish_20260927_r2.py",
+     "test_shadow_detector_catches_a_synthetic_pair",
+     3000
+    ],
+    [
+     "tests/test_polish_20260927_r2.py",
+     "test_product_code_has_no_shadowed_method_definitions",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "L5 class 侧空白面补永久锁：@staticmethod 与绑定方法签名、classmethod 保留显式 cls（对齐 SYNTAX/08:123）",
+   "artifacts": [
+    [
+     "tests/test_polish_20260927_r2.py",
+     "test_class_side_classmethod_keeps_explicit_cls",
+     3000
+    ],
+    [
+     "tests/test_polish_20260927_r2.py",
+     "test_class_side_static_and_bound_signatures",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "L6 被删守卫的语义仍在调用面生效（成对：嵌套 meta 必被抓、模块级 meta 不误抓），且绑定的仍是活份实现",
+   "artifacts": [
+    [
+     "tests/test_polish_20260927_r2.py",
+     "test_nested_meta_block_is_rejected_with_position",
+     3000
+    ],
+    [
+     "tests/test_polish_20260927_r2.py",
+     "test_bound_visitors_are_the_surviving_implementations",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "L7 三套判据体系同一时刻复算且只升不降（1894/47/25），git 红线 HEAD 未动",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r2_baselines.json",
+     "1894 passed",
+     900
+    ],
+    [
+     ".fist-loop-20260927/polish_r2_baselines.json",
+     "PASS=25 FAIL=0",
+     900
+    ]
+   ]
+  },
+  {
+   "name": "L8 作用域化 lint 只判亲笔行，并把「本环只删不加」做成可机器否证的断言（含必然违例自检）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r2_lint.json",
+     "selfprobe-caught",
+     400
+    ],
+    [
+     ".fist-loop-20260927/polish_r2_lint.json",
+     "added_lines",
+     400
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "L1 生效性证据双口径咬合（AST 候选 + 运行时 co_firstlineno，删前留档）",
+   ".fist-loop-20260927/polish_r2_evidence.json",
+   "live_firstlineno"
+  ],
+  [
+   "L2 删除驱动四条自证（锚点唯一、变异可证、绑定≠待删、幂等守卫）",
+   ".fist-loop-20260927/polish_r2_cut_guard.json",
+   "期望 2 处同名 def"
+  ],
+  [
+   "L3 仓库外快照反解（符号集合不变、切片逐字相等、全树遮蔽归零）",
+   ".fist-loop-20260927/polish_r2_after.json",
+   "slice_from_snapshot_matches_removed_text"
+  ],
+  [
+   "L4 结构判据机制化并配合成违例（判据能自己被抓到）",
+   "tests/test_polish_20260927_r2.py",
+   "test_shadow_detector_catches_a_synthetic_pair"
+  ],
+  [
+   "L5 class 侧空白面补锁（staticmethod/绑定方法/显式 cls）",
+   "tests/test_polish_20260927_r2.py",
+   "test_class_side_static_and_bound_signatures"
+  ],
+  [
+   "L6 被删守卫语义仍在调用面生效（成对）+ 绑定的仍是活份",
+   "tests/test_polish_20260927_r2.py",
+   "test_nested_meta_block_is_rejected_with_position"
+  ],
+  [
+   "L7 三套基线同一时刻复算只升不降 + git 红线",
+   ".fist-loop-20260927/polish_r2_baselines.json",
+   "1894 passed"
+  ],
+  [
+   "L8 作用域化 lint：亲笔行零违例 + 纯删除可证 + 必然违例自检",
+   ".fist-loop-20260927/polish_r2_lint.json",
+   "selfprobe-caught"
+  ]
+ ],
+ "root_deliverable": "R2-打磨 交付：{REPORT}；半径=不改变对外语义的可验证收敛三件——① 清偿 BUG-42：按生效性证据（co_firstlineno 2084/926 与 AST 候选 [1418,2084]/[484,926] 咬合）删除两处被遮蔽的死码，共 20 行，删除前后模块级/类内符号集合逐档相同、快照切片与驱动记录的 removed_text 逐字相等、全树同名遮蔽计数归零、绑定行号上移量恰等于删除行数（2084→2076、926→914）；② 机制化结构判据：同一类体内同名方法即红，配合成违例对照，删除前实测为红并逐字点名两处；③ 给 R2-验证 指出的 class 侧空白面补 8 条永久锁（含被删守卫语义仍在调用面生效的成对锁）。三套基线 1894 passed / 47/47 / PASS=25 FAIL=0，HEAD 仍 17d68b4、暂存区 0；作用域化 lint 亲笔 147 行零违例、两档产品码新增 0 行（纯删除）。本环自身缺陷当场列 §五，不隐藏",
+ "root_marker": "[selfdrive-polish]",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/polish_r2_baselines.json",
+   "1894 passed",
+   900
+  ],
+  [
+   ".fist-loop-20260927/polish_r2_after.json",
+   "tree_dupes",
+   2000
+  ],
+  [
+   "memory/bugs.md",
+   "FIXED(打磨=已完成)",
+   60000
+  ]
+ ],
+ "root_verify_reason": "本环结论全部由盘上证据件反解：生效性双口径、仓库外快照独立反解、结构判据带合成违例、三套基线只升不降、lint 作用域限亲笔行；BUG-42 的 FIXED 段已追加进 memory/bugs.md 且可从 sqlite 与账本双向回读"
+}

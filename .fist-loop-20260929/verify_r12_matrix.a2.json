@@ -1,0 +1,198 @@
+{
+ "pid": 43536,
+ "cells": {
+  "L0 现树（应全绿）": {
+   "pytest": {
+    "rc": 0,
+    "n_failed": 0,
+    "failed_ids": [],
+    "crash": false,
+    "summary": "============================= 144 passed in 1.14s ============================="
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=23 passed=23 failed=0 refused=0 accuracy=100.00% rc=0",
+    "failed": 0
+   },
+   "identity": [
+    {
+     "anchor_gone": true
+    }
+   ]
+  },
+  "M1 摘掉注解位接线": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "                # SYNTAX/11「类型约束」：注解位写的类型实参也要过声明界（`l",
+     "removed_len": 247
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "摘除",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 16,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#10]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#12]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#15]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#18]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#1]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#2]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#6]",
+     "tests/test_generic_bounds_r12.py::test_annotation_position_rejects_on_struct_form_too",
+     "tests/test_generic_bounds_r12.py::test_annotation_position_rejects_union_bound_violation",
+     "tests/test_generic_bounds_r12.py::test_arity_and_bound_diagnostic_coexist",
+     "tests/test_generic_bounds_r12.py::test_bound_diagnostic_points_at_the_annotation_site"
+    ],
+    "crash": false,
+    "summary": "======================= 16 failed, 128 passed in 0.98s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=23 passed=15 failed=8 refused=0 accuracy=65.22% rc=1",
+    "failed": 8
+   }
+  },
+  "M2 摘掉显式实参构造位接线": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "        # 类/结构体的显式类型实参：界判定在此完成。函数由 `_visit_Call` 里那份",
+     "removed_len": 224
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "摘除",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 2,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#8]",
+     "tests/test_generic_bounds_r12.py::test_explicit_type_args_at_constructor_reject_violation"
+    ],
+    "crash": false,
+    "summary": "======================== 2 failed, 142 passed in 1.00s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=23 passed=22 failed=1 refused=0 accuracy=95.65% rc=1",
+    "failed": 1
+   }
+  },
+  "M3 字面量位退回窄复制": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "                # 检查泛型参数约束：复用调用位那一份判定。原来这里只认单名界\n    ",
+     "removed_len": -605
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 3,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#20]",
+     "tests/test_generic_bounds_r12.py::test_struct_literal_path_reuses_the_shared_checker",
+     "tests/test_generic_bounds_r12.py::test_struct_literal_position_rejects_union_bound"
+    ],
+    "crash": false,
+    "summary": "======================== 3 failed, 141 passed in 1.03s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=23 passed=22 failed=1 refused=0 accuracy=95.65% rc=1",
+    "failed": 1
+   }
+  },
+  "M4 共用件短路（三处接线全成装饰）": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "        constraints = getattr(decl, \"generic_constra",
+     "removed_len": -68
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 22,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#10]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#12]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#15]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#18]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#1]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#20]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#22]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#2]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#6]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#8]",
+     "tests/test_generic_bounds_r12.py::test_annotation_position_rejects_on_struct_form_too"
+    ],
+    "crash": false,
+    "summary": "======================= 22 failed, 122 passed in 1.03s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=23 passed=12 failed=11 refused=0 accuracy=52.17% rc=1",
+    "failed": 11
+   }
+  },
+  "M5 只改注释（对照格，必须 0 红）": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "                # SYNTAX/11「类型约束」：注解位写的类型实参也要过声明界（`l",
+     "removed_len": -2
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "只改注释",
+     "code_unchanged": true,
+     "comment_actually_changed": true
+    }
+   ],
+   "pytest": {
+    "rc": 0,
+    "n_failed": 0,
+    "failed_ids": [],
+    "crash": false,
+    "summary": "============================= 144 passed in 0.99s ============================="
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=23 passed=23 failed=0 refused=0 accuracy=100.00% rc=0",
+    "failed": 0
+   }
+  }
+ }
+}

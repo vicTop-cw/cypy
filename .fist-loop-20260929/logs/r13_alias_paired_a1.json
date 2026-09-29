@@ -1,0 +1,126 @@
+{
+ "CTRL_scalar_mismatch": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Type mismatch: expected int, got str at 2:9"
+  ]
+ },
+ "CTRL_arity_bare_class": {
+  "stage": "parse",
+  "n": 1,
+  "errs": [
+   "Expected COLON, got LBRACKET at 1:10"
+  ]
+ },
+ "CTRL_bound_violation": {
+  "stage": "parse",
+  "n": 1,
+  "errs": [
+   "Expected COLON, got LBRACKET at 1:10"
+  ]
+ },
+ "CTRL_unknown_type": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "P01_tuple_inner_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "P02_tuple_flag_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "P03_list_elem_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "P04_list_elem_mixed": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "P05_dict_val_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "P06_unknown_in_tuple": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "P07_list_of_list_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "P08_tuple_arity_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A01_alias_inner_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A02_alias_flag_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A03_alias_ok": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A04_alias_unknown_arg": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A05_alias_bare_use": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A06_alias_arity_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Type alias 'Result' expects 1 generic parameter(s), but got 2 at line 1"
+  ]
+ },
+ "A07_alias_of_alias": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Type mismatch: expected Pair[Pair[int]], got tuple[tuple[int, int], tuple[str, int]] at 5:9"
+  ]
+ },
+ "A08_alias_in_param": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A09_alias_scalar_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Type mismatch: expected int, got str at 4:9"
+  ]
+ },
+ "A10_alias_bound_decl": {
+  "stage": "parse",
+  "n": 1,
+  "errs": [
+   "Expected IDENTIFIER, got COLON at 1:11"
+  ]
+ }
+}

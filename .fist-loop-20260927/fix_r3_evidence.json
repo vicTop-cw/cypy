@@ -1,0 +1,149 @@
+{
+ "flips": {
+  "C1": {
+   "before_rc": 0,
+   "before_observed": {
+    "generic_nodes": 1,
+    "collected": 0
+   },
+   "after_rc": 1,
+   "after_observed": {
+    "generic_nodes": 1,
+    "collected": 1
+   },
+   "present_after": false,
+   "expected": "before=0 → after=1",
+   "ok": true
+  },
+  "C3": {
+   "before_rc": 0,
+   "before_observed": {
+    "flag_readers": {
+     "run_default": [
+      "check_only",
+      "emit_ast",
+      "emit_cython",
+      "generate_setup"
+     ],
+     "run_build": [
+      "check_only"
+     ]
+    }
+   },
+   "after_rc": 1,
+   "after_observed": {
+    "flag_readers": {
+     "run_transpile": [
+      "check_only",
+      "emit_ast",
+      "emit_cython",
+      "generate_setup"
+     ],
+     "run_default": [
+      "check_only",
+      "emit_ast",
+      "emit_cython",
+      "generate_setup"
+     ],
+     "run_build": [
+      "check_only"
+     ]
+    }
+   },
+   "present_after": false,
+   "expected": "before=0 → after=1",
+   "ok": true
+  },
+  "C4": {
+   "before_rc": 0,
+   "before_observed": {
+    "raised": "TypeError: this type has no size"
+   },
+   "after_rc": 1,
+   "after_observed": {
+    "raised": "UnionTypeError: Union member 'int' is a Python builtin type; pass a ctypes type (ctypes.c_int) or a "
+   },
+   "present_after": false,
+   "expected": "before=0 → after=1",
+   "ok": true
+  },
+  "C6": {
+   "before_rc": 0,
+   "before_observed": {
+    "per_seed_orders": {
+     "0": "['d', 'b', 'c', 'a', 'e']",
+     "1": "['d', 'e', 'a', 'b', 'c']",
+     "7": "['d', 'b', 'a', 'c', 'e']",
+     "42": "['c', 'e', 'b', 'd', 'a']",
+     "99": "['e', 'b', 'a', 'd', 'c']"
+    },
+    "distinct": 5
+   },
+   "after_rc": 1,
+   "after_observed": {
+    "per_seed_orders": {
+     "0": "['a', 'b', 'c', 'd', 'e']",
+     "1": "['a', 'b', 'c', 'd', 'e']",
+     "7": "['a', 'b', 'c', 'd', 'e']",
+     "42": "['a', 'b', 'c', 'd', 'e']",
+     "99": "['a', 'b', 'c', 'd', 'e']"
+    },
+    "distinct": 1
+   },
+   "present_after": false,
+   "expected": "before=0 → after=1",
+   "ok": true
+  },
+  "C5": {
+   "before_rc": 0,
+   "before_observed": {
+    "returned": "None",
+    "annotation": "int"
+   },
+   "after_rc": 0,
+   "after_observed": {
+    "returned": "None",
+    "annotation": "Optional"
+   },
+   "present_after": true,
+   "expected": "before=0 → after=0（行为被既有测试/冻结层钉住），只修声明侧",
+   "ok": true
+  },
+  "C8": {
+   "before_rc": 0,
+   "before_observed": {
+    "node_kinds": [
+     "PointerType"
+    ],
+    "errors": []
+   },
+   "after_rc": 0,
+   "after_observed": {
+    "node_kinds": [
+     "PointerType"
+    ],
+    "errors": []
+   },
+   "present_after": true,
+   "expected": "before=0 → after=0（行为被既有测试/冻结层钉住），只修声明侧",
+   "ok": true
+  }
+ },
+ "declared_side": {
+  "c5_observed": {
+   "returned": "None",
+   "annotation": "Optional"
+  },
+  "c8_doc_checks": {
+   "old_rule2_literal_gone": true,
+   "mentions_frozen_doc": true,
+   "mentions_function_scope": true
+  }
+ },
+ "judge_selfprobe": {
+  "must_catch_no_flip_on_C1": true,
+  "must_not_miss_flip_on_C1": true,
+  "must_catch_spurious_flip_on_C5": true
+ },
+ "refuse": []
+}

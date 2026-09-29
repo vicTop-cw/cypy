@@ -1,0 +1,121 @@
+{
+ "started": "2026-09-28T04:51:17+00:00",
+ "cards": [
+  "CODEGEN_augmented_xor_drops_left_operand",
+  "LEXER_bitwise_xor_and_invert_unreachable",
+  "DEFER_nested_return_exit_skips_cleanup",
+  "TEST_vacuous_success_guard_hides_assertions"
+ ],
+ "filed": [
+  {
+   "key": "CODEGEN_augmented_xor_drops_left_operand",
+   "skipped": true,
+   "summary": "[CODEGEN_augmented_xor_drops_left_operand] 复合赋值 `^=` 静默产出 `x = <右值>`，左操作数与运算符一起丢了",
+   "note": "幂等守卫：账本已有同 summary，不重发",
+   "ledger_number": "BUG-74"
+  },
+  {
+   "key": "LEXER_bitwise_xor_and_invert_unreachable",
+   "skipped": true,
+   "summary": "[LEXER_bitwise_xor_and_invert_unreachable] 文档声明的二元 `a ^ b` 与一元 `~a` 在 CLI 上不可达（与 `^:`/`~:` 构建块共用词位）",
+   "note": "幂等守卫：账本已有同 summary，不重发",
+   "ledger_number": "BUG-75"
+  },
+  {
+   "key": "DEFER_nested_return_exit_skips_cleanup",
+   "summary": "[DEFER_nested_return_exit_skips_cleanup] `defer` 的清理只注入函数体顶层出口，`if`/`for` 里的 return 静默跳过清理",
+   "skipped": false,
+   "rpc": {
+    "bug_id": "BUG-76",
+    "id": "BUG-76",
+    "task_id": "T0r94"
+   },
+   "ledger_number": "BUG-76",
+   "expected": "BUG-76",
+   "summary_on_disk": true,
+   "mechanism_on_disk": true,
+   "repro_on_disk": true,
+   "rows_in_detail": 1
+  },
+  {
+   "key": "TEST_vacuous_success_guard_hides_assertions",
+   "summary": "[TEST_vacuous_success_guard_hides_assertions] `if result.success` 型守卫让代码生成断言在编译失败时静默空过（余 7 处）",
+   "skipped": false,
+   "rpc": {
+    "bug_id": "BUG-77",
+    "id": "BUG-77",
+    "task_id": "T0r95"
+   },
+   "ledger_number": "BUG-77",
+   "expected": "BUG-77",
+   "summary_on_disk": true,
+   "mechanism_on_disk": true,
+   "repro_on_disk": true,
+   "rows_in_detail": 7
+  }
+ ],
+ "ledger": "memory/bugs.md",
+ "ledger_before_max": 75,
+ "ledger_after_max": 77,
+ "sqlite_bug_tasks_before": 71,
+ "sqlite_bug_tasks_after": 73,
+ "pinned_card_ids": {
+  "^=": "BUG-74",
+  "^": "BUG-75",
+  "~": "BUG-75",
+  "DEFER_nested_return_exit_skips_cleanup": "BUG-76"
+ },
+ "measured_artifacts": [
+  "advance_r4_scope_face.json",
+  "advance_r4_dormant.json"
+ ],
+ "repro": [
+  "python -X utf8 .fist-loop-20260927/advance_r4_scope_face.py",
+  "python -X utf8 .fist-loop-20260927/advance_r4_dormant.py"
+ ],
+ "decision_quoted": "指挥官裁决 2026-09-28：改测试期望为声明面语义（defer 调用搬到体末 + 多 defer 逆序），产品码本环不动；其余 7 处同款守卫与 defer-before-return 不可达一起入账",
+ "self_checks": [
+  {
+   "label": "DEFER_nested_return_exit_skips_cleanup：detail 里的行数要与判据件反解到的行数一致",
+   "got": 1,
+   "want": 1,
+   "why": "不许手打第二套数",
+   "ok": true
+  },
+  {
+   "label": "TEST_vacuous_success_guard_hides_assertions：detail 里的行数要与判据件反解到的行数一致",
+   "got": 7,
+   "want": 7,
+   "why": "不许手打第二套数",
+   "ok": true
+  },
+  {
+   "label": "判据件点名的卡号要等于实际落账号（不一致就是它在指一张不存在的卡）",
+   "got": [
+    4,
+    {}
+   ],
+   "want": [
+    4,
+    {}
+   ],
+   "why": "{}",
+   "ok": true
+  },
+  {
+   "label": "未跳过的卡数要与 sqlite bug 任务增量一致（md 与库两栏同判）",
+   "got": [
+    2,
+    2
+   ],
+   "want": [
+    2,
+    2
+   ],
+   "why": "md 新增 -74 条，sqlite 增量 2；四张卡的号 ['BUG-74', 'BUG-75', 'BUG-76', 'BUG-77']",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T04:51:18+00:00"
+}

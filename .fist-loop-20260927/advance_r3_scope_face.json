@@ -1,0 +1,40 @@
+{
+ "outside_radius": {
+  "alias_signature_collapses_to_object": {
+   "observed_emitted_signature": "def process(callback):",
+   "claim": "类型别名在**产物**签名里塌成无标注（分析层已能顺着别名查元数，codegen 层未等距传递）",
+   "why_not_this_round": "改产物签名要动 codegen 的类型映射，属新语义，不在『已声明未实现里挑最小的那件』范围内"
+  },
+  "variadic_Callable_ellipsis_not_parsed": {
+   "observed": "ValueError: Unexpected token DOT_DOT at 1:19",
+   "declared_in_docs": false,
+   "grep_of_declaration": [],
+   "why_not_this_round": "SYNTAX/PROJECT-SPEC/docs 里搜不到 `Callable[...]` 变长写法 ⇒ 它不是『已声明』，本环半径只覆盖文档声明过的 `Callable[[T], R]`"
+  },
+  "argument_type_check_not_implemented": {
+   "observed": "元数一致但实参类型不符（如 `f('a')` 对 `Callable[[int], str]`）当前不报错",
+   "why_not_this_round": "需要先把赋值处的类型兼容级联抽成共用谓词（现在散在 type_checker.py 五六个分支里），属重构决定，交裁决后再做",
+   "measured_errors": []
+  }
+ },
+ "outside_total": 3,
+ "frozen_doc_rows": [
+  {
+   "file": "SYNTAX/appendix-C-features.md",
+   "line": "| `Callable[[T], R]` 函数类型标注 | 使用 `def` + 类型推断 | v0.5 |"
+  },
+  {
+   "file": "SYNTAX/12-type-alias.md",
+   "line": "type Callback = Callable[[int], str]"
+  }
+ ],
+ "frozen_docs_modified": 0,
+ "variadic_probe_outcome": "ValueError: Unexpected token DOT_DOT at 1:19",
+ "note": "本环不碰 SYNTAX/PROJECT-SPEC：appendix-C 那行『尚未实现』在实现后变陈旧，改它属冻结面动作 ⇒ 只点名交人工，不自己动刀",
+ "at_utc": "2026-09-27T19:10:44+00:00",
+ "refuse": [],
+ "lane_files": [
+  "cypyc/analyzer/type_checker.py"
+ ],
+ "type_checker_sha_before": "4db6e1f3bfc2c7d3"
+}

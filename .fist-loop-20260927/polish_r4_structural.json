@@ -1,0 +1,444 @@
+{
+ "started": "2026-09-28T02:09:38+00:00",
+ "redline": 3000,
+ "files_measured": 56,
+ "over_redline": [
+  "cypyc/parser/parser.py",
+  "cypyc/codegen/cython_generator.py",
+  "cypyc/analyzer/type_checker.py",
+  "cypy_bridge/compiler.py"
+ ],
+ "sizes": [
+  {
+   "file": "cypyc/__init__.py",
+   "total_lines": 5,
+   "code_lines": 3
+  },
+  {
+   "file": "cypyc/__main__.py",
+   "total_lines": 13,
+   "code_lines": 10
+  },
+  {
+   "file": "cypyc/analyzer/__init__.py",
+   "total_lines": 8,
+   "code_lines": 7
+  },
+  {
+   "file": "cypyc/analyzer/build_block_checker.py",
+   "total_lines": 196,
+   "code_lines": 143
+  },
+  {
+   "file": "cypyc/analyzer/comptime_evaluator.py",
+   "total_lines": 703,
+   "code_lines": 531
+  },
+  {
+   "file": "cypyc/analyzer/cycle_detector.py",
+   "total_lines": 207,
+   "code_lines": 158
+  },
+  {
+   "file": "cypyc/analyzer/defer_analyzer.py",
+   "total_lines": 90,
+   "code_lines": 73
+  },
+  {
+   "file": "cypyc/analyzer/pointer_checker.py",
+   "total_lines": 349,
+   "code_lines": 269
+  },
+  {
+   "file": "cypyc/analyzer/scope_analyzer.py",
+   "total_lines": 919,
+   "code_lines": 736
+  },
+  {
+   "file": "cypyc/analyzer/type_checker.py",
+   "total_lines": 4299,
+   "code_lines": 3207
+  },
+  {
+   "file": "cypyc/cli.py",
+   "total_lines": 903,
+   "code_lines": 711
+  },
+  {
+   "file": "cypyc/codegen/__init__.py",
+   "total_lines": 6,
+   "code_lines": 5
+  },
+  {
+   "file": "cypyc/codegen/bridge_generator.py",
+   "total_lines": 201,
+   "code_lines": 150
+  },
+  {
+   "file": "cypyc/codegen/cython_generator.py",
+   "total_lines": 4139,
+   "code_lines": 3310
+  },
+  {
+   "file": "cypyc/codegen/setup_generator.py",
+   "total_lines": 67,
+   "code_lines": 54
+  },
+  {
+   "file": "cypyc/codegen/type_mapper.py",
+   "total_lines": 91,
+   "code_lines": 71
+  },
+  {
+   "file": "cypyc/incremental/__init__.py",
+   "total_lines": 9,
+   "code_lines": 7
+  },
+  {
+   "file": "cypyc/incremental/ast_differ.py",
+   "total_lines": 240,
+   "code_lines": 177
+  },
+  {
+   "file": "cypyc/incremental/dependency_graph.py",
+   "total_lines": 258,
+   "code_lines": 159
+  },
+  {
+   "file": "cypyc/incremental/file_monitor.py",
+   "total_lines": 187,
+   "code_lines": 140
+  },
+  {
+   "file": "cypyc/incremental/hot_reload.py",
+   "total_lines": 685,
+   "code_lines": 505
+  },
+  {
+   "file": "cypyc/incremental/incremental_manager.py",
+   "total_lines": 502,
+   "code_lines": 358
+  },
+  {
+   "file": "cypyc/parser/__init__.py",
+   "total_lines": 5,
+   "code_lines": 4
+  },
+  {
+   "file": "cypyc/parser/lexer.py",
+   "total_lines": 976,
+   "code_lines": 785
+  },
+  {
+   "file": "cypyc/parser/macro_expander.py",
+   "total_lines": 566,
+   "code_lines": 409
+  },
+  {
+   "file": "cypyc/parser/parser.py",
+   "total_lines": 4753,
+   "code_lines": 3751
+  },
+  {
+   "file": "cypyc/parser/preprocessor.py",
+   "total_lines": 271,
+   "code_lines": 219
+  },
+  {
+   "file": "cypyc/project/__init__.py",
+   "total_lines": 11,
+   "code_lines": 9
+  },
+  {
+   "file": "cypyc/project/module_dependency_graph.py",
+   "total_lines": 267,
+   "code_lines": 208
+  },
+  {
+   "file": "cypyc/project/project_compiler.py",
+   "total_lines": 873,
+   "code_lines": 660
+  },
+  {
+   "file": "cypyc/project/type_registry.py",
+   "total_lines": 260,
+   "code_lines": 200
+  },
+  {
+   "file": "cypyc/transformer/__init__.py",
+   "total_lines": 24,
+   "code_lines": 21
+  },
+  {
+   "file": "cypyc/transformer/defer_transformer.py",
+   "total_lines": 55,
+   "code_lines": 43
+  },
+  {
+   "file": "cypyc/transformer/enum_transformer.py",
+   "total_lines": 55,
+   "code_lines": 42
+  },
+  {
+   "file": "cypyc/transformer/generic_transformer.py",
+   "total_lines": 57,
+   "code_lines": 43
+  },
+  {
+   "file": "cypyc/transformer/struct_transformer.py",
+   "total_lines": 54,
+   "code_lines": 42
+  },
+  {
+   "file": "cypyc/transformer/trait_transformer.py",
+   "total_lines": 58,
+   "code_lines": 46
+  },
+  {
+   "file": "cypyc/utils/__init__.py",
+   "total_lines": 5,
+   "code_lines": 4
+  },
+  {
+   "file": "cypyc/utils/ast_utils.py",
+   "total_lines": 59,
+   "code_lines": 52
+  },
+  {
+   "file": "cypyc/utils/error_reporter.py",
+   "total_lines": 271,
+   "code_lines": 218
+  },
+  {
+   "file": "cypyc/utils/indent_detector.py",
+   "total_lines": 66,
+   "code_lines": 49
+  },
+  {
+   "file": "cypy_hook/__init__.py",
+   "total_lines": 3,
+   "code_lines": 2
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "total_lines": 1178,
+   "code_lines": 864
+  },
+  {
+   "file": "cypy_bridge/__init__.py",
+   "total_lines": 236,
+   "code_lines": 194
+  },
+  {
+   "file": "cypy_bridge/compiler.py",
+   "total_lines": 4033,
+   "code_lines": 3081
+  },
+  {
+   "file": "cypy_bridge/core.py",
+   "total_lines": 105,
+   "code_lines": 75
+  },
+  {
+   "file": "cypy_bridge/defer.py",
+   "total_lines": 187,
+   "code_lines": 137
+  },
+  {
+   "file": "cypy_bridge/enum.py",
+   "total_lines": 198,
+   "code_lines": 146
+  },
+  {
+   "file": "cypy_bridge/generics.py",
+   "total_lines": 239,
+   "code_lines": 170
+  },
+  {
+   "file": "cypy_bridge/memory.py",
+   "total_lines": 316,
+   "code_lines": 229
+  },
+  {
+   "file": "cypy_bridge/meta.py",
+   "total_lines": 278,
+   "code_lines": 183
+  },
+  {
+   "file": "cypy_bridge/nogil.py",
+   "total_lines": 284,
+   "code_lines": 206
+  },
+  {
+   "file": "cypy_bridge/pointer.py",
+   "total_lines": 596,
+   "code_lines": 456
+  },
+  {
+   "file": "cypy_bridge/struct.py",
+   "total_lines": 195,
+   "code_lines": 144
+  },
+  {
+   "file": "cypy_bridge/types.py",
+   "total_lines": 505,
+   "code_lines": 385
+  },
+  {
+   "file": "cypy_bridge/union.py",
+   "total_lines": 203,
+   "code_lines": 141
+  }
+ ],
+ "type_checker": {
+  "code_lines": 3207,
+  "methods": 141
+ },
+ "hook_eval_marker_count": 2,
+ "hook_eval_marker_product_face_total": 2,
+ "deleted_verbatim": [
+  " D examples/demos/legacy/analyzer/type_checking.cypy",
+  " D examples/demos/legacy/builtins/defer_and_guard.cypy",
+  " D examples/demos/legacy/builtins/generics.cypy",
+  " D examples/demos/legacy/builtins/pointer_operations.cypy",
+  " D examples/demos/legacy/codegen/cdef_class_generation.cypy",
+  " D examples/demos/legacy/codegen/module_magic_attrs.cypy",
+  " D examples/demos/legacy/parser/build_blocks.cypy",
+  " D examples/demos/legacy/parser/implicit_policy.cypy",
+  " D examples/demos/legacy/parser/struct_definition.cypy",
+  " D examples/struct.cypy"
+ ],
+ "renamed_verbatim": [],
+ "product_files_touched_this_ring": [],
+ "canary": {
+  "fresh_file_caught": true,
+  "scratch_removed": true
+ },
+ "git": {
+  "rows": 171,
+  "deleted_or_renamed": [
+   " D examples/demos/legacy/analyzer/type_checking.cypy",
+   " D examples/demos/legacy/builtins/defer_and_guard.cypy",
+   " D examples/demos/legacy/builtins/generics.cypy",
+   " D examples/demos/legacy/builtins/pointer_operations.cypy",
+   " D examples/demos/legacy/codegen/cdef_class_generation.cypy",
+   " D examples/demos/legacy/codegen/module_magic_attrs.cypy",
+   " D examples/demos/legacy/parser/build_blocks.cypy",
+   " D examples/demos/legacy/parser/implicit_policy.cypy",
+   " D examples/demos/legacy/parser/struct_definition.cypy",
+   " D examples/struct.cypy"
+  ],
+  "staged": []
+ },
+ "adjudication_queue": [
+  {
+   "item": "3000 行红线拆分",
+   "files": [
+    "cypyc/parser/parser.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypy_bridge/compiler.py"
+   ],
+   "why_不可逆": "拆文件会改导入面与既有测试路径，属结构重排 ⇒ 交人工",
+   "measure": "code_lines 逐文件实测"
+  },
+  {
+   "item": "type_checker.py 体量/分支重写",
+   "files": [
+    "cypyc/analyzer/type_checker.py"
+   ],
+   "why_不可逆": "重写会移动语义判定点，需要 golden 重注册 ⇒ 交人工",
+   "measure": "3207 行 / 141 个方法"
+  },
+  {
+   "item": "hook.eval 写侧 __result__ 形状",
+   "files": [
+    "cypy_hook/hook.py"
+   ],
+   "why_不可逆": "改产物形状影响已发布扩展的读取面 ⇒ 交人工",
+   "measure": "字面出现 2 次"
+  }
+ ],
+ "executed_irreversible": [],
+ "self_checks": [
+  {
+   "label": "3000 行（不含注释）红线：超限文件要逐张点名",
+   "got": true,
+   "want": true,
+   "why": "[\"cypyc/parser/parser.py\", \"cypyc/codegen/cython_generator.py\", \"cypyc/analyzer/type_checker.py\", \"cypy_bridge/compiler.py\"]",
+   "ok": true
+  },
+  {
+   "label": "type_checker.py 在测量面上（否则「它的体量」这句没被测到）",
+   "got": 1,
+   "want": 1,
+   "why": "[{\"file\": \"cypyc/analyzer/type_checker.py\", \"total_lines\": 4299, \"code_lines\": 3207}]",
+   "ok": true
+  },
+  {
+   "label": "type_checker.py 的方法数被实测记入账面",
+   "got": true,
+   "want": true,
+   "why": "141 个 def",
+   "ok": true
+  },
+  {
+   "label": "hook.eval 写侧标记的计数满足包含关系（产品面总数 ≥ hook 单文件数）",
+   "got": true,
+   "want": true,
+   "why": "hook=2 全产品面=2",
+   "ok": true
+  },
+  {
+   "label": "写侧标记至少在一个文件里字面存在（否则挂账理由要改写为「标记缺席」）",
+   "got": true,
+   "want": true,
+   "why": "全产品面 2 次",
+   "ok": true
+  },
+  {
+   "label": "本环没有碰过任何产品码文件（mtime 全早于环节起点）",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "canary：刚写下的文件必须被同一谓词判为「碰过」",
+   "got": true,
+   "want": true,
+   "why": "struct_canary_41080.py",
+   "ok": true
+  },
+  {
+   "label": "重命名一律为零（R 状态在本环不许出现）",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "删除数与上一环实测逐字相等（本环没新删东西；口径=计数一致，未逐名对照 ⇒ 记为上界一致）",
+   "got": 10,
+   "want": 10,
+   "why": "本环 10 vs R4-验证 10",
+   "ok": true
+  },
+  {
+   "label": "暂存区为空（没有 git add）",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "挂账队列逐条带测量（不许只写标题）",
+   "got": true,
+   "want": true,
+   "why": "[\"3000 行红线拆分\", \"type_checker.py 体量/分支重写\", \"hook.eval 写侧 __result__ 形状\"]",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T02:09:38+00:00"
+}

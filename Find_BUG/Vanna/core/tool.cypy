@@ -1,0 +1,70 @@
+#!bin cypy
+# ============================================================
+# tool.cypy — Tool trait, ToolContext, ToolResult
+# ============================================================
+
+from user import User, RequestContext
+from components import UiComponent
+
+# --- ToolResult ---
+
+struct ToolResult:
+    # Result returned by tool execution
+    success: bool
+    result_for_llm: str
+    ui_component: UiComponent
+    error: str
+    metadata: dict<str, str>
+
+    def __init__(self, success: bool, result_for_llm: str = "", ui_component: UiComponent = UiComponent.text(""), error: str = "", metadata: dict<str, str> = {}):
+        self.success = success
+        self.result_for_llm = result_for_llm
+        self.ui_component = ui_component
+        self.error = error
+        self.metadata = metadata
+
+    def ok(result_for_llm: str, ui_component: UiComponent = UiComponent.text("")) -> ToolResult:
+        return ToolResult(success=True, result_for_llm=result_for_llm, ui_component=ui_component)
+
+    def fail(error: str) -> ToolResult:
+        return ToolResult(success=False, result_for_llm=error, error=error)
+
+
+# --- ToolContext ---
+
+struct ToolContext:
+    # Context passed to tools during execution
+    request_context: RequestContext
+    conversation_history: list<dict<str, str>>
+    system_prompt: str
+
+    def __init__(self, request_context: RequestContext, conversation_history: list<dict<str, str>> = [], system_prompt: str = ""):
+        self.request_context = request_context
+        self.conversation_history = conversation_history
+        self.system_prompt = system_prompt
+
+    def user(self) -> User:
+        return self.request_context.user
+
+
+# --- Tool trait (generic typed tool system) ---
+
+trait Tool<T>:
+    # Base trait for all tools. T is the args schema type.
+
+    def name(self) -> str
+
+    def description(self) -> str
+
+    def get_args_schema(self) -> object
+
+    def access_groups(self) -> list<str>:
+        return []
+
+    def execute(self, context: ToolContext, args: T) -> ToolResult
+
+    def check_access(self, context: ToolContext) -> bool:
+        let groups: list<str> = self.access_groups()
+        if len(groups) == 0:
+            return True
+        return context.user().has_any_group(groups)

@@ -1,0 +1,190 @@
+{
+ "pid": 21128,
+ "cells": {
+  "L0 现树（应全绿）": {
+   "pytest": {
+    "rc": 0,
+    "n_failed": 0,
+    "failed_ids": [],
+    "crash": false,
+    "summary": "============================= 138 passed in 1.16s ============================="
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=19 passed=19 failed=0 refused=0 accuracy=100.00% rc=0",
+    "failed": 0
+   },
+   "identity": [
+    {
+     "anchor_gone": true
+    }
+   ]
+  },
+  "M1 摘掉注解位接线": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "                # SYNTAX/11「类型约束」：注解位写的类型实参也要过声明界（`l",
+     "removed_len": 247
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 16,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#10]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#12]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#15]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#18]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#1]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#2]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#6]",
+     "tests/test_generic_bounds_r12.py::test_annotation_position_rejects_on_struct_form_too",
+     "tests/test_generic_bounds_r12.py::test_annotation_position_rejects_union_bound_violation",
+     "tests/test_generic_bounds_r12.py::test_arity_and_bound_diagnostic_coexist",
+     "tests/test_generic_bounds_r12.py::test_bound_diagnostic_points_at_the_annotation_site"
+    ],
+    "crash": false,
+    "summary": "======================= 16 failed, 122 passed in 0.93s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=19 passed=11 failed=8 refused=0 accuracy=57.89% rc=1",
+    "failed": 8
+   }
+  },
+  "M2 摘掉显式实参构造位接线": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "        # 类/结构体的显式类型实参：界判定在此完成。函数由 `_visit_Call` 里那份",
+     "removed_len": 224
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 2,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#8]",
+     "tests/test_generic_bounds_r12.py::test_explicit_type_args_at_constructor_reject_violation"
+    ],
+    "crash": false,
+    "summary": "======================== 2 failed, 136 passed in 0.93s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=19 passed=18 failed=1 refused=0 accuracy=94.74% rc=1",
+    "failed": 1
+   }
+  },
+  "M3 字面量位退回窄复制": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "                # 检查泛型参数约束：复用调用位那一份判定。原来这里只认单名界\n    ",
+     "removed_len": -605
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 1,
+    "failed_ids": [
+     "tests/test_generic_bounds_r12.py::test_struct_literal_path_reuses_the_shared_checker"
+    ],
+    "crash": false,
+    "summary": "======================== 1 failed, 137 passed in 0.96s ========================"
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=19 passed=19 failed=0 refused=0 accuracy=100.00% rc=0",
+    "failed": 0
+   }
+  },
+  "M4 共用件短路（三处接线全成装饰）": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "        constraints = getattr(decl, \"generic_constra",
+     "removed_len": -68
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 18,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#10]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#12]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#15]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#18]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#1]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#2]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#6]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#8]",
+     "tests/test_generic_bounds_r12.py::test_annotation_position_rejects_on_struct_form_too",
+     "tests/test_generic_bounds_r12.py::test_annotation_position_rejects_union_bound_violation",
+     "tests/test_generic_bounds_r12.py::test_arity_and_bound_diagnostic_coexist"
+    ],
+    "crash": false,
+    "summary": "======================= 18 failed, 120 passed in 0.95s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=19 passed=10 failed=9 refused=0 accuracy=52.63% rc=1",
+    "failed": 9
+   }
+  },
+  "M5 只改注释（对照格，必须 0 红）": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "                # SYNTAX/11「类型约束」：注解位写的类型实参也要过声明界（`l",
+     "removed_len": -2
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 0,
+    "n_failed": 0,
+    "failed_ids": [],
+    "crash": false,
+    "summary": "============================= 138 passed in 0.93s ============================="
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=19 passed=19 failed=0 refused=0 accuracy=100.00% rc=0",
+    "failed": 0
+   }
+  }
+ }
+}

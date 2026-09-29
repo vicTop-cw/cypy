@@ -1,0 +1,185 @@
+{
+ "key": "r5_hunt",
+ "tag": "[loop:20260927-loop:R5-寻虫]",
+ "assignee": "cypy-hunter",
+ "difficulty": "难",
+ "description": "[omega:required] [loop:20260927-loop:R5-寻虫] 寻虫（hunt）R5：五轮循环的最后一环狩猎。只诊断、只入账、零产品码改动；每条候选必须在**真实入口面**或**文档声明面**上被成对对照确诊，判据自己坏了要能红。\n① 观察面先证明「看得见」再谈「有没有虫」：六个语义邻域（函数符号被当返回类型 / 普通函数调用不判元数 / 别名与结构字段回调 / 文案形状 / 生成面 lowering / 元数判定上下文）逐格用『文档声明的语义』定期望，另建三条变异通道（`legacy_args` / `declared_sig` / `callback_param`，锚点各自 `count==1` 实测）证明邻域可观察；白建的通道必须逐条点名，零发现与看不见必须分家。\n② 声明面逐条自己重测：18 条文档主张（appendix-C 特性表 / 类型表 / 缩进规则 / USAGE 示例 / 规模红线 / bridge 自述）每条现读 `file:line` 原文 + 当场实测；文档自述未实现且今天确实没实现 ⇒ `design` 撤回不占号，文档写了不存在的能力 ⇒ `real-gap`，今天已实现而表还写未实现 ⇒ `stale-doc`；子代理结论只当线索，一律不许原样入账。\n③ 生成面（`transpile` 出码）成对确诊：每条一个 pos（现象现形）+ 一个同族 ctl（今天行为正确的形状），两档齐全才 CONFIRMED；`_fn_body()` 作用域限定，防模块 docstring 的引号形状冒充结论；同一批夹具双跑必须一致。\n④ 真实入口面（CLI / import hook / 项目命令）成对确诊：命令行、退出码、stderr 原文、`sys.modules` loader 身份、缓存目录实况为观察对象，不用『源码里有某字样』代替调用面；对照也站不住的（两态同观察）只能记 UNSURE，不许写进确诊。\n⑤ 每条判据自带『判据坏了必红』的对照：变异归属、canary 方向、双跑稳定性、临时目录清干净（`tmp_left` 必须为空表），缺任一条该判据视为恒绿并被拒。\n⑥ 只确诊入账：卡号从盘上现数（`max(BUG-NN)+1`），`report_bug` 回读 + 账本号增量 + sqlite bug 任务增量三向必须相等；同一批卡二次扫描不得再冒新号（幂等复扫）；每张卡带一键复跑命令与『什么现象不算证明』；邻域缺陷引用已入账单号必须反查存在。\n⑦ 三套判据体系同一批复算且只升不降：pytest / 收集数 / 自研套件 / e2e 的地板取自上一环实测件 `advance_r4_baselines.json:floors`（逐栏反解，不手打），地板四栏缺一即拒；HEAD 未动、暂存 0、冻结面 `PROJECT-SPEC/**`+`SYNTAX/**` 的 sha 与 porcelain 两栏都不许动；改动半径按 mtime 正面测出并点名。\n⑧ 驱动面与被测面同等受审：本轮亲笔脚本过 flake8（口径 `--max-line-length=100 --extend-ignore=E203,W503,W505`），硬错（E9/W605/F821/F7/F63/F841）必须为 0，软账条数不得高于上一环实测基线；报告与账本三向同步，被拒原文逐字进报告。",
+ "fingerprint": {
+  "必须": "每条候选带 file:line 与定位声明原文、pos/ctl 两档实测输出、一条『判据坏了必红』对照；入账件带一键复跑命令与『什么现象不算证明』；与前四轮已入账 77 单按根因去重；撤回项逐条点名给理由；三套体系与 git 红线同批复算且地板从上一环实测件反解；半径按 mtime 正面测出；号从盘上现数并三向对齐",
+  "禁止": "在本环修产品码或改测试；改 PROJECT-SPEC/SYNTAX 冻结语义；把子代理结论原样入账；把『只跑正例的对照』当确诊；把『判据看不见样本』的零发现写成『没有缺陷』；git add/commit/push/删文件/重注册 golden；把没做的写成 done；用『源码里出现某字样』代替调用面判据",
+  "半径": "只读测量 + `.fist-loop-20260927/` 判据件 + `memory/bugs.md` 追加段与 bug 任务库；产品码/测试/docs 四者本环改动为 0（按 mtime 正面测出）",
+  "地板": "取自 `.fist-loop-20260927/advance_r4_baselines.json` 的 floors 四栏（pytest / collect / suite / e2e_pass），逐栏反解且只升不降"
+ },
+ "needle_verification": {
+  "why": "上一环吃过「needle 只是文件名子串」的亏：`control` 撞 `SYNTAX/15-control-flow.md`、`queue` 撞 `queue_frozen_edit` 前缀，needle 在但主张不在。本环开工前把全部 needle 按「必须是判据件里的真键名」严口径重扫一遍，实测数落在这里。",
+  "checked_len": 24,
+  "missing_before": 0,
+  "false_substring_before": 0,
+  "rule": "needle 必须是被引判据件 JSON 里的真键名（顶层或一层嵌套），不能只是文件名字符串或值的前缀；每条规则配 canary：前缀式 needle（`confi`）在严口径下必须被拒。",
+  "artifacts_pending": [],
+  "strict_rule_rejected_len": 0,
+  "measured_at_utc": "2026-09-28T07:34:15+00:00"
+ },
+ "laws": [
+  {
+   "name": "观察面先证明看得见：六邻域逐格定期望 + 三条变异通道归属，零发现与看不见分家，白建通道逐条点名",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_faces.json",
+     "flips_by_mutant",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_faces.json",
+     "unattributed_mutants",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_faces.json",
+     "cases_total",
+     6000
+    ]
+   ]
+  },
+  {
+   "name": "声明面逐条自己重测：18 条文档主张现读原文 + 当场实测，design/stale-doc/real-gap 三态，撤回项点名",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_declared.json",
+     "withdrawn_design",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_declared.json",
+     "not_measured_or_true",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_declared.json",
+     "rows_total",
+     6000
+    ]
+   ]
+  },
+  {
+   "name": "生成面成对确诊：pos 现形 + 同族 ctl 正确两档齐全才 CONFIRMED，`_fn_body` 作用域限定，双跑必须一致",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_codegen.json",
+     "confirmed",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_codegen.json",
+     "canary",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_codegen.json",
+     "unsure",
+     4000
+    ]
+   ]
+  },
+  {
+   "name": "真实入口面成对确诊：CLI/hook/项目命令的退出码·stderr·loader 身份为观察对象，对照站不住只记 UNSURE",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_cli_face.json",
+     "confirmed",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_cli_face.json",
+     "unsure",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_cli_face.json",
+     "keys",
+     6000
+    ]
+   ]
+  },
+  {
+   "name": "每条判据自带『坏了必红』对照，且测量面残渣在清理之后独立复测（变异归属、canary 方向、双跑稳定性、tmp_left 非空即拒）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_faces.json",
+     "blind_spots",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_codegen.json",
+     "tmp_left",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_cli_face.json",
+     "tmp_left",
+     6000
+    ]
+   ]
+  },
+  {
+   "name": "只确诊入账：号从盘上现数，report_bug 回读 + 账本增量 + sqlite 增量三向相等，二次扫描幂等，每卡带复跑命令",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_book.json",
+     "filed",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_book.json",
+     "live_reruns",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_book.json",
+     "sqlite_bug_tasks_after",
+     4000
+    ]
+   ]
+  },
+  {
+   "name": "三套体系同批复算且地板从上一环实测件反解（四栏缺一即拒），HEAD/暂存/冻结面未动，半径按 mtime 正面测出",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_baselines.json",
+     "floors_source",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_baselines.json",
+     "radius",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_baselines.json",
+     "three_systems_green",
+     4000
+    ]
+   ]
+  },
+  {
+   "name": "驱动面与被测面同等受审：亲笔脚本硬错为 0、软账只降不升，报告与账本三向同步且被拒原文逐字入账",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+     "hard_violations",
+     800
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+     "soft_total",
+     800
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_book.json",
+     "duplicates",
+     4000
+    ]
+   ]
+  }
+ ]
+}

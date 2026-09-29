@@ -1,0 +1,237 @@
+{
+ "started": "2026-09-28T10:58:44+00:00",
+ "corpus_total": 203,
+ "corpus_dirs": [
+  "examples",
+  "test_suite",
+  "docs",
+  "omega",
+  "Find_BUG"
+ ],
+ "head_tree": {
+  "dir": ".fist-loop-20260927/fix_r5_snap/head_impact",
+  "py_files": 56
+ },
+ "api_surface": {
+  "head": {
+   "analyze_only": false,
+   "transpile": true
+  },
+  "current": {
+   "analyze_only": true,
+   "transpile": true
+  }
+ },
+ "diagnostics_channel": "not_measured：HEAD 的 CypyHook 没有 analyze_only（实测 AttributeError），两档 API 面不等⇒ 分析器诊断面不写结论；本件的 new_diagnostics 走的是 transpile 错误面",
+ "self_checks": [
+  {
+   "label": "对照0：两档都必须有 transpile 这个可比 API（没有就没有影响面主张）",
+   "got": true,
+   "want": true,
+   "why": "api={'head': {'analyze_only': False, 'transpile': True}, 'current': {'analyze_only': True, 'transpile': True}}",
+   "ok": true
+  },
+  {
+   "label": "对照0b：交付件里的诊断面口径必须跟着实测 API 差异走（不可比却写 measured=在编结论）",
+   "got": true,
+   "want": true,
+   "why": "HEAD analyze_only=False / 当前=True ⇒ 交付件里写的是 not_measured",
+   "ok": true
+  },
+  {
+   "label": "对照1：两棵树对同一条干净源必须给同一种观察（不同=比较器在编差异）",
+   "got": true,
+   "want": true,
+   "why": "HEAD=[{'file': 'canary_same.cypy', 'ok': True, 'code_len': 746, 'err': [], 'ana': None}] 当前=[{'file': 'canary_same.cypy', 'ok': True, 'code_len': 728, 'err': [], 'ana': []}]",
+   "ok": true
+  },
+  {
+   "label": "对照2：两棵树对同一条坏源都必须拒绝（有一档说成功=判据坏了）",
+   "got": true,
+   "want": true,
+   "why": "HEAD=[{'file': 'canary_bad.cypy', 'ok': False, 'code_len': 0, 'err': ['Compilation error: Expected increased indentation at line 2. Expected 4, got 0'], 'ana': None}] 当前=[{'file': 'canary_bad.cypy', 'ok': False, 'code_len': 0, 'err': ['Compilation error: Expected IDENTIFIER, got COLON at 1:7'], 'ana': ['Compilation error: Expected IDENTIFIER, got COLON at 1:7']}]",
+   "ok": true
+  },
+  {
+   "label": "语料覆盖率：HEAD 与当前必须都观察到全部语料（缺一档就没有对照面）",
+   "got": [
+    203,
+    203
+   ],
+   "want": [
+    203,
+    203
+   ],
+   "why": "HEAD 203 / 当前 203 / 语料 203",
+   "ok": true
+  },
+  {
+   "label": "每条命中都必须带逐字文案点名（只报数不报文案=含糊）",
+   "got": 0,
+   "want": 0,
+   "why": "点名 0 / 命中 0",
+   "ok": true
+  }
+ ],
+ "self_checks_red": [],
+ "new_diagnostics": [],
+ "new_rejections": [],
+ "new_acceptances": [
+  {
+   "file": "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_constraint_silently_swallowed.cypy",
+   "head_verbatim": [
+    "Undefined name 'constraint' at 8:1",
+    "Undefined name 'constraint' at 8:1"
+   ],
+   "len": 788
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj05/pk2/__init__.cypy",
+   "head_verbatim": [
+    "Compilation error: Expected IDENTIFIER, got DOT at 1:6"
+   ],
+   "len": 777
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj05/pkg/sub/leaf.cypy",
+   "head_verbatim": [
+    "Compilation error: Expected IDENTIFIER, got DOT at 1:6"
+   ],
+   "len": 777
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj06a/app/consumer.cypy",
+   "head_verbatim": [
+    "Compilation error: Expected IMPORT, got DOT at 1:9"
+   ],
+   "len": 779
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/projexp/pkg/sub/leaf.cypy",
+   "head_verbatim": [
+    "Compilation error: Expected IDENTIFIER, got DOT at 1:6"
+   ],
+   "len": 777
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/projexp2/app/consumer.cypy",
+   "head_verbatim": [
+    "Compilation error: Expected IMPORT, got DOT at 1:9"
+   ],
+   "len": 779
+  },
+  {
+   "file": "Find_BUG/beartype/decorator.cypy",
+   "head_verbatim": [
+    "Compilation error: Unexpected token RAISE at 34:44"
+   ],
+   "len": 2745
+  },
+  {
+   "file": "Find_BUG/pydantic/examples_faithful.cypy",
+   "head_verbatim": [
+    "Compilation error: Expected IDENTIFIER, got AT at 46:5"
+   ],
+   "len": 2624
+  },
+  {
+   "file": "Find_BUG/pydantic/fields.cypy",
+   "head_verbatim": [
+    "Compilation error: Invalid indentation level 17 at line 21. Indentation must be a multiple of 4"
+   ],
+   "len": 2148
+  },
+  {
+   "file": "Find_BUG/sqlalchemy_core/sqlalchemy_core.cypy",
+   "head_verbatim": [
+    "Compilation error: Expected RPAREN, got DEREF at 167:53"
+   ],
+   "len": 7698
+  },
+  {
+   "file": "Find_BUG/tenacity/tenacity.cypy",
+   "head_verbatim": [
+    "Compilation error: Expected IDENTIFIER, got STRING at 16:5"
+   ],
+   "len": 3256
+  },
+  {
+   "file": "Find_BUG/test_bug_fixes.cypy",
+   "head_verbatim": [
+    "Compilation error: Invalid indentation level 4 at line 34. Expected one of [0]"
+   ],
+   "len": 4462
+  },
+  {
+   "file": "examples/constraint_numeric.cypy",
+   "head_verbatim": [
+    "Undefined name 'constraint' at 9:1",
+    "Undefined name 'constraint' at 13:1"
+   ],
+   "len": 1159
+  },
+  {
+   "file": "examples/subtype_units.cypy",
+   "head_verbatim": [
+    "Compilation error: Unexpected token SUBTYPE at 14:15"
+   ],
+   "len": 1296
+  }
+ ],
+ "shape_changed": [
+  {
+   "file": "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_constraint_value_position.cypy",
+   "head": "Undefined name 'constraint' at 3:1",
+   "cur": "'Numeric' is a constraint, not a type: it can only appear as a generic bound 'T: Numeric'. For a usable union type write 'type Numeric = int"
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_subtype_missing.cypy",
+   "head": "Compilation error: Unexpected token SUBTYPE at 4:15",
+   "cur": "cannot assign 'float' to 'Meter': 'Meter' is a nominal subtype of 'float'; downcast requires an explicit 'v as Meter'. A nominal type does n"
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_assign.cypy",
+   "head": "Generic constraint violation: type 'int' does not satisfy constraint 'NumberLike' for parameter 'T' at 0:0",
+   "cur": "Generic constraint violation: type 'int' does not satisfy constraint 'NumberLike' (allowed: NumberLike) for parameter 'T', in call to 'combi"
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_via_wrapper.cypy",
+   "head": "Generic constraint violation: type 'int' does not satisfy constraint 'NumberLike' for parameter 'T' at 0:0",
+   "cur": "Generic constraint violation: type 'int' does not satisfy constraint 'NumberLike' (allowed: NumberLike) for parameter 'T', in call to 'combi"
+  }
+ ],
+ "diagnostics_note_state": "not_measured",
+ "new_diagnostics_len": 0,
+ "new_rejections_len": 0,
+ "new_acceptances_len": 14,
+ "shape_changed_len": 4,
+ "corpus_adjudication_files": [],
+ "adjudication_needed": 0,
+ "canary": {
+  "transpile_comparable": true,
+  "analyze_only_same_surface": false,
+  "same_source_agrees": true,
+  "bad_source_rejected_both": true,
+  "same_source_head": [
+   {
+    "file": "canary_same.cypy",
+    "ok": true,
+    "code_len": 746,
+    "err": [],
+    "ana": null
+   }
+  ],
+  "same_source_current": [
+   {
+    "file": "canary_same.cypy",
+    "ok": true,
+    "code_len": 728,
+    "err": [],
+    "ana": []
+   }
+  ]
+ },
+ "note": "语料文本同一串喂两棵树；变差命中交 fix_r5_ledger.py 挂账，本件不裁决也不放行；改好的那部分（new_acceptances）与变差的那部分同屏列出。",
+ "refuse": [],
+ "at_utc": "2026-09-28T10:58:52+00:00"
+}

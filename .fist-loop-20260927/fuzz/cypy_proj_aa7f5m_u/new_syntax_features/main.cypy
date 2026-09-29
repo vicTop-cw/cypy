@@ -1,0 +1,121 @@
+# Cypy 新语法特性示例 —— name~ 命名参数糖 + guard 循环守卫
+#
+# T0r258.4.2 说明：
+#   * 原先的驱动体是 `if __name__ == "__main__":`（cypyc run 走 import + 调 main()，
+#     守卫永不成立）且没有 `def main()`，于是 15 处 print 一行都跑不到，
+#     golden 只有 1 字节换行 —— 一条零约束力的假锚点。现在改为 hello.cypy /
+#     generic.cypy 的 `def main() -> int:` 惯例，8 个 test_* 全部被调用，
+#     每个 test 一行可观察输出。
+#   * `^:` 索引构建块与 `~:` 去括号构建块的用例已显式挂起到
+#     examples/_pending_build_blocks.cypy（下划线前缀 = 判据不注册、不假装绿）：
+#     它们分别被 BUG-025（负索引段错误 exit 139）、BUG-026（return 位置的 `~:`
+#     静默误编译成函数对象）、BUG-027（`~:` 规范形态不可解析）挡住，
+#     详见 Find_BUG/BUGS.md。
+
+# ========== 1. name~ 命名参数语法糖 ==========
+
+def make_point(x: float, y: float, z: float) -> tuple<float, float, float>:
+    return (x, y, z)
+
+def test_named_param_sugar() -> tuple<float, float, float>:
+    x = 1.0
+    y = 2.0
+    z = 3.0
+    return make_point(x~, y~, z~)
+
+
+def add_values(a: int, b: int, c: int) -> int:
+    return a + b + c
+
+def test_mixed_named_params() -> int:
+    x = 10
+    y = 20
+    c = 30
+    return add_values(x, y, c~)
+
+
+# ========== 2. guard 循环守卫 ==========
+
+def test_guard_in_for_loop() -> int:
+    count: int = 0
+    for i in range(10):
+        guard i < 5 else break
+        count = count + 1
+    return count
+
+
+def test_guard_in_while_loop() -> int:
+    count: int = 0
+    i: int = 0
+    while i < 10:
+        guard i < 3 else break
+        count = count + 1
+        i = i + 1
+    return count
+
+
+def test_guard_not_in_loop() -> str:
+    x: int = 0
+    guard x > 0 else "invalid input"
+    return "ok"
+
+
+def test_guard_single_line_else() -> str:
+    value: int = -1
+    guard value >= 0 else "negative"
+    return "positive"
+
+
+def test_guard_in_nested_loop() -> int:
+    total: int = 0
+    for i in range(5):
+        for j in range(5):
+            guard (i + j) < 8 else break
+            total = total + 1
+    return total
+
+
+def test_guard_multiple_in_loop() -> int:
+    count: int = 0
+    for i in range(20):
+        guard i % 2 == 0 else continue
+        guard i < 10 else break
+        count = count + 1
+    return count
+
+
+# ========== 主入口 ==========
+
+def main() -> int:
+    print("=== Cypy 新语法特性测试 ===")
+
+    point = test_named_param_sugar()
+    print(f"1. name~ 语法糖: {point}")
+
+    mixed = test_mixed_named_params()
+    print(f"2. 混合命名参数: {mixed}")
+
+    guard_result1 = test_guard_in_for_loop()
+    print(f"3. for 循环 guard: {guard_result1}")
+
+    guard_result2 = test_guard_in_while_loop()
+    print(f"4. while 循环 guard: {guard_result2}")
+
+    guard_result3 = test_guard_not_in_loop()
+    print(f"5. 非循环 guard: {guard_result3}")
+
+    guard_result4 = test_guard_single_line_else()
+    print(f"6. 单行 else 分支 guard: {guard_result4}")
+
+    guard_result5 = test_guard_in_nested_loop()
+    print(f"7. 嵌套循环 guard: {guard_result5}")
+
+    guard_result6 = test_guard_multiple_in_loop()
+    print(f"8. 多重 guard: {guard_result6}")
+
+    print("=== 8 个用例全部调用完毕 ===")
+    return 0
+
+
+if __name__ == "__main__":
+    main()

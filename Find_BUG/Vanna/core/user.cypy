@@ -1,0 +1,75 @@
+#!bin cypy
+# ============================================================
+# user.cypy — User identity and authentication
+# ============================================================
+
+from dataclasses import dataclass
+
+# --- Core types ---
+
+struct User:
+    # Authenticated user identity
+    id: str
+    email: str
+    name: str
+    group_memberships: list<str>
+
+    def __init__(self, id: str, email: str, name: str = "", group_memberships: list<str> = []):
+        self.id = id
+        self.email = email
+        self.name = name if name else email
+        self.group_memberships = group_memberships
+
+    def has_group(self, group: str) -> bool:
+        return group in self.group_memberships
+
+    def has_any_group(self, groups: list<str>) -> bool:
+        for g in groups:
+            if g in self.group_memberships:
+                return True
+        return False
+
+    def __str__(self) -> str:
+        return f"User(id={self.id}, email={self.email})"
+
+
+struct AnonymousUser:
+    # Unauthenticated user placeholder
+
+    def id(self) -> str:
+        return "anonymous"
+
+    def email(self) -> str:
+        return ""
+
+    def has_group(self, group: str) -> bool:
+        return False
+
+    def has_any_group(self, groups: list<str>) -> bool:
+        return False
+
+
+# --- Request context ---
+
+struct RequestContext:
+    # Context passed through the agent for each request
+    request_id: str
+    user: User
+    metadata: dict<str, str>
+
+    def __init__(self, request_id: str, user: User, metadata: dict<str, str> = {}):
+        self.request_id = request_id
+        self.user = user
+        self.metadata = metadata
+
+    def from_user(user: User) -> RequestContext:
+        let rid: str = user.id
+        return RequestContext(request_id=rid, user=user)
+
+
+# --- User resolver (abstract) ---
+
+trait UserResolver:
+    # Resolves user identity from a request context
+
+    def resolve_user(self, request_context: dict<str, str>) -> User

@@ -1,0 +1,3 @@
+SCOPE before=206 after=206 crashes=0
+SCOPE parse_refused=3
+CONCLUSION phase=after new_red_sources=0 gone_red_sources=0 touched=0 unchanged_non_cons=190 new_red_without_constraint_decl=0 real_crashes=0

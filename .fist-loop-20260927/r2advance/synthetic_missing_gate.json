@@ -1,0 +1,294 @@
+{
+ "name": "20260927.19.55.00",
+ "title": "R2-推进（advance）环节报告",
+ "stage": "第 2 轮第 5 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R2",
+ "root_task": "T0r61",
+ "assignee": "cypy-advancer",
+ "marker": "[selfdrive-advance]",
+ "footer": "fixed=BUG-48 new=BUG-54 locks=9 judge-defects=5 op-defects=5 carry=BUG-54跨进程build隔离,watch删除事件产物语义,BUG-49,BUG-40,BUG-41,BUG-43,BUG-35深嵌套半边,BUG-50,BUG-52,BUG-53 decisions=4",
+ "fragment": ".fist-loop-20260927/r2_advance_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/advance_r2_watch_probe_before.json",
+  ".fist-loop-20260927/advance_r2_watch_probe.json",
+  ".fist-loop-20260927/advance_r2_race_probe.json",
+  ".fist-loop-20260927/advance_r2_wiring.json",
+  ".fist-loop-20260927/advance_r2_bug54.json",
+  ".fist-loop-20260927/advance_r2_lint.json",
+  ".fist-loop-20260927/advance_r2_baselines.json",
+  ".fist-loop-20260927/verify_r2_ledger3way.json",
+  ".fist-loop-20260927/close_r2_advance.out.json"
+ ],
+ "closure": {
+  "stage": "close_r2_advance.out.json",
+  "root": "close_r2_advance_root.out.json"
+ },
+ "gates": [
+  {
+   "label": "①",
+   "claim": "转结原话先重测：before 件里 watch 进程确实起来了（反驳的前提成立）",
+   "artifact": ".fist-loop-20260927/__no_such_artifact__.json",
+   "path": "banner_seen",
+   "equals": true
+  },
+  {
+   "label": "②",
+   "claim": "『无事件日志』这半被实测推翻（File changed ≥3 行、重载成功 ≥2 次）",
+   "artifact": ".fist-loop-20260927/advance_r2_watch_probe_before.json",
+   "path": "grep.file_changed",
+   "min": 3
+  },
+  {
+   "label": "③",
+   "claim": "改码前 watch 已经会重编译 ⇒ 原话的『无重编译』也不成立",
+   "artifact": ".fist-loop-20260927/advance_r2_watch_probe_before.json",
+   "path": "grep.successfully_reloaded",
+   "min": 2
+  },
+  {
+   "label": "④",
+   "claim": "但 -o 目录确实收不到东西：before 件产物清单是空表（这才是真缺的那半）",
+   "artifact": ".fist-loop-20260927/advance_r2_watch_probe_before.json",
+   "path": "outputs_in_out_dir",
+   "equals": []
+  },
+  {
+   "label": "⑤",
+   "claim": "改码后同一夹具：-o 目录拿到 4 份产物（a/b 各 .pyx + .pyd）",
+   "artifact": ".fist-loop-20260927/advance_r2_watch_probe.json",
+   "path": "outputs_in_out_dir",
+   "min": 4
+  },
+  {
+   "label": "⑥",
+   "claim": "CLI 回调真的在打批次结论：[Watch] Published 行 ≥1",
+   "artifact": ".fist-loop-20260927/advance_r2_watch_probe.json",
+   "path": "grep.watch_published",
+   "min": 1
+  },
+  {
+   "label": "⑦",
+   "claim": "after 件零失败重载、零 traceback（不是把红藏进新增路径）",
+   "artifact": ".fist-loop-20260927/advance_r2_watch_probe.json",
+   "path": "grep.failed_to_reload",
+   "equals": 0
+  },
+  {
+   "label": "⑧",
+   "claim": "after 件同样是\"进程起来 + 监控到文件\"的同一形状（两跑可比）",
+   "artifact": ".fist-loop-20260927/advance_r2_watch_probe.json",
+   "path": "banner_seen",
+   "equals": true
+  },
+  {
+   "label": "⑨",
+   "claim": "并发互踩用开关两态证成：锁关的轮次必须出红且成因为编译类",
+   "artifact": ".fist-loop-20260927/advance_r2_race_probe.json",
+   "path": "lock_off_red_rounds",
+   "min": 1
+  },
+  {
+   "label": "⑩",
+   "claim": "锁开 3 轮全绿且每轮都有发布产物",
+   "artifact": ".fist-loop-20260927/advance_r2_race_probe.json",
+   "path": "lock_on",
+   "min": 3
+  },
+  {
+   "label": "⑪",
+   "claim": "race 判据件零拒绝",
+   "artifact": ".fist-loop-20260927/advance_r2_race_probe.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑫",
+   "claim": "CLI 接线逐项核对：run_watch 把 -o 当产物目录并挂上回调",
+   "artifact": ".fist-loop-20260927/advance_r2_wiring.json",
+   "path": "cli_wiring.on_reload_callable",
+   "equals": true
+  },
+  {
+   "label": "⑬",
+   "claim": "--debounce 0.7 真的到了 start()（不是被引擎吞掉）",
+   "artifact": ".fist-loop-20260927/advance_r2_wiring.json",
+   "path": "cli_wiring.debounce_delay",
+   "equals": 0.7
+  },
+  {
+   "label": "⑭",
+   "claim": "监控器实测：显式 1.23 生效",
+   "artifact": ".fist-loop-20260927/advance_r2_wiring.json",
+   "path": "monitor_debounce_measured.explicit",
+   "equals": 1.23
+  },
+  {
+   "label": "⑮",
+   "claim": "对照：不传时仍是 0.5 ⇒ 库路径默认行为没被我带偏",
+   "artifact": ".fist-loop-20260927/advance_r2_wiring.json",
+   "path": "monitor_debounce_measured.default",
+   "equals": 0.5
+  },
+  {
+   "label": "⑯",
+   "claim": "接线件零拒绝",
+   "artifact": ".fist-loop-20260927/advance_r2_wiring.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑰",
+   "claim": "BUG-54 入账且号/任务号双向对得上（幂等守卫在场）",
+   "artifact": ".fist-loop-20260927/advance_r2_bug54.json",
+   "path": "rpc_bug_id",
+   "equals": "BUG-54"
+  },
+  {
+   "label": "⑱",
+   "claim": "BUG-54 的 summary 已落账本盘上文件（不是只在 rpc 回执里）",
+   "artifact": ".fist-loop-20260927/advance_r2_bug54.json",
+   "path": "summary_on_disk",
+   "equals": true
+  },
+  {
+   "label": "⑲",
+   "claim": "pytest 全量下限只升不降：passed ≥1903",
+   "artifact": ".fist-loop-20260927/advance_r2_baselines.json",
+   "path": "pytest.passed",
+   "min": 1903
+  },
+  {
+   "label": "⑳",
+   "claim": "收集数 ≥1903（防用例静默消失）",
+   "artifact": ".fist-loop-20260927/advance_r2_baselines.json",
+   "path": "pytest.collected",
+   "min": 1903
+  },
+  {
+   "label": "㉑",
+   "claim": "失败用例逐条点名，必须为空",
+   "artifact": ".fist-loop-20260927/advance_r2_baselines.json",
+   "path": "pytest.failed",
+   "equals": []
+  },
+  {
+   "label": "㉒",
+   "claim": "自研套件 47/47（第二套体系，不互相抵扣）",
+   "artifact": ".fist-loop-20260927/advance_r2_baselines.json",
+   "path": "suite.green",
+   "equals": true
+  },
+  {
+   "label": "㉓",
+   "claim": "端到端基准 PASS=25 FAIL=0，且基准未重注册",
+   "artifact": ".fist-loop-20260927/advance_r2_baselines.json",
+   "path": "e2e.green",
+   "equals": true
+  },
+  {
+   "label": "㉔",
+   "claim": "git 红线：HEAD 仍 17d68b4、暂存区 0",
+   "artifact": ".fist-loop-20260927/advance_r2_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "㉕",
+   "claim": "暂存区文件数为 0（未 git add）",
+   "artifact": ".fist-loop-20260927/advance_r2_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "㉖",
+   "claim": "三套基线 + git + 半径同一时刻复算，整体零拒绝",
+   "artifact": ".fist-loop-20260927/advance_r2_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㉗",
+   "claim": "改动半径 4 档全部归属本单（归不到本单的必须显式列出）",
+   "artifact": ".fist-loop-20260927/advance_r2_baselines.json",
+   "path": "radius.unclaimed_by_this_lane",
+   "equals": []
+  },
+  {
+   "label": "㉘",
+   "claim": "作用域化 lint：亲笔行零违例",
+   "artifact": ".fist-loop-20260927/advance_r2_lint.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㉙",
+   "claim": "lint 自检抓到必然违例（否则整条判据恒绿）",
+   "artifact": ".fist-loop-20260927/advance_r2_lint.json",
+   "path": "selftest",
+   "equals": "selfprobe-caught"
+  },
+  {
+   "label": "㉚",
+   "claim": "lint 覆盖面是亲笔行而非整档：比对行数 ≥300",
+   "artifact": ".fist-loop-20260927/advance_r2_lint.json",
+   "path": "authored_lines_checked",
+   "min": 300
+  },
+  {
+   "label": "㉛",
+   "claim": "账本条目随 BUG-54 增长（≥54），FIXED 段随 BUG-48 收口增长（≥43）",
+   "artifact": ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "path": "ledger.entries",
+   "min": 54
+  },
+  {
+   "label": "㉜",
+   "claim": "FIXED 段计数下限（上一环 42 + 本环 BUG-48）",
+   "artifact": ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "path": "ledger.fixed_sections",
+   "min": 43
+  },
+  {
+   "label": "㉝",
+   "claim": "收口链 16 张叶子全走完 claim→omega→execute→submit→output_validate→verify",
+   "artifact": ".fist-loop-20260927/close_r2_advance.out.json",
+   "path": "leaves",
+   "min": 16
+  },
+  {
+   "label": "㉞",
+   "claim": "收口链零失败叶子",
+   "artifact": ".fist-loop-20260927/close_r2_advance.out.json",
+   "path": "failed",
+   "equals": []
+  },
+  {
+   "label": "㉟",
+   "claim": "上卷被拒按作用域分栏：根任务 6 条结构性拒绝，不多不少",
+   "artifact": ".fist-loop-20260927/advance_r2_root_split.json",
+   "path": "by_scope.root",
+   "equals": 6
+  },
+  {
+   "label": "㊱",
+   "claim": "枝干 0 条 ⇒ 本环上卷驱动确实只跑了一次（≥1 即为重跑，须逐字承认）",
+   "artifact": ".fist-loop-20260927/advance_r2_root_split.json",
+   "path": "by_scope.branch",
+   "equals": 0
+  },
+  {
+   "label": "㊲",
+   "claim": "账本 FIXED 段终态件零拒绝（标记 1 段、原话逐字在段内）",
+   "artifact": ".fist-loop-20260927/advance_r2_ledger.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㊳",
+   "claim": "BUG-48 原话在 FIXED 段里逐字出现（折行打断引用会被这条抓回）",
+   "artifact": ".fist-loop-20260927/advance_r2_ledger.json",
+   "path": "phrase_in_fixed_section",
+   "truthy": true
+  }
+ ]
+}

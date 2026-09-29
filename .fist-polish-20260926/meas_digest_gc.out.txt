@@ -1,0 +1,7 @@
+A clean process              wall=0.793 cpu=0.438 ratio=1.81 alloc_blocks=135568 gen2_collections=2
+B +1500000 cyclic objects    wall=0.945 cpu=0.469 ratio=2.02 alloc_blocks=3135582 gen2_collections=12
+C same objects, gc.freeze    wall=0.544 cpu=0.422 ratio=1.29 alloc_blocks=3135581 gen2_collections=14
+D noise released             wall=0.802 cpu=0.469 ratio=1.71 alloc_blocks=135583 gen2_collections=17
+threshold in the pytest case: wall < 2.0
+observed under pytest, whole file (38 tests): wall=3.385 -> FAILED
+observed under pytest, this case alone: wall<2.0 -> PASSED

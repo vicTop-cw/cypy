@@ -1,0 +1,160 @@
+{
+ "started_utc": "2026-09-29T04:44:46+00:00",
+ "ns": "cypy-loop-20260929",
+ "targets": [
+  "BUG-112",
+  "BUG-113",
+  "BUG-114",
+  "BUG-115",
+  "BUG-116"
+ ],
+ "ledger_seen": {
+  "BUG-112": true,
+  "BUG-113": true,
+  "BUG-114": true,
+  "BUG-115": true,
+  "BUG-116": true
+ },
+ "ledger_summaries": {
+  "BUG-112": "[模式匹配:class 位置槽位] ClassDef 无 .fields 时 _pattern_slot_types 恒空，case C(x, y) 的元数检查被静默跳过",
+  "BUG-113": "[模式匹配:槽位数] struct 里的 `__match_args__ = (...)` 被当成第三个数据字段计入槽位数",
+  "BUG-114": "[模式匹配:语法未落地] SYNTAX/17 文档写法 `tuple<int, ...>` 与 `case Numbers(x, y, ..)` 进不了解析器（Unexpected token DOT_DOT）",
+  "BUG-115": "[模式匹配:元数来源] 元数来源未消费 `__match_args__` 名称序，只按数据字段数计算",
+  "BUG-116": "[规范落地] corpus/ 与 tests/regression/ 已建立但只覆盖 2 个 op（41 个测试对）"
+ },
+ "bug_list_reply_chars": 62107,
+ "bug_list_rows_total": 117,
+ "bug_list_hits": {
+  "BUG-112": {
+   "by_id": true,
+   "by_summary_prefix": true
+  },
+  "BUG-113": {
+   "by_id": true,
+   "by_summary_prefix": true
+  },
+  "BUG-114": {
+   "by_id": true,
+   "by_summary_prefix": true
+  },
+  "BUG-115": {
+   "by_id": true,
+   "by_summary_prefix": true
+  },
+  "BUG-116": {
+   "by_id": true,
+   "by_summary_prefix": true
+  }
+ },
+ "tasks_ns_bugs_rows_0929": 0,
+ "report_bug_rows_today": 19,
+ "report_bug_rows_in_window": [
+  "2026-09-29T04:38:10Z",
+  "2026-09-29T04:38:10Z",
+  "2026-09-29T04:38:10Z",
+  "2026-09-29T04:38:10Z",
+  "2026-09-29T04:38:10Z"
+ ],
+ "report_bug_target_summaries": [
+  {
+   "ts": "2026-09-29T03:13:47Z",
+   "summary": "[模式匹配:规范缺口] 无 __unapply__ 且实参元数 > 字段数时产物发不存在的 __f{i}",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:13:48Z",
+   "summary": "[兄弟仓 FIST-Mbt] cli.js serve 仍往协议 stdout 打 2 行人类横幅",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:13:48Z",
+   "summary": "[规范落地] PROJECT-SPEC 要求的 corpus/ 与 tests/regression/ 在本仓不存在",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:14:26Z",
+   "summary": "[模式匹配:规范缺口] 无 __unapply__ 且实参元数 > 字段数时产物发不存在的 __f{i}",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:14:26Z",
+   "summary": "[兄弟仓 FIST-Mbt] cli.js serve 仍往协议 stdout 打 2 行人类横幅",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:14:26Z",
+   "summary": "[规范落地] PROJECT-SPEC 要求的 corpus/ 与 tests/regression/ 在本仓不存在",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:15:09Z",
+   "summary": "[模式匹配:规范缺口] 无 __unapply__ 且实参元数 > 字段数时产物发不存在的 __f{i}",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:15:09Z",
+   "summary": "[兄弟仓 FIST-Mbt] cli.js serve 仍往协议 stdout 打 2 行人类横幅",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:15:09Z",
+   "summary": "[规范落地] PROJECT-SPEC 要求的 corpus/ 与 tests/regression/ 在本仓不存在",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:16:54Z",
+   "summary": "[组合环] loop_create 返回完整记录但环不落库：同 ns 的新会话 loop_status/loop_tick 报 loop not found",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:16:54Z",
+   "summary": "[状态机出路] 待领取的叶没有任何代理可用的退役出路：reject 只接受待验收，delete/task_cleanup 不适用于未领任务",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:43:06Z",
+   "summary": "[解析器:类型表达式] 注解位置没有类型表达式产生器，`[int]`/`(int,str)`/`{str:int}` 全被编成字面量节点",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:53:01Z",
+   "summary": "[FIST-Mbt:建树] `task_plan_deep(split_n=4)` 生成 5 枝 × 3 叶 = 15 叶，其中 8 支描述逐字复制根单、无独立",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T03:53:01Z",
+   "summary": "[FIST-Mbt:账面] `call_log.result_json` 对所有成功调用只存 2 字节 `ok`，且 laya_decide 的行按 ns/ta",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T04:38:10Z",
+   "summary": "[模式匹配:class 位置槽位] ClassDef 无 .fields 时 _pattern_slot_types 恒空，case C(x, y) 的元数检查",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T04:38:10Z",
+   "summary": "[模式匹配:槽位数] struct 里的 `__match_args__ = (...)` 被当成第三个数据字段计入槽位数",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T04:38:10Z",
+   "summary": "[模式匹配:语法未落地] SYNTAX/17 文档写法 `tuple<int, ...>` 与 `case Numbers(x, y, ..)` 进不了解析器（",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T04:38:10Z",
+   "summary": "[模式匹配:元数来源] 元数来源未消费 `__match_args__` 名称序，只按数据字段数计算",
+   "result_json_bytes": 2
+  },
+  {
+   "ts": "2026-09-29T04:38:10Z",
+   "summary": "[规范落地] corpus/ 与 tests/regression/ 已建立但只覆盖 2 个 op（41 个测试对）",
+   "result_json_bytes": 2
+  }
+ ],
+ "result_json_shape": [
+  2
+ ],
+ "three_way_ok": true
+}
+CONCLUSION ledger=5/5 bug_list_by_id=5/5 bug_list_by_summary=5/5 report_bug_rows=19 tasks_ns_bugs_rows_0929=0 three_way_ok=True rc=0

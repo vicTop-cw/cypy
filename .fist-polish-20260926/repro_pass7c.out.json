@@ -1,0 +1,58 @@
+[
+ {
+  "probe": "match_fields",
+  "match_arm_lines": [
+   "if isinstance(_match_subject_1, Rect):"
+  ],
+  "mentions_dunder_init_as_field": false,
+  "defect": false
+ },
+ {
+  "probe": "owned_import",
+  "first_six_lines": [
+   "# cython: language_level=3",
+   "# cython: boundscheck=False",
+   "# cython: wraparound=False",
+   "# cython: initializedcheck=False",
+   "# cython: nonecheck=False",
+   "# cython: warn.unreachable=False"
+  ],
+  "cython_directive_still_on_line_1": true,
+  "defect": false
+ },
+ {
+  "probe": "comptime_attribute",
+  "per_expr": {
+   "str_upper": {
+    "error": "ValueError: Expected NEWLINE, got EOF at 1:22"
+   },
+   "list_append": {
+    "error": "ValueError: Expected NEWLINE, got EOF at 1:24"
+   },
+   "str_split": {
+    "error": "ValueError: Expected NEWLINE, got EOF at 1:25"
+   },
+   "len": {
+    "error": "ValueError: Expected NEWLINE, got EOF at 1:19"
+   }
+  },
+  "function_table_sample": [],
+  "attribute_calls_all_none": false,
+  "len_still_works": false,
+  "defect": null
+ },
+ {
+  "probe": "comptime_stmt_disappears",
+  "crashed": "AttributeError: 'list' object has no attribute '__dict__'"
+ },
+ {
+  "probe": "trait_generic_key",
+  "trait_impls": {
+   "Show": [
+    "Box"
+   ]
+  },
+  "keys_containing_repr_of_node": [],
+  "defect": false
+ }
+]

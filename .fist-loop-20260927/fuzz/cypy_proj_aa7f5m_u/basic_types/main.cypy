@@ -1,0 +1,50 @@
+# 基础类型示例
+# 演示 Cypy 的基本类型系统
+
+def main() -> int:
+    # 基本数值类型
+    let a: int = 42
+    let b: float = 3.14
+    let c: double = 2.71828
+    let d: bool = True
+
+    print(f"int: {a}")
+    print(f"float: {b}")
+    print(f"double: {c}")
+    print(f"bool: {d}")
+
+    # 数值类型转换
+    let e: float = a  # 隐式转换 (int -> float)
+    let f: bool = True
+
+    print(f"auto(int to float): {e}")
+    print(f"bool: {f}")
+
+    # 字符串类型
+    let name: str = "Cypy"
+    let greeting: str = f"Hello, {name}!"
+    let raw_str: str = r"Raw\nstring"
+
+    print(greeting)
+    print(raw_str)
+
+    # 列表类型
+    let numbers: list<int> = [1, 2, 3, 4, 5]
+
+    print(f"list<int>: {numbers}")
+
+    # 元组类型
+    let point: tuple<int, int> = (10, 20)
+    let data: tuple<str, int, float> = ("test", 42, 3.14)
+
+    print(f"point: {point}")
+    print(f"data: {data}")
+
+    # 类型推断
+    let inferred = 42
+    print(f"inferred type: {type(inferred)}")
+
+    return 0
+
+if __name__ == "__main__":
+    main()

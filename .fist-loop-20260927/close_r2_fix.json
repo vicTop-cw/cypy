@@ -1,0 +1,186 @@
+{
+ "key": "r2_fix",
+ "root_task": "T0r56",
+ "assignee": "cypy-fixer",
+ "stage": "R2-修复",
+ "forbid": "改 PROJECT-SPEC/ 与 SYNTAX/ 冻结语义；弱化或删除既有测试；git add/commit/push；改用户环境（sitecustomize/.pth/注册表）；把别单的锁红当成本单证据；用「产物里出现了某字样」代替调用面判据；替另一条 lane 未盘上可观测的主张签完成",
+ "laws": [
+  {
+   "name": "L1 BUG-44：struct 的 @staticmethod/@classmethod 不得注入 self，binding(False) 只挂绑定方法",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r2_lockproof_revert_bug44.json",
+     "test_bug44_struct_selfless_methods_drop_injected_self",
+     1100
+    ],
+    [
+     "tests/test_loop_20260927_fix_r2.py",
+     "def origin():",
+     9000
+    ]
+   ]
+  },
+  {
+   "name": "L2 BUG-45：= __implicit_default__ 脱糖成 Type.__implicit_default__()，无注解时带行列诊断",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r2_lockproof_revert_bug45.json",
+     "test_bug45_implicit_default_without_annotation_is_diagnosed",
+     1100
+    ],
+    [
+     "tests/test_loop_20260927_fix_r2.py",
+     "Config.__implicit_default__()",
+     9000
+    ]
+   ]
+  },
+  {
+   "name": "L3 BUG-39：顶层 return 必须非零退出并带行列，函数内 return 形状不变",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r2_lockproof_revert_bug39.json",
+     "test_bug39_toplevel_return_is_diagnosed_at_cli",
+     1050
+    ],
+    [
+     "tests/test_loop_20260927_fix_r2.py",
+     "must be used inside a function",
+     9000
+    ]
+   ]
+  },
+  {
+   "name": "L4 BUG-35：解析/生成异常与 I/O 失败分桶，行列不得丢（深嵌套守卫另账）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r2_lockproof_revert_bug35.json",
+     "test_bug35_parse_diagnosis_is_not_bucketed_as_read_error",
+     1050
+    ],
+    [
+     "tests/test_loop_20260927_fix_r2.py",
+     "读取文件错误",
+     9000
+    ]
+   ]
+  },
+  {
+   "name": "L5 BUG-46：hook install/status 口径一致（都限定当前进程），docs/USAGE.md 同步收窄",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r2_lockproof_revert_bug46.json",
+     "test_bug46_usage_doc_matches_the_narrowed_claim",
+     1100
+    ],
+    [
+     "docs/USAGE.md",
+     "不写盘、不跨进程生效",
+     8000
+    ]
+   ]
+  },
+  {
+   "name": "L6 BUG-47：cypy_hook 包级暴露 install_hook/uninstall_hook/is_hook_installed 且 __all__ 对齐",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r2_lockproof_revert_bug47.json",
+     "test_bug47_package_level_hook_api_exists",
+     1100
+    ],
+    [
+     "cypy_hook/__init__.py",
+     "is_hook_installed",
+     120
+    ]
+   ]
+  },
+  {
+   "name": "L7 三套基线与改动半径：pytest ≥1883、自研 47/47、e2e 25/25、HEAD 仍 17d68b4、亲笔行 lint 零违例",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r2_baselines.json",
+     "unclaimed_by_this_lane",
+     600
+    ],
+    [
+     ".fist-loop-20260927/fix_r2_lint.json",
+     "authored_lines_checked",
+     250
+    ]
+   ]
+  },
+  {
+   "name": "L8 锁死承重：6 单回退矩阵逐单转红、零混因、对照仍绿、15 条全收集，且有必然违例自检",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r2_lockproof.json",
+     "\"refuse\": []",
+     1000
+    ],
+    [
+     ".fist-loop-20260927/fix_r2_lint_selftest.json",
+     "selfprobe-caught",
+     200
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "L1 BUG-44：struct 的 @staticmethod/@classmethod 不得注入 self，binding(False) 只挂绑定方法",
+   ".fist-loop-20260927/fix_r2_lockproof_revert_bug44.json",
+   "test_bug44_struct_selfless_methods_drop_injected_self"
+  ],
+  [
+   "L2 BUG-45：= __implicit_default__ 脱糖成 Type.__implicit_default__()，无注解时带行列诊断",
+   ".fist-loop-20260927/fix_r2_lockproof_revert_bug45.json",
+   "test_bug45_implicit_default_without_annotation_is_diagnosed"
+  ],
+  [
+   "L3 BUG-39：顶层 return 必须非零退出并带行列，函数内 return 形状不变",
+   ".fist-loop-20260927/fix_r2_lockproof_revert_bug39.json",
+   "test_bug39_toplevel_return_is_diagnosed_at_cli"
+  ],
+  [
+   "L4 BUG-35：解析/生成异常与 I/O 失败分桶，行列不得丢（深嵌套守卫另账）",
+   ".fist-loop-20260927/fix_r2_lockproof_revert_bug35.json",
+   "test_bug35_parse_diagnosis_is_not_bucketed_as_read_error"
+  ],
+  [
+   "L5 BUG-46：hook install/status 口径一致（都限定当前进程），docs/USAGE.md 同步收窄",
+   ".fist-loop-20260927/fix_r2_lockproof_revert_bug46.json",
+   "test_bug46_usage_doc_matches_the_narrowed_claim"
+  ],
+  [
+   "L6 BUG-47：cypy_hook 包级暴露 install_hook/uninstall_hook/is_hook_installed 且 __all__ 对齐",
+   ".fist-loop-20260927/fix_r2_lockproof_revert_bug47.json",
+   "test_bug47_package_level_hook_api_exists"
+  ],
+  [
+   "L7 三套基线与改动半径：pytest ≥1883、自研 47/47、e2e 25/25、HEAD 仍 17d68b4、亲笔行 lint 零违例",
+   ".fist-loop-20260927/fix_r2_baselines.json",
+   "unclaimed_by_this_lane"
+  ],
+  [
+   "L8 锁死承重：6 单回退矩阵逐单转红、零混因、对照仍绿、15 条全收集，且有必然违例自检",
+   ".fist-loop-20260927/fix_r2_lockproof.json",
+   "\"refuse\": []"
+  ]
+ ],
+ "root_deliverable": "R2-修复 交付：{REPORT}；6 单全部落到调用面（BUG-44 struct 非绑定方法不再注入 self、BUG-45 __implicit_default__ 脱糖成 Type.__implicit_default__()、BUG-39 顶层 return 带行列诊断、BUG-35 解析/生成异常与 I/O 失败分桶、BUG-46 hook install/status 口径收窄到当前进程并同步 docs、BUG-47 cypy_hook 包级 API 再导出），新增 18 条永久回归且在只回退本单的临时树上逐单转红、他单全绿；三套基线同一时刻复算 pytest 1886 passed（收集 1886）/ 自研 47/47 / e2e PASS=25 FAIL=0，HEAD 仍 17d68b4 且零 add/commit/push；本轮自身缺陷 12 条（8 判据 + 4 操作）当场修回并留档，其中 2 条操作缺陷已入账 BUG-50（black 整档重写不可回滚）/BUG-51（return 守卫吃掉宏体）",
+ "root_marker": "[selfdrive-fix]",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/fix_r2_baselines.json",
+   "1886 passed",
+   300
+  ],
+  [
+   ".fist-loop-20260927/fix_r2_lint_selftest.json",
+   "selfprobe-caught",
+   120
+  ]
+ ],
+ "root_verify_reason": "6 单都有成对证据：只回退本单 ⇒ 本单锁转红且别单/对照仍绿（混因清单为空），完整树 ⇒ 18 条全收集全绿；lint 判据配了必然违例自检（120 列探针必须被抓到），基线数字与改动半径在同一时刻的一次复算里取齐，不从散文里抄"
+}

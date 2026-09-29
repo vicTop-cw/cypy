@@ -1,0 +1,21 @@
+{
+ "ran_at_utc": "2026-09-29T04:47:45+00:00",
+ "spec17_measured_lines": 449,
+ "anchor": "，441→448 行。",
+ "anchor_count": 1,
+ "refuse": [],
+ "old_line_verbatim": "  （`__match_args__` 名称序目前未被消费，正解另立 BUG-115），441→448 行。",
+ "new_line_verbatim": "  （`__match_args__` 名称序目前未被消费，正解另立 BUG-115），441→449 行（规则 6、7 占 8 行，即 442–449）。",
+ "lines_touched": [
+  "  （`__match_args__` 名称序目前未被消费，正解另立 BUG-115），441→448 行。"
+ ],
+ "recheck": {
+  "stale_needle_gone": true,
+  "measured_number_present": true,
+  "entries": 117,
+  "fixed_sections": 82,
+  "total_lines_unchanged": true
+ },
+ "verified": true
+}
+CONCLUSION anchor=1 changed=1 spec17_measured=449 verified=True rc=0

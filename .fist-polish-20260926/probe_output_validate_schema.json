@@ -1,0 +1,32 @@
+{
+  "name": "output_validate",
+  "description": "产出物验证（Did it work? 证据梯 L4 硬门）：按 artifacts 描述的交付产物做确定性验证——文件存在？非空？invariant 成立？外部 run_check 结果 ok？报告不是证据，只有交付产物的实际状态才能证明工作发生了。任一 artifact 失败即 verdict=fail。enforce 闭环：verdict=fail 时调用方可直接 report_bug(publish_task=true) 或 reject 打回。参数：task_id(可选, 用于取 project_dir)、project_dir(可选, 相对 CWD 路径如 .)、artifacts(必填, 数组：{path, contains?, not_contains?, min_chars?} 或 {check_key})、external_results(可选 Json, 外部 run_check 结果字典)、evidence(可选, agent 报告)、require_evidence(可选默认 false, 硬门全过时是否要求 evidence 非空)。",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "task_id": {
+        "type": "string",
+        "description": "任务 id（可选, 用于取项目目录）"
+      },
+      "project_dir": {
+        "type": "string",
+        "description": "项目目录（可选, 相对路径如 ., 不传则依 task_id 或 CWD）"
+      },
+      "artifacts": {
+        "type": "array",
+        "description": "要验证的交付产物数组（必填）。每项：{path, contains?, not_contains?, min_chars?} 检查文件；或 {check_key} 引用 external_results 中的外部 run_check 结果"
+      },
+      "evidence": {
+        "type": "string",
+        "description": "agent 报告字符串（示意层弱证据；硬门全过时可选参考）"
+      },
+      "require_evidence": {
+        "type": "boolean",
+        "description": "是否要求 evidence 非空（默认 false）。硬门全过但 evidence 空且此为 true → verdict=fail"
+      }
+    },
+    "required": [
+      "artifacts"
+    ]
+  }
+}

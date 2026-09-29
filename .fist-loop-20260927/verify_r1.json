@@ -1,0 +1,111 @@
+{
+ "refuse": [],
+ "pytest_full": {
+  "rc": 0,
+  "passed": 1862,
+  "failed": 0,
+  "errors": 0,
+  "summary_line": "====================== 1862 passed in 619.86s (0:10:19) ======================="
+ },
+ "test_suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0"
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+ },
+ "frozen_docs": {
+  "touched_vs_head": [
+   "SYNTAX/01-basic-types.md",
+   "SYNTAX/appendix-A-keywords.md"
+  ],
+  "touched_after_round_start": [],
+  "round_start": "2026-09-26 23:00:00",
+  "per_file_mtime": {
+   "SYNTAX/01-basic-types.md": "2026-09-26 22:40:23",
+   "SYNTAX/appendix-A-keywords.md": "2026-09-26 13:29:12"
+  },
+  "newest_frozen_mtime": "2026-09-26 22:40:23",
+  "newest_frozen_file": "SYNTAX/01-basic-types.md"
+ },
+ "lint_scoped": {
+  "rc": 0,
+  "refuse": [],
+  "in_authored": {
+   "cypy_bridge/__init__.py": 0,
+   "cypy_bridge/types.py": 0,
+   "cypyc/codegen/cython_generator.py": 0,
+   "cypyc/parser/lexer.py": 0,
+   "tests/test_loop_20260927_fix.py": 0
+  },
+  "totals": {
+   "cypy_bridge/__init__.py": 10,
+   "cypy_bridge/types.py": 54,
+   "cypyc/codegen/cython_generator.py": 285,
+   "cypyc/parser/lexer.py": 38,
+   "tests/test_loop_20260927_fix.py": 0
+  },
+  "black_would_reformat": [
+   "cypy_bridge/__init__.py",
+   "cypy_bridge/types.py",
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/lexer.py"
+  ],
+  "repo_census": {
+   "rc": 1,
+   "total": 4990,
+   "census": {
+    "W293": 3991,
+    "F401": 164,
+    "W291": 37,
+    "E501": 423,
+    "F541": 111,
+    "E303": 6,
+    "F841": 108,
+    "F811": 10,
+    "W292": 32,
+    "E302": 15,
+    "E402": 38,
+    "F601": 6,
+    "E128": 20,
+    "E306": 4,
+    "E261": 2,
+    "E129": 1,
+    "E203": 1,
+    "E127": 4,
+    "E722": 2,
+    "E712": 11,
+    "E741": 1,
+    "W391": 1,
+    "E731": 1,
+    "E305": 1
+   },
+   "files": 131
+  },
+  "controls": {
+   "lint_scope": {
+    "ok": true,
+    "range0": [
+     1343,
+     1347,
+     "def _record_declared_var"
+    ],
+    "inside_caught": 1,
+    "outside_leaked": 0
+   }
+  }
+ },
+ "mypy_record_only": {
+  "rc": 1,
+  "error_count": 950,
+  "first5": [
+   "cypyc\\project\\module_dependency_graph.py:20: error: Incompatible types in assignment (expression has type \"None\", variable has type \"set[str]\")  [assignment]",
+   "cypyc\\project\\module_dependency_graph.py:21: error: Incompatible types in assignment (expression has type \"None\", variable has type \"set[str]\")  [assignment]",
+   "cypyc\\project\\module_dependency_graph.py:23: error: Function is missing a return type annotation  [no-untyped-def]",
+   "cypyc\\project\\module_dependency_graph.py:40: error: Function is missing a return type annotation  [no-untyped-def]",
+   "cypyc\\project\\module_dependency_graph.py:175: error: Function is missing a return type annotation  [no-untyped-def]"
+  ],
+  "note": "只记录不裁决：strict 全仓存量债非本轮引入"
+ }
+}

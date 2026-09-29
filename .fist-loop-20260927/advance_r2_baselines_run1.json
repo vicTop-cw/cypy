@@ -1,0 +1,69 @@
+{
+ "refuse": [
+  "pytest 不达标：rc=1 passed=1901 下限=1902 failed=['test_bug10_cache_update_parse_failure_warns']"
+ ],
+ "pytest": {
+  "rc": 1,
+  "passed": 1901,
+  "floor": 1902,
+  "failed": [
+   "test_bug10_cache_update_parse_failure_warns"
+  ],
+  "collected": 1902,
+  "collect_rc": 0,
+  "other_counts": {
+   "failed": 1
+  },
+  "line": "1 failed, 1901 passed in 349.36s (0:05:49)"
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": "47",
+   "Passed": "47",
+   "Failed": "0",
+   "Skipped": "0"
+  },
+  "green": true
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+  "fields": {
+   "PASS": "25",
+   "FAIL": "0",
+   "WARN": "0",
+   "UNREG/RUNFAIL": "0"
+  },
+  "green": true
+ },
+ "git": {
+  "head": "17d68b4",
+  "head_rc": 0,
+  "staged": 0,
+  "dirty_rows": 163
+ },
+ "radius": {
+  "count": 4,
+  "rows": [
+   {
+    "file": "cypyc/cli.py",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "cypyc/incremental/hot_reload.py",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "docs/USAGE.md",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "tests/test_advance_20260927_r2.py",
+    "attributed_to_this_lane": true
+   }
+  ],
+  "unclaimed_by_this_lane": []
+ }
+}

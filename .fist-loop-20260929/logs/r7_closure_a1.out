@@ -1,0 +1,176 @@
+{
+ "root": "T0r113",
+ "tree": {
+  "root": "T0r113",
+  "branches_from_plan": [
+   "T0r113.1",
+   "T0r113.2",
+   "T0r113.3",
+   "T0r113.4",
+   "T0r113.5"
+  ],
+  "listing_rows_in_ns": 0,
+  "leaves_by_flag": [],
+  "leaves_by_depth": [],
+  "leaves_used": [],
+  "leaf_count": 0
+ },
+ "loop_create": "{\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:43:06Z\", \"updated_at\": \"2026-09-29T03:43:06Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 33}",
+ "baseline": {
+  "collected": 2158,
+  "passed": 2158,
+  "log": ".fist-loop-20260929\\logs\\r7_pytest_r1.log",
+  "conclusion_line_verbatim": "====================== 2158 passed in 413.15s (0:06:53) =======================",
+  "ledger_open_ids": [
+   "BUG-34",
+   "BUG-40",
+   "BUG-43",
+   "BUG-49",
+   "BUG-50",
+   "BUG-52",
+   "BUG-53",
+   "BUG-54",
+   "BUG-65",
+   "BUG-68",
+   "BUG-69",
+   "BUG-70",
+   "BUG-71",
+   "BUG-72",
+   "BUG-73",
+   "BUG-77",
+   "BUG-92",
+   "BUG-94",
+   "BUG-95",
+   "BUG-96",
+   "BUG-97",
+   "BUG-98",
+   "BUG-99",
+   "BUG-100",
+   "BUG-101",
+   "BUG-102",
+   "BUG-103",
+   "BUG-104",
+   "BUG-105",
+   "BUG-106",
+   "BUG-96",
+   "BUG-107",
+   "BUG-108"
+  ],
+  "ledger_closed_ids": 76
+ },
+ "leaf_status": {},
+ "run_check": {},
+ "tally": {
+  "by_tool": {
+   "bug_list": {
+    "ok": 1,
+    "refused": 0
+   },
+   "claim": {
+    "ok": 6,
+    "refused": 0
+   },
+   "execute": {
+    "ok": 6,
+    "refused": 12
+   },
+   "get": {
+    "ok": 37,
+    "refused": 0
+   },
+   "list": {
+    "ok": 3,
+    "refused": 0
+   },
+   "loop_create": {
+    "ok": 1,
+    "refused": 1
+   },
+   "loop_tick": {
+    "ok": 6,
+    "refused": 0
+   },
+   "omega_result_verify": {
+    "ok": 6,
+    "refused": 12
+   },
+   "omega_spec_create": {
+    "ok": 6,
+    "refused": 12
+   },
+   "omega_spec_review": {
+    "ok": 6,
+    "refused": 0
+   },
+   "project_health": {
+    "ok": 1,
+    "refused": 0
+   },
+   "publish_parallel": {
+    "ok": 2,
+    "refused": 0
+   },
+   "reject": {
+    "ok": 0,
+    "refused": 15
+   },
+   "report_bug": {
+    "ok": 12,
+    "refused": 0
+   },
+   "run_check": {
+    "ok": 18,
+    "refused": 0
+   },
+   "submit": {
+    "ok": 6,
+    "refused": 12
+   },
+   "task_plan_deep": {
+    "ok": 1,
+    "refused": 0
+   },
+   "verify": {
+    "ok": 6,
+    "refused": 12
+   }
+  },
+  "rpc_sent_by_tool": {
+   "publish_parallel": 1,
+   "laya_decide": 1,
+   "task_plan_deep": 1,
+   "list": 1,
+   "loop_create": 1,
+   "bug_list": 1,
+   "loop_tick": 6,
+   "report_bug": 1
+  },
+  "rpc_sent_total": 13,
+  "sent_but_not_logged": [
+   "laya_decide"
+  ],
+  "logged_but_not_sent": [
+   "claim",
+   "execute",
+   "get",
+   "omega_result_verify",
+   "omega_spec_create",
+   "omega_spec_review",
+   "project_health",
+   "reject",
+   "run_check",
+   "submit",
+   "verify"
+  ],
+  "rows": 200,
+  "refused": 76,
+  "root_status": "拆分中",
+  "queried_at_utc": "2026-09-29T03:43:07+00:00"
+ }
+}
+REFUSED list | (建树回读) | 回读叶数 0 ≠ 交付条数 4（root=T0r113, prefix=T0r113.）⇒ 不逐叶走链
+REFUSED tree | (第 0 条) | 叶数 0 ≠ 交付条数 4 ⇒ 不做部分对应，本条整条不打卡
+REFUSED tree | (第 1 条) | 叶数 0 ≠ 交付条数 4 ⇒ 不做部分对应，本条整条不打卡
+REFUSED tree | (第 2 条) | 叶数 0 ≠ 交付条数 4 ⇒ 不做部分对应，本条整条不打卡
+REFUSED tree | (第 3 条) | 叶数 0 ≠ 交付条数 4 ⇒ 不做部分对应，本条整条不打卡
+CONCLUSION root=拆分中 calls=200 refused=76 refusal_rows=5 leaves_closed=0/4

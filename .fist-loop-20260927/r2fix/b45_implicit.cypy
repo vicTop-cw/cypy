@@ -1,0 +1,11 @@
+struct Config:
+    timeout: int
+
+    @staticmethod
+    def __implicit_default__() -> Config:
+        return Config(timeout=30)
+
+def process(data: str, cfg: Config = __implicit_default__) -> str:
+    return data
+
+print(process("hi"))

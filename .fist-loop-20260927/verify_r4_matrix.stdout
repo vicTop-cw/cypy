@@ -1,0 +1,21 @@
+{
+ "rows_total": 22,
+ "bearing": 13,
+ "non_bearing": 9,
+ "broken": 0,
+ "sha_restored": 22,
+ "canary_caught": 1,
+ "identity_ok": true,
+ "non_bearing_ids": [
+  "H767-replace",
+  "H791-replace",
+  "H839-replace",
+  "H878-replace",
+  "H1019-insert",
+  "H1030-replace",
+  "H1096-insert",
+  "H2155-replace",
+  "X99-canary-comment"
+ ],
+ "refuse": []
+}

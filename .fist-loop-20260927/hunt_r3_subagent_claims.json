@@ -1,0 +1,87 @@
+{
+ "rows": [
+  {
+   "id": "C1",
+   "subagent_claim_verbatim": "GenericTransformer matches an attribute no generic node has … collects zero generic definitions",
+   "my_measured_verdict": "CONFIRMED",
+   "pos_ok": true,
+   "ctl_ok": true,
+   "my_probe_history": ""
+  },
+  {
+   "id": "C2",
+   "subagent_claim_verbatim": "comptime ignores Param.default_value … evaluate_comptime degrades it to None (silent drop)",
+   "my_measured_verdict": "DESIGN",
+   "pos_ok": true,
+   "ctl_ok": true,
+   "my_probe_history": ""
+  },
+  {
+   "id": "C3",
+   "subagent_claim_verbatim": "transpile flags documented in its own help text are unreachable",
+   "my_measured_verdict": "CONFIRMED",
+   "pos_ok": true,
+   "ctl_ok": true,
+   "my_probe_history": ""
+  },
+  {
+   "id": "C4",
+   "subagent_claim_verbatim": "CUnion's own docstring example crashes",
+   "my_measured_verdict": "CONFIRMED",
+   "pos_ok": true,
+   "ctl_ok": true,
+   "my_probe_history": ""
+  },
+  {
+   "id": "C5",
+   "subagent_claim_verbatim": "realloc lies about its return type … frees ptr and return None for size <= 0",
+   "my_measured_verdict": "CONFIRMED",
+   "pos_ok": true,
+   "ctl_ok": true,
+   "my_probe_history": ""
+  },
+  {
+   "id": "C6",
+   "subagent_claim_verbatim": "get_compilation_order is nondeterministic and contradicts its docstring … Also zero callers repo-wide",
+   "my_measured_verdict": "CONFIRMED",
+   "pos_ok": true,
+   "ctl_ok": true,
+   "my_probe_history": "v1 在同进程里改 os.environ['PYTHONHASHSEED'] 跑 5 次 ⇒ distinct=1，判成'不现形'；字符串哈希在解释器启动时就定，同进程改环境变量根本改不了它 ⇒ 必须起子进程（v2 起 5 个种子，distinct=4）。"
+  },
+  {
+   "id": "C7",
+   "subagent_claim_verbatim": "Dead in-degree computation … first 8 lines unreachable in effect",
+   "my_measured_verdict": "REJECTED",
+   "pos_ok": false,
+   "ctl_ok": true,
+   "my_probe_history": "v1 用 `in_degree_assigned_again`/窗口文本猜死码，v2 换成 AST 口径（pass-only 循环 + Load 计数）后实测 pass_only_loops=[]、in_degree_loads=6 ⇒ 子代理那条**不成立**，撤回、不入账。"
+  },
+  {
+   "id": "C8",
+   "subagent_claim_verbatim": "BuildBlockChecker docstring rule #2 is unimplemented … Checker is wired live at cypy_hook/hook.py:272-275",
+   "my_measured_verdict": "CONFIRMED",
+   "pos_ok": true,
+   "ctl_ok": true,
+   "my_probe_history": "v3 读 inspect.getdoc(类) 找规则清单 ⇒ 规则其实写在**模块** docstring，读空之后把 'pos 不成立' 误判成 REJECTED（差点漏掉一条真缺陷）。v4 改读 sys.modules[...].__doc__ 才现形。"
+  }
+ ],
+ "subagent_confirmed_by_me": [
+  "C1",
+  "C3",
+  "C4",
+  "C5",
+  "C6",
+  "C8"
+ ],
+ "withdrawn": [
+  {
+   "id": "C2",
+   "v": "DESIGN"
+  },
+  {
+   "id": "C7",
+   "v": "REJECTED"
+  }
+ ],
+ "refuse": []
+}

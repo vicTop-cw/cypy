@@ -1,0 +1,77 @@
+{
+ "key": "r3_fix",
+ "root_task": "T0r70",
+ "assignee": "cypy-fixer",
+ "stage": "R3-修复",
+ "forbid": "弱化或删除既有测试来迁就新行为；改 PROJECT-SPEC/SYNTAX 冻结语义；把未修的半边写成已修；git push/删文件/暂存别人的改动；把没做的写成 done；替另一条 lane 的改动签归属",
+ "laws": [
+  {
+   "name": "修法台账：六件各有声明面、所选修法与被放弃的替代方案（含放弃理由）",
+   "artifacts": [
+    [".fist-loop-20260927/fix_r3_plan.json", "rejected_alternative", 300],
+    [".fist-loop-20260927/fix_r3_plan.json", "chosen_fix", 300]
+   ]
+  },
+  {
+   "name": "修前对照快照在盘：同一批三态夹具，before 的 defect_present 必须仍为 true",
+   "artifacts": [
+    [".fist-loop-20260927/fix_r3_evidence.json", "before_observed", 300]
+   ]
+  },
+  {
+   "name": "翻转与声明侧：四件从现形翻到不现形，两件只修声明侧并给出字面变化的实据",
+   "artifacts": [
+    [".fist-loop-20260927/fix_r3_evidence.json", "c8_doc_checks", 300],
+    [".fist-loop-20260927/fix_r3_evidence.json", "judge_selfprobe", 300]
+   ]
+  },
+  {
+   "name": "回归锁三向对账：声明名 == 收集 == PASSED，每条 BUG 都有 pos 与配对对照",
+   "artifacts": [
+    [".fist-loop-20260927/fix_r3_locks_inventory.json", "ctl_total", 300]
+   ]
+  },
+  {
+   "name": "锁非恒真：上一提交产品码树上逐组出红，且红因分栏（陈旧面 vs 行为差异）",
+   "artifacts": [
+    [".fist-loop-20260927/fix_r3_head_proof.json", "stale_control_reds", 300],
+    [".fist-loop-20260927/fix_r3_head_proof.json", "caveat", 300]
+   ]
+  },
+  {
+   "name": "三套判据体系同一时刻复算且只升不降，git 红线未动，半径全部归本单",
+   "artifacts": [
+    [".fist-loop-20260927/fix_r3_baselines.json", "1920 passed", 300]
+   ]
+  },
+  {
+   "name": "账本 FIXED 段落账：六件各一段、条目标题行逐字未改、幂等守卫可重跑拒写",
+   "artifacts": [
+    [".fist-loop-20260927/fix_r3_ledger.json", "sections_written", 300]
+   ]
+  },
+  {
+   "name": "报告与账本同步：三向对照（条目/FIXED 段/服务端 bug 任务）+ 孤儿按点名白名单",
+   "artifacts": [
+    [".fist-loop-20260927/fix_r3_ledger3way.json", "orphans_match_known_whitelist", 300]
+   ]
+  }
+ ],
+ "branches": [
+  ["修法台账：声明面、所选修法与被放弃的替代方案", ".fist-loop-20260927/fix_r3_plan.json", "rejected_alternative"],
+  ["修前快照：上一环三态夹具的 before 对照", ".fist-loop-20260927/fix_r3_evidence.json", "before_observed"],
+  ["翻转判定与声明侧字面复算（含判据自证）", ".fist-loop-20260927/fix_r3_evidence.json", "judge_selfprobe"],
+  ["回归锁清单：pos/对照与三向名字对账", ".fist-loop-20260927/fix_r3_locks_inventory.json", "ctl_total"],
+  ["旧码树复算：锁承重的次级证据与红因分栏", ".fist-loop-20260927/fix_r3_head_proof.json", "stale_control_reds"],
+  ["三套基线与 git 红线：同一时刻、只升不降", ".fist-loop-20260927/fix_r3_baselines.json", "1920 passed"],
+  ["账本段落账：FIXED 终态判据与幂等守卫", ".fist-loop-20260927/fix_r3_ledger.json", "sections_written"],
+  ["三向对照与报告同步", ".fist-loop-20260927/fix_r3_ledger3way.json", "orphans_match_known_whitelist"]
+ ],
+ "root_deliverable": "R3-修复 交付：{REPORT}；六件 BUG-55..60 逐件落地（泛型收集认 generic_params / transpile 四旗标接到 run_transpile / CUnion 示例改可用形状并对内建类型给专属错误 / realloc 注解与文档对齐返回值 / 环内编译序 sorted / 构建块 docstring 对齐 SYNTAX/04），17 条回归锁三向对账全绿，pytest 1920、自研 47/47、e2e 25/25 未回落，HEAD 未动、暂存 0、半径 7 档全归本单；两件（BUG-58/BUG-60）未消除的另一半留在裁决面并逐字写明",
+ "root_marker": "[selfdrive-fix]",
+ "root_extra_artifacts": [
+  [".fist-loop-20260927/fix_r3_evidence.json", "judge_selfprobe", 300],
+  [".fist-loop-20260927/fix_r3_locks_inventory.json", "ctl_total", 300]
+ ],
+ "root_verify_reason": "六件各有『声明面 + 所选修法 + 被放弃方案及理由』的台账；四件用上一环同夹具做出 before→after 翻转（判据自带『必须能抓没翻』的自证），两件按声明侧字面复算并写明未消除的另一半；17 条锁的声明名、--collect-only 集合与 PASSED 集合双向相等且每组都有成对对照；三套基线当场复算未回落，改动半径逐档归属本单"
+}

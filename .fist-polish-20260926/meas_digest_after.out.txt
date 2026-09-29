@@ -1,0 +1,14 @@
+python: 3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]
+executable: C:\Users\victo\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\python.exe
+cpu_count: 20
+PYTHONHASHSEED: None
+cwd: E:\IDEProjects\AI\Cypy\.fist-polish-20260926
+source lines: 11000
+source md5: 339007772848c4f4990070185c2be951
+rep0 calib wall=0.539 cpu=0.547 ratio=0.98 | digest wall=0.252 cpu=0.250 ratio=1.01 stmts=1100
+rep1 calib wall=0.541 cpu=0.531 ratio=1.02 | digest wall=0.227 cpu=0.234 ratio=0.97 stmts=1100
+rep2 calib wall=1.171 cpu=0.750 ratio=1.56 | digest wall=0.842 cpu=0.469 ratio=1.80 stmts=1100
+threshold read from test: 2.0
+judge wall<2.0 : PASS (worst wall=0.842)
+judge cpu<2.0 : PASS (worst cpu =0.469)
+gc counts: (1807, 1, 2)

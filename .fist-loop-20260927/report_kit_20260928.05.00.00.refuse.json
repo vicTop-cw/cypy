@@ -1,0 +1,10 @@
+{
+ "refuse": [
+  "artifact .fist-loop-20260927/hunt_r4_calllog_tally.json 不可用（MISSING None）",
+  "artifact .fist-loop-20260927/hunt_r4_self_audit.json 不可用（MISSING None）",
+  "gate ⑪-1 的件 .fist-loop-20260927/hunt_r4_calllog_tally.json 不可用",
+  "gate ⑪-2 的件 .fist-loop-20260927/hunt_r4_calllog_tally.json 不可用",
+  "gate ⑪-3 的件 .fist-loop-20260927/hunt_r4_self_audit.json 不可用",
+  "gate ⑪-4 的件 .fist-loop-20260927/hunt_r4_self_audit.json 不可用"
+ ]
+}

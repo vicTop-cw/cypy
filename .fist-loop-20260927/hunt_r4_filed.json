@@ -1,0 +1,230 @@
+{
+ "started": "2026-09-27T20:25:15+00:00",
+ "filed": [
+  "BUG-61",
+  "BUG-62",
+  "BUG-63",
+  "BUG-64",
+  "BUG-65",
+  "BUG-66",
+  "BUG-67",
+  "BUG-68",
+  "BUG-69",
+  "BUG-70"
+ ],
+ "entries": [
+  {
+   "key": "RC1_func_symbol_typed_as_return",
+   "rpc": {
+    "bug_id": "BUG-61",
+    "id": "BUG-61",
+    "task_id": "T0r75"
+   },
+   "ledger_number": "BUG-61",
+   "expected": "BUG-61",
+   "summary_on_disk": true,
+   "detail_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "not_proof_on_disk": true
+  },
+  {
+   "key": "RC2_no_argument_type_check",
+   "rpc": {
+    "bug_id": "BUG-62",
+    "id": "BUG-62",
+    "task_id": "T0r76"
+   },
+   "ledger_number": "BUG-62",
+   "expected": "BUG-62",
+   "summary_on_disk": true,
+   "detail_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "not_proof_on_disk": true
+  },
+  {
+   "key": "RC3_struct_field_type_unresolved",
+   "rpc": {
+    "bug_id": "BUG-63",
+    "id": "BUG-63",
+    "task_id": "T0r77"
+   },
+   "ledger_number": "BUG-63",
+   "expected": "BUG-63",
+   "summary_on_disk": true,
+   "detail_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "not_proof_on_disk": true
+  },
+  {
+   "key": "RC4_internal_repr_in_message",
+   "rpc": {
+    "bug_id": "BUG-64",
+    "id": "BUG-64",
+    "task_id": "T0r78"
+   },
+   "ledger_number": "BUG-64",
+   "expected": "BUG-64",
+   "summary_on_disk": true,
+   "detail_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "not_proof_on_disk": true
+  },
+  {
+   "key": "DOC_status_stale_rows",
+   "rpc": {
+    "bug_id": "BUG-65",
+    "id": "BUG-65",
+    "task_id": "T0r79"
+   },
+   "ledger_number": "BUG-65",
+   "expected": "BUG-65",
+   "summary_on_disk": true,
+   "detail_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "not_proof_on_disk": true
+  },
+  {
+   "key": "DOC_cli_face_mismatch",
+   "rpc": {
+    "bug_id": "BUG-66",
+    "id": "BUG-66",
+    "task_id": "T0r80"
+   },
+   "ledger_number": "BUG-66",
+   "expected": "BUG-66",
+   "summary_on_disk": true,
+   "detail_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "not_proof_on_disk": true
+  },
+  {
+   "key": "DOC_example_fails",
+   "rpc": {
+    "bug_id": "BUG-67",
+    "id": "BUG-67",
+    "task_id": "T0r81"
+   },
+   "ledger_number": "BUG-67",
+   "expected": "BUG-67",
+   "summary_on_disk": true,
+   "detail_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "not_proof_on_disk": true
+  },
+  {
+   "key": "BRIDGE_cache_side_effect",
+   "rpc": {
+    "bug_id": "BUG-68",
+    "id": "BUG-68",
+    "task_id": "T0r82"
+   },
+   "ledger_number": "BUG-68",
+   "expected": "BUG-68",
+   "summary_on_disk": true,
+   "detail_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "not_proof_on_disk": true
+  },
+  {
+   "key": "BRIDGE_c_not_equivalent",
+   "rpc": {
+    "bug_id": "BUG-69",
+    "id": "BUG-69",
+    "task_id": "T0r83"
+   },
+   "ledger_number": "BUG-69",
+   "expected": "BUG-69",
+   "summary_on_disk": true,
+   "detail_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "not_proof_on_disk": true
+  },
+  {
+   "key": "SPEC_file_size_redline",
+   "rpc": {
+    "bug_id": "BUG-70",
+    "id": "BUG-70",
+    "task_id": "T0r84"
+   },
+   "ledger_number": "BUG-70",
+   "expected": "BUG-70",
+   "summary_on_disk": true,
+   "detail_on_disk": true,
+   "repro_cmd_on_disk": true,
+   "not_proof_on_disk": true
+  }
+ ],
+ "filed_total": 10,
+ "plan_total": 10,
+ "numbering_from_disk": {
+  "before_max": 60,
+  "first_new": 61
+ },
+ "ledger_before": 60,
+ "ledger_after": 70,
+ "sqlite_bug_rows": {
+  "before": 56,
+  "after": 66,
+  "delta": 10
+ },
+ "sqlite_recent": [
+  [
+   "T0r9",
+   "已完成",
+   "修复 bug: [silent-fail] cypyc/transformer 五个 transformer 把递归调用"
+  ],
+  [
+   "T0r84",
+   "待领取",
+   "修复 bug: [SPEC_file_size_redline] PROJECT-SPEC 自己的 3000 行（不含注"
+  ],
+  [
+   "T0r83",
+   "待领取",
+   "修复 bug: [BRIDGE_c_not_equivalent] bridge 生成的 C 里有**模块级** `if"
+  ],
+  [
+   "T0r82",
+   "待领取",
+   "修复 bug: [BRIDGE_cache_side_effect] `BridgeCacheManager` 的只读查"
+  ],
+  [
+   "T0r81",
+   "待领取",
+   "修复 bug: [DOC_example_fails] 文档示例引用实现里不存在的符号：`ProjectCompileR"
+  ],
+  [
+   "T0r80",
+   "待领取",
+   "修复 bug: [DOC_cli_face_mismatch] CLI 用法文档与实读不符：`cypyc --compi"
+  ],
+  [
+   "T0r8",
+   "已完成",
+   "修复 bug: [silent-fail] cypyc/project/project_compiler.py:826 "
+  ],
+  [
+   "T0r79",
+   "待领取",
+   "修复 bug: [DOC_status_stale_rows] 文档宣称的形态与今天实现不符（appendix-C 特性"
+  ],
+  [
+   "T0r78",
+   "待领取",
+   "修复 bug: [RC4_internal_repr_in_message] 类型不符的用户可见文案直接内插 `Type"
+  ],
+  [
+   "T0r77",
+   "待领取",
+   "修复 bug: [RC3_struct_field_type_unresolved] struct 成员的声明类型在方法"
+  ]
+ ],
+ "withdrawn_design": [
+  "D03"
+ ],
+ "not_measured": [
+  "D18"
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-27T20:25:19+00:00"
+}

@@ -1,0 +1,76 @@
+#!bin cypy
+# ============================================================
+# examples_faithful.cypy — Stress-test port examples
+# ============================================================
+
+from model_faithful import Model
+from fields import Field, FieldInfo
+from validators_faithful import field_validator, model_validator
+from errors import ValidationError
+
+enum FColor:
+    RED = "red"
+    GREEN = "green"
+    BLUE = "blue"
+
+
+def _has_at(s: str) -> bool:
+    let i: int = 0
+    while i < len(s):
+        if s[i] == "@":
+            return True
+        i = i + 1
+    return False
+
+
+# ---- Self-referencing generic model (STRESS: class Model<Self>) ----
+struct FUser:
+    # STRESS: class body annotations + Field defaults
+    id: int
+    name: str
+    email: str
+    age: int
+    nickname: str
+    tags: list<str>
+    color: FColor
+
+    def __init__(self):
+        self.id = 0
+        self.name = ""
+        self.email = ""
+        self.age = 18
+        self.nickname = ""
+        self.tags = []
+        self.color = FColor.RED
+
+    @field_validator("email")
+    def check_email(self, v: str) -> str:
+        if not _has_at(v):
+            raise ValidationError([{"loc": "email", "msg": "no @", "type": "value_error"}])
+        return v
+
+    @model_validator(mode="after")
+    def check_consistency(self) -> FUser:
+        if self.age < 0:
+            raise ValidationError([{"loc": "age", "msg": "negative", "type": "value_error"}])
+        return self
+
+
+# ---- Generic model (STRESS: class Foo<T> + data: T) ----
+struct FResponse:
+    code: int
+    msg: str
+
+    def __init__(self):
+        self.code = 0
+        self.msg = ""
+
+
+# ---- Recursive model (STRESS: Model<Self> + list<Tree>) ----
+struct FTree:
+    value: int
+    children: list<FTree>
+
+    def __init__(self):
+        self.value = 0
+        self.children = []

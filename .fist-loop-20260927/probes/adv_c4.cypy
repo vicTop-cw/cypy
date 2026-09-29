@@ -1,0 +1,10 @@
+struct Config:
+    timeout: int
+    debug: bool
+
+    @staticmethod
+    def __implicit_default__() -> Config:
+        return Config(timeout=30, debug=False)
+
+def process(cfg: Config = __implicit_default__) -> int:
+    return cfg.timeout

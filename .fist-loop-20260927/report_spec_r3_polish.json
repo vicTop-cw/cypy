@@ -1,0 +1,556 @@
+{
+ "name": "20260928.02.25.00",
+ "title": "R3-打磨（polish）环节报告",
+ "stage": "第 3 轮第 4 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R3",
+ "root_task": "T0r72",
+ "assignee": "cypy-polisher",
+ "marker": "[selfdrive-polish]",
+ "fragment": ".fist-loop-20260927/r3_polish_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/polish_r3_locks.json",
+  ".fist-loop-20260927/polish_r3_api.json",
+  ".fist-loop-20260927/polish_r3_docs.json",
+  ".fist-loop-20260927/polish_r3_lint.json",
+  ".fist-loop-20260927/polish_r3_eol.json",
+  ".fist-loop-20260927/polish_r3_lockproof.json",
+  ".fist-loop-20260927/polish_r3_baselines.json",
+  ".fist-loop-20260927/polish_r3_irreversible.json",
+  ".fist-loop-20260927/polish_r3_self_audit.json",
+  ".fist-loop-20260927/r3_polish_pre_baseline.json",
+  ".fist-loop-20260927/close_r3_polish.out.json",
+  ".fist-loop-20260927/close_r3_polish_root.out.json"
+ ],
+ "closure": {
+  "stage": ".fist-loop-20260927/close_r3_polish.out.json",
+  "root": ".fist-loop-20260927/close_r3_polish_root.out.json"
+ },
+ "gates": [
+  {
+   "label": "①-1",
+   "claim": "法 1：BUG-55 夹具已换成 SYNTAX/11 冻结形（盘上文本含 `struct Box<T>` 且不含 `generic struct Box<T>`）",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "path": "frozen_fixture_swapped",
+   "equals": true
+  },
+  {
+   "label": "①-2",
+   "claim": "法 1：非冻结形的现状对照锁仍在（不静默删掉）",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "path": "nonfrozen_control_kept",
+   "equals": true
+  },
+  {
+   "label": "①-3",
+   "claim": "法 2：新增锁条数与声明相等（9 条）",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "path": "new_locks",
+   "equals": 9
+  },
+  {
+   "label": "①-4",
+   "claim": "法 2：有回退证明的新锁 ≥7，且未覆盖集合必须恰好点名",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "path": "each_new_lock_red_when_reverted",
+   "min": 7
+  },
+  {
+   "label": "①-5",
+   "claim": "法 2：未覆盖锁点名清单恰为 2 条（反方向对照 + 现状探针）",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "path": "revert_uncovered_locks",
+   "equals": [
+    "test_polish_every_documented_cypyc_flag_is_real",
+    "test_polish_parser_currently_tolerates_non_frozen_keyword"
+   ]
+  },
+  {
+   "label": "①-6",
+   "claim": "两个锁文件声明的 def test_ 总数 == 当场跑绿的条数",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "path": "declared_total",
+   "equals": 26
+  },
+  {
+   "label": "①-7",
+   "claim": "26 条锁当场全绿、红为空表",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "path": "reds",
+   "equals": []
+  },
+  {
+   "label": "①-8",
+   "claim": "证据落盘时被检锁文件的 sha256 身份（2 个文件各一条）",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "path": "lock_file_sha256",
+   "min": 2
+  },
+  {
+   "label": "②-1",
+   "claim": "回退矩阵总组数 8（7 组 mutation + 1 组只改注释对照）",
+   "artifact": ".fist-loop-20260927/polish_r3_lockproof.json",
+   "path": "groups_total",
+   "equals": 8
+  },
+  {
+   "label": "②-2",
+   "claim": "回退矩阵合格组数 == 总组数",
+   "artifact": ".fist-loop-20260927/polish_r3_lockproof.json",
+   "path": "groups_ok",
+   "equals": 8
+  },
+  {
+   "label": "②-3",
+   "claim": "mutation 组全部做到『该红的红、不该红的仍绿』",
+   "artifact": ".fist-loop-20260927/polish_r3_lockproof.json",
+   "path": "revert_groups_ok",
+   "equals": 7
+  },
+  {
+   "label": "②-4",
+   "claim": "『只改注释』对照必须全绿（证明锁不抓字面噪声）",
+   "artifact": ".fist-loop-20260927/polish_r3_lockproof.json",
+   "path": "control_groups_ok",
+   "equals": 1
+  },
+  {
+   "label": "②-5",
+   "claim": "回退矩阵前提树全绿（26 条）",
+   "artifact": ".fist-loop-20260927/polish_r3_lockproof.json",
+   "path": "premise.passed",
+   "equals": 26
+  },
+  {
+   "label": "②-6",
+   "claim": "全部复原后仍 26 条全绿（mutation 没留残留）",
+   "artifact": ".fist-loop-20260927/polish_r3_lockproof.json",
+   "path": "after_restore.passed",
+   "equals": 26
+  },
+  {
+   "label": "②-7",
+   "claim": "驱动没改工作区任何文件（快照隔离成立）",
+   "artifact": ".fist-loop-20260927/polish_r3_lockproof.json",
+   "path": "workspace_untouched",
+   "equals": true
+  },
+  {
+   "label": "②-8",
+   "claim": "临时快照树自删后盘上残留为空（该格能红：本轮就是靠它抓到 7 个历次残留）",
+   "artifact": ".fist-loop-20260927/polish_r3_lockproof.json",
+   "path": "snap_left",
+   "equals": []
+  },
+  {
+   "label": "②-9",
+   "claim": "窄性断言处数（must_stay_green）",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "path": "narrowness_asserts",
+   "min": 3
+  },
+  {
+   "label": "②-10",
+   "claim": "所有窄性断言全部仍绿",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "path": "must_stay_green_all_ok",
+   "equals": true
+  },
+  {
+   "label": "③-1",
+   "claim": "法 4：CypyHook 公开 analyze_only() 已加入",
+   "artifact": ".fist-loop-20260927/polish_r3_api.json",
+   "path": "public_added",
+   "equals": true
+  },
+  {
+   "label": "③-2",
+   "claim": "法 4：CLI 不再直调私有（残留 0 处）",
+   "artifact": ".fist-loop-20260927/polish_r3_api.json",
+   "path": "cli_private_occurrences",
+   "equals": 0
+  },
+  {
+   "label": "③-3",
+   "claim": "公开门面与私有实现在坏源码上结果逐字相等（纯委托，语义未动）",
+   "artifact": ".fist-loop-20260927/polish_r3_api.json",
+   "path": "delegation_equal_on_broken",
+   "equals": true
+  },
+  {
+   "label": "③-4",
+   "claim": "坏源码经门面确实报错（不是空壳门面）",
+   "artifact": ".fist-loop-20260927/polish_r3_api.json",
+   "path": "broken_error_count",
+   "min": 1
+  },
+  {
+   "label": "③-5",
+   "claim": "干净源码经门面错误清单为空",
+   "artifact": ".fist-loop-20260927/polish_r3_api.json",
+   "path": "clean_errors",
+   "equals": []
+  },
+  {
+   "label": "③-6",
+   "claim": "改走门面后 CLI --check-only 仍 rc=0",
+   "artifact": ".fist-loop-20260927/polish_r3_api.json",
+   "path": "cli_check_only_rc",
+   "equals": 0
+  },
+  {
+   "label": "③-7",
+   "claim": "CLI --check-only 零产物（帮助文本承诺的口径没被改坏）",
+   "artifact": ".fist-loop-20260927/polish_r3_api.json",
+   "path": "cli_check_only_artifacts",
+   "equals": []
+  },
+  {
+   "label": "③-8",
+   "claim": "CLI 侧被触碰的行逐条点名",
+   "artifact": ".fist-loop-20260927/polish_r3_api.json",
+   "path": "cli_lines_touched",
+   "min": 1
+  },
+  {
+   "label": "④-1",
+   "claim": "法 3：文档↔argparse↔--help 三向一致",
+   "artifact": ".fist-loop-20260927/polish_r3_docs.json",
+   "path": "flags_three_way",
+   "equals": true
+  },
+  {
+   "label": "④-2",
+   "claim": "文档里不存在幽灵旗标",
+   "artifact": ".fist-loop-20260927/polish_r3_docs.json",
+   "path": "phantom",
+   "equals": []
+  },
+  {
+   "label": "④-3",
+   "claim": "argparse 里不存在未文档化旗标",
+   "artifact": ".fist-loop-20260927/polish_r3_docs.json",
+   "path": "undocumented",
+   "equals": []
+  },
+  {
+   "label": "④-4",
+   "claim": "--help 与 argparse 声明无差异",
+   "artifact": ".fist-loop-20260927/polish_r3_docs.json",
+   "path": "help_mismatch",
+   "equals": []
+  },
+  {
+   "label": "④-5",
+   "claim": "五个子命令逐个子命令三栏对表（argparse/documented/help）",
+   "artifact": ".fist-loop-20260927/polish_r3_docs.json",
+   "path": "per_subcommand",
+   "min": 5
+  },
+  {
+   "label": "④-6",
+   "claim": "通用旗标 --output/--verbose 走选项表而非示例行",
+   "artifact": ".fist-loop-20260927/polish_r3_docs.json",
+   "path": "universal_flags_documented_in_table",
+   "equals": true
+  },
+  {
+   "label": "④-7",
+   "claim": "文档守卫当场可复跑（pytest -k 现跑，不是回忆）",
+   "artifact": ".fist-loop-20260927/polish_r3_docs.json",
+   "path": "guard_rerunnable",
+   "equals": true
+  },
+  {
+   "label": "⑤-1",
+   "claim": "法 5：E9/W605/F821 三类硬违例全零",
+   "artifact": ".fist-loop-20260927/polish_r3_lint.json",
+   "path": "hard_violations",
+   "equals": {
+    "E9": 0,
+    "W605": 0,
+    "F821": 0
+   }
+  },
+  {
+   "label": "⑤-2",
+   "claim": "E501 逐文件不高于开工基线（只准减不准增）",
+   "artifact": ".fist-loop-20260927/polish_r3_lint.json",
+   "path": "e501_within_baseline",
+   "equals": true
+  },
+  {
+   "label": "⑤-3",
+   "claim": "无一个文件 E501 上升（上升清单必须为空表）",
+   "artifact": ".fist-loop-20260927/polish_r3_lint.json",
+   "path": "e501_grew",
+   "equals": {}
+  },
+  {
+   "label": "⑤-4",
+   "claim": "基线与现值可比：归一后交集不为空（本轮实测 48）",
+   "artifact": ".fist-loop-20260927/polish_r3_lint.json",
+   "path": "files_compared_against_baseline",
+   "min": 40
+  },
+  {
+   "label": "⑤-5",
+   "claim": "flake8 输出全部解析成功（unparsed 为 0 才允许计数）",
+   "artifact": ".fist-loop-20260927/polish_r3_lint.json",
+   "path": "unparsed_lines",
+   "equals": 0
+  },
+  {
+   "label": "⑤-6",
+   "claim": "亲笔新文件零违例",
+   "artifact": ".fist-loop-20260927/polish_r3_lint.json",
+   "path": "own_file_clean",
+   "equals": true
+  },
+  {
+   "label": "⑤-7",
+   "claim": "开工基线自求和与声明总量相等（口径不空转）",
+   "artifact": ".fist-loop-20260927/r3_polish_pre_baseline.json",
+   "path": "e501_by_file",
+   "min": 40
+  },
+  {
+   "label": "⑥-1",
+   "claim": "法 6：混用文件清单点名（只点名不动刀）",
+   "artifact": ".fist-loop-20260927/polish_r3_eol.json",
+   "path": "mixed_files_manifest",
+   "min": 1
+  },
+  {
+   "label": "⑥-2",
+   "claim": "法 6：混用文件仍只有基线那 1 个（本环不动刀，也不许新增）",
+   "artifact": ".fist-loop-20260927/polish_r3_eol.json",
+   "path": "mixed_files_now_count",
+   "equals": 1
+  },
+  {
+   "label": "⑥-3",
+   "claim": "无整档重排：每档改动行数不超上限",
+   "artifact": ".fist-loop-20260927/polish_r3_eol.json",
+   "path": "no_bulk_reformat",
+   "equals": true
+  },
+  {
+   "label": "⑥-4",
+   "claim": "四个被改文件逐档 mtime/行数留痕",
+   "artifact": ".fist-loop-20260927/polish_r3_eol.json",
+   "path": "changed_lines_per_file",
+   "min": 4
+  },
+  {
+   "label": "⑥-5",
+   "claim": "行尾类别零漂移（工具没静默换行尾）",
+   "artifact": ".fist-loop-20260927/polish_r3_eol.json",
+   "path": "line_ending_class_drift",
+   "equals": []
+  },
+  {
+   "label": "⑥-6",
+   "claim": "本轮新文件纯 LF",
+   "artifact": ".fist-loop-20260927/polish_r3_eol.json",
+   "path": "new_file_profile",
+   "min": 3
+  },
+  {
+   "label": "⑦-1",
+   "claim": "法 7：pytest passed 不低于上调后的下限 1929",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "pytest.passed",
+   "min": 1929
+  },
+  {
+   "label": "⑦-2",
+   "claim": "pytest collected 同步达标（新锁没从收集里静默消失）",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "pytest.collected",
+   "min": 1929
+  },
+  {
+   "label": "⑦-3",
+   "claim": "本轮 9 条新锁在全量收集里现形",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "pytest.polish_locks_collected",
+   "min": 9
+  },
+  {
+   "label": "⑦-4",
+   "claim": "pytest failed/error 为空",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "pytest.failed",
+   "equals": []
+  },
+  {
+   "label": "⑦-5",
+   "claim": "自研套件 47/47（第二套体系，不用 pytest 的绿抵扣）",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "suite.fields",
+   "min": 4
+  },
+  {
+   "label": "⑦-6",
+   "claim": "自研套件绿旗标",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "suite.green",
+   "equals": true
+  },
+  {
+   "label": "⑦-7",
+   "claim": "e2e golden 25/25 且 FAIL/WARN/UNREG 三格为零",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "e2e.fields",
+   "min": 4
+  },
+  {
+   "label": "⑦-8",
+   "claim": "三套体系同批复算全绿旗标",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "three_systems_green",
+   "equals": 1
+  },
+  {
+   "label": "⑦-9",
+   "claim": "git 红线格全过（HEAD/暂存区/他人 worktree/临时树）",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "git.all_ok",
+   "equals": true
+  },
+  {
+   "label": "⑧-1",
+   "claim": "法 8：改动半径逐档归属本单，越界为空",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "radius.unexpected",
+   "equals": []
+  },
+  {
+   "label": "⑧-2",
+   "claim": "清单里的 5 档全部在半径里现形（少一档就是清单口径宽了）",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "radius.missing",
+   "equals": []
+  },
+  {
+   "label": "⑧-3",
+   "claim": "半径文件数 == 本环清单数 5",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "radius.count",
+   "equals": 5
+  },
+  {
+   "label": "⑧-4",
+   "claim": "半径精确旗标",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "radius_exact",
+   "equals": 1
+  },
+  {
+   "label": "⑧-5",
+   "claim": "测量窗口起止留痕（『同一时刻』按窗口读）",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "finished_at_utc",
+   "min": 20
+  },
+  {
+   "label": "⑧-6",
+   "claim": "本环驱动文件硬违例为零",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "lint.hard_violations",
+   "equals": 0
+  },
+  {
+   "label": "⑨-1",
+   "claim": "不可逆动作逐条点名（≥10 条）",
+   "artifact": ".fist-loop-20260927/polish_r3_irreversible.json",
+   "path": "items",
+   "min": 10
+  },
+  {
+   "label": "⑨-2",
+   "claim": "其中 live 探针 ≥8 条（不能全靠清单级自述）",
+   "artifact": ".fist-loop-20260927/polish_r3_irreversible.json",
+   "path": "live_probe_items",
+   "min": 8
+  },
+  {
+   "label": "⑨-3",
+   "claim": "零执行旗标 executed_none=1",
+   "artifact": ".fist-loop-20260927/polish_r3_irreversible.json",
+   "path": "executed_none",
+   "equals": 1
+  },
+  {
+   "label": "⑨-4",
+   "claim": "被执行清单必须为空表",
+   "artifact": ".fist-loop-20260927/polish_r3_irreversible.json",
+   "path": "executed",
+   "equals": []
+  },
+  {
+   "label": "⑨-5",
+   "claim": "判据通道自测：注入的假违例确实被 probe() 抓住",
+   "artifact": ".fist-loop-20260927/polish_r3_irreversible.json",
+   "path": "self_test.caught",
+   "equals": 1
+  },
+  {
+   "label": "⑨-6",
+   "claim": "清单级条目也点名并写明为什么只能清单级",
+   "artifact": ".fist-loop-20260927/polish_r3_irreversible.json",
+   "path": "manifest_items",
+   "min": 2
+  },
+  {
+   "label": "⑩-1",
+   "claim": "报告页脚每条数字都能从判据件反解（自审等式）",
+   "artifact": ".fist-loop-20260927/polish_r3_self_audit.json",
+   "path": "counts_all_equal",
+   "equals": 1
+  },
+  {
+   "label": "⑩-2",
+   "claim": "自审条数 ≥20（少于此说明页脚有格没被反解）",
+   "artifact": ".fist-loop-20260927/polish_r3_self_audit.json",
+   "path": "checks",
+   "min": 20
+  },
+  {
+   "label": "⑩-3",
+   "claim": "自审不一致清单为空",
+   "artifact": ".fist-loop-20260927/polish_r3_self_audit.json",
+   "path": "mismatched",
+   "equals": []
+  },
+  {
+   "label": "⑩-4",
+   "claim": "六张判据件的 refuse 全为空",
+   "artifact": ".fist-loop-20260927/polish_r3_evidence.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑩-5",
+   "claim": "回退矩阵件自身 refuse 为空",
+   "artifact": ".fist-loop-20260927/polish_r3_lockproof.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑩-6",
+   "claim": "复算件 refuse 为空",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑩-7",
+   "claim": "不可逆面件 refuse 为空",
+   "artifact": ".fist-loop-20260927/polish_r3_irreversible.json",
+   "path": "refuse",
+   "equals": []
+  }
+ ],
+ "footer": "leaves=16 new_locks=9 locks_green_now=26/26 revert_groups=7/8 control_green=yes uncovered=2 api_public=yes api_cli_private=0 docs_three_way=yes lint_hard=0/0/0 e501=355/355 reduced=0 eol_mixed=1 eol_drift=0 pytest=1929 pytest_collected=1929 pytest_locks_collected=9 suite=47/47 e2e=25/25 e2e_zero=000 radius=5 radius_unexpected=0 irreversible=12(live=9,derived=1,manifest=2) executed=none audit_selftest=1 judge-defects=10 op-defects=3 decisions=3 refusal_kinds=6 measured_window=2026-09-27T18:13:35Z->2026-09-27T18:25:44Z generated_at=2026-09-27T18:34:02+00:00 handoff=R4:现状探针升级为决策+USAGE 三向守卫扩到 examples+lint 持平非改善(E501 355)+取件先证键形状；E501 存量与 SYNTAX 漂移与 CRLF 策略三项交人工裁决"
+}

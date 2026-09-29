@@ -1,0 +1,7 @@
+# 变量构建块 :=
+let result =:
+    let x: int = 10
+    let y: int = 20
+    x + y  # 最后一个表达式作为返回值
+
+print(result)  # 30

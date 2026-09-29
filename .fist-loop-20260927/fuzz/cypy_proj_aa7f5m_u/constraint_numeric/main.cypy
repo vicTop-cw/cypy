@@ -1,0 +1,37 @@
+# constraint Numeric = ... —— 命名联合类型约束（SYNTAX/33 §2）
+#
+# `constraint` 是**界**（bound）不是类型：它只能出现在 `T: Numeric` 位置（C-2.1），
+# 违反界是编译期错误，不静默降级成 object（C-4.4）。把 main() 里那行
+# `# print(clamp("x", 1, 10))` 取消注释即可看到 C-5 的模板诊断：
+# `Generic constraint violation: type 'str' does not satisfy constraint 'Numeric'
+# (allowed: int | float | double) ...`。
+# 要在值位置用一个可用的联合类型，写 `type Numeric = int | float`（那是别名，C-3.2）。
+constraint Numeric = int | float | double
+
+# C-2.3 传递展开：Wide 的成员 = Numeric 的成员并上 str，即 int | float | double | str。
+# 诊断里摊开的名单也是这份展开后的结果（C-5.2），所以报错时看得见成员而不是 `Wide`。
+constraint Wide = Numeric | str
+
+def clamp<T: Numeric>(v: T, lo: T, hi: T) -> T:
+    if v < lo:
+        return lo
+    if v > hi:
+        return hi
+    return v
+
+def total<T: Numeric>(a: T, b: T) -> T:
+    return a + b
+
+def echo<T: Wide>(v: T) -> T:
+    return v
+
+def main() -> int:
+    print(clamp(5, 1, 10))
+    print(clamp(2.5, 1.0, 1.5))
+    print(total(20, 22))
+    print(total(0.5, 0.25))
+    # 'str' 只有通过 Numeric -> Wide 的并集展开才满足这个界
+    print(echo("flattened"))
+    print(echo(7))
+    # print(clamp("x", 1, 10))
+    return 0

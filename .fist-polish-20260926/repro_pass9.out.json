@@ -1,0 +1,14 @@
+{
+ "cypy_float_in_compiler": [
+  "double",
+  "double"
+ ],
+ "cypy_float_in_bridge": "c_float",
+ "cypy_double_in_bridge": "c_double",
+ "sizeof_bridge_float": 4,
+ "sizeof_bridge_double": 8,
+ "roundtrip_via_float_member": "0.10000000149011612",
+ "roundtrip_via_double_member": "0.1",
+ "site": "cypy_bridge/types.py:43（cypy_to_ctypes[\"float\"] = ctypes.c_float）、消费面 :80/:86/:114/:211 与 union.py:50 / generics.py:51 / pointer.py:101",
+ "docstring_usage": "cdef_union(\"int\", \"float\") —— cypy_bridge/union.py:164 自己的示例形态"
+}

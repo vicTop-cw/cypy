@@ -1,0 +1,12 @@
+{
+ "rows_total": 18,
+ "failed_rows": [],
+ "leaks": {},
+ "sensitivity_flips": 13,
+ "proper_flips": [
+  "V61a",
+  "V61c"
+ ],
+ "pre_ident": true,
+ "refuse": []
+}

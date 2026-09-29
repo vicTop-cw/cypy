@@ -1,0 +1,5 @@
+def main() -> int:
+    let a: int = 10
+    let b: int = 12
+    print(a ^ b)
+    return 0

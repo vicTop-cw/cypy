@@ -1,0 +1,235 @@
+{
+  "run_check": {
+    "name": "run_check",
+    "description": "外部判据检查（**宿主 RCE 能力**：服务端真实执行任意命令，防自写自测恒绿；请勿暴露给不可信客户端）。参数：task_id 任务id、cmd 可执行命令、args 参数数组(可选)、workdir 工作目录(默认任务所在项目目录，**必须在项目目录子树内**，拒绝绝对路径/盘符/..)、timeout_ms 超时毫秒(默认120000)、now 时间戳(可选，服务端盖章)。真实 spawn 子进程运行 cmd，退出码 0 记为 passed、否则 failed，结果 JSON（含 stdout/stderr）落库 specs 表（spec_type=check）；[gate:required] 任务的 verify 依赖本记录且校验新鲜度。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        },
+        "cmd": {
+          "type": "string",
+          "description": "要执行的外部命令（必填），如 bash / sh / node / cargo"
+        },
+        "args": {
+          "type": "array",
+          "description": "命令参数数组（可选）"
+        },
+        "workdir": {
+          "type": "string",
+          "description": "工作目录（可选，默认任务所在项目目录；**必须在项目目录子树内**，拒绝绝对路径/盘符/..）"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "description": "超时毫秒（可选，默认 120000）"
+        },
+        "now": {
+          "type": "string",
+          "description": "时间戳(可选，服务端盖章)"
+        }
+      },
+      "required": [
+        "task_id",
+        "cmd"
+      ]
+    }
+  },
+  "reject": {
+    "name": "reject",
+    "description": "验收拒绝（待验收 -> 已打回）。参数：task_id、reason 打回原因、by 操作者。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        },
+        "reason": {
+          "type": "string",
+          "description": "打回原因（可选）"
+        },
+        "by": {
+          "type": "string",
+          "description": "操作者(默认 human_steward)"
+        },
+        "now": {
+          "type": "string",
+          "description": "时间戳(可选)"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  },
+  "pause": {
+    "name": "pause",
+    "description": "暂停任务（任意活跃状态 -> 已暂停）。参数：task_id。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        },
+        "now": {
+          "type": "string",
+          "description": "时间戳(可选)"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  },
+  "get": {
+    "name": "get",
+    "description": "查询单个任务详情。参数：task_id。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  },
+  "retry": {
+    "name": "retry",
+    "description": "打回后重试（已打回 -> 执行中）。参数：task_id。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        },
+        "now": {
+          "type": "string",
+          "description": "时间戳(可选)"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  },
+  "list": {
+    "name": "list",
+    "description": "列出任务，可按状态与命名空间过滤。参数：status(可选，中文状态名)、namespace(可选，按命名空间过滤；不传则列出全库所有命名空间)。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "按状态过滤(可选)：待领取/已领取/执行中/待验收/已完成/已归档"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "按命名空间过滤(可选)：如 default/cron-auto/cron-cypy/fist-iter；不传则列出全部命名空间"
+        }
+      },
+      "required": []
+    }
+  },
+  "task_triage": {
+    "name": "task_triage",
+    "description": "下一步该做啥（推荐式挑选 + 能力偏好路由）：对指定命名空间（namespace 缺省全量）把『待领取且依赖已满足』的任务按 能力匹配(want)→优先级(高>中>低)→重要度(高>中>低)→深度(叶可执行单元优先)→id 排出序，并给出一条 suggestion（此刻建议先领哪条及理由），供 agent 无需全量扫描。难度标签直接复用拆解时的『难度梯度 …:易/中/难』标记。参数：namespace(可选)、agent(调用方身份，可审计)、want 能力关键词(可选，命中者排头部，Marketplookup 雏形)。返回 { count, ns, agent, want, tasks:[...], suggestion? }。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "description": "命名空间(可选，只统计该 ns；空=全部)"
+        },
+        "agent": {
+          "type": "string",
+          "description": "调用方身份(默认 self)，用于 suggestion/审计"
+        },
+        "want": {
+          "type": "string",
+          "description": "能力关键词(可选)：命中该关键词的可领取任务排头部(按能力路由)"
+        }
+      },
+      "required": []
+    }
+  },
+  "delete": {
+    "name": "delete",
+    "description": "删除已归档任务。参数：task_id。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填，仅已归档可删）"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  },
+  "resume": {
+    "name": "resume",
+    "description": "恢复任务（已暂停 -> 已领取）。参数：task_id。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        },
+        "now": {
+          "type": "string",
+          "description": "时间戳(可选)"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  },
+  "heal": {
+    "name": "heal",
+    "description": "no_signal 看护（AO watchdog）：心跳超时静默的活跃任务（执行中/已领取/拆分中）回滚为已领取待重派。参数：now、timeout_sec(可选默认600)。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "now": {
+          "type": "string",
+          "description": "当前时间戳(默认内置)"
+        },
+        "timeout_sec": {
+          "type": "integer",
+          "description": "超时秒数(可选默认600)"
+        }
+      },
+      "required": []
+    }
+  },
+  "task_cleanup": {
+    "name": "task_cleanup",
+    "description": "归档清理：删除超过保留期的已归档任务。参数：now、retention_days(可选默认30)。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "now": {
+          "type": "string",
+          "description": "当前时间戳(默认内置)"
+        },
+        "retention_days": {
+          "type": "integer",
+          "description": "归档保留天数(可选默认30)"
+        }
+      },
+      "required": []
+    }
+  }
+}

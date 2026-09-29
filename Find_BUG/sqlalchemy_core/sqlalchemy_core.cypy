@@ -1,0 +1,180 @@
+# SQLAlchemy Core 表达式语言子集（cypyc 复刻压测 · Phase 3）
+#
+# 移植目标：用 Cypy 原生 struct/trait 复刻 SQLAlchemy 的 SQL 表达式树，
+# 重点压测：
+#   - 运算符重载（__eq__/__ne__/__lt__/__le__/__gt__/__ge__/__and__/__or__/__add__/__sub__）
+#   - trait 多态（ClauseElement.compile）
+#   - struct 方法链式调用（Select.where(...).compile()）
+#   - dict/list/while + 字符串拼接 + isinstance 自省
+#
+# 内核零重依赖，表达式节点都是普通 struct。
+#
+# 注意（见 Find_BUG/BUGS.md BUG-023，已修复）：运算符方法可直接返回 trait 类型
+# ClauseElement，链式 `a == 5 & b > 18` 中 `&` 作用在 trait 值上可正常派发；
+# 编译器已支持 trait 包装器转发运算符、trait 类型变量按鸭子类型持有具体 struct。
+
+trait ClauseElement:
+    def compile(self) -> str
+
+
+# 先定义叶子表达节点，避免 Column 的运算符方法前向引用具体返回类型
+struct _BinaryExpression:
+    left: object
+    op: str
+    right: object
+
+    def __init__(self, left: object, op: str, right: object):
+        self.left = left
+        self.op = op
+        self.right = right
+
+    def compile(self) -> str:
+        return _compile_operand(self.left) + " " + self.op + " " + _compile_operand(self.right)
+
+    def __and__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, "AND", other)
+
+    def __or__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, "OR", other)
+
+
+struct _InExpression:
+    left: object
+    values: list<object>
+
+    def __init__(self, left: object, values: list<object>):
+        self.left = left
+        self.values = values
+
+    def compile(self) -> str:
+        parts = []
+        i = 0
+        while i < len(self.values):
+            parts.append(_compile_operand(self.values[i]))
+            i = i + 1
+        return _compile_operand(self.left) + " IN (" + _join(parts, ", ") + ")"
+
+
+struct Column:
+    name: str
+    table_name: str
+    type_name: str
+
+    def __init__(self, name: str, table: str = "", type_name: str = ""):
+        self.name = name
+        self.table_name = table
+        self.type_name = type_name
+
+    def _fullname(self) -> str:
+        if self.table_name == "":
+            return self.name
+        return self.table_name + "." + self.name
+
+    def compile(self) -> str:
+        return self._fullname()
+
+    def __eq__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, "=", other)
+
+    def __ne__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, "!=", other)
+
+    def __lt__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, "<", other)
+
+    def __le__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, "<=", other)
+
+    def __gt__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, ">", other)
+
+    def __ge__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, ">=", other)
+
+    def __and__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, "AND", other)
+
+    def __or__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, "OR", other)
+
+    def __add__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, "+", other)
+
+    def __sub__(self, other: object) -> ClauseElement:
+        return _BinaryExpression(self, "-", other)
+
+    def in_(self, values: list<object>) -> _InExpression:
+        return _InExpression(self, values)
+
+
+# BUG-023 已修复：isinstance(o, ClauseElement) 现在能正确识别实现该 trait 的
+# 具体 struct（编译器把 trait isinstance 改写为运行时注册表查表）。
+def _compile_operand(o: object) -> str:
+    if isinstance(o, str):
+        return "'" + o + "'"
+    if isinstance(o, ClauseElement):
+        return o.compile()
+    return str(o)
+
+
+def _join(items: list<str>, sep: str) -> str:
+    result = ""
+    i = 0
+    while i < len(items):
+        if i > 0:
+            result = result + sep
+        result = result + items[i]
+        i = i + 1
+    return result
+
+
+struct Table:
+    name: str
+    c: dict<str, Column>
+
+    def __init__(self, name: str, cols: list<Column>):
+        self.name = name
+        self.c = {}
+        i = 0
+        while i < len(cols):
+            col = cols[i]
+            self.c[col.name] = col
+            i = i + 1
+
+
+struct Select:
+    table: Table
+    where_clause: object
+
+    def __init__(self, table: Table):
+        self.table = table
+        self.where_clause = None
+
+    def where(self, clause: ClauseElement) -> Select:
+        self.where_clause = clause
+        return self
+
+    def compile(self) -> str:
+        sql = "SELECT * FROM " + self.table.name
+        if self.where_clause is not None:
+            sql = sql + " WHERE " + self.where_clause.compile()
+        return sql
+
+
+# 端到端冒烟：构建并编译一个带 AND 条件的查询
+def build_query() -> str:
+    users = Table("users", [Column("id"), Column("name"), Column("age")])
+    stmt = Select(users).where((users.c["id"] == 5) & (users.c["age"] > 18))
+    return stmt.compile()
+
+
+# 注册 trait 实现（方法已在各 struct 体内直接定义）
+impl ClauseElement for Column:
+    pass
+impl ClauseElement for _BinaryExpression:
+    pass
+impl ClauseElement for _InExpression:
+    pass
+
+# 注：Column/Table/Select 的 __init__ 默认参数（如 table: str = ""）依赖编译器
+# 正确生成默认参数值，相关修复见 Find_BUG/BUGS.md 的 BUG-022。

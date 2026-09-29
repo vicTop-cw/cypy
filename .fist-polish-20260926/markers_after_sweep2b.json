@@ -1,0 +1,1 @@
+{"out": ".fist-polish-20260926/markers.json", "files": 56, "lines": 30085, "counts": {"TODO": 0, "FIXME": 0, "HACK": 0, "XXX": 0, "type_ignore": 0, "bare_except": 0, "except_swallowed": 3, "broad_except": 45, "mutable_default_arg": 0, "open_without_with": 0, "subprocess_call": 3}}

@@ -1,0 +1,404 @@
+{
+ "started_z": "2026-09-29T05:33:37Z",
+ "ns": "cypy-loop-20260929",
+ "refusals": [
+  {
+   "node": "T0r115.3",
+   "tool": "omega_result_verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"任务 [T0r115.3] 尚无交付物（deliverable 为空），无可复验成果\"}}"
+  },
+  {
+   "node": "T0r115.3",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r115.3] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}"
+  },
+  {
+   "node": "T0r115.4",
+   "tool": "omega_result_verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"任务 [T0r115.4] 尚无交付物（deliverable 为空），无可复验成果\"}}"
+  },
+  {
+   "node": "T0r115.4",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r115.4] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}"
+  },
+  {
+   "node": "T0r115.5",
+   "tool": "omega_result_verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"任务 [T0r115.5] 尚无交付物（deliverable 为空），无可复验成果\"}}"
+  },
+  {
+   "node": "T0r115.5",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r115.5] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}"
+  },
+  {
+   "node": "T0r115",
+   "tool": "omega_result_verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"任务 [T0r115] 尚无交付物（deliverable 为空），无可复验成果\"}}"
+  },
+  {
+   "node": "T0r115",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r115] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}"
+  }
+ ],
+ "nodes": {
+  "T0r115.1.1": {
+   "kind": "face",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "[0m Source: examples/demos/upcoming_features/planned_features.cypy\r\n\u001b[36m[2/3]\u001b[0m Output: output\r\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\r\n\u001b[32m[OK] Static analysis passed (no code generated)\u001b[0m\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.1.2": {
+   "kind": "face",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "........................... [ 62%]\r\n....................                                                     [100%]\r\n\r\n============================= 54 passed in 0.26s ==============================\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.2.1": {
+   "kind": "face",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "ation.shape cases=24 passed=24\r\nSPEC cypy.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.2.2": {
+   "kind": "face",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "[], \"n\": 0}\r\n[C1 切片赋值] {\"errors\": [], \"all_errors\": [], \"claim_holds\": false}\r\nCONCLUSION cells=6 corpus_exists=True regr_exists=True gate_rc=0 bug71_still_holds=False bugeta_claim_still_holds=False\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.3.1": {
+   "kind": "face",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "动一行注释 | anchor=1 | rc=0 fails=0 | 对照绿（尺没坏）\r\nCONCLUSION baseline=CONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0 control_green=True load_bearing=2/2 not_load_bearing=[]\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.1.3": {
+   "kind": "boundary-real",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "ation.shape cases=24 passed=24\r\nSPEC cypy.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.2.3": {
+   "kind": "boundary-real",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "动一行注释 | anchor=1 | rc=0 fails=0 | 对照绿（尺没坏）\r\nCONCLUSION baseline=CONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0 control_green=True load_bearing=2/2 not_load_bearing=[]\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.3.3": {
+   "kind": "boundary-declared-na",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "ation.shape cases=24 passed=24\r\nSPEC cypy.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.4.3": {
+   "kind": "boundary-declared-na",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "ation.shape cases=24 passed=24\r\nSPEC cypy.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.5.3": {
+   "kind": "boundary-declared-na",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "ation.shape cases=24 passed=24\r\nSPEC cypy.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.6.1": {
+   "kind": "boundary-declared-na",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "ation.shape cases=24 passed=24\r\nSPEC cypy.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.6.2": {
+   "kind": "boundary-declared-na",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "ation.shape cases=24 passed=24\r\nSPEC cypy.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r115.6.3": {
+   "kind": "boundary-declared-na",
+   "status_before": "待领取",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "ation.shape cases=24 passed=24\r\nSPEC cypy.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  }
+ },
+ "bugs": [
+  {
+   "reply": "{\"bug_id\": \"BUG-117\", \"id\": \"BUG-117\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  }
+ ],
+ "root": {
+  "task_id": "T0r115",
+  "namespace": "cypy-loop-20260929",
+  "message": "已并行追加独立根任务"
+ },
+ "ledger_baseline": {
+  "open_blocks": 25,
+  "open_ids": 25,
+  "closed_markers": [
+   "FIXED",
+   "DUPLICATE",
+   "OUT",
+   "WONT"
+  ],
+  "not_counted_as_closed": "NOT-FIXED（转结未修＝开口）"
+ },
+ "loop_create": "{\"name\": \"cypy-selfdrive-r9\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\"",
+ "laya": "{\"available\": false, \"sidecar\": \"skipped\", \"decision\": {\"source\": \"fallback\", \"complex\": false, \"feature_route\": \"拆解调度\", \"split_n\": 5, \"splits_per_family\": [{\"family\": \"拆解调度\", \"score\": 0}, {\"family\": \"深度验证\", \"score\": 0}, {\"family\": \"预算成本\", \"score\": 0}, {\"family\": \"可靠性容错\", \"score\": 0}, {\"family\": \"排程路由\", \"score\": 0}, {\"family\": \"目标校验\", \"score\": 0}, {\"family\": \"代码质量扫描\", \"score\": 0}, {\"family\": \"自进化强",
+ "plan_raw": "{\"root\": \"T0r115\", \"by\": \"cypy-selfdrive-agent\", \"split_n\": 5, \"tree\": {\"task_id\": \"T0r115\", \"created\": 6, \"children\": [{\"id\": \"T0r115.1\", \"depth\": 2, \"leaf\": false, \"spec_hash\": \"\", \"depends_on\": [], \"children\": [{\"id\": \"T0r115.1.1\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r115.1.2\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"chil",
+ "tree_readback": {
+  "root": "T0r115",
+  "rows": 25,
+  "leaves": 18,
+  "branches": 6,
+  "general": [
+   "T0r115.1.1",
+   "T0r115.1.2",
+   "T0r115.2.1",
+   "T0r115.2.2",
+   "T0r115.3.1",
+   "T0r115.3.2",
+   "T0r115.4.1",
+   "T0r115.4.2",
+   "T0r115.5.1",
+   "T0r115.5.2"
+  ],
+  "boundary": [
+   "T0r115.1.3",
+   "T0r115.2.3",
+   "T0r115.3.3",
+   "T0r115.4.3",
+   "T0r115.5.3",
+   "T0r115.6.1",
+   "T0r115.6.2",
+   "T0r115.6.3"
+  ],
+  "unclassified": [],
+  "already_closed": []
+ },
+ "skipped_already_closed": 0,
+ "left_pending_general": [
+  "T0r115.3.2",
+  "T0r115.4.1",
+  "T0r115.4.2",
+  "T0r115.5.1",
+  "T0r115.5.2"
+ ],
+ "branch_final": {
+  "T0r115.1": "已完成",
+  "T0r115.2": "已完成",
+  "T0r115.3": "拆分中",
+  "T0r115.4": "拆分中",
+  "T0r115.5": "拆分中",
+  "T0r115.6": "已完成"
+ },
+ "root_final": "拆分中",
+ "root_status_final": "拆分中",
+ "ticks": 6,
+ "rollup": {
+  "已完成": 16,
+  "待领取": 5,
+  "拆分中": 4
+ },
+ "call_log_rows_since_start": 144,
+ "call_log_error_rows": 0,
+ "rpc_sent_total": 142,
+ "rpc_sent_by_tool": {
+  "claim": 13,
+  "execute": 13,
+  "laya_decide": 1,
+  "loop_create": 1,
+  "loop_tick": 6,
+  "omega_result_verify": 20,
+  "omega_spec_create": 20,
+  "omega_spec_review": 20,
+  "report_bug": 1,
+  "run_check": 13,
+  "submit": 13,
+  "task_plan_deep": 1,
+  "verify": 20
+ }
+}

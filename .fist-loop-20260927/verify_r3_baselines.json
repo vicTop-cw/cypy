@@ -1,0 +1,94 @@
+{
+ "refuse": [],
+ "started_at_utc": "2026-09-27T17:33:11+00:00",
+ "note": "三套体系是**一批连续复算**（各格自带 at_utc），不是同一秒；报告里凡说『同一时刻』都按本件的 start→finish 窗口口径读",
+ "measured_at_utc": "2026-09-27T17:33:11+00:00",
+ "stage_start_utc": "2026-09-27T17:01:14+00:00",
+ "pytest": {
+  "rc": 0,
+  "passed": 1920,
+  "floor": 1920,
+  "failed": [],
+  "collected": 1920,
+  "collect_rc": 0,
+  "other_counts": {},
+  "line": "1920 passed in 355.38s (0:05:55)",
+  "at_utc": "2026-09-27T17:39:12+00:00"
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": "47",
+   "Passed": "47",
+   "Failed": "0",
+   "Skipped": "0"
+  },
+  "green": true,
+  "at_utc": "2026-09-27T17:40:25+00:00"
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+  "fields": {
+   "PASS": "25",
+   "FAIL": "0",
+   "WARN": "0",
+   "UNREG/RUNFAIL": "0"
+  },
+  "green": true,
+  "at_utc": "2026-09-27T17:43:36+00:00",
+  "at_utc_method": "run2 的驱动漏记本格时刻（§六 第 10 条）⇒ 从证据文件 r3verify_logs/e2e_final.log 的 mtime 反解；该文件在 e2e 跑完后立即写盘，落在本件 started(17:33:11Z)→finished(17:43:38Z) 窗口内。驱动已补，下一环不需要再反解"
+ },
+ "git": {
+  "head_ok": true,
+  "staged_zero": true,
+  "dirty_rows": 166,
+  "deleted_tracked": 10,
+  "worktrees": [
+   "E:/IDEProjects/AI/Cypy",
+   "E:/IDEProjects/AI/_cypy_head_baseline"
+  ],
+  "foreign_worktree_present": true,
+  "own_snapshot_dirs_left": [],
+  "own_snapshot_gone": true,
+  "ahead_of_upstream": "1",
+  "all_ok": true,
+  "at_utc": "2026-09-27T17:43:36+00:00"
+ },
+ "radius": {
+  "count": 0,
+  "files": [],
+  "stage_start_utc": "2026-09-27T17:01:14+00:00",
+  "scanned_dirs": [
+   "cypyc",
+   "cypy_hook",
+   "cypy_bridge",
+   "tests",
+   "docs",
+   "scripts",
+   "examples"
+  ],
+  "at_utc": "2026-09-27T17:43:36+00:00"
+ },
+ "lint": {
+  "rc": 0,
+  "files": 8,
+  "hard_violations": 0,
+  "detail": [],
+  "targets": [
+   ".fist-loop-20260927/verify_r3_baselines.py",
+   ".fist-loop-20260927/verify_r3_callsite.py",
+   ".fist-loop-20260927/verify_r3_footer.py",
+   ".fist-loop-20260927/verify_r3_irreversible.py",
+   ".fist-loop-20260927/verify_r3_ledger3way.py",
+   ".fist-loop-20260927/verify_r3_matrix.py",
+   ".fist-loop-20260927/verify_r3_report_audit.py",
+   ".fist-loop-20260927/verify_r3_self_audit.py"
+  ],
+  "at_utc": "2026-09-27T17:43:38+00:00"
+ },
+ "radius_claim_ok": 1,
+ "pytest_ge_floor": 1,
+ "finished_at_utc": "2026-09-27T17:43:38+00:00"
+}

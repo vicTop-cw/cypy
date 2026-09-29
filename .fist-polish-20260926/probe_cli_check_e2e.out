@@ -1,0 +1,3 @@
+exit: 1
+diagnostic lines on stdout: ["\x1b[31m-\x1b[0m Name 'f' is already declared in this scope (line 5, col 5)"]
+verdict: PASSED-THROUGH

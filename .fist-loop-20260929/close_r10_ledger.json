@@ -1,0 +1,46 @@
+{
+ "started_z": "2026-09-29T06:46:07Z",
+ "ids_before_max": 122,
+ "filed": [
+  {
+   "key": "R10-JUDGE-GETSOURCE-SKew",
+   "reply_verbatim": "{\"bug_id\": \"BUG-123\", \"id\": \"BUG-123\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  },
+  {
+   "key": "R10-STATUS-DOC-BLANKET-CLAIM",
+   "reply_verbatim": "{\"bug_id\": \"BUG-124\", \"id\": \"BUG-124\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  },
+  {
+   "key": "R10-BUILTIN-NAME-SHADOWS-USER-FN",
+   "reply_verbatim": "{\"bug_id\": \"BUG-125\", \"id\": \"BUG-125\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  }
+ ],
+ "refusals": [],
+ "skipped_existing": [],
+ "fixed": {
+  "BUG-118": {
+   "appended": true,
+   "section_bytes": 2621
+  }
+ },
+ "bug_list_rows": 126,
+ "new_ids": [
+  123,
+  124,
+  125
+ ],
+ "ids_after_max": 125,
+ "keys_present": {
+  "R10-JUDGE-GETSOURCE-SKew": true,
+  "R10-STATUS-DOC-BLANKET-CLAIM": true,
+  "R10-BUILTIN-NAME-SHADOWS-USER-FN": true
+ },
+ "append_only_check": {
+  "prefix_identical": true,
+  "bug118_header_untouched": true,
+  "grew_by": 8027,
+  "fixed_sections_now": 84,
+  "headers_now": 126
+ },
+ "call_log_error_rows": 0
+}

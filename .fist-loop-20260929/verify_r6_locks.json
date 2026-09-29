@@ -1,0 +1,48 @@
+{
+ "tree": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\lockproof_tree",
+ "cells": {
+  "L1_codegen_collect_removed": {
+   "rc": 1,
+   "summary_line": "========================= 3 failed, 5 passed in 0.49s =========================",
+   "selected": null,
+   "failed": 3,
+   "red_nodes": [
+    "FAILED tests\\test_pattern_positional_struct.py::test_struct_extractor_is_called_not_phantom_attr",
+    "FAILED tests\\test_pattern_positional_struct.py::test_struct_field_order_drives_positional_pattern",
+    "FAILED tests\\test_pattern_positional_struct.py::test_methods_are_not_positional_fields"
+   ]
+  },
+  "L2_slot_type_removed": {
+   "rc": 1,
+   "summary_line": "========================= 2 failed, 6 passed in 0.66s =========================",
+   "selected": null,
+   "failed": 2,
+   "red_nodes": [
+    "FAILED tests\\test_pattern_positional_struct.py::test_positional_binding_takes_slot_type_not_int",
+    "FAILED tests\\test_pattern_positional_struct.py::test_positional_binding_falls_back_to_field_order_without_extractor"
+   ]
+  },
+  "L3_shadow_restored": {
+   "rc": 5,
+   "summary_line": "ult_test_loop_scope=function\ncollected 122 items / 122 deselected / 0 selected\n\n=========================== 122 deselected in 0.48s ===========================\n",
+   "selected": 0,
+   "failed": 0,
+   "red_nodes": []
+  },
+  "C_comment_only_must_be_green": {
+   "rc": 0,
+   "summary_line": "============================== 8 passed in 0.69s ==============================",
+   "selected": null,
+   "failed": 0,
+   "red_nodes": []
+  }
+ },
+ "refuse": [],
+ "identity": {
+  "rc": 0,
+  "paths": [
+   "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\lockproof_tree\\cypyc\\__init__.py",
+   "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\lockproof_tree\\cypyc\\analyzer\\type_checker.py"
+  ]
+ }
+}

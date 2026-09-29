@@ -1,0 +1,14 @@
+{
+ "refuse": [],
+ "report": "memory/reviews/20260928.02.55.00.md",
+ "bug_entries_on_disk": 60,
+ "claimed_fixed": [],
+ "bug_ids_in_report": [],
+ "task_claims": [
+  {
+   "task": "T0r73",
+   "status_in_db": "已归档",
+   "mentioned": "T0r73"
+  }
+ ]
+}

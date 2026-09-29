@@ -1,0 +1,1218 @@
+{
+ "started": "2026-09-28T00:51:46+00:00",
+ "window": "2026-09-27T21:16",
+ "cards": [
+  {
+   "num": 1,
+   "title_line": "## BUG-1 [2026-09-26T05:31:45Z] [high] OPEN",
+   "summary": "[cache] cypy_bridge/compiler.py:3656 clear_cache 把 .pyd 删除失败当成功：裸 except 吞掉后仍从 manifest 删条目",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r6",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 2,
+   "title_line": "## BUG-2 [2026-09-26T05:31:45Z] [high] OPEN",
+   "summary": "[subprocess] cypy_bridge/compiler.py:3795 subprocess.run 无 timeout；同仓做同一件事的另外两处都有 timeout=120",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r7",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 3,
+   "title_line": "## BUG-3 [2026-09-26T05:31:45Z] [high] OPEN",
+   "summary": "[silent-fail] cypyc/project/project_compiler.py:826 增量重解析异常被吞：失败后仍用陈旧 AST 计算影响集并报告已传播",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r8",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 4,
+   "title_line": "## BUG-4 [2026-09-26T05:31:45Z] [medium] OPEN",
+   "summary": "[silent-fail] cypyc/transformer 五个 transformer 把递归调用包进 except (AttributeError, TypeError)，子树真实异常被吞、收集静默截断",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r9",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 5,
+   "title_line": "## BUG-5 [2026-09-26T05:31:45Z] [medium] OPEN",
+   "summary": "[silent-fail] cypyc/incremental/hot_reload.py:110 与 :125 状态快照/回滚吞掉 getattr/setattr 异常（含用户 property 执行失败）",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r10",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 6,
+   "title_line": "## BUG-6 [2026-09-26T05:31:46Z] [medium] OPEN",
+   "summary": "[silent-fail] cypyc/incremental/file_monitor.py:58 读不到 .py 首行即判定「不是 Cypy 文件」，变更被静默漏掉",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r11",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 7,
+   "title_line": "## BUG-7 [2026-09-26T05:31:46Z] [low] OPEN",
+   "summary": "[diagnostics] cypy_hook/hook.py:926 与 cypy_bridge/compiler.py:3583 manifest 损坏与「文件不存在」不可区分，静默按无缓存继续",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r12",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 8,
+   "title_line": "## BUG-8 [2026-09-26T06:09:13Z] [medium] OPEN",
+   "summary": "[silent-fail] cypyc/parser/macro_expander.py:380 宏展开后的代码块解析失败时静默返回原块，整条宏语句从输出中消失且无任何告警",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r13",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 9,
+   "title_line": "## BUG-9 [2026-09-26T06:37:48Z] [medium] OPEN",
+   "summary": "[silent-fail] cypyc/incremental/hot_reload.py:253 HotReloadEngine 的模块级状态快照/回滚仍是 `except Exception: pass`，BUG-5 的修复只覆盖了 CypyProxyModule 那一份平行实现",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r14",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 10,
+   "title_line": "## BUG-10 [2026-09-26T06:37:48Z] [medium] OPEN",
+   "summary": "[silent-fail] cypyc/incremental/hot_reload.py:457 热重载把依赖分析与增量缓存更新的解析失败整段吞掉（:332 与 :457 两处，注释即『解析失败不影响热重载』）",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r15",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 11,
+   "title_line": "## BUG-11 [2026-09-26T07:13:26Z] [medium] OPEN",
+   "summary": "[silent-fail] cypyc/project/project_compiler.py:539 项目模式 type_check_module 只上送 TypeChecker 诊断，ScopeAnalyzer 已报出的重名/类型级冲突（SYNTAX/33 C-3.1）被静默丢弃——同一份源码在单文件模式 cypy_hook/hook.py:250 会报错，两个入口给出相反裁决",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r16",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 12,
+   "title_line": "## BUG-12 [2026-09-26T08:27:00Z] [medium] OPEN",
+   "summary": "[error-masking] cypy_bridge/nogil.py:73 GilState.__exit__ 无条件 acquire，with 体内提前归还 GIL 后再抛用户异常时，退出路径用 NoGilError('GIL is not released') 顶掉用户异常——同一族的嵌套覆盖问题本模块已在 NoGilContext 修过，GilState 这条退出路径漏修",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r17",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 13,
+   "title_line": "## BUG-13 [2026-09-26T10:07:36Z] [medium] OPEN",
+   "summary": "[judge-brittleness] tests/test_incremental.py:547 TestDigestCost 用墙钟阈值 `digest_elapsed < 2.0` 判性能，代价取决于同进程里先跑过多少用例（CPython 循环 GC 要扫既有堆）——同一份产品代码在单跑时 0.5s、整文件跑后 3.385s，判据跨收集顺序不可复现，把门禁 ① 变成抛硬币",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（裁决落地段工作，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r18",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 14,
+   "title_line": "## BUG-14 [2026-09-26T12:26:08Z] [medium] OPEN",
+   "summary": "[float-width] cypyc/codegen/type_mapper.py:8 与 :23 对同一声明类型 float 给出两种宽度（cypy_to_cython 出 C float=32 位、cypy_to_c 出 double=64 位），且 def 签名与 let 绑定的注解在 Cython 产物里被整段丢弃 —— examples/subtype_units.cypy 一次运行内第 2 行与第 9 行互相矛盾",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（裁决落地段工作，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r19",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 15,
+   "title_line": "## BUG-15 [2026-09-26T13:33:00Z] [high] OPEN",
+   "summary": "[lexer-truncation] cypyc/parser/lexer.py:538 三反引号判定用 2 字符切片 `source[pos:pos+2]==\"``\"` 却连推 3 个字符，源文件里任意一对游离反引号会把其后整段吞成一个 BACKTICK_BLOCK，其后的定义全部消失且零报错",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r20",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 16,
+   "title_line": "## BUG-16 [2026-09-26T13:33:00Z] [high] OPEN",
+   "summary": "[parser-decorators] cypyc/parser/parser.py:1375 成员级 `decorators = []` 重绑了 :1326 形参持有的结构体自身装饰器列表，`@value struct` 只要含一个被装饰的成员就丢掉 @value，并把成员装饰器挂到 struct 上",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r21",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 17,
+   "title_line": "## BUG-17 [2026-09-26T13:33:00Z] [medium] OPEN",
+   "summary": "[diagnostics] cypyc/project/project_compiler.py:666 `_pick_extension` 名字全不匹配时 `return sorted(candidates)[0]`，把别的模块（或历史残留）的 .pyd 当成本次该模块的产物回报，「No .pyd file generated」永不触发",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r22",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 18,
+   "title_line": "## BUG-18 [2026-09-26T13:33:00Z] [high] OPEN",
+   "summary": "[cache-invalidation] cypyc/incremental/incremental_manager.py:311-320 「检查导入模块是否变化」只看 `is_cached()`（缓存条目存不存在），从不比对依赖的 file_hash，改了被 import 的 .cypy 仍判缓存有效并复用陈旧 .pyd",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r23",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 19,
+   "title_line": "## BUG-19 [2026-09-26T13:33:00Z] [medium] OPEN",
+   "summary": "[codegen-directives] cypyc/codegen/cython_generator.py:1287 `_ensure_owned_import` 用 `output.insert(0, ...)` 把 pointer import 插到整段 `# cython:` 指令之前，而本文件 :299 的注释规定指令必须在最顶部否则被忽略",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r24",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 20,
+   "title_line": "## BUG-20 [2026-09-26T13:33:00Z] [medium] OPEN",
+   "summary": "[comptime] cypyc/analyzer/comptime_evaluator.py:455-461 `_get_func_name` 对 `x.upper()` 这类 Attribute 调用退回 `str(node)`（得到 \"Attribute(line=.., col=..)\"），于是 :188-276 整张字符串/列表方法表永不命中，comptime 语句静默消失",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r25",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 21,
+   "title_line": "## BUG-21 [2026-09-26T13:33:00Z] [medium] OPEN",
+   "summary": "[type-checker] cypyc/analyzer/type_checker.py:432（同族 :1283、:2008）用 `getattr(stmt.for_type,'id',str(stmt.for_type))` 取 impl 的目标类型名，`impl Show for Box<T>` 注册成 \"GenericType(line=5, col=15)\" 这种节点 repr，codegen 侧 :482-486 却正确剥掉泛型 —— 两份 trait 登记表口径分叉",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r26",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 22,
+   "title_line": "## BUG-22 [2026-09-26T13:33:00Z] [low] OPEN",
+   "summary": "[lexer] cypyc/parser/lexer.py:651-652 f-string 前缀判定集合是 (`\"`, `'`, f, F)，注释 :650 声称支持 f/F/rf/fr，实际 `fr\"...\"` 因第二字符 'r' 不在集合内被拆成 IDENTIFIER `fr` + STRING，`rf\"...\"` 却正常",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r27",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 23,
+   "title_line": "## BUG-23 [2026-09-26T13:33:00Z] [medium] OPEN",
+   "summary": "[pointer] cypy_bridge/pointer.py:322 `addr()` 先判 `hasattr(obj,'value')`，而每个 c_void_p 都有 `.value`，:327 的 `elif isinstance(obj, ctypes.c_void_p): return obj.value` 成死代码 —— 对空指针也返回非零堆地址",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r28",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 24,
+   "title_line": "## BUG-24 [2026-09-26T13:33:00Z] [medium] OPEN",
+   "summary": "[cache] cypy_hook/hook.py:1020-1024 `clear_cache()` 无参分支走 `os.walk(os.getcwd())` 却要求 `os.path.dirname(root)==\"__pycache__\"`，绝对路径下永不相等，删了 0 个文件仍由 cli.py:384 打印 [OK] cache cleared",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r29",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 25,
+   "title_line": "## BUG-25 [2026-09-26T13:33:00Z] [medium] OPEN",
+   "summary": "[encoding] cypy_bridge/compiler.py:3766 与 :3807 把生成的 .c 和 setup.py 用 `open(path,'w')` 按本地编码写盘（本机 cp936），含非 cp936 字符的源码直接 UnicodeEncodeError，读源码侧却是 encoding=\"utf-8\"",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r30",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 26,
+   "title_line": "## BUG-26 [2026-09-26T13:33:00Z] [low] OPEN",
+   "summary": "[portability] cypy_bridge/compiler.py:3833 编译产物扫描只认 `endswith('.pyd')`，而 :3704-3707 的 `_detect_compiler` 明确支持 linux/gcc 与 darwin/clang，非 Windows 上即便编译成功也抛 \"Failed to find generated .pyd file\"",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r31",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 27,
+   "title_line": "## BUG-27 [2026-09-26T13:33:00Z] [low] OPEN",
+   "summary": "[hot-reload] cypyc/incremental/hot_reload.py:530 `set.union(*[...])` 在 results 为空（纯删除批次）时抛 TypeError，被 :535 的 except 打成 \"Callback error\"，用户回调其实一次都没跑",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r32",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 28,
+   "title_line": "## BUG-28 [2026-09-26T13:33:00Z] [medium] OPEN",
+   "summary": "[reformat] cypyc/utils/indent_detector.py:30-34 detect() 观测到多种缩进宽度时一律取 4（没有取公因数），:56-58 再以 `// indent_size` 换算层数，2 空格风格源码经 normalize() 后 函数体被压到 0 列，块结构直接毁坏",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r33",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 29,
+   "title_line": "## BUG-29 [2026-09-26T13:33:00Z] [low] OPEN",
+   "summary": "[cli-diagnostics] cypy_hook/hook.py:836 对可能为 None 的 `parsed_args.source` 直接 `os.path.isfile(...)`，`cypyc hook` 不带文件名时抛裸 TypeError traceback 而不是用法提示（cypyc/cli.py:408 的那道守卫排在 hook 分支 return 之后，护不到这里）",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r34",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 30,
+   "title_line": "## BUG-30 [2026-09-26T15:12:42Z] [high] OPEN",
+   "summary": "[codegen-coercion] cypyc/codegen/cython_generator.py:1170 声明式局部变量走 `name: <ctype> = value` 注解形式且不补隐式转换，于是 `let e: float = <int 表达式>` 的 e 在编译产物里仍是 Python int（type() 回 <class 'int'>），float 路径在 BUG-14 裁决落地后由 42.0 退化成了 42",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-27T03:58:00Z 追加留档（2026-09-27 R1-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r35",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 31,
+   "title_line": "## BUG-31 [2026-09-26T15:21:33Z] [medium] OPEN",
+   "summary": "[type-width-divergence] cypy_bridge/types.py:43 仍把 Cypy 的 `float` 映射到 ctypes.c_float（4 字节），而 BUG-14 裁决后 cypyc 的两张表都出 double（8 字节）——同一个声明类型在两个包里仍然两种宽度，经 cypy_bridge 存取时出现 float32 精度损失",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-27T03:58:00Z 追加留档（2026-09-27 R1-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r36",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 32,
+   "title_line": "## BUG-32 [2026-09-26T15:48:08Z] [high] OPEN",
+   "summary": "[codegen-echo-fidelity] cypyc/codegen/cython_generator.py:3334（修复前号，修复后该行在 :3337）约束注释把成员名过了一遍 type_mapper，BUG-14 裁决（float≡double）落地后产物写成 `# constraint Numeric = int | double`，注释里出现的名字不再是用户声明的那个",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-26 追加留档（裁决落地段工作，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r37",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-polisher"
+  },
+  {
+   "num": 33,
+   "title_line": "## BUG-33 [2026-09-27T03:05:03Z] [high] OPEN",
+   "summary": "[对抗样例:词法] lexer 对未闭合字符串不诊断，静默吞掉后续源码",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-27T03:58:00Z 追加留档（2026-09-27 R1-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r39",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-loop-hunter"
+  },
+  {
+   "num": 34,
+   "title_line": "## BUG-34 [2026-09-27T03:05:03Z] [high] OPEN",
+   "summary": "[对抗样例:类型标注] 非法标注形态把 AST 节点的 repr 写进产物（xs: Constant(line=2, col=9)）",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r40",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-loop-hunter"
+  },
+  {
+   "num": 35,
+   "title_line": "## BUG-35 [2026-09-27T03:05:03Z] [high] OPEN",
+   "summary": "[读码+对抗] parse/lex 阶段的一切异常在用户面被归入「读取文件错误」，深嵌套 RecursionError 同桶且无行列",
+   "fixed_header": "### FIXED(verify=已完成, 范围=分桶) — 2026-09-27T10:04:00Z 追加留档（2026-09-27 R2-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r41",
+   "repro_cmd": null,
+   "half_open_disclosed": true,
+   "half_open_needle": "转结",
+   "reported_by": "cypy-loop-hunter"
+  },
+  {
+   "num": 36,
+   "title_line": "## BUG-36 [2026-09-27T03:05:03Z] [high] OPEN",
+   "summary": "[转结确诊:模式匹配] 位置模式不调用 __unapply__，产物访问不存在的 __f0/__f1",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r42",
+   "repro_cmd": null,
+   "half_open_disclosed": true,
+   "half_open_needle": "转结",
+   "reported_by": "cypy-loop-hunter"
+  },
+  {
+   "num": 37,
+   "title_line": "## BUG-37 [2026-09-27T03:05:03Z] [high] OPEN",
+   "summary": "[类型检查假阳性] 位置模式把绑定名判成 int，有效程序被判「Return type mismatch」并非零退出",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r43",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-loop-hunter"
+  },
+  {
+   "num": 38,
+   "title_line": "## BUG-38 [2026-09-27T03:12:55Z] [high] OPEN",
+   "summary": "[变异fuzz:词法] 源文件以空格结尾且无末换行时，词法器抛 TypeError（NoneType 参与 in 运算）",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-27T03:58:00Z 追加留档（2026-09-27 R1-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r44",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-loop-hunter"
+  },
+  {
+   "num": 39,
+   "title_line": "## BUG-39 [2026-09-27T03:12:55Z] [high] OPEN",
+   "summary": "[变异fuzz:语法] 顶层 return 被静默接受并原样写进产物，生成的 .pyx 必编译失败",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-27T10:04:00Z 追加留档（2026-09-27 R2-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r45",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-loop-hunter"
+  },
+  {
+   "num": 40,
+   "title_line": "## BUG-40 [2026-09-27T04:36:35Z] [low] OPEN",
+   "summary": "[构建/规范配置] pyproject 的 [tool.flake8] 对 flake8 7.x 不生效（缺 Flake8-pyproject），lint 口径与项目声明不一致",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r48",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": null
+  },
+  {
+   "num": 41,
+   "title_line": "## BUG-41 [2026-09-27T05:11:09Z] [medium] OPEN",
+   "summary": "tests/test_boundary_comprehensive.py 两组测试类被同名重复定义遮住，6 条用例静默不执行",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r51",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": null
+  },
+  {
+   "num": 42,
+   "title_line": "## BUG-42 [2026-09-27T05:11:09Z] [medium] OPEN",
+   "summary": "产品码里 _visit_ExprStmt / _visit_MetaBlock 各定义两次，前一份成为死代码",
+   "fixed_header": "### FIXED(打磨=已完成) — 2026-09-27T10:56:00Z 追加留档（2026-09-27 R2-打磨(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r52",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": null
+  },
+  {
+   "num": 43,
+   "title_line": "## BUG-43 [2026-09-27T05:16:29Z] [medium] OPEN",
+   "summary": "[静态检查配置] mypy 按声明的 python_version=3.9 跑测试树会整轮中断（依赖里有 3.10 语法），strict 门形同不存在",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r53",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": null
+  },
+  {
+   "num": 44,
+   "title_line": "## BUG-44 [2026-09-27T06:11:39Z] [high] OPEN",
+   "summary": "struct 里的 @staticmethod 生成时仍注入 self，产物签名与声明不符且调用必炸",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-27T10:04:00Z 追加留档（2026-09-27 R2-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": null,
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-advancer"
+  },
+  {
+   "num": 45,
+   "title_line": "## BUG-45 [2026-09-27T06:11:39Z] [high] OPEN",
+   "summary": "struct 的 __implicit_default__ 默认值生成成裸名字，导入即 NameError，声明的自动填充没有落地",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-27T10:04:00Z 追加留档（2026-09-27 R2-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": null,
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-advancer"
+  },
+  {
+   "num": 46,
+   "title_line": "## BUG-46 [2026-09-27T08:14:56Z] [high] OPEN",
+   "summary": "hook install 打印 [OK] 但不做任何持久化，紧接着 status 在另一进程里报未安装（两命令互相否定）",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-27T10:04:00Z 追加留档（2026-09-27 R2-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": null,
+   "repro_cmd": null,
+   "half_open_disclosed": true,
+   "half_open_needle": "挂账",
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 47,
+   "title_line": "## BUG-47 [2026-09-27T08:14:56Z] [medium] OPEN",
+   "summary": "docs 声明的 cypy_hook 包级 API（install_hook/uninstall_hook/is_hook_installed）未再导出，导入即 AttributeError",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-27T10:04:00Z 追加留档（2026-09-27 R2-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": null,
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 48,
+   "title_line": "## BUG-48 [2026-09-27T08:14:56Z] [high] OPEN",
+   "summary": "cypyc watch 只打印横幅：改动或新增被监控文件后 16s 内无任何重编译产物与事件日志，rc 始终 0",
+   "fixed_header": "### FIXED(推进=已完成) — 2026-09-27T11:55:00Z 追加留档（2026-09-27 R2-推进(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": null,
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 49,
+   "title_line": "## BUG-49 [2026-09-27T08:34:30Z] [medium] OPEN",
+   "summary": "SYNTAX/33 的实现状态栏说 constraint 未实现，但同一文件与实测都表明它四层已落地（过期声明会诱使后续轮重复实现）",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": null,
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 50,
+   "title_line": "## BUG-50 [2026-09-27T09:33:03Z] [high] OPEN",
+   "summary": "操作者把两档存量未格式化的产品文件交给 black 整档重写，改动不可回滚且淹没真实 diff",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": null,
+   "repro_cmd": null,
+   "half_open_disclosed": true,
+   "half_open_needle": "交人工",
+   "reported_by": "cypy-fixer"
+  },
+  {
+   "num": 51,
+   "title_line": "## BUG-51 [2026-09-27T09:33:04Z] [medium] OPEN",
+   "summary": "BUG-39 的顶层 return 守卫首版吃掉宏体/宏展开片段里的 return，全量 pytest 当场红 2 条",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-27T10:04:00Z 追加留档（2026-09-27 R2-修复(循环轮)，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": null,
+   "repro_cmd": null,
+   "half_open_disclosed": true,
+   "half_open_needle": "转结",
+   "reported_by": "cypy-fixer"
+  },
+  {
+   "num": 52,
+   "title_line": "## BUG-52 [2026-09-27T10:24:13Z] [medium] OPEN",
+   "summary": "[构建/规范配置] pyproject 声明了 [tool.black] line-length=100，但 156 个 .py 里 142 个不满足，照 PROJECT-SPEC/02 跑 format 会产出巨量不可复审的 diff",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r58",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-verifier"
+  },
+  {
+   "num": 53,
+   "title_line": "## BUG-53 [2026-09-27T10:25:21Z] [medium] OPEN",
+   "summary": "[构建/规范配置] pyproject 声明了 [tool.black] line-length=100，但 156 个 .py 里 142 个不满足，照 PROJECT-SPEC/02 跑 format 会产出巨量不可复审的 diff",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r59",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-verifier"
+  },
+  {
+   "num": 54,
+   "title_line": "## BUG-54 [2026-09-27T11:47:06Z] [medium] OPEN",
+   "summary": "cypyc watch 的编译中间目录 build/ 是进程间共享的：两个 watch 并发编译会互踩，引擎内串行锁挡不住",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r62",
+   "repro_cmd": null,
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-advancer"
+  },
+  {
+   "num": 55,
+   "title_line": "## BUG-55 [2026-09-27T12:46:09Z] [medium] OPEN",
+   "summary": "generic_transformer 读 `type_params`，parser 的泛型节点带的是 `generic_params` ⇒ 泛型收集恒为空",
+   "fixed_header": "### FIXED(修复=已完成) — 2026-09-27T16:52:09Z 追加留档（2026-09-28 R3-修复，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r63",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C1",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 56,
+   "title_line": "## BUG-56 [2026-09-27T12:46:10Z] [medium] OPEN",
+   "summary": "`cypyc transpile` 的 --check-only/--emit-ast/--generate-setup/--emit-cython 只被印给用户，run_transpile 一个都不读（读它们的是只能从不可达分支进入的 r",
+   "fixed_header": "### FIXED(修复=已完成) — 2026-09-27T16:52:09Z 追加留档（2026-09-28 R3-修复，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r64",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C3",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 57,
+   "title_line": "## BUG-57 [2026-09-27T12:46:10Z] [low] OPEN",
+   "summary": "CUnion/union 的 docstring 示例 `CUnion(int, float)` 一跑就抛 TypeError（对 Python 内建类型取 ctypes.sizeof）",
+   "fixed_header": "### FIXED(修复=已完成) — 2026-09-27T16:52:09Z 追加留档（2026-09-28 R3-修复，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r65",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C4",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 58,
+   "title_line": "## BUG-58 [2026-09-27T12:46:10Z] [medium] OPEN",
+   "summary": "realloc(ptr, 0) 先 free 再 `return None`，而签名是 `-> int`、文档只说返回地址，malloc 同一形状走的是抛错分支",
+   "fixed_header": "### FIXED(修复=已完成) — 2026-09-27T16:52:09Z 追加留档（2026-09-28 R3-修复，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r66",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C5",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 59,
+   "title_line": "## BUG-59 [2026-09-27T12:46:10Z] [medium] OPEN",
+   "summary": "get_compilation_order 把环内模块塞进 `set` 再 extend ⇒ 环存在时推荐编译序随进程哈希种子变化",
+   "fixed_header": "### FIXED(修复=已完成) — 2026-09-27T16:52:09Z 追加留档（2026-09-28 R3-修复，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r67",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C6",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 60,
+   "title_line": "## BUG-60 [2026-09-27T12:46:10Z] [low] OPEN",
+   "summary": "BuildBlockChecker 的 docstring 规则 2（指针语法只能在构建块内部使用）没有实现：_visit_DerefExpr/_visit_PointerType 只注释『移除』，不 append 任何 error",
+   "fixed_header": "### FIXED(修复=已完成) — 2026-09-27T16:52:09Z 追加留档（2026-09-28 R3-修复，本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": false,
+   "task_id": "T0r68",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r3_repro.py C8",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 61,
+   "title_line": "## BUG-61 [2026-09-27T20:25:15Z] [high] OPEN",
+   "summary": "[RC1_func_symbol_typed_as_return] 函数名被登记成它的**返回类型**（没有可调用签名）⇒ 元数判定挂错表：正确调用被判错、错误调用被放行",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-28 R4-修复 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": true,
+   "task_id": "T0r75",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py RC1_func_symbol_typed_as_return",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 62,
+   "title_line": "## BUG-62 [2026-09-27T20:25:15Z] [high] OPEN",
+   "summary": "[RC2_no_argument_type_check] 实参类型与形参声明类型从不做兼容性比对：`apply(\"s\")`（形参 `n: int`）零诊断，而同族 `let x: int = \"s\"` 会报",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-28 R4-修复 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": true,
+   "task_id": "T0r76",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py RC2_no_argument_type_check",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 63,
+   "title_line": "## BUG-63 [2026-09-27T20:25:16Z] [high] OPEN",
+   "summary": "[RC3_struct_field_type_unresolved] struct 成员的声明类型在方法体里解析不出来：`self.n`/`self.i.n`/`self.cb(1,2)` 三类全部静默，同族局部变量与形参都会判",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-28 R4-修复 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": true,
+   "task_id": "T0r77",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py RC3_struct_field_type_unresolved",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 64,
+   "title_line": "## BUG-64 [2026-09-27T20:25:16Z] [medium] OPEN",
+   "summary": "[RC4_internal_repr_in_message] 类型不符的用户可见文案直接内插 `Type` 对象 ⇒ 打印 `Callable[tuple[int], str]`，与源语法 `Callable[[int], str]` 两种写法都不对应",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-28 R4-修复 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": true,
+   "task_id": "T0r78",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py RC4_internal_repr_in_message",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 65,
+   "title_line": "## BUG-65 [2026-09-27T20:25:17Z] [medium] OPEN",
+   "summary": "[DOC_status_stale_rows] 文档宣称的形态与今天实现不符（appendix-C 特性表 5 行 + USAGE 未实现清单 + 实现状态表 1 行 + 主类型表 i32 一族）",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r79",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py DOC_status_stale_rows",
+   "half_open_disclosed": true,
+   "half_open_needle": "冻结面",
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 66,
+   "title_line": "## BUG-66 [2026-09-27T20:25:17Z] [medium] OPEN",
+   "summary": "[DOC_cli_face_mismatch] CLI 用法文档与实读不符：`cypyc --compile` / `build --incremental` 不存在，`hook` 有 6 个未记选项，入口点与 Python 下限两处转述错",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-28 R4-修复 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": true,
+   "task_id": "T0r80",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py DOC_cli_face_mismatch",
+   "half_open_disclosed": true,
+   "half_open_needle": "half-open",
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 67,
+   "title_line": "## BUG-67 [2026-09-27T20:25:18Z] [high] OPEN",
+   "summary": "[DOC_example_fails] 文档示例引用实现里不存在的符号：`ProjectCompileResult.output_files`（无此字段）、`hook.eval(...)` 承诺返回值（读侧要 `__result__`，写侧从不产出）",
+   "fixed_header": "### FIXED(verify=已完成) — 2026-09-28 R4-修复 追加留档（本条目正文与标题行 `OPEN` 一字未改）",
+   "fixed_in_r4_window": true,
+   "task_id": "T0r81",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py DOC_example_fails",
+   "half_open_disclosed": true,
+   "half_open_needle": "half-open",
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 68,
+   "title_line": "## BUG-68 [2026-09-27T20:25:18Z] [medium] OPEN",
+   "summary": "[BRIDGE_cache_side_effect] `BridgeCacheManager` 的只读查询在**调用方 CWD** 造出 `__pycache__/cypy/py313/`（`_get_base_cache_dir(None)` 回落 `os.getcwd()`）",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r82",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py BRIDGE_cache_side_effect",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 69,
+   "title_line": "## BUG-69 [2026-09-27T20:25:19Z] [high] OPEN",
+   "summary": "[BRIDGE_c_not_equivalent] bridge 生成的 C 里有**模块级** `if ((__name__ == \"__main__\")) {…}`（花括号净深 0 处），与 `cypy_bridge/__init__.py:4` 自述的「与 Cython 等价」不符，MSVC 必拒",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r83",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py BRIDGE_c_not_equivalent",
+   "half_open_disclosed": true,
+   "half_open_needle": "转结",
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 70,
+   "title_line": "## BUG-70 [2026-09-27T20:25:19Z] [low] OPEN",
+   "summary": "[SPEC_file_size_redline] PROJECT-SPEC 自己的 3000 行（不含注释）红线被 parser.py=3444、cython_generator.py=3108 越过，规范要求的\"当时就拆\"没有发生",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r84",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py SPEC_file_size_redline",
+   "half_open_disclosed": true,
+   "half_open_needle": "挂账",
+   "reported_by": "cypy-hunter"
+  },
+  {
+   "num": 71,
+   "title_line": "## BUG-71 [2026-09-28T00:17:49Z] [high] OPEN",
+   "summary": "[SLICE_typed_as_element] 切片表达式被判定成容器的**元素**类型：`xs[1:3]` 得 `int`，仓内自带 DEMO 因此过不了 `--check-only`（appendix-C《已实现的限制修复》第 1 行声称 v0.2 已实现）",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r87",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/verify_r4_repro.py SLICE_typed_as_element",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-verifier"
+  },
+  {
+   "num": 72,
+   "title_line": "## BUG-72 [2026-09-28T00:17:50Z] [medium] OPEN",
+   "summary": "[CODEGEN_named_conditions_unreachable] appendix-C 点名的三个 codegen 方法（以及 `_extractor_pattern_condition`/`_contains_extractor`）在活路径上调用计数为 0：模式条件由别处就地拼出",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r88",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/verify_r4_repro.py CODEGEN_named_conditions_unreachable",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-verifier"
+  },
+  {
+   "num": 73,
+   "title_line": "## BUG-73 [2026-09-28T00:18:06Z] [medium] OPEN",
+   "summary": "[PYD_incremental_cache_not_reused] `compile_to_pyd` 连跑两次仍重写 `.pyd`：同一次结果里先写「缓存命中」再写「缓存未命中」，两个缓存各查各的（docs/USAGE.md:406 的「源未变会复用 .pyd」在调用面不成立）",
+   "fixed_header": null,
+   "fixed_in_r4_window": false,
+   "task_id": "T0r89",
+   "repro_cmd": "python -X utf8 .fist-loop-20260927/verify_r4_repro.py PYD_incremental_cache_not_reused",
+   "half_open_disclosed": false,
+   "half_open_needle": null,
+   "reported_by": "cypy-verifier"
+  }
+ ],
+ "cards_total": 73,
+ "headings_total": 73,
+ "sqlite_bug_rows": 69,
+ "ledger_delta": 4,
+ "md_only_cards": [
+  "BUG-44",
+  "BUG-45",
+  "BUG-46",
+  "BUG-47",
+  "BUG-48",
+  "BUG-49",
+  "BUG-50",
+  "BUG-51"
+ ],
+ "sqlite_only_rows": [
+  "T0r2",
+  "T0r3",
+  "T0r4",
+  "T0r5"
+ ],
+ "md_only_cards_len": 8,
+ "sqlite_only_rows_len": 4,
+ "three_way": [
+  {
+   "card": "BUG-61",
+   "task_id": "T0r75",
+   "md_fixed": true,
+   "sqlite_status": "已完成",
+   "sqlite_completed_by": "cypy-fixer",
+   "call_log_rows": 4,
+   "agree": true
+  },
+  {
+   "card": "BUG-62",
+   "task_id": "T0r76",
+   "md_fixed": true,
+   "sqlite_status": "已完成",
+   "sqlite_completed_by": "cypy-fixer",
+   "call_log_rows": 4,
+   "agree": true
+  },
+  {
+   "card": "BUG-63",
+   "task_id": "T0r77",
+   "md_fixed": true,
+   "sqlite_status": "已完成",
+   "sqlite_completed_by": "cypy-fixer",
+   "call_log_rows": 4,
+   "agree": true
+  },
+  {
+   "card": "BUG-64",
+   "task_id": "T0r78",
+   "md_fixed": true,
+   "sqlite_status": "已完成",
+   "sqlite_completed_by": "cypy-fixer",
+   "call_log_rows": 4,
+   "agree": true
+  },
+  {
+   "card": "BUG-66",
+   "task_id": "T0r80",
+   "md_fixed": true,
+   "sqlite_status": "已完成",
+   "sqlite_completed_by": "cypy-fixer",
+   "call_log_rows": 4,
+   "agree": true
+  },
+  {
+   "card": "BUG-67",
+   "task_id": "T0r81",
+   "md_fixed": true,
+   "sqlite_status": "已完成",
+   "sqlite_completed_by": "cypy-fixer",
+   "call_log_rows": 4,
+   "agree": true
+  }
+ ],
+ "three_way_agreed": 6,
+ "r4_fixed_cards": [
+  "BUG-61",
+  "BUG-62",
+  "BUG-63",
+  "BUG-64",
+  "BUG-66",
+  "BUG-67"
+ ],
+ "filed_this_round": [
+  "BUG-71",
+  "BUG-72",
+  "BUG-73"
+ ],
+ "recheck": [
+  {
+   "card": "BUG-61",
+   "command": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py RC1_func_symbol_typed_as_return",
+   "exit_code": 1,
+   "key_present": false,
+   "expectation": "fixed-must-not-recur",
+   "stdout_tail": " },\n \"not_reproduced\": [\n  \"RC1_func_symbol_typed_as_return/C01\",\n  \"RC1_func_symbol_typed_as_return/C02\",\n  \"RC1_func_symbol_typed_as_return/C03\",\n  \"RC1_func_symbol_typed_as_return/C04\",\n  \"RC1_func_symbol_typed_as_return/C05\"\n ],\n \"fixture_broken\": false\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-62",
+   "command": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py RC2_no_argument_type_check",
+   "exit_code": 1,
+   "key_present": false,
+   "expectation": "fixed-must-not-recur",
+   "stdout_tail": "\"must_be\": false, \"meaning\": \"返回 1 = rc=1 这一态可达\"}\n{\n \"keys\": {\n  \"RC2_no_argument_type_check\": 1\n },\n \"not_reproduced\": [\n  \"RC2_no_argument_type_check/C06\",\n  \"RC2_no_argument_type_check/C07\",\n  \"RC2_no_argument_type_check/C08\"\n ],\n \"fixture_broken\": false\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-63",
+   "command": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py RC3_struct_field_type_unresolved",
+   "exit_code": 1,
+   "key_present": false,
+   "expectation": "fixed-must-not-recur",
+   "stdout_tail": "ng\": \"返回 1 = rc=1 这一态可达\"}\n{\n \"keys\": {\n  \"RC3_struct_field_type_unresolved\": 1\n },\n \"not_reproduced\": [\n  \"RC3_struct_field_type_unresolved/C09\",\n  \"RC3_struct_field_type_unresolved/C10\",\n  \"RC3_struct_field_type_unresolved/C11\"\n ],\n \"fixture_broken\": false\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-64",
+   "command": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py RC4_internal_repr_in_message",
+   "exit_code": 1,
+   "key_present": false,
+   "expectation": "fixed-must-not-recur",
+   "stdout_tail": "expected 1, got 2 at 3:12\"], \"defect_phenomenon_reproduced\": false, \"must_be\": false, \"meaning\": \"返回 1 = rc=1 这一态可达\"}\n{\n \"keys\": {\n  \"RC4_internal_repr_in_message\": 1\n },\n \"not_reproduced\": [\n  \"RC4_internal_repr_in_message/C12\"\n ],\n \"fixture_broken\": false\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-65",
+   "command": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py DOC_status_stale_rows",
+   "exit_code": 0,
+   "key_present": true,
+   "expectation": "handoff-may-still-recur",
+   "stdout_tail": "\"observed_errors\": [\"Callable arity mismatch: expected 1, got 2 at 3:12\"], \"defect_phenomenon_reproduced\": false, \"must_be\": false, \"meaning\": \"返回 1 = rc=1 这一态可达\"}\n{\n \"keys\": {\n  \"DOC_status_stale_rows\": 0\n },\n \"not_reproduced\": [],\n \"fixture_broken\": false\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-66",
+   "command": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py DOC_cli_face_mismatch",
+   "exit_code": 0,
+   "key_present": true,
+   "expectation": "report",
+   "stdout_tail": "\"observed_errors\": [\"Callable arity mismatch: expected 1, got 2 at 3:12\"], \"defect_phenomenon_reproduced\": false, \"must_be\": false, \"meaning\": \"返回 1 = rc=1 这一态可达\"}\n{\n \"keys\": {\n  \"DOC_cli_face_mismatch\": 0\n },\n \"not_reproduced\": [],\n \"fixture_broken\": false\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-67",
+   "command": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py DOC_example_fails",
+   "exit_code": 0,
+   "key_present": true,
+   "expectation": "report",
+   "stdout_tail": "y\", \"observed_errors\": [\"Callable arity mismatch: expected 1, got 2 at 3:12\"], \"defect_phenomenon_reproduced\": false, \"must_be\": false, \"meaning\": \"返回 1 = rc=1 这一态可达\"}\n{\n \"keys\": {\n  \"DOC_example_fails\": 0\n },\n \"not_reproduced\": [],\n \"fixture_broken\": false\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-68",
+   "command": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py BRIDGE_cache_side_effect",
+   "exit_code": 0,
+   "key_present": true,
+   "expectation": "handoff-may-still-recur",
+   "stdout_tail": "served_errors\": [\"Callable arity mismatch: expected 1, got 2 at 3:12\"], \"defect_phenomenon_reproduced\": false, \"must_be\": false, \"meaning\": \"返回 1 = rc=1 这一态可达\"}\n{\n \"keys\": {\n  \"BRIDGE_cache_side_effect\": 0\n },\n \"not_reproduced\": [],\n \"fixture_broken\": false\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-69",
+   "command": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py BRIDGE_c_not_equivalent",
+   "exit_code": 0,
+   "key_present": true,
+   "expectation": "handoff-may-still-recur",
+   "stdout_tail": "bserved_errors\": [\"Callable arity mismatch: expected 1, got 2 at 3:12\"], \"defect_phenomenon_reproduced\": false, \"must_be\": false, \"meaning\": \"返回 1 = rc=1 这一态可达\"}\n{\n \"keys\": {\n  \"BRIDGE_c_not_equivalent\": 0\n },\n \"not_reproduced\": [],\n \"fixture_broken\": false\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-70",
+   "command": "python -X utf8 .fist-loop-20260927/hunt_r4_repro.py SPEC_file_size_redline",
+   "exit_code": 0,
+   "key_present": true,
+   "expectation": "handoff-may-still-recur",
+   "stdout_tail": "observed_errors\": [\"Callable arity mismatch: expected 1, got 2 at 3:12\"], \"defect_phenomenon_reproduced\": false, \"must_be\": false, \"meaning\": \"返回 1 = rc=1 这一态可达\"}\n{\n \"keys\": {\n  \"SPEC_file_size_redline\": 0\n },\n \"not_reproduced\": [],\n \"fixture_broken\": false\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-71",
+   "command": "python -X utf8 .fist-loop-20260927/verify_r4_repro.py SLICE_typed_as_element",
+   "exit_code": 0,
+   "key_present": true,
+   "expectation": "handoff-may-still-recur",
+   "stdout_tail": "\"rc\": 1,\n  \"diags_total\": 4,\n  \"first\": [\n   \"Type mismatch: expected list[int], got int at 60:9\",\n   \"Return type mismatch: expected list[int], got int at 67:1\"\n  ]\n },\n \"predicate\": \"探针 rc!=0 且诊断里有「expected list[int], got int」，并且仓内 DEMO 也过不了 --check-only\"\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-72",
+   "command": "python -X utf8 .fist-loop-20260927/verify_r4_repro.py CODEGEN_named_conditions_unreachable",
+   "exit_code": 0,
+   "key_present": true,
+   "expectation": "handoff-may-still-recur",
+   "stdout_tail": "\n  \"_generate_tuple_condition\": 0,\n  \"_generate_array_condition\": 0,\n  \"_generate_dict_condition\": 0,\n  \"_extractor_pattern_condition\": 0,\n  \"_contains_extractor\": 0\n },\n \"behaviour_generated_inline\": true,\n \"predicate\": \"元组模式的判定条件确实出现在生成物里，而这五个名字的调用计数全为 0\"\n}\n",
+   "stderr_tail": ""
+  },
+  {
+   "card": "BUG-73",
+   "command": "python -X utf8 .fist-loop-20260927/verify_r4_repro.py PYD_incremental_cache_not_reused",
+   "exit_code": 0,
+   "key_present": true,
+   "expectation": "report",
+   "stdout_tail": "y\",\n   \"增量编译: 缓存命中，使用缓存结果\",\n   \"增量编译: 缓存未命中，开始解析\",\n   \"增量编译: 受影响定义数: 0\"\n  ],\n  \"cached_after\": null,\n  \"stale_after\": false,\n  \"dur\": [\n   27.38,\n   20.41\n  ]\n },\n \"predicate\": \"两轮都 success、第二轮 .pyd 被重写（mtime 变了）、成功后 CypyCacheManager.get_cached_pyd 仍为 None\"\n}\n",
+   "stderr_tail": ""
+  }
+ ],
+ "still_recurring": [
+  "BUG-65",
+  "BUG-66",
+  "BUG-67",
+  "BUG-68",
+  "BUG-69",
+  "BUG-70",
+  "BUG-71",
+  "BUG-72",
+  "BUG-73"
+ ],
+ "fixed_still_recurring": [
+  "BUG-66",
+  "BUG-67"
+ ],
+ "undisclosed_half_open": [],
+ "fixed_not_recurring": [
+  "BUG-61",
+  "BUG-62",
+  "BUG-63",
+  "BUG-64"
+ ],
+ "cards_missing_task_id": [
+  "BUG-44",
+  "BUG-45",
+  "BUG-46",
+  "BUG-47",
+  "BUG-48",
+  "BUG-49",
+  "BUG-50",
+  "BUG-51"
+ ],
+ "cards_missing_task_id_len": 8,
+ "recheck_keys": [
+  "BUG-61",
+  "BUG-62",
+  "BUG-63",
+  "BUG-64",
+  "BUG-65",
+  "BUG-66",
+  "BUG-67",
+  "BUG-68",
+  "BUG-69",
+  "BUG-70",
+  "BUG-71",
+  "BUG-72",
+  "BUG-73"
+ ],
+ "call_log_counts_sample": {
+  "T0r75": 4,
+  "T0r76": 4,
+  "T0r77": 4,
+  "T0r78": 4,
+  "T0r80": 4,
+  "T0r81": 4
+ },
+ "omega_rows_by_task": {
+  "T0r86.1.1": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.1.2": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.2.1": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.2.2": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.3.1": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.3.2": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.4.1": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.4.2": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.5.1": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.5.2": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.6.1": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.6.2": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.7.1": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.7.2": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.8.1": {
+   "ok": 1,
+   "total": 1
+  },
+  "T0r86.8.2": {
+   "ok": 1,
+   "total": 1
+  }
+ },
+ "note": "「仍现形」不等于违例：卡片自己写明交人工/挂账的那些（BUG-65/69/70/71/72/73）本环不修，现形是事实；违例是「修完还现形」或「没落库却留档」",
+ "refuse": [],
+ "at_utc": "2026-09-28T00:52:52+00:00"
+}

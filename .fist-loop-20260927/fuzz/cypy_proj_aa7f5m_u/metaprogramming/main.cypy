@@ -1,0 +1,27 @@
+# 元编程示例
+# Cypy 的编译期常量和条件编译
+
+# 编译期常量
+const MAX_SIZE = 100
+const PI = 3.141592653589793
+
+# 使用常量
+def use_constants():
+    print(f"MAX_SIZE = {MAX_SIZE}")
+    print(f"PI = {PI}")
+    
+    circumference = 2 * PI * 5
+    print(f"半径为5的圆周长: {circumference}")
+
+# 条件编译
+const DEBUG = True
+
+def debug_log(message: str):
+    if DEBUG:
+        print(f"[DEBUG] {message}")
+
+# 运行示例
+use_constants()
+print("-" * 30)
+
+debug_log("这是一条调试消息")

@@ -1,0 +1,4 @@
+{
+ "footer": "[selfdrive-verify] round=R3 stage=第 3 轮第 3 环（寻虫→修复→验证→打磨→推进） root=T0r71 gates=56 refused=6 leaves=16 matrix_rows=6/6 sha_restored=6/6 identity=6 premise=17/17 collected=17 carried_claims=6 declared_side=6 callsite=16/16 report_audit_counts=23/23 refusal_table=6-verbatim ledger_reruns=6/6 pytest=1920 pytest_collected=1920 suite=47/47 e2e=25/25 e2e_zero=000 radius=0 lint_hard=0 baselines_run=2 irreversible=10(live=9,manifest=1) executed=none judge-defects=10 op-defects=4 decisions=3 measured_window=2026-09-27T17:33:11Z->2026-09-27T17:43:38Z generated_at=2026-09-27T17:46:13+00:00 handoff=R4:非冻结generic形可解析+锁夹具换冻结形+importlib取模块+bridge生成setup入锁",
+ "gates": 56
+}

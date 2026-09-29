@@ -1,0 +1,104 @@
+{
+ "root": "T0r113",
+ "tree": {
+  "rows": 21,
+  "leaves": 15,
+  "general_by_description": [
+   "T0r113.1.1",
+   "T0r113.1.2",
+   "T0r113.2.1",
+   "T0r113.2.2",
+   "T0r113.3.1",
+   "T0r113.3.2",
+   "T0r113.4.1",
+   "T0r113.4.2"
+  ],
+  "boundary_by_description": [
+   "T0r113.1.3",
+   "T0r113.2.3",
+   "T0r113.3.3",
+   "T0r113.4.3",
+   "T0r113.5.1",
+   "T0r113.5.2",
+   "T0r113.5.3"
+  ]
+ },
+ "plan": [
+  {
+   "leaf": "T0r113.1.1",
+   "kind": "face",
+   "deliverable_head": "规范面：SYNTAX/02 补「注解形态闭集」+ SYNTAX/17 补「位置模式的元数与槽位规则」（BUG-92/BU",
+   "check": "from pathlib import Path as P;a=P('SYNTAX/02-type-annotations.md').read_text(encoding='utf-8');b=P('SYNTAX/17-pattern-matching.md').read_text(encoding='utf-8');assert '注解形态闭集' in a and '元数与槽位规则' in b;print('SPEC OK',len(a.splitlines()),len(b.splitlines()))"
+  },
+  {
+   "leaf": "T0r113.1.2",
+   "kind": "face",
+   "deliverable_head": "分析器面：注解闭集校验（_validate_annotation_shapes/_check_annotation_sh",
+   "check": "-q"
+  },
+  {
+   "leaf": "T0r113.2.1",
+   "kind": "face",
+   "deliverable_head": "生成器面：_type_to_str 末路不再 `str(node)`，未知形态退化为 object；锁死「产物永不含 l",
+   "check": "product_never or degrades_to_object"
+  },
+  {
+   "leaf": "T0r113.2.2",
+   "kind": "face",
+   "deliverable_head": "判据面：既有用例 test_extractor_pattern.py::test_extractor_pattern_t",
+   "check": "-q"
+  },
+  {
+   "leaf": "T0r113.1.3",
+   "kind": "boundary-real",
+   "deliverable_head": "注解面边界审视 15 格（空输入 `x: = 1`、6 条合法形态、4 条非法形态、12 层嵌套/200 元组/非类型字",
+   "check": ".fist-loop-20260929/hunt_r7_boundary.py"
+  },
+  {
+   "leaf": "T0r113.2.3",
+   "kind": "boundary-real",
+   "deliverable_head": "元数面边界审视 8 格（0 实参/相符/欠元/超元/32 槽极值/未定义类型/字面量与绑定混写/嵌套模式）：超元与 32",
+   "check": ".fist-loop-20260929/hunt_r7_boundary.py"
+  },
+  {
+   "leaf": "T0r113.3.3",
+   "kind": "declared-na",
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R7 的输入域四类用例集中在 .fi",
+   "check": ".fist-loop-20260929/hunt_r7_boundary.py"
+  },
+  {
+   "leaf": "T0r113.4.3",
+   "kind": "declared-na",
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R7 的输入域四类用例集中在 .fi",
+   "check": ".fist-loop-20260929/hunt_r7_boundary.py"
+  },
+  {
+   "leaf": "T0r113.5.1",
+   "kind": "declared-na",
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R7 的输入域四类用例集中在 .fi",
+   "check": ".fist-loop-20260929/hunt_r7_boundary.py"
+  },
+  {
+   "leaf": "T0r113.5.2",
+   "kind": "declared-na",
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R7 的输入域四类用例集中在 .fi",
+   "check": ".fist-loop-20260929/hunt_r7_boundary.py"
+  },
+  {
+   "leaf": "T0r113.5.3",
+   "kind": "declared-na",
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R7 的输入域四类用例集中在 .fi",
+   "check": ".fist-loop-20260929/hunt_r7_boundary.py"
+  }
+ ],
+ "baseline": {
+  "collected": 2158,
+  "passed": 2158,
+  "conclusion_line_verbatim": "====================== 2158 passed in 413.15s (0:06:53) =======================",
+  "native_log": ".fist-loop-20260929/logs/r7_native_r1.log",
+  "e2e_log": ".fist-loop-20260929/logs/r7_e2e_r1.log",
+  "ledger_open": 34,
+  "ledger_closed_sections": 76
+ }
+}
+DRY plan_rows=11 faces=4 boundary_real=2 declared_na=5 leaves_total=15

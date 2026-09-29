@@ -1,0 +1,2 @@
+VERBATIM ## BUG-96 [2026-09-29T03:13:47Z] [medium] OPEN ;; ## BUG-96 [2026-09-29T03:19:00+00:00] [high] OPEN
+CONCLUSION r13_ledger_dup filed=1 refused=0 new_id=['BUG-140'] dup_lines=[2747, 2868] headers=140->141 unique=139->140 report_bug_rows=43 ok=True out=file_r13_ledger_dup_a1.json

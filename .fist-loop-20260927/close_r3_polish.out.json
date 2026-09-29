@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r72.1.1",
+   "law": "锁夹具换冻结形：BUG-55 用 SYNTAX/11 的 `struct Box<T>`，并留非冻结形被容忍的显式对照",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.1.2",
+   "law": "锁夹具换冻结形：BUG-55 用 SYNTAX/11 的 `struct Box<T>`，并留非冻结形被容忍的显式对照",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.2.1",
+   "law": "补三条新锁：bridge 生成 setup / bridge 对 emit-cython 明确 decline / importlib 取子模块",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.2.2",
+   "law": "补三条新锁：bridge 生成 setup / bridge 对 emit-cython 明确 decline / importlib 取子模块",
+   "artifact": ".fist-loop-20260927/polish_r3_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.3.1",
+   "law": "入口 API 打磨：新增公开 CypyHook.analyze_only()（现只有私有 _parse_and_analyze，cypy_hook/hook.py:221），cypyc/cli.py:495 改走公开面；语义与错误清单一字不动",
+   "artifact": ".fist-loop-20260927/polish_r3_api.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.3.2",
+   "law": "入口 API 打磨：新增公开 CypyHook.analyze_only()（现只有私有 _parse_and_analyze，cypy_hook/hook.py:221），cypyc/cli.py:495 改走公开面；语义与错误清单一字不动",
+   "artifact": ".fist-loop-20260927/polish_r3_api.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.4.1",
+   "law": "文档-帮助-argparse 三向一致：USAGE.md:66-70 的四个 transpile 旗标与 :102 的 build --check-only 都必须既在 --help 里、又被对应子命令读取；判据可复跑",
+   "artifact": ".fist-loop-20260927/polish_r3_docs.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.4.2",
+   "law": "文档-帮助-argparse 三向一致：USAGE.md:66-70 的四个 transpile 旗标与 :102 的 build --check-only 都必须既在 --help 里、又被对应子命令读取；判据可复跑",
+   "artifact": ".fist-loop-20260927/polish_r3_docs.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.5.1",
+   "law": "lint 存量只减不增：E9/W605 零、亲笔文件零违例、E501 逐文件不高于开工基线",
+   "artifact": ".fist-loop-20260927/polish_r3_lint.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.5.2",
+   "law": "lint 存量只减不增：E9/W605 零、亲笔文件零违例、E501 逐文件不高于开工基线",
+   "artifact": ".fist-loop-20260927/polish_r3_lint.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.6.1",
+   "law": "行尾策略只点名不动刀：混用清单实测、新文件统一 LF 的守卫、禁整档重排的理由留字",
+   "artifact": ".fist-loop-20260927/polish_r3_eol.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.6.2",
+   "law": "行尾策略只点名不动刀：混用清单实测、新文件统一 LF 的守卫、禁整档重排的理由留字",
+   "artifact": ".fist-loop-20260927/polish_r3_eol.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.7.1",
+   "law": "三套判据体系与红线复算：收集数随新锁上调，两套测试体系都跑，基线只升不降",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.7.2",
+   "law": "三套判据体系与红线复算：收集数随新锁上调，两套测试体系都跑，基线只升不降",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.8.1",
+   "law": "改动半径与报告自洽：每档归属本单、页脚每格从判据件反解",
+   "artifact": ".fist-loop-20260927/polish_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r72.8.2",
+   "law": "改动半径与报告自洽：每档归属本单、页脚每格从判据件反解",
+   "artifact": ".fist-loop-20260927/polish_r3_self_audit.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r72",
+ "stage": "R3-打磨"
+}

@@ -1,0 +1,257 @@
+{
+ "refuse": [],
+ "items": 14,
+ "probes": [
+  "git commit（本地提交）",
+  "git push（推送到远端）",
+  "git add / 暂存区写入",
+  "git tag（新标签）",
+  "删分支 / 合并 PR",
+  "改 PROJECT-SPEC / SYNTAX 冻结语义",
+  "既有冻结文档漂移被本环吞掉或冒充已修",
+  "删除被跟踪文件",
+  "重注册 golden 基准",
+  "对非本环文件动手 / 整档重排",
+  "删除既有函数/类（比「只加判定」更远的改动）",
+  "弱化/删除既有测试（全量名字级）",
+  "删别人的 worktree",
+  "清空/回退 FIST 任务库"
+ ],
+ "self_test": {
+  "injected": 1,
+  "caught": 1,
+  "refuse_after_cleanup": 0
+ },
+ "live_probe_items": 11,
+ "derived_items": 1,
+ "manifest_items": 2,
+ "executed_none": 1,
+ "executed": [],
+ "detail": [
+  {
+   "action": "git commit（本地提交）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "head": "17d68b436962",
+    "expected": "17d68b4",
+    "reflog_top": "17d68b4 HEAD@{2026-09-02 17:59:02 +0800}: reset: moving to HEAD"
+   },
+   "note": "HEAD 仍是本轮底树 ⇒ 本环零 commit",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "git push（推送到远端）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "ahead_of_upstream_now": "1",
+    "ahead_at_prev_stage": "1",
+    "remote_reflog_top": "2ea6be2 refs/remotes/origin/master@{2026-08-03 11:42:24 +0800}: update by push",
+    "remote_reflog_parsed": true
+   },
+   "note": "本地领先数与上一环实测相等（推过就会变 0）＋ 远端跟踪 ref 的 reflog 顶条早于开工",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "git add / 暂存区写入",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "staged_count": 0,
+    "dirty_rows": 168
+   },
+   "note": "暂存区必须为空；脏行是历轮未提交成果（只挂账不提交）",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "git tag（新标签）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "tag_total": 0,
+    "created_after_stage_start": []
+   },
+   "note": "开工后新增 tag 必须为 0",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "删分支 / 合并 PR",
+   "executed": false,
+   "method": "manifest",
+   "evidence": {
+    "branch_count": 5,
+    "branches": [
+     "master",
+     "gitcode/master",
+     "origin",
+     "origin/main",
+     "origin/master"
+    ],
+    "current_branch": "master"
+   },
+   "note": "清单级：开工前没留 branch 清单快照，删分支连 reflog 一起消失 ⇒ 事后证不了「没删过」",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "改 PROJECT-SPEC / SYNTAX 冻结语义",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "files_touched_in_stage_window": [],
+    "stage_start_utc": "2026-09-27T18:41:40+00:00"
+   },
+   "note": "mtime 反解，不是自述",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "既有冻结文档漂移被本环吞掉或冒充已修",
+   "executed": false,
+   "method": "manifest",
+   "evidence": {
+    "files": 2,
+    "added": 41,
+    "removed": 11,
+    "files_list": [
+     "SYNTAX/01-basic-types.md",
+     "SYNTAX/appendix-A-keywords.md"
+    ]
+   },
+   "note": "清单级：历轮未提交与本轮在同一个 diff 里 ⇒ 只记上界交裁决",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "删除被跟踪文件",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "deleted_rows_now": 10,
+    "deleted_rows_at_prev_stage": 10
+   },
+   "note": "与上一环实测相等（跨环只用两边都有的格）",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "重注册 golden 基准",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "baseline_files_touched_in_window": []
+   },
+   "note": "推进环不改基准；要扩覆盖面属交裁决动作",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "对非本环文件动手 / 整档重排",
+   "executed": false,
+   "method": "derived",
+   "evidence": {
+    "files_touched_in_stage_window": [
+     "cypyc/analyzer/type_checker.py",
+     "tests/test_loop_20260927_advance_r3.py"
+    ],
+    "lane_files": [
+     "cypyc/analyzer/type_checker.py",
+     "tests/test_loop_20260927_advance_r3.py"
+    ]
+   },
+   "note": "由半径反解：多一档就是越界",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "删除既有函数/类（比「只加判定」更远的改动）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "changed_lines": 37,
+    "removed_definitions": [],
+    "before_snapshot_sha": "4db6e1f3bfc2c7d3",
+    "pre_baseline_sha": "4db6e1f3bfc2c7d3"
+   },
+   "note": "before 快照在 advance_r3_before/（从 tmp_advance/before 固化，sha 与开工前件同值），逐行对表 ⇒ 本环主张是「只往分析层加判定」",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "弱化/删除既有测试（全量名字级）",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "disappeared": [],
+    "added": [
+     "tests/test_loop_20260927_advance_r3.py::test_advance_alias_form_is_also_checked",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_arity_and_return_errors_coexist",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_violation_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_callable_arity_zero_args_passed_reported",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_codegen_object_fallback_unchanged",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_correct_single_arg_call_stays_clean",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_keyword_arg_call_is_skipped",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_two_arg_and_zero_arg_forms_match",
+     "tests/test_loop_20260927_advance_r3.py::test_advance_unrecognized_callable_shape_is_not_judged"
+    ],
+    "before_names": 1929,
+    "now_names": 1938,
+    "added_names": 9,
+    "added_stray": [],
+    "declared_locks": [
+     "test_advance_alias_form_is_also_checked",
+     "test_advance_arity_and_return_errors_coexist",
+     "test_advance_callable_arity_violation_reported",
+     "test_advance_callable_arity_zero_args_passed_reported",
+     "test_advance_codegen_object_fallback_unchanged",
+     "test_advance_correct_single_arg_call_stays_clean",
+     "test_advance_keyword_arg_call_is_skipped",
+     "test_advance_two_arg_and_zero_arg_forms_match",
+     "test_advance_unrecognized_callable_shape_is_not_judged"
+    ],
+    "declared_missing": [],
+    "shape_problems": []
+   },
+   "note": "对照件=上一环留存的 --collect-only 日志（本环改动前），逐名两向对表；新增必须全部来自本轮点名的锁文件，半径外冒出用例名就是有人动了别的档",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "删别人的 worktree",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "worktrees": [
+     "E:/IDEProjects/AI/Cypy",
+     "E:/IDEProjects/AI/_cypy_head_baseline"
+    ]
+   },
+   "note": "foreign 树必须原样在",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  },
+  {
+   "action": "清空/回退 FIST 任务库",
+   "executed": false,
+   "method": "live_probe",
+   "evidence": {
+    "call_log_rows_now": 3427,
+    "call_log_rows_at_prev_closure": 3227,
+    "issue_up_tool_rows": 0
+   },
+   "note": "只增不减才算没动库；issue_up 在本构建里不是工具名 ⇒ 如实上报",
+   "at_utc": "2026-09-27T19:22:43+00:00"
+  }
+ ],
+ "changed_lines_in_product": 37,
+ "golden_baseline_touched": [],
+ "before_snapshot_sha": "4db6e1f3bfc2c7d3",
+ "removed_definitions": [],
+ "test_names_disappeared": [],
+ "test_names_added_stray": [],
+ "test_names_shape_problems": [],
+ "test_names_added": 9,
+ "stage_start_utc": "2026-09-27T18:41:40+00:00",
+ "lane_files": [
+  "cypyc/analyzer/type_checker.py",
+  "tests/test_loop_20260927_advance_r3.py"
+ ],
+ "radius_window": [
+  "cypyc/analyzer/type_checker.py",
+  "tests/test_loop_20260927_advance_r3.py"
+ ],
+ "started_at_utc": "2026-09-27T19:22:43+00:00",
+ "finished_at_utc": "2026-09-27T19:22:43+00:00"
+}

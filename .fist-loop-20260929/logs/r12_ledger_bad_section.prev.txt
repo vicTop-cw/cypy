@@ -1,0 +1,25 @@
+### FIXED(R12 声明界在使用侧 2026-09-29T2026-09-29T08:56:17ZZ）— 追加留档（本单正文与标题行的 `OPEN` 一字未改）
+- 修法：把「使用侧类型实参要过声明界」收进**一处**共用件 `TypeChecker._check_declared_bounds`
+  （`cypyc/analyzer/type_checker.py`），三处使用位各接一行：
+  ① 注解位 `_visit_GenericType`（元数判定之后，与 `Type argument count mismatch` 并存不互相遮蔽）；
+  ② 显式类型实参构造位 `_bind_explicit_type_args`（只对 class/struct 生效 —— 函数由 `_visit_Call`
+  里那份统一判，否则同一条界会得到两条账）；
+  ③ 结构体字面量位 `_visit_StructLiteral`：**摘掉**原来自带的那份窄复制
+  （它只认 `getattr(ast,'id')` 的单名界，`T: int | float` 取到 None ⇒ 静默放行），改调共用件。
+  三类界（联合／单名／特质／typeclass）都落到既有 `_check_generic_constraint`，本轮不新增消息合成点。
+- 半径先测后开门（不是"改完看看"）：`.fist-loop-20260929/measure_r12_constraint_radius.py`
+  改动前快照 `r12_radius_before.json` 与改动后 `r12_radius_after.json` 同集合逐文件比错误集合，
+  结论 `CONCLUSION phase=after new_red_sources=0 gone_red_sources=0 ... real_crashes=0`
+  —— 口径：改动前 206 份源（106 份盘面 `.cypy` + 100 对既有 corpus，历轮 `.fist-loop-*` scratch 树排除），
+  其中 16 份含约束声明、共 34 处 ⇒ 开门不牵连任何既有源。
+- 判据：新增 Ω-spec `corpus/cypy.generic.bounds.json`（19 对，指纹 `fnv1a64:789e5df5153c034c`，
+  生成件 `.fist-loop-20260929/make_corpus_r12.py` 落盘前逐条走 `execute + judge`，一条不符就拒写 ——
+  本轮它拒了 3 次：`stage` 取值猜成 `check`（实测是 `ok`）、trait 实现忘写 `impl Show for Impl:`、
+  typeclass 语法写成 `typeclass Number for T:`（实际是 `typeclass Number:` + `impl typeclass Number for int:`））；
+  回归锁 `tests/test_generic_bounds_r12.py`（16 支，含「字面量位不许长回窄复制」的源码针与
+  「诊断行列指向注解位」的按源反解针）。台账地板同批上调 `FLOOR_SPECS 5→6`、`FLOOR_CASES 100→119`。
+- 手册：`SYNTAX/11-generics.md` 新增「声明界在使用侧的判定」规则 1-4，
+  其中规则 4 明确写出**不判的一面**（构造位不写类型实参时不做推断），
+  并把这一面另立 BUG-135、把违界诊断的 `in call to '<unknown>'` 误导文案另立 BUG-134 ⇒ 不遮挡本单关闭。
+- 未随本单关闭的相邻面：BUG-120（`-> T:` 无体签名形态）、BUG-121（`f[T](x)` 方括号形态）、
+  BUG-122（类型实参存在性）、BUG-128（struct 方法不代入，与 BUG-135 同一推断层）。

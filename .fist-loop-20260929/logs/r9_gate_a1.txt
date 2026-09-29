@@ -1,0 +1,5 @@
+SPEC cypy.annotation.shape cases=24 passed=24
+SPEC cypy.pattern.positional cases=19 passed=18
+  FAIL #18 codegen 'struct E:' → 缺片段 'and False'；观测="Positional pattern 'E' has 3 slot(s) but type 'E' unpacks only 2 at 7:14"
+SPEC cypy.type.slice cases=8 passed=8
+CONCLUSION specs=3 cases=51 passed=50 failed=1 refused=0 accuracy=98.04% rc=1

@@ -1,0 +1,120 @@
+#!bin cypy
+# Duck 约束示例 — 展示完整的 duck 关键字功能
+# duck 约束参考 Nim concept 设计，用于编译期鸭子类型约束
+
+# === 1. 操作符约束 ===
+meta:
+    # 可比较约束：类型必须支持比较操作符
+    duck Comparable:
+        a < b -> bool
+        a > b -> bool
+        a <= b -> bool
+        a >= b -> bool
+        a == b -> bool
+        a != b -> bool
+
+    # 数值约束：类型必须支持算术运算
+    # Self 表示返回类型为约束类型本身
+    duck Numeric:
+        a + b -> Self
+        a - b -> Self
+        a * b -> Self
+        a / b -> Self
+        -a -> Self
+
+# === 2. 属性约束 ===
+meta:
+    # 命名约束：类型必须有 name 属性
+    duck Named:
+        name: str
+
+    # 大小约束：类型必须有 size 属性
+    duck Sized:
+        size: int
+
+    # 组合属性约束
+    duck Identified:
+        id: int
+        name: str
+
+# === 3. 方法约束 ===
+meta:
+    # 可迭代约束
+    duck Iterable:
+        __iter__(self) -> Iterator
+
+    # 泛型容器约束
+    duck Container<T>:
+        add(self, item: T) -> None
+        remove(self, item: T) -> bool
+        __contains__(self, item: T) -> bool
+        __len__(self) -> int
+
+    # 索引约束
+    duck Indexable<T>:
+        __getitem__(self, index: int) -> T
+        __setitem__(self, index: int, value: T) -> None
+
+# === 4. 组合约束（引用其他 duck） ===
+meta:
+    # 有序约束：继承 Comparable
+    duck Ordered:
+        Comparable
+        a <=> b -> int
+
+    # 可排序容器：组合 Comparable + Container
+    duck SortableContainer<T>:
+        Comparable
+        Container<T>
+
+# === 5. 使用约束的函数 ===
+
+# 泛型函数带约束
+def sort<T: Comparable>(items: list<T>) -> list<T>:
+    """对可比较的列表进行排序"""
+    return items
+
+def find_max<T: Comparable>(a: T, b: T) -> T:
+    """返回较大的值"""
+    if a > b:
+        return a
+    return b
+
+def add_values<T: Numeric>(a: T, b: T) -> T:
+    """对数值类型求和"""
+    return a + b
+
+def display<T: Named>(obj: T) -> None:
+    """显示有 name 属性的对象"""
+    print(obj.name)
+
+def process_container<T: Container<int>>(container: T) -> None:
+    """处理存储整数的容器"""
+    container.add(42)
+
+
+# ========== 6. 驱动 ==========
+# T0r258.4.2：本文件此前只有声明、零可观察输出，golden 是与其它 6 个示例逐字节
+# 相同的崩溃回溯。现在让 Comparable / Numeric / Named 三个 duck 约束真正被调用，
+# 每个 print 站点都落一行（厚度探针 feat_anchor_01.py 的 R7 规则要求 G >= 打印站点数，
+# 即「写了 print 却没跑到」本身就是锚点失守）。
+# process_container 仍不调用：Container<int> 需要 add/remove/__contains__/__len__
+# 四个方法全满足，而约束求解器在非 main 调用点上会误报（Find_BUG/BUGS.md BUG-030，
+# 归 constraint/subtype 那条线），留待该线完成后补驱动。
+
+struct Widget:
+    name: str
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+def main() -> int:
+    print(f"duck Comparable find_max(3, 7) = {find_max(3, 7)}")
+    print(f"duck Numeric add_values(2, 5) = {add_values(2, 5)}")
+    print(f"duck Comparable sort passthrough = {sort([3, 1, 2])}")
+    let w = Widget(name="duck-named-widget")
+    display(w)
+    return 0
+
+if __name__ == "__main__":
+    main()

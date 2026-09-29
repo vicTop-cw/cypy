@@ -1,0 +1,18 @@
+{
+ "refuse": [],
+ "fixed_sections": 3,
+ "new_entries": [
+  92,
+  93,
+  94,
+  95
+ ],
+ "written_at_utc": "2026-09-29T03:04:19+00:00",
+ "recheck": {
+  "entries": 95,
+  "fixed_sections": 76,
+  "bytes_before": 293837,
+  "bytes_after": 303600,
+  "open_now": 12
+ }
+}

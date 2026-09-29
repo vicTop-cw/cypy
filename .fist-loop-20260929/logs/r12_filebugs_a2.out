@@ -1,0 +1,4 @@
+FILED R12-BOUND-DIAG-NOT-A-CALL | {"bug_id": "BUG-134", "id": "BUG-134", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+FILED R12-CTOR-NO-GENERIC-INFERENCE | {"bug_id": "BUG-135", "id": "BUG-135", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+NEW_IDS ["BUG-134", "BUG-135"]
+CONCLUSION filed=2 refused=0 skipped=0 new_ids=2 headers=136 call_log={"rows": 3, "error_rows_ok_needle": 0, "report_bug_rows": 2}

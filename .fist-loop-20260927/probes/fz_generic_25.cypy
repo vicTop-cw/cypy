@@ -1,0 +1,4 @@
+def identity<T>(v: T) -> T:
+    return v
+
+print(idntity(3))

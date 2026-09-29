@@ -1,0 +1,199 @@
+{
+ "root": "T0r114",
+ "tree": {
+  "root": "T0r114",
+  "rows": 25,
+  "leaves": 18,
+  "general": [
+   "T0r114.1.2",
+   "T0r114.1.3",
+   "T0r114.2.1",
+   "T0r114.2.3",
+   "T0r114.3.1",
+   "T0r114.3.2",
+   "T0r114.4.1",
+   "T0r114.4.2",
+   "T0r114.4.3",
+   "T0r114.5.2",
+   "T0r114.5.3",
+   "T0r114.6.1",
+   "T0r114.6.3"
+  ],
+  "boundary": [
+   "T0r114.2.2",
+   "T0r114.3.3",
+   "T0r114.5.1",
+   "T0r114.6.2"
+  ]
+ },
+ "baseline": {
+  "pytest_collected": 2202,
+  "pytest_passed": 2202,
+  "pytest_log": "r8_pytest_r3.log",
+  "gate_conclusion_verbatim": "CONCLUSION specs=2 cases=41 passed=41 failed=0 refused=0 accuracy=100.00% rc=0",
+  "negatives_conclusion_verbatim": "CONCLUSION controls=5 carrying=5 corpus_untouched=True all_carry=True",
+  "family_conclusion_verbatim": "CONCLUSION cases=6 {'OK': 5, 'DIAGNOSTIC': 0, 'PARSE-FAIL': 1, 'INTERNAL': 0} rows_json=.fist-loop-20260929/hunt_r8_extractor_family.json",
+  "ledger_open": 33,
+  "ledger_fixed_sections": 79
+ },
+ "leaf_status": {
+  "T0r114.1.2": [
+   "face",
+   "待领取",
+   "已完成",
+   "passed"
+  ],
+  "T0r114.1.3": [
+   "face",
+   "待领取",
+   "已完成",
+   "passed"
+  ],
+  "T0r114.2.1": [
+   "face",
+   "待领取",
+   "已完成",
+   "passed"
+  ],
+  "T0r114.2.3": [
+   "face",
+   "待领取",
+   "已完成",
+   "passed"
+  ],
+  "T0r114.3.1": [
+   "face",
+   "待领取",
+   "已完成",
+   "passed"
+  ],
+  "T0r114.2.2": [
+   "boundary-real",
+   "待领取",
+   "已完成",
+   "passed"
+  ],
+  "T0r114.3.3": [
+   "boundary-real",
+   "待领取",
+   "已完成",
+   "passed"
+  ],
+  "T0r114.5.1": [
+   "boundary-declared-na",
+   "待领取",
+   "已完成",
+   "passed"
+  ],
+  "T0r114.6.2": [
+   "boundary-declared-na",
+   "待领取",
+   "已完成",
+   "passed"
+  ]
+ },
+ "tally": {
+  "by_tool": {
+   "bug_list": {
+    "ok": 1,
+    "refused": 0
+   },
+   "claim": {
+    "ok": 9,
+    "refused": 0
+   },
+   "execute": {
+    "ok": 9,
+    "refused": 0
+   },
+   "get": {
+    "ok": 18,
+    "refused": 0
+   },
+   "loop_create": {
+    "ok": 1,
+    "refused": 0
+   },
+   "loop_tick": {
+    "ok": 6,
+    "refused": 0
+   },
+   "omega_result_verify": {
+    "ok": 9,
+    "refused": 0
+   },
+   "omega_spec_create": {
+    "ok": 9,
+    "refused": 0
+   },
+   "omega_spec_review": {
+    "ok": 9,
+    "refused": 0
+   },
+   "publish_parallel": {
+    "ok": 1,
+    "refused": 0
+   },
+   "report_bug": {
+    "ok": 5,
+    "refused": 0
+   },
+   "run_check": {
+    "ok": 9,
+    "refused": 0
+   },
+   "submit": {
+    "ok": 9,
+    "refused": 0
+   },
+   "verify": {
+    "ok": 9,
+    "refused": 0
+   }
+  },
+  "rpc_sent_by_tool": {
+   "publish_parallel": 1,
+   "laya_decide": 1,
+   "task_plan_deep": 1,
+   "loop_create": 1,
+   "bug_list": 1,
+   "get": 18,
+   "claim": 9,
+   "omega_spec_create": 9,
+   "omega_spec_review": 9,
+   "execute": 9,
+   "run_check": 9,
+   "omega_result_verify": 9,
+   "submit": 9,
+   "verify": 9,
+   "loop_tick": 6,
+   "report_bug": 5
+  },
+  "rpc_sent_total": 106,
+  "sent_but_invisible_to_filter": [
+   "laya_decide",
+   "task_plan_deep"
+  ],
+  "rows_matching_filter": 104,
+  "refused_matching_filter": 0,
+  "filter_window_from": "2026-09-29T04:37:57Z",
+  "root_status": "拆分中",
+  "leaf_status_after": {
+   "已完成": 9,
+   "待领取": 9
+  },
+  "pending_leaf_ids": [
+   "T0r114.1.1",
+   "T0r114.3.2",
+   "T0r114.4.1",
+   "T0r114.4.2",
+   "T0r114.4.3",
+   "T0r114.5.2",
+   "T0r114.5.3",
+   "T0r114.6.1",
+   "T0r114.6.3"
+  ]
+ }
+}
+REFUSED sqlite | (分形状) | 叶 18 支里按描述只认出 13+4 支，剩余形状未知
+CONCLUSION closed=9 by_kind={'face': 5, 'boundary-real': 2, 'boundary-declared-na': 2} still_pending=9 root=拆分中 calls=104 refused=0 refusal_rows=1 run_check_states=['passed']

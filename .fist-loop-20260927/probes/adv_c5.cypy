@@ -1,0 +1,6 @@
+let result =:
+    let x: int = 10
+    let y: int = 20
+    x + y
+
+print(result)

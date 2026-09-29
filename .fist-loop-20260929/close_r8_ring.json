@@ -1,0 +1,374 @@
+{
+ "started_z": "2026-09-29T04:39:40Z",
+ "ns": "cypy-loop-20260929",
+ "refusals": [],
+ "nodes": {
+  "T0r114.1.1": {
+   "kind": "face",
+   "deliverable_head": "规范面：SYNTAX/17「位置模式的元数与槽位规则」补规则 6（`__`-包围的类属性不占位置槽）与规则 7（`__match_args__` 名称序尚未被消",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "SPEC17 OK 449\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r114.3.2": {
+   "kind": "face",
+   "deliverable_head": "判据与规范落地面：新建 corpus/（2 份 Ω-spec、41 个测试对）+ scripts/omega_gate.py（fnv1a64 指纹校验、逐对跑批",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "SPEC cypy.annotation.shape cases=24 passed=24\r\nSPEC cypy.pattern.positional cases=17 passed=17\r\nCONCLUSION specs=2 cases=41 passed=41 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r114.4.1": {
+   "kind": "face",
+   "deliverable_head": "分析器面：_pattern_slot_types 的位置序改由 _positional_fields 提供 —— class 不再有恒空槽位（旧行为：Class",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "ed 44 items\r\n\r\ntests\\regression\\test_corpus_pairs.py .................................. [ 77%]\r\n..........                                                               [100%]\r\n\r\n============================= 44 passed in 0.28s ==============================\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r114.4.2": {
+   "kind": "face",
+   "deliverable_head": "寻虫面：SYNTAX/17 优先级表的 4 个提取器 + 类型模式 + OR 模式逐个原样喂进管线，6 格里 5 格 OK、1 格 PARSE-FAIL（文档写",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "           OK          parse=OK analyze=OK codegen=OK\r\n    slot_types={} extractor_called_in_code=False phantom_f=False\r\nCONCLUSION cases=6 {'OK': 5, 'DIAGNOSTIC': 0, 'PARSE-FAIL': 1, 'INTERNAL': 0} rows_json=.fist-loop-20260929/hunt_r8_extractor_family.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r114.5.2": {
+   "kind": "face",
+   "deliverable_head": "尺的面：新增门全部带必然违例对照 —— 5 格负面控制逐一承重（指纹篡改、少一条用例、未知断言键 refuse、放过非法/拦掉合法两向、克隆语料让 pytest",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "rdict\": false, \"reason\": \"errors 期望 0，实际 1：['Invalid type annotation at 2:8 (期望 类型名或 list<int> /\"},\r\n克隆语料少一条 ⇒ pytest 地板门真红             carries=True {\"rc\": 1, \"tail\": \"1 failed in 0.81s\"}\r\nCONCLUSION controls=5 carrying=5 corpus_untouched=True all_carry=True\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r114.4.3": {
+   "kind": "boundary-declared-na",
+   "deliverable_head": "边界审视（本叶真实交付）：Ω-gate 与回归地板的负控制矩阵 5 格逐一承重，输入域覆盖『篡改 spec / 删除用例 / 未知断言键 / 期望方向反了 / ",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "rdict\": false, \"reason\": \"errors 期望 0，实际 1：['Invalid type annotation at 2:8 (期望 类型名或 list<int> /\"},\r\n克隆语料少一条 ⇒ pytest 地板门真红             carries=True {\"rc\": 1, \"tail\": \"1 failed in 0.89s\"}\r\nCONCLUSION controls=5 carrying=5 corpus_untouched=True all_carry=True\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r114.5.3": {
+   "kind": "boundary-declared-na",
+   "deliverable_head": "边界审视（本叶真实交付）：提取器家族按文档代码块原样跑，四类失败形态分栏（OK / DIAGNOSTIC / PARSE-FAIL / INTERNAL），逐字",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "           OK          parse=OK analyze=OK codegen=OK\r\n    slot_types={} extractor_called_in_code=False phantom_f=False\r\nCONCLUSION cases=6 {'OK': 5, 'DIAGNOSTIC': 0, 'PARSE-FAIL': 1, 'INTERNAL': 0} rows_json=.fist-loop-20260929/hunt_r8_extractor_family.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r114.6.1": {
+   "kind": "boundary-declared-na",
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R8 的输入域四类用例集中在两份探针件（提取器家族 6 格 + Ω-gate",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "           OK          parse=OK analyze=OK codegen=OK\r\n    slot_types={} extractor_called_in_code=False phantom_f=False\r\nCONCLUSION cases=6 {'OK': 5, 'DIAGNOSTIC': 0, 'PARSE-FAIL': 1, 'INTERNAL': 0} rows_json=.fist-loop-20260929/hunt_r8_extractor_family.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r114.6.3": {
+   "kind": "boundary-declared-na",
+   "deliverable_head": "本叶无独立交付物，按叶子自身条款「或显式声明该项不适用并说明依据」申报不适用。依据：R8 的输入域四类用例集中在两份探针件（提取器家族 6 格 + Ω-gate",
+   "steps": {
+    "claim": "ok",
+    "omega_spec_create": "ok",
+    "omega_spec_review": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "           OK          parse=OK analyze=OK codegen=OK\r\n    slot_types={} extractor_called_in_code=False phantom_f=False\r\nCONCLUSION cases=6 {'OK': 5, 'DIAGNOSTIC': 0, 'PARSE-FAIL': 1, 'INTERNAL': 0} rows_json=.fist-loop-20260929/hunt_r8_extractor_family.json\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "status_before": "待领取",
+   "status_after": "已完成",
+   "assignee": "cypy-selfdrive-agent"
+  }
+ },
+ "ticks": [
+  {
+   "mode": "advance",
+   "reply": "{\"next_mode\": \"advance\", \"next_step_idx\": 1, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r8\", \"action\": \"tick\", \"from_idx\": 0, \"next_mode\": \"advance\", \"to_idx\": 1, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r8\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 1, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T04:39:41Z\", \"updated_at\": \"2026-09-29T04:39:51Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2202, \"baseline_open_bug_count\": 38}}"
+  },
+  {
+   "mode": "bugfind",
+   "reply": "{\"next_mode\": \"bugfind\", \"next_step_idx\": 2, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r8\", \"action\": \"tick\", \"from_idx\": 1, \"next_mode\": \"bugfind\", \"to_idx\": 2, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r8\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 2, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T04:39:41Z\", \"updated_at\": \"2026-09-29T04:39:51Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2202, \"baseline_open_bug_count\": 38}}"
+  },
+  {
+   "mode": "fix_and_merge",
+   "reply": "{\"next_mode\": \"fix_and_merge\", \"next_step_idx\": 3, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r8\", \"action\": \"tick\", \"from_idx\": 2, \"next_mode\": \"fix_and_merge\", \"to_idx\": 3, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r8\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 3, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T04:39:41Z\", \"updated_at\": \"2026-09-29T04:39:52Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2202, \"baseline_open_bug_count\": 38}}"
+  },
+  {
+   "mode": "verify",
+   "reply": "{\"next_mode\": \"verify\", \"next_step_idx\": 4, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r8\", \"action\": \"tick\", \"from_idx\": 3, \"next_mode\": \"verify\", \"to_idx\": 4, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r8\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 4, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T04:39:41Z\", \"updated_at\": \"2026-09-29T04:39:52Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2202, \"baseline_open_bug_count\": 38}}"
+  },
+  {
+   "mode": "polish",
+   "reply": "{\"next_mode\": \"polish\", \"next_step_idx\": 5, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r8\", \"action\": \"tick\", \"from_idx\": 4, \"next_mode\": \"polish\", \"to_idx\": 5, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r8\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 5, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T04:39:41Z\", \"updated_at\": \"2026-09-29T04:39:52Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2202, \"baseline_open_bug_count\": 38}}"
+  },
+  {
+   "mode": "advance",
+   "reply": "{\"next_mode\": \"advance\", \"next_step_idx\": 0, \"next_round\": 1, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r8\", \"action\": \"tick\", \"from_idx\": 5, \"next_mode\": \"advance\", \"to_idx\": 0, \"round\": 1, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r8\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 1, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T04:39:41Z\", \"updated_at\": \"2026-09-29T04:39:52Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2202, \"baseline_open_bug_count\": 38}}"
+  }
+ ],
+ "bugs": [
+  {
+   "skipped": "账本已有同 summary（幂等守卫）",
+   "summary": "[模式匹配:class 位置槽位] ClassDef 无 .fields 时 _pattern_slot_types 恒空，case C(x"
+  },
+  {
+   "skipped": "账本已有同 summary（幂等守卫）",
+   "summary": "[模式匹配:槽位数] struct 里的 `__match_args__ = (...)` 被当成第三个数据字段计入槽位数"
+  },
+  {
+   "skipped": "账本已有同 summary（幂等守卫）",
+   "summary": "[模式匹配:语法未落地] SYNTAX/17 文档写法 `tuple<int, ...>` 与 `case Numbers(x, y, .."
+  },
+  {
+   "skipped": "账本已有同 summary（幂等守卫）",
+   "summary": "[模式匹配:元数来源] 元数来源未消费 `__match_args__` 名称序，只按数据字段数计算"
+  },
+  {
+   "skipped": "账本已有同 summary（幂等守卫）",
+   "summary": "[规范落地] corpus/ 与 tests/regression/ 已建立但只覆盖 2 个 op（41 个测试对）"
+  }
+ ],
+ "tally": {
+  "by_tool": {
+   "bug_list": {
+    "ok": 1,
+    "refused": 0
+   },
+   "claim": {
+    "ok": 9,
+    "refused": 0
+   },
+   "execute": {
+    "ok": 9,
+    "refused": 0
+   },
+   "get": {
+    "ok": 18,
+    "refused": 0
+   },
+   "loop_create": {
+    "ok": 1,
+    "refused": 0
+   },
+   "loop_tick": {
+    "ok": 6,
+    "refused": 0
+   },
+   "omega_result_verify": {
+    "ok": 9,
+    "refused": 0
+   },
+   "omega_spec_create": {
+    "ok": 9,
+    "refused": 0
+   },
+   "omega_spec_review": {
+    "ok": 9,
+    "refused": 0
+   },
+   "run_check": {
+    "ok": 9,
+    "refused": 0
+   },
+   "submit": {
+    "ok": 9,
+    "refused": 0
+   },
+   "verify": {
+    "ok": 9,
+    "refused": 0
+   }
+  },
+  "rpc_sent_by_tool": {
+   "loop_create": 1,
+   "bug_list": 1,
+   "get": 18,
+   "claim": 9,
+   "omega_spec_create": 9,
+   "omega_spec_review": 9,
+   "execute": 9,
+   "run_check": 9,
+   "omega_result_verify": 9,
+   "submit": 9,
+   "verify": 9,
+   "loop_tick": 6
+  },
+  "rpc_sent_total": 98,
+  "sent_but_invisible_to_filter": [],
+  "rows_matching_filter": 98,
+  "refused_matching_filter": 0,
+  "filter_window_from": "2026-09-29T04:39:40Z",
+  "root_status": "拆分中",
+  "leaf_status_after": {
+   "已完成": 18
+  },
+  "pending_leaf_ids": []
+ },
+ "baseline_measured": {
+  "pytest_collected": 2202,
+  "pytest_passed": 2202,
+  "pytest_log": "r8_pytest_r3.log",
+  "gate_conclusion_verbatim": "CONCLUSION specs=2 cases=41 passed=41 failed=0 refused=0 accuracy=100.00% rc=0",
+  "negatives_conclusion_verbatim": "CONCLUSION controls=5 carrying=5 corpus_untouched=True all_carry=True",
+  "family_conclusion_verbatim": "CONCLUSION cases=6 {'OK': 5, 'DIAGNOSTIC': 0, 'PARSE-FAIL': 1, 'INTERNAL': 0} rows_json=.fist-loop-20260929/hunt_r8_extractor_family.json",
+  "ledger_open": 38,
+  "ledger_fixed_sections": 79
+ },
+ "root_reused": "T0r114",
+ "loop_create": "{\"name\": \"cypy-selfdrive-r8\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T04:39:41Z\", \"updated_at\": \"2026-09-29T04:39:41Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2202, \"baseline_open_bug_count\": 38}",
+ "tree_readback": {
+  "root": "T0r114",
+  "rows": 25,
+  "leaves": 18,
+  "general": [
+   "T0r114.1.1",
+   "T0r114.1.2",
+   "T0r114.2.1",
+   "T0r114.2.2",
+   "T0r114.3.1",
+   "T0r114.3.2",
+   "T0r114.4.1",
+   "T0r114.4.2",
+   "T0r114.5.1",
+   "T0r114.5.2"
+  ],
+  "boundary": [
+   "T0r114.1.3",
+   "T0r114.2.3",
+   "T0r114.3.3",
+   "T0r114.4.3",
+   "T0r114.5.3",
+   "T0r114.6.1",
+   "T0r114.6.2",
+   "T0r114.6.3"
+  ],
+  "unclassified": [],
+  "already_closed": [
+   "T0r114.1.2",
+   "T0r114.1.3",
+   "T0r114.2.1",
+   "T0r114.2.2",
+   "T0r114.2.3",
+   "T0r114.3.1",
+   "T0r114.3.3",
+   "T0r114.5.1",
+   "T0r114.6.2"
+  ]
+ },
+ "skipped_already_closed": 9,
+ "left_pending_general": [],
+ "bug_list_rows": 110
+}

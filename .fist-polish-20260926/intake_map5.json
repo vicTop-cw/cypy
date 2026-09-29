@@ -1,0 +1,14 @@
+{
+  "mapping": [
+    {
+      "bug_id": "BUG-13",
+      "task_id": "T0r18",
+      "summary": "[judge-brittleness] tests/test_incremental.py:547 TestDigestCost 用墙钟阈值 `digest_elapsed < 2.0` 判性能，代价取决于同进程里先跑过多少用例（CPython 循环 GC 要扫既有堆）——同一份产品代码在单跑时 0.5s、整文件跑后 3.385s，判据跨收集顺序不可复现，把门禁 ① 变成抛硬币",
+      "fired": true
+    }
+  ],
+  "failures": [],
+  "missing": [],
+  "ledger_before": 12,
+  "ledger_after": 13
+}

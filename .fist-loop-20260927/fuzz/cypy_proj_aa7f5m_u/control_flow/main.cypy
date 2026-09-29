@@ -1,0 +1,65 @@
+# 控制流示例
+# 演示 Cypy 的控制流语句
+
+def main() -> int:
+    # if-else 语句
+    let score: int = 85
+
+    if score >= 90:
+        print("Excellent!")
+    elif score >= 80:
+        print("Good!")
+    elif score >= 60:
+        print("Pass!")
+    else:
+        print("Fail!")
+
+    # for 循环
+    print("\nFor loop:")
+    for i in range(5):
+        print(f"  i = {i}")
+
+    # 带步长的 range
+    print("\nFor loop with step:")
+    for i in range(0, 10, 2):
+        print(f"  i = {i}")
+
+    # 列表遍历
+    let fruits: list<str> = ["apple", "banana", "cherry"]
+    print("\nList iteration:")
+    for fruit in fruits:
+        print(f"  fruit: {fruit}")
+
+    # while 循环
+    print("\nWhile loop:")
+    mut count: int = 0
+    while count < 5:
+        print(f"  count = {count}")
+        count += 1
+
+    # break 和 continue
+    print("\nBreak and continue:")
+    for i in range(10):
+        if i == 3:
+            continue
+        if i == 7:
+            break
+        print(f"  i = {i}")
+
+    # match 语句
+    print("\nMatch statement:")
+    let x: int = 2
+    match x:
+        case 1:
+            print("One")
+        case 2:
+            print("Two")
+        case 3:
+            print("Three")
+        case _:
+            print("Other")
+
+    return 0
+
+if __name__ == "__main__":
+    main()

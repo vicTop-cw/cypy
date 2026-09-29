@@ -1,0 +1,338 @@
+{
+ "started": "2026-09-28T06:35:58+00:00",
+ "cases": 7,
+ "rows": [
+  {
+   "id": "H01",
+   "key": "CLI_global_output_dir_overwritten_by_subparser",
+   "phenomenon": "全局 `-o DIR` 被子命令的同名默认值覆盖 ⇒ 写到 `output` 且没有任何提示",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 57,
+    "quote": "| `-o, --output DIR` | 生成文件输出目录（默认 `output`） |"
+   },
+   "want_pos": "ignored",
+   "want_ctl": "honoured",
+   "pos_first": {
+    "rc": 0,
+    "dir_made": false,
+    "out": "llo.cypy\n\u001b[36m[2/3]\u001b[0m Output: output\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n\u001b[32m[OK] Transpiled successfully\u001b[0m\n  \u001b[36mOutput:\u001b[0m output\\hello.pyx",
+    "observed": "ignored"
+   },
+   "pos_second": {
+    "rc": 0,
+    "dir_made": false,
+    "out": "llo.cypy\n\u001b[36m[2/3]\u001b[0m Output: output\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n\u001b[32m[OK] Transpiled successfully\u001b[0m\n  \u001b[36mOutput:\u001b[0m output\\hello.pyx",
+    "observed": "ignored"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "dir_made": true,
+    "observed": "honoured"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "dir_made": true,
+    "observed": "honoured"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "H02",
+   "key": "CLI_hook_positional_source_unreachable",
+   "phenomenon": "`cypyc hook <source>` 这种文档与 --help 都写了的用法必然报 invalid choice",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 128,
+    "quote": "cypyc hook install        # 在**当前进程**内注册 import hook（不写盘、不跨进程生效）"
+   },
+   "want_pos": "unreachable",
+   "want_ctl": "reachable",
+   "pos_first": {
+    "rc": 1,
+    "msg": "ll,status,clear-cache} ... [source]\ncypyc hook: error: argument hook_command: invalid choice: 'E:/IDEProjects/AI/Cypy/examples/hello.cypy' (choose from 'install', 'uninstall', 'status', 'clear-cache')",
+    "observed": "unreachable"
+   },
+   "pos_second": {
+    "rc": 1,
+    "msg": "ll,status,clear-cache} ... [source]\ncypyc hook: error: argument hook_command: invalid choice: 'E:/IDEProjects/AI/Cypy/examples/hello.cypy' (choose from 'install', 'uninstall', 'status', 'clear-cache')",
+    "observed": "unreachable"
+   },
+   "ctl_first": {
+    "rc": 1,
+    "msg": "ll,status,clear-cache} ... [source]\ncypyc hook: error: argument hook_command: invalid choice: 'E:/IDEProjects/AI/Cypy/examples/hello.cypy' (choose from 'install', 'uninstall', 'status', 'clear-cache')",
+    "observed": "unreachable"
+   },
+   "ctl_second": {
+    "rc": 1,
+    "msg": "ll,status,clear-cache} ... [source]\ncypyc hook: error: argument hook_command: invalid choice: 'E:/IDEProjects/AI/Cypy/examples/hello.cypy' (choose from 'install', 'uninstall', 'status', 'clear-cache')",
+    "observed": "unreachable"
+   },
+   "pos_ok": true,
+   "ctl_ok": false,
+   "verdict": "UNSURE"
+  },
+  {
+   "id": "H03",
+   "key": "HOOK_bom_marker_silently_not_hooked",
+   "phenomenon": "带 BOM 的 `#!bin cypy` 首行让 hook 静默放行，按普通 .py 执行且零诊断",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 290,
+    "quote": "# 之后即可 import 带 \"#!bin cypy\" 标记的文件"
+   },
+   "want_pos": "not_hooked",
+   "want_ctl": "hooked",
+   "pos_first": {
+    "rc": 0,
+    "loader": "SourceFileLoader E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\hunt_r5_tmp\\cli_face\\h03\\marker_bom.py",
+    "observed": "not_hooked"
+   },
+   "pos_second": {
+    "rc": 0,
+    "loader": "SourceFileLoader E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\hunt_r5_tmp\\cli_face\\rh03\\marker_bom.py",
+    "observed": "not_hooked"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "loader": "ExtensionFileLoader",
+    "observed": "hooked"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "loader": "ExtensionFileLoader",
+    "observed": "hooked"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "H04",
+   "key": "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+   "phenomenon": "`hook clear-cache` 打「已清除」但 `.pyd` 留在原地（只删了 manifest 那层）",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 131,
+    "quote": "cypyc hook clear-cache    # 清除 Cypy 编译缓存（__pycache__/cypy）"
+   },
+   "want_pos": "claimed_but_kept",
+   "want_ctl": "cleared",
+   "pos_first": {
+    "rc": 0,
+    "claim": "[OK] Cypy compilation cache cleared successfully",
+    "pyd_before": [
+     "marker_ok.cp313-win_amd64.pyd",
+     "marker_ok.cp313-win_amd64.pyd"
+    ],
+    "pyd_after": [
+     "marker_ok.cp313-win_amd64.pyd",
+     "marker_ok.cp313-win_amd64.pyd"
+    ],
+    "manifest_gone": true,
+    "observed": "claimed_but_kept"
+   },
+   "pos_second": {
+    "rc": 0,
+    "claim": "[OK] Cypy compilation cache cleared successfully",
+    "pyd_before": [
+     "marker_ok.cp313-win_amd64.pyd",
+     "marker_ok.cp313-win_amd64.pyd"
+    ],
+    "pyd_after": [
+     "marker_ok.cp313-win_amd64.pyd",
+     "marker_ok.cp313-win_amd64.pyd"
+    ],
+    "manifest_gone": true,
+    "observed": "claimed_but_kept"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "manifest_before": [
+     "manifest.json"
+    ],
+    "manifest_after": [],
+    "observed": "cleared"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "manifest_before": [
+     "manifest.json"
+    ],
+    "manifest_after": [],
+    "observed": "cleared"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "H05",
+   "key": "CLI_build_entry_failure_reason_swallowed",
+   "phenomenon": "`build --entry nosuch` rc=1，打印 `Failed modules (0)`，原因文案被丢弃",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 102,
+    "quote": "cypyc build ./myproject --entry main    # 仅编译 main 模块及其依赖"
+   },
+   "want_pos": "no_reason",
+   "want_ctl": "reason_given",
+   "pos_first": {
+    "rc": 1,
+    "out": "\\AI\\Cypy\\examples\\test_project\n\u001b[36m[2/5]\u001b[0m Output directory: output\n\u001b[36m[3/5]\u001b[0m Mode: Full build\n\u001b[36m[4/5]\u001b[0m Building project...\n\u001b[36m[5/5]\u001b[0m Compilation order: types -> geometry -> main\n\n  Failed modules (0):",
+    "reason_missing": true,
+    "observed": "no_reason"
+   },
+   "pos_second": {
+    "rc": 1,
+    "out": "\\AI\\Cypy\\examples\\test_project\n\u001b[36m[2/5]\u001b[0m Output directory: output\n\u001b[36m[3/5]\u001b[0m Mode: Full build\n\u001b[36m[4/5]\u001b[0m Building project...\n\u001b[36m[5/5]\u001b[0m Compilation order: types -> geometry -> main\n\n  Failed modules (0):",
+    "reason_missing": true,
+    "observed": "no_reason"
+   },
+   "ctl_first": {
+    "rc": 0,
+    "out": "geometry.cp313-win_amd64.pyd\n    \u001b[32m[OK]\u001b[0m main -> E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\hunt_r5_tmp\\cli_face\\k05c\\output\\main\\main.cp313-win_amd64.pyd",
+    "observed": "reason_given"
+   },
+   "ctl_second": {
+    "rc": 0,
+    "out": "geometry.cp313-win_amd64.pyd\n    \u001b[32m[OK]\u001b[0m main -> E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\hunt_r5_tmp\\cli_face\\k05c\\output\\main\\main.cp313-win_amd64.pyd",
+    "observed": "reason_given"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "H06",
+   "key": "CLI_check_only_ignores_entry_scope",
+   "phenomenon": "`--check-only` 分支根本不读 `args.entry` ⇒ 裁剪范围的承诺在检查模式下失效",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 102,
+    "quote": "cypyc build ./myproject --entry main    # 仅编译 main 模块及其依赖"
+   },
+   "want_pos": "ignored",
+   "want_ctl": "honoured",
+   "pos_first": {
+    "rc": 0,
+    "out": "]\u001b[0m Parsing and type checking...\n\u001b[32m[OK] geometry: type check passed\u001b[0m\n\u001b[32m[OK] main: type check passed\u001b[0m\n\u001b[32m[OK] types: type check passed\u001b[0m\n\u001b[32m[OK] All modules passed type checking\u001b[0m",
+    "observed": "ignored"
+   },
+   "pos_second": {
+    "rc": 0,
+    "out": "]\u001b[0m Parsing and type checking...\n\u001b[32m[OK] geometry: type check passed\u001b[0m\n\u001b[32m[OK] main: type check passed\u001b[0m\n\u001b[32m[OK] types: type check passed\u001b[0m\n\u001b[32m[OK] All modules passed type checking\u001b[0m",
+    "observed": "ignored"
+   },
+   "ctl_first": {
+    "rc": 1,
+    "out": "ry: output\n\u001b[36m[3/5]\u001b[0m Mode: Full build\n\u001b[36m[4/5]\u001b[0m Building project...\n\u001b[36m[5/5]\u001b[0m Compilation order: types -> geometry -> main\n\n  Failed modules (0):",
+    "observed": "honoured"
+   },
+   "ctl_second": {
+    "rc": 1,
+    "out": "ry: output\n\u001b[36m[3/5]\u001b[0m Mode: Full build\n\u001b[36m[4/5]\u001b[0m Building project...\n\u001b[36m[5/5]\u001b[0m Compilation order: types -> geometry -> main\n\n  Failed modules (0):",
+    "observed": "honoured"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "H07",
+   "key": "CODEGEN_module_identity_hardcoded_unknown",
+   "phenomenon": "每个产物都写死 `__name__ = \"unknown\"` / `__file__ = \"\"`（无人传 source_file）",
+   "doc": {
+    "file": "cypyc/codegen/cython_generator.py",
+    "line": 327,
+    "quote": "self._write(f\"Source file: {self.source_file or 'unknown'}\")"
+   },
+   "want_pos": "unknown_identity",
+   "want_ctl": "real_identity",
+   "pos_first": {
+    "rc": 0,
+    "observed": "unknown_identity"
+   },
+   "pos_second": {
+    "rc": 0,
+    "observed": "unknown_identity"
+   },
+   "ctl_first": {
+    "observed": "real_identity",
+    "tail": " {name}!'\ndef main():\n    message = greet('World')\n    print(message)\n    return 0\nif __name__ == '__main__':\n    main()"
+   },
+   "ctl_second": {
+    "observed": "real_identity",
+    "tail": " {name}!'\ndef main():\n    message = greet('World')\n    print(message)\n    return 0\nif __name__ == '__main__':\n    main()"
+   },
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "CONFIRMED"
+  }
+ ],
+ "confirmed": [
+  "H01",
+  "H03",
+  "H04",
+  "H05",
+  "H06",
+  "H07"
+ ],
+ "unsure": [
+  "H02"
+ ],
+ "keys": [
+  "CLI_global_output_dir_overwritten_by_subparser",
+  "HOOK_bom_marker_silently_not_hooked",
+  "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+  "CLI_build_entry_failure_reason_swallowed",
+  "CLI_check_only_ignores_entry_scope",
+  "CODEGEN_module_identity_hardcoded_unknown"
+ ],
+ "canary": {
+  "pos_and_ctl_expectations_are_opposite_per_case": true,
+  "flipping_one_expectation_would_change_verdict": true
+ },
+ "tmp_left": [],
+ "self_checks": [
+  {
+   "label": "每条候选四档观察全部拿到",
+   "got": 28,
+   "want": 28,
+   "why": "四档 × 每条候选",
+   "ok": true
+  },
+  {
+   "label": "确诊 + 未确认 = 总数",
+   "got": 7,
+   "want": 7,
+   "why": "两栏回加",
+   "ok": true
+  },
+  {
+   "label": "确诊集合非空（否则是本判据看不见，不是产品干净）",
+   "got": true,
+   "want": true,
+   "why": "确诊 ['H01', 'H03', 'H04', 'H05', 'H06', 'H07']／未确认 ['H02']",
+   "ok": true
+  },
+  {
+   "label": "声明原文全部定位成功",
+   "got": [],
+   "want": [],
+   "why": "file:line 现读",
+   "ok": true
+  },
+  {
+   "label": "canary：每条的 pos/ctl 期望方向相反（同向=没在做对照）",
+   "got": true,
+   "want": true,
+   "why": "{\"pos_and_ctl_expectations_are_opposite_per_case\": true, \"flipping_one_expectation_would_change_verdict\": true}",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T06:39:51+00:00"
+}

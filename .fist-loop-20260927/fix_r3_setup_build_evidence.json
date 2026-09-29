@@ -1,0 +1,24 @@
+{
+ "measured_at_local": "2026-09-28 00:08",
+ "cmd": "cd .fist-loop-20260927/tmp_r3/out && python -X utf8 setup.py build_ext --inplace",
+ "rc": 0,
+ "artifacts": {
+  "demo.pyx": {
+   "bytes": 787,
+   "sha256_12": "1153954d0b08"
+  },
+  "demo.c": {
+   "bytes": 327323,
+   "sha256_12": "07c7a4f0ebff"
+  },
+  "setup.py": {
+   "bytes": 207,
+   "sha256_12": "328d8c980fc8"
+  }
+ },
+ "pyd_found": [
+  "demo.cp313-win_amd64.pyd",
+  "build/lib.win-amd64-cpython-313/demo.cp313-win_amd64.pyd"
+ ],
+ "note": "验证 `cypyc transpile --generate-setup` 写出的 setup.py 真能走通编译链（中间目录 build/ 落在 out/ 下，因为 cwd 在 out/）；本轮不把它做成测试（需要 MSVC 且墙钟数十秒，属 e2e 档位，交裁决是否入基准）。"
+}

@@ -1,0 +1,233 @@
+{
+ "CTRL_scalar_mismatch": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Type mismatch: expected int, got str at 2:9"
+  ]
+ },
+ "P01_tuple_inner_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Element 2 type mismatch: expected int, got str at 2:9"
+  ]
+ },
+ "P02_tuple_flag_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Element 1 type mismatch: expected bool, got int at 2:9"
+  ]
+ },
+ "P03_list_elem_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Element 1 type mismatch: expected int, got str at 2:9"
+  ]
+ },
+ "P05_dict_val_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "P06_unknown_in_tuple": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "P07_list_of_list_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Element 1 type mismatch: expected int, got str at 2:9"
+  ]
+ },
+ "P08_tuple_arity_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Tuple element count mismatch: expected 2, got 1 at 2:9"
+  ]
+ },
+ "P09_return_elem_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Return element 2 type mismatch: expected int, got str at 3:1"
+  ]
+ },
+ "P10_return_narrow": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Return element 1 type mismatch: expected int, got float at 3:1"
+  ]
+ },
+ "A01_alias_inner_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Element 2 type mismatch: expected int, got str at 4:9"
+  ]
+ },
+ "A02_alias_flag_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Element 1 type mismatch: expected bool, got int at 4:9"
+  ]
+ },
+ "A03_alias_ok": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A04_alias_unknown_arg": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A05_alias_bare_use": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A06_alias_arity_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Type alias 'Result' expects 1 generic parameter(s), but got 2 at line 1"
+  ]
+ },
+ "A07_alias_of_alias": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Element 2 type mismatch: expected int, got str at 5:9"
+  ]
+ },
+ "A08_alias_in_param": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "A09_alias_scalar_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Type mismatch: expected int, got str at 4:9"
+  ]
+ },
+ "A10_alias_bound_decl": {
+  "stage": "parse",
+  "n": 1,
+  "errs": [
+   "Expected IDENTIFIER, got COLON at 1:11"
+  ]
+ },
+ "G01_empty_ctor": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G02_nested_hetero": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G03_tuple_none": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G04_mixed_collapse": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G05_widening": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G06_set_noarg": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G07_return_ok": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G08_user_types_lenient": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G09_trait_elem_lenient": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G10_dict_still_lenient": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "G11_union_alias_use": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "N01_nested_alias_ok": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "N02_nested_alias_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Element 2 type mismatch: expected int, got str at 5:9"
+  ]
+ },
+ "N03_scalar_alias_in_alias": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Element 1 type mismatch: expected int, got str at 5:9"
+  ]
+ },
+ "N04_self_alias_no_hang": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Type mismatch: expected Loop[int], got int at 4:9"
+  ]
+ },
+ "U01_maybe_wrong": {
+  "stage": "ok",
+  "n": 1,
+  "errs": [
+   "Type mismatch: expected Union[int, None], got str at 4:9"
+  ]
+ },
+ "U02_maybe_ok": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "U03_maybe_int_ok": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ },
+ "U04_listorset_elem_wrong": {
+  "stage": "ok",
+  "n": 0,
+  "errs": []
+ }
+}

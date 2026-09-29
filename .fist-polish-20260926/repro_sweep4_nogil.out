@@ -1,0 +1,7 @@
+  escaped exception type = NoGilError (expected ValueError if the user error survived)
+  isinstance NoGilError  = True
+[repro A] GilState.__exit__ 覆盖用户异常: REPRODUCED
+  threading.active_count() 1 -> 2 (delta 1) after 12 one-shot calls
+  live ThreadPoolExecutor workers = 1
+[repro B] nogil_thread 一次性调用泄漏执行器线程: not reproduced
+summary: A=True B=False

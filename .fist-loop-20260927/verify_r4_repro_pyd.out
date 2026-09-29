@@ -1,0 +1,42 @@
+{
+ "present": true,
+ "measure": {
+  "pyd_first": [
+   "cache_src.cp313-win_amd64.pyd"
+  ],
+  "pyd_second": [
+   "cache_src.cp313-win_amd64.pyd"
+  ],
+  "rewritten": true,
+  "attrs1": [
+   "pyd_path"
+  ],
+  "path1": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\repro\\cache_out\\cache_src.cp313-win_amd64.pyd",
+  "path2": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\repro\\cache_out\\cache_src.cp313-win_amd64.pyd",
+  "ok1": true,
+  "ok2": true,
+  "steps1": [
+   "=== 一步到位编译模式 ===",
+   "开始处理文件: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\repro\\cache_src.cypy",
+   "开始转译文件: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\repro\\cache_src.cypy",
+   "增量编译: 缓存未命中，开始解析",
+   "增量编译: 受影响定义数: 1",
+   "基础转译模式开始"
+  ],
+  "steps2": [
+   "=== 一步到位编译模式 ===",
+   "开始处理文件: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\repro\\cache_src.cypy",
+   "开始转译文件: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\repro\\cache_src.cypy",
+   "增量编译: 缓存命中，使用缓存结果",
+   "增量编译: 缓存未命中，开始解析",
+   "增量编译: 受影响定义数: 0"
+  ],
+  "cached_after": null,
+  "stale_after": false,
+  "dur": [
+   8.35,
+   7.76
+  ]
+ },
+ "predicate": "两轮都 success、第二轮 .pyd 被重写（mtime 变了）、成功后 CypyCacheManager.get_cached_pyd 仍为 None"
+}

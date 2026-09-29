@@ -1,0 +1,94 @@
+{
+ "attempts": 3,
+ "threads": 2,
+ "lock_on": [
+  {
+   "successes": [
+    true,
+    true
+   ],
+   "published": [
+    2,
+    2
+   ],
+   "errors": [],
+   "compileish_failure": false
+  },
+  {
+   "successes": [
+    true,
+    true
+   ],
+   "published": [
+    2,
+    2
+   ],
+   "errors": [],
+   "compileish_failure": false
+  },
+  {
+   "successes": [
+    true,
+    true
+   ],
+   "published": [
+    2,
+    2
+   ],
+   "errors": [],
+   "compileish_failure": false
+  }
+ ],
+ "lock_off": [
+  {
+   "successes": [
+    false,
+    false
+   ],
+   "published": [
+    0,
+    0
+   ],
+   "errors": [
+    "编译错误: Traceback (most recent call last):\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Temp\\tmpa40avtcu\\setup.py\", line 3, in <module>\r\n    setup(\r\n    ~~~~~^\r\n        name='racem_0_0',\r\n        ^^^^^^^^^^^^^^^^^\r\n    ...<6 lines>...\r\n        ],\r\n        ^^\r\n    )\r\n    ^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\__init__.py\", line 115, in setup\r\n    return distutils.core.setup(**attrs)\r\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\core.py\", line 186, in setup\r\n    return run_commands(dist)\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\core.py\", line 202, in run_commands\r\n    dist.run_commands()\r\n    ~~~~~~~~~~~~~~~~~^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\dist.py\", line 1002, in run_commands\r\n    self.run_command(cmd)\r\n    ~~~~~~~~~~~~~~~~^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\dist.py\", line 1102, in run_command\r\n    super().run_command(command)\r\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\dist.py\", line 1021, in run_command\r\n    cmd_obj.run()\r\n    ~~~~~~~~~~~^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\command\\build_ext.py\", line 96, in run\r\n    _build_ext.run(self)\r\n    ~~~~~~~~~~~~~~^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\command\\build_ext.py\", line 368, in run\r\n    self.build_extensions()\r\n    ~~~~~~~~~~~~~~~~~~~~~^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\command\\build_ext.py\", line 484, in build_extensions\r\n    self._build_extensions_serial()\r\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\command\\build_ext.py\", line 510, in _build_extensions_serial\r\n    self.build_extension(ext)\r\n    ~~~~~~~~~~~~~~~~~~~~^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\command\\build_ext.py\", line 261, in build_extension\r\n    _build_ext.build_extension(self, ext)\r\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\Cython\\Distutils\\build_ext.py\", line 131, in build_extension\r\n    new_ext = cythonize(\r\n              ~~~~~~~~~^\r\n        ext,force=self.force, quiet=self.verbose == 0, **options\r\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n    )[0]\r\n    ^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\Cython\\Build\\Dependencies.py\", line 981, in cythonize\r\n    module_list, module_metadata = create_extension_list(\r\n                                   ~~~~~~~~~~~~~~~~~~~~~^\r\n        module_list,\r\n        ^^^^^^^^^^^^\r\n    ...<4 lines>...\r\n        language=language,\r\n        ^^^^^^^^^^^^^^^^^^\r\n        aliases=aliases)\r\n        ^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\Cython\\Build\\Dependencies.py\", line 812, in create_extension_list\r\n    for file in nonempty(sorted(extended_iglob(filepattern)), \"'%s' doesn't match any files\" % filepattern):\r\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\Cython\\Build\\Dependencies.py\", line 80, in nonempty\r\n    raise ValueError(error_msg)\r\nValueError: 'racem_0_0.pyx' doesn't match any files\r\n",
+    "编译错误: Traceback (most recent call last):\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Temp\\tmpa40avtcu\\setup.py\", line 3, in <module>\r\n    setup(\r\n    ~~~~~^\r\n        name='racem_0_0',\r\n        ^^^^^^^^^^^^^^^^^\r\n    ...<6 lines>...\r\n        ],\r\n        ^^\r\n    )\r\n    ^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\__init__.py\", line 115, in setup\r\n    return distutils.core.setup(**attrs)\r\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\core.py\", line 186, in setup\r\n    return run_commands(dist)\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\core.py\", line 202, in run_commands\r\n    dist.run_commands()\r\n    ~~~~~~~~~~~~~~~~~^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\dist.py\", line 1002, in run_commands\r\n    self.run_command(cmd)\r\n    ~~~~~~~~~~~~~~~~^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\dist.py\", line 1102, in run_command\r\n    super().run_command(command)\r\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\dist.py\", line 1021, in run_command\r\n    cmd_obj.run()\r\n    ~~~~~~~~~~~^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\command\\build_ext.py\", line 96, in run\r\n    _build_ext.run(self)\r\n    ~~~~~~~~~~~~~~^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\command\\build_ext.py\", line 368, in run\r\n    self.build_extensions()\r\n    ~~~~~~~~~~~~~~~~~~~~~^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\command\\build_ext.py\", line 484, in build_extensions\r\n    self._build_extensions_serial()\r\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\_distutils\\command\\build_ext.py\", line 510, in _build_extensions_serial\r\n    self.build_extension(ext)\r\n    ~~~~~~~~~~~~~~~~~~~~^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\setuptools\\command\\build_ext.py\", line 261, in build_extension\r\n    _build_ext.build_extension(self, ext)\r\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\Cython\\Distutils\\build_ext.py\", line 131, in build_extension\r\n    new_ext = cythonize(\r\n              ~~~~~~~~~^\r\n        ext,force=self.force, quiet=self.verbose == 0, **options\r\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n    )[0]\r\n    ^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\Cython\\Build\\Dependencies.py\", line 981, in cythonize\r\n    module_list, module_metadata = create_extension_list(\r\n                                   ~~~~~~~~~~~~~~~~~~~~~^\r\n        module_list,\r\n        ^^^^^^^^^^^^\r\n    ...<4 lines>...\r\n        language=language,\r\n        ^^^^^^^^^^^^^^^^^^\r\n        aliases=aliases)\r\n        ^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\Cython\\Build\\Dependencies.py\", line 812, in create_extension_list\r\n    for file in nonempty(sorted(extended_iglob(filepattern)), \"'%s' doesn't match any files\" % filepattern):\r\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\victo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages\\Cython\\Build\\Dependencies.py\", line 80, in nonempty\r\n    raise ValueError(error_msg)\r\nValueError: 'racem_0_0.pyx' doesn't match any files\r\n"
+   ],
+   "compileish_failure": true
+  },
+  {
+   "successes": [
+    false,
+    false
+   ],
+   "published": [
+    0,
+    0
+   ],
+   "errors": [
+    "编译错误: error: command 'D:\\\\VisualStudioBuildTools\\\\VC\\\\Tools\\\\MSVC\\\\14.44.35207\\\\bin\\\\HostX86\\\\x64\\\\link.exe' failed with exit code 1104\r\n",
+    "编译错误: error: can't copy 'build\\lib.win-amd64-cpython-313\\racem_1_0.cp313-win_amd64.pyd': doesn't exist or not a regular file\r\n"
+   ],
+   "compileish_failure": true
+  },
+  {
+   "successes": [
+    false,
+    true
+   ],
+   "published": [
+    0,
+    2
+   ],
+   "errors": [
+    "未找到生成的.pyd文件"
+   ],
+   "compileish_failure": true
+  }
+ ],
+ "lock_off_red_rounds": [
+  1,
+  2,
+  3
+ ],
+ "refuse": []
+}

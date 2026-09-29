@@ -1,0 +1,12 @@
+{
+ "selftest": "selfprobe-caught",
+ "hits": [
+  {
+   "file": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/fix_r2_lint_selfprobe.py",
+   "code": "E501",
+   "row": 1
+  }
+ ],
+ "probe": "120 列赋值行（必然违例）",
+ "expected": "E501 被抓到才算判据会红"
+}

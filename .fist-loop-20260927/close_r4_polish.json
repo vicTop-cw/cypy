@@ -1,0 +1,202 @@
+{
+ "key": "r4_polish",
+ "root_task": "T0r90",
+ "assignee": "cypy-polisher",
+ "stage": "R4-打磨",
+ "forbid": "改 PROJECT-SPEC 与 SYNTAX；重注册 golden；git add/commit/push；删文件或删别人的 worktree；删除或放宽既有测试；为了让绿而降低判据；把「没做到」写成「已做」；在本环动手拆 3000 行文件；向服务端补派未派单的卡片；报告归档后再改交付物；把 needle 的子串命中当成证据（必须是被引件里的真键名）",
+ "laws": [
+  {
+   "name": "非冻结文档按调用面实读改写（USAGE.md 的 .pyd 复用那句必须与实测一致），并配「改前措辞与实测相违」的反向对照",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r4_docs.json",
+     "diff_changed_lines",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/polish_r4_docs.json",
+     "pyd_reused_between_calls",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "附录 C 的 4 条形差只出两栏（交人工 / 非冻结补注），冻结面 sha 逐字未动并有反例 canary",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r4_appendixC.json",
+     "queue_frozen_edit",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/polish_r4_appendixC.json",
+     "frozen_sha",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "账面卫生以「只增不改」为准：差分逐行证明零删改，缺 task_id 的卡片逐张补记",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r4_ledger.json",
+     "append_only_diff",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/polish_r4_ledger.json",
+     "removed_samples",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "判据件债务收敛到共用件，且收敛后关键格数（承重行数/翻转数/体系数）逐字不变",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r4_debt.json",
+     "kit_apis",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/polish_r4_debt.json",
+     "equivalence",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "调用面探针固化成 tests/ 永久锁：先红后绿 + mutation 证承重，既有测试一条不动",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r4_locks.json",
+     "new_test_file",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/polish_r4_locks.json",
+     "lane_prefix_code",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "结构债与不可逆项逐条测量后挂账（3000 行拆分、type_checker 体量、hook.eval 写侧）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r4_structural.json",
+     "adjudication_queue",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/polish_r4_structural.json",
+     "files_measured",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "三套判据体系同批复算只升不降，红线与冻结面正面测，半径按 mtime 分栏",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r4_baselines.json",
+     "systems",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/polish_r4_baselines.json",
+     "radius",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "账面三向与 call_log 前缀对账，被拒原文逐字入账，收口顺序纪律照旧",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r4_calllog_tally.json",
+     "rows",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/polish_r4_drivers_lint.json",
+     "soft_total",
+     2000
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "法1：非冻结文档按调用面实读改写（USAGE.md 的 .pyd 复用那句必须与实测一致），并配「改前措辞与实测相违」的反向对照",
+   ".fist-loop-20260927/polish_r4_docs.json",
+   "diff_changed_lines"
+  ],
+  [
+   "法2：附录 C 的 4 条形差只出两栏（交人工 / 非冻结补注），冻结面 sha 逐字未动并有反例 canary",
+   ".fist-loop-20260927/polish_r4_appendixC.json",
+   "queue_frozen_edit"
+  ],
+  [
+   "法3：账面卫生以「只增不改」为准：差分逐行证明零删改，缺 task_id 的卡片逐张补记",
+   ".fist-loop-20260927/polish_r4_ledger.json",
+   "append_only_diff"
+  ],
+  [
+   "法4：判据件债务收敛到共用件，且收敛后关键格数（承重行数/翻转数/体系数）逐字不变",
+   ".fist-loop-20260927/polish_r4_debt.json",
+   "kit_apis"
+  ],
+  [
+   "法5：调用面探针固化成 tests/ 永久锁：先红后绿 + mutation 证承重，既有测试一条不动",
+   ".fist-loop-20260927/polish_r4_locks.json",
+   "new_test_file"
+  ],
+  [
+   "法6：结构债与不可逆项逐条测量后挂账（3000 行拆分、type_checker 体量、hook.eval 写侧）",
+   ".fist-loop-20260927/polish_r4_structural.json",
+   "adjudication_queue"
+  ],
+  [
+   "法7：三套判据体系同批复算只升不降，红线与冻结面正面测，半径按 mtime 分栏",
+   ".fist-loop-20260927/polish_r4_baselines.json",
+   "systems"
+  ],
+  [
+   "法8：账面三向与 call_log 前缀对账，被拒原文逐字入账，收口顺序纪律照旧",
+   ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "rows"
+  ]
+ ],
+ "root_deliverable": "R4-打磨 交付：memory/reviews/20260928.10.35.00；半径=措辞面/账面/测试面/骨架（产品 0 项、冻结 0 项均为空，tests 只新增 [\"tests/test_loop_20260927_polish_r4.py\"]，docs 只 [\"docs/APPENDIX_C_DEVIATIONS.md\", \"docs/USAGE.md\"]）。八条法全部独立复算：(1) `docs/USAGE.md` 的「源未变会复用 .pyd」按调用面改写——实测行号 [414]（不是旧账里的 406），sha 0400fdca1a0fd284→b8c04986f97f9fdf，差分 2 行；反证三格 False/True/True，签名面 [\"self\", \"source_path\", \"output_dir\", \"force_recompile\"] 与 CLI 子命令 6 个由 --help 反解；(2) 附录 C 形差分两栏——交人工栏行号 [1, 4, 5, 6]（实测非连续），我方可做栏 docs/APPENDIX_C_DEVIATIONS.md 共 4 行 2635 B；冻结面 37 个 sha 前后相等 True，注入 canary 被抓 True；(3) 账面只增不改：新增 8 行、删除 0 行，卡数 73→73、合法 task_id 65→65，8 张缺号卡反查 bugs 树命中 0 张 ⇒ 补记措辞是「未派单」并交人工；(4) 骨架收敛到 loop_kit.py（API 8 个），行为不变证据 4 行覆盖 [\"verify_r4_baselines.json\", \"fix_r4_baselines.json\", \"advance_r3_baselines.json\"]，复制集合相同 True（4 个文件），双 canary {\"junk_zero\": [0, 0, 0], \"good_1976\": 1976}；形状分差 4 条与留债 {\"def check(\": 23, \"passed|failed|errors?\": 3, \"Total:\": 5, \"rglob\": 15} 逐类点名，本环接入件 [\"polish_r4_debt.py\", \"polish_r4_structural.py\"]；(5) 调用面探针固化成 tests/test_loop_20260927_polish_r4.py：工作区 20 passed，修前码 15 failed（红 15 条，含 1 条文档面）；两档身份 sha ff9e8821cb22 ≠ 27a3408faad2，收集 1976=1956+20，文档谓词三向 {\"before_text_fails\": true, \"current_text_passes\": true, \"before_copy_on_disk\": true}；(6) 结构债只测量：56 个文件过 3000 行红线，越线 4 个，type_checker 3207 行/141 方法，hook.eval 写侧标记 2/产品面 2；挂账 3 条、执行不可逆 0 条、本环碰过的产品文件 0 个、改名 0 个，删除 10 条与上一环同集（旧账未结）；(7) 三套体系同批复算且只升不降：pytest 1976 通过/0 失败/0 错误（地板 1956）、收集 1976（地板 1956+20）、自研 {\"Total\": 47, \"Passed\": 47, \"Failed\": 0, \"Skipped\": 0}、e2e {\"PASS\": 25, \"FAIL\": 0, \"RUNFAIL\": 0, \"WARN\": 0}；HEAD 17d68b4、暂存 0、冻结 43 个文件 sha 未变、扫描 3860 文件；比较函数 canary {\"only_up_reports_violation\": true, \"only_up_reports_equality_ok\": true}；(8) 账面与驱动面：渲染前 call_log 本环前缀 18 行/17 个任务、被拒 0 条、负对照 0 行，omega 链此刻 {\"omega_spec_create\": 0, \"omega_spec_review\": 0, \"omega_result_verify\": 0}（收口链在报告之后才发，故此处为 0 是事实不是缺项）；驱动 15 个硬错 0、软账 0（基线 0）。计划 needle 校正 11 处（8 个键名盘上不存在、2 个是子串假命中），强度未动；渲染前自证 133/149 道、占位 102 个、needle 严口径违例 0 条、件-脚本同源例外披露 0 条。",
+ "root_marker": "[selfdrive-polish]",
+ "root_law_marks_len": 8,
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "spec_named_carriers",
+   1000
+  ],
+  [
+   ".fist-loop-20260927/polish_r4_self_audit.json",
+   "needle_strict_violations",
+   1000
+  ]
+ ],
+ "root_verify_reason": "打磨环最容易说谎的是「我把口径对齐了」这句话本身，所以每条都配了反向证明：(1) 文档改写不是照源码字面抄，而是同一源同 output_dir 的真跑三格判定（复用=false、缓存查询恒 None、同一次调用连打命中与未命中），并把实测行号与旧账行号的分歧留在件里；(2) 冻结面的「未动」用 37 个逐文件 sha 相等 + 一字节注入 canary 双向证明，只有前者就是「谓词坏了也报平安」；(3) 账面「只增不改」用差分四格（新增/删除/卡数/合法号数）而不是声明，反查命中为空这件事逼出「未派单」这个诚实措辞——写成「找回单号」就是伪造服务端归属；(4) 骨架收敛的证据是新旧解析对同一批归档件逐字段相等 + 复制集合逐字相同 + 解析器双 canary；形状分差与留债逐条点名，没有把它们抹平成「已收敛」；(5) 新锁必须两档跑：工作区全绿、修前码必须红，且身份由 type_checker 的两个 sha 证明是两棵树；文档面那条红单独分栏，免得一次文档改写冒充「产品锁承重」；(6) 结构债全程只给测量与挂账理由，本环不可逆动作数、被碰产品文件数、改名数三格都为空，并配「刚写的文件必须被同一谓词判为碰过」的 canary 证明这个空集测得出来；(7) 三套体系 + git 红线 + 半径同一时刻复算，地板取 R4-验证 实测件而非手写目标，比较函数配「不可能的地板必须报违规」的 canary；本环两次起批、测量面未冻结这件事写进正文而不是藏进脚注；(8) 渲染前自证 133/149 道，needle 口径从「值里含子串」升级为「必须是件里的真键名」，并配 canary 证明旧口径确实放过过 {\"substring_rule_would_pass_control\": true, \"strict_rule_rejects_control\": true, \"control_hit_is_a_filename_inside_frozen_sha\": true}；件-脚本同源门把「跑完又改脚本」的例外逼着逐条披露。",
+ "tests_allow": [
+  "tests/test_loop_20260927_polish_r4.py"
+ ],
+ "docs_allow": [
+  "docs/APPENDIX_C_DEVIATIONS.md",
+  "docs/USAGE.md"
+ ],
+ "embedded_self_audit": {
+  "gates_pass": 133,
+  "gates_total": 149,
+  "placeholders_total": 102,
+  "stale_artifacts_len": 0,
+  "at_utc": "2026-09-28T02:44:01+00:00"
+ },
+ "built_from_artifacts_at_utc": "2026-09-28T02:44:01+00:00"
+}

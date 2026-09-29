@@ -1,0 +1,2 @@
+SEALED dict cases=23 fp=fnv1a64:fnv1a64:d31d62984b62f3ae tightened cypy.container.elements.json fp fnv1a64:7349f8d14b3fc9fc->fnv1a64:fnv1a64:f45c1ff0f323aec1 specs=8 total_cases=174 others_untouched=True drift=[] bucket_agreement=23/23
+CONCLUSION make_corpus_r14 dict_cases=23 dict_fp=fnv1a64:fnv1a64:d31d62984b62f3ae container_fp=fnv1a64:fnv1a64:f45c1ff0f323aec1 specs_before=7 specs_after=8 total_cases=174 others_untouched=True drift=0

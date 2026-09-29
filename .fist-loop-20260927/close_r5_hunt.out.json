@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r96.1.1",
+   "law": "观察面先证明看得见：六邻域逐格定期望 + 三条变异通道归属，零发现与看不见分家，白建通道逐条点名",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.1.2",
+   "law": "观察面先证明看得见：六邻域逐格定期望 + 三条变异通道归属，零发现与看不见分家，白建通道逐条点名",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.2.1",
+   "law": "声明面逐条自己重测：18 条文档主张现读原文 + 当场实测，design/stale-doc/real-gap 三态，撤回项点名",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.2.2",
+   "law": "声明面逐条自己重测：18 条文档主张现读原文 + 当场实测，design/stale-doc/real-gap 三态，撤回项点名",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.3.1",
+   "law": "生成面成对确诊：pos 现形 + 同族 ctl 正确两档齐全才 CONFIRMED，`_fn_body` 作用域限定，双跑必须一致",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.3.2",
+   "law": "生成面成对确诊：pos 现形 + 同族 ctl 正确两档齐全才 CONFIRMED，`_fn_body` 作用域限定，双跑必须一致",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.4.1",
+   "law": "真实入口面成对确诊：CLI/hook/项目命令的退出码·stderr·loader 身份为观察对象，对照站不住只记 UNSURE",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.4.2",
+   "law": "真实入口面成对确诊：CLI/hook/项目命令的退出码·stderr·loader 身份为观察对象，对照站不住只记 UNSURE",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.5.1",
+   "law": "每条判据自带『坏了必红』对照，且测量面残渣在清理之后独立复测（变异归属、canary 方向、双跑稳定性、tmp_left 非空即拒）",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.5.2",
+   "law": "每条判据自带『坏了必红』对照，且测量面残渣在清理之后独立复测（变异归属、canary 方向、双跑稳定性、tmp_left 非空即拒）",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.6.1",
+   "law": "只确诊入账：号从盘上现数，report_bug 回读 + 账本增量 + sqlite 增量三向相等，二次扫描幂等，每卡带复跑命令",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.6.2",
+   "law": "只确诊入账：号从盘上现数，report_bug 回读 + 账本增量 + sqlite 增量三向相等，二次扫描幂等，每卡带复跑命令",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.7.1",
+   "law": "三套体系同批复算且地板从上一环实测件反解（四栏缺一即拒），HEAD/暂存/冻结面未动，半径按 mtime 正面测出",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.7.2",
+   "law": "三套体系同批复算且地板从上一环实测件反解（四栏缺一即拒），HEAD/暂存/冻结面未动，半径按 mtime 正面测出",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.8.1",
+   "law": "驱动面与被测面同等受审：亲笔脚本硬错为 0、软账只降不升，报告与账本三向同步且被拒原文逐字入账",
+   "artifact": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r96.8.2",
+   "law": "驱动面与被测面同等受审：亲笔脚本硬错为 0、软账只降不升，报告与账本三向同步且被拒原文逐字入账",
+   "artifact": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r96",
+ "stage": "R5-寻虫"
+}

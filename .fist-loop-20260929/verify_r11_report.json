@@ -1,0 +1,277 @@
+{
+ "report": "T0r117-cypy-selfdrive-r11-report.md",
+ "report_bytes": 21600,
+ "ledger": {
+  "headers": 134,
+  "open": 37,
+  "open_wide": 36,
+  "open_ids": [
+   "40",
+   "43",
+   "49",
+   "50",
+   "52",
+   "54",
+   "65",
+   "68",
+   "69",
+   "70",
+   "72",
+   "73",
+   "77",
+   "94",
+   "97",
+   "99",
+   "100",
+   "103",
+   "105",
+   "106",
+   "109",
+   "110",
+   "111",
+   "114",
+   "115",
+   "116",
+   "117",
+   "120",
+   "121",
+   "122",
+   "123",
+   "124",
+   "125",
+   "126",
+   "127",
+   "128",
+   "129"
+  ],
+  "severity": {
+   "low": 10,
+   "medium": 22,
+   "high": 5
+  },
+  "judge_face": [
+   "117",
+   "123",
+   "124"
+  ],
+  "product_face": 34,
+  "fixed_sections": 89,
+  "amendment_sections": 9
+ },
+ "cited_bug_ids": [
+  96,
+  99,
+  106,
+  109,
+  116,
+  117,
+  119,
+  120,
+  121,
+  122,
+  123,
+  124,
+  126,
+  127,
+  128,
+  129,
+  130,
+  131,
+  132,
+  133
+ ],
+ "cited_paths": 21,
+ "verbatim_claims": 13,
+ "anchors": [
+  {
+   "rel": "cypyc/parser/parser.py",
+   "needle": "class ClassDef(ASTNode):",
+   "hits": [
+    329
+   ],
+   "claimed": "329-347",
+   "ok": true,
+   "file_lines": 4805
+  },
+  {
+   "rel": "cypyc/parser/parser.py",
+   "needle": "def _parse_type_param_list",
+   "hits": [
+    1599
+   ],
+   "claimed": "1599-1623",
+   "ok": true,
+   "file_lines": 4805
+  },
+  {
+   "rel": "cypyc/parser/parser.py",
+   "needle": "generic_params, generic_constraint",
+   "hits": [
+    1628,
+    1657
+   ],
+   "claimed": "1628-1628",
+   "ok": true,
+   "file_lines": 4805
+  },
+  {
+   "rel": "cypyc/analyzer/type_checker.py",
+   "needle": "def _generic_arity_diagnostic",
+   "hits": [
+    1296
+   ],
+   "claimed": "1296-1311",
+   "ok": true,
+   "file_lines": 4596
+  },
+  {
+   "rel": "cypyc/analyzer/type_checker.py",
+   "needle": "decl = self.class_defs.get(node.na",
+   "hits": [
+    3966
+   ],
+   "claimed": "3964-3972",
+   "ok": true,
+   "file_lines": 4596
+  },
+  {
+   "rel": "cypyc/analyzer/type_checker.py",
+   "needle": "class_def = self.class_defs[vname]",
+   "hits": [
+    2513
+   ],
+   "claimed": "2513-2534",
+   "ok": true,
+   "file_lines": 4596
+  },
+  {
+   "rel": "cypyc/analyzer/type_checker.py",
+   "needle": "def _visit_ClassDef",
+   "hits": [
+    592
+   ],
+   "claimed": "592-608",
+   "ok": true,
+   "file_lines": 4596
+  },
+  {
+   "rel": "cypyc/analyzer/type_checker.py",
+   "needle": "return_type.name in self._generic_",
+   "hits": [
+    643
+   ],
+   "claimed": "643-646",
+   "ok": true,
+   "file_lines": 4596
+  },
+  {
+   "rel": "SYNTAX/11-generics.md",
+   "needle": "### 泛型类的判定口径",
+   "hits": [
+    127
+   ],
+   "claimed": "127-152",
+   "ok": true,
+   "file_lines": 185
+  },
+  {
+   "rel": "tests/test_generic_class_r11.py",
+   "needle": "R11 回归锁",
+   "hits": [
+    1
+   ],
+   "claimed": "1-13",
+   "ok": true,
+   "file_lines": 204
+  },
+  {
+   "rel": "corpus/cypy.generic.class.json",
+   "needle": "fnv1a64:90f410a1d1cd0fd8",
+   "hits": [
+    347
+   ],
+   "claimed": "1-1000000",
+   "ok": true,
+   "file_lines": 348
+  }
+ ],
+ "checks": [
+  {
+   "name": "bug_ids_all_exist",
+   "ok": true,
+   "detail": "cited=20 missing=[]"
+  },
+  {
+   "name": "bug_ids_nonvacuous",
+   "ok": true,
+   "detail": "cited=20（少于 10 说明抽取坏了）"
+  },
+  {
+   "name": "paths_all_exist",
+   "ok": true,
+   "detail": "paths=21 missing=[]"
+  },
+  {
+   "name": "paths_nonvacuous",
+   "ok": true,
+   "detail": "paths=21（实测 17，地板 12）"
+  },
+  {
+   "name": "verbatim_claims_backed",
+   "ok": true,
+   "detail": "claims=13 unbacked=[]"
+  },
+  {
+   "name": "verbatim_nonvacuous",
+   "ok": true,
+   "detail": "claims=13"
+  },
+  {
+   "name": "code_anchors_in_range",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "name": "ledger_numbers_match",
+   "ok": true,
+   "detail": "{'open_blocks': {'claim': '37', 'actual': '37'}, 'headers': {'claim': '134', 'actual': '134'}, 'fixed_total': {'claim': '89', 'actual': '89'}, 'high': {'claim': '5', 'actual': '5'}, 'medium': {'claim': '22', 'actual': '2"
+  },
+  {
+   "name": "judge_face_ids_named",
+   "ok": true,
+   "detail": "['117', '123', '124']"
+  },
+  {
+   "name": "open_claim_consistent_all_places",
+   "ok": true,
+   "detail": "claims=['37'] actual=37"
+  },
+  {
+   "name": "spec_cases_29",
+   "ok": true,
+   "detail": "fnv1a64:90f410a1d1cd0fd8"
+  },
+  {
+   "name": "spec_fp_in_report",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "floor_100_matches_corpus",
+   "ok": true,
+   "detail": "corpus_total=100"
+  },
+  {
+   "name": "canary_shifted_range_red",
+   "ok": true,
+   "detail": "[{'rel': 'cypyc/parser/parser.py', 'still_hits_if_shifted': False}, {'rel': 'cypyc/parser/parser.py', 'still_hits_if_shifted': False}, {'rel': 'cypyc/parser/parser.py', 'still_hits_if_shifted': False}, {'rel': 'cypyc/ana"
+  },
+  {
+   "name": "canary_fake_bug_id_red",
+   "ok": true,
+   "detail": "fake=140 probe_missing=[140]"
+  }
+ ],
+ "failed": [],
+ "placeholder_section_6": false
+}

@@ -1,0 +1,2 @@
+repro: python -m cypyc transpile .fist-loop-20260927/hunts/fuzz_02.cypy -o .fist-loop-20260927/fuzz/cli_out && python -m cython -3 .fist-loop-20260927/fuzz/cli_out/fuzz_02.pyx -o .fist-loop-20260927/fuzz/cli_out/fuzz_02.c
+out  : [OK] Transpiled successfully  ->  .fist-loop-20260927\fuzz\cli_out\fuzz_02.pyx:31:0: Return not inside a function body

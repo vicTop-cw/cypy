@@ -1,0 +1,17 @@
+class ComptimeStmt source:
+class ComptimeStmt(ASTNode):
+    """编译期求值语句 - 在编译时执行并替换为常量"""
+
+    def __init__(self, expr: Any, line: int = 0, col: int = 0):
+        super().__init__("ComptimeStmt", line, col)
+        self.expr = expr
+
+has type_annotation in class source: False
+construction sites: 2
+---- site ----
+ComptimeStmt(ASTNode):
+    """编译期求值语句 - 在编译时执行并替换为常量"""
+passes type_annotation: False
+---- site ----
+ComptimeStmt(expr, self._current().line, self._current().col)
+passes type_annotation: False

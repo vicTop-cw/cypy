@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\amend_r14_ledger.py", line 285, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\amend_r14_ledger.py", line 225, in main
+    own_segs = [section("FIXED", titles[id_of[bid]]) for bid in touched]
+                                        ~~~~~^^^^^
+KeyError: 'BUG-141'

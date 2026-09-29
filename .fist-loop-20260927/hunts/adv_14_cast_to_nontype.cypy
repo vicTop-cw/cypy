@@ -1,0 +1,4 @@
+def main() -> int:
+    x: int = 1
+    y = x as NotAType
+    return 0

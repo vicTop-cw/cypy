@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r85.1.1",
+   "law": "逐单认领并分栏（本环可修／交人工）：认领表从盘上账本反解，每张单的理由与归属逐条点名，交人工的不占修",
+   "artifact": ".fist-loop-20260927/fix_r4_claim.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.1.2",
+   "law": "逐单认领并分栏（本环可修／交人工）：认领表从盘上账本反解，每张单的理由与归属逐条点名，交人工的不占修",
+   "artifact": ".fist-loop-20260927/fix_r4_claim.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.2.1",
+   "law": "锁先行：每单一条「修前必红」的锁，跑到红才动实现；红必须是断言级红，不是收集错或夹具崩",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.2.2",
+   "law": "锁先行：每单一条「修前必红」的锁，跑到红才动实现；红必须是断言级红，不是收集错或夹具崩",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.3.1",
+   "law": "根因合并修：RC1/RC2/RC3/RC4 的改动点共用同一处签名结构与兼容谓词，用 file:line 与符号引用正面证明，不是四个补丁",
+   "artifact": ".fist-loop-20260927/fix_r4_rc.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.3.2",
+   "law": "根因合并修：RC1/RC2/RC3/RC4 的改动点共用同一处签名结构与兼容谓词，用 file:line 与符号引用正面证明，不是四个补丁",
+   "artifact": ".fist-loop-20260927/fix_r4_rc.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.4.1",
+   "law": "回退矩阵：每单把实现摘回修前原文，该单锁必须变红且其余锁不牵连；摘完逐文件 sha 复原并自证",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.4.2",
+   "law": "回退矩阵：每单把实现摘回修前原文，该单锁必须变红且其余锁不牵连；摘完逐文件 sha 复原并自证",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.5.1",
+   "law": "语义变更影响面：存量语料逐档跑分析器，「修前无诊断→修后有诊断」清单实测；有命中就挂账交裁决，不放宽不放行",
+   "artifact": ".fist-loop-20260927/fix_r4_impact.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.5.2",
+   "law": "语义变更影响面：存量语料逐档跑分析器，「修前无诊断→修后有诊断」清单实测；有命中就挂账交裁决，不放宽不放行",
+   "artifact": ".fist-loop-20260927/fix_r4_impact.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.6.1",
+   "law": "三套体系同批全量复算且只升不降（pytest ≥1938 / 自研 47/47 / e2e 25/25 且 FAIL/WARN/UNREG 三格零），冻结面与 git 红线按 mtime+sha 正面测",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.6.2",
+   "law": "三套体系同批全量复算且只升不降（pytest ≥1938 / 自研 47/47 / e2e 25/25 且 FAIL/WARN/UNREG 三格零），冻结面与 git 红线按 mtime+sha 正面测",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.7.1",
+   "law": "账面闭环：修复单逐单 claim→execute→submit→verify、md 追加 FIXED 段、三向对照一致；被拒原文逐字进报告",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.7.2",
+   "law": "账面闭环：修复单逐单 claim→execute→submit→verify、md 追加 FIXED 段、三向对照一致；被拒原文逐字进报告",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger_check.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.8.1",
+   "law": "驱动面与顺序自计：本轮新写脚本硬码 lint 为零并配注入对照；报告渲染次数与「渲染后未再改」正面测",
+   "artifact": ".fist-loop-20260927/fix_r4_drivers_lint.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r85.8.2",
+   "law": "驱动面与顺序自计：本轮新写脚本硬码 lint 为零并配注入对照；报告渲染次数与「渲染后未再改」正面测",
+   "artifact": ".fist-loop-20260927/fix_r4_render_order.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r85",
+ "stage": "R4-修复"
+}

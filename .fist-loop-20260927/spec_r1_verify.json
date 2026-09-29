@@ -1,0 +1,21 @@
+{
+ "key": "r1_verify",
+ "tag": "[loop:20260927-loop:R1-验证]",
+ "assignee": "cypy-verifier",
+ "difficulty": "难",
+ "description": "[loop:20260927-loop:R1-验证] 验证模式（verify）R1：对 R1-修复 后的产品码做全量取证——pytest 全量、自研套件、端到端基准、CLI/构建自检、规范符合性、修复面真编译复核、账本对账、脏工作树定性。开关 omega 强验证/laya/issue_up/call_log 全开，门禁不绿不得 verify。",
+ "laws": [
+  "pytest 全量实跑并与 1854 基线对齐",
+  "自研套件与端到端基准复跑",
+  "修复面真编译复核（.pyd 运行期与 CLI rc）",
+  "CLI 与构建启动自检（三命令 + import 身份探针）",
+  "规范符合性检查（PROJECT-SPEC/SYNTAX 对照）",
+  "冻结文档与既有测试未被改动的取证",
+  "账本一致性与脏工作树定性",
+  "验证报告与转结"
+ ],
+ "fingerprint": {
+  "必须": "pytest 全量 0 failed 且通过数 ≥1854（含本轮新增 8 条锁）；自研套件 47/47；e2e_golden 25/25；BUG-30 的 .pyd 运行期 type 为 float、BUG-33/38 的 CLI rc 有实测；PROJECT-SPEC/ 与 SYNTAX/ 零改动（git diff 取证）；报告落 memory/reviews/",
+  "禁止": "跳过任何一套测试体系；把「单文件绿」当「全量绿」；动冻结语义；git push/删文件/清理脏工作树；用弱化断言换取通过"
+ }
+}

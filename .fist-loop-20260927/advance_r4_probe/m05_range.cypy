@@ -1,0 +1,9 @@
+let score: int = 75
+
+def main() -> int:
+    match score:
+        case 0..60:
+            print("Fail")
+        case 60..100:
+            print("Pass")
+    return 0

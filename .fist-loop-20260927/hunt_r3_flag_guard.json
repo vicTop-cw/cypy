@@ -1,0 +1,7 @@
+{
+ "command": "python -X utf8 .fist-loop-20260927/close_stage_generic.py close_r3_hunt.json memory/reviews/20260927.20.55.00.md --dry-run",
+ "refused": true,
+ "stdout_verbatim": "REFUSE — 本驱动不收旗标，收到 ['--dry-run']；要预检请读 close 前打印的清单",
+ "rpc_sent": false,
+ "note": "这条对照在驱动加守卫之后跑；加守卫之前同一条命令把 16 叶链真实跑完并落库（见 §五 第 13 条）"
+}

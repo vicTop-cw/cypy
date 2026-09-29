@@ -1,0 +1,359 @@
+{
+  "head": "17d68b4",
+  "summary_line": "======================== 23 failed, 1 passed in 0.75s =========================",
+  "module_paths": {
+    "cypyc": "E:\\IDEProjects\\AI\\Cypy\\.fist-polish-20260926\\_lockproof_head\\cypyc\\__init__.py",
+    "nogil": "E:\\IDEProjects\\AI\\Cypy\\.fist-polish-20260926\\_lockproof_head\\cypy_bridge\\nogil.py",
+    "nogil_is_module": true
+  },
+  "product_py_differing": 56,
+  "collected": 24,
+  "rows": [
+    {
+      "bug": "BUG-1",
+      "cases": 1,
+      "distinct_functions": 1,
+      "lock_cases": 1,
+      "red_on_head": 1,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug1_clear_cache_does_not_claim_success_when_remove_fails",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug1_clear_cache_does_not_claim_success_when_remove_fails",
+          "on_head": "FAILED",
+          "role": "lock"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-2",
+      "cases": 2,
+      "distinct_functions": 2,
+      "lock_cases": 2,
+      "red_on_head": 2,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug2_bridge_build_subprocess_run_passes_timeout",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug2_bridge_build_subprocess_run_passes_timeout",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug2_build_timeout_is_shared_with_sibling_callers",
+          "on_head": "FAILED",
+          "role": "lock"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-3",
+      "cases": 1,
+      "distinct_functions": 1,
+      "lock_cases": 1,
+      "red_on_head": 1,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug3_reparse_failure_is_reported_not_swallowed",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug3_reparse_failure_is_reported_not_swallowed",
+          "on_head": "FAILED",
+          "role": "lock"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-4",
+      "cases": 5,
+      "distinct_functions": 1,
+      "lock_cases": 5,
+      "red_on_head": 5,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug4_transformer_recursion_is_outside_broad_try[defer]",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug4_transformer_recursion_is_outside_broad_try[defer]",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug4_transformer_recursion_is_outside_broad_try[enum]",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug4_transformer_recursion_is_outside_broad_try[generic]",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug4_transformer_recursion_is_outside_broad_try[struct]",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug4_transformer_recursion_is_outside_broad_try[trait]",
+          "on_head": "FAILED",
+          "role": "lock"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-5",
+      "cases": 2,
+      "distinct_functions": 2,
+      "lock_cases": 2,
+      "red_on_head": 2,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug5_state_restore_reports_setattr_failure",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug5_state_restore_reports_setattr_failure",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug5_state_snapshot_reports_getattr_failure",
+          "on_head": "FAILED",
+          "role": "lock"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-6",
+      "cases": 2,
+      "distinct_functions": 2,
+      "lock_cases": 2,
+      "red_on_head": 2,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug6_cypy_file_with_bom_is_still_detected",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug6_cypy_file_with_bom_is_still_detected",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug6_unreadable_cypy_candidate_warns",
+          "on_head": "FAILED",
+          "role": "lock"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-7",
+      "cases": 2,
+      "distinct_functions": 2,
+      "lock_cases": 2,
+      "red_on_head": 2,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug7_corrupt_bridge_manifest_warns",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug7_corrupt_bridge_manifest_warns",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug7_corrupt_manifest_warns",
+          "on_head": "FAILED",
+          "role": "lock"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-8",
+      "cases": 1,
+      "distinct_functions": 1,
+      "lock_cases": 1,
+      "red_on_head": 1,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug8_macro_reparse_degradation_is_reported",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug8_macro_reparse_degradation_is_reported",
+          "on_head": "FAILED",
+          "role": "lock"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-9",
+      "cases": 2,
+      "distinct_functions": 2,
+      "lock_cases": 2,
+      "red_on_head": 2,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug9_module_state_restore_warns",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug9_module_state_restore_warns",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug9_module_state_snapshot_warns",
+          "on_head": "FAILED",
+          "role": "lock"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-10",
+      "cases": 2,
+      "distinct_functions": 2,
+      "lock_cases": 2,
+      "red_on_head": 2,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug10_cache_update_parse_failure_warns",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug10_cache_update_parse_failure_warns",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug10_dependency_analysis_parse_failure_warns",
+          "on_head": "FAILED",
+          "role": "lock"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-11",
+      "cases": 2,
+      "distinct_functions": 2,
+      "lock_cases": 1,
+      "red_on_head": 1,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [
+        "test_bug11_type_level_name_collision_is_reported"
+      ],
+      "locks": true,
+      "lock_case": "test_bug11_project_type_check_reports_scope_errors",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug11_project_type_check_reports_scope_errors",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug11_type_level_name_collision_is_reported",
+          "on_head": "FAILED",
+          "role": "confound"
+        }
+      ]
+    },
+    {
+      "bug": "BUG-12",
+      "cases": 2,
+      "distinct_functions": 2,
+      "lock_cases": 1,
+      "red_on_head": 1,
+      "green_on_head": 0,
+      "controls_red": [],
+      "confounded_red": [],
+      "locks": true,
+      "lock_case": "test_bug12_gilstate_exit_does_not_replace_user_exception",
+      "unexplained_green": [],
+      "detail": [
+        {
+          "case": "test_bug12_gilstate_exit_does_not_replace_user_exception",
+          "on_head": "FAILED",
+          "role": "lock"
+        },
+        {
+          "case": "test_bug12_gilstate_exit_still_restores_state",
+          "on_head": "PASSED",
+          "role": "control"
+        }
+      ]
+    }
+  ],
+  "no_lock": [],
+  "controls": {
+    "test_bug12_gilstate_exit_still_restores_state": "GilState 退出恢复 GIL 的本职行为对照"
+  },
+  "confounds": {
+    "test_bug11_type_level_name_collision_is_reported": "HEAD 的 parser/scope_analyzer 里 subtype 出现 0 次（未提交的 R2 特性），该用例在 HEAD 上以 'No AST for module' 变红 = 混因"
+  },
+  "subtype_confound_evidence": {
+    "head": {
+      "cypyc/parser/parser.py": 0,
+      "cypyc/analyzer/scope_analyzer.py": 0
+    },
+    "worktree": {
+      "cypyc/parser/parser.py": 23,
+      "cypyc/analyzer/scope_analyzer.py": 9
+    }
+  },
+  "returncode": 1,
+  "one_line_tracebacks": [
+    "FAILED tests/test_polish_20260926.py::test_bug1_clear_cache_does_not_claim_success_when_remove_fails",
+    "FAILED tests/test_polish_20260926.py::test_bug2_bridge_build_subprocess_run_passes_timeout",
+    "FAILED tests/test_polish_20260926.py::test_bug2_build_timeout_is_shared_with_sibling_callers",
+    "FAILED tests/test_polish_20260926.py::test_bug3_reparse_failure_is_reported_not_swallowed",
+    "FAILED tests/test_polish_20260926.py::test_bug4_transformer_recursion_is_outside_broad_try[defer]",
+    "FAILED tests/test_polish_20260926.py::test_bug4_transformer_recursion_is_outside_broad_try[enum]",
+    "FAILED tests/test_polish_20260926.py::test_bug4_transformer_recursion_is_outside_broad_try[generic]",
+    "FAILED tests/test_polish_20260926.py::test_bug4_transformer_recursion_is_outside_broad_try[struct]",
+    "FAILED tests/test_polish_20260926.py::test_bug4_transformer_recursion_is_outside_broad_try[trait]",
+    "FAILED tests/test_polish_20260926.py::test_bug5_state_snapshot_reports_getattr_failure",
+    "FAILED tests/test_polish_20260926.py::test_bug5_state_restore_reports_setattr_failure",
+    "FAILED tests/test_polish_20260926.py::test_bug6_cypy_file_with_bom_is_still_detected",
+    "FAILED tests/test_polish_20260926.py::test_bug6_unreadable_cypy_candidate_warns",
+    "FAILED tests/test_polish_20260926.py::test_bug7_corrupt_manifest_warns - Asse...",
+    "FAILED tests/test_polish_20260926.py::test_bug7_corrupt_bridge_manifest_warns",
+    "FAILED tests/test_polish_20260926.py::test_bug8_macro_reparse_degradation_is_reported",
+    "FAILED tests/test_polish_20260926.py::test_bug9_module_state_snapshot_warns",
+    "FAILED tests/test_polish_20260926.py::test_bug9_module_state_restore_warns - ...",
+    "FAILED tests/test_polish_20260926.py::test_bug10_dependency_analysis_parse_failure_warns",
+    "FAILED tests/test_polish_20260926.py::test_bug10_cache_update_parse_failure_warns",
+    "FAILED tests/test_polish_20260926.py::test_bug11_project_type_check_reports_scope_errors",
+    "FAILED tests/test_polish_20260926.py::test_bug11_type_level_name_collision_is_reported",
+    "FAILED tests/test_polish_20260926.py::test_bug12_gilstate_exit_does_not_replace_user_exception"
+  ],
+  "stderr_tail": ""
+}

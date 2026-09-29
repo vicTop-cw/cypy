@@ -1,0 +1,550 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r46.1.1",
+   "law": "BUG-30 生成码补隐式 <double> 强转",
+   "artifact": "tests/test_loop_20260927_fix.py",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.1.2",
+   "law": "BUG-30 生成码补隐式 <double> 强转",
+   "artifact": ".fist-loop-20260927/golden_diff_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.2.1",
+   "law": "BUG-31 bridge 宽度表口径措辞",
+   "artifact": "cypy_bridge/types.py",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.2.2",
+   "law": "BUG-31 bridge 宽度表口径措辞",
+   "artifact": "tests/test_loop_20260927_fix.py",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.3.1",
+   "law": "BUG-33 未闭合字符串必须诊断",
+   "artifact": "cypyc/parser/lexer.py",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.3.2",
+   "law": "BUG-33 未闭合字符串必须诊断",
+   "artifact": "tests/test_loop_20260927_fix.py",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.4.1",
+   "law": "BUG-38 词法器 EOF 尾随空白不得崩",
+   "artifact": "cypyc/parser/lexer.py",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.4.2",
+   "law": "BUG-38 词法器 EOF 尾随空白不得崩",
+   "artifact": "tests/test_loop_20260927_fix.py",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.5.1",
+   "law": "每单锁死回归 + 回退树证红",
+   "artifact": ".fist-loop-20260927/lockproof_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.5.2",
+   "law": "每单锁死回归 + 回退树证红",
+   "artifact": "tests/test_loop_20260927_fix.py",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.6.1",
+   "law": "端到端基准先快照再重注册",
+   "artifact": ".fist-loop-20260927/golden_update_r1.log",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.6.2",
+   "law": "端到端基准先快照再重注册",
+   "artifact": ".fist-loop-20260927/goldendiff_r1.py",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.7.1",
+   "law": "双套基线复跑与账本 FIXED 留档",
+   "artifact": ".fist-loop-20260927/run_baselines_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.7.2",
+   "law": "双套基线复跑与账本 FIXED 留档",
+   "artifact": "memory/bugs.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.8.1",
+   "law": "修复报告与转结",
+   "artifact": "memory/reviews/20260927.11.55.55.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r46.8.2",
+   "law": "修复报告与转结",
+   "artifact": ".fist-loop-20260927/loop_progress.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  }
+ ],
+ "failed": [],
+ "root_status": "拆分中"
+}

@@ -1,0 +1,230 @@
+{
+ "started": "2026-09-28T01:34:01+00:00",
+ "spec": "report_spec_r4_verify.json",
+ "report_name": "20260928.09.25.00",
+ "window_start_utc": "2026-09-27T23:40:14",
+ "gates_total": 152,
+ "gates_pass": 141,
+ "gates_self_deferred": [
+  "⑨-13",
+  "⑨-14",
+  "⑨-15",
+  "⑨-16",
+  "⑨-17",
+  "⑨-18",
+  "⑨-19",
+  "⑨-26",
+  "⑨-27",
+  "⑨-28",
+  "⑨-29"
+ ],
+ "gates_fail": [],
+ "gates_by_law": {
+  "1": 11,
+  "2": 5,
+  "3": 12,
+  "4": 10,
+  "5": 17,
+  "6": 20,
+  "7": 14,
+  "8": 30
+ },
+ "artifacts_declared": 14,
+ "section10_items": {
+  "declared": 20,
+  "actual": 20
+ },
+ "placeholders_total": 162,
+ "placeholders_bad": [],
+ "placeholders_self_pending_first_run": [
+  "verify_r4_self_audit.json|gates_pass",
+  "verify_r4_self_audit.json|gates_total",
+  "verify_r4_self_audit.json|gates_self_deferred",
+  "verify_r4_self_audit.json|placeholders_total",
+  "verify_r4_self_audit.json|placeholders_bad",
+  "verify_r4_self_audit.json|fixpoint.converged",
+  "verify_r4_self_audit.json|fixpoint.mismatch",
+  "verify_r4_self_audit.json|fixpoint.actual",
+  "verify_r4_self_audit.json|fixpoint.embedded",
+  "verify_r4_self_audit.json|fixpoint.canary_drift_caught",
+  "verify_r4_self_audit.json|stale_artifacts"
+ ],
+ "placeholders_empty": [
+  "verify_r4_appendixC.json|unverified",
+  "verify_r4_baselines.json|radius.docs",
+  "verify_r4_baselines.json|radius.frozen",
+  "verify_r4_baselines.json|radius.product",
+  "verify_r4_baselines.json|radius.tests",
+  "verify_r4_callsite.json|failed_rows",
+  "verify_r4_callsite.json|internal_repr_leaks",
+  "verify_r4_compile.json|repo_new_files",
+  "verify_r4_irreversible.json|git_meta_written_this_stage",
+  "verify_r4_ledger3way.json|undisclosed_half_open",
+  "verify_r4_matrix.json|broken_import",
+  "verify_r4_matrix.json|rc_mismatch"
+ ],
+ "stale_artifacts": [
+  {
+   "artifact": ".fist-loop-20260927/verify_r4_file_bugs.json",
+   "reason": "出单之后脚本只做过一次 E501 折行（同一字面量拆成两段拼接，refuse 文案逐字不变）；不重跑——重跑会把 BUG-71/72/73 再落一遍，账本污染是不可逆的。这条例外由 verify_r4_self_audit.py 的同源谓词当场判出并在此披露，同时 §九 的入账数由 sqlite 行数增量（66→69）与 md 卡号连续性两路独立复核，不依赖该脚本的当前字节"
+  }
+ ],
+ "stale_canary_caught": true,
+ "fixpoint": {
+  "close_spec": "close_r4_verify.json",
+  "keys": [
+   "gates_pass",
+   "gates_total",
+   "placeholders_total",
+   "stale_artifacts_len"
+  ],
+  "mismatch": [],
+  "converged": true,
+  "embedded": {
+   "gates_pass": 141,
+   "gates_total": 152,
+   "placeholders_total": 162,
+   "stale_artifacts_len": 1,
+   "at_utc": "2026-09-28T01:24:23+00:00"
+  },
+  "actual": {
+   "gates_pass": 141,
+   "gates_total": 152,
+   "placeholders_total": 162,
+   "stale_artifacts_len": 1
+  },
+  "note": "不动点已推到：收口 spec 引用的格数与其后一次自证实测逐格相同",
+  "canary_drift_caught": true
+ },
+ "body": ".fist-loop-20260927/r4_verify_body.md",
+ "self_checks": [
+  {
+   "label": "门禁 label 不重复",
+   "got": [],
+   "want": [],
+   "why": "按 label 计数",
+   "ok": true
+  },
+  {
+   "label": "不许有 min=0 的恒真门",
+   "got": [],
+   "want": [],
+   "why": "min=0 永远成立",
+   "ok": true
+  },
+  {
+   "label": "每道门禁都自带可判谓词",
+   "got": [],
+   "want": [],
+   "why": "缺 min/equals/truthy",
+   "ok": true
+  },
+  {
+   "label": "散文占位全部解析成功",
+   "got": [],
+   "want": [],
+   "why": "件在盘上且路径可解",
+   "ok": true
+  },
+  {
+   "label": "空值占位必须由 equals 为空值的门禁作证",
+   "got": [],
+   "want": [],
+   "why": "空值 12 个，无佐证 0 个",
+   "ok": true
+  },
+  {
+   "label": "散文点名的件都在 artifacts 清单里",
+   "got": [],
+   "want": [],
+   "why": "按 basename 对齐",
+   "ok": true
+  },
+  {
+   "label": "artifacts 清单里的件都在盘上",
+   "got": [],
+   "want": [],
+   "why": "存在性（我这一份件在本轮第一次跑时本就还不存在）",
+   "ok": true
+  },
+  {
+   "label": "artifacts 清单不许有重复",
+   "got": [],
+   "want": [],
+   "why": "重复声明=口径含糊",
+   "ok": true
+  },
+  {
+   "label": "被引用的件不许带 refuse",
+   "got": [],
+   "want": [],
+   "why": "件里非空=门禁不绿",
+   "ok": true
+  },
+  {
+   "label": "本环件的时间戳不许早于环节窗口",
+   "got": [],
+   "want": [],
+   "why": "旧件当本轮证据",
+   "ok": true
+  },
+  {
+   "label": "未披露的过期件为零",
+   "got": [],
+   "want": [],
+   "why": "披露位=报告里要逐条写的例外",
+   "ok": true
+  },
+  {
+   "label": "canary：过期件必须被抓到",
+   "got": true,
+   "want": true,
+   "why": "py=1790559241306785300 json=1790559236306121100",
+   "ok": true
+  },
+  {
+   "label": "canary 不误抓：刚写出的件不许被判过期",
+   "got": false,
+   "want": false,
+   "why": "py=1790559241304345900 json=1790559241304345900",
+   "ok": true
+  },
+  {
+   "label": "合成违例目录清干净",
+   "got": [],
+   "want": [],
+   "why": "残留=下一轮把它当真件",
+   "ok": true
+  },
+  {
+   "label": "每条法都至少一道门禁",
+   "got": [],
+   "want": [],
+   "why": "{\"1\": 11, \"2\": 5, \"3\": 12, \"4\": 10, \"5\": 17, \"6\": 20, \"7\": 14, \"8\": 30}",
+   "ok": true
+  },
+  {
+   "label": "法声明的每件证据都有门禁认领（预检查的=报告认的）",
+   "got": [],
+   "want": [],
+   "why": "按 basename 对齐",
+   "ok": true
+  },
+  {
+   "label": "法声明的 needle 必须真在件里",
+   "got": [],
+   "want": [],
+   "why": "件内 JSON 全文搜",
+   "ok": true
+  },
+  {
+   "label": "§十 标题声明条数 == 正文编号条数",
+   "got": 20,
+   "want": 20,
+   "why": "## 十、本环我自己的失效（20 条，逐条：现象 → 我错在哪 → 改成什么才承重）",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T01:34:01+00:00"
+}

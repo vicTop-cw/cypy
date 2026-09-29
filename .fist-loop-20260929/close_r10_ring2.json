@@ -1,0 +1,272 @@
+{
+ "started_z": "2026-09-29T07:00:36Z",
+ "nodes": {
+  "T0r116.1.1": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.1.2": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.1.3": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.2.1": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.2.2": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.2.3": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.3.1": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.3.2": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.3.3": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.4.1": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.4.2": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  },
+  "T0r116.4.3": {
+   "before": "待验收",
+   "steps": {
+    "reject": "ok",
+    "retry": "ok",
+    "execute": "ok",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "tail": " cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "result_verify": "ok",
+    "submit": "ok",
+    "verify": "ok"
+   },
+   "before2": "已打回",
+   "after": "已完成"
+  }
+ },
+ "refusals": [],
+ "benign": [],
+ "branches": {
+  "T0r116.1": {
+   "before": "待验收",
+   "steps": {
+    "result_verify": "ok",
+    "verify": "ok"
+   },
+   "after": "已完成"
+  },
+  "T0r116.2": {
+   "before": "待验收",
+   "steps": {
+    "result_verify": "ok",
+    "verify": "ok"
+   },
+   "after": "已完成"
+  },
+  "T0r116.3": {
+   "before": "待验收",
+   "steps": {
+    "result_verify": "ok",
+    "verify": "ok"
+   },
+   "after": "已完成"
+  },
+  "T0r116.4": {
+   "before": "待验收",
+   "steps": {
+    "result_verify": "ok",
+    "verify": "ok"
+   },
+   "after": "已完成"
+  }
+ },
+ "root": {
+  "before": "待验收",
+  "steps": {
+   "result_verify": "ok",
+   "verify": "ok"
+  },
+  "after": "已完成"
+ },
+ "loop_tick": "{\"__error__\": {\"code\": -32000, \"message\": \"loop_tick: 参数名不被接受 「namespace」应为「name」（该工具声明的参数：name, project_health_grade, blocked_tasks, current_test_count, current_open_bug_count）。BUG-23：这类键过去被静默忽略，任务会落进默认命名空间而返回体看不出来。\"}}",
+ "rollup": {
+  "已完成": 17
+ },
+ "call_log_error_rows": 0,
+ "calls": 95,
+ "root_status": "已完成"
+}

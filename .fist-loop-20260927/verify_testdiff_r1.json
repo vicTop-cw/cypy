@@ -1,0 +1,863 @@
+{
+ "refuse": [],
+ "renamed_sites": 3,
+ "renamed_sites_new_files": 4,
+ "stale_old_name": [],
+ "old_name_control": {
+  "live_use_caught": true,
+  "lock_text_caught": false,
+  "unstripped_would_false_alarm": true
+ },
+ "tracked_modified": [
+  "tests/test_boundary_comprehensive.py",
+  "tests/test_bridge_integration.py",
+  "tests/test_bridge_library.py",
+  "tests/test_cli.py",
+  "tests/test_codegen.py",
+  "tests/test_codegen_cast.py",
+  "tests/test_codegen_new_features.py",
+  "tests/test_comptime_func.py",
+  "tests/test_hook.py",
+  "tests/test_macro_expansion.py",
+  "tests/test_macro_features.py",
+  "tests/test_new_features_boundary.py",
+  "tests/test_ownership.py",
+  "tests/test_project_compiler.py",
+  "tests/test_stage3.py",
+  "tests/test_union_type_checking.py"
+ ],
+ "per_file": {
+  "tests/test_analyzer.py": {
+   "head": null,
+   "now": {
+    "test_defs": 6,
+    "asserts": 12,
+    "markers": 0
+   }
+  },
+  "tests/test_benchmark.py": {
+   "head": null,
+   "now": {
+    "test_defs": 7,
+    "asserts": 10,
+    "markers": 0
+   }
+  },
+  "tests/test_boundary_comprehensive.py": {
+   "head": {
+    "test_defs": 122,
+    "asserts": 1,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 128,
+    "asserts": 9,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_bridge_integration.py": {
+   "head": {
+    "test_defs": 35,
+    "asserts": 48,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 39,
+    "asserts": 51,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_bridge_library.py": {
+   "head": {
+    "test_defs": 90,
+    "asserts": 116,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 120,
+    "asserts": 181,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_byte_diff_runner.py": {
+   "head": null,
+   "now": {
+    "test_defs": 3,
+    "asserts": 3,
+    "markers": 0
+   }
+  },
+  "tests/test_cli.py": {
+   "head": {
+    "test_defs": 8,
+    "asserts": 8,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 10,
+    "asserts": 10,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_codegen.py": {
+   "head": {
+    "test_defs": 6,
+    "asserts": 14,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 6,
+    "asserts": 14,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_codegen_async.py": {
+   "head": null,
+   "now": {
+    "test_defs": 2,
+    "asserts": 15,
+    "markers": 0
+   }
+  },
+  "tests/test_codegen_async_cython.py": {
+   "head": null,
+   "now": {
+    "test_defs": 7,
+    "asserts": 11,
+    "markers": 0
+   }
+  },
+  "tests/test_codegen_cast.py": {
+   "head": {
+    "test_defs": 5,
+    "asserts": 6,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 5,
+    "asserts": 6,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_codegen_concurrent.py": {
+   "head": null,
+   "now": {
+    "test_defs": 2,
+    "asserts": 5,
+    "markers": 0
+   }
+  },
+  "tests/test_codegen_error_handling.py": {
+   "head": null,
+   "now": {
+    "test_defs": 19,
+    "asserts": 49,
+    "markers": 0
+   }
+  },
+  "tests/test_codegen_guard.py": {
+   "head": null,
+   "now": {
+    "test_defs": 19,
+    "asserts": 39,
+    "markers": 0
+   }
+  },
+  "tests/test_codegen_new_features.py": {
+   "head": {
+    "test_defs": 21,
+    "asserts": 54,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 24,
+    "asserts": 60,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_codegen_simd.py": {
+   "head": null,
+   "now": {
+    "test_defs": 4,
+    "asserts": 10,
+    "markers": 0
+   }
+  },
+  "tests/test_codegen_verification.py": {
+   "head": null,
+   "now": {
+    "test_defs": 20,
+    "asserts": 47,
+    "markers": 0
+   }
+  },
+  "tests/test_comptime_func.py": {
+   "head": {
+    "test_defs": 18,
+    "asserts": 32,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 24,
+    "asserts": 43,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_demos.py": {
+   "head": null,
+   "now": {
+    "test_defs": 18,
+    "asserts": 27,
+    "markers": 1
+   }
+  },
+  "tests/test_duck.py": {
+   "head": null,
+   "now": {
+    "test_defs": 42,
+    "asserts": 84,
+    "markers": 0
+   }
+  },
+  "tests/test_dynamic_awareness.py": {
+   "head": null,
+   "now": {
+    "test_defs": 12,
+    "asserts": 22,
+    "markers": 0
+   }
+  },
+  "tests/test_e2e_new_features.py": {
+   "head": null,
+   "now": {
+    "test_defs": 17,
+    "asserts": 33,
+    "markers": 0
+   }
+  },
+  "tests/test_extractor_pattern.py": {
+   "head": null,
+   "now": {
+    "test_defs": 22,
+    "asserts": 61,
+    "markers": 0
+   }
+  },
+  "tests/test_find_bug_sqlalchemy_core.py": {
+   "head": null,
+   "now": {
+    "test_defs": 4,
+    "asserts": 7,
+    "markers": 0
+   }
+  },
+  "tests/test_find_bug_tenacity.py": {
+   "head": null,
+   "now": {
+    "test_defs": 9,
+    "asserts": 21,
+    "markers": 0
+   }
+  },
+  "tests/test_for_unpacking.py": {
+   "head": null,
+   "now": {
+    "test_defs": 11,
+    "asserts": 15,
+    "markers": 0
+   }
+  },
+  "tests/test_generic_types.py": {
+   "head": null,
+   "now": {
+    "test_defs": 10,
+    "asserts": 2,
+    "markers": 0
+   }
+  },
+  "tests/test_global_nonlocal.py": {
+   "head": null,
+   "now": {
+    "test_defs": 10,
+    "asserts": 10,
+    "markers": 0
+   }
+  },
+  "tests/test_golden_anchor_probes.py": {
+   "head": null,
+   "now": {
+    "test_defs": 8,
+    "asserts": 11,
+    "markers": 0
+   }
+  },
+  "tests/test_guarded_strategy.py": {
+   "head": null,
+   "now": {
+    "test_defs": 5,
+    "asserts": 15,
+    "markers": 0
+   }
+  },
+  "tests/test_hook.py": {
+   "head": {
+    "test_defs": 2,
+    "asserts": 3,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 8,
+    "asserts": 14,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_hot_reload.py": {
+   "head": null,
+   "now": {
+    "test_defs": 16,
+    "asserts": 58,
+    "markers": 0
+   }
+  },
+  "tests/test_implicit_strategy.py": {
+   "head": null,
+   "now": {
+    "test_defs": 2,
+    "asserts": 2,
+    "markers": 0
+   }
+  },
+  "tests/test_incremental.py": {
+   "head": null,
+   "now": {
+    "test_defs": 27,
+    "asserts": 92,
+    "markers": 0
+   }
+  },
+  "tests/test_integration_full_stack.py": {
+   "head": null,
+   "now": {
+    "test_defs": 14,
+    "asserts": 26,
+    "markers": 0
+   }
+  },
+  "tests/test_integration_type_system.py": {
+   "head": null,
+   "now": {
+    "test_defs": 25,
+    "asserts": 16,
+    "markers": 0
+   }
+  },
+  "tests/test_is_not_regression.py": {
+   "head": null,
+   "now": {
+    "test_defs": 3,
+    "asserts": 8,
+    "markers": 0
+   }
+  },
+  "tests/test_judge_strictness.py": {
+   "head": null,
+   "now": {
+    "test_defs": 18,
+    "asserts": 41,
+    "markers": 0
+   }
+  },
+  "tests/test_lexer_new_keywords.py": {
+   "head": null,
+   "now": {
+    "test_defs": 5,
+    "asserts": 20,
+    "markers": 0
+   }
+  },
+  "tests/test_loop_20260927_fix.py": {
+   "head": null,
+   "now": {
+    "test_defs": 8,
+    "asserts": 19,
+    "markers": 0
+   }
+  },
+  "tests/test_lz_features.py": {
+   "head": null,
+   "now": {
+    "test_defs": 12,
+    "asserts": 18,
+    "markers": 0
+   }
+  },
+  "tests/test_lz_type_mapping.py": {
+   "head": null,
+   "now": {
+    "test_defs": 17,
+    "asserts": 22,
+    "markers": 0
+   }
+  },
+  "tests/test_macro.py": {
+   "head": null,
+   "now": {
+    "test_defs": 8,
+    "asserts": 11,
+    "markers": 0
+   }
+  },
+  "tests/test_macro_expansion.py": {
+   "head": {
+    "test_defs": 5,
+    "asserts": 9,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 20,
+    "asserts": 41,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_macro_features.py": {
+   "head": {
+    "test_defs": 19,
+    "asserts": 26,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 25,
+    "asserts": 34,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_module_magic_attrs.py": {
+   "head": null,
+   "now": {
+    "test_defs": 5,
+    "asserts": 18,
+    "markers": 0
+   }
+  },
+  "tests/test_named_constraints.py": {
+   "head": null,
+   "now": {
+    "test_defs": 27,
+    "asserts": 46,
+    "markers": 0
+   }
+  },
+  "tests/test_never_type.py": {
+   "head": null,
+   "now": {
+    "test_defs": 3,
+    "asserts": 3,
+    "markers": 0
+   }
+  },
+  "tests/test_new_features.py": {
+   "head": null,
+   "now": {
+    "test_defs": 10,
+    "asserts": 15,
+    "markers": 0
+   }
+  },
+  "tests/test_new_features_boundary.py": {
+   "head": {
+    "test_defs": 18,
+    "asserts": 28,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 21,
+    "asserts": 36,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_new_syntax_boundary.py": {
+   "head": null,
+   "now": {
+    "test_defs": 13,
+    "asserts": 29,
+    "markers": 0
+   }
+  },
+  "tests/test_nominal_subtypes.py": {
+   "head": null,
+   "now": {
+    "test_defs": 31,
+    "asserts": 62,
+    "markers": 0
+   }
+  },
+  "tests/test_ownership.py": {
+   "head": {
+    "test_defs": 20,
+    "asserts": 31,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 30,
+    "asserts": 52,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_parser.py": {
+   "head": null,
+   "now": {
+    "test_defs": 9,
+    "asserts": 25,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_async.py": {
+   "head": null,
+   "now": {
+    "test_defs": 2,
+    "asserts": 11,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_buildblock.py": {
+   "head": null,
+   "now": {
+    "test_defs": 4,
+    "asserts": 23,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_comptime.py": {
+   "head": null,
+   "now": {
+    "test_defs": 5,
+    "asserts": 11,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_go.py": {
+   "head": null,
+   "now": {
+    "test_defs": 4,
+    "asserts": 15,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_guard.py": {
+   "head": null,
+   "now": {
+    "test_defs": 5,
+    "asserts": 17,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_integration.py": {
+   "head": null,
+   "now": {
+    "test_defs": 8,
+    "asserts": 32,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_macro.py": {
+   "head": null,
+   "now": {
+    "test_defs": 5,
+    "asserts": 11,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_match.py": {
+   "head": null,
+   "now": {
+    "test_defs": 18,
+    "asserts": 97,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_pipe.py": {
+   "head": null,
+   "now": {
+    "test_defs": 5,
+    "asserts": 31,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_spawn.py": {
+   "head": null,
+   "now": {
+    "test_defs": 4,
+    "asserts": 15,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_suite.py": {
+   "head": null,
+   "now": {
+    "test_defs": 5,
+    "asserts": 30,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_test.py": {
+   "head": null,
+   "now": {
+    "test_defs": 10,
+    "asserts": 35,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_union.py": {
+   "head": null,
+   "now": {
+    "test_defs": 5,
+    "asserts": 20,
+    "markers": 0
+   }
+  },
+  "tests/test_parser_vec.py": {
+   "head": null,
+   "now": {
+    "test_defs": 4,
+    "asserts": 17,
+    "markers": 0
+   }
+  },
+  "tests/test_pattern_matching.py": {
+   "head": null,
+   "now": {
+    "test_defs": 76,
+    "asserts": 428,
+    "markers": 0
+   }
+  },
+  "tests/test_polish_20260926.py": {
+   "head": null,
+   "now": {
+    "test_defs": 20,
+    "asserts": 38,
+    "markers": 1
+   }
+  },
+  "tests/test_polish_20260926_pass7.py": {
+   "head": null,
+   "now": {
+    "test_defs": 32,
+    "asserts": 57,
+    "markers": 0
+   }
+  },
+  "tests/test_preprocessor.py": {
+   "head": null,
+   "now": {
+    "test_defs": 26,
+    "asserts": 25,
+    "markers": 0
+   }
+  },
+  "tests/test_project_compiler.py": {
+   "head": {
+    "test_defs": 6,
+    "asserts": 15,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 24,
+    "asserts": 60,
+    "markers": 1
+   },
+   "shrunk": false
+  },
+  "tests/test_slice_codegen.py": {
+   "head": null,
+   "now": {
+    "test_defs": 12,
+    "asserts": 12,
+    "markers": 0
+   }
+  },
+  "tests/test_square_bracket_types.py": {
+   "head": null,
+   "now": {
+    "test_defs": 7,
+    "asserts": 11,
+    "markers": 0
+   }
+  },
+  "tests/test_stage2.py": {
+   "head": null,
+   "now": {
+    "test_defs": 8,
+    "asserts": 15,
+    "markers": 0
+   }
+  },
+  "tests/test_stage3.py": {
+   "head": {
+    "test_defs": 6,
+    "asserts": 9,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 6,
+    "asserts": 9,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_stage4.py": {
+   "head": null,
+   "now": {
+    "test_defs": 5,
+    "asserts": 1,
+    "markers": 0
+   }
+  },
+  "tests/test_stage5.py": {
+   "head": null,
+   "now": {
+    "test_defs": 8,
+    "asserts": 8,
+    "markers": 0
+   }
+  },
+  "tests/test_syntax_integration.py": {
+   "head": null,
+   "now": {
+    "test_defs": 55,
+    "asserts": 14,
+    "markers": 0
+   }
+  },
+  "tests/test_test_suite_harness.py": {
+   "head": null,
+   "now": {
+    "test_defs": 12,
+    "asserts": 43,
+    "markers": 0
+   }
+  },
+  "tests/test_trait_isinstance.py": {
+   "head": null,
+   "now": {
+    "test_defs": 13,
+    "asserts": 22,
+    "markers": 0
+   }
+  },
+  "tests/test_trait_system.py": {
+   "head": null,
+   "now": {
+    "test_defs": 11,
+    "asserts": 25,
+    "markers": 0
+   }
+  },
+  "tests/test_transformer.py": {
+   "head": null,
+   "now": {
+    "test_defs": 3,
+    "asserts": 5,
+    "markers": 0
+   }
+  },
+  "tests/test_type_checking.py": {
+   "head": null,
+   "now": {
+    "test_defs": 6,
+    "asserts": 5,
+    "markers": 0
+   }
+  },
+  "tests/test_type_inference.py": {
+   "head": null,
+   "now": {
+    "test_defs": 46,
+    "asserts": 47,
+    "markers": 0
+   }
+  },
+  "tests/test_type_promotion.py": {
+   "head": null,
+   "now": {
+    "test_defs": 19,
+    "asserts": 19,
+    "markers": 0
+   }
+  },
+  "tests/test_type_system_spec_integrity.py": {
+   "head": null,
+   "now": {
+    "test_defs": 4,
+    "asserts": 8,
+    "markers": 0
+   }
+  },
+  "tests/test_union_type.py": {
+   "head": null,
+   "now": {
+    "test_defs": 10,
+    "asserts": 11,
+    "markers": 0
+   }
+  },
+  "tests/test_union_type_checking.py": {
+   "head": {
+    "test_defs": 15,
+    "asserts": 17,
+    "markers": 0
+   },
+   "now": {
+    "test_defs": 22,
+    "asserts": 33,
+    "markers": 0
+   },
+   "shrunk": false
+  },
+  "tests/test_unit_test_modes.py": {
+   "head": null,
+   "now": {
+    "test_defs": 10,
+    "asserts": 31,
+    "markers": 0
+   }
+  },
+  "tests/test_varargs.py": {
+   "head": null,
+   "now": {
+    "test_defs": 8,
+    "asserts": 16,
+    "markers": 0
+   }
+  },
+  "tests/test_vec.py": {
+   "head": null,
+   "now": {
+    "test_defs": 9,
+    "asserts": 11,
+    "markers": 0
+   }
+  }
+ },
+ "shrink": {},
+ "negative_control": {
+  "file": "tests/test_boundary_comprehensive.py",
+  "removed_chars": 945,
+  "caught": true
+ },
+ "skip_marker_total": 3,
+ "note": "mtime 不做归因判据：test_bridge_library.py 对 HEAD 是 +427/-3，多出的 424 行来自 09-26 未提交轮次，本轮只改了 3 行"
+}

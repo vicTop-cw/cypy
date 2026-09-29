@@ -1,0 +1,18 @@
+
+struct Gate:
+    label: str
+
+    @staticmethod
+    def blank(n: int = 3) -> int:
+        return n
+
+    @classmethod
+    def make(cls, tag: str = "x") -> int:
+        return 1
+
+    def shout(self, times: int) -> int:
+        return times * 2
+
+def driver() -> int:
+    g: Gate = Gate("hi")
+    return Gate.blank(4) + g.shout(2)

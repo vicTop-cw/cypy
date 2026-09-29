@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r70.1.1",
+   "law": "修法台账：六件各有声明面、所选修法与被放弃的替代方案（含放弃理由）",
+   "artifact": ".fist-loop-20260927/fix_r3_plan.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.1.2",
+   "law": "修法台账：六件各有声明面、所选修法与被放弃的替代方案（含放弃理由）",
+   "artifact": ".fist-loop-20260927/fix_r3_plan.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.2.1",
+   "law": "修前对照快照在盘：同一批三态夹具，before 的 defect_present 必须仍为 true",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.2.2",
+   "law": "修前对照快照在盘：同一批三态夹具，before 的 defect_present 必须仍为 true",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.3.1",
+   "law": "翻转与声明侧：四件从现形翻到不现形，两件只修声明侧并给出字面变化的实据",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.3.2",
+   "law": "翻转与声明侧：四件从现形翻到不现形，两件只修声明侧并给出字面变化的实据",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.4.1",
+   "law": "回归锁三向对账：声明名 == 收集 == PASSED，每条 BUG 都有 pos 与配对对照",
+   "artifact": ".fist-loop-20260927/fix_r3_locks_inventory.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.4.2",
+   "law": "回归锁三向对账：声明名 == 收集 == PASSED，每条 BUG 都有 pos 与配对对照",
+   "artifact": ".fist-loop-20260927/fix_r3_locks_inventory.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.5.1",
+   "law": "锁非恒真：上一提交产品码树上逐组出红，且红因分栏（陈旧面 vs 行为差异）",
+   "artifact": ".fist-loop-20260927/fix_r3_head_proof.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.5.2",
+   "law": "锁非恒真：上一提交产品码树上逐组出红，且红因分栏（陈旧面 vs 行为差异）",
+   "artifact": ".fist-loop-20260927/fix_r3_head_proof.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.6.1",
+   "law": "三套判据体系同一时刻复算且只升不降，git 红线未动，半径全部归本单",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.6.2",
+   "law": "三套判据体系同一时刻复算且只升不降，git 红线未动，半径全部归本单",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.7.1",
+   "law": "账本 FIXED 段落账：六件各一段、条目标题行逐字未改、幂等守卫可重跑拒写",
+   "artifact": ".fist-loop-20260927/fix_r3_ledger.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.7.2",
+   "law": "账本 FIXED 段落账：六件各一段、条目标题行逐字未改、幂等守卫可重跑拒写",
+   "artifact": ".fist-loop-20260927/fix_r3_ledger.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.8.1",
+   "law": "报告与账本同步：三向对照（条目/FIXED 段/服务端 bug 任务）+ 孤儿按点名白名单",
+   "artifact": ".fist-loop-20260927/fix_r3_ledger3way.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r70.8.2",
+   "law": "报告与账本同步：三向对照（条目/FIXED 段/服务端 bug 任务）+ 孤儿按点名白名单",
+   "artifact": ".fist-loop-20260927/fix_r3_ledger3way.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r70",
+ "stage": "R3-修复"
+}

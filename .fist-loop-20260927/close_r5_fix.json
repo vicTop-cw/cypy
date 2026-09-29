@@ -1,0 +1,995 @@
+{
+ "key": "r5_fix",
+ "root_task": "T0r110",
+ "assignee": "cypy-fixer",
+ "stage": "R5-修复",
+ "forbid": "删除/放宽/skip/xfail 既有测试或改期望值迁就实现；改 PROJECT-SPEC/ 与 SYNTAX/ 冻结语义；git add/commit/push；删文件、重注册 golden；把没做的写成 done；把「文档没写」当成不修语义缺陷的理由",
+ "forbid_source": "spec_r5_fix.json:fingerprint.禁止（逐条反解，非本文件手打）",
+ "laws": [
+  {
+   "name": "认领表从盘上反解：本环 13 张新单 + 账本现数的未闭环旧单逐张分栏「本环可修／交人工／已闭环不复修」，每张单的归属理由逐条点名，交人工的一律不占修、不改账本状态",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_intake.json",
+     "planned_keys",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_intake.json",
+     "split_columns",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_intake.json",
+     "legacy_open_ids",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "锁先行：每单一条会失败的锁测试，跑到**断言级红**才动实现；红必须由「HEAD 产品码 + 本轮测试」在独立快照树里复算出来，不是收集错、不是夹具崩、不是 import 错",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_locks.json",
+     "lock_red_before",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_locks.json",
+     "lock_green_after",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_locks.json",
+     "assertion_level_red_only",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "根因合并修：改动点用 file:line + 符号引用正面指认；同族根因（binop 优先级表 / defer 搬迁 / comptime 求值契约 / builtin 名集 / argparse 播种 / hook 首行读取）共用同一处修法，不许一堆补丁冒充根因",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_rc.json",
+     "change_points",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_rc.json",
+     "merged_root_causes",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_rc.json",
+     "symbols_referenced",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "回退矩阵：每单把自己的改动摘回 HEAD 原文，该单锁必须变红且其余锁不牵连；摘完逐文件 sha 复原并自证，矩阵条数 = 认领单数",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_revert.json",
+     "matrix",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_revert.json",
+     "sha_restored",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_revert.json",
+     "collateral",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "语义变更影响面：存量语料逐档在 HEAD 树与当前树各跑一遍分析/转译，「修前无诊断→修后有诊断」「修前可编译→修后被拒」两张清单实测；有命中就挂账交裁决，不放宽不放行",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_impact.json",
+     "new_diagnostics",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_impact.json",
+     "new_rejections",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_impact.json",
+     "corpus_total",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "三套体系同批全量复算且地板只升不降（pytest ≥ 上一环实测、自研套件全过、e2e golden 达地板且 FAIL/WARN/UNREG 三格零），冻结面与 git 红线按 mtime + sha 正面测出改动半径",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_baselines.json",
+     "floors",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_baselines.json",
+     "three_systems_green",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_baselines.json",
+     "radius",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "账面闭环：每单 claim→execute→submit→verify、账本追加 `### FIXED(...)` 段、服务端回读 + 账本 + sqlite 三向对照一致；未修完的如实留 OPEN 并逐字写明卡在哪；被拒原文进件",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_ledger.json",
+     "closed_ids",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_ledger.json",
+     "fixed_sections",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_ledger.json",
+     "three_way",
+     2000
+    ]
+   ]
+  },
+  {
+   "name": "驱动面与顺序自证：本环亲笔脚本硬码 lint 为零并配注入对照；渲染次数按见证件记录数而不是文件存在性；call_log 按号段 + 环标签两档现数，规格点名工具的实际承担者逐条给数",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r5_drivers_lint.json",
+     "hard_violations",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_drivers_lint.json",
+     "previous_round_soft_baseline",
+     2000
+    ],
+    [
+     ".fist-loop-20260927/fix_r5_drivers_lint.json",
+     "canary",
+     2000
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "认领表从盘上反解：本环 13 张新单 + 账本现数的未闭环旧单逐张分栏「本环可修／交人工／已闭环不复修」，每张单的归属理由逐条点名，交人工的一律不占修、不改账本状态",
+   ".fist-loop-20260927/fix_r5_intake.json",
+   "planned_keys"
+  ],
+  [
+   "锁先行：每单一条会失败的锁测试，跑到**断言级红**才动实现；红必须由「HEAD 产品码 + 本轮测试」在独立快照树里复算出来，不是收集错、不是夹具崩、不是 import 错",
+   ".fist-loop-20260927/fix_r5_locks.json",
+   "lock_red_before"
+  ],
+  [
+   "根因合并修：改动点用 file:line + 符号引用正面指认；同族根因（binop 优先级表 / defer 搬迁 / comptime 求值契约 / builtin 名集 / argparse 播种 / hook 首行读取）共用同一处修法，不许一堆补丁冒充根因",
+   ".fist-loop-20260927/fix_r5_rc.json",
+   "change_points"
+  ],
+  [
+   "回退矩阵：每单把自己的改动摘回 HEAD 原文，该单锁必须变红且其余锁不牵连；摘完逐文件 sha 复原并自证，矩阵条数 = 认领单数",
+   ".fist-loop-20260927/fix_r5_revert.json",
+   "matrix"
+  ],
+  [
+   "语义变更影响面：存量语料逐档在 HEAD 树与当前树各跑一遍分析/转译，「修前无诊断→修后有诊断」「修前可编译→修后被拒」两张清单实测；有命中就挂账交裁决，不放宽不放行",
+   ".fist-loop-20260927/fix_r5_impact.json",
+   "new_diagnostics"
+  ],
+  [
+   "三套体系同批全量复算且地板只升不降（pytest ≥ 上一环实测、自研套件全过、e2e golden 达地板且 FAIL/WARN/UNREG 三格零），冻结面与 git 红线按 mtime + sha 正面测出改动半径",
+   ".fist-loop-20260927/fix_r5_baselines.json",
+   "floors"
+  ],
+  [
+   "账面闭环：每单 claim→execute→submit→verify、账本追加 `### FIXED(...)` 段、服务端回读 + 账本 + sqlite 三向对照一致；未修完的如实留 OPEN 并逐字写明卡在哪；被拒原文进件",
+   ".fist-loop-20260927/fix_r5_ledger.json",
+   "closed_ids"
+  ],
+  [
+   "驱动面与顺序自证：本环亲笔脚本硬码 lint 为零并配注入对照；渲染次数按见证件记录数而不是文件存在性；call_log 按号段 + 环标签两档现数，规格点名工具的实际承担者逐条给数",
+   ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "hard_violations"
+  ]
+ ],
+ "branch_ids": [
+  "T0r110.1",
+  "T0r110.2",
+  "T0r110.3",
+  "T0r110.4",
+  "T0r110.5",
+  "T0r110.6",
+  "T0r110.7",
+  "T0r110.8"
+ ],
+ "root_marker": "[selfdrive-fix]",
+ "root_deliverable": "R5-修复 交付：{REPORT}。八法＝① 认领表从账本现读反解：账上未闭环 36 张里本环认领 22 张（R5-寻虫 新立 13 张＋旧账转结 23 张），分栏 4 栏「本环可修／交人工／已闭环不复修」逐张点名归属理由，交人工的一张都不占修、不改账本状态（没认领的严重度按 4 档逐档给数，不写统称）→ ② 锁先行：18 张单各一条锁，动实现前红 17 条、动实现后绿 18 条（共 118 个测试节点），红落在断言级的 17 条——收集错、夹具崩、import 错一律不算红；在 HEAD 快照树上复算后仍为绿的 1 条，没锁的 4 张逐条点名、不并进闭环主张 → ③ 根因合并修：改动点 522 处、按 (文件,符号) 归并成 354 个根因、符号引用 507 个，落在本环改动的 17 个文件上；没单认领的产品文件 1 个、只被派单半径覆盖而没单点到的 1 个、复算没归到任何单的 0 处逐条点名不藏；认领了却没修完的 3 张仍按 OPEN 转结 → ④ 回退矩阵：22 行（＝认领单数，一张不落；本环没产品码改动的记 not_measured 而不是假装摘过），其中带锁可测的 18 行，摘回单元按锁承重并成 5 组，摘回后变红 17 单（断言级 14 单），第一遍数到的 0 条组间牵连并组复扫后归零，摘完 153/153 个文件逐个 sha 复原自证；承重探针正面数出 9 个产品文件真承重、0 个不承重、派单声明面里没承重的 3 个，三份清单同屏点名 → ⑤ 影响面：203 档存量语料在 HEAD 树与当前树各跑一遍分析/转译，新增诊断 0 条、新增被拒 0 条、新增可编译 14 条、诊断形状变了 4 条，需交裁决 0 条——有命中就挂账交裁决，本环不放宽不放行 → ⑥ 三套体系同批全量复算：pytest 过 2119 条、失败 0 条、收集 2119 节点；自研套件过 47 条、失败 0 条；e2e PASS 25 条、FAIL 0 条、UNREG/RUNFAIL 0 条、WARN 0 条；地板 4 格从上一环实测件反解且只升不降（pytest 地板 2002），三套体系绿 3/3 格；改动半径 123 个允许面文件、冻结面被碰 0 处 → ⑦ 账面闭环：17 张走完 claim→execute→submit→verify，账本追加 FIXED 段 17 段，未修完如实留 OPEN 5 张并逐字写明卡在哪，服务端回读／账本／sqlite 三向对照 17 张里一致 17 张、对不上 0 张 → ⑧ 驱动面：亲笔脚本 18 个、硬码违规 0 条、软账 0 条不高于上一环实测基线 0 条，注入对照被抓到 1 条（证明 lint 不是恒绿）；needle 严口径 24/24 条全是被引件里的真键名；call_log 按号段现数 18 行（17 个节点），环标签档 1 行、指纹档 2 行——标签档数到零行时报告里写的是『过滤器看不见这个标签』而不是『没开过』，两档都数不到的工具逐条点名等价承担者（工具名不存在≠能力没开）；本环被拒原文 0 条逐字进件；车道回执 7 条自报文件全部被 git diff 与 mtime 复算过（报了≠改了）。本环零提交，HEAD 未动。",
+ "root_verify_reason": "修复环最容易说谎的是『这单我修完了』这句话，所以每一层都配了反向证明：(一) 认领表从账本现读反解，分栏之和必须等于未闭环卡数（分栏不吞行），交人工的单只进表不占修、不改状态；`unclaimed_severities` 逐档点名没认领的严重度，而不是统称『已评估』。(二) 锁的红一律在 `git archive HEAD` 解出的独立快照树里复算：`lock_green_on_head` 必须为空，`locks_missing` 里的单不并进闭环主张；collection error、夹具崩、import 错都不算红，`assertion_level_red_only` 只数断言级那一档。(三) 根因合并按 (文件,符号) 归并并给 file:line＋符号引用，`product_files_without_card`、`covered_only_by_scope`、`unattributed_changes` 任一非空都要逐条点名——一堆补丁冒充根因、或改了没单认领的文件，在这里藏不住；`unfixed_claimed` 非空就是没修完，按 OPEN 转结不写成本环修掉。(四) 回退矩阵每单一行：摘回不红＝这条锁不承重，`revert_red_ids` 数不满有锁的行数就要点名；`collateral` 记第一遍观测到的组间牵连、并组复扫后必须归零；`sha_restored` 与 `sha_files_total` 不等即拒；`extras.bearing` 是正面测出来的承重面，`unborne_files` 与 `declared_face_not_bearing` 专门点名『派单时声明改了、探针说没承重』那批文件；空操作对照（摘一条本环根本没碰的文件）也配了，它一红整套矩阵作废。(五) 影响面：两档 API 面不等（HEAD 的 hook 没有 analyze_only）时本件写 `not_measured` 并只走 transpile 错误面，不写成『没有影响』；`new_rejections` 或 `shape_changed` 有命中就挂账交裁决，`new_acceptances`（改好的那部分）与变差的那部分同屏列出，不自挑好看的。(六) 三套体系同批全量复算，地板从上一环实测件的 `floors` 反解、只升不降；`three_systems_green` 缺任一格或 `three_systems_ok` 不为真就不写『全绿』；冻结面与 git 红线按 mtime＋sha 正面测出改动半径，`radius.touched_forbidden` 非空即拒。(七) 账面闭环按 claim→execute→submit→verify 逐单走，服务端回读／账本／sqlite 三向对照，对不上的进 `three_way_bad` 并拒；未修完的留 OPEN 且由 `leftover_marked` 逐字写明卡在哪；被拒原文逐字进件（`refusals_md`）。(八) 驱动面硬码 lint 配注入对照：`canary.bad_caught` 抓不到东西就说明这套 lint 恒绿、判据坏了；软账与上一环实测基线逐格对齐；渲染次数按见证件记录数而不是文件存在性。(九) call_log 两档并记（环标签档＋指纹档）。某档数到零行时，报告里写的是『过滤器看不见这个标签』或『本 build 没有这个工具名』，并点名等价能力由谁承担，而不是『没开过』或『已开启』；needle 一律按『被引件里的真键名』校，从已判真 needle 上机械截出来的前缀式假命中被严口径拒。(十) 零值测量（`hard_violations` 为零、`collateral` 为空、`new_rejections` 为空）是合法结果，门禁把零值当缺失就是判据坏了；反过来『件还没跑完』不算零值，`root_measured` 里反解不出的一格一律写成未实测并进 refuse。",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/fix_r5_needles.json",
+   "per_law_real",
+   400
+  ],
+  [
+   ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "hard_violations",
+   400
+  ],
+  [
+   ".fist-loop-20260927/fix_r5_calllog_tally.json",
+   "ring_tag_calls",
+   2000
+  ],
+  [
+   ".fist-loop-20260927/fix_r5_revert.json",
+   "matrix",
+   2000
+  ],
+  [
+   ".fist-loop-20260927/fix_r5_ledger.json",
+   "three_way",
+   2000
+  ]
+ ],
+ "root_measured": {
+  "claimed": 22,
+  "cards_total": 36,
+  "split_columns": 4,
+  "legacy_open": 23,
+  "ring_new": 13,
+  "unclaimed_gaps": 4,
+  "locked": 18,
+  "lock_red": 17,
+  "lock_green": 18,
+  "lock_assertion": 17,
+  "lock_nodes": 118,
+  "locks_missing": 4,
+  "green_on_head": 1,
+  "change_points": 522,
+  "merged_rc": 354,
+  "symbols": 507,
+  "no_card_files": 1,
+  "scope_only_files": 1,
+  "unattributed": 0,
+  "ring_files": 17,
+  "unfixed": 3,
+  "matrix_rows": 22,
+  "groups": 5,
+  "revert_red": 17,
+  "assertion_ids": 14,
+  "collateral": 0,
+  "sha_restored": 153,
+  "sha_files": 153,
+  "bearing": 9,
+  "unborne": 0,
+  "declared_not_bearing": 3,
+  "rows_with_lock": 18,
+  "corpus": 203,
+  "new_diag": 0,
+  "new_rej": 0,
+  "new_acc": 14,
+  "shape_changed": 4,
+  "adjudication": 0,
+  "pytest_passed": 2119,
+  "pytest_failed": 0,
+  "collect_nodes": 2119,
+  "suite_passed": 47,
+  "suite_failed": 0,
+  "e2e_pass": 25,
+  "e2e_fail": 0,
+  "e2e_unreg": 0,
+  "e2e_warn": 0,
+  "floors": 4,
+  "floor_pytest": 2002,
+  "systems_total": 3,
+  "systems_green": 3,
+  "radius_touched": 123,
+  "radius_forbidden": 0,
+  "closed": 17,
+  "fixed_sections": 17,
+  "leftover": 5,
+  "three_way": 17,
+  "three_way_bad": 0,
+  "agree": 17,
+  "hard": 0,
+  "soft": 0,
+  "soft_baseline": 0,
+  "drivers": 18,
+  "lint_canary": 1,
+  "needles": 24,
+  "needles_checked": 24,
+  "tally_rows": 18,
+  "tally_nodes": 17,
+  "ring_tag": 1,
+  "fp_rows": 2,
+  "refusals": 0,
+  "lanes": 7,
+  "laws": 8,
+  "leaves": 16,
+  "branches": 8
+ },
+ "measured_unresolved": [],
+ "measured_source_table": [
+  [
+   "claimed",
+   "fix_r5_intake.json",
+   "planned_ids",
+   "len"
+  ],
+  [
+   "cards_total",
+   "fix_r5_intake.json",
+   "cards_total",
+   "val"
+  ],
+  [
+   "split_columns",
+   "fix_r5_intake.json",
+   "split_columns",
+   "len"
+  ],
+  [
+   "legacy_open",
+   "fix_r5_intake.json",
+   "legacy_open_ids",
+   "len"
+  ],
+  [
+   "ring_new",
+   "fix_r5_intake.json",
+   "ring_new_ids",
+   "len"
+  ],
+  [
+   "unclaimed_gaps",
+   "fix_r5_intake.json",
+   "unclaimed_severities",
+   "len"
+  ],
+  [
+   "locked",
+   "fix_r5_locks.json",
+   "locked_ids",
+   "len"
+  ],
+  [
+   "lock_red",
+   "fix_r5_locks.json",
+   "lock_red_before",
+   "len"
+  ],
+  [
+   "lock_green",
+   "fix_r5_locks.json",
+   "lock_green_after",
+   "len"
+  ],
+  [
+   "lock_assertion",
+   "fix_r5_locks.json",
+   "assertion_level_red_only",
+   "len"
+  ],
+  [
+   "lock_nodes",
+   "fix_r5_locks.json",
+   "lock_nodes_total",
+   "val"
+  ],
+  [
+   "locks_missing",
+   "fix_r5_locks.json",
+   "locks_missing",
+   "len"
+  ],
+  [
+   "green_on_head",
+   "fix_r5_locks.json",
+   "lock_green_on_head",
+   "len"
+  ],
+  [
+   "change_points",
+   "fix_r5_rc.json",
+   "change_points",
+   "val"
+  ],
+  [
+   "merged_rc",
+   "fix_r5_rc.json",
+   "merged_root_cause_len",
+   "val"
+  ],
+  [
+   "symbols",
+   "fix_r5_rc.json",
+   "symbols_referenced_len",
+   "val"
+  ],
+  [
+   "no_card_files",
+   "fix_r5_rc.json",
+   "product_files_without_card",
+   "len"
+  ],
+  [
+   "scope_only_files",
+   "fix_r5_rc.json",
+   "covered_only_by_scope",
+   "len"
+  ],
+  [
+   "unattributed",
+   "fix_r5_rc.json",
+   "unattributed_changes",
+   "len"
+  ],
+  [
+   "ring_files",
+   "fix_r5_rc.json",
+   "ring_files_all_len",
+   "val"
+  ],
+  [
+   "unfixed",
+   "fix_r5_rc.json",
+   "unfixed_claimed",
+   "len"
+  ],
+  [
+   "matrix_rows",
+   "fix_r5_revert.json",
+   "matrix_rows",
+   "val"
+  ],
+  [
+   "groups",
+   "fix_r5_revert.json",
+   "groups_len",
+   "val"
+  ],
+  [
+   "revert_red",
+   "fix_r5_revert.json",
+   "revert_red_ids",
+   "len"
+  ],
+  [
+   "assertion_ids",
+   "fix_r5_revert.json",
+   "assertion_level_ids",
+   "len"
+  ],
+  [
+   "collateral",
+   "fix_r5_revert.json",
+   "collateral",
+   "len"
+  ],
+  [
+   "sha_restored",
+   "fix_r5_revert.json",
+   "sha_restored",
+   "val"
+  ],
+  [
+   "sha_files",
+   "fix_r5_revert.json",
+   "sha_files_total",
+   "val"
+  ],
+  [
+   "bearing",
+   "fix_r5_revert.json",
+   "extras.bearing",
+   "len"
+  ],
+  [
+   "unborne",
+   "fix_r5_revert.json",
+   "extras.unborne_files",
+   "len"
+  ],
+  [
+   "declared_not_bearing",
+   "fix_r5_revert.json",
+   "extras.declared_face_not_bearing",
+   "len"
+  ],
+  [
+   "rows_with_lock",
+   "fix_r5_revert.json",
+   "extras.rows_with_lock",
+   "len"
+  ],
+  [
+   "corpus",
+   "fix_r5_impact.json",
+   "corpus_total",
+   "val"
+  ],
+  [
+   "new_diag",
+   "fix_r5_impact.json",
+   "new_diagnostics_len",
+   "val"
+  ],
+  [
+   "new_rej",
+   "fix_r5_impact.json",
+   "new_rejections_len",
+   "val"
+  ],
+  [
+   "new_acc",
+   "fix_r5_impact.json",
+   "new_acceptances_len",
+   "val"
+  ],
+  [
+   "shape_changed",
+   "fix_r5_impact.json",
+   "shape_changed_len",
+   "val"
+  ],
+  [
+   "adjudication",
+   "fix_r5_impact.json",
+   "adjudication_needed",
+   "val"
+  ],
+  [
+   "pytest_passed",
+   "fix_r5_baselines.json",
+   "pytest.passed",
+   "val"
+  ],
+  [
+   "pytest_failed",
+   "fix_r5_baselines.json",
+   "pytest.failed_sum",
+   "val"
+  ],
+  [
+   "collect_nodes",
+   "fix_r5_baselines.json",
+   "collect.nodeids",
+   "val"
+  ],
+  [
+   "suite_passed",
+   "fix_r5_baselines.json",
+   "suite.fields.Passed",
+   "val"
+  ],
+  [
+   "suite_failed",
+   "fix_r5_baselines.json",
+   "suite.fields.Failed",
+   "val"
+  ],
+  [
+   "e2e_pass",
+   "fix_r5_baselines.json",
+   "e2e.fields.PASS",
+   "val"
+  ],
+  [
+   "e2e_fail",
+   "fix_r5_baselines.json",
+   "e2e.fields.FAIL",
+   "val"
+  ],
+  [
+   "e2e_unreg",
+   "fix_r5_baselines.json",
+   "e2e.fields.UNREG/RUNFAIL",
+   "val"
+  ],
+  [
+   "e2e_warn",
+   "fix_r5_baselines.json",
+   "e2e.fields.WARN",
+   "val"
+  ],
+  [
+   "floors",
+   "fix_r5_baselines.json",
+   "floors",
+   "len"
+  ],
+  [
+   "floor_pytest",
+   "fix_r5_baselines.json",
+   "floors.pytest",
+   "val"
+  ],
+  [
+   "systems_total",
+   "fix_r5_baselines.json",
+   "three_systems_green",
+   "len"
+  ],
+  [
+   "systems_green",
+   "fix_r5_baselines.json",
+   "three_systems_green",
+   "true"
+  ],
+  [
+   "radius_touched",
+   "fix_r5_baselines.json",
+   "radius.allowed_touched",
+   "val"
+  ],
+  [
+   "radius_forbidden",
+   "fix_r5_baselines.json",
+   "radius.forbidden_total",
+   "val"
+  ],
+  [
+   "closed",
+   "fix_r5_ledger.json",
+   "closed_ids",
+   "len"
+  ],
+  [
+   "fixed_sections",
+   "fix_r5_ledger.json",
+   "fixed_sections",
+   "len"
+  ],
+  [
+   "leftover",
+   "fix_r5_ledger.json",
+   "leftover_ids",
+   "len"
+  ],
+  [
+   "three_way",
+   "fix_r5_ledger.json",
+   "three_way",
+   "len"
+  ],
+  [
+   "three_way_bad",
+   "fix_r5_ledger.json",
+   "three_way_bad",
+   "len"
+  ],
+  [
+   "agree",
+   "fix_r5_ledger.json",
+   "agree_total",
+   "val"
+  ],
+  [
+   "hard",
+   "fix_r5_drivers_lint.json",
+   "hard_violations",
+   "val"
+  ],
+  [
+   "soft",
+   "fix_r5_drivers_lint.json",
+   "soft_total",
+   "val"
+  ],
+  [
+   "soft_baseline",
+   "fix_r5_drivers_lint.json",
+   "previous_round_soft_baseline",
+   "val"
+  ],
+  [
+   "drivers",
+   "fix_r5_drivers_lint.json",
+   "drivers_scanned",
+   "val"
+  ],
+  [
+   "lint_canary",
+   "fix_r5_drivers_lint.json",
+   "canary.bad_caught",
+   "val"
+  ],
+  [
+   "needles",
+   "fix_r5_needles.json",
+   "real_key_len",
+   "val"
+  ],
+  [
+   "needles_checked",
+   "fix_r5_needles.json",
+   "checked_len",
+   "val"
+  ],
+  [
+   "tally_rows",
+   "fix_r5_calllog_tally.json",
+   "stages.{root}.rows",
+   "val"
+  ],
+  [
+   "tally_nodes",
+   "fix_r5_calllog_tally.json",
+   "stages.{root}.distinct_tasks",
+   "val"
+  ],
+  [
+   "ring_tag",
+   "fix_r5_calllog_tally.json",
+   "ring_tag_calls.total",
+   "val"
+  ],
+  [
+   "fp_rows",
+   "fix_r5_calllog_tally.json",
+   "fingerprint_channel.rows",
+   "val"
+  ],
+  [
+   "refusals",
+   "fix_r5_calllog_tally.json",
+   "distinct_refusal_texts",
+   "val"
+  ],
+  [
+   "lanes",
+   "r5_fix_lanes.json",
+   "lanes",
+   "len"
+  ]
+ ],
+ "leaves": [
+  "T0r110.1.1",
+  "T0r110.1.2",
+  "T0r110.2.1",
+  "T0r110.2.2",
+  "T0r110.3.1",
+  "T0r110.3.2",
+  "T0r110.4.1",
+  "T0r110.4.2",
+  "T0r110.5.1",
+  "T0r110.5.2",
+  "T0r110.6.1",
+  "T0r110.6.2",
+  "T0r110.7.1",
+  "T0r110.7.2",
+  "T0r110.8.1",
+  "T0r110.8.2"
+ ],
+ "fingerprint": {
+  "必须": [
+   "只改产品码与新增测试；每单一条会失败的锁",
+   "三套体系同批全量复算",
+   "每单账面闭环或如实留 OPEN",
+   "被拒原文逐字进件"
+  ],
+  "禁止": [
+   "删除/放宽/skip/xfail 既有测试或改期望值迁就实现",
+   "改 PROJECT-SPEC/ 与 SYNTAX/ 冻结语义",
+   "git add/commit/push",
+   "删文件、重注册 golden",
+   "把没做的写成 done",
+   "把「文档没写」当成不修语义缺陷的理由"
+  ],
+  "半径": "产品码 + 新增测试 + 账本；语义变更影响面只挂账不自行放行",
+  "地板": "pytest / 自研套件 / e2e 三套均取上一环实测值，只升不降"
+ },
+ "needle_verification": {
+  "checked_len": 24,
+  "missing_before": 0,
+  "false_substring_before": 0,
+  "artifacts_pending": [],
+  "artifacts_declared": [
+   "fix_r5_baselines.json",
+   "fix_r5_drivers_lint.json",
+   "fix_r5_impact.json",
+   "fix_r5_intake.json",
+   "fix_r5_ledger.json",
+   "fix_r5_locks.json",
+   "fix_r5_rc.json",
+   "fix_r5_revert.json"
+  ],
+  "off_ring_artifacts": [],
+  "pending_stub_artifacts": [],
+  "strict_rule_rejected_len": 0,
+  "canary_prefixes": 24,
+  "measured_at_utc": "2026-09-28T10:58:58+00:00"
+ },
+ "started": "2026-09-28T10:58:59+00:00",
+ "self_checks": [
+  {
+   "label": "叶子按 sqlite 反解到 16 张",
+   "got": 16,
+   "want": 16,
+   "why": "实得 16",
+   "ok": true
+  },
+  {
+   "label": "分支 8 支（每条法一支）",
+   "got": 8,
+   "want": 8,
+   "why": "实得 8",
+   "ok": true
+  },
+  {
+   "label": "omega 强验证在每支叶子上都开着",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "计划八条法逐条有 3 件证据",
+   "got": [
+    3
+   ],
+   "want": [
+    3
+   ],
+   "why": "artifacts 条数分布",
+   "ok": true
+  },
+  {
+   "label": "计划法条数 = 收口法条数（同源）",
+   "got": 8,
+   "want": 8,
+   "why": "同一份计划派单与收口",
+   "ok": true
+  },
+  {
+   "label": "渲染前预检：件在盘上、能 parse、needle 是真键名、长度达标",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "canary：前缀式 needle（change_points→change）必被严口径拒",
+   "got": true,
+   "want": true,
+   "why": "[\"law1 .fist-loop-20260927/fix_r5_rc.json 里「change」不是真键名\"]",
+   "ok": true
+  },
+  {
+   "label": "canary 的另一侧：同一个前缀在旧子串口径下会被放行（说明严口径真的加了约束）",
+   "got": [],
+   "want": [],
+   "why": "子串口径对 change 的判定：[]",
+   "ok": true
+  },
+  {
+   "label": "canary 用的前缀确实是『被引件原文里有、真键名里没有』（不然上面两侧的 canary 都是假绿）",
+   "got": [
+    true,
+    true,
+    false
+   ],
+   "want": [
+    true,
+    true,
+    false
+   ],
+   "why": ".fist-loop-20260927/fix_r5_rc.json：change_points→change",
+   "ok": true
+  },
+  {
+   "label": "measured 每一格都能从本环判据件反解（反解不出=件没跑完或键名是我编的）",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "根 marker 是本环（修复）的页脚字样，不是上一环（寻虫）那个",
+   "got": [
+    "[selfdrive-fix]",
+    false
+   ],
+   "want": [
+    "[selfdrive-fix]",
+    false
+   ],
+   "why": "实得 [selfdrive-fix]；spec 自带的 root_marker=None",
+   "ok": true
+  },
+  {
+   "label": "禁止栏逐条从 spec.fingerprint.禁止 反解，且没留上一环那句『禁止在本环修产品码』",
+   "got": [
+    true,
+    true,
+    false
+   ],
+   "want": [
+    true,
+    true,
+    false
+   ],
+   "why": "6 条：删除/放宽/skip/xfail 既有测试或改期望值迁就实现；改 PROJECT-SPEC/ 与 SYNTAX/ 冻结语义；git add/commit/push；删文件、重注册 golden；把没做的写成 done；把「文档没写」当成不修语义缺陷的理由",
+   "ok": true
+  },
+  {
+   "label": "根交付文案＋根验收理由里每个整数都落在 MEASURED 反解出来的数集内（不许手打新数字）",
+   "got": [],
+   "want": [],
+   "why": "allowed=[0, 1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 16, 17, 18, 22, 23, 24, 25, 36, 47, 118, 123, 153, 203, 354, 507, 522, 2002, 2119] unresolved=0",
+   "ok": true
+  },
+  {
+   "label": "渲染前预检用的报告占位串里不含阿拉伯数字（含了就能把数字偷渡过上面那条门）",
+   "got": false,
+   "want": false,
+   "why": "memory/reviews/x.md",
+   "ok": true
+  },
+  {
+   "label": "branches 三元组数 = 法条数（根上卷按支取证据件）",
+   "got": 8,
+   "want": 8,
+   "why": "close_root_generic 按分支号取 (法, 件, needle)",
+   "ok": true
+  },
+  {
+   "label": "附加产物逐件在盘上、且 needle 是被引件里的真键名",
+   "got": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "why": "[[\".fist-loop-20260927/fix_r5_needles.json\", \"per_law_real\", 400], [\".fist-loop-20260927/fix_r5_drivers_lint.json\", \"hard_violations\", 400], [\".fist-loop-20260927/fix_r5_calllog_tally.json\", \"ring_tag_calls\", 2000], [\".fist-loop-20260927/fix_r5_revert.json\", \"",
+   "ok": true
+  },
+  {
+   "label": "附加产物点的件全是本环件（混进上一环的 faces/declared/book 那一类即红）",
+   "got": [
+    "fix_r5_calllog_tally.json",
+    "fix_r5_drivers_lint.json",
+    "fix_r5_ledger.json",
+    "fix_r5_needles.json",
+    "fix_r5_revert.json"
+   ],
+   "want": [
+    "fix_r5_calllog_tally.json",
+    "fix_r5_drivers_lint.json",
+    "fix_r5_ledger.json",
+    "fix_r5_needles.json",
+    "fix_r5_revert.json"
+   ],
+   "why": "[\"fix_r5_calllog_tally.json\", \"fix_r5_drivers_lint.json\", \"fix_r5_ledger.json\", \"fix_r5_needles.json\", \"fix_r5_revert.json\"]",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T10:58:59+00:00"
+}

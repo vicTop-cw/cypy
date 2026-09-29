@@ -1,0 +1,105 @@
+{
+ "grouped_by": "params_json.task_id 前缀（不按标签、不按回忆）",
+ "stages": {
+  "T0r73 R3-推进（含 16 叶 + 8 支 + 根上卷）": {
+   "total": 197,
+   "ok": 191,
+   "refused": 6,
+   "by_tool": {
+    "claim": {
+     "ok": 17,
+     "refused": 1
+    },
+    "task_plan_deep": {
+     "ok": 1,
+     "refused": 0
+    },
+    "omega_status": {
+     "ok": 16,
+     "refused": 0
+    },
+    "omega_spec_create": {
+     "ok": 24,
+     "refused": 1
+    },
+    "omega_spec_review": {
+     "ok": 24,
+     "refused": 1
+    },
+    "execute": {
+     "ok": 16,
+     "refused": 1
+    },
+    "submit": {
+     "ok": 16,
+     "refused": 1
+    },
+    "output_validate": {
+     "ok": 17,
+     "refused": 0
+    },
+    "omega_result_verify": {
+     "ok": 24,
+     "refused": 1
+    },
+    "verify": {
+     "ok": 25,
+     "refused": 0
+    },
+    "get": {
+     "ok": 10,
+     "refused": 0
+    },
+    "archive": {
+     "ok": 1,
+     "refused": 0
+    }
+   },
+   "refused_detail": [
+    {
+     "tool": "claim",
+     "ts": "2026-09-27T19:27:16Z",
+     "task": "T0r73"
+    },
+    {
+     "tool": "execute",
+     "ts": "2026-09-27T19:27:16Z",
+     "task": "T0r73"
+    },
+    {
+     "tool": "submit",
+     "ts": "2026-09-27T19:27:16Z",
+     "task": "T0r73"
+    },
+    {
+     "tool": "omega_spec_create",
+     "ts": "2026-09-27T19:27:16Z",
+     "task": "T0r73"
+    },
+    {
+     "tool": "omega_spec_review",
+     "ts": "2026-09-27T19:27:16Z",
+     "task": "T0r73"
+    },
+    {
+     "tool": "omega_result_verify",
+     "ts": "2026-09-27T19:27:16Z",
+     "task": "T0r73"
+    }
+   ]
+  }
+ },
+ "queried_at_utc": "2026-09-27T19:32:58+00:00",
+ "log_rows_total": 3607,
+ "control_absent_prefix_rows": 0,
+ "by_ns": {
+  "cypy-loop-20260927": 3159,
+  "cypy-polish-20260926": 390,
+  "bugs": 55,
+  "default": 2,
+  "E:\\IDEProjects\\AI\\Cypy": 1
+ },
+ "issue_up_tool_rows": 0,
+ "issue_up_note": "本构建里 issue_up 不是工具名（0 行）：开单走 tasks 表，如实上报而不是谎称已用",
+ "refuse": []
+}

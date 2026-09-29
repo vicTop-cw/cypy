@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\hunt_r7_boundary.py", line 23, in <module>
+    from cypyc.lexer import Lexer  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'cypyc.lexer'

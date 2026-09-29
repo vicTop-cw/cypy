@@ -1,0 +1,70 @@
+{
+ "window_utc": "2026-09-27T17:01:14Z -> 2026-09-27T17:47:06+00:00",
+ "calls_total": 200,
+ "calls_ok": 194,
+ "calls_refused": 6,
+ "by_tool": {
+  "archive": {
+   "ok": 1,
+   "refused": 0
+  },
+  "call_log": {
+   "ok": 1,
+   "refused": 0
+  },
+  "claim": {
+   "ok": 17,
+   "refused": 1
+  },
+  "execute": {
+   "ok": 16,
+   "refused": 1
+  },
+  "get": {
+   "ok": 10,
+   "refused": 0
+  },
+  "laya_decide": {
+   "ok": 1,
+   "refused": 0
+  },
+  "omega_result_verify": {
+   "ok": 24,
+   "refused": 1
+  },
+  "omega_spec_create": {
+   "ok": 24,
+   "refused": 1
+  },
+  "omega_spec_review": {
+   "ok": 24,
+   "refused": 1
+  },
+  "omega_status": {
+   "ok": 16,
+   "refused": 0
+  },
+  "output_validate": {
+   "ok": 17,
+   "refused": 0
+  },
+  "publish": {
+   "ok": 1,
+   "refused": 0
+  },
+  "submit": {
+   "ok": 16,
+   "refused": 1
+  },
+  "task_plan_deep": {
+   "ok": 1,
+   "refused": 0
+  },
+  "verify": {
+   "ok": 25,
+   "refused": 0
+  }
+ },
+ "refused_are_only_root_structural": true,
+ "note": "被拒恰为根任务 T0r71 的 6 条既定结构性拒绝（description 无 [omega:required] + 根已在待验收）；branch/leaf 级零被拒 ⇒ 上卷驱动只跑过一次"
+}

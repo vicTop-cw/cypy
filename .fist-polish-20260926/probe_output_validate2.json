@@ -1,0 +1,374 @@
+[
+  {
+    "case": "contains 命中",
+    "expect": "pass",
+    "got": "pass",
+    "agree": true,
+    "artifacts": [
+      {
+        "path": "tests/test_polish_20260926.py",
+        "contains": "def test_bug12_gilstate_exit_does_not_replace_user_exception"
+      }
+    ],
+    "extra": {},
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "tests/test_polish_20260926.py",
+          "ok": true,
+          "d": "OK（存在/非空/invariant 全部通过）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  },
+  {
+    "case": "contains 不命中(必须 fail)",
+    "expect": "fail",
+    "got": "fail",
+    "agree": true,
+    "artifacts": [
+      {
+        "path": "tests/test_polish_20260926.py",
+        "contains": "def test_zzz_definitely_not_in_this_repo"
+      }
+    ],
+    "extra": {},
+    "reply": {
+      "verdict": "fail",
+      "layer": "l4-hard-failed",
+      "passed": 0,
+      "failed": 1,
+      "checks": [
+        {
+          "a": "tests/test_polish_20260926.py",
+          "ok": false,
+          "d": "文件缺少必需字符串: \"def test_zzz_definitely_not_in_this_repo\""
+        }
+      ],
+      "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+      "err": null
+    }
+  },
+  {
+    "case": "not_contains 违例(必须 fail)",
+    "expect": "fail",
+    "got": "pass",
+    "agree": false,
+    "artifacts": [
+      {
+        "path": "cypy_bridge/nogil.py",
+        "not_contains": "if self._released: self.acquire()"
+      }
+    ],
+    "extra": {},
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "cypy_bridge/nogil.py",
+          "ok": true,
+          "d": "OK（存在/非空/invariant 全部通过）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  },
+  {
+    "case": "not_contains 满足",
+    "expect": "pass",
+    "got": "pass",
+    "agree": true,
+    "artifacts": [
+      {
+        "path": "cypy_bridge/nogil.py",
+        "not_contains": "def test_zzz_definitely_not_in_this_repo"
+      }
+    ],
+    "extra": {},
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "cypy_bridge/nogil.py",
+          "ok": true,
+          "d": "OK（存在/非空/invariant 全部通过）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  },
+  {
+    "case": "min_chars 过大(必须 fail)",
+    "expect": "fail",
+    "got": "fail",
+    "agree": true,
+    "artifacts": [
+      {
+        "path": "cypy_bridge/nogil.py",
+        "min_chars": 1000000000
+      }
+    ],
+    "extra": {},
+    "reply": {
+      "verdict": "fail",
+      "layer": "l4-hard-failed",
+      "passed": 0,
+      "failed": 1,
+      "checks": [
+        {
+          "a": "cypy_bridge/nogil.py",
+          "ok": false,
+          "d": "文件字符数不足: 当前 6882 < 下限 1000000000"
+        }
+      ],
+      "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+      "err": null
+    }
+  },
+  {
+    "case": "min_chars 合理",
+    "expect": "pass",
+    "got": "pass",
+    "agree": true,
+    "artifacts": [
+      {
+        "path": "cypy_bridge/nogil.py",
+        "min_chars": 10
+      }
+    ],
+    "extra": {},
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "cypy_bridge/nogil.py",
+          "ok": true,
+          "d": "OK（存在/非空/invariant 全部通过）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  },
+  {
+    "case": "external check_key ok",
+    "expect": "pass",
+    "got": "pass",
+    "agree": true,
+    "artifacts": [
+      {
+        "check_key": "pytest"
+      }
+    ],
+    "extra": {
+      "external_results": {
+        "pytest": {
+          "ok": true,
+          "stdout": "24 passed"
+        }
+      }
+    },
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "external:pytest",
+          "ok": true,
+          "d": "OK（外部检查 passed）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  },
+  {
+    "case": "external check_key fail(必须 fail)",
+    "expect": "fail",
+    "got": "fail",
+    "agree": true,
+    "artifacts": [
+      {
+        "check_key": "pytest"
+      }
+    ],
+    "extra": {
+      "external_results": {
+        "pytest": {
+          "ok": false,
+          "stdout": "1 failed"
+        }
+      }
+    },
+    "reply": {
+      "verdict": "fail",
+      "layer": "l4-hard-failed",
+      "passed": 0,
+      "failed": 1,
+      "checks": [
+        {
+          "a": "external:pytest",
+          "ok": false,
+          "d": "外部检查 failed（stderr 片段: ）"
+        }
+      ],
+      "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+      "err": null
+    }
+  },
+  {
+    "case": "external check_key 缺失(必须 fail)",
+    "expect": "fail",
+    "got": "fail",
+    "agree": true,
+    "artifacts": [
+      {
+        "check_key": "nope"
+      }
+    ],
+    "extra": {
+      "external_results": {
+        "pytest": {
+          "ok": true
+        }
+      }
+    },
+    "reply": {
+      "verdict": "fail",
+      "layer": "l4-hard-failed",
+      "passed": 0,
+      "failed": 1,
+      "checks": [
+        {
+          "a": "external:nope",
+          "ok": false,
+          "d": "外部结果缺失: key=\"nope\" 未在 external_results 中找到（调用方应先跑 run_check 把结果传入）"
+        }
+      ],
+      "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+      "err": null
+    }
+  },
+  {
+    "case": "未知字段名 contans(拼错)",
+    "expect": "fail",
+    "got": "pass",
+    "agree": false,
+    "artifacts": [
+      {
+        "path": "tests/test_polish_20260926.py",
+        "contans": "def test_zzz_definitely_not_in_this_repo"
+      }
+    ],
+    "extra": {},
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "tests/test_polish_20260926.py",
+          "ok": true,
+          "d": "OK（存在/非空/invariant 全部通过）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  },
+  {
+    "case": "未知字段名 invariant",
+    "expect": "fail",
+    "got": "pass",
+    "agree": false,
+    "artifacts": [
+      {
+        "path": "tests/test_polish_20260926.py",
+        "invariant": "必须包含 def test_zzz_definitely_not_in_this_repo"
+      }
+    ],
+    "extra": {},
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "tests/test_polish_20260926.py",
+          "ok": true,
+          "d": "OK（存在/非空/invariant 全部通过）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  },
+  {
+    "case": "空 artifacts 数组",
+    "expect": "fail",
+    "got": null,
+    "agree": false,
+    "artifacts": [],
+    "extra": {},
+    "reply": {
+      "verdict": null,
+      "layer": null,
+      "passed": null,
+      "failed": null,
+      "checks": [],
+      "note": "",
+      "err": {
+        "code": -32000,
+        "message": "output_validate: artifacts 为空——至少声明一条要验证的交付产物"
+      }
+    }
+  },
+  {
+    "case": "path 缺失只给 contains",
+    "expect": "fail",
+    "got": "fail",
+    "agree": true,
+    "artifacts": [
+      {
+        "contains": "def test_bug12_gilstate_exit_does_not_replace_user_exception"
+      }
+    ],
+    "extra": {},
+    "reply": {
+      "verdict": "fail",
+      "layer": "l4-hard-failed",
+      "passed": 0,
+      "failed": 1,
+      "checks": [
+        {
+          "a": "external:",
+          "ok": false,
+          "d": "check_key 为空"
+        }
+      ],
+      "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+      "err": null
+    }
+  }
+]

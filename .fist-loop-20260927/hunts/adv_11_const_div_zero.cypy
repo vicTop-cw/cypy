@@ -1,0 +1,4 @@
+def main() -> int:
+    a: int = 1
+    b: int = a / 0
+    return 0

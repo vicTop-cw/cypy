@@ -1,0 +1,14 @@
+
+class Registry:
+    count: int
+
+    @staticmethod
+    def version() -> int:
+        return 7
+
+    @classmethod
+    def named(cls, tag: str) -> int:
+        return 1
+
+    def bump(self, by: int) -> int:
+        return self.count + by

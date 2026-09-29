@@ -1,0 +1,48 @@
+{
+ "violation_cases": {
+  "one_expected_two_given": [
+   "Callable arity mismatch: expected 1, got 2 at 2:12"
+  ],
+  "one_expected_zero_given": [
+   "Callable arity mismatch: expected 1, got 0 at 2:12"
+  ],
+  "two_expected_one_given": [
+   "Callable arity mismatch: expected 2, got 1 at 2:12"
+  ],
+  "zero_expected_one_given": [
+   "Callable arity mismatch: expected 0, got 1 at 2:12"
+  ],
+  "alias_one_expected_two_given": [
+   "Callable arity mismatch: expected 1, got 2 at 3:12"
+  ]
+ },
+ "violation_total": 5,
+ "clean_cases_green": true,
+ "clean_cases": {
+  "one_expected_one_given": [],
+  "two_expected_two_given": [],
+  "zero_expected_zero_given": [],
+  "nested_form_matched": []
+ },
+ "skipped_shapes": {
+  "bare_Callable": [
+   "Return type mismatch: expected int, got Callable at 3:1"
+  ],
+  "one_slot_Callable": [],
+  "keyword_args_call": [],
+  "tuple_literal_arg": []
+ },
+ "cases_with_locus": 5,
+ "coexist_with_return_error": [
+  "Callable arity mismatch: expected 1, got 2 at 2:12",
+  "Return type mismatch: expected int, got str at 3:1"
+ ],
+ "measured_message": "Callable arity mismatch: expected 1, got 2 at 2:12",
+ "type_checker_sha_now": "27a3408faad21e9f",
+ "at_utc": "2026-09-27T19:10:42+00:00",
+ "refuse": [],
+ "lane_files": [
+  "cypyc/analyzer/type_checker.py"
+ ],
+ "type_checker_sha_before": "4db6e1f3bfc2c7d3"
+}

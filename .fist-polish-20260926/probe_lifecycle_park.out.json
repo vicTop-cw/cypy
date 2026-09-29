@@ -1,0 +1,167 @@
+{
+  "now": "2026-09-26T07:56:00Z",
+  "before": {
+    "list_no_filter": 19,
+    "list_pending_no_ns": [
+      "T0.1.1@cypy-polish-20260926",
+      "T0.1.2@cypy-polish-20260926",
+      "T0.2.1@cypy-polish-20260926",
+      "T0.2.2@cypy-polish-20260926",
+      "T0.3.1@cypy-polish-20260926",
+      "T0.3.2@cypy-polish-20260926",
+      "T0.4.1@cypy-polish-20260926",
+      "T0.4.2@cypy-polish-20260926",
+      "T0.5.1@cypy-polish-20260926",
+      "T0.5.2@cypy-polish-20260926",
+      "T0.6.1@cypy-polish-20260926",
+      "T0.6.2@cypy-polish-20260926"
+    ],
+    "list_ns_bugs_pending": [
+      "T0r2",
+      "T0r3",
+      "T0r4",
+      "T0r5"
+    ],
+    "list_ns_bugs_total": 15,
+    "list_ns_polish_total": 19,
+    "list_ns_default": []
+  },
+  "pause": {
+    "T0r2": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0r2:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0r3": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0r3:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0r4": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0r4:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0r5": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0r5:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.1.1": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.1.1:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.1.2": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.1.2:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.2.1": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.2.1:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.2.2": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.2.2:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.3.1": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.3.1:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.3.2": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.3.2:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.4.1": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.4.1:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.4.2": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.4.2:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.5.1": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.5.1:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.5.2": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.5.2:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.6.1": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.6.1:get": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.6.2": {
+      "status": "已暂停",
+      "__error__": null
+    },
+    "T0.6.2:get": {
+      "status": "已暂停",
+      "__error__": null
+    }
+  },
+  "after": {
+    "list_no_filter": 19,
+    "list_pending_no_ns": [],
+    "list_ns_bugs_pending": [],
+    "list_ns_bugs_total": 15,
+    "list_ns_polish_total": 19,
+    "list_ns_default": []
+  }
+}

@@ -1,0 +1,288 @@
+{
+ "name": "20260927.19.05.00",
+ "title": "R2-打磨（polish）环节报告",
+ "stage": "第 2 轮第 4 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R2",
+ "root_task": "T0r60",
+ "assignee": "cypy-polisher",
+ "marker": "[selfdrive-polish]",
+ "footer": "fixed=BUG-42 locks=8 judge-defects=5 op-defects=5 carry=analyzer侧meta守卫,_visit_ExprStmt分发语义,formatter债142文件,BUG-48,BUG-40,BUG-41,BUG-43,BUG-35深嵌套半边,10个已删除未提交文件,close_root驱动L4门前置 decisions=5",
+ "fragment": ".fist-loop-20260927/r2_polish_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/polish_r2_evidence.json",
+  ".fist-loop-20260927/polish_r2_cut.json",
+  ".fist-loop-20260927/polish_r2_cut_guard.json",
+  ".fist-loop-20260927/polish_r2_after.json",
+  ".fist-loop-20260927/polish_r2_baselines.json",
+  ".fist-loop-20260927/polish_r2_lint.json",
+  ".fist-loop-20260927/verify_r2_ledger3way.json",
+  ".fist-loop-20260927/close_r2_polish.out.json",
+  ".fist-loop-20260927/polish_r2_root_split.json",
+  "tests/test_polish_20260927_r2.py"
+ ],
+ "closure": {
+  "stage": "close_r2_polish.out.json",
+  "root": "close_r2_polish_root.out.json"
+ },
+ "gates": [
+  {
+   "label": "①",
+   "claim": "生效性判据件零拒绝：AST 候选与运行时 co_firstlineno 两条口径互相咬合",
+   "artifact": ".fist-loop-20260927/polish_r2_evidence.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "②",
+   "claim": "删前留档仍在：ExprStmt 的 AST 候选是两处（不是被删后重跑的产物）",
+   "artifact": ".fist-loop-20260927/polish_r2_evidence.json",
+   "path": "live['CythonGenerator._visit_ExprStmt'].candidates",
+   "min": 2
+  },
+  {
+   "label": "③",
+   "claim": "删前留档仍在：MetaBlock 的 AST 候选是两处",
+   "artifact": ".fist-loop-20260927/polish_r2_evidence.json",
+   "path": "live['ScopeAnalyzer._visit_MetaBlock'].candidates",
+   "min": 2
+  },
+  {
+   "label": "④",
+   "claim": "删除驱动自身零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r2_cut.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑤",
+   "claim": "驱动记录不是 dry-run（真的落过盘）",
+   "artifact": ".fist-loop-20260927/polish_r2_cut.json",
+   "path": "dry_run",
+   "equals": false
+  },
+  {
+   "label": "⑥",
+   "claim": "被删文本逐字留档：ExprStmt 那份 250 字符以上（驱动记的 removed_text 实测 299）",
+   "artifact": ".fist-loop-20260927/polish_r2_cut.json",
+   "path": "measures.bug42_expr_stmt.removed_text",
+   "min": 250
+  },
+  {
+   "label": "⑦",
+   "claim": "第二处删除行数 ≥11（守卫份比活份长 5 行，删的就是这半）",
+   "artifact": ".fist-loop-20260927/polish_r2_cut.json",
+   "path": "measures.bug42_meta_block.removed_lines",
+   "min": 11
+  },
+  {
+   "label": "⑧",
+   "claim": "绑定行号 ≠ 待删行号：驱动删的是被遮蔽那份（ExprStmt 绑 2084，删 1418）",
+   "artifact": ".fist-loop-20260927/polish_r2_cut.json",
+   "path": "bound_lines._visit_ExprStmt",
+   "min": 2000
+  },
+  {
+   "label": "⑨",
+   "claim": "负向对照：驱动重跑必须 rc=1（幂等守卫不是装饰）",
+   "artifact": ".fist-loop-20260927/polish_r2_cut_guard.json",
+   "path": "rc_line",
+   "equals": "rc=1"
+  },
+  {
+   "label": "⑩",
+   "claim": "负向对照给出两条逐字拒绝原因（两档各一条），不是空拒绝",
+   "artifact": ".fist-loop-20260927/polish_r2_cut_guard.json",
+   "path": "observed.refuse",
+   "min": 2
+  },
+  {
+   "label": "⑪",
+   "claim": "独立反解件零拒绝（从仓库外快照重算，不用驱动的自证）",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑫",
+   "claim": "全树同名方法遮蔽归零：BUG-42 的形状已被清空",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "path": "tree_dupes",
+   "equals": {}
+  },
+  {
+   "label": "⑬",
+   "claim": "行数差恰等于驱动声称的删除行数（cython_generator -8）",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "path": "files['cypyc/codegen/cython_generator.py'].line_delta",
+   "equals": -8
+  },
+  {
+   "label": "⑭",
+   "claim": "行数差恰等于驱动声称的删除行数（scope_analyzer -12）",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "path": "files['cypyc/analyzer/scope_analyzer.py'].line_delta",
+   "equals": -12
+  },
+  {
+   "label": "⑮",
+   "claim": "快照切出的文本 == 驱动记的 removed_text（删除面不是自说自话）",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "path": "files['cypyc/codegen/cython_generator.py'].slice_from_snapshot_matches_removed_text",
+   "equals": true
+  },
+  {
+   "label": "⑯",
+   "claim": "删除前后模块级符号集合相同（没让任何名字消失）",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "path": "files['cypyc/analyzer/scope_analyzer.py'].module_symbols_equal",
+   "equals": true
+  },
+  {
+   "label": "⑰",
+   "claim": "绑定行号只上移了删除行数那么多（2084→2076）",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "path": "bound_after._visit_ExprStmt",
+   "equals": 2076
+  },
+  {
+   "label": "⑱",
+   "claim": "绑定行号只上移了删除行数那么多（926→914）",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "path": "bound_after._visit_MetaBlock",
+   "equals": 914
+  },
+  {
+   "label": "⑲",
+   "claim": "本环 8 条回归锁全绿（含删除前那条红过的结构门）",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "path": "polish_tests.rc",
+   "equals": 0
+  },
+  {
+   "label": "⑳",
+   "claim": "对照覆盖面：与仓库外快照逐档比对的受版本控制 Python 档 ≥150（实测 166，不是只比我自己改的两档）",
+   "artifact": ".fist-loop-20260927/polish_r2_after.json",
+   "path": "files",
+   "min": 150
+  },
+  {
+   "label": "㉑",
+   "claim": "pytest 全量下限只升不降：passed ≥1894、收集数同窗实测且 rc=0",
+   "artifact": ".fist-loop-20260927/polish_r2_baselines.json",
+   "path": "pytest.passed",
+   "min": 1894
+  },
+  {
+   "label": "㉒",
+   "claim": "收集数 ≥1894（防「用例静默消失」）且失败清单为空",
+   "artifact": ".fist-loop-20260927/polish_r2_baselines.json",
+   "path": "pytest.collected",
+   "min": 1894
+  },
+  {
+   "label": "㉓",
+   "claim": "pytest 失败用例逐条点名，必须为空",
+   "artifact": ".fist-loop-20260927/polish_r2_baselines.json",
+   "path": "pytest.failed",
+   "equals": []
+  },
+  {
+   "label": "㉔",
+   "claim": "自研套件 47/47（另一套体系，不与之互相抵扣）",
+   "artifact": ".fist-loop-20260927/polish_r2_baselines.json",
+   "path": "suite.green",
+   "equals": true
+  },
+  {
+   "label": "㉕",
+   "claim": "端到端基准 PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+   "artifact": ".fist-loop-20260927/polish_r2_baselines.json",
+   "path": "e2e.green",
+   "equals": true
+  },
+  {
+   "label": "㉖",
+   "claim": "git 红线：HEAD 仍 17d68b4 且暂存区为空",
+   "artifact": ".fist-loop-20260927/polish_r2_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "㉗",
+   "claim": "git 红线：暂存区文件数为 0（未 git add）",
+   "artifact": ".fist-loop-20260927/polish_r2_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "㉘",
+   "claim": "基线三套 + git + 半径在同一时刻复算，整体零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r2_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㉙",
+   "claim": "作用域化 lint 亲笔行零违例",
+   "artifact": ".fist-loop-20260927/polish_r2_lint.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㉚",
+   "claim": "lint 自检抓到必然违例（否则整条 lint 是摆设）",
+   "artifact": ".fist-loop-20260927/polish_r2_lint.json",
+   "path": "selftest",
+   "equals": "selfprobe-caught"
+  },
+  {
+   "label": "㉛",
+   "claim": "「本环只删不加」可机器否证：两档产品码新增行数均为 0",
+   "artifact": ".fist-loop-20260927/polish_r2_lint.json",
+   "path": "product_files['cypyc/analyzer/scope_analyzer.py'].added_lines",
+   "equals": 0
+  },
+  {
+   "label": "㉜",
+   "claim": "账本 FIXED 段随本环增长（≥42 段），条目数不减",
+   "artifact": ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "path": "ledger.fixed_sections",
+   "min": 42
+  },
+  {
+   "label": "㉝",
+   "claim": "收口链 16 张叶子全部走完 claim→omega→execute→submit→output_validate→verify",
+   "artifact": ".fist-loop-20260927/close_r2_polish.out.json",
+   "path": "leaves",
+   "min": 16
+  },
+  {
+   "label": "㉞",
+   "claim": "收口链零失败叶子",
+   "artifact": ".fist-loop-20260927/close_r2_polish.out.json",
+   "path": "failed",
+   "equals": []
+  },
+  {
+   "label": "㉟",
+   "claim": "上卷被拒按作用域分栏：根任务那 6 条结构性拒绝不多不少（无 [omega:required] + 待验收态）",
+   "artifact": ".fist-loop-20260927/polish_r2_root_split.json",
+   "path": "by_scope.root",
+   "equals": 6
+  },
+  {
+   "label": "㊱",
+   "claim": "枝干上 24 条重入拒绝如实入账（本环承认驱动被我重跑，不把它洗成'服务端语义既定'）",
+   "artifact": ".fist-loop-20260927/polish_r2_root_split.json",
+   "path": "by_scope.branch",
+   "equals": 24
+  },
+  {
+   "label": "㊲",
+   "claim": "收口链根任务终态为已归档、叶完成 16",
+   "artifact": ".fist-loop-20260927/close_r2_polish_root.out.json",
+   "path": "leaves_done",
+   "equals": 16
+  }
+ ]
+}

@@ -1,0 +1,259 @@
+{
+ "started": "2026-09-28T00:48:47+00:00",
+ "toolchain": {
+  "cl": "E:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.EXE",
+  "python_include": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Include",
+  "banner": ""
+ },
+ "attempts": [
+  {
+   "id": "canary-valid-c",
+   "command_verbatim": "E:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.EXE /nologo /c /Tc E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile\\canary_valid.c",
+   "rc": 0,
+   "error_lines": [],
+   "banner": "",
+   "text_tail": "canary_valid.c\r\n"
+  },
+  {
+   "id": "canary-module-level-if",
+   "command_verbatim": "E:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.EXE /nologo /c /Tc E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile\\canary_module_if.c",
+   "rc": 2,
+   "error_lines": [
+    "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile\\canary_module_if.c(2): error C2059: 语法错误:“if”"
+   ],
+   "banner": "",
+   "text_tail": "canary_module_if.c\r\nE:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile\\canary_module_if.c(2): error C2059: 语法错误:“if”\r\n"
+  },
+  {
+   "id": "bridge-generated-c",
+   "command_verbatim": "E:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.EXE /nologo /c /Tc E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile\\probe69.c /IC:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Include",
+   "rc": 2,
+   "error_lines": [
+    "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile\\probe69.c(10): error C2059: 语法错误:“if”"
+   ],
+   "banner": "",
+   "text_tail": "probe69.c\r\nE:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile\\probe69.c(10): error C2059: 语法错误:“if”\r\n"
+  }
+ ],
+ "structural": {
+  "c_lines": 60,
+  "module_level_if_lines": [
+   [
+    10,
+    "if ((__name__ == \"__main__\")) {"
+   ]
+  ]
+ },
+ "d18_cache": {
+  "claim": "docs/USAGE.md:406「源未变会复用 .pyd」",
+  "measure": {
+   "before": {
+    "cwd": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile",
+    "pyd": [],
+    "pyd_mtime_ns": {},
+    "is_stale": false,
+    "cached": null,
+    "caller_cwd_cache": true
+   },
+   "mid": {
+    "cwd": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile",
+    "pyd": [
+     "build",
+     "probe69.c",
+     "probe69.cp313-win_amd64.pyd",
+     "probe69.pyx",
+     "setup.py"
+    ],
+    "pyd_mtime_ns": {
+     "probe69.c": 1790556533924550600,
+     "probe69.cp313-win_amd64.pyd": 1790556545000000000,
+     "probe69.pyx": 1790556529797376800
+    },
+    "is_stale": false,
+    "cached": null,
+    "caller_cwd_cache": true
+   },
+   "after": {
+    "cwd": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile",
+    "pyd": [
+     "build",
+     "probe69.c",
+     "probe69.cp313-win_amd64.pyd",
+     "probe69.pyx",
+     "setup.py"
+    ],
+    "pyd_mtime_ns": {
+     "probe69.c": 1790556533924550600,
+     "probe69.cp313-win_amd64.pyd": 1790556556000000000,
+     "probe69.pyx": 1790556546960793900
+    },
+    "is_stale": false,
+    "cached": null,
+    "caller_cwd_cache": true
+   },
+   "first": {
+    "success": true,
+    "pyd_path": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile\\pyd_out\\probe69.cp313-win_amd64.pyd",
+    "pyd_attrs_on_result": [
+     "pyd_path"
+    ],
+    "errors": []
+   },
+   "second": {
+    "success": true,
+    "pyd_path": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile\\pyd_out\\probe69.cp313-win_amd64.pyd",
+    "pyd_attrs_on_result": [
+     "pyd_path"
+    ],
+    "errors": []
+   },
+   "dur_first": 17.382,
+   "dur_second": 9.739
+  },
+  "same_pyd_path": true,
+  "pyd_rewritten_between_calls": true,
+  "verdict": "no-reuse",
+  "rc": 0,
+  "stderr_tail": "",
+  "artifacts_on_disk": [
+   "probe69.c",
+   "probe69.cp313-win_amd64.pyd",
+   "probe69.pyx"
+  ],
+  "pyd_attrs_on_result": [
+   "pyd_path"
+  ],
+  "pyd_path_empty_while_artifact_exists": []
+ },
+ "scratch_outside_repo": true,
+ "scratch_dir": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile",
+ "watched_dirs": [
+  "tests/golden",
+  "cypyc",
+  "cypy_bridge",
+  "cypy_hook",
+  "scripts",
+  "PROJECT-SPEC",
+  "SYNTAX",
+  "docs"
+ ],
+ "repo_new_files": [],
+ "untracked_before_total": 3,
+ "golden_face_files": [
+  "examples/basic_types.out",
+  "examples/concurrency.out",
+  "examples/constraint_numeric.out",
+  "examples/control_flow.out",
+  "examples/defer.out",
+  "examples/functions.out",
+  "examples/generic.out",
+  "examples/generics_advanced.out",
+  "examples/hello.out",
+  "examples/list_comprehension.out",
+  "examples/meta.out",
+  "examples/metaprogramming.out",
+  "examples/minimal_test.out",
+  "examples/new_syntax_features.out",
+  "examples/pipe_operator.out",
+  "examples/pointers.out",
+  "examples/struct_enum.out",
+  "examples/struct_records.out",
+  "examples/subtype_units.out",
+  "examples/test_duck.out",
+  "examples/test_macro.out",
+  "examples/test_meta.out",
+  "examples/test_new_features.out",
+  "examples/test_union.out",
+  "examples/test_vec.out",
+  "scripts/e2e_golden.sh"
+ ],
+ "golden_untouched": {
+  "before": "eb6616fd55780c8e",
+  "after": "eb6616fd55780c8e",
+  "files_before": 26,
+  "files_after": 26,
+  "equal": true,
+  "regenerate_called": false
+ },
+ "note": "本件不调用任何 golden 注册入口（`e2e_golden.sh` 只按 sha 比，不跑）；所有编译产物落 verify_r4_tmp/compile/，仓库源码树零新增",
+ "self_checks": [
+  {
+   "label": "工具链自证：合法 C 必须编得过",
+   "got": 0,
+   "want": 0,
+   "why": "canary_valid.c\r\n",
+   "ok": true
+  },
+  {
+   "label": "合成违例必须被编译器抓住（否则拒判是空的）",
+   "got": true,
+   "want": true,
+   "why": "rc=2 errs=['E:\\\\IDEProjects\\\\AI\\\\Cypy\\\\.fist-loop-20260927\\\\verify_r4_tmp\\\\compile\\\\canary_module_if.c(2): error C2059: 语法错误:“if”']",
+   "ok": true
+  },
+  {
+   "label": "生成物必须含模块级 if（这是 BUG-69 的现场）",
+   "got": true,
+   "want": true,
+   "why": "{'c_lines': 60, 'module_level_if_lines': [(10, 'if ((__name__ == \"__main__\")) {')]}",
+   "ok": true
+  },
+  {
+   "label": "D18 必须先看到 .pyd 真落盘（否则没资格谈复用）",
+   "got": true,
+   "want": true,
+   "why": "mid=['build', 'probe69.c', 'probe69.cp313-win_amd64.pyd', 'probe69.pyx', 'setup.py']",
+   "ok": true
+  },
+  {
+   "label": "D18 两轮都必须编译成功（失败的一轮不能拿来谈缓存）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "见 measure",
+   "ok": true
+  },
+  {
+   "label": "golden 面（examples/*.out 与 e2e_golden.sh）前后必须逐字相等",
+   "got": true,
+   "want": true,
+   "why": "before=eb6616fd55780c8e after=eb6616fd55780c8e",
+   "ok": true
+  },
+  {
+   "label": "golden 面必须真数到基准文件（空指纹不算自证）",
+   "got": true,
+   "want": true,
+   "why": "files=26",
+   "ok": true
+  },
+  {
+   "label": "golden 文件数不得变化（新增/删除都算动过基准）",
+   "got": 26,
+   "want": 26,
+   "why": "files_total 前后",
+   "ok": true
+  },
+  {
+   "label": "被看住的目录里本轮不得新增未跟踪文件",
+   "got": [],
+   "want": [],
+   "why": "见 repo_new_files",
+   "ok": true
+  },
+  {
+   "label": "编译产物必须全在 scratch（仓库源码树之外）",
+   "got": true,
+   "want": true,
+   "why": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_tmp\\compile",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T00:49:16+00:00"
+}

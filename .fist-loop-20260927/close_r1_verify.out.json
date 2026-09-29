@@ -1,0 +1,550 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r47.1.1",
+   "law": "pytest 全量实跑",
+   "artifact": ".fist-loop-20260927/verify_pytest_full_r1.log",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.1.2",
+   "law": "pytest 全量实跑",
+   "artifact": ".fist-loop-20260927/verify_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.2.1",
+   "law": "自研套件与端到端基准",
+   "artifact": ".fist-loop-20260927/verify_test_suite_r1.log",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.2.2",
+   "law": "自研套件与端到端基准",
+   "artifact": ".fist-loop-20260927/verify_e2e_r1.log",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.3.1",
+   "law": "修复面真编译复核",
+   "artifact": ".fist-loop-20260927/verify_runtime_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.3.2",
+   "law": "修复面真编译复核",
+   "artifact": ".fist-loop-20260927/verify_runtime_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.4.1",
+   "law": "CLI 与构建启动自检",
+   "artifact": ".fist-loop-20260927/verify_cli_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.4.2",
+   "law": "CLI 与构建启动自检",
+   "artifact": ".fist-loop-20260927/verify_cli_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.5.1",
+   "law": "规范符合性检查",
+   "artifact": ".fist-loop-20260927/verify_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.5.2",
+   "law": "规范符合性检查",
+   "artifact": ".fist-loop-20260927/verify_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.6.1",
+   "law": "冻结文档与既有测试未改动",
+   "artifact": ".fist-loop-20260927/verify_testdiff_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.6.2",
+   "law": "冻结文档与既有测试未改动",
+   "artifact": "memory/bugs.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.7.1",
+   "law": "账本一致性与脏工作树定性",
+   "artifact": ".fist-loop-20260927/verify_dirt_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.7.2",
+   "law": "账本一致性与脏工作树定性",
+   "artifact": ".fist-loop-20260927/loop_progress.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.8.1",
+   "law": "验证报告与转结",
+   "artifact": "memory/reviews/20260927.12.54.01.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r47.8.2",
+   "law": "验证报告与转结",
+   "artifact": ".fist-loop-20260927/verify_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  }
+ ],
+ "failed": [],
+ "root_status": "拆分中"
+}

@@ -1,0 +1,59 @@
+{
+ "cases": [
+  {
+   "source": "alias_use_param.cypy",
+   "artifact": "alias_use_param.pyx",
+   "diff_lines": 0,
+   "identical_after_strip": true,
+   "diff_sample": [],
+   "kept_time_lines": 2
+  },
+  {
+   "source": "direct_annot.cypy",
+   "artifact": "direct_annot.pyx",
+   "diff_lines": 0,
+   "identical_after_strip": true,
+   "diff_sample": [],
+   "kept_time_lines": 2
+  },
+  {
+   "source": "examples/demos/data_structures/type_alias_demo.cypy",
+   "artifact": "type_alias_demo.pyx",
+   "diff_lines": 0,
+   "identical_after_strip": true,
+   "diff_sample": [],
+   "kept_time_lines": 2
+  },
+  {
+   "source": "examples/demos/boundary_cases/combined_features.cypy",
+   "artifact": "combined_features.pyx",
+   "diff_lines": 0,
+   "identical_after_strip": true,
+   "diff_sample": [],
+   "kept_time_lines": 2
+  }
+ ],
+ "all_textual_identical": true,
+ "identical_total": 4,
+ "refused_by_new_check": [
+  {
+   "source": "ctl_callable_arity_bad",
+   "refusal_needle": "Callable arity mismatch",
+   "before_artifact_bytes": 790,
+   "after_artifact_written": false,
+   "refusal_excerpt": "ys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\r\n\u001b[31m[FAIL] Transpile failed:\u001b[0m"
+  }
+ ],
+ "refused_expected_total": 1,
+ "stripped_line_markers": [
+  "__compile_time__",
+  "__generated_at__"
+ ],
+ "sources_scanned": 5,
+ "at_utc": "2026-09-27T19:10:44+00:00",
+ "refuse": [],
+ "lane_files": [
+  "cypyc/analyzer/type_checker.py"
+ ],
+ "type_checker_sha_before": "4db6e1f3bfc2c7d3"
+}

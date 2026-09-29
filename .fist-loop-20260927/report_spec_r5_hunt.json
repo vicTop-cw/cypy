@@ -1,0 +1,865 @@
+{
+ "name": "20260928.15.10.00",
+ "title": "R5-寻虫（hunt）环节报告",
+ "stage": "第 5 轮第 1 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R5",
+ "root_task": "T0r96",
+ "assignee": "cypy-hunter",
+ "marker": "[selfdrive-hunt]",
+ "fragment": ".fist-loop-20260927/r5_hunt_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/spec_r5_hunt.json",
+  ".fist-loop-20260927/hunt_r5_analyzer.py",
+  ".fist-loop-20260927/hunt_r5_faces.py",
+  ".fist-loop-20260927/hunt_r5_faces.json",
+  ".fist-loop-20260927/hunt_r5_declared.py",
+  ".fist-loop-20260927/hunt_r5_declared.json",
+  ".fist-loop-20260927/hunt_r5_codegen.py",
+  ".fist-loop-20260927/hunt_r5_codegen.json",
+  ".fist-loop-20260927/hunt_r5_cli_face.py",
+  ".fist-loop-20260927/hunt_r5_cli_face.json",
+  ".fist-loop-20260927/hunt_r5_needles.py",
+  ".fist-loop-20260927/hunt_r5_needles.json",
+  ".fist-loop-20260927/hunt_r5_book.py",
+  ".fist-loop-20260927/hunt_r5_book.json",
+  ".fist-loop-20260927/hunt_r5_baselines.py",
+  ".fist-loop-20260927/hunt_r5_baselines.json",
+  ".fist-loop-20260927/hunt_r5_drivers_lint.py",
+  ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+  ".fist-loop-20260927/hunt_r5_calllog_tally.py",
+  ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+  ".fist-loop-20260927/hunt_r5_self_audit.py",
+  ".fist-loop-20260927/hunt_r5_close_spec.py",
+  ".fist-loop-20260927/close_r5_hunt.json",
+  ".fist-loop-20260927/hunt_r5_close_spec.py",
+  ".fist-loop-20260927/hunt_r5_render_order.py",
+  ".fist-loop-20260927/hunt_r5_progress.py",
+  ".fist-loop-20260927/loop_kit.py",
+  ".fist-loop-20260927/close_stage_generic.py",
+  ".fist-loop-20260927/close_root_generic.py",
+  ".fist-loop-20260927/close_r5_hunt.out.json",
+  ".fist-loop-20260927/close_r5_hunt_root.out.json"
+ ],
+ "stale_ok": [],
+ "closure_note": "收口链（16 叶 × omega 全链 + 8 支 + 根上卷）在本报告渲染之后才发，其结果与被拒原文一律进 .fist-loop-20260927/loop_progress.md，故此处不留 closure 位——留了就等于要求渲染时收口件已存在，而那会把顺序倒过来",
+ "footer": "root=\"T0r96\"；laws=8；faces_families=6；face_cases=25；faces_candidates=0；mutant_flips={\"declared_sig\": 4, \"legacy_args\": 2}；unattributed=[\"callback_param\"]；blind_spots=[]；declared_rows=18；stale=8；real_gap=3；design_withdrawn=[\"D03\"]；not_measured_or_true=[\"D11\", \"D18\"]；codegen_cases=7；codegen_confirmed=[\"G01\", \"G02\", \"G03\", \"G04\", \"G05\", \"G07\", \"G06\"]；cli_cases=7；cli_confirmed=[\"H01\", \"H03\", \"H04\", \"H05\", \"H06\", \"H07\"]；cli_unsure=[\"H02\"]；cards=13；on_disk_keys=13；ledger=\"90->90\"；sqlite_bugs=\"86->86\"；pytest=2002；collect=2002；suite={\"Total\": 47, \"Passed\": 47, \"Failed\": 0, \"Skipped\": 0}；e2e={\"rc\": 0, \"fields\": {\"PASS\": 25, \"FAIL\": 0, \"UNREG/RUNFAIL\": 0, \"WARN\": 0}, \"summary_line\": [\"[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0\"], \"tail\": [\"PASS  test_union.cypy\", \"PASS  test_vec.cypy\", \"[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0\"]}；floors={\"pytest\": 2002, \"collect\": 2002, \"suite\": 47, \"e2e_pass\": 25}；head=\"17d68b4\"；staged=0；radius_forbidden=0；radius_allowed=250；driver_hard=0；driver_soft=0；needles=\"24/24\"；generated_at=\"2026-09-28T07:12:37+00:00\"",
+ "gates": [
+  {
+   "label": "①-1",
+   "claim": "`hunt_r5_faces.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-2",
+   "claim": "`hunt_r5_faces.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "self_checks",
+   "min": 8
+  },
+  {
+   "label": "①-3",
+   "claim": "`hunt_r5_faces.json` 必须带本轮起跑戳（字段 started；同名旧件冒充本轮新跑靠这道抓）",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-4",
+   "claim": "`hunt_r5_declared.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-5",
+   "claim": "`hunt_r5_declared.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "self_checks",
+   "min": 6
+  },
+  {
+   "label": "①-6",
+   "claim": "`hunt_r5_declared.json` 必须带本轮起跑戳（字段 started；同名旧件冒充本轮新跑靠这道抓）",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-7",
+   "claim": "`hunt_r5_codegen.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-8",
+   "claim": "`hunt_r5_codegen.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "path": "self_checks",
+   "min": 6
+  },
+  {
+   "label": "①-9",
+   "claim": "`hunt_r5_codegen.json` 必须带本轮起跑戳（字段 started；同名旧件冒充本轮新跑靠这道抓）",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-10",
+   "claim": "`hunt_r5_cli_face.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-11",
+   "claim": "`hunt_r5_cli_face.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "path": "self_checks",
+   "min": 5
+  },
+  {
+   "label": "①-12",
+   "claim": "`hunt_r5_cli_face.json` 必须带本轮起跑戳（字段 started；同名旧件冒充本轮新跑靠这道抓）",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-13",
+   "claim": "`hunt_r5_book.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-14",
+   "claim": "`hunt_r5_book.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "self_checks",
+   "min": 14
+  },
+  {
+   "label": "①-15",
+   "claim": "`hunt_r5_book.json` 必须带本轮起跑戳（字段 started；同名旧件冒充本轮新跑靠这道抓）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-16",
+   "claim": "`hunt_r5_needles.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-17",
+   "claim": "`hunt_r5_needles.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "self_checks",
+   "min": 5
+  },
+  {
+   "label": "①-18",
+   "claim": "`hunt_r5_needles.json` 必须带本轮起跑戳（字段 started；同名旧件冒充本轮新跑靠这道抓）",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-19",
+   "claim": "`hunt_r5_baselines.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-20",
+   "claim": "`hunt_r5_baselines.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "self_checks",
+   "min": 16
+  },
+  {
+   "label": "①-21",
+   "claim": "`hunt_r5_baselines.json` 必须带本轮起跑戳（字段 window.start_utc；同名旧件冒充本轮新跑靠这道抓）",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "window.start_utc",
+   "min": 12
+  },
+  {
+   "label": "①-22",
+   "claim": "`hunt_r5_drivers_lint.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-23",
+   "claim": "`hunt_r5_drivers_lint.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "path": "self_checks",
+   "min": 4
+  },
+  {
+   "label": "①-24",
+   "claim": "`hunt_r5_drivers_lint.json` 必须带本轮起跑戳（字段 started；同名旧件冒充本轮新跑靠这道抓）",
+   "artifact": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-25",
+   "claim": "`hunt_r5_calllog_tally.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-26",
+   "claim": "`hunt_r5_calllog_tally.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "self_checks",
+   "min": 7
+  },
+  {
+   "label": "①-27",
+   "claim": "`hunt_r5_calllog_tally.json` 必须带本轮起跑戳（字段 started；同名旧件冒充本轮新跑靠这道抓）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-28",
+   "claim": "`close_r5_hunt.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/close_r5_hunt.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-29",
+   "claim": "`close_r5_hunt.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/close_r5_hunt.json",
+   "path": "self_checks",
+   "min": 11
+  },
+  {
+   "label": "①-30",
+   "claim": "`close_r5_hunt.json` 必须带本轮起跑戳（字段 started；同名旧件冒充本轮新跑靠这道抓）",
+   "artifact": ".fist-loop-20260927/close_r5_hunt.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "②-1",
+   "claim": "法①：语义邻域拆成六带逐带对照",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "families",
+   "min": 6
+  },
+  {
+   "label": "②-2",
+   "claim": "法①：六带用例（含对照）总数达 25 条且两两当场实跑",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "cases_total",
+   "min": 25
+  },
+  {
+   "label": "②-3",
+   "claim": "法①：三条变异通道里至少两条真的翻转了判定（归属可反解）",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "flips_by_mutant",
+   "min": 2
+  },
+  {
+   "label": "②-4",
+   "claim": "法①：翻转归属覆盖到 3 族（另 3 族只由格级期望证明，见 ②-9 的点名）",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "flips_by_family",
+   "min": 3
+  },
+  {
+   "label": "②-5",
+   "claim": "法①：白建的变异通道必须逐条点名，不许静默丢掉",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "unattributed_mutants",
+   "min": 1
+  },
+  {
+   "label": "②-6",
+   "claim": "法①：六邻域的变异夹具全集入表（不是只留翻转的那几条）",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "mutant_candidates",
+   "min": 6
+  },
+  {
+   "label": "②-7",
+   "claim": "法①：看不见样本的格必须显式留在 blind_spots（0 才是『没有盲区』的主张）",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "blind_spots",
+   "equals": []
+  },
+  {
+   "label": "②-8",
+   "claim": "法①：期望口径写明是『文档声明的语义』而不是『今天怎样』",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "expectation_note",
+   "min": 40
+  },
+  {
+   "label": "②-9",
+   "claim": "法①：没有被变异翻转覆盖的族必须正面点名（含糊写成「六带都活」就是假话）",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "families_without_flip",
+   "min": 3
+  },
+  {
+   "label": "③-1",
+   "claim": "法②：主张条数达 18 且每行带 file:line 与原文",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "rows_total",
+   "min": 18
+  },
+  {
+   "label": "③-2",
+   "claim": "法②：判为文档陈旧（今天已实现）的逐条点名",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "stale_total",
+   "min": 1
+  },
+  {
+   "label": "③-3",
+   "claim": "法②：判为真实缺口的逐条点名",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "real_gap_total",
+   "min": 1
+  },
+  {
+   "label": "③-4",
+   "claim": "法②：文档自述未实现且今天确实没实现 ⇒ 撤回，不占号",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "withdrawn_design",
+   "min": 1
+  },
+  {
+   "label": "③-5",
+   "claim": "法②：跑不动/没测的必须落进 not_measured_or_true，不许写成没问题",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "not_measured_or_true",
+   "min": 2
+  },
+  {
+   "label": "③-6",
+   "claim": "法②：观察用的是被测树的分析器（身份串入件，防孪生件顶包）",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "identity",
+   "min": 20
+  },
+  {
+   "label": "③-7",
+   "claim": "法②：规模红线四栏实测（三个文件行数 + 阈值）",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "size_lines",
+   "min": 4
+  },
+  {
+   "label": "③-8",
+   "claim": "法②：hook 子命令未列出的选项逐条点名",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "undocumented_hook_options",
+   "min": 1
+  },
+  {
+   "label": "③-9",
+   "claim": "法②：子代理结论只作线索、全部现测的口径写明在件里",
+   "artifact": ".fist-loop-20260927/hunt_r5_declared.json",
+   "path": "note_on_subagent",
+   "min": 40
+  },
+  {
+   "label": "④-1",
+   "claim": "法③：生成面用例 7 条（pos 与同族 ctl 各一档）",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "path": "cases",
+   "min": 7
+  },
+  {
+   "label": "④-2",
+   "claim": "法③：确诊集合非空且逐条点名",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "path": "confirmed",
+   "min": 7
+  },
+  {
+   "label": "④-3",
+   "claim": "法③：机制签名键与确诊一一对应",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "path": "keys",
+   "min": 7
+  },
+  {
+   "label": "④-4",
+   "claim": "法③：期望写错就确认不了 + 对照方向逐条声明（两格 canary）",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "path": "canary",
+   "min": 2
+  },
+  {
+   "label": "④-5",
+   "claim": "法③：未确认档必须显式留档（本环为 0，但键要在）",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "path": "unsure",
+   "equals": []
+  },
+  {
+   "label": "④-6",
+   "claim": "法③：残渣在清理之后复测，非空即拒",
+   "artifact": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "path": "tmp_left",
+   "equals": []
+  },
+  {
+   "label": "⑤-1",
+   "claim": "法④：入口面用例 7 条（CLI/hook/build/project）",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "path": "cases",
+   "min": 7
+  },
+  {
+   "label": "⑤-2",
+   "claim": "法④：入口面确诊 6 条逐条点名",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "path": "confirmed",
+   "min": 6
+  },
+  {
+   "label": "⑤-3",
+   "claim": "法④：对照没站对的那条只能记 UNSURE 且留在件里（不许混进确诊）",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "path": "unsure",
+   "min": 1
+  },
+  {
+   "label": "⑤-4",
+   "claim": "法④：pos 与 ctl 期望逐条相反（否则方向是蒙出来的）",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "path": "canary",
+   "min": 2
+  },
+  {
+   "label": "⑤-5",
+   "claim": "法④：机制签名键入表",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "path": "keys",
+   "min": 6
+  },
+  {
+   "label": "⑤-6",
+   "claim": "法④：入口面残渣同样在清理后复测",
+   "artifact": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "path": "tmp_left",
+   "equals": []
+  },
+  {
+   "label": "⑥-1",
+   "claim": "法⑤：faces 的观察性由变异翻转正面证明（不是『跑出结果就算看见』）",
+   "artifact": ".fist-loop-20260927/hunt_r5_faces.json",
+   "path": "flips_by_mutant",
+   "min": 2
+  },
+  {
+   "label": "⑥-2",
+   "claim": "法⑤：入账件的机制签名逐条点名（13 张，一张不多不少）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "keys",
+   "min": 13
+  },
+  {
+   "label": "⑥-3",
+   "claim": "法⑤：幂等复扫把已在账的逐条点名（重跑一条都不重开，且看得见为什么不开）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "duplicates",
+   "min": 13
+  },
+  {
+   "label": "⑥-5",
+   "claim": "法⑤：卡表签名与判据件签名不一致的对数逐对留档（重打字面量不许静默）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "key_alias",
+   "min": 8
+  },
+  {
+   "label": "⑥-6",
+   "claim": "法⑤：别名对数与实测不一致条数同源（不是手写个数）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "key_alias_len",
+   "min": 8
+  },
+  {
+   "label": "⑦-1",
+   "claim": "法⑥：卡表条数 = 两批判据件确诊条数之和",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "cards",
+   "min": 13
+  },
+  {
+   "label": "⑦-2",
+   "claim": "法⑥：每张卡在账本与 sqlite bugs 树里都能数到（在账，不是我记得）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "on_disk_keys_len",
+   "min": 13
+  },
+  {
+   "label": "⑦-3",
+   "claim": "法⑥：入账后账本最大号 = 报告生成时从 memory/bugs.md 现读的数（两路独立）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "ledger_after_max",
+   "equals": 90
+  },
+  {
+   "label": "⑦-4",
+   "claim": "法⑥：sqlite bugs 任务数 = 生成时直查库的数（不是件里说多少就算多少）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "sqlite_bug_tasks_after",
+   "equals": 86
+  },
+  {
+   "label": "⑦-5",
+   "claim": "法⑥：逐卡在账证据入表（键/用例/账本命中数/bug 行数）",
+   "artifact": ".fist-loop-20260927/hunt_r5_book.json",
+   "path": "per_key_on_disk",
+   "min": 13
+  },
+  {
+   "label": "⑧-1",
+   "claim": "法⑦：地板四栏齐（pytest/collect/suite/e2e_pass）且来自上一环实测件",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "floors",
+   "min": 4
+  },
+  {
+   "label": "⑧-2",
+   "claim": "法⑦：地板来源串点名上一环件与逐栏数值",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "floors_source",
+   "min": 20
+  },
+  {
+   "label": "⑧-3",
+   "claim": "法⑦：三套体系同刻为绿",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "three_systems_green",
+   "equals": true
+  },
+  {
+   "label": "⑧-4",
+   "claim": "法⑦：pytest 失败汇总为 0（字段名从件反解：failed_sum）",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "pytest.failed_sum",
+   "equals": 0
+  },
+  {
+   "label": "⑧-5",
+   "claim": "法⑦：pytest 通过数达上一环地板",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "pytest.passed",
+   "min": 2002
+  },
+  {
+   "label": "⑧-5b",
+   "claim": "法⑦：三套体系的合取旗标 all_ok 为真（不是某一格自己绿）",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "all_ok",
+   "equals": true
+  },
+  {
+   "label": "⑧-6",
+   "claim": "法⑦：收集数达地板（+20 之后不回退）",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "collect.nodeids",
+   "min": 2002
+  },
+  {
+   "label": "⑧-7",
+   "claim": "法⑦：HEAD 未动（本环零提交）",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "⑧-8",
+   "claim": "法⑦：暂存区为 0 行",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "⑧-9",
+   "claim": "法⑦：禁用面改动为 0（冻结语义文件按 mtime 正面测）",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "radius.forbidden_total",
+   "equals": 0
+  },
+  {
+   "label": "⑧-10",
+   "claim": "法⑦：允许面改动逐条点名（半径不是空话也不是口号）",
+   "artifact": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "path": "radius.allowed_touched",
+   "min": 1
+  },
+  {
+   "label": "⑨-1",
+   "claim": "法⑧：亲笔驱动扫描条数达 12 个以上",
+   "artifact": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "path": "drivers_scanned",
+   "min": 12
+  },
+  {
+   "label": "⑨-2",
+   "claim": "法⑧：硬错（E9/W605/F821/F7/F63/F841）为 0",
+   "artifact": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "path": "hard_violations",
+   "equals": 0
+  },
+  {
+   "label": "⑨-3",
+   "claim": "法⑧：软账条数不高于上一环实测基线 0",
+   "artifact": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "path": "soft_total",
+   "equals": 0
+  },
+  {
+   "label": "⑨-4",
+   "claim": "法⑧：行长口径写明是 100（与项目声明一致，不是为过而调）",
+   "artifact": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "path": "line_length_declared",
+   "equals": 100
+  },
+  {
+   "label": "⑨-5",
+   "claim": "法⑧：lint 自带合成违例对照，抓不到即自判坏",
+   "artifact": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "path": "canary",
+   "min": 1
+  },
+  {
+   "label": "⑩-1",
+   "claim": "needle 全集条数由扫描件反解（不手数）",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "checked_len",
+   "min": 20
+  },
+  {
+   "label": "⑩-2",
+   "claim": "每条 needle 都是被引件里的真键名（不合格条数必须为 0）",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "real_key_len",
+   "equals": 24
+  },
+  {
+   "label": "⑩-3",
+   "claim": "扫描时还不存在的判据件必须为空表（否则法条引用了不存在的东西）",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "pending_artifacts",
+   "equals": []
+  },
+  {
+   "label": "⑩-4",
+   "claim": "前缀式假命中 canary 必须抓到东西（否则严口径与子串口径无法区分）",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "prefix_canary",
+   "min": 1
+  },
+  {
+   "label": "⑩-5",
+   "claim": "实测数写回环节计划（报告里的数与判据件同源）",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "needle_verification_written_back",
+   "min": 4
+  },
+  {
+   "label": "⑪-1",
+   "claim": "本环号段在 call_log 里的行数达法条数（按前缀数，不按回忆）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "stages.T0r96.rows",
+   "min": 8
+  },
+  {
+   "label": "⑪-2",
+   "claim": "全库行数做分母要看得见（0 分母上的『零被拒』没意义）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "total_call_log_rows",
+   "min": 500
+  },
+  {
+   "label": "⑪-3",
+   "claim": "不存在的前缀必须数出 0 行（过滤器不恒真）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "control_absent_prefix_rows",
+   "equals": 0
+  },
+  {
+   "label": "⑪-4",
+   "claim": "本环前缀的逐工具计数（omega 链在其中，不按回忆列）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "stages.T0r96.by_tool",
+   "min": 3
+  },
+  {
+   "label": "⑪-5",
+   "claim": "laya / issue_up / call_log 的实际承担工具逐条给数",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "spec_named_carriers",
+   "min": 3
+  },
+  {
+   "label": "⑪-6",
+   "claim": "上一环号段的种子行数看得见（跨环对照不是空的）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "stage_seed_rows.total",
+   "min": 20
+  },
+  {
+   "label": "⑪-7",
+   "claim": "『0 命中就不许写已开启』这条口径写在件里（不是报告里的一句话）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "note",
+   "min": 40
+  },
+  {
+   "label": "⑪-9",
+   "claim": "本环前缀总行数达 20 行（omega 链 + 派单 + 入账都会计数）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "stages.T0r96.rows",
+   "min": 20
+  },
+  {
+   "label": "⑪-10",
+   "claim": "环标签档在场：publish/laya_decide/report_bug 没有 task_id，按标签这路才数得到",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "ring_tag_calls.by_tool",
+   "min": 3
+  },
+  {
+   "label": "⑪-11",
+   "claim": "本环标签下确有成功调用（≥10 行 ok：13 张卡 + publish + laya_decide）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "ring_tag_calls.ok",
+   "min": 10
+  },
+  {
+   "label": "⑪-12",
+   "claim": "不存在的标签必须数出 0 行（按标签这路过滤也不恒真）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "ring_tag_calls.absent_control_rows",
+   "equals": 0
+  },
+  {
+   "label": "⑪-13",
+   "claim": "标签档 13 条被拒原文逐字分组在场（不是挑两条代表）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "ring_tag_calls.refusals_md",
+   "min": 200
+  },
+  {
+   "label": "⑪-14",
+   "claim": "被拒原文去重后的组数逐条点名（分组键不是手数）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "ring_tag_calls.distinct_refusal_texts",
+   "min": 3
+  },
+  {
+   "label": "⑪-15",
+   "claim": "call_log 工具面的回包看得见本环号段（自读 sqlite 不算开过工具）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "call_log_tool_probe.rows_containing_stage",
+   "min": 100
+  },
+  {
+   "label": "⑪-16",
+   "claim": "跨环正例那一档要写明口径（不然 R4 的数会被当成本环的）",
+   "artifact": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "path": "stage_seed_rows.scope",
+   "min": 10
+  },
+  {
+   "label": "⑫-1",
+   "claim": "法1（头号证据件 hunt_r5_faces.json）的 3 条 needle 全部是被引件里的**真键名**——按实测条数等值校，零值测量（如 blind_spots=[]）不算缺失",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "per_law_real.law1",
+   "equals": 3
+  },
+  {
+   "label": "⑫-2",
+   "claim": "法2（头号证据件 hunt_r5_declared.json）的 3 条 needle 全部是被引件里的**真键名**——按实测条数等值校，零值测量（如 blind_spots=[]）不算缺失",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "per_law_real.law2",
+   "equals": 3
+  },
+  {
+   "label": "⑫-3",
+   "claim": "法3（头号证据件 hunt_r5_codegen.json）的 3 条 needle 全部是被引件里的**真键名**——按实测条数等值校，零值测量（如 blind_spots=[]）不算缺失",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "per_law_real.law3",
+   "equals": 3
+  },
+  {
+   "label": "⑫-4",
+   "claim": "法4（头号证据件 hunt_r5_cli_face.json）的 3 条 needle 全部是被引件里的**真键名**——按实测条数等值校，零值测量（如 blind_spots=[]）不算缺失",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "per_law_real.law4",
+   "equals": 3
+  },
+  {
+   "label": "⑫-5",
+   "claim": "法5（头号证据件 hunt_r5_faces.json）的 3 条 needle 全部是被引件里的**真键名**——按实测条数等值校，零值测量（如 blind_spots=[]）不算缺失",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "per_law_real.law5",
+   "equals": 3
+  },
+  {
+   "label": "⑫-6",
+   "claim": "法6（头号证据件 hunt_r5_book.json）的 3 条 needle 全部是被引件里的**真键名**——按实测条数等值校，零值测量（如 blind_spots=[]）不算缺失",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "per_law_real.law6",
+   "equals": 3
+  },
+  {
+   "label": "⑫-7",
+   "claim": "法7（头号证据件 hunt_r5_baselines.json）的 3 条 needle 全部是被引件里的**真键名**——按实测条数等值校，零值测量（如 blind_spots=[]）不算缺失",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "per_law_real.law7",
+   "equals": 3
+  },
+  {
+   "label": "⑫-8",
+   "claim": "法8（头号证据件 hunt_r5_drivers_lint.json）的 3 条 needle 全部是被引件里的**真键名**——按实测条数等值校，零值测量（如 blind_spots=[]）不算缺失",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "per_law_real.law8",
+   "equals": 3
+  },
+  {
+   "label": "⑫-9",
+   "claim": "needle 严口径的总覆盖面 = 计划声明的 artifacts 总数（24 条，逐条不是手数）",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "real_key_len",
+   "equals": 24
+  },
+  {
+   "label": "⑫-10",
+   "claim": "扫描时不存在「件还没跑」的档（pending 必须为空表）",
+   "artifact": ".fist-loop-20260927/hunt_r5_needles.json",
+   "path": "pending_artifacts",
+   "equals": []
+  }
+ ],
+ "gates_total": 116,
+ "closure": {
+  "stage": ".fist-loop-20260927/close_r5_hunt.out.json",
+  "root": ".fist-loop-20260927/close_r5_hunt_root.out.json"
+ }
+}

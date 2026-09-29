@@ -1,0 +1,41 @@
+命令：python -X utf8 -m black .fist-loop-20260927/*.py（仓库根下执行，17:41:5x）
+black 自述：35 files reformatted, 32 files left unchanged
+
+按 mtime>=17:41 反解到的 .py（含我随后手工修的 2 个，故 37）：
+close_r1_fix.py
+close_r1_fix_root.py
+close_r1_hunt.py
+close_r1_polish.py
+close_r1_root.py
+close_r1_verify.py
+close_r1_verify_root.py
+fix_r2_file_bug50.py
+fix_r2_ledger.py
+fix_r2_lint_selfprobe.py
+fix_r2_lockproof.py
+gen_report_r1_advance.py
+gen_report_r1_fix.py
+gen_report_r1_hunt.py
+gen_report_r1_polish.py
+gen_report_r1_verify.py
+goldendiff_r1.py
+hunt_r1_adv.py
+intake_r1_hunt.py
+intake_r1_hunt2.py
+leaves_r1.py
+ledger_fixed_r1.py
+lfist.py
+lfist_lib.py
+lockproof_r1.py
+mode_list_r1.py
+polish_baselines_r1.py
+polish_wallclock_r1.py
+root_r1.py
+root_stage.py
+run_baselines_r1.py
+step0_r1.py
+test_loop_before_black.py
+verify_cli_r1.py
+verify_dirt_r1.py
+verify_r1.py
+verify_runtime_r1.py

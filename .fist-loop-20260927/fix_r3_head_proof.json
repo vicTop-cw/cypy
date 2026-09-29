@@ -1,0 +1,106 @@
+{
+ "head": "17d68b4",
+ "run_rc": 1,
+ "red_groups": 6,
+ "failed_total": 12,
+ "passed_total": 5,
+ "stale_control_reds": [
+  {
+   "lock": "test_bug58_realloc_zero_size_still_returns_none_and_frees",
+   "reason": "E       AttributeError: module 'cypy_bridge.memory' has no attribute '_as_address'"
+  }
+ ],
+ "groups": {
+  "BUG-55": {
+   "red": [
+    "test_bug55_generic_params_nodes_are_collected"
+   ],
+   "green": [
+    "test_bug55_duck_def_type_params_still_collected"
+   ],
+   "red_reasons": {
+    "test_bug55_generic_params_nodes_are_collected": "E       AssertionError: 泛型节点 1 个、只收到 0 个"
+   },
+   "control_red_on_old_tree": [],
+   "task_id": "T0r63"
+  },
+  "BUG-56": {
+   "red": [
+    "test_bug56_check_only_reports_and_generates_nothing",
+    "test_bug56_check_only_fails_on_broken_source",
+    "test_bug56_emit_ast_prints_parsed_nodes",
+    "test_bug56_emit_cython_prints_cython_code",
+    "test_bug56_generate_setup_writes_buildable_script"
+   ],
+   "green": [
+    "test_bug56_control_plain_transpile_writes_no_setup"
+   ],
+   "red_reasons": {
+    "test_bug56_check_only_reports_and_generates_nothing": "E           AssertionError: \u001b[1m",
+    "test_bug56_check_only_fails_on_broken_source": "E           AssertionError: \u001b[1m",
+    "test_bug56_emit_ast_prints_parsed_nodes": "E           AssertionError: []",
+    "test_bug56_emit_cython_prints_cython_code": "E           AssertionError: \u001b[1m",
+    "test_bug56_generate_setup_writes_buildable_script": "E           AssertionError: --generate-setup 之后 C:\\Users\\victo\\AppData\\Local\\Temp\\tmprtrxgplz\\out\\setup.py 不在盘上：\u001b[1m"
+   },
+   "control_red_on_old_tree": [],
+   "task_id": "T0r64"
+  },
+  "BUG-57": {
+   "red": [
+    "test_bug57_builtin_member_type_is_diagnosed",
+    "test_bug57_union_docstrings_advertise_only_runnable_shapes"
+   ],
+   "green": [
+    "test_bug57_documented_member_shapes_work"
+   ],
+   "red_reasons": {
+    "test_bug57_builtin_member_type_is_diagnosed": "E   TypeError: this type has no size",
+    "test_bug57_union_docstrings_advertise_only_runnable_shapes": "E       AttributeError: 'function' object has no attribute 'union'"
+   },
+   "control_red_on_old_tree": [],
+   "task_id": "T0r65"
+  },
+  "BUG-58": {
+   "red": [
+    "test_bug58_realloc_annotation_matches_return_shape",
+    "test_bug58_realloc_zero_size_still_returns_none_and_frees"
+   ],
+   "green": [
+    "test_bug58_control_malloc_zero_still_raises"
+   ],
+   "red_reasons": {
+    "test_bug58_realloc_annotation_matches_return_shape": "E       AssertionError: <class 'ctypes.c_void_p'>",
+    "test_bug58_realloc_zero_size_still_returns_none_and_frees": "E       AttributeError: module 'cypy_bridge.memory' has no attribute '_as_address'"
+   },
+   "control_red_on_old_tree": [],
+   "task_id": "T0r66"
+  },
+  "BUG-59": {
+   "red": [
+    "test_bug59_compilation_order_stable_across_hash_seeds"
+   ],
+   "green": [],
+   "red_reasons": {
+    "test_bug59_compilation_order_stable_across_hash_seeds": "E       AssertionError: 同一张图给出 3 种顺序：[\"['y', 'x', 'c', 'a', 'b']\\n['z', 'y', 'x']\", \"['y', 'x', 'a', 'b', 'c']\\n['z', 'y', 'x']\", \"['y', 'x', 'b', 'a', 'c']\\n['z', 'y', 'x']\", \"['y', 'x', 'c', 'a', 'b"
+   },
+   "control_red_on_old_tree": [],
+   "task_id": "T0r67"
+  },
+  "BUG-60": {
+   "red": [
+    "test_bug60_docstring_rule2_aligns_with_frozen_syntax"
+   ],
+   "green": [
+    "test_bug60_control_other_rules_still_enforced"
+   ],
+   "red_reasons": {
+    "test_bug60_docstring_rule2_aligns_with_frozen_syntax": "E       AssertionError:"
+   },
+   "control_red_on_old_tree": [],
+   "task_id": "T0r68"
+  }
+ },
+ "caveat": "HEAD(17d68b4) 不是本环开工快照：工作树有 160+ 行未提交改动（红线禁止 commit），旧树里同时缺本轮六件修复与前几轮改动，故个别红是陈旧面（如 cypy_bridge.memory 在旧树没有 _as_address）。本件是次级证据；主证据是 fix_r3_evidence.json 的同夹具翻转对照。",
+ "primary_evidence": ".fist-loop-20260927/fix_r3_evidence.json",
+ "refuse": []
+}

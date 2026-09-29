@@ -1,0 +1,9 @@
+let point: tuple<int, int> = (10, 20)
+
+def main() -> int:
+    match point:
+        case (x, 0):
+            print(x)
+        case _:
+            print(0)
+    return 0

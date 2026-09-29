@@ -1,0 +1,208 @@
+{
+ "refuse": [],
+ "checks": 16,
+ "checks_all_true": 1,
+ "failed_checks": [],
+ "identity": {
+  "cypyc_file": "E:\\IDEProjects\\AI\\Cypy\\cypyc\\__init__.py",
+  "inside_repo": true
+ },
+ "detail": [
+  {
+   "name": "build_block_checker 调用面：函数体内指针声明不报、assign 块内 yield 仍报",
+   "how": "in-process: Lexer+Parser+BuildBlockChecker 两份真实源码",
+   "expected": "指针声明 errors==[]；yield 块 errors 非空",
+   "observed": {
+    "ptr_in_func": [],
+    "yield_in_assign": [
+     "yield statement is not allowed in assign build blocks (=:) at 4:9"
+    ]
+   },
+   "ok": true
+  },
+  {
+   "name": "--check-only 坏源码：非零退出且报问题数",
+   "how": "cypyc transpile bad.cypy -o out --check-only",
+   "expected": "rc!=0, 'Static analysis found', 不产码",
+   "observed": {
+    "rc": 1,
+    "found_msg": true,
+    "produced": []
+   },
+   "ok": true
+  },
+  {
+   "name": "--check-only 干净源码：rc=0 + 报通过 + 不产码",
+   "how": "cypyc transpile ok.cypy -o out --check-only",
+   "expected": "rc=0, 'Static analysis passed', 产物目录空",
+   "observed": {
+    "rc": 0,
+    "passed_msg": true,
+    "produced": []
+   },
+   "ok": true
+  },
+  {
+   "name": "get_compilation_order 在另外 6 个哈希种子上给同一序（BUG-59 调用面）",
+   "how": "子进程 PYTHONHASHSEED ∈ {2,3,5,11,13,12345}，图与修复环不同（双环+链）",
+   "expected": "distinct 输出 == 1，且环内 {m1,m2,m3} 按名字排在链后",
+   "observed": {
+    "distinct": 1,
+    "order": [
+     "m1",
+     "m2",
+     "m3"
+    ]
+   },
+   "ok": true
+  },
+  {
+   "name": "--emit-ast 打印解析后的节点树",
+   "how": "cypyc transpile ast.cypy --emit-ast",
+   "expected": "rc=0 且节点行含 'FuncDef add'",
+   "observed": {
+    "rc": 0,
+    "funcdef_lines": [
+     "  FuncDef add  @ 1:5"
+    ]
+   },
+   "ok": true
+  },
+  {
+   "name": "--bridge --emit-cython 明确说明不适用（而不是静默）",
+   "how": "cypyc transpile br.cypy --bridge --emit-cython",
+   "expected": "rc=0 + 提示 'does not apply in --bridge mode' + 产出 .c",
+   "observed": {
+    "rc": 0,
+    "notice": true,
+    "files": [
+     "br.c"
+    ]
+   },
+   "ok": true
+  },
+  {
+   "name": "--emit-cython（Cython 模式）打印 .pyx 文本",
+   "how": "cypyc transpile cy.cypy --emit-cython",
+   "expected": "rc=0 + 'Generated Cython code:' + 'def add('",
+   "observed": {
+    "rc": 0,
+    "header": true,
+    "body": true
+   },
+   "ok": true
+  },
+  {
+   "name": "--generate-setup（bridge 模式）同样写出 setup.py",
+   "how": "cypyc transpile setup_br.cypy --bridge --generate-setup",
+   "expected": "rc=0 + setup.py 存在 + sources 非空",
+   "observed": {
+    "rc": 0,
+    "exists": true,
+    "sources": [
+     "setup_br.c"
+    ],
+    "tail": "imeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n"
+   },
+   "ok": true
+  },
+  {
+   "name": "--generate-setup（Cython 模式）写可解析的 setup.py 且 sources 指向 .pyx",
+   "how": "cypyc transpile setup_cy.cypy -o out --generate-setup",
+   "expected": "rc=0 + setup.py 存在 + ast.parse 通过 + sources 含 setup_cy.pyx",
+   "observed": {
+    "rc": 0,
+    "exists": true,
+    "sources": [
+     "setup_cy.pyx"
+    ]
+   },
+   "ok": true
+  },
+  {
+   "name": "冻结泛型 struct Box<T> 走真实 transpile 入口能出码（BUG-55 的调用面）",
+   "how": "cypyc transpile box.cypy -o out（SYNTAX/11 冻结形：struct Box<T>）",
+   "expected": "rc=0 且产出 box.pyx",
+   "observed": {
+    "rc": 0,
+    "files": [
+     "box.pyx"
+    ],
+    "tail": "imeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour\n"
+   },
+   "ok": true
+  },
+  {
+   "name": "transpile --help 承诺四个旗标",
+   "how": "python -m cypyc.cli transpile --help",
+   "expected": "四个旗标全部出现在帮助文本",
+   "observed": {
+    "rc": 0,
+    "advertised": [
+     "--check-only",
+     "--emit-ast",
+     "--emit-cython",
+     "--generate-setup"
+    ]
+   },
+   "ok": true
+  },
+  {
+   "name": "realloc 返回注解与实现同形（对象相等，不是字符串比对）",
+   "how": "in-process: typing.get_type_hints(memory.realloc)",
+   "expected": "hints['return'] == typing.Optional[int]",
+   "observed": {
+    "return_hint": "typing.Optional[int]",
+    "equal": true
+   },
+   "ok": true
+  },
+  {
+   "name": "realloc 扩容返回裸地址(int) 且可直接 memset 回读（注解说的就是这个形状）",
+   "how": "in-process: malloc(16) -> realloc(ptr,128) -> memset -> free",
+   "expected": "返回 int、写读一致（b'AAAA'）",
+   "observed": {
+    "returned": "int",
+    "is_int": true,
+    "readback": "AAAA"
+   },
+   "ok": true
+  },
+  {
+   "name": "realloc(p, 0) 释放并返回 None（既有形状，本轮没动）",
+   "how": "in-process: malloc(32) -> realloc(ptr, 0)",
+   "expected": "返回值 is None",
+   "observed": {
+    "returned": "None"
+   },
+   "ok": true
+  },
+  {
+   "name": "传 Python 内建类型 ⇒ UnionTypeError 且文案给口径",
+   "how": "in-process: CUnion(int, float)",
+   "expected": "抛 UnionTypeError，文案含 'Python builtin type'、不含 'no size'",
+   "observed": {
+    "raised": "Union member 'int' is a Python builtin type; pass a ctypes type (ctypes.c_int) or a C type name ('int')"
+   },
+   "ok": true
+  },
+  {
+   "name": "CUnion 两种可运行形状（ctypes 类型 / C 类型名）+ union() 等价",
+   "how": "in-process: CUnion(c_int,c_double) / CUnion('int','double') / union(...)",
+   "expected": "三种构造都能赋值回读，size 一致",
+   "observed": {
+    "roundtrip": [
+     3.5,
+     3.5,
+     3.5
+    ],
+    "sizes": [
+     8,
+     8,
+     8
+    ]
+   },
+   "ok": true
+  }
+ ]
+}

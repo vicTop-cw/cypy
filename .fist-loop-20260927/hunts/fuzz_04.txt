@@ -1,0 +1,2 @@
+repro: python -m cypyc transpile .fist-loop-20260927/hunts/fuzz_04.cypy -o .fist-loop-20260927/fuzz/cli_out && copy .fist-loop-20260927\fuzz\cli_out\fuzz_04.pyx .fist-loop-20260927\fuzz\cli_out\a.pyx && timeout /t 3 >/dev/null && python -m cypyc transpile .fist-loop-20260927/hunts/fuzz_04.cypy -o .fist-loop-20260927/fuzz/cli_out && fc .fist-loop-20260927\fuzz\cli_out\a.pyx .fist-loop-20260927\fuzz\cli_out\fuzz_04.pyx
+out  : -__compile_time__ = "2026-09-27T11:04:44"  /  +__compile_time__ = "2026-09-27T11:04:47"   (same source, same compiler, non-identical bytes)

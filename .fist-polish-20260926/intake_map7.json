@@ -1,0 +1,113 @@
+{
+ "mapping": [
+  {
+   "bug_id": "BUG-15",
+   "task_id": "T0r20",
+   "summary": "[lexer-truncation] cypyc/parser/lexer.py:538 三反引号判定用 2 字符切片 `source[pos:pos+2]==\"``\"` 却连推 3 个字符，源文件里任意一对游离反引号会把其后整段吞成一个 BACKTICK_BLOCK，其后的定义全部消失且零报错",
+   "severity": "high",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-16",
+   "task_id": "T0r21",
+   "summary": "[parser-decorators] cypyc/parser/parser.py:1375 成员级 `decorators = []` 重绑了 :1326 形参持有的结构体自身装饰器列表，`@value struct` 只要含一个被装饰的成员就丢掉 @value，并把成员装饰器挂到 struct 上",
+   "severity": "high",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-17",
+   "task_id": "T0r22",
+   "summary": "[diagnostics] cypyc/project/project_compiler.py:666 `_pick_extension` 名字全不匹配时 `return sorted(candidates)[0]`，把别的模块（或历史残留）的 .pyd 当成本次该模块的产物回报，「No .pyd file generated」永不触发",
+   "severity": "medium",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-18",
+   "task_id": "T0r23",
+   "summary": "[cache-invalidation] cypyc/incremental/incremental_manager.py:311-320 「检查导入模块是否变化」只看 `is_cached()`（缓存条目存不存在），从不比对依赖的 file_hash，改了被 import 的 .cypy 仍判缓存有效并复用陈旧 .pyd",
+   "severity": "high",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-19",
+   "task_id": "T0r24",
+   "summary": "[codegen-directives] cypyc/codegen/cython_generator.py:1287 `_ensure_owned_import` 用 `output.insert(0, ...)` 把 pointer import 插到整段 `# cython:` 指令之前，而本文件 :299 的注释规定指令必须在最顶部否则被忽略",
+   "severity": "medium",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-20",
+   "task_id": "T0r25",
+   "summary": "[comptime] cypyc/analyzer/comptime_evaluator.py:455-461 `_get_func_name` 对 `x.upper()` 这类 Attribute 调用退回 `str(node)`（得到 \"Attribute(line=.., col=..)\"），于是 :188-276 整张字符串/列表方法表永不命中，comptime 语句静默消失",
+   "severity": "medium",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-21",
+   "task_id": "T0r26",
+   "summary": "[type-checker] cypyc/analyzer/type_checker.py:432（同族 :1283、:2008）用 `getattr(stmt.for_type,'id',str(stmt.for_type))` 取 impl 的目标类型名，`impl Show for Box<T>` 注册成 \"GenericType(line=5, col=15)\" 这种节点 repr，codegen 侧 :482-486 却正确剥掉泛型 —— 两份 trait 登记表口径分叉",
+   "severity": "medium",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-22",
+   "task_id": "T0r27",
+   "summary": "[lexer] cypyc/parser/lexer.py:651-652 f-string 前缀判定集合是 (`\"`, `'`, f, F)，注释 :650 声称支持 f/F/rf/fr，实际 `fr\"...\"` 因第二字符 'r' 不在集合内被拆成 IDENTIFIER `fr` + STRING，`rf\"...\"` 却正常",
+   "severity": "low",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-23",
+   "task_id": "T0r28",
+   "summary": "[pointer] cypy_bridge/pointer.py:322 `addr()` 先判 `hasattr(obj,'value')`，而每个 c_void_p 都有 `.value`，:327 的 `elif isinstance(obj, ctypes.c_void_p): return obj.value` 成死代码 —— 对空指针也返回非零堆地址",
+   "severity": "medium",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-24",
+   "task_id": "T0r29",
+   "summary": "[cache] cypy_hook/hook.py:1020-1024 `clear_cache()` 无参分支走 `os.walk(os.getcwd())` 却要求 `os.path.dirname(root)==\"__pycache__\"`，绝对路径下永不相等，删了 0 个文件仍由 cli.py:384 打印 [OK] cache cleared",
+   "severity": "medium",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-25",
+   "task_id": "T0r30",
+   "summary": "[encoding] cypy_bridge/compiler.py:3766 与 :3807 把生成的 .c 和 setup.py 用 `open(path,'w')` 按本地编码写盘（本机 cp936），含非 cp936 字符的源码直接 UnicodeEncodeError，读源码侧却是 encoding=\"utf-8\"",
+   "severity": "medium",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-26",
+   "task_id": "T0r31",
+   "summary": "[portability] cypy_bridge/compiler.py:3833 编译产物扫描只认 `endswith('.pyd')`，而 :3704-3707 的 `_detect_compiler` 明确支持 linux/gcc 与 darwin/clang，非 Windows 上即便编译成功也抛 \"Failed to find generated .pyd file\"",
+   "severity": "low",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-27",
+   "task_id": "T0r32",
+   "summary": "[hot-reload] cypyc/incremental/hot_reload.py:530 `set.union(*[...])` 在 results 为空（纯删除批次）时抛 TypeError，被 :535 的 except 打成 \"Callback error\"，用户回调其实一次都没跑",
+   "severity": "low",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-28",
+   "task_id": "T0r33",
+   "summary": "[reformat] cypyc/utils/indent_detector.py:30-34 detect() 观测到多种缩进宽度时一律取 4（没有取公因数），:56-58 再以 `// indent_size` 换算层数，2 空格风格源码经 normalize() 后 函数体被压到 0 列，块结构直接毁坏",
+   "severity": "medium",
+   "fired": true
+  },
+  {
+   "bug_id": "BUG-29",
+   "task_id": "T0r34",
+   "summary": "[cli-diagnostics] cypy_hook/hook.py:836 对可能为 None 的 `parsed_args.source` 直接 `os.path.isfile(...)`，`cypyc hook` 不带文件名时抛裸 TypeError traceback 而不是用法提示（cypyc/cli.py:408 的那道守卫排在 hook 分支 return 之后，护不到这里）",
+   "severity": "low",
+   "fired": true
+  }
+ ],
+ "failures": [],
+ "missing": [],
+ "ledger_before": 14,
+ "ledger_after": 29
+}

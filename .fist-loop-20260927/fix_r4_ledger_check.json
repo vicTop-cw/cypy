@@ -1,0 +1,66 @@
+{
+ "mode": "check",
+ "rows": [
+  {
+   "key": "DOC_cli_face_mismatch",
+   "task_id": "T0r80",
+   "cards_matched": 1,
+   "status": "已完成",
+   "completed_by": "cypy-fixer",
+   "md_fixed": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "DOC_example_fails",
+   "task_id": "T0r81",
+   "cards_matched": 1,
+   "status": "已完成",
+   "completed_by": "cypy-fixer",
+   "md_fixed": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "RC1_func_symbol_typed_as_return",
+   "task_id": "T0r75",
+   "cards_matched": 1,
+   "status": "已完成",
+   "completed_by": "cypy-fixer",
+   "md_fixed": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "RC2_no_argument_type_check",
+   "task_id": "T0r76",
+   "cards_matched": 1,
+   "status": "已完成",
+   "completed_by": "cypy-fixer",
+   "md_fixed": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "RC3_struct_field_type_unresolved",
+   "task_id": "T0r77",
+   "cards_matched": 1,
+   "status": "已完成",
+   "completed_by": "cypy-fixer",
+   "md_fixed": true,
+   "call_log_rows": 4
+  },
+  {
+   "key": "RC4_internal_repr_in_message",
+   "task_id": "T0r78",
+   "cards_matched": 1,
+   "status": "已完成",
+   "completed_by": "cypy-fixer",
+   "md_fixed": true,
+   "call_log_rows": 4
+  }
+ ],
+ "total": 6,
+ "agree_total": 6,
+ "driving_artifact_at": "2026-09-27T21:57:31+00:00",
+ "driving_artifact_agree": 6,
+ "refuse": [],
+ "note": "check 态只读 sqlite 与 md、只调 count(*) ⇒ 不产生新调用、不追加留档",
+ "at_utc": "2026-09-27T22:02:20+00:00"
+}

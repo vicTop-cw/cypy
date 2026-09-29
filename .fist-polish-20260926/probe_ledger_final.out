@@ -1,0 +1,4 @@
+tickets_done=12/13 root=已归档
+status_counts: {'已完成': 18, '已归档': 1, '已暂停': 16, '待领取': 1}
+ns_counts: {'bugs': 17, 'cypy-polish-20260926': 19}
+T0r1 present: False

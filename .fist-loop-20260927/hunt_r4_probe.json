@@ -1,0 +1,350 @@
+{
+ "refuse": [],
+ "battery_cases": 16,
+ "ran_on_trees": 2,
+ "mutant_build": {
+  "packages_copied": 3,
+  "mutated": true,
+  "removed_line": "self._check_callable_arity(node, args)",
+  "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/tmp_hunt2/mutant"
+ },
+ "witness_pos_differ": 15,
+ "rows": [
+  {
+   "ctx": "plain_body",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 4:1"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 3:12"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    return cb(1, 2)\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    return cb(1)\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> int:\n    return cb(1)\n"
+   }
+  },
+  {
+   "ctx": "let_initializer",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": false,
+   "visit_probe_errors": [
+    "Type mismatch: expected int, got str at 3:9"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 3:18"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    let v: str = cb(1, 2)\n    return v\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    let v: str = cb(1)\n    return v\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> int:\n    let v: int = cb(1)\n    return v\n"
+   }
+  },
+  {
+   "ctx": "if_body",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 5:5"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 4:16"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback, n: int) -> str:\n    if n > 0:\n        return cb(1, 2)\n    return \"\"\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback, n: int) -> str:\n    if n > 0:\n        return cb(1)\n    return \"\"\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback, n: int) -> int:\n    if n > 0:\n        return cb(1)\n    return 0\n"
+   }
+  },
+  {
+   "ctx": "elif_else_body",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 7:5"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 6:16"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback, n: int) -> str:\n    if n > 5:\n        return \"\"\n    elif n > 0:\n        return cb(1, 2)\n    else:\n        return \"\"\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback, n: int) -> str:\n    if n > 5:\n        return \"\"\n    elif n > 0:\n        return cb(1)\n    else:\n        return \"\"\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback, n: int) -> int:\n    if n > 5:\n        return 0\n    elif n > 0:\n        return cb(1)\n    else:\n        return 0\n"
+   }
+  },
+  {
+   "ctx": "for_body",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 5:5"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 4:9"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback, xs: list[int]) -> None:\n    for x in xs:\n        cb(1, 2)\n    return\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback, xs: list[int]) -> None:\n    for x in xs:\n        cb(1)\n    return\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback, xs: list[int]) -> int:\n    for x in xs:\n        return cb(1)\n    return 0\n"
+   }
+  },
+  {
+   "ctx": "while_body",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 6:5"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 5:9"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> None:\n    let i: int = 0\n    while i < 3:\n        cb(1, 2)\n        i = i + 1\n    return\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> None:\n    let i: int = 0\n    while i < 3:\n        cb(1)\n        i = i + 1\n    return\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> int:\n    let i: int = 0\n    while i < 3:\n        return cb(1)\n    return 0\n"
+   }
+  },
+  {
+   "ctx": "defer_block",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 6:1"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 4:9"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    defer:\n        cb(1, 2)\n    return \"\"\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    defer:\n        cb(1)\n    return \"\"\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> int:\n    defer:\n        cb(1)\n    return \"\"\n"
+   }
+  },
+  {
+   "ctx": "try_except",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 5:5"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 4:16"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    try:\n        return cb(1, 2)\n    except:\n        return \"\"\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    try:\n        return cb(1)\n    except:\n        return \"\"\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> int:\n    try:\n        return cb(1)\n    except:\n        return 0\n"
+   }
+  },
+  {
+   "ctx": "struct_method",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 5:1"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 4:16"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\nstruct Holder:\n    def run(self, cb: Callback) -> str:\n        return cb(1, 2)\n",
+    "ctl": "type Callback = Callable[[int], str]\nstruct Holder:\n    def run(self, cb: Callback) -> str:\n        return cb(1)\n",
+    "visit": "type Callback = Callable[[int], str]\nstruct Holder:\n    def run(self, cb: Callback) -> int:\n        return cb(1)\n"
+   }
+  },
+  {
+   "ctx": "guard_expression",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 5:1"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 4:12"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback, n: int) -> str:\n    guard n > 0 else return \"\"\n    return cb(1, 2)\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback, n: int) -> str:\n    guard n > 0 else return \"\"\n    return cb(1)\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback, n: int) -> int:\n    guard n > 0 else return 0\n    return cb(1)\n"
+   }
+  },
+  {
+   "ctx": "nested_function",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 5:5"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 4:16"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef outer(cb: Callback) -> str:\n    def inner() -> str:\n        return cb(1, 2)\n    return inner()\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef outer(cb: Callback) -> str:\n    def inner() -> str:\n        return cb(1)\n    return inner()\n",
+    "visit": "type Callback = Callable[[int], str]\ndef outer(cb: Callback) -> int:\n    def inner() -> int:\n        return cb(1)\n    return inner()\n"
+   }
+  },
+  {
+   "ctx": "after_return_unreachable",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected int, got str at 4:5"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 4:5"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    return \"\"\n    cb(1, 2)\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    return \"\"\n    cb(1)\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> int:\n    return \"\"\n    cb(1)\n"
+   }
+  },
+  {
+   "ctx": "binary_operand",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": false,
+   "visit_probe_errors": [
+    "Type mismatch: expected int, got str at 3:9"
+   ],
+   "pos_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 3:18"
+   ],
+   "ctl_errors": [],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    let s: str = cb(1, 2) + cb(1)\n    return s\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    let s: str = cb(1) + cb(1)\n    return s\n",
+    "visit": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> int:\n    let s: int = cb(1) + cb(1)\n    return s\n"
+   }
+  },
+  {
+   "ctx": "let_aliased_callback",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Type mismatch: expected Callable[tuple[int], str], got str at 6:9",
+    "Return type mismatch: expected int, got str at 8:1"
+   ],
+   "pos_errors": [
+    "Type mismatch: expected Callable[tuple[int], str], got str at 6:9",
+    "Callable arity mismatch: expected 1, got 2 at 7:12"
+   ],
+   "ctl_errors": [
+    "Type mismatch: expected Callable[tuple[int], str], got str at 6:9"
+   ],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef double(n: int) -> str:\n    return \"x\"\n\ndef a() -> str:\n    let cb: Callback = double\n    return cb(1, 2)\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef double(n: int) -> str:\n    return \"x\"\n\ndef a() -> str:\n    let cb: Callback = double\n    return cb(1)\n",
+    "visit": "type Callback = Callable[[int], str]\ndef double(n: int) -> str:\n    return \"x\"\n\ndef a() -> int:\n    let cb: Callback = double\n    return cb(1)\n"
+   }
+  },
+  {
+   "ctx": "callable_return_type",
+   "pos_reports_arity": true,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": true,
+   "visit_probe_errors": [
+    "Return type mismatch: expected Callable[tuple[int], str], got str at 5:1",
+    "Return type mismatch: expected int, got str at 8:1"
+   ],
+   "pos_errors": [
+    "Return type mismatch: expected Callable[tuple[int], str], got str at 5:1",
+    "Callable arity mismatch: expected 1, got 2 at 7:12"
+   ],
+   "ctl_errors": [
+    "Return type mismatch: expected Callable[tuple[int], str], got str at 5:1"
+   ],
+   "verdict": "reported",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\ndef mk() -> Callback:\n    return \"\"\n\ndef use(mk_it: Callable[[], Callback]) -> str:\n    let f: Callback = mk_it()\n    return f(1, 2)\n",
+    "ctl": "type Callback = Callable[[int], str]\ndef mk() -> Callback:\n    return \"\"\n\ndef use(mk_it: Callable[[], Callback]) -> str:\n    let f: Callback = mk_it()\n    return f(1)\n",
+    "visit": "type Callback = Callable[[int], str]\ndef mk() -> Callback:\n    return \"\"\n\ndef use(mk_it: Callable[[], Callback]) -> int:\n    let f: Callback = mk_it()\n    return f(1)\n"
+   }
+  },
+  {
+   "ctx": "struct_field_callback",
+   "pos_reports_arity": false,
+   "ctl_reports_arity": false,
+   "mutant_reports_arity": false,
+   "context_visited_by_type_checker": false,
+   "visit_probe_errors": [],
+   "pos_errors": [],
+   "ctl_errors": [],
+   "verdict": "context-not-visited",
+   "sources": {
+    "pos": "type Callback = Callable[[int], str]\nstruct Runner:\n    cb: Callback\n\n    def run_it(self) -> str:\n        return self.cb(1, 2)\n",
+    "ctl": "type Callback = Callable[[int], str]\nstruct Runner:\n    cb: Callback\n\n    def run_it(self) -> str:\n        return self.cb(1)\n",
+    "visit": "type Callback = Callable[[int], str]\nstruct Runner:\n    cb: Callback\n\n    def run_it(self) -> int:\n        return self.cb(1)\n"
+   }
+  }
+ ],
+ "invalid_fixtures": [],
+ "silent_in_visited_context": [],
+ "context_not_visited": [
+  "struct_field_callback"
+ ],
+ "counts": {
+  "reported": 15,
+  "silent": 0,
+  "not_visited": 1
+ },
+ "at_utc": "2026-09-27T19:43:06+00:00",
+ "mutant_left": []
+}

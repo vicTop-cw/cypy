@@ -1,0 +1,4 @@
+PASS 65
+FAIL 路径可解析 cypyc/analyzer/type_checker.py:3994
+FAIL 路径可解析 omega_gate.py
+CONCLUSION pass=65 fail=2 report=T0r114-cypy-selfdrive-r8-report.md rc=1

@@ -1,0 +1,116 @@
+{
+ "started": "2026-09-28T02:43:48+00:00",
+ "window_start_utc": "2026-09-28T01:41:16",
+ "scanned": [
+  "loop_kit.py",
+  "polish_r4_appendixC.py",
+  "polish_r4_baselines.py",
+  "polish_r4_calllog_tally.py",
+  "polish_r4_close_spec.py",
+  "polish_r4_debt.py",
+  "polish_r4_docs.py",
+  "polish_r4_drivers_lint.py",
+  "polish_r4_gen_locks.py",
+  "polish_r4_ledger.py",
+  "polish_r4_locks.py",
+  "polish_r4_progress.py",
+  "polish_r4_render_order.py",
+  "polish_r4_self_audit.py",
+  "polish_r4_structural.py"
+ ],
+ "detail": [
+  {
+   "file": "loop_kit.py",
+   "bytes": 2764,
+   "mtime_utc": "2026-09-28T02:00:01+00:00"
+  },
+  {
+   "file": "polish_r4_appendixC.py",
+   "bytes": 6476,
+   "mtime_utc": "2026-09-28T01:59:20+00:00"
+  },
+  {
+   "file": "polish_r4_baselines.py",
+   "bytes": 11947,
+   "mtime_utc": "2026-09-28T01:55:02+00:00"
+  },
+  {
+   "file": "polish_r4_calllog_tally.py",
+   "bytes": 12525,
+   "mtime_utc": "2026-09-28T02:07:31+00:00"
+  },
+  {
+   "file": "polish_r4_close_spec.py",
+   "bytes": 15202,
+   "mtime_utc": "2026-09-28T02:30:09+00:00"
+  },
+  {
+   "file": "polish_r4_debt.py",
+   "bytes": 8727,
+   "mtime_utc": "2026-09-28T02:36:50+00:00"
+  },
+  {
+   "file": "polish_r4_docs.py",
+   "bytes": 12141,
+   "mtime_utc": "2026-09-28T01:47:52+00:00"
+  },
+  {
+   "file": "polish_r4_drivers_lint.py",
+   "bytes": 5935,
+   "mtime_utc": "2026-09-28T02:40:27+00:00"
+  },
+  {
+   "file": "polish_r4_gen_locks.py",
+   "bytes": 4321,
+   "mtime_utc": "2026-09-28T02:08:56+00:00"
+  },
+  {
+   "file": "polish_r4_ledger.py",
+   "bytes": 8177,
+   "mtime_utc": "2026-09-28T01:58:06+00:00"
+  },
+  {
+   "file": "polish_r4_locks.py",
+   "bytes": 8087,
+   "mtime_utc": "2026-09-28T01:53:54+00:00"
+  },
+  {
+   "file": "polish_r4_progress.py",
+   "bytes": 15695,
+   "mtime_utc": "2026-09-28T02:42:29+00:00"
+  },
+  {
+   "file": "polish_r4_render_order.py",
+   "bytes": 6408,
+   "mtime_utc": "2026-09-28T02:32:11+00:00"
+  },
+  {
+   "file": "polish_r4_self_audit.py",
+   "bytes": 20283,
+   "mtime_utc": "2026-09-28T02:35:35+00:00"
+  },
+  {
+   "file": "polish_r4_structural.py",
+   "bytes": 7690,
+   "mtime_utc": "2026-09-28T02:08:12+00:00"
+  }
+ ],
+ "drivers_scanned": 15,
+ "hard_violations": 0,
+ "hard_lines": [],
+ "soft_total": 0,
+ "soft_codes": {},
+ "canary": {
+  "bad_caught": 1,
+  "clean_false_positive": 0,
+  "bad_line_preview": [
+   "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verifyr4canary_ztalqul9\\canary_bad.py:2:101: E501 line too long (185 > 100 characters)"
+  ],
+  "leftover": []
+ },
+ "line_length_declared": 100,
+ "note": "软账条数只降不升：上一环 verify_r4_drivers_lint.json 的 soft_total 是基线；口径含本轮新建的共用件 loop_kit.py",
+ "refuse": [],
+ "at_utc": "2026-09-28T02:44:00+00:00",
+ "previous_round_soft_baseline": 0
+}

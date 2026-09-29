@@ -1,0 +1,351 @@
+{
+ "name": "20260928.00.20.00",
+ "title": "R3-修复（bug fix）环节报告",
+ "stage": "第 3 轮第 2 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R3",
+ "root_task": "T0r70",
+ "assignee": "cypy-fixer",
+ "marker": "[selfdrive-fix]",
+ "footer": "fixed=BUG-55,BUG-56,BUG-57,BUG-58(声明侧),BUG-59,BUG-60(文档侧) half_left=BUG-58行为半,BUG-60强制检查半 locks=17(pos=11,ctl=6) flips=C1:1,C3:1,C4:1,C6:1 kept_red=C5,C8 pytest=1920 suite=47/47 e2e=25/25 radius=7 baselines_run=2(run1恒真格已归档) judge-defects=12 op-defects=8 decisions=5",
+ "fragment": ".fist-loop-20260927/r3_fix_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/fix_r3_plan.json",
+  ".fist-loop-20260927/fix_r3_evidence.json",
+  ".fist-loop-20260927/fix_r3_locks_inventory.json",
+  ".fist-loop-20260927/fix_r3_head_proof.json",
+  ".fist-loop-20260927/fix_r3_baselines.json",
+  ".fist-loop-20260927/fix_r3_ledger.json",
+  ".fist-loop-20260927/fix_r3_ledger3way.json",
+  ".fist-loop-20260927/close_r3_fix.out.json",
+  ".fist-loop-20260927/close_r3_fix_root.out.json",
+  ".fist-loop-20260927/fix_r3_root_split.json"
+ ],
+ "closure": {
+  "stage": "close_r3_fix.out.json",
+  "root": "close_r3_fix_root.out.json"
+ },
+ "gates": [
+  {
+   "label": "①",
+   "claim": "修法台账件数：六件缺陷逐件立项（缺一条就不配说『六件都修了』）",
+   "artifact": ".fist-loop-20260927/fix_r3_plan.json",
+   "path": "per_bug",
+   "min": 6
+  },
+  {
+   "label": "②",
+   "claim": "台账自报零拒绝",
+   "artifact": ".fist-loop-20260927/fix_r3_plan.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "③",
+   "claim": "锁总数在台账里被声明为 17（与后面实测的收集数、通过数三方对照）",
+   "artifact": ".fist-loop-20260927/fix_r3_plan.json",
+   "path": "locks_total",
+   "equals": 17
+  },
+  {
+   "label": "④",
+   "claim": "六件都记了『被放弃的替代修法』且非空话（逐行布尔由 checker 算出，不是 min>=6 的恒真形状）",
+   "artifact": ".fist-loop-20260927/fix_r3_plan.json",
+   "path": "derived.all_have_rejected_alternative",
+   "equals": true
+  },
+  {
+   "label": "⑤",
+   "claim": "台账里的 task_id 与上一环入账件双向相等（防手打造号）",
+   "artifact": ".fist-loop-20260927/fix_r3_plan.json",
+   "path": "derived.task_ids_match_filed",
+   "equals": true
+  },
+  {
+   "label": "⑥",
+   "claim": "翻转复算覆盖六件",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "flips",
+   "min": 6
+  },
+  {
+   "label": "⑦",
+   "claim": "C1（BUG-55 泛型收集）before=0 → after=1",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "flips.C1.after_rc",
+   "equals": 1
+  },
+  {
+   "label": "⑧",
+   "claim": "C3（BUG-56 旗标读取方）before=0 → after=1",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "flips.C3.after_rc",
+   "equals": 1
+  },
+  {
+   "label": "⑨",
+   "claim": "C4（BUG-57 内建类型示例）before=0 → after=1",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "flips.C4.after_rc",
+   "equals": 1
+  },
+  {
+   "label": "⑩",
+   "claim": "C6（BUG-59 环内序）before=0 → after=1：5 个 PYTHONHASHSEED 子进程给同一序",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "flips.C6.after_rc",
+   "equals": 1
+  },
+  {
+   "label": "⑪",
+   "claim": "C5 只修声明侧：注解必须已从 int 变 Optional，返回值仍为 None（既有测试钉住）",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "declared_side.c5_observed.annotation",
+   "equals": "Optional"
+  },
+  {
+   "label": "⑫",
+   "claim": "C8 只修声明侧：docstring 旧字面『指针语法只能在构建块内部使用』必须消失",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "declared_side.c8_doc_checks.old_rule2_literal_gone",
+   "equals": true
+  },
+  {
+   "label": "⑬",
+   "claim": "C8 新字面必须引用冻结层与函数作用域口径（不是随手删一句）",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "declared_side.c8_doc_checks.mentions_frozen_doc",
+   "equals": true
+  },
+  {
+   "label": "⑭",
+   "claim": "判据自证 1：同一判定函数必须能抓『没翻』",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "judge_selfprobe.must_catch_no_flip_on_C1",
+   "equals": true
+  },
+  {
+   "label": "⑮",
+   "claim": "判据自证 2：不得误抓『翻了』",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "judge_selfprobe.must_not_miss_flip_on_C1",
+   "equals": true
+  },
+  {
+   "label": "⑯",
+   "claim": "判据自证 3：C5 若『假装翻』也必须被抓",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "judge_selfprobe.must_catch_spurious_flip_on_C5",
+   "equals": true
+  },
+  {
+   "label": "⑰",
+   "claim": "翻转复算件自报零拒绝",
+   "artifact": ".fist-loop-20260927/fix_r3_evidence.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑱",
+   "claim": "锁：声明名集合与 --collect-only 集合数量相等",
+   "artifact": ".fist-loop-20260927/fix_r3_locks_inventory.json",
+   "path": "collected",
+   "equals": 17
+  },
+  {
+   "label": "⑲",
+   "claim": "锁：17 条全部以 PASSED 出现（跑了但没通过不算通过）",
+   "artifact": ".fist-loop-20260927/fix_r3_locks_inventory.json",
+   "path": "passed",
+   "equals": 17
+  },
+  {
+   "label": "⑳",
+   "claim": "锁：正例锁 11 条（打主张；BUG-56 的『坏源码必须被拦』经旧码树复算改判为 pos）",
+   "artifact": ".fist-loop-20260927/fix_r3_locks_inventory.json",
+   "path": "pos_total",
+   "min": 11
+  },
+  {
+   "label": "㉑",
+   "claim": "锁：对照锁 6 条（防恒绿；只有正例的判据等于没有判据）",
+   "artifact": ".fist-loop-20260927/fix_r3_locks_inventory.json",
+   "path": "ctl_total",
+   "min": 6
+  },
+  {
+   "label": "㉒",
+   "claim": "锁：每条 BUG 都有 pos 且带配对证据",
+   "artifact": ".fist-loop-20260927/fix_r3_locks_inventory.json",
+   "path": "per_bug",
+   "min": 6
+  },
+  {
+   "label": "㉓",
+   "claim": "锁清单件自报零拒绝",
+   "artifact": ".fist-loop-20260927/fix_r3_locks_inventory.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㉔",
+   "claim": "旧码树复算：六个 BUG 组在 17d68b4 产品码上每组都出红（锁承重）",
+   "artifact": ".fist-loop-20260927/fix_r3_head_proof.json",
+   "path": "red_groups",
+   "equals": 6
+  },
+  {
+   "label": "㉕",
+   "claim": "旧码树：对照锁不得因行为差异而红（陈旧符号造成的红单列并留原文）",
+   "artifact": ".fist-loop-20260927/fix_r3_head_proof.json",
+   "path": "stale_control_reds",
+   "min": 1
+  },
+  {
+   "label": "㉖",
+   "claim": "旧码树件自带『HEAD 不等于开工基线』的 caveat（次级证据的口径写在件里而不是靠读者记）",
+   "artifact": ".fist-loop-20260927/fix_r3_head_proof.json",
+   "path": "caveat",
+   "min": 40
+  },
+  {
+   "label": "㉗",
+   "claim": "pytest 全量：passed ≥ 1920（= R3-寻虫 实测 1903 + 本环 17 条锁）",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "path": "pytest.passed",
+   "min": 1920
+  },
+  {
+   "label": "㉘",
+   "claim": "pytest 收集数同达下限（分得开『用例红』与『用例不在收集里』）",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "path": "pytest.collected",
+   "min": 1920
+  },
+  {
+   "label": "㉙",
+   "claim": "自研套件 47/47 绿（pytest 绿不能抵扣它）",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "path": "suite.green",
+   "equals": true
+  },
+  {
+   "label": "㉚",
+   "claim": "e2e golden 25/25 绿（第三套体系，独立复算）",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "path": "e2e.green",
+   "equals": true
+  },
+  {
+   "label": "㉛",
+   "claim": "git 红线：HEAD 仍是 17d68b4、暂存区 0 档",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "㉜",
+   "claim": "改动半径 7 档且全部归属本单（mtime 反解，不是自述）",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "path": "radius.count",
+   "min": 7
+  },
+  {
+   "label": "㉝",
+   "claim": "半径里没有未归属文件（不替别的 lane 认领改动）",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "path": "radius.unclaimed_by_this_lane",
+   "equals": []
+  },
+  {
+   "label": "㉞",
+   "claim": "lint：E9/W605 零条，亲笔新文件零违例，E501 不得高于修前存量",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "path": "lint.hard_violations",
+   "equals": 0
+  },
+  {
+   "label": "㉟",
+   "claim": "基线件自报零拒绝",
+   "artifact": ".fist-loop-20260927/fix_r3_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㊱",
+   "claim": "账本段落账：六件各追加一段 FIXED",
+   "artifact": ".fist-loop-20260927/fix_r3_ledger.json",
+   "path": "sections_written",
+   "equals": 6
+  },
+  {
+   "label": "㊲",
+   "claim": "账本终态：条目仍 60、标题行逐字未动（只能追加）",
+   "artifact": ".fist-loop-20260927/fix_r3_ledger.json",
+   "path": "state.titles_identical",
+   "equals": true
+  },
+  {
+   "label": "㊳",
+   "claim": "账本件自报零拒绝（含幂等守卫：重跑必须拒写）",
+   "artifact": ".fist-loop-20260927/fix_r3_ledger.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㊴",
+   "claim": "三向对照：本环 FIXED 段数 6 且孤儿恰等于白名单 4 条",
+   "artifact": ".fist-loop-20260927/fix_r3_ledger3way.json",
+   "path": "server.orphans_match_known_whitelist",
+   "equals": true
+  },
+  {
+   "label": "㊵",
+   "claim": "三向对照件自报零拒绝",
+   "artifact": ".fist-loop-20260927/fix_r3_ledger3way.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㊶",
+   "claim": "台账自报的 flipped 与翻转复算件的 after_rc 逐件一致（两张旗不许各说各话）",
+   "artifact": ".fist-loop-20260927/fix_r3_plan.json",
+   "path": "derived.flip_flags_match_evidence",
+   "equals": true
+  },
+  {
+   "label": "㊷",
+   "claim": "每条 BUG 都有正例锁与配对对照（同锁内双向断言也算，但必须写明）",
+   "artifact": ".fist-loop-20260927/fix_r3_plan.json",
+   "path": "derived.all_paired",
+   "equals": true
+  },
+  {
+   "label": "㊸",
+   "claim": "叶级收口：16 叶全链走完（claim→omega→execute→submit→output_validate→复验→verify）",
+   "artifact": ".fist-loop-20260927/close_r3_fix.out.json",
+   "path": "leaves",
+   "min": 16
+  },
+  {
+   "label": "㊹",
+   "claim": "上卷驱动只跑一次：枝干与叶级零被拒（枝干出现任何一条都意味着驱动被重跑）",
+   "artifact": ".fist-loop-20260927/fix_r3_root_split.json",
+   "path": "by_scope.branch",
+   "equals": 0
+  },
+  {
+   "label": "㊺",
+   "claim": "根终态已归档，被拒恰 6 条且全在根作用域（既定结构性拒绝，逐字进《被拒原文》）",
+   "artifact": ".fist-loop-20260927/fix_r3_root_split.json",
+   "path": "refused_total",
+   "equals": 6
+  },
+  {
+   "label": "㊻",
+   "claim": "锁的角色不是我自己标的算数：旧码树复算会抓出『把 pos 误标成 ctl』（本轮真被抓出一条），角色改判后 plan/inventory 两处同步为 11/6",
+   "artifact": ".fist-loop-20260927/fix_r3_head_proof.json",
+   "path": "refuse",
+   "equals": []
+  }
+ ]
+}

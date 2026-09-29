@@ -1,0 +1,69 @@
+{
+ "mapping": [
+  {
+   "key": "BUG-A",
+   "bug_id": "BUG-33",
+   "task_id": "T0r39",
+   "status": "OPEN",
+   "path": ".",
+   "samples": "[对抗样例:词法"
+  },
+  {
+   "key": "BUG-B",
+   "bug_id": "BUG-34",
+   "task_id": "T0r40",
+   "status": "OPEN",
+   "path": ".",
+   "samples": "[对抗样例:类型标注"
+  },
+  {
+   "key": "BUG-C",
+   "bug_id": "BUG-35",
+   "task_id": "T0r41",
+   "status": "OPEN",
+   "path": ".",
+   "samples": "[读码+对抗"
+  },
+  {
+   "key": "BUG-E",
+   "bug_id": "BUG-36",
+   "task_id": "T0r42",
+   "status": "OPEN",
+   "path": ".",
+   "samples": "[转结确诊:模式匹配"
+  },
+  {
+   "key": "BUG-F",
+   "bug_id": "BUG-37",
+   "task_id": "T0r43",
+   "status": "OPEN",
+   "path": ".",
+   "samples": "[类型检查假阳性"
+  },
+  {
+   "key": "BUG-38",
+   "bug_id": "BUG-38",
+   "task_id": "T0r44",
+   "status": "OPEN",
+   "path": ".",
+   "samples": "[变异fuzz:词法"
+  },
+  {
+   "key": "BUG-39",
+   "bug_id": "BUG-39",
+   "task_id": "T0r45",
+   "status": "OPEN",
+   "path": ".",
+   "samples": "[变异fuzz:语法"
+  }
+ ],
+ "skipped_for_missing_evidence": [],
+ "lane_second": {
+  "evidence": ".fist-loop-20260927/hunts/fz_evidence.json",
+  "not_filed": {
+   "fz03": "同 BUG-35 归桶根因",
+   "fz04": "规格未定（无「可复现构建」承诺）",
+   "fz05": "生产路径每模块新建实例，无用户可见面"
+  }
+ }
+}

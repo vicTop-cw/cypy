@@ -1,0 +1,19 @@
+files_scanned=1147 parse_fail=73 generic_decls=148
+parse_fail_kinds=Counter({'ValueError': 72, 'RecursionError': 1})
+  FAIL .fist-loop-20260927\advance_r4_probe\m06_struct_kw.cypy [ValueError] Unexpected pattern token ASSIGN at 9:21
+  FAIL .fist-loop-20260927\advance_r4_probe\m08_enum.cypy [ValueError] Expected IDENTIFIER, got LPAREN at 2:11
+  FAIL .fist-loop-20260927\advance_r4_probe\p01_struct_literal.cypy [ValueError] Expected IDENTIFIER, got NEWLINE at 7:5
+  FAIL .fist-loop-20260927\advance_r4_probe\r06_bytes.cypy [ValueError] Expected NEWLINE, got STRING at 2:21
+  FAIL .fist-loop-20260927\fix_r5_snap\head\examples\demos\legacy\builtins\generics.cypy [ValueError] Expected COLON, got LBRACKET at 5:12
+  FAIL .fist-loop-20260927\fix_r5_snap\revert\Find_BUG\audit_2026q3\fixtures\feat_type_system\neg_dispatch_missing.cypy [ValueError] Expected RPAREN, got COLON at 4:16
+  FAIL .fist-loop-20260927\fix_r5_snap\revert\Find_BUG\audit_2026q3\scratch\anchor02\repro_deparens_canonical.cypy [ValueError] Expected ARROW, got INTEGER at 11:23
+  FAIL .fist-loop-20260927\fix_r5_snap\revert\Find_BUG\audit_2026q3\scratch\proj05\pk3\a\b\deep.cypy [ValueError] Expected IDENTIFIER, got DOT_DOT at 1:6
+  FAIL .fist-loop-20260927\fuzz\cli_out\t1.cypy [ValueError] Expected NEWLINE, got EOF at 1:11
+  FAIL .fist-loop-20260927\fuzz\mutants\m0049_struct_enum.cypy [ValueError] Unexpected token EOF at 36:46
+  FAIL .fist-loop-20260927\fuzz\mutants\nm003_basic_types.cypy [ValueError] Unterminated string literal opened at 24:21, reached end of file at 24:27
+  FAIL .fist-loop-20260927\fuzz\mutants\nm005_minimal_test.cypy [ValueError] Expected COLON, got EOF at 7:24
+decl_kinds=Counter({'StructDef': 108, 'ClassDef': 40})
+ann_sites=55 ann_arity_mismatch=0
+call_sites=0 call_arity_mismatch=0
+declared_names=Address, AdvancedPoint, Agent, AgentConfig, AgentError, AgentMessage, AgentResponse, Animal, AnnotatedType, AnonymousUser, AppError, Attempt, AuthenticationError, AuthorizationError, BaseModel, BearTypeConfig, BoundingBox, Box, Calculator, CallableType
+CONCLUSION ann=55 ann_bad=0 call=0 call_bad=0 

@@ -1,0 +1,6 @@
+truct Point:
+    x: int
+    y: int
+
+let p = Point(1, 2)
+print(p.x)

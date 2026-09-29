@@ -1,0 +1,26 @@
+{
+ "ledger_entries": 91,
+ "closure_tally": {
+  "FIXED": 72,
+  "DUPLICATE": 1,
+  "NOT_BUG": 5,
+  "OUT_OF_SCOPE": 1,
+  "none": 12
+ },
+ "open_count": 12,
+ "open_ids": [
+  "BUG-34",
+  "BUG-36",
+  "BUG-37",
+  "BUG-40",
+  "BUG-41",
+  "BUG-43",
+  "BUG-49",
+  "BUG-50",
+  "BUG-52",
+  "BUG-54",
+  "BUG-65",
+  "BUG-70"
+ ],
+ "note": "bug_list 按标题行报 91 全 OPEN；真开口径按条目内 ### 段反解"
+}

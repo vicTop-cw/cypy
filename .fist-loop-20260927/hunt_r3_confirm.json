@@ -1,0 +1,543 @@
+{
+ "cases": [
+  {
+   "id": "C1",
+   "claim": "generic_transformer 读 `type_params`，parser 的泛型节点带的是 `generic_params` ⇒ 泛型收集恒为空",
+   "declared": "cypyc/transformer/generic_transformer.py:5（自称注册泛型参数）与 :39（读 type_params）",
+   "mode": "confirm",
+   "pos": {
+    "observed": {
+     "generic_param_nodes": [
+      [
+       "FuncDef",
+       [
+        "T"
+       ]
+      ],
+      [
+       "StructDef",
+       [
+        "T"
+       ]
+      ]
+     ],
+     "generic_defs_collected": 0
+    },
+    "want": "有泛型节点时被收集到（docstring 第 5 行『注册泛型参数』）",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "collected_with_type_params_attr": 1
+    },
+    "want": "只要属性叫 type_params 就能收 ⇒ 坏的是名字对不上，不是收集器逻辑",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "C2",
+   "claim": "comptime 调用不读 `Param.default_value` ⇒ 但 `comptime def` 整族在 SYNTAX/19 里自述『未实现』，故**撤回**（DESIGN，不入账）",
+   "declared": "SYNTAX/19-comptime.md:22/:43（自述未实现）对 comptime_evaluator.py:630-632",
+   "mode": "declared-scope",
+   "pos": {
+    "observed": {
+     "param_defaults": [
+      null,
+      "Constant(line=1, col=36)"
+     ],
+     "one_arg": "None",
+     "raised": "ValueError: Undefined variable 'b' at compile time"
+    },
+    "want": "11（默认值该生效）",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "declared_in_syntax_doc": [
+      "4. **编译期函数**：`comptime def` 语法未实现",
+      "| `comptime def` 编译期函数 | 未实现 |"
+     ]
+    },
+    "want": "文档必须明说 comptime def 未实现（否则本条就该入账）",
+    "ok": true
+   },
+   "verdict": "DESIGN"
+  },
+  {
+   "id": "C3",
+   "claim": "`cypyc transpile` 的 --check-only/--emit-ast/--generate-setup/--emit-cython 只被印给用户，run_transpile 一个都不读（读它们的是只能从不可达分支进入的 run_default）",
+   "declared": "docs/USAGE.md 与 transpile --help 的承诺 vs cypyc/cli.py:435-516",
+   "mode": "confirm",
+   "pos": {
+    "observed": {
+     "flag_readers": {
+      "run_default": [
+       "check_only",
+       "emit_ast",
+       "emit_cython",
+       "generate_setup"
+      ],
+      "run_build": [
+       "check_only"
+      ]
+     },
+     "run_transpile_reads": []
+    },
+    "want": "transpile 的帮助文本写了这四个旗标 ⇒ 至少要读一个",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "top_level_choices": [
+      "transpile,compile,build,run,watch,hook",
+      "transpile,compile,build,run,watch,hook"
+     ],
+     "transpile_help_advertises": [
+      "--check-only",
+      "--emit-ast",
+      "--generate-setup",
+      "--emit-cython"
+     ]
+    },
+    "want": "transpile --help 确实把这四个旗标承诺给用户",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "C4",
+   "claim": "CUnion/union 的 docstring 示例 `CUnion(int, float)` 一跑就抛 TypeError（对 Python 内建类型取 ctypes.sizeof）",
+   "declared": "cypy_bridge/union.py:23-31 与 :179 的示例文本",
+   "mode": "confirm",
+   "pos": {
+    "observed": "TypeError: this type has no size",
+    "want": "docstring 里的示例（若真含 CUnion(int, float)）应可用",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "with_ctypes_types": "CUnion"
+    },
+    "want": "给 ctypes 类型时构造成功",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "C5",
+   "claim": "realloc(ptr, 0) 先 free 再 `return None`，而签名是 `-> int`、文档只说返回地址，malloc 同一形状走的是抛错分支",
+   "declared": "cypy_bridge/memory.py:195-216",
+   "mode": "confirm",
+   "pos": {
+    "observed": {
+     "returned": "None",
+     "annotation": "int",
+     "doc_says": "新的内存地址（int）\n\n异常："
+    },
+    "want": "注解 int + 文档『新的内存地址（int）』⇒ 不该返回 None",
+    "ok": true
+   },
+   "ctl": {
+    "observed": "malloc(0) raised MemoryError",
+    "want": "抛错",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "C6",
+   "claim": "get_compilation_order 把环内模块塞进 `set` 再 extend ⇒ 环存在时推荐编译序随进程哈希种子变化",
+   "declared": "cypyc/project/module_dependency_graph.py:200-212（文档只说『跳过循环中的模块』）",
+   "mode": "confirm",
+   "pos": {
+    "observed": {
+     "per_seed_orders": [
+      [
+       "0",
+       "d,b,c,a,e"
+      ],
+      [
+       "1",
+       "d,e,a,b,c"
+      ],
+      [
+       "7",
+       "d,b,a,c,e"
+      ],
+      [
+       "42",
+       "c,e,b,d,a"
+      ],
+      [
+       "99",
+       "e,b,a,d,c"
+      ]
+     ],
+     "distinct": 5
+    },
+    "want": "同一张图必须给同一个推荐序（文档只说『跳过循环中的模块』）",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "acyclic_order": [
+      "z",
+      "y",
+      "x"
+     ],
+     "edges": "x→y, y→z（x 依赖 y）"
+    },
+    "want": "无环时给确定的『被依赖者在前』序 ⇒ 证明 get_compilation_order 本身没坏",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  },
+  {
+   "id": "C7",
+   "claim": "子代理主张：topological_sort 先算一遍 in_degree 并把某个循环体写成 `pass`，随后整个丢掉重建 ⇒ 前段是死码",
+   "declared": "cypyc/project/module_dependency_graph.py:134-141",
+   "mode": "check-only",
+   "pos": {
+    "observed": {
+     "in_degree_store_count": 2,
+     "in_degree_load_count": 6,
+     "for_loops_whose_whole_body_is_pass": []
+    },
+    "want": "第一遍算出来的 in_degree 应被消费（否则前段是死码）",
+    "ok": false
+   },
+   "ctl": {
+    "observed": {
+     "loaded_names_sample": [
+      "queue"
+     ]
+    },
+    "want": "确有别的名字被真读（说明 Load 判据不是恒假）",
+    "ok": true
+   },
+   "verdict": "REJECTED"
+  },
+  {
+   "id": "C8",
+   "claim": "BuildBlockChecker 的 docstring 规则 2（指针语法只能在构建块内部使用）没有实现：_visit_DerefExpr/_visit_PointerType 只注释『移除』，不 append 任何 error",
+   "declared": "cypyc/analyzer/build_block_checker.py:5-6（声明）对 :75-84（实现）",
+   "mode": "confirm",
+   "pos": {
+    "observed": {
+     "node_kinds": [
+      "FuncDef",
+      "PointerType"
+     ],
+     "docstring_rule2": [
+      "1. 构建块内部默认unsafe，允许指针语法",
+      "2. 指针语法只能在构建块内部使用"
+     ],
+     "errors_for_pointer_outside_block": []
+    },
+    "want": "规则 2 承诺『指针语法只能在构建块内部使用』⇒ 函数体内的 PointerType 应报错",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "errors_from_a_different_rule": [
+      "yield statement is not allowed in assign build blocks (=:) at 7:3"
+     ]
+    },
+    "want": "对照：另一条规则（assign 块里不许 yield）确实在报 ⇒ 检查器不是整体空转，只有规则 2 是空的",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  }
+ ],
+ "confirmed": [
+  "C1",
+  "C3",
+  "C4",
+  "C5",
+  "C6",
+  "C8"
+ ],
+ "n_cases": 8,
+ "design_or_rejected": [
+  {
+   "id": "C2",
+   "v": "DESIGN"
+  },
+  {
+   "id": "C7",
+   "v": "REJECTED"
+  }
+ ],
+ "refuse": [],
+ "by_id": {
+  "C1": {
+   "id": "C1",
+   "claim": "generic_transformer 读 `type_params`，parser 的泛型节点带的是 `generic_params` ⇒ 泛型收集恒为空",
+   "declared": "cypyc/transformer/generic_transformer.py:5（自称注册泛型参数）与 :39（读 type_params）",
+   "mode": "confirm",
+   "pos": {
+    "observed": {
+     "generic_param_nodes": [
+      [
+       "FuncDef",
+       [
+        "T"
+       ]
+      ],
+      [
+       "StructDef",
+       [
+        "T"
+       ]
+      ]
+     ],
+     "generic_defs_collected": 0
+    },
+    "want": "有泛型节点时被收集到（docstring 第 5 行『注册泛型参数』）",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "collected_with_type_params_attr": 1
+    },
+    "want": "只要属性叫 type_params 就能收 ⇒ 坏的是名字对不上，不是收集器逻辑",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  },
+  "C2": {
+   "id": "C2",
+   "claim": "comptime 调用不读 `Param.default_value` ⇒ 但 `comptime def` 整族在 SYNTAX/19 里自述『未实现』，故**撤回**（DESIGN，不入账）",
+   "declared": "SYNTAX/19-comptime.md:22/:43（自述未实现）对 comptime_evaluator.py:630-632",
+   "mode": "declared-scope",
+   "pos": {
+    "observed": {
+     "param_defaults": [
+      null,
+      "Constant(line=1, col=36)"
+     ],
+     "one_arg": "None",
+     "raised": "ValueError: Undefined variable 'b' at compile time"
+    },
+    "want": "11（默认值该生效）",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "declared_in_syntax_doc": [
+      "4. **编译期函数**：`comptime def` 语法未实现",
+      "| `comptime def` 编译期函数 | 未实现 |"
+     ]
+    },
+    "want": "文档必须明说 comptime def 未实现（否则本条就该入账）",
+    "ok": true
+   },
+   "verdict": "DESIGN"
+  },
+  "C3": {
+   "id": "C3",
+   "claim": "`cypyc transpile` 的 --check-only/--emit-ast/--generate-setup/--emit-cython 只被印给用户，run_transpile 一个都不读（读它们的是只能从不可达分支进入的 run_default）",
+   "declared": "docs/USAGE.md 与 transpile --help 的承诺 vs cypyc/cli.py:435-516",
+   "mode": "confirm",
+   "pos": {
+    "observed": {
+     "flag_readers": {
+      "run_default": [
+       "check_only",
+       "emit_ast",
+       "emit_cython",
+       "generate_setup"
+      ],
+      "run_build": [
+       "check_only"
+      ]
+     },
+     "run_transpile_reads": []
+    },
+    "want": "transpile 的帮助文本写了这四个旗标 ⇒ 至少要读一个",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "top_level_choices": [
+      "transpile,compile,build,run,watch,hook",
+      "transpile,compile,build,run,watch,hook"
+     ],
+     "transpile_help_advertises": [
+      "--check-only",
+      "--emit-ast",
+      "--generate-setup",
+      "--emit-cython"
+     ]
+    },
+    "want": "transpile --help 确实把这四个旗标承诺给用户",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  },
+  "C4": {
+   "id": "C4",
+   "claim": "CUnion/union 的 docstring 示例 `CUnion(int, float)` 一跑就抛 TypeError（对 Python 内建类型取 ctypes.sizeof）",
+   "declared": "cypy_bridge/union.py:23-31 与 :179 的示例文本",
+   "mode": "confirm",
+   "pos": {
+    "observed": "TypeError: this type has no size",
+    "want": "docstring 里的示例（若真含 CUnion(int, float)）应可用",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "with_ctypes_types": "CUnion"
+    },
+    "want": "给 ctypes 类型时构造成功",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  },
+  "C5": {
+   "id": "C5",
+   "claim": "realloc(ptr, 0) 先 free 再 `return None`，而签名是 `-> int`、文档只说返回地址，malloc 同一形状走的是抛错分支",
+   "declared": "cypy_bridge/memory.py:195-216",
+   "mode": "confirm",
+   "pos": {
+    "observed": {
+     "returned": "None",
+     "annotation": "int",
+     "doc_says": "新的内存地址（int）\n\n异常："
+    },
+    "want": "注解 int + 文档『新的内存地址（int）』⇒ 不该返回 None",
+    "ok": true
+   },
+   "ctl": {
+    "observed": "malloc(0) raised MemoryError",
+    "want": "抛错",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  },
+  "C6": {
+   "id": "C6",
+   "claim": "get_compilation_order 把环内模块塞进 `set` 再 extend ⇒ 环存在时推荐编译序随进程哈希种子变化",
+   "declared": "cypyc/project/module_dependency_graph.py:200-212（文档只说『跳过循环中的模块』）",
+   "mode": "confirm",
+   "pos": {
+    "observed": {
+     "per_seed_orders": [
+      [
+       "0",
+       "d,b,c,a,e"
+      ],
+      [
+       "1",
+       "d,e,a,b,c"
+      ],
+      [
+       "7",
+       "d,b,a,c,e"
+      ],
+      [
+       "42",
+       "c,e,b,d,a"
+      ],
+      [
+       "99",
+       "e,b,a,d,c"
+      ]
+     ],
+     "distinct": 5
+    },
+    "want": "同一张图必须给同一个推荐序（文档只说『跳过循环中的模块』）",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "acyclic_order": [
+      "z",
+      "y",
+      "x"
+     ],
+     "edges": "x→y, y→z（x 依赖 y）"
+    },
+    "want": "无环时给确定的『被依赖者在前』序 ⇒ 证明 get_compilation_order 本身没坏",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  },
+  "C7": {
+   "id": "C7",
+   "claim": "子代理主张：topological_sort 先算一遍 in_degree 并把某个循环体写成 `pass`，随后整个丢掉重建 ⇒ 前段是死码",
+   "declared": "cypyc/project/module_dependency_graph.py:134-141",
+   "mode": "check-only",
+   "pos": {
+    "observed": {
+     "in_degree_store_count": 2,
+     "in_degree_load_count": 6,
+     "for_loops_whose_whole_body_is_pass": []
+    },
+    "want": "第一遍算出来的 in_degree 应被消费（否则前段是死码）",
+    "ok": false
+   },
+   "ctl": {
+    "observed": {
+     "loaded_names_sample": [
+      "queue"
+     ]
+    },
+    "want": "确有别的名字被真读（说明 Load 判据不是恒假）",
+    "ok": true
+   },
+   "verdict": "REJECTED"
+  },
+  "C8": {
+   "id": "C8",
+   "claim": "BuildBlockChecker 的 docstring 规则 2（指针语法只能在构建块内部使用）没有实现：_visit_DerefExpr/_visit_PointerType 只注释『移除』，不 append 任何 error",
+   "declared": "cypyc/analyzer/build_block_checker.py:5-6（声明）对 :75-84（实现）",
+   "mode": "confirm",
+   "pos": {
+    "observed": {
+     "node_kinds": [
+      "FuncDef",
+      "PointerType"
+     ],
+     "docstring_rule2": [
+      "1. 构建块内部默认unsafe，允许指针语法",
+      "2. 指针语法只能在构建块内部使用"
+     ],
+     "errors_for_pointer_outside_block": []
+    },
+    "want": "规则 2 承诺『指针语法只能在构建块内部使用』⇒ 函数体内的 PointerType 应报错",
+    "ok": true
+   },
+   "ctl": {
+    "observed": {
+     "errors_from_a_different_rule": [
+      "yield statement is not allowed in assign build blocks (=:) at 7:3"
+     ]
+    },
+    "want": "对照：另一条规则（assign 块里不许 yield）确实在报 ⇒ 检查器不是整体空转，只有规则 2 是空的",
+    "ok": true
+   },
+   "verdict": "CONFIRMED"
+  }
+ },
+ "n_case": 8,
+ "all_pairs_ok": false,
+ "n_confirmed": 6,
+ "n_design": 1,
+ "n_rejected": 1,
+ "n_probe_broken": 0,
+ "all_confirmed_pairs_ok": true,
+ "non_confirmed_pairs": {
+  "C2": {
+   "pos_ok": true,
+   "ctl_ok": true,
+   "verdict": "DESIGN"
+  },
+  "C7": {
+   "pos_ok": false,
+   "ctl_ok": true,
+   "verdict": "REJECTED"
+  }
+ }
+}

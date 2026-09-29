@@ -1,0 +1,47 @@
+{
+ "cells": [
+  {
+   "name": "A1 目录存在",
+   "corpus_files": [
+    "cypy.annotation.shape.json",
+    "cypy.pattern.positional.json",
+    "cypy.type.slice.json"
+   ],
+   "regression_files": [
+    "test_corpus_pairs.py"
+   ],
+   "corpus_dir_exists": true,
+   "regr_dir_exists": true
+  },
+  {
+   "name": "A2 Ω-gate 可跑",
+   "rc": 0,
+   "conclusion": "CONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0"
+  },
+  {
+   "name": "A3 回归件可跑",
+   "rc": 0,
+   "summary": "============================= 54 passed in 0.28s =============================="
+  },
+  {
+   "name": "B1 元数>字段数 的产物面",
+   "diagnostics": [
+    "Positional pattern 'E' has 3 slot(s) but type 'E' unpacks only 2 at 8:14"
+   ],
+   "lines_with__f": [],
+   "claim_holds": false,
+   "diag_count": 1
+  },
+  {
+   "name": "C0 demo 目录",
+   "files": [],
+   "n": 0
+  },
+  {
+   "name": "C1 切片赋值",
+   "errors": [],
+   "all_errors": [],
+   "claim_holds": false
+  }
+ ]
+}

@@ -1,0 +1,416 @@
+{
+ "name": "20260928.01.25.00",
+ "title": "R3-验证（verify）环节报告",
+ "stage": "第 3 轮第 3 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R3",
+ "root_task": "T0r71",
+ "assignee": "cypy-verifier",
+ "marker": "[selfdrive-verify]",
+ "footer": "[selfdrive-verify] round=R3 stage=第 3 轮第 3 环（寻虫→修复→验证→打磨→推进） root=T0r71 gates=56 refused=6 leaves=16 matrix_rows=6/6 sha_restored=6/6 identity=6 premise=17/17 collected=17 carried_claims=6 declared_side=6 callsite=16/16 report_audit_counts=23/23 refusal_table=6-verbatim ledger_reruns=6/6 pytest=1920 pytest_collected=1920 suite=47/47 e2e=25/25 e2e_zero=000 radius=0 lint_hard=0 baselines_run=2 irreversible=10(live=9,manifest=1) executed=none judge-defects=10 op-defects=4 decisions=3 measured_window=2026-09-27T17:33:11Z->2026-09-27T17:43:38Z generated_at=2026-09-27T17:46:13+00:00 handoff=R4:非冻结generic形可解析+锁夹具换冻结形+importlib取模块+bridge生成setup入锁",
+ "fragment": ".fist-loop-20260927/r3_verify_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/verify_r3_matrix.json",
+  ".fist-loop-20260927/verify_r3_callsite.json",
+  ".fist-loop-20260927/verify_r3_report_audit.json",
+  ".fist-loop-20260927/verify_r3_baselines.json",
+  ".fist-loop-20260927/verify_r3_irreversible.json"
+ ],
+ "closure": {
+  "stage": "close_r3_verify.out.json",
+  "root": "close_r3_verify_root.out.json"
+ },
+ "gates": [
+  {
+   "label": "①",
+   "claim": "回退矩阵行数：六件各有『改回修前 ⇒ 该件锁变红』的一行",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "rows",
+   "min": 6
+  },
+  {
+   "label": "②",
+   "claim": "身份探针：至少 4 个被测模块的 __file__ 落在快照树内（跑的不是工作区/已安装副本）",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "identity",
+   "min": 4
+  },
+  {
+   "label": "③",
+   "claim": "复原自证：六行 mutation 后 sha256 逐字回到 mutation 前",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "sha_verified_rows",
+   "min": 6
+  },
+  {
+   "label": "④",
+   "claim": "全行复原旗标（任一行没复原即 0）",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "all_restored",
+   "equals": 1
+  },
+  {
+   "label": "⑤",
+   "claim": "声明侧回算：六件上一环声明的形状今天仍在盘上",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "declared_side_still_true",
+   "min": 6
+  },
+  {
+   "label": "⑥",
+   "claim": "遗留主张回算：flip/kept_red 六条与探针当下退出码一致",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "carried_claims",
+   "min": 6
+  },
+  {
+   "label": "⑦",
+   "claim": "矩阵件自报零拒绝（含锚点计数、py_compile、连带红、sha 复原四类）",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑧",
+   "claim": "矩阵合取旗标（rows/sha/identity/all_restored 同时成立）",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "checks_all_true",
+   "equals": 1
+  },
+  {
+   "label": "⑨",
+   "claim": "前提格：快照树里本轮锁全绿（passed==17）",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "premise.passed",
+   "equals": 17
+  },
+  {
+   "label": "⑩",
+   "claim": "前提格的 --collect-only 实收 17（防『只跑了子集』的假绿）",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "premise.collected",
+   "equals": 17
+  },
+  {
+   "label": "⑪",
+   "claim": "前提格红清单为空",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "premise.reds",
+   "equals": []
+  },
+  {
+   "label": "⑫",
+   "claim": "因果身份：工作区 7 个文件全程 sha 未变",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "workspace_sha_after_unchanged",
+   "truthy": true
+  },
+  {
+   "label": "⑬",
+   "claim": "矩阵跑完后快照与工作区逐字一致（mutation 未残留）",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "overlay_identical",
+   "truthy": true
+  },
+  {
+   "label": "⑭",
+   "claim": "BUG-55 回退后其正例锁变红",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "per_bug.BUG-55.pos_red",
+   "min": 1
+  },
+  {
+   "label": "⑮",
+   "claim": "BUG-56 回退后其正例锁变红",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "per_bug.BUG-56.pos_red",
+   "min": 1
+  },
+  {
+   "label": "⑯",
+   "claim": "BUG-57 回退后其正例锁变红",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "per_bug.BUG-57.pos_red",
+   "min": 1
+  },
+  {
+   "label": "⑰",
+   "claim": "BUG-58 回退后其正例锁变红（声明侧那一半确实被钉住）",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "per_bug.BUG-58.pos_red",
+   "min": 1
+  },
+  {
+   "label": "⑱",
+   "claim": "BUG-59 回退后其正例锁变红",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "per_bug.BUG-59.pos_red",
+   "min": 1
+  },
+  {
+   "label": "⑲",
+   "claim": "BUG-60 回退后其正例锁变红（文档口径那一半确实被钉住）",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "per_bug.BUG-60.pos_red",
+   "min": 1
+  },
+  {
+   "label": "⑳",
+   "claim": "快照树自建证明：六个标记文件都在",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "snapshot.exists",
+   "truthy": true
+  },
+  {
+   "label": "㉑",
+   "claim": "快照树体量：复制的 tracked 文件数 ≥200（不是空壳树）",
+   "artifact": ".fist-loop-20260927/verify_r3_matrix.json",
+   "path": "snapshot.extracted_files",
+   "min": 200
+  },
+  {
+   "label": "㉒",
+   "claim": "调用面独立复验条数 ≥8（实得见件内 detail）",
+   "artifact": ".fist-loop-20260927/verify_r3_callsite.json",
+   "path": "checks",
+   "min": 8
+  },
+  {
+   "label": "㉓",
+   "claim": "调用面全真旗标",
+   "artifact": ".fist-loop-20260927/verify_r3_callsite.json",
+   "path": "checks_all_true",
+   "equals": 1
+  },
+  {
+   "label": "㉔",
+   "claim": "调用面件自报零拒绝（含异常即失败，不算跳过）",
+   "artifact": ".fist-loop-20260927/verify_r3_callsite.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㉕",
+   "claim": "失败检查清单为空",
+   "artifact": ".fist-loop-20260927/verify_r3_callsite.json",
+   "path": "failed_checks",
+   "equals": []
+  },
+  {
+   "label": "㉖",
+   "claim": "调用面跑的是仓库树（cypyc.__file__ 在仓库根下）",
+   "artifact": ".fist-loop-20260927/verify_r3_callsite.json",
+   "path": "identity.inside_repo",
+   "truthy": true
+  },
+  {
+   "label": "㉗",
+   "claim": "上一环报告的可反解计数 ≥20 条",
+   "artifact": ".fist-loop-20260927/verify_r3_report_audit.json",
+   "path": "counts_total",
+   "min": 20
+  },
+  {
+   "label": "㉘",
+   "claim": "计数全部相等（无一条报告数字与判据件不符）",
+   "artifact": ".fist-loop-20260927/verify_r3_report_audit.json",
+   "path": "counts",
+   "min": 20
+  },
+  {
+   "label": "㉙",
+   "claim": "计数对表合取旗标",
+   "artifact": ".fist-loop-20260927/verify_r3_report_audit.json",
+   "path": "counts_all_equal",
+   "equals": 1
+  },
+  {
+   "label": "㉚",
+   "claim": "审计件自报零拒绝",
+   "artifact": ".fist-loop-20260927/verify_r3_report_audit.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㉛",
+   "claim": "被拒原文双向对表：报告缺条目数为 0",
+   "artifact": ".fist-loop-20260927/verify_r3_report_audit.json",
+   "path": "refusal_table.missing",
+   "equals": []
+  },
+  {
+   "label": "㉜",
+   "claim": "被拒原文双向对表：报告多出条目数为 0",
+   "artifact": ".fist-loop-20260927/verify_r3_report_audit.json",
+   "path": "refusal_table.extra",
+   "equals": []
+  },
+  {
+   "label": "㉝",
+   "claim": "账本 FIXED 段复跑条数 ==6",
+   "artifact": ".fist-loop-20260927/verify_r3_report_audit.json",
+   "path": "repro_reruns",
+   "equals": 6
+  },
+  {
+   "label": "㉞",
+   "claim": "复跑退出码与账本自述 after rc 相符的段数 ==6",
+   "artifact": ".fist-loop-20260927/verify_r3_report_audit.json",
+   "path": "repro_reruns_match_claim",
+   "equals": 6
+  },
+  {
+   "label": "㉟",
+   "claim": "基线件自报零拒绝",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㊱",
+   "claim": "pytest 通过数不低于 1920（只升不降）",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "pytest.passed",
+   "min": 1920
+  },
+  {
+   "label": "㊲",
+   "claim": "pytest 收集数 ≥1920（绿不能是『没收集到』）",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "pytest.collected",
+   "min": 1920
+  },
+  {
+   "label": "㊳",
+   "claim": "pytest 失败/错误清单为空",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "pytest.failed",
+   "equals": []
+  },
+  {
+   "label": "㊴",
+   "claim": "自研套件 47/47 绿",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "suite.green",
+   "truthy": true
+  },
+  {
+   "label": "㊵",
+   "claim": "e2e golden 25/25 绿（FAIL/WARN/UNREG 全零）",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "e2e.green",
+   "truthy": true
+  },
+  {
+   "label": "㊶",
+   "claim": "HEAD 仍是本轮底树 17d68b4",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "git.head_ok",
+   "truthy": true
+  },
+  {
+   "label": "㊷",
+   "claim": "暂存区为空（未 git add）",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "git.staged_zero",
+   "truthy": true
+  },
+  {
+   "label": "㊸",
+   "claim": "别人家的 worktree 仍在（没删）",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "git.foreign_worktree_present",
+   "truthy": true
+  },
+  {
+   "label": "㊹",
+   "claim": "本环自己的快照临时树已清零（从文件系统反解，不是自述）",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "git.own_snapshot_gone",
+   "truthy": true
+  },
+  {
+   "label": "㊺",
+   "claim": "git 红线格合取",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "git.all_ok",
+   "truthy": true
+  },
+  {
+   "label": "㊻",
+   "claim": "改动半径 ==0（验证环不修产品码）",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "radius.count",
+   "equals": 0
+  },
+  {
+   "label": "㊼",
+   "claim": "半径主张与实测一致旗标",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "radius_claim_ok",
+   "equals": 1
+  },
+  {
+   "label": "㊽",
+   "claim": "本环亲笔驱动的 E9/W605/F821 硬违例 ==0（且解析行数自证）",
+   "artifact": ".fist-loop-20260927/verify_r3_baselines.json",
+   "path": "lint.hard_violations",
+   "equals": 0
+  },
+  {
+   "label": "㊾",
+   "claim": "不可逆动作点名 ≥5 条",
+   "artifact": ".fist-loop-20260927/verify_r3_irreversible.json",
+   "path": "items",
+   "min": 5
+  },
+  {
+   "label": "㊿",
+   "claim": "live_probe 级 ≥6 条（清单级必须写明为何只能清单级）",
+   "artifact": ".fist-loop-20260927/verify_r3_irreversible.json",
+   "path": "live_probe_items",
+   "min": 6
+  },
+  {
+   "label": "○51",
+   "claim": "零执行旗标：没有任何一条不可逆动作被本环做掉",
+   "artifact": ".fist-loop-20260927/verify_r3_irreversible.json",
+   "path": "executed_none",
+   "equals": 1
+  },
+  {
+   "label": "○52",
+   "claim": "已执行清单为空",
+   "artifact": ".fist-loop-20260927/verify_r3_irreversible.json",
+   "path": "executed",
+   "equals": []
+  },
+  {
+   "label": "○53",
+   "claim": "不可逆件自报零拒绝",
+   "artifact": ".fist-loop-20260927/verify_r3_irreversible.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "○54",
+   "claim": "叶级收口 16/16（失败清单为空）",
+   "artifact": "close_r3_verify.out.json",
+   "path": "failed",
+   "equals": []
+  },
+  {
+   "label": "○55",
+   "claim": "根任务已归档（结构性被拒恰 6 条，逐字进《被拒原文》）",
+   "artifact": "close_r3_verify_root.out.json",
+   "path": "root_final",
+   "equals": "已归档"
+  },
+  {
+   "label": "○56",
+   "claim": "根 16 叶全部完成",
+   "artifact": "close_r3_verify_root.out.json",
+   "path": "leaves_done",
+   "min": 16
+  }
+ ]
+}

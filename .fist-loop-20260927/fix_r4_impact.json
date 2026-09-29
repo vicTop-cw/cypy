@@ -1,0 +1,1840 @@
+{
+ "started": "2026-09-27T21:43:15+00:00",
+ "corpus": 203,
+ "corpus_unparsed": 3,
+ "rows": [
+  {
+   "file": "examples/_pending_build_blocks.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/_pending_type_defects.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/basic_types.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/concurrency.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/constraint_numeric.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/control_flow.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/defer.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/basics/control_flow.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/basics/hello.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/basics/types.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/basics/variables.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/boundary_cases/boundary_values.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/boundary_cases/combined_features.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/boundary_cases/composite_declarations.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/boundary_cases/exception_edges.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/boundary_cases/nested_syntax.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/boundary_cases/special_operators.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/async_await.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/exceptions_demo.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/magic_properties.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/simd_vector.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/spawn_go.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/union_type.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/data_structures/class_demo.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/data_structures/enum_demo.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/data_structures/struct_demo.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/data_structures/type_alias_demo.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/legacy/analyzer/scope_usage.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/legacy/analyzer/type_safety.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/legacy/codegen/codegen_basic.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/legacy/codegen/codegen_struct.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/legacy/integration/array_operations.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/legacy/integration/full_program.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/legacy/integration/recursion.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/legacy/parser/basic_syntax.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/legacy/parser/type_conversion.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/macros/macro_examples.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/memory_metaprogramming/comptime_demo.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/memory_metaprogramming/defer_demo.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/memory_metaprogramming/macros.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/memory_metaprogramming/meta_blocks.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/memory_metaprogramming/pointers.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/patterns_operators/build_blocks.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/patterns_operators/extractor_patterns.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/patterns_operators/pattern_matching.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/patterns_operators/pipe_operator.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/patterns_operators/syntax_sugar.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/simd_vectors/vec_examples.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/traits_duck/duck_advanced.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/traits_duck/duck_basic.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/traits_duck/trait_advanced.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/traits_duck/trait_basic.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/type_system/union_type_examples.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/demos/upcoming_features/planned_features.cypy",
+   "before_errors": 4,
+   "after_errors": 4,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/functions.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/generic.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/generics_advanced.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/hello.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/list_comprehension.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/meta.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/metaprogramming.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/minimal_test.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/new_syntax_features.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/pipe_operator.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/pointers.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/struct_enum.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/struct_records.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/subtype_units.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/test_duck.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/test_macro.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/test_meta.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/test_new_features.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/test_project/geometry.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/test_project/main.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/test_project/types.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/test_union.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "examples/test_vec.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_constraint_silently_swallowed.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_constraint_value_position.cypy",
+   "before_errors": 2,
+   "after_errors": 2,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_dispatch_missing.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": "ValueError: Expected RPAREN, got COLON at 4:16",
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/fixtures/feat_type_system/neg_subtype_missing.cypy",
+   "before_errors": 1,
+   "after_errors": 1,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/fixtures/feat_type_system/pos_inline_union_bound.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_assign.cypy",
+   "before_errors": 1,
+   "after_errors": 1,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_call.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_intret.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_self.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_two_types.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_duck_via_wrapper.cypy",
+   "before_errors": 1,
+   "after_errors": 1,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_explicit_init.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_fields_only_positional.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/probe_struct_enum_nostrstatus.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/repro_caret_build_block.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/repro_deparens_canonical.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": "ValueError: Expected ARROW, got INTEGER at 11:23",
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/repro_deparens_in_return.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/repro_deparens_noncanonical.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/repro_subscript_chain.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/v_neg_index_list.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/v_pos_index.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/anchor02/v_str_key_chain.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_cat_int/integration/array_operations.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_cat_int/integration/full_program.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_cat_int/integration/recursion.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_fix9/analyzer/scope_usage.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_fix9/analyzer/type_safety.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_fix9/codegen/codegen_basic.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_fix9/codegen/codegen_struct.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_fix9/integration/array_operations.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_fix9/integration/full_program.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_fix9/integration/recursion.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_fix9/parser/basic_syntax.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_fix9/parser/type_conversion.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_real/analyzer/scope_usage.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_real/codegen/codegen_struct.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_real/integration/array_operations.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/demos_real/parser/type_conversion.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/analyzer/scope_usage.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/analyzer/type_safety.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/codegen/codegen_basic.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/codegen/codegen_struct.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/parser/basic_syntax.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_0_control/demos/parser/type_conversion.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_A/demos/analyzer/scope_usage.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_A/demos/analyzer/type_safety.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_A/demos/codegen/codegen_basic.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_A/demos/codegen/codegen_struct.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_A/demos/parser/basic_syntax.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_A/demos/parser/type_conversion.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_B/demos/analyzer/scope_usage.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_B/demos/analyzer/type_safety.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_B/demos/codegen/codegen_basic.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_B/demos/codegen/codegen_struct.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_B/demos/parser/basic_syntax.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_B/demos/parser/type_conversion.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_C/demos/analyzer/scope_usage.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_C/demos/analyzer/type_safety.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_C/demos/codegen/codegen_basic.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_C/demos/codegen/codegen_struct.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_C/demos/parser/basic_syntax.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/fixed_C/demos/parser/type_conversion.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj04/geometry.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj04/types.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj05/pk2/__init__.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj05/pk2/sib2.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj05/pk3/__init__.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj05/pk3/a/b/deep.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": "ValueError: Expected IDENTIFIER, got DOT_DOT at 1:6",
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj05/pk3/a/top.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj05/pkg/sub/leaf.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj05/pkg/sub/sib.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj06a/app/consumer.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj06a/vendor/pkg/mod.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj06b/consumer.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj06b/left/mod.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj06b/right/mod.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj07a/lib.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj07a/main.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj07b/aa.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj07b/bb.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj08/foo/__init__.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj08/foo/bar.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj08/foo.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj08_alt/zzz_pkg/__init__.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/proj08_alt/zzz_pkg.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/projexp/pkg/sub/leaf.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/projexp/pkg/sub/sib.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/projexp/toproot.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/projexp2/app/consumer.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/projexp2/vendor/pkg/mod.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/projexp3/foo/__init__.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/projexp3/foo.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/repro02_v1.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/repro02_v2_same_lines.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/repro02_v3_extra_line.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/repro03_v1.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/repro03_v2.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/repro03_v3_added_def.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/audit_2026q3/scratch/tsuite/demos_reordered/cat/alpha.cypy",
+   "before_errors": 2,
+   "after_errors": 2,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/beartype/__init__.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/beartype/checker.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/beartype/decorator.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/beartype/types.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/pydantic/base_model.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/pydantic/errors.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/pydantic/examples_faithful.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/pydantic/fields.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/pydantic/model_faithful.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/pydantic/models.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/pydantic/registry.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/pydantic/validation.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/pydantic/validators_faithful.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/sqlalchemy_core/sqlalchemy_core.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/tenacity/tenacity.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/test_bug_fixes.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/capabilities/sql_runner.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/core/agent.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/core/components.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/core/errors.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/core/llm.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/core/registry.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/core/tool.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/core/user.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/integrations/sqlite.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/tools/run_sql.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  },
+  {
+   "file": "Find_BUG/Vanna/tools/visualize_data.cypy",
+   "before_errors": 0,
+   "after_errors": 0,
+   "added": [],
+   "dropped": [],
+   "parse_error": null,
+   "checker_crash": null
+  }
+ ],
+ "newly_rejected": [],
+ "newly_accepted": [],
+ "unadjudicated": [],
+ "note": "对照的是**同一批 AST**上两个版本的 TypeChecker；parse_error 只说明该档本来就解析不动（两侧一致），不计入影响面",
+ "refuse": [],
+ "at_utc": "2026-09-27T21:43:16+00:00"
+}

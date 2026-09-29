@@ -1,0 +1,5 @@
+class Counter:
+    n: int
+
+    def bump(dx: int) -> int:
+        return self.n + dx

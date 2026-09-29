@@ -1,0 +1,33 @@
+# 指针操作示例
+# 演示 Cypy 的指针操作能力
+
+# 简单的指针概念演示
+def pointer_concepts():
+    x = 10
+    
+    print(f"变量 x 的值: {x}")
+    
+    # 在 Cypy 中，指针操作通过 addr() 和 * 实现
+    # 注意：指针操作需要在支持 C 类型的上下文中使用
+    
+    print("指针操作演示完成")
+
+# 结构体示例
+struct Vector:
+    x: float
+    y: float
+    z: float
+
+def struct_example():
+    v = Vector(x=1.0, y=2.0, z=3.0)
+    
+    print(f"向量: ({v.x}, {v.y}, {v.z})")
+    
+    # 修改结构体字段
+    v.x = 10.0
+    print(f"修改后: ({v.x}, {v.y}, {v.z})")
+
+# 运行示例
+pointer_concepts()
+print("-" * 30)
+struct_example()

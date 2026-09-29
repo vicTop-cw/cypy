@@ -1,0 +1,69 @@
+{
+ "measured": {
+  "open_bugs": 37,
+  "test_count": 2284,
+  "task_rollup": {
+   "已完成": 101,
+   "待领取": 24,
+   "拆分中": 9
+  },
+  "blocked_tasks": 0
+ },
+ "shape_control": {
+  "只传声明键": {
+   "环查无": 24,
+   "成功": 24,
+   "键名被拒": 0,
+   "其它": 0
+  },
+  "含未声明键": {
+   "键名被拒": 10,
+   "成功": 0,
+   "环查无": 0,
+   "其它": 0
+  }
+ },
+ "control_gates": {
+  "pass": true,
+  "bad": []
+ },
+ "nodes": {},
+ "loop_status_before": {
+  "raw": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-ring-r11\"}}",
+  "picked": {},
+  "refused": true
+ },
+ "tick": [
+  "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-ring-r11\"}}",
+  {}
+ ],
+ "loop_status_after": {
+  "raw": "{\"__error__\": {\"code\": -32000, \"message\": \"loop not found: cypy-selfdrive-ring-r11\"}}",
+  "picked": {},
+  "refused": true
+ },
+ "error_rows_two_needles": {
+  "ok_0_needle_since_0759": 31,
+  "percent_error_needle_same_window": 0,
+  "newest_three_rows": [
+   [
+    "2026-09-29T08:10:58Z",
+    0,
+    "loop not found: cypy-selfdrive-ring-r11"
+   ],
+   [
+    "2026-09-29T08:10:58Z",
+    0,
+    "loop not found: cypy-selfdrive-ring-r11"
+   ],
+   [
+    "2026-09-29T08:10:58Z",
+    0,
+    "loop not found: cypy-selfdrive-ring-r11"
+   ]
+  ]
+ },
+ "tick_refused": true,
+ "state_moved": false,
+ "state_unmeasurable": true
+}

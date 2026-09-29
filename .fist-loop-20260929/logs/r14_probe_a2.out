@@ -1,0 +1,24 @@
+RED CTRL_scalar_mismatch     ok     n=1 :: Type mismatch: expected int, got str at 2:9
+RED CTRL_list_elem_wrong     ok     n=1 :: Element 1 type mismatch: expected int, got str at 2:9
+ok  D01_value_wrong          ok     n=0 :: 
+ok  D02_key_wrong            ok     n=0 :: 
+ok  D03_return_value_wrong   ok     n=0 :: 
+ok  D04_nested_list_wrong    ok     n=0 :: 
+ok  D05_alias_dict_wrong     ok     n=0 :: 
+ok  D06_dict_of_dict_wrong   ok     n=0 :: 
+ok  D07_bool_key_under_str   ok     n=0 :: 
+ok  G14_hetero_both          ok     n=0 :: 
+ok  G01_empty_literal        ok     n=0 :: 
+ok  G02_correct              ok     n=0 :: 
+ok  G03_hetero_values        ok     n=0 :: 
+ok  G04_widening_value       ok     n=0 :: 
+ok  G05_bool_widening        ok     n=0 :: 
+ok  G06_user_type_value      ok     n=0 :: 
+ok  G07_untyped_let          ok     n=0 :: 
+ok  G08_nested_correct       ok     n=0 :: 
+ok  G09_dict_of_dict_ok      ok     n=0 :: 
+ok  G10_param_annotation     ok     n=0 :: 
+ok  G11_empty_then_return    ok     n=0 :: 
+ok  G12_empty_untyped        ok     n=0 :: 
+ok  G13_scalar_alias_dict    ok     n=0 :: 
+CONCLUSION r14_dict_probe phase=before tag=a2 cases=23 defect_silent=7/7 silent_ids=['D01_value_wrong', 'D02_key_wrong', 'D03_return_value_wrong', 'D04_nested_list_wrong', 'D05_alias_dict_wrong', 'D06_dict_of_dict_wrong', 'D07_bool_key_under_str'] read_channel_broken=[] green_now_red=[] crashed=[] parse_failures=[] out=r14_dict_probe_a2.json

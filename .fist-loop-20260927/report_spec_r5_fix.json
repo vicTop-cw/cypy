@@ -1,0 +1,873 @@
+{
+ "name": "20260928.PENDING-NAME",
+ "title": "R5-修复（fix）环节报告",
+ "stage": "第 5 轮第 2 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R5",
+ "root_task": "T0r110",
+ "assignee": "cypy-fixer",
+ "marker": "[selfdrive-fix]",
+ "fragment": ".fist-loop-20260927/r5_fix_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/spec_r5_fix.json",
+  ".fist-loop-20260927/r5_fix_lanes.json",
+  ".fist-loop-20260927/fix_r5_intake.py",
+  ".fist-loop-20260927/fix_r5_intake.json",
+  ".fist-loop-20260927/fix_r5_locks.py",
+  ".fist-loop-20260927/fix_r5_locks.json",
+  ".fist-loop-20260927/fix_r5_rc.py",
+  ".fist-loop-20260927/fix_r5_rc.json",
+  ".fist-loop-20260927/fix_r5_revert.py",
+  ".fist-loop-20260927/fix_r5_revert.json",
+  ".fist-loop-20260927/fix_r5_impact.py",
+  ".fist-loop-20260927/fix_r5_impact.json",
+  ".fist-loop-20260927/fix_r5_baselines.py",
+  ".fist-loop-20260927/fix_r5_baselines.json",
+  ".fist-loop-20260927/fix_r5_ledger.py",
+  ".fist-loop-20260927/fix_r5_ledger.json",
+  ".fist-loop-20260927/fix_r5_drivers_lint.py",
+  ".fist-loop-20260927/fix_r5_drivers_lint.json",
+  ".fist-loop-20260927/fix_r5_calllog_tally.py",
+  ".fist-loop-20260927/fix_r5_calllog_tally.json",
+  ".fist-loop-20260927/fix_r5_book91.py",
+  ".fist-loop-20260927/fix_r5_book91.json",
+  ".fist-loop-20260927/fix_r5_lane_identity.py",
+  ".fist-loop-20260927/fix_r5_needles.py",
+  ".fist-loop-20260927/fix_r5_needles.json",
+  ".fist-loop-20260927/fix_r5_self_audit.py",
+  ".fist-loop-20260927/fix_r5_report_spec.py",
+  ".fist-loop-20260927/fix_r5_close_spec.py",
+  ".fist-loop-20260927/close_r5_fix.json",
+  ".fist-loop-20260927/fix_r5_render_order.py",
+  ".fist-loop-20260927/fix_r5_render_witness.py",
+  ".fist-loop-20260927/fix_r5_progress.py",
+  ".fist-loop-20260927/loop_kit.py",
+  ".fist-loop-20260927/close_stage_generic.py",
+  ".fist-loop-20260927/close_root_generic.py",
+  ".fist-loop-20260927/close_r5_fix.out.json",
+  ".fist-loop-20260927/close_r5_fix_root.out.json",
+  ".fist-loop-20260927/loop_progress.md"
+ ],
+ "stale_ok": [],
+ "closure_note": "收口链（16 叶 × omega 全链 + 8 支 + 根上卷）在本报告渲染之后才发，其结果与被拒原文一律进 .fist-loop-20260927/loop_progress.md，故此处不留 closure 位——留了就等于要求渲染时收口件已存在，而那会把顺序倒过来",
+ "footer": "root=\"T0r110\"；marker=\"[selfdrive-fix]\"；laws=8；planned_ids=[68, 69, 71, 72, 73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91]；cards_total=36；legacy_open=[34, 36, 37, 40, 41, 43, 49, 50, 52, 53, 54, 65, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 91]；split_columns={\"本环认领\": [68, 69, 71, 72, 73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91], \"交人工或裁决\": [40, 43, 49, 50, 52, 53], \"交人工或裁决（红线：冻结语义）\": [], \"未认领（转结仍 OPEN）\": [34, 36, 37, 41, 54, 65, 70, 77]}；locked=[73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91]；lock_red_before=[74, 75, 76, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91]；lock_green_after=[73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91]；lock_nodes=118；locks_missing=[68, 69, 71, 72]；change_points=522；merged_root_causes=354；symbols=[\"<模块级>\", \"ASTCache\", \"ASTCache.get\", \"ASTCache.get_stats\", \"ASTCache.set\", \"ArrayPattern\", \"ArrayPattern.__init__\", \"AsPattern\", \"AsPattern.__init__\", \"AwaitExpr\", \"BacktickBlock\", \"BacktickBlock.__init__\", \"BuildBlockExpr\", \"BuildValueExpr\", \"CacheClearReport\", \"CacheClearReport.ok\", \"Call.__init__\", \"CaseClause\", \"CaseClause.__init__\", \"CastExpr\", \"CastExpr.__init__\", \"ClassDef.__init__\", \"ComptimeEvaluator\", \"ComptimeEvaluator._evaluate_constant\", \"ComptimeEvaluator._evaluate_for_statement\", \"ComptimeEvaluator._evaluate_literal\", \"ComptimeEvaluator._evaluate_node\", \"ComptimeEvaluator._for_target_names\", \"ComptimeEvaluator.evaluate\", \"ComptimeFuncDef\", \"ComptimeFuncDef.__init__\", \"ComptimeNotImplementedError\", \"ComptimeNotImplementedError.__init__\", \"ComptimeStmt\", \"ConstraintDef\", \"ConstraintDef.__init__\", \"CypyCacheManager\", \"CypyCacheManager._base_cache_dir_for\", \"CypyCacheManager._clear_single\", \"CypyCacheManager._clear_tree\", \"CypyCacheManager._find_cache_roots\", \"CypyCacheManager._load_manifest\", \"CypyCacheManager._remove_file\", \"CypyCacheManager.clear_cache\", \"CypyCacheManager.is_cypy_file\", \"CypyHook\", \"CypyHook.analyze_only\", \"CypyHook.compile_and_import\", \"CypyHook.compile_to_pyd\", \"CypyHook.run\", \"CypyHook.run_cli\", \"CypyHook.run_module\", \"CypyHook.transpile\", \"CypyHook.transpile_file\", \"CythonGenerator\", \"CythonGenerator.__init__\", \"CythonGenerator._collect_defer_stmts\", \"CythonGenerator._collect_defer_stmts.scan\", \"CythonGenerator._collect_method_names\", \"CythonGenerator._collect_module_info\", \"CythonGenerator._collect_subtypes\", \"CythonGenerator._collect_type_aliases\", \"CythonGenerator._constraint_member_name\", \"CythonGenerator._declared_cython_type_of\", \"CythonGenerator._decorator_names\", \"CythonGenerator._emit_defer_stmts\", \"CythonGenerator._emit_trait_isinstance_support\", \"CythonGenerator._ensure_owned_import\", \"CythonGenerator._float_widen_if_integral\", \"CythonGenerator._fold_comptime_result\", \"CythonGenerator._for_target_to_str\", \"CythonGenerator._generate_guard_else_block\", \"CythonGenerator._generate_module_magic_attrs\", \"CythonGenerator._generate_param_strings\", \"CythonGenerator._is_integral_value_expr\", \"CythonGenerator._is_selfless_method\", \"CythonGenerator._param_default_str\", \"CythonGenerator._pattern_bound_names\", \"CythonGenerator._pattern_match_info\", \"CythonGenerator._record_declared_var\", \"CythonGenerator._render_comptime_item\", \"CythonGenerator._subtype_to_base\", \"CythonGenerator._trait_ancestors\", \"CythonGenerator._trait_class_ref\", \"CythonGenerator._type_to_str\", \"CythonGenerator._visit_Assign\", \"CythonGenerator._visit_BinOp\", \"CythonGenerator._visit_Call\", \"CythonGenerator._visit_ComptimeStmt\", \"CythonGenerator._visit_ConstraintDef\", \"CythonGenerator._visit_DeferStmt\", \"CythonGenerator._visit_ForStmt\", \"CythonGenerator._visit_FuncDef\", \"CythonGenerator._visit_ImplStmt\", \"CythonGenerator._visit_LetStmt\", \"CythonGenerator._visit_Module\", \"CythonGenerator._visit_RaiseStmt\", \"CythonGenerator._visit_ReturnStmt\", \"CythonGenerator._visit_StructDef\", \"CythonGenerator._visit_SubtypeDef\", \"CythonGenerator._visit_TraitDef\", \"CythonGenerator.generate\", \"DictLiteral\", \"DictPattern\", \"DictPattern.__init__\", \"DuckDef\", \"DuckDef.__init__\", \"DuckRequirement\", \"DuckRequirement.__init__\", \"ExceptionDef\", \"ExceptionDef.__init__\", \"ExtractorPattern\", \"ExtractorPattern.__init__\", \"FuncDef.__init__\", \"FunctionNotFoundError\", \"GoStmt\", \"GoStmt.__init__\", \"GuardStmt\", \"GuardStmt.__init__\", \"IfExp\", \"IfStmt.__init__\", \"ImplStmt.__init__\", \"LambdaExpr\", \"LambdaExpr.__init__\", \"LetStmt.__init__\", \"Lexer\", \"Lexer.__init__\", \"Lexer._caret_is_infix\", \"Lexer._current_line_starts_with\", \"Lexer._handle_newline\", \"Lexer._skip_whitespace\", \"Lexer._tokenize_string\", \"Lexer.tokenize\", \"ListComp\", \"ListComp.__init__\", \"MacroCall\", \"MacroDef\", \"MacroDef.__init__\", \"MatchExpr\", \"MatchExpr.__init__\", \"MatchStmt\", \"MatchStmt.__init__\", \"Param.__init__\", \"Parser\", \"Parser.__init__\", \"Parser._bound_text\", \"Parser._consume\", \"Parser._is_destructure_target\", \"Parser._parse_bitwise_and\", \"Parser._parse_bitwise_or\", \"Parser._parse_bitwise_xor\", \"Parser._parse_block\", \"Parser._parse_build_block\", \"Parser._parse_call\", \"Parser._parse_cast_expr\", \"Parser._parse_class_def\", \"Parser._parse_comparison\", \"Parser._parse_comparison_expr\", \"Parser._parse_comptime_func_def\", \"Parser._parse_comptime_stmt\", \"Parser._parse_const_stmt\", \"Parser._parse_constraint\", \"Parser._parse_decorator\", \"Parser._parse_defer_stmt\", \"Parser._parse_duck_def\", \"Parser._parse_duck_params\", \"Parser._parse_duck_requirement\", \"Parser._parse_enum_def\", \"Parser._parse_expr_stmt\", \"Parser._parse_for_stmt\", \"Parser._parse_for_target\", \"Parser._parse_for_target_element\", \"Parser._parse_from_import\", \"Parser._parse_func_def\", \"Parser._parse_generic_bound\", \"Parser._parse_go_stmt\", \"Parser._parse_guard_stmt\", \"Parser._parse_impl_stmt\", \"Parser._parse_inline_suite\", \"Parser._parse_lambda\", \"Parser._parse_let_stmt\", \"Parser._parse_macro_def\", \"Parser._parse_match_expr\", \"Parser._parse_match_stmt\", \"Parser._parse_meta_block\", \"Parser._parse_multiplicative_expr\", \"Parser._parse_mut_stmt\", \"Parser._parse_owned_stmt\", \"Parser._parse_param_for_lambda\", \"Parser._parse_params\", \"Parser._parse_pattern\", \"Parser._parse_pattern_with_or\", \"Parser._parse_pipeline_expr\", \"Parser._parse_primary\", \"Parser._parse_raise_stmt\", \"Parser._parse_return_stmt\", \"Parser._parse_setup_stmt\", \"Parser._parse_single_expr_block\", \"Parser._parse_spawn_stmt\", \"Parser._parse_statement\", \"Parser._parse_struct_def\", \"Parser._parse_subtype_def\", \"Parser._parse_suite_stmt\", \"Parser._parse_teardown_stmt\", \"Parser._parse_test_stmt\", \"Parser._parse_trait_def\", \"Parser._parse_try_stmt\", \"Parser._parse_type\", \"Parser._parse_type_alias\", \"Parser._parse_type_element\", \"Parser._parse_typeclass_def\", \"Parser._parse_typed_var\", \"Parser._parse_unary_expr\", \"Parser._parse_vec_literal\", \"Parser._parse_with_stmt\", \"Parser._pop_scope\", \"Parser._push_scope\", \"Parser._reject_multiple_bounds\", \"Parser._require_function_scope\", \"Parser._require_module_level\", \"Parser._type_node_to_str\", \"Pattern\", \"PipeExpr\", \"PipeExpr.__init__\", \"ProjectCompiler\", \"ProjectCompiler.__init__\", \"ProjectCompiler._get_type_str\", \"ProjectCompiler._is_package_module\", \"ProjectCompiler._note_import_diagnostic\", \"ProjectCompiler._pick_extension\", \"ProjectCompiler._pick_extension.score\", \"ProjectCompiler._resolve_import_target\", \"ProjectCompiler._resolve_relative_import\", \"ProjectCompiler.build\", \"ProjectCompiler.compile_module\", \"ProjectCompiler.discover_modules\", \"ProjectCompiler.get_incremental_changes\", \"ProjectCompiler.parse_all_modules\", \"ProjectCompiler.type_check_module\", \"RangePattern\", \"ScopeAnalyzer\", \"ScopeAnalyzer.__init__\", \"ScopeAnalyzer._check_redefinition\", \"ScopeAnalyzer._extract_names\", \"ScopeAnalyzer._register_builtins\", \"ScopeAnalyzer._visit_ConstraintDef\", \"ScopeAnalyzer._visit_SubtypeDef\", \"ScopeAnalyzer._visit_TypeAlias\", \"SetupStmt\", \"SlicePattern\", \"SpawnStmt\", \"SpawnStmt.__init__\", \"StopExpressionParsing\", \"StructDef.__init__\", \"StructField.__init__\", \"StructLiteral\", \"StructLiteral.__init__\", \"StructPattern\", \"StructPattern.__init__\", \"SubtypeDef\", \"SubtypeDef.__init__\", \"SuiteDef\", \"TeardownStmt\", \"TestCLIModes.test_cli_transpile_command\", \"TestCodegenVerification\", \"TestCodegenVerification.test_compile_time_constants\", \"TestCodegenVerification.test_comptime_expression\", \"TestCodegenVerification.test_const_generation\", \"TestCodegenVerification.test_cython_directives\", \"TestCodegenVerification.test_defer_statement\", \"TestCodegenVerification.test_enum_generation\", \"TestCodegenVerification.test_fstring\", \"TestCodegenVerification.test_function_with_types\", \"TestCodegenVerification.test_generic_struct\", \"TestCodegenVerification.test_go_statement\", \"TestCodegenVerification.test_let_statement\", \"TestCodegenVerification.test_list_comprehension\", \"TestCodegenVerification.test_match_statement\", \"TestCodegenVerification.test_pipeline_operator\", \"TestCodegenVerification.test_pointer_operations\", \"TestCodegenVerification.test_spawn_statement\", \"TestCodegenVerification.test_struct_generation\", \"TestCodegenVerification.test_struct_with_default_values\", \"TestCodegenVerification.test_struct_with_methods\", \"TestCodegenVerification.test_type_alias\", \"TestCompileMode.test_compile_to_pyd_basic\", \"TestCompileMode.test_run_module\", \"TestDef\", \"TestHookIntegrationMode.test_compile_and_import\", \"TokenType\", \"TraitDef.__init__\", \"TryStmt.__init__\", \"Type\", \"Type.__eq__\", \"TypeAlias.__init__\", \"TypeChecker\", \"TypeChecker.__init__\", \"TypeChecker._bare_container_type\", \"TypeChecker._bound_member_satisfied\", \"TypeChecker._bound_names_of_pattern\", \"TypeChecker._call_is_judgable\", \"TypeChecker._callable_arg_mismatch\", \"TypeChecker._callable_declared_params\", \"TypeChecker._callable_signature_assignable\", \"TypeChecker._check_bound_satisfaction\", \"TypeChecker._check_callable_arg_types\", \"TypeChecker._check_callable_arity\", \"TypeChecker._check_constraint_definition\", \"TypeChecker._check_generic_constraint\", \"TypeChecker._check_impl_on_subtype\", \"TypeChecker._check_isinstance_on_subtype\", \"TypeChecker._check_subtype_definition\", \"TypeChecker._common_subtype_base\", \"TypeChecker._common_subtype_base.chain_of\", \"TypeChecker._comparison_override_result_type\", \"TypeChecker._constraint_member_text\", \"TypeChecker._expand_constraint_members\", \"TypeChecker._extract_bind_names\", \"TypeChecker._finalize_subtype_edges\", \"TypeChecker._get_type_from_node\", \"TypeChecker._is_declared_type_name\", \"TypeChecker._is_fresh_literal\", \"TypeChecker._is_unpack_target\", \"TypeChecker._member_type_name\", \"TypeChecker._mismatch\", \"TypeChecker._nominal_subtype_assignment\", \"TypeChecker._register_callable\", \"TypeChecker._report_bound_violation\", \"TypeChecker._report_constraint_in_value_position\", \"TypeChecker._report_subtype_has_no_runtime_identity\", \"TypeChecker._subtype_ancestor_chain\", \"TypeChecker._subtype_base_kind\", \"TypeChecker._subtype_chain_status\", \"TypeChecker._subtype_direct_base\", \"TypeChecker._subtype_error\", \"TypeChecker._subtype_runtime_name\", \"TypeChecker._type_display\", \"TypeChecker._type_satisfies_duck\", \"TypeChecker._value_type_for_declared\", \"TypeChecker._visit_Assign\", \"TypeChecker._visit_Attribute\", \"TypeChecker._visit_BinOp\", \"TypeChecker._visit_Call\", \"TypeChecker._visit_CastExpr\", \"TypeChecker._visit_ComptimeStmt\", \"TypeChecker._visit_ConstraintDef\", \"TypeChecker._visit_ForStmt\", \"TypeChecker._visit_FuncDef\", \"TypeChecker._visit_ImplStmt\", \"TypeChecker._visit_LetStmt\", \"TypeChecker._visit_Module\", \"TypeChecker._visit_Name\", \"TypeChecker._visit_ReturnStmt\", \"TypeChecker._visit_SubtypeDef\", \"TypeChecker._visit_TypePattern\", \"TypeChecker.check\", \"TypeClassDef\", \"TypeClassDef.__init__\", \"TypeClassImpl\", \"TypeClassImpl.__init__\", \"TypePattern\", \"TypePattern.__init__\", \"UnionType\", \"VecLiteral\", \"VecLiteral.__init__\", \"VecType\", \"_analyze_errors\", \"_assert_compilable\", \"_ast_nodes\", \"_body\", \"_check_scope\", \"_cli\", \"_comptime_block\", \"_comptime_expr\", \"_find_ast_nodes\", \"_first_position\", \"_fn_lines\", \"_fn_slice\", \"_func_slice\", \"_identity_lines\", \"_looks_like_ast_node\", \"_lower\", \"_marker_file\", \"_not_implemented_error\", \"_parse\", \"_path_under\", \"_plain\", \"_plant_cache_tree\", \"_read_cli_source\", \"_report_build_failures\", \"_report_cache_clear\", \"_require_pure_value\", \"_returned_expr\", \"_run_cli\", \"_safe_rmtree\", \"_source\", \"_tok\", \"_transpile_check_only\", \"_transpile_emit_ast\", \"_transpile_generate_setup\", \"_types\", \"build_isolated_command\", \"build_isolated_env\", \"comptime_block_not_implemented\", \"evaluate_comptime\", \"extension_filename\", \"extension_suffix\", \"extension_suffixes\", \"main\", \"module_name_from_filename\", \"parse_args\", \"pick_built_extension\", \"pick_built_extension.is_prefer_dir\", \"pick_built_extension.stem\", \"run_build\", \"run_run\", \"run_transpile\", \"run_watch\", \"run_watch.report_reload\", \"test_bug74_augmented_xor_lowers_to_declared_equivalent\", \"test_bug74_augmented_xor_with_variable_rhs_keeps_both_operands\", \"test_bug74_build_value_in_value_position_unchanged\", \"test_bug74_plain_assignment_not_touched\", \"test_bug75_bitwise_ops_lower\", \"test_bug75_frozen_caret_lexemes_untouched\", \"test_bug75_infix_xor_parses_to_binop\", \"test_bug75_lexer_emits_infix_caret_token\", \"test_bug75_unary_invert_parses_to_unaryop\", \"test_bug75_xor_precedence_sits_between_bitwise_and_and_or\", \"test_bug76_defer_in_loop_return_emitted_once_per_exit\", \"test_bug76_multiple_defers_keep_reverse_order_at_every_exit\", \"test_bug76_nested_return_exit_runs_defer_cleanup\", \"test_bug76_single_exit_still_emits_cleanup_once\", \"test_bug78_equal_precedence_right_operand_keeps_parens\", \"test_bug78_left_associative_chain_not_over_parenthesized\", \"test_bug78_power_stays_right_associative\", \"test_bug79_augassign_family_still_lexed\", \"test_bug79_augassign_lowers_to_doc_equivalent\", \"test_bug79_lexer_emits_declared_augassign_token\", \"test_bug80_defer_in_nested_function_belongs_to_that_function\", \"test_bug80_defer_only_block_stays_compilable\", \"test_bug80_nested_defer_in_for_runs_once_at_exit\", \"test_bug80_nested_defer_in_if_runs_at_function_exit\", \"test_bug80_nested_defer_in_loop_block_stays_compilable\", \"test_bug80_top_level_defer_still_moved_to_exit\", \"test_bug81_codegen_renders_container_results_structurally\", \"test_bug81_collection_elements_are_evaluated_not_copied\", \"test_bug81_comptime_collection_product_is_a_compilable_literal\", \"test_bug81_control_scalar_comptime_unchanged\", \"test_bug81_evaluate_contract_returns_no_ast_node\", \"test_bug81_list_concatenation_is_pure\", \"test_bug81_list_literal_evaluates_to_pure_python_values\", \"test_bug81_mixed_scalar_collection_is_pure\", \"test_bug81_nested_collection_literal_is_pure\", \"test_bug81_nested_unresolvable_element_is_whole_evaluation_failure\", \"test_bug81_scalar_folding_unchanged\", \"test_bug81_tuple_literal_evaluates_to_pure_python_values\", \"test_bug81_unresolvable_element_is_whole_evaluation_failure\", \"test_bug82_comptime_string_cannot_hijack_docstring\", \"test_bug82_comptime_string_result_is_not_interpolated_raw\", \"test_bug82_comptime_string_with_backslash_not_emitted_as_broken_literal\", \"test_bug82_control_int_comptime_on_same_path\", \"test_bug82_string_comptime_value_is_correct_on_evaluator_side\", \"test_bug83_block_form_evaluate_entry_also_reports_not_implemented\", \"test_bug83_block_form_raises_structured_not_implemented_diagnostic\", \"test_bug83_block_form_surfaces_diagnostic_through_analyzer_face\", \"test_bug83_inline_form_control_still_clean\", \"test_bug84_both_analyzer_channels_agree_on_pointer_element_name\", \"test_bug84_control_documented_pointer_names_stay_clean\", \"test_bug84_documented_char_pointer_return_annotation_resolves\", \"test_bug84_documented_void_pointer_name_resolves\", \"test_bug84_undocumented_c_integer_names_stay_undefined\", \"test_bug90_hook_transpile_file_carries_real_identity\", \"test_bug90_hook_transpile_without_path_fabricates_nothing\", \"test_bug90_identity_literals_round_trip_for_nasty_paths\", \"test_bug90_other_module_metadata_still_emitted\", \"test_bug90_placeholder_identity_not_emitted\", \"test_bug90_real_identity_when_source_path_known\", \"test_bug91_windows_path_in_header_docstring_is_a_valid_literal\", \"test_declared_builtins_still_cited_in_syntax_docs\", \"test_defer_declared_shape\", \"test_doc_worked_example_maps_to_noreturn\", \"test_name_face_at_cli_entry\", \"test_pinned_defects_still_have_a_card\", \"test_r5_85_output_dir_after_subcommand_still_used\", \"test_r5_85_output_dir_before_subcommand_is_used\", \"test_r5_85_output_dir_both_sides_subcommand_wins\", \"test_r5_85_parse_args_global_after_subcommand_still_works\", \"test_r5_85_parse_args_global_before_subcommand\", \"test_r5_85_parse_args_global_default_unchanged\", \"test_r5_85_verbose_before_subcommand_prints_steps\", \"test_r5_85_verbose_control_without_flag_stays_quiet\", \"test_r5_86_bom_marker_still_recognised_as_cypy\", \"test_r5_86_bom_source_still_transpiles\", \"test_r5_86_finder_does_not_silently_pass_bom_file_through\", \"test_r5_86_plain_python_file_is_not_hijacked\", \"test_r5_87_clear_cache_removes_every_artifact_and_reports_count\", \"test_r5_87_clear_cache_reports_undeletable_file_in_report\", \"test_r5_87_clear_cache_reports_undeletable_file_in_report.refusing\", \"test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers\", \"test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers.refuse_all\", \"test_r5_88_cycle_reason_reaches_user\", \"test_r5_88_no_cypy_files_reason_reaches_user\", \"test_r5_88_rejected_entry_name_reaches_user\", \"test_r5_89_check_only_honours_entry_scope\", \"test_r5_89_check_only_with_unknown_entry_fails_loudly\", \"test_r5_89_check_only_without_entry_still_checks_everything\"]；files_this_ring=[\"cypy_hook/hook.py\", \"cypyc/analyzer/comptime_evaluator.py\", \"cypyc/analyzer/scope_analyzer.py\", \"cypyc/analyzer/type_checker.py\", \"cypyc/cli.py\", \"cypyc/codegen/cython_generator.py\", \"cypyc/parser/lexer.py\", \"cypyc/parser/parser.py\", \"cypyc/project/project_compiler.py\", \"tests/analyzer/test_r5_fix_comptime_types.py\", \"tests/cli/test_r5_fix_cli_hook.py\", \"tests/codegen/__init__.py\", \"tests/codegen/test_r5_fix_codegen.py\", \"tests/parser/test_r5_fix_lexer_tokens.py\", \"tests/test_codegen_verification.py\", \"tests/test_loop_20260927_advance_r4.py\", \"tests/test_unit_test_modes.py\"]；product_files_without_card=[\"cypyc/analyzer/scope_analyzer.py\"]；unfixed_claimed=[68, 69, 73]；matrix_rows=22；revert_red=[74, 75, 76, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91]；sha=\"153/153\"；bearing={\"cypy_hook/hook.py\": [85, 86, 87, 90], \"cypyc/analyzer/comptime_evaluator.py\": [81, 83], \"cypyc/analyzer/scope_analyzer.py\": [84], \"cypyc/analyzer/type_checker.py\": [83], \"cypyc/cli.py\": [85, 87, 88, 89], \"cypyc/codegen/cython_generator.py\": [74, 76, 78, 80, 81, 82, 90, 91], \"cypyc/parser/lexer.py\": [74, 75, 76, 78, 79, 80, 81, 82, 83, 84, 85, 86, 89, 90, 91], \"cypyc/parser/parser.py\": [74, 75, 78, 79], \"cypyc/project/project_compiler.py\": [88]}；unborne=[]；git_product_files=[\"cypy_hook/hook.py\", \"cypyc/analyzer/comptime_evaluator.py\", \"cypyc/analyzer/scope_analyzer.py\", \"cypyc/analyzer/type_checker.py\", \"cypyc/cli.py\", \"cypyc/codegen/cython_generator.py\", \"cypyc/parser/lexer.py\", \"cypyc/parser/parser.py\", \"cypyc/project/project_compiler.py\"]；corpus=203；new_rejections=0；new_acceptances=14；shape_changed=4；api_surface={\"head\": {\"analyze_only\": false, \"transpile\": true}, \"current\": {\"analyze_only\": true, \"transpile\": true}}；pytest=2119；collect=2119；suite={\"Total\": 47, \"Passed\": 47, \"Failed\": 0, \"Skipped\": 0}；e2e={\"PASS\": 25, \"FAIL\": 0, \"UNREG/RUNFAIL\": 0, \"WARN\": 0}；floors={\"pytest\": 2002, \"collect\": 2002, \"suite\": 47, \"e2e_pass\": 25}；floors_source=\"hunt_r5_baselines.json:{\\\"pytest\\\": 2002, \\\"collect\\\": 2002, \\\"suite\\\": 47, \\\"e2e_pass\\\": 25}\"；head=\"17d68b4\"；staged=0；radius={\"forbidden_total\": 0, \"allowed_touched\": 123}；closed=[74, 75, 76, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91]；fixed_sections=[\"CLI_build_failure_reason_message_swallowed\", \"CLI_check_only_ignores_entry_scope\", \"CLI_global_option_overwritten_by_subparser\", \"CODEGEN_augmented_xor_drops_left_operand\", \"CODEGEN_binop_parens_dropped_changes_order\", \"CODEGEN_header_docstring_backslash_escape\", \"CODEGEN_module_identity_hardcoded_unknown\", \"CODEGEN_nested_defer_runs_eagerly\", \"COMPTIME_block_form_surfaces_internal_exception\", \"COMPTIME_collection_literal_leaks_ast_repr\", \"COMPTIME_string_result_emitted_unescaped\", \"DEFER_nested_return_exit_skips_cleanup\", \"HOOK_bom_marker_silently_not_compiled\", \"HOOK_clear_cache_reports_ok_but_keeps_artifacts\", \"LEXER_bitwise_xor_and_invert_unreachable\", \"LEXER_declared_augassign_never_lexed\", \"TYPES_documented_pointer_element_names_undefined\"]；not_fixed=[\"BRIDGE_c_not_equivalent\", \"BRIDGE_cache_side_effect\", \"CODEGEN_named_conditions_unreachable\", \"PYD_incremental_cache_not_reused\", \"SLICE_typed_as_element\"]；three_way_bad=[]；hard=0；soft=\"0<=前环 0\"；tally_rows=18；fingerprint_rows=2；needles=\"24/24\"；generated_at=\"2026-09-28T10:33:58+00:00\"",
+ "gates": [
+  {
+   "label": "①-1",
+   "claim": "`fix_r5_intake.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_intake.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-2",
+   "claim": "`fix_r5_locks.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-3",
+   "claim": "`fix_r5_rc.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-4",
+   "claim": "`fix_r5_revert.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-5",
+   "claim": "`fix_r5_impact.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_impact.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-6",
+   "claim": "`fix_r5_baselines.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-7",
+   "claim": "`fix_r5_ledger.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-8",
+   "claim": "`fix_r5_drivers_lint.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-9",
+   "claim": "`fix_r5_calllog_tally.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_calllog_tally.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-10",
+   "claim": "`fix_r5_needles.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_needles.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-11",
+   "claim": "`fix_r5_book91.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/fix_r5_book91.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-12",
+   "claim": "`close_r5_fix.json` 的 refuse 必须逐字为空表（件内每条自证都要判过）",
+   "artifact": ".fist-loop-20260927/close_r5_fix.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "②-1",
+   "claim": "`fix_r5_intake.json` 的 self_checks 条数不低于设计下限 10（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_intake.json",
+   "path": "self_checks",
+   "min": 10
+  },
+  {
+   "label": "②-2",
+   "claim": "`fix_r5_locks.json` 的 self_checks 条数不低于设计下限 10（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "self_checks",
+   "min": 10
+  },
+  {
+   "label": "②-3",
+   "claim": "`fix_r5_rc.json` 的 self_checks 条数不低于设计下限 5（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "self_checks",
+   "min": 5
+  },
+  {
+   "label": "②-4",
+   "claim": "`fix_r5_revert.json` 的 self_checks 条数不低于设计下限 10（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "self_checks",
+   "min": 10
+  },
+  {
+   "label": "②-5",
+   "claim": "`fix_r5_impact.json` 的 self_checks 条数不低于设计下限 6（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_impact.json",
+   "path": "self_checks",
+   "min": 6
+  },
+  {
+   "label": "②-6",
+   "claim": "`fix_r5_baselines.json` 的 self_checks 条数不低于设计下限 14（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "self_checks",
+   "min": 14
+  },
+  {
+   "label": "②-7",
+   "claim": "`fix_r5_ledger.json` 的 self_checks 条数不低于设计下限 8（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "self_checks",
+   "min": 8
+  },
+  {
+   "label": "②-8",
+   "claim": "`fix_r5_drivers_lint.json` 的 self_checks 条数不低于设计下限 3（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "path": "self_checks",
+   "min": 3
+  },
+  {
+   "label": "②-9",
+   "claim": "`fix_r5_calllog_tally.json` 的 self_checks 条数不低于设计下限 10（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_calllog_tally.json",
+   "path": "self_checks",
+   "min": 10
+  },
+  {
+   "label": "②-10",
+   "claim": "`fix_r5_needles.json` 的 self_checks 条数不低于设计下限 4（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_needles.json",
+   "path": "self_checks",
+   "min": 4
+  },
+  {
+   "label": "②-11",
+   "claim": "`fix_r5_book91.json` 的 self_checks 条数不低于设计下限 10（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/fix_r5_book91.json",
+   "path": "self_checks",
+   "min": 10
+  },
+  {
+   "label": "②-12",
+   "claim": "`close_r5_fix.json` 的 self_checks 条数不低于设计下限 4（判据被删掉就是掉分，不是掉麻烦）",
+   "artifact": ".fist-loop-20260927/close_r5_fix.json",
+   "path": "self_checks",
+   "min": 4
+  },
+  {
+   "label": "③-1",
+   "claim": "`fix_r5_intake.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_intake.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "③-2",
+   "claim": "`fix_r5_locks.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "③-3",
+   "claim": "`fix_r5_rc.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "③-4",
+   "claim": "`fix_r5_revert.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "③-5",
+   "claim": "`fix_r5_impact.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_impact.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "③-6",
+   "claim": "`fix_r5_baselines.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "③-7",
+   "claim": "`fix_r5_ledger.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "③-8",
+   "claim": "`fix_r5_drivers_lint.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "③-9",
+   "claim": "`fix_r5_calllog_tally.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_calllog_tally.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "③-10",
+   "claim": "`fix_r5_needles.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_needles.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "③-11",
+   "claim": "`fix_r5_book91.json` 带有本轮起跑戳 `started_at_utc`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/fix_r5_book91.json",
+   "path": "started_at_utc",
+   "truthy": true
+  },
+  {
+   "label": "③-12",
+   "claim": "`close_r5_fix.json` 带有本轮起跑戳 `started`（旧件冒充本轮新跑就靠这一道抓）",
+   "artifact": ".fist-loop-20260927/close_r5_fix.json",
+   "path": "started",
+   "truthy": true
+  },
+  {
+   "label": "法①-1",
+   "claim": "本环认领的单数 ≥ 20（R5-寻虫 入账 13 张 + 本环修复途中新入账 1 张 + 账本现数未闭环旧单里可修的那批）",
+   "artifact": ".fist-loop-20260927/fix_r5_intake.json",
+   "path": "planned_ids",
+   "min": 20
+  },
+  {
+   "label": "法①-2",
+   "claim": "每张认领单都带归属栏与理由（cards 条数 ≥ 认领单数）",
+   "artifact": ".fist-loop-20260927/fix_r5_intake.json",
+   "path": "cards",
+   "min": 22
+  },
+  {
+   "label": "法①-3",
+   "claim": "旧单未闭环栏不为空（legacy_open_ids 从 bugs 树现读，不是我记得）",
+   "artifact": ".fist-loop-20260927/fix_r5_intake.json",
+   "path": "legacy_open_ids",
+   "min": 3
+  },
+  {
+   "label": "法①-4",
+   "claim": "分栏表在场（本环可修／交人工／已闭环不复修／红线，逐张给归属）",
+   "artifact": ".fist-loop-20260927/fix_r5_intake.json",
+   "path": "split_columns",
+   "truthy": true
+  },
+  {
+   "label": "法①-5",
+   "claim": "交人工的单必须带卡片原文逐字引文（handoff_quote_len > 0）",
+   "artifact": ".fist-loop-20260927/fix_r5_intake.json",
+   "path": "handoff_quote_len",
+   "min": 1
+  },
+  {
+   "label": "法①-6",
+   "claim": "归属规则不许留模棱两可的单（ambiguous_bare 必须空表，有条目就得交裁决）",
+   "artifact": ".fist-loop-20260927/fix_r5_intake.json",
+   "path": "ambiguous_bare",
+   "equals": []
+  },
+  {
+   "label": "法①-7",
+   "claim": "没有服务端单号的账面条目逐条点名（no_server_card_ids 是实测差集不是形容词）",
+   "artifact": ".fist-loop-20260927/fix_r5_intake.json",
+   "path": "no_server_card_ids",
+   "truthy": true
+  },
+  {
+   "label": "法②-1",
+   "claim": "有锁的单数 ≥ 15（每单一条会失败的锁测试）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "locked_ids",
+   "min": 15
+  },
+  {
+   "label": "法②-2",
+   "claim": "锁在 HEAD 快照树上复算出的红 ≥ 15 单（旧码不红=锁不承重）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "lock_red_before",
+   "min": 15
+  },
+  {
+   "label": "法②-3",
+   "claim": "锁在当前树上全绿（绿 ≥ 15 单，缺一环就是假锁）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "lock_green_after",
+   "min": 15
+  },
+  {
+   "label": "法②-4",
+   "claim": "红一律是断言级（跑到断言级红才算动过实现，收集错与 import 错不算）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "assertion_level_red_only",
+   "truthy": true
+  },
+  {
+   "label": "法②-5",
+   "claim": "锁节点总数 ≥ 100（条数从 pytest 现读）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "lock_nodes_total",
+   "min": 100
+  },
+  {
+   "label": "法②-6",
+   "claim": "无锁的单逐条点名（locks_missing 是缺的证据清单）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "locks_missing",
+   "truthy": true
+  },
+  {
+   "label": "法②-7",
+   "claim": "快照树身份探针在场（跑错副本树时这套红全是假的）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "canary_probe",
+   "truthy": true
+  },
+  {
+   "label": "法②-8",
+   "claim": "幽灵节点对照在场：不存在的 nodeid 必须报 no tests ran",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "ghost_probe",
+   "truthy": true
+  },
+  {
+   "label": "法②-9",
+   "claim": "锁文件行数 ≥ 盘上 glob 到的 test_r5_fix_*.py 数（两路各数一遍）",
+   "artifact": ".fist-loop-20260927/fix_r5_locks.json",
+   "path": "runs",
+   "min": 4
+  },
+  {
+   "label": "法③-1",
+   "claim": "改动点条数 ≥ 400（file::symbol 由 git+ast 反解）",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "change_points",
+   "min": 400
+  },
+  {
+   "label": "法③-2",
+   "claim": "同族根因合并后引用的符号 ≥ 300",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "symbols_referenced",
+   "min": 300
+  },
+  {
+   "label": "法③-3",
+   "claim": "合并后的根因组 ≥ 200（一堆补丁冒充根因就数不出这个）",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "merged_root_cause_len",
+   "min": 200
+  },
+  {
+   "label": "法③-4",
+   "claim": "改动无人归属的文件必须空表（改了没人报=清单口径漏面）",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "unattributed_changes",
+   "equals": []
+  },
+  {
+   "label": "法③-5",
+   "claim": "rc 认领面的号段与本环计划同源（planned_keys 条数 ≥ 认领单数）",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "planned_keys",
+   "min": 22
+  },
+  {
+   "label": "法③-6",
+   "claim": "改了但没被任何单点名的产品文件必须逐条列出（交回退矩阵实测承重）",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "product_files_without_card",
+   "truthy": true
+  },
+  {
+   "label": "法③-7",
+   "claim": "车道回执条数 ≥ 5（报了不等于改了，逐条看盘）",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "lane_receipts",
+   "min": 5
+  },
+  {
+   "label": "法③-8",
+   "claim": "只按派单半径覆盖、没按自报文件覆盖的面要逐条点名（自报漏面就靠这栏翻出来）",
+   "artifact": ".fist-loop-20260927/fix_r5_rc.json",
+   "path": "covered_only_by_scope",
+   "truthy": true
+  },
+  {
+   "label": "法④-1",
+   "claim": "矩阵条数 ≥ 认领单数（没产品码改动的单也占一行，写 not_measured 而不是消失）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "matrix_rows",
+   "min": 22
+  },
+  {
+   "label": "法④-2",
+   "claim": "摘回后变红的单 ≥ 12（不红的单在这环不算修完）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "revert_red_ids",
+   "min": 12
+  },
+  {
+   "label": "法④-3",
+   "claim": "红里断言级的单 ≥ 8（要的是锁承重，不是树被摘坏）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "assertion_level_ids",
+   "min": 8
+  },
+  {
+   "label": "法④-4",
+   "claim": "组间牵连必须为零（按实测承重闭包合组之后还牵连=假分离）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "collateral",
+   "equals": []
+  },
+  {
+   "label": "法④-5",
+   "claim": "sha 复原数 = 摘回文件数（复原不是拼接）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "sha_restored",
+   "equals": 153
+  },
+  {
+   "label": "法④-6",
+   "claim": "空操作摘回的反证跑过（本环没改过的文件按 HEAD 重写=空操作，锁必须还绿）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "canary_no_op_revert",
+   "truthy": true
+  },
+  {
+   "label": "法④-7",
+   "claim": "探针摘回单元与本驱动自己 git 数到的产品文件逐字相等（两套实现必须同集）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "extras.units_probed",
+   "equals": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "label": "法④-8",
+   "claim": "每个被摘的文件都至少打红一张单的锁（unborne_files 必须空表）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "extras.unborne_files",
+   "equals": []
+  },
+  {
+   "label": "法④-9",
+   "claim": "副本树里 import 到的就是副本那份（孪生树顶掉副本时整套矩阵作废）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "extras.identity.inside_work_tree",
+   "equals": true
+  },
+  {
+   "label": "法④-10",
+   "claim": "真树在全程未被写入（root_tree_dirtied 必须空表）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "extras.root_tree_dirtied",
+   "equals": []
+  },
+  {
+   "label": "法④-11",
+   "claim": "卡片点名面与实测承重面不一致的文件逐条列出（BUG-84/88 那类归属差）",
+   "artifact": ".fist-loop-20260927/fix_r5_revert.json",
+   "path": "extras.declared_face_not_bearing",
+   "truthy": true
+  },
+  {
+   "label": "法⑤-1",
+   "claim": "语料档数 = 本驱动 glob 到的 .cypy 文件数（语料面不是自报）",
+   "artifact": ".fist-loop-20260927/fix_r5_impact.json",
+   "path": "corpus_total",
+   "equals": 203
+  },
+  {
+   "label": "法⑤-2",
+   "claim": "「修前可编译→修后被拒」必须为 0（收紧要交裁决，不自批）",
+   "artifact": ".fist-loop-20260927/fix_r5_impact.json",
+   "path": "new_rejections_len",
+   "equals": 0
+  },
+  {
+   "label": "法⑤-3",
+   "claim": "「修前无诊断→修后有诊断」清单在场（逐条实测，空表也是数出来的空表）",
+   "artifact": ".fist-loop-20260927/fix_r5_impact.json",
+   "path": "new_diagnostics",
+   "truthy": true
+  },
+  {
+   "label": "法⑤-4",
+   "claim": "被本环新接受的语料 ≥ 5（变宽也要数出来）",
+   "artifact": ".fist-loop-20260927/fix_r5_impact.json",
+   "path": "new_acceptances_len",
+   "min": 5
+  },
+  {
+   "label": "法⑤-5",
+   "claim": "产物形状变化 ≥ 1（零变化就说明两棵树跑的是同一份码）",
+   "artifact": ".fist-loop-20260927/fix_r5_impact.json",
+   "path": "shape_changed_len",
+   "min": 1
+  },
+  {
+   "label": "法⑤-6",
+   "claim": "要裁决的档数如实点名（corpus_adjudication_files 是清单不是形容词）",
+   "artifact": ".fist-loop-20260927/fix_r5_impact.json",
+   "path": "corpus_adjudication_files",
+   "truthy": true
+  },
+  {
+   "label": "法⑤-7",
+   "claim": "HEAD 引擎与当前引擎的 API 面差异如实记录（测不到的通道一律写 not_measured）",
+   "artifact": ".fist-loop-20260927/fix_r5_impact.json",
+   "path": "api_surface",
+   "truthy": true
+  },
+  {
+   "label": "法⑥-1",
+   "claim": "pytest 通过数 ≥ 上一环实测地板 2002",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "pytest.passed",
+   "min": 2002
+  },
+  {
+   "label": "法⑥-2",
+   "claim": "pytest 无失败（failed_sum 必须 0）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "pytest.failed_sum",
+   "equals": 0
+  },
+  {
+   "label": "法⑥-3",
+   "claim": "collect-only 的 nodeid 数 ≥ 上一环实测地板 2002",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "collect.nodeids",
+   "min": 2002
+  },
+  {
+   "label": "法⑥-4",
+   "claim": "自研套件通过数 ≥ 上一环实测地板 47",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "suite.fields.Passed",
+   "min": 47
+  },
+  {
+   "label": "法⑥-5",
+   "claim": "e2e golden PASS ≥ 上一环实测地板 25",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "e2e.fields.PASS",
+   "min": 25
+  },
+  {
+   "label": "法⑥-6",
+   "claim": "三套体系全绿（有一格假就不许发闭环件）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "three_systems_ok",
+   "equals": true
+  },
+  {
+   "label": "法⑥-7",
+   "claim": "HEAD 与本驱动现读 git rev-parse 一致（本环红线：不提交、不 rebase）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "法⑥-8",
+   "claim": "暂存区为空（红线：不得 git add）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "法⑥-9",
+   "claim": "冻结面改动半径为零（PROJECT-SPEC/SYNTAX/套件配置/根文档）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "radius.forbidden_total",
+   "equals": 0
+  },
+  {
+   "label": "法⑥-10",
+   "claim": "地板四栏逐字等于上一环实测件那四栏（防手打也防自我放宽）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "floors",
+   "equals": {
+    "pytest": 2002,
+    "collect": 2002,
+    "suite": 47,
+    "e2e_pass": 25
+   }
+  },
+  {
+   "label": "法⑥-11",
+   "claim": "本轮确实写了东西（改动半径正面测出，allowed_touched > 0）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "radius.allowed_touched",
+   "min": 1
+  },
+  {
+   "label": "法⑥-12",
+   "claim": "外部 HEAD 基线 worktree 仍在（不属于本环的东西不许被顺手删掉）",
+   "artifact": ".fist-loop-20260927/fix_r5_baselines.json",
+   "path": "git.foreign_worktree_present",
+   "equals": true
+  },
+  {
+   "label": "法⑦-1",
+   "claim": "闭环单数 ≥ 12（能闭环的单是五件交集算出来的，不是我列的）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "closed_keys_len",
+   "min": 12
+  },
+  {
+   "label": "法⑦-2",
+   "claim": "账本里本环 FIXED 段条数 = 件里记的闭环单数（本驱动现读账本对撞）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "fixed_sections",
+   "equals": 17
+  },
+  {
+   "label": "法⑦-3",
+   "claim": "转结段条数 = 件里记的未清单数（一张都不许悄悄消失）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "not_fixed_sections",
+   "equals": 5
+  },
+  {
+   "label": "法⑦-4",
+   "claim": "三向对照的不一致项必须空表（md／sqlite 终态／call_log 三处同源）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "three_way_bad",
+   "equals": []
+  },
+  {
+   "label": "法⑦-5",
+   "claim": "账本条目总数与本驱动现读数一致（追加段落不新增也不删除条目）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "ledger_total",
+   "equals": 91
+  },
+  {
+   "label": "法⑦-6",
+   "claim": "三向对照表条数 ≥ 12（每单都要有 md+sqlite+call_log 三栏）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "three_way",
+   "min": 12
+  },
+  {
+   "label": "法⑦-7",
+   "claim": "影响面要裁决的档数在闭环件里点名（impact_adjudication 在场）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "impact_adjudication",
+   "truthy": true
+  },
+  {
+   "label": "法⑦-8",
+   "claim": "逐单驱动表条数 ≥ 12（claim→execute→submit→verify 的每一步都留了回包）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "rows",
+   "min": 12
+  },
+  {
+   "label": "法⑦-9",
+   "claim": "留 OPEN 的单数 ≥ 5（入账未修是合法终态，但必须是算出来的）",
+   "artifact": ".fist-loop-20260927/fix_r5_ledger.json",
+   "path": "leftover_len",
+   "min": 5
+  },
+  {
+   "label": "法⑧-1",
+   "claim": "亲笔脚本硬错必须为 0（E9/F821/F7/F63/F841/W605）",
+   "artifact": ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "path": "hard_violations",
+   "equals": []
+  },
+  {
+   "label": "法⑧-2",
+   "claim": "软账不得高于上一环实测的那个数（0）",
+   "artifact": ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "path": "soft_total",
+   "equals": 0
+  },
+  {
+   "label": "法⑧-3",
+   "claim": "扫描条数 = 本驱动 glob 到的 fix_r5_*.py 数（不挑好跑的扫）",
+   "artifact": ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "path": "drivers_scanned",
+   "min": 19
+  },
+  {
+   "label": "法⑧-4",
+   "claim": "注入对照必须被抓到（坏例没被抓= lint 是装饰）",
+   "artifact": ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "path": "canary",
+   "truthy": true
+  },
+  {
+   "label": "法⑧-5",
+   "claim": "call_log 按号段现数的本环行数 ≥ 17",
+   "artifact": ".fist-loop-20260927/fix_r5_calllog_tally.json",
+   "path": "stages.T0r110.rows",
+   "min": 17
+  },
+  {
+   "label": "法⑧-6",
+   "claim": "不存在号段的对照必须数出 0 行（过滤器不恒真）",
+   "artifact": ".fist-loop-20260927/fix_r5_calllog_tally.json",
+   "path": "control_absent_prefix_rows",
+   "equals": 0
+  },
+  {
+   "label": "法⑧-7",
+   "claim": "环标签那档 0 行时必须由根描述指纹档补上（两档不许同时为空）",
+   "artifact": ".fist-loop-20260927/fix_r5_calllog_tally.json",
+   "path": "fingerprint_channel.rows",
+   "min": 2
+  },
+  {
+   "label": "法⑧-8",
+   "claim": "规格点名工具的实际承担者逐条给数（0 也要是数出来的 0）",
+   "artifact": ".fist-loop-20260927/fix_r5_calllog_tally.json",
+   "path": "spec_named_carriers",
+   "truthy": true
+  },
+  {
+   "label": "法⑧-9",
+   "claim": "call_log 工具本轮真打过且回包看得到本环号段",
+   "artifact": ".fist-loop-20260927/fix_r5_calllog_tally.json",
+   "path": "call_log_tool_probe.rows_containing_stage",
+   "min": 17
+  },
+  {
+   "label": "法⑧-10",
+   "claim": "本 build 里被点名的工具是否存在，逐条给数（工具名不存在≠能力没开）",
+   "artifact": ".fist-loop-20260927/fix_r5_calllog_tally.json",
+   "path": "named_tools_in_this_build",
+   "truthy": true
+  },
+  {
+   "label": "⑫-1",
+   "claim": "needle 条数 = 计划里 8 法声明的 artifacts 总数（逐条不是手数）",
+   "artifact": ".fist-loop-20260927/fix_r5_needles.json",
+   "path": "real_key_len",
+   "equals": 24
+  },
+  {
+   "label": "⑫-2",
+   "claim": "扫描时不存在「件还没跑」的档（pending 必须空表）",
+   "artifact": ".fist-loop-20260927/fix_r5_needles.json",
+   "path": "pending_artifacts",
+   "equals": []
+  },
+  {
+   "label": "⑫-3",
+   "claim": "前缀式 needle 的反例必须被严口径拒掉（否则这条规则是假的）",
+   "artifact": ".fist-loop-20260927/fix_r5_needles.json",
+   "path": "canary",
+   "truthy": true
+  },
+  {
+   "label": "⑬-1",
+   "claim": "车道数 ≥ 5（每道一个文件半径，交付面逐道留回执）",
+   "artifact": ".fist-loop-20260927/r5_fix_lanes.json",
+   "path": "lanes",
+   "min": 5
+  },
+  {
+   "label": "⑬-2",
+   "claim": "每条车道都要写状态与理由（跑死也要逐字写原因，不许留空栏）",
+   "artifact": ".fist-loop-20260927/r5_fix_lanes.json",
+   "path": "lanes",
+   "min": 7
+  }
+ ],
+ "gates_total": 114,
+ "closure": {
+  "stage": ".fist-loop-20260927/close_r5_fix.out.json",
+  "root": ".fist-loop-20260927/close_r5_fix_root.out.json"
+ }
+}

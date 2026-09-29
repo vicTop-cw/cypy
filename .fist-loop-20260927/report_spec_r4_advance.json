@@ -1,0 +1,846 @@
+{
+ "name": "20260928.13.20.00",
+ "title": "R4-推进（advance）环节报告",
+ "stage": "第 4 轮第 5 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R4",
+ "root_task": "T0r93",
+ "assignee": "cypy-advancer",
+ "marker": "[selfdrive-advance]",
+ "fragment": ".fist-loop-20260927/r4_advance_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/spec_r4_advance.json",
+  ".fist-loop-20260927/advance_r4_never.py",
+  ".fist-loop-20260927/advance_r4_never.json",
+  ".fist-loop-20260927/advance_r4_builtins.py",
+  ".fist-loop-20260927/advance_r4_builtins.json",
+  ".fist-loop-20260927/advance_r4_scope_face.py",
+  ".fist-loop-20260927/advance_r4_scope_face.json",
+  ".fist-loop-20260927/advance_r4_filed.py",
+  ".fist-loop-20260927/advance_r4_filed.json",
+  ".fist-loop-20260927/advance_r4_dormant.py",
+  ".fist-loop-20260927/advance_r4_dormant.json",
+  ".fist-loop-20260927/advance_r4_lock_plan.json",
+  ".fist-loop-20260927/advance_r4_locks.py",
+  ".fist-loop-20260927/advance_r4_locks.json",
+  ".fist-loop-20260927/advance_r4_codegen_diff.json",
+  ".fist-loop-20260927/advance_r4_corpus.json",
+  ".fist-loop-20260927/advance_r4_sweep.py",
+  ".fist-loop-20260927/advance_r4_baselines.py",
+  ".fist-loop-20260927/advance_r4_baselines.json",
+  ".fist-loop-20260927/advance_r4_irreversible.py",
+  ".fist-loop-20260927/advance_r4_irreversible.json",
+  ".fist-loop-20260927/advance_r4_drivers_lint.py",
+  ".fist-loop-20260927/advance_r4_drivers_lint.json",
+  ".fist-loop-20260927/advance_r4_calllog_tally.py",
+  ".fist-loop-20260927/advance_r4_calllog_tally.json",
+  ".fist-loop-20260927/advance_r4_self_audit.py",
+  ".fist-loop-20260927/advance_r4_self_audit.json",
+  ".fist-loop-20260927/advance_r4_close_spec.py",
+  ".fist-loop-20260927/close_r4_advance.json",
+  ".fist-loop-20260927/advance_r4_render_order.py",
+  ".fist-loop-20260927/advance_r4_gen_locks.py",
+  ".fist-loop-20260927/advance_r4_lib.py",
+  ".fist-loop-20260927/advance_r4_probes.py",
+  ".fist-loop-20260927/loop_kit.py"
+ ],
+ "stale_ok": [],
+ "closure_note": "收口链（16 叶 × omega 全链 + 8 支 + 根上卷）在本报告渲染之后才发，其结果与被拒原文一律进 .fist-loop-20260927/loop_progress.md，故此处不留 closure 位——留了就等于要求渲染时收口件已存在，而那会把顺序倒过来",
+ "footer": "radius=产品两档分析器 / 冻结 0 / docs 0 / tests 1 新锁；carry=半径外 8 条挂账 + BUG-74/75 两张新卡 + 语料与产物面同趟扫描",
+ "gates": [
+  {
+   "label": "①-1",
+   "claim": "`advance_r4_never.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_never.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-2",
+   "claim": "`advance_r4_never.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_never.json",
+   "path": "self_checks",
+   "min": 9
+  },
+  {
+   "label": "①-3",
+   "claim": "`advance_r4_never.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_never.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-4",
+   "claim": "`advance_r4_builtins.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_builtins.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-5",
+   "claim": "`advance_r4_builtins.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_builtins.json",
+   "path": "self_checks",
+   "min": 22
+  },
+  {
+   "label": "①-6",
+   "claim": "`advance_r4_builtins.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_builtins.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-7",
+   "claim": "`advance_r4_scope_face.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_scope_face.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-8",
+   "claim": "`advance_r4_scope_face.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_scope_face.json",
+   "path": "self_checks",
+   "min": 5
+  },
+  {
+   "label": "①-9",
+   "claim": "`advance_r4_scope_face.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_scope_face.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-10",
+   "claim": "`advance_r4_dormant.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_dormant.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-11",
+   "claim": "`advance_r4_dormant.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_dormant.json",
+   "path": "self_checks",
+   "min": 20
+  },
+  {
+   "label": "①-12",
+   "claim": "`advance_r4_dormant.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_dormant.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-13",
+   "claim": "`advance_r4_filed.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_filed.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-14",
+   "claim": "`advance_r4_filed.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_filed.json",
+   "path": "self_checks",
+   "min": 4
+  },
+  {
+   "label": "①-15",
+   "claim": "`advance_r4_filed.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_filed.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-16",
+   "claim": "`advance_r4_locks.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-17",
+   "claim": "`advance_r4_locks.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "self_checks",
+   "min": 7
+  },
+  {
+   "label": "①-18",
+   "claim": "`advance_r4_locks.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-19",
+   "claim": "`advance_r4_codegen_diff.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_codegen_diff.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-20",
+   "claim": "`advance_r4_codegen_diff.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_codegen_diff.json",
+   "path": "self_checks",
+   "min": 1
+  },
+  {
+   "label": "①-21",
+   "claim": "`advance_r4_codegen_diff.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_codegen_diff.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-22",
+   "claim": "`advance_r4_corpus.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_corpus.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-23",
+   "claim": "`advance_r4_corpus.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_corpus.json",
+   "path": "self_checks",
+   "min": 4
+  },
+  {
+   "label": "①-24",
+   "claim": "`advance_r4_corpus.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_corpus.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-25",
+   "claim": "`advance_r4_baselines.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-26",
+   "claim": "`advance_r4_baselines.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "self_checks",
+   "min": 13
+  },
+  {
+   "label": "①-27",
+   "claim": "`advance_r4_baselines.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-28",
+   "claim": "`advance_r4_irreversible.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-29",
+   "claim": "`advance_r4_irreversible.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "path": "self_checks",
+   "min": 7
+  },
+  {
+   "label": "①-30",
+   "claim": "`advance_r4_irreversible.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-31",
+   "claim": "`advance_r4_self_audit.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/advance_r4_self_audit.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-32",
+   "claim": "`advance_r4_self_audit.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/advance_r4_self_audit.json",
+   "path": "self_checks",
+   "min": 28
+  },
+  {
+   "label": "①-33",
+   "claim": "`advance_r4_self_audit.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/advance_r4_self_audit.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "①-34",
+   "claim": "`close_r4_advance.json` 的 refuse 必须逐字为空表（件内每条自证都判过）",
+   "artifact": ".fist-loop-20260927/close_r4_advance.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-35",
+   "claim": "`close_r4_advance.json` 的 self_checks 条数不得少于下限（删自证会红）",
+   "artifact": ".fist-loop-20260927/close_r4_advance.json",
+   "path": "self_checks",
+   "min": 4
+  },
+  {
+   "label": "①-36",
+   "claim": "`close_r4_advance.json` 必须带 started 戳（同名旧件冒充本轮新跑的那类失效）",
+   "artifact": ".fist-loop-20260927/close_r4_advance.json",
+   "path": "started",
+   "min": 12
+  },
+  {
+   "label": "②-1",
+   "claim": "法①：Never 夹具两棵树对跑，条数就是计划里那 5 条",
+   "artifact": ".fist-loop-20260927/advance_r4_never.json",
+   "path": "cases",
+   "min": 5
+  },
+  {
+   "label": "②-2",
+   "claim": "法①：canary 三格（放行新名 / 不放行任意名 / 红只来自名称表）",
+   "artifact": ".fist-loop-20260927/advance_r4_never.json",
+   "path": "canary",
+   "min": 3
+  },
+  {
+   "label": "②-3",
+   "claim": "法①：被改的产品文件逐档带 before/after sha（是哪两档由 ⑦-8 的等值门钉）",
+   "artifact": ".fist-loop-20260927/advance_r4_never.json",
+   "path": "edited_files",
+   "min": 2
+  },
+  {
+   "label": "②-4",
+   "claim": "法①：文档工作例逐字进件（不是复述）",
+   "artifact": ".fist-loop-20260927/advance_r4_never.json",
+   "path": "doc_quote",
+   "min": 80
+  },
+  {
+   "label": "③-1",
+   "claim": "法②：放行的三个名字逐个点名",
+   "artifact": ".fist-loop-20260927/advance_r4_builtins.json",
+   "path": "added",
+   "min": 3
+  },
+  {
+   "label": "③-2",
+   "claim": "法②：未放行的六个内建名逐个点名（半径不外溢）",
+   "artifact": ".fist-loop-20260927/advance_r4_builtins.json",
+   "path": "not_added",
+   "min": 6
+  },
+  {
+   "label": "③-3",
+   "claim": "法②：声明面引用行是量出来的，三条各带实测行号与原文",
+   "artifact": ".fist-loop-20260927/advance_r4_builtins.json",
+   "path": "doc_evidence",
+   "min": 3
+  },
+  {
+   "label": "③-4",
+   "claim": "法②：canary 五格（含「未声明名在冻结语料里 0 处调用点」）",
+   "artifact": ".fist-loop-20260927/advance_r4_builtins.json",
+   "path": "canary",
+   "min": 5
+  },
+  {
+   "label": "③-5",
+   "claim": "法②后果：激活方向两格必须相反（改前 fail / 改后 success）",
+   "artifact": ".fist-loop-20260927/advance_r4_dormant.json",
+   "path": "canary.activation_direction_differs",
+   "equals": true
+  },
+  {
+   "label": "③-6",
+   "claim": "法②后果：声明面引文两处（SYNTAX/14 与 SYNTAX/04）逐字进件",
+   "artifact": ".fist-loop-20260927/advance_r4_dormant.json",
+   "path": "doc_basis",
+   "min": 2
+  },
+  {
+   "label": "③-7",
+   "claim": "法②后果：4 档 defer 形状实测，钉住的多出口形状号与清理次数如实记录",
+   "artifact": ".fist-loop-20260927/advance_r4_dormant.json",
+   "path": "shapes",
+   "min": 4
+  },
+  {
+   "label": "③-8",
+   "claim": "法②后果：改后的 test_defer_statement 函数体逐字留档（不是转述）",
+   "artifact": ".fist-loop-20260927/advance_r4_dormant.json",
+   "path": "test_patch.body_after",
+   "min": 200
+  },
+  {
+   "label": "③-9",
+   "claim": "法②后果：同款休眠守卫现存 7 处逐条点名（本环只动被激活的那一条）",
+   "artifact": ".fist-loop-20260927/advance_r4_dormant.json",
+   "path": "vacuous_guards.count",
+   "equals": 7
+  },
+  {
+   "label": "③-10",
+   "claim": "法②后果：canary 八格（反例必被抓、切片变窄、守卫扫描不上注释的当）",
+   "artifact": ".fist-loop-20260927/advance_r4_dormant.json",
+   "path": "canary",
+   "min": 8
+  },
+  {
+   "label": "④-1",
+   "claim": "法③：12 条复合赋值全部按文档自己的等价式判过",
+   "artifact": ".fist-loop-20260927/advance_r4_scope_face.json",
+   "path": "augmented_matrix",
+   "min": 12
+  },
+  {
+   "label": "④-2",
+   "claim": "法③：二元/一元表达式面 10 条",
+   "artifact": ".fist-loop-20260927/advance_r4_scope_face.json",
+   "path": "binary_matrix",
+   "min": 10
+  },
+  {
+   "label": "④-3",
+   "claim": "法③：半径外形状逐条给去向（挂账表非空且不许漏项）",
+   "artifact": ".fist-loop-20260927/advance_r4_scope_face.json",
+   "path": "adjudication_queue",
+   "min": 8
+  },
+  {
+   "label": "④-4",
+   "claim": "法③：静默产错码集合与钉住的名单同为空/同为那份名单",
+   "artifact": ".fist-loop-20260927/advance_r4_scope_face.json",
+   "path": "silent_wrong",
+   "equals": [
+    "^="
+   ]
+  },
+  {
+   "label": "④-5",
+   "claim": "法③：被响亮拒绝的声明形状逐字点名",
+   "artifact": ".fist-loop-20260927/advance_r4_scope_face.json",
+   "path": "declared_rejected",
+   "equals": [
+    "&=",
+    "**=",
+    "^",
+    "|=",
+    "~"
+   ]
+  },
+  {
+   "label": "④-6",
+   "claim": "法③：四张卡真入账且号连续（账本最大号前后各记一次）",
+   "artifact": ".fist-loop-20260927/advance_r4_filed.json",
+   "path": "filed",
+   "min": 4
+  },
+  {
+   "label": "④-7",
+   "claim": "法③：sqlite bug 任务增量与卡数同数",
+   "artifact": ".fist-loop-20260927/advance_r4_filed.json",
+   "path": "sqlite_bug_tasks_after",
+   "min": 70
+  },
+  {
+   "label": "④-8",
+   "claim": "法③：判据件钉住的卡号全部落在实际账号里",
+   "artifact": ".fist-loop-20260927/advance_r4_filed.json",
+   "path": "pinned_card_ids",
+   "min": 4
+  },
+  {
+   "label": "⑤-1",
+   "claim": "法④：新锁在改前码档必须红（红点数取下限=plan 名单长度）",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "lane_prefix_code.red_ids",
+   "min": 8
+  },
+  {
+   "label": "⑤-1b",
+   "claim": "法④：改前红点名单要逐字等于 plan（两份来源对不上就红）",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "canary.red_list_exact_match",
+   "equals": true
+  },
+  {
+   "label": "⑤-1c",
+   "claim": "法④：锁条数要等于生成器 plan 的 expected_tests（两份来源互验，不手打）",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "expected_tests",
+   "equals": 26
+  },
+  {
+   "label": "⑤-2",
+   "claim": "法④：工作区档零失败",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "lane_work.failed",
+   "equals": 0
+  },
+  {
+   "label": "⑤-3",
+   "claim": "法④：两棵树的 type_checker sha 不同（身份探针）",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "identity.work_type_checker_sha",
+   "min": 12
+  },
+  {
+   "label": "⑤-4",
+   "claim": "法④：改前档的 type_checker sha 另记一份",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "identity.snap_type_checker_sha",
+   "min": 12
+  },
+  {
+   "label": "⑤-5",
+   "claim": "法④：收集地板 = 上一环实测 + 本环新增锁数（取全量件反解出的 floors.collect）",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "collect_after_locks",
+   "min": 2002
+  },
+  {
+   "label": "⑥-1",
+   "claim": "法⑤：77 档语料两态产物逐字相同的档数达全集",
+   "artifact": ".fist-loop-20260927/advance_r4_codegen_diff.json",
+   "path": "all_textual_identical",
+   "min": 77
+  },
+  {
+   "label": "⑥-2",
+   "claim": "法⑤：无理解释的产物差异必须为空表",
+   "artifact": ".fist-loop-20260927/advance_r4_codegen_diff.json",
+   "path": "differing_unjustified",
+   "equals": []
+  },
+  {
+   "label": "⑥-3",
+   "claim": "法⑥：语料扫描档数达上一环基线 77",
+   "artifact": ".fist-loop-20260927/advance_r4_corpus.json",
+   "path": "samples_scanned",
+   "min": 77
+  },
+  {
+   "label": "⑥-4",
+   "claim": "法⑥：新增诊断行的文件表必须为空",
+   "artifact": ".fist-loop-20260927/advance_r4_corpus.json",
+   "path": "files_with_new_errors",
+   "equals": []
+  },
+  {
+   "label": "⑥-5",
+   "claim": "法⑥：两支见证夹具在位（尺子看得见被测形状）",
+   "artifact": ".fist-loop-20260927/advance_r4_corpus.json",
+   "path": "witnesses",
+   "min": 2
+  },
+  {
+   "label": "⑥-6",
+   "claim": "法⑥：诊断「变少」的文件表也为空（本环没修产品语义，不该有东西变好）",
+   "artifact": ".fist-loop-20260927/advance_r4_corpus.json",
+   "path": "files_with_errors_gone",
+   "equals": []
+  },
+  {
+   "label": "⑦-1",
+   "claim": "法⑦：pytest 失败数为 0",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "systems.pytest.failed",
+   "equals": 0
+  },
+  {
+   "label": "⑦-2",
+   "claim": "法⑦：pytest 错误数为 0",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "systems.pytest.errors",
+   "equals": 0
+  },
+  {
+   "label": "⑦-3",
+   "claim": "法⑦：pytest 通过数达地板（地板由件反解，不手打）",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "systems.pytest.passed",
+   "min": 2002
+  },
+  {
+   "label": "⑦-4",
+   "claim": "法⑦：收集数与跑完的「过+红+错」同为地板之上",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "systems.collect.nodeids",
+   "min": 2002
+  },
+  {
+   "label": "⑦-5",
+   "claim": "法⑦：自研套件 47 条",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "systems.suite.fields.Total",
+   "min": 47
+  },
+  {
+   "label": "⑦-6",
+   "claim": "法⑦：e2e golden PASS 达地板",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "systems.e2e.PASS",
+   "min": 25
+  },
+  {
+   "label": "⑦-7",
+   "claim": "法⑦：冻结面 43 个 sha 变更表必须为空",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "frozen_changed",
+   "equals": []
+  },
+  {
+   "label": "⑦-8",
+   "claim": "法⑦：半径按 mtime 归因只到两档分析器",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "radius.product_by_mtime_this_ring",
+   "equals": [
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py"
+   ]
+  },
+  {
+   "label": "⑦-9",
+   "claim": "法⑦：HEAD 未漂（本轮没有 commit）",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "⑦-10",
+   "claim": "法⑦：暂存区 0 行",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "⑦-11",
+   "claim": "法⑦：三套体系同刻为绿",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "three_systems_green",
+   "truthy": true
+  },
+  {
+   "label": "⑦-11b",
+   "claim": "法⑦：冻结面脏行里落在本环窗口内的必须为空",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "frozen_dirt_in_ring",
+   "equals": []
+  },
+  {
+   "label": "⑦-11c",
+   "claim": "法⑦：冻结面归因尺子两侧都会动（刚写的行被抓、loop 前的行被放）",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "canary",
+   "min": 6
+  },
+  {
+   "label": "⑦-11d",
+   "claim": "法⑦：每条冻结面脏行都要有解释（无解释表为空）",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "frozen_unexplained",
+   "equals": []
+  },
+  {
+   "label": "⑦-12",
+   "claim": "法⑦：驱动件硬错为 0（只数不拦＝装饰）",
+   "artifact": ".fist-loop-20260927/advance_r4_drivers_lint.json",
+   "path": "hard_violations",
+   "equals": 0
+  },
+  {
+   "label": "⑦-13",
+   "claim": "法⑦：驱动件软账不高于上一环基线",
+   "artifact": ".fist-loop-20260927/advance_r4_drivers_lint.json",
+   "path": "soft_total",
+   "equals": 0
+  },
+  {
+   "label": "⑦-14",
+   "claim": "法⑦：lint 清单非空且带逐文件 mtime 留档",
+   "artifact": ".fist-loop-20260927/advance_r4_drivers_lint.json",
+   "path": "detail",
+   "min": 10
+  },
+  {
+   "label": "⑦-15",
+   "claim": "法⑦：合成违例必被抓（lint 口径的自证）",
+   "artifact": ".fist-loop-20260927/advance_r4_drivers_lint.json",
+   "path": "canary.bad_caught",
+   "min": 1
+  },
+  {
+   "label": "⑦-16",
+   "claim": "法⑦：docs 面按 mtime 数到 0（推进环不动文档，白名单为空就是判据）",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "radius.docs",
+   "equals": []
+  },
+  {
+   "label": "⑧-1",
+   "claim": "法⑧：账本面无毁灭型工具",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "path": "verdict.destructive_tools",
+   "equals": []
+  },
+  {
+   "label": "⑧-2",
+   "claim": "法⑧：archive 只允许本环号段",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "path": "verdict.foreign_archive_targets",
+   "equals": []
+  },
+  {
+   "label": "⑧-3",
+   "claim": "法⑧：产品面无删除/改名",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "path": "product_bad_status",
+   "equals": []
+  },
+  {
+   "label": "⑧-4",
+   "claim": "法⑧：本环未跟踪新增产品文件为空（既往遗留照列不拒判）",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "path": "product_untracked_new",
+   "equals": []
+  },
+  {
+   "label": "⑧-5",
+   "claim": "法⑧：检测器三条对照全成立",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "path": "canary",
+   "min": 3
+  },
+  {
+   "label": "⑧-6",
+   "claim": "法⑧：archive 目标面为空（一次也没对别人号段动手）",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "path": "archive_targets",
+   "equals": []
+  },
+  {
+   "label": "⑨-1",
+   "claim": "每条法都至少留下一行带本环前缀的调用（建树/派单/laya 都算，发单前必为 0）",
+   "artifact": ".fist-loop-20260927/advance_r4_calllog_tally.json",
+   "path": "rows_T0r93",
+   "min": 8
+  },
+  {
+   "label": "⑨-2",
+   "claim": "全库行数作为分母要看得见（0 分母上的「零被拒」没有意义）",
+   "artifact": ".fist-loop-20260927/advance_r4_calllog_tally.json",
+   "path": "total_call_log_rows",
+   "min": 500
+  },
+  {
+   "label": "⑨-3",
+   "claim": "不存在的对照前缀必须数出 0 行（过滤器不恒真）",
+   "artifact": ".fist-loop-20260927/advance_r4_calllog_tally.json",
+   "path": "control_absent_prefix_rows",
+   "equals": 0
+  },
+  {
+   "label": "⑨-4",
+   "claim": "omega 链三工具逐条有计数（不是「已开启」一句话）",
+   "artifact": ".fist-loop-20260927/advance_r4_calllog_tally.json",
+   "path": "omega_chain_by_tool",
+   "min": 3
+  },
+  {
+   "label": "⑨-5",
+   "claim": "laya/issue_up/call_log 的实际承担工具逐条给数",
+   "artifact": ".fist-loop-20260927/advance_r4_calllog_tally.json",
+   "path": "spec_named_carriers",
+   "min": 3
+  },
+  {
+   "label": "⑨-6",
+   "claim": "缺陷入账在 bugs 树里有行（按机制签名反解）",
+   "artifact": ".fist-loop-20260927/advance_r4_calllog_tally.json",
+   "path": "bug_intake_rows",
+   "min": 2
+  },
+  {
+   "label": "⑨-7",
+   "claim": "整条循环的根任务逐根点名（R1..R4 已完成的根单都在）",
+   "artifact": ".fist-loop-20260927/advance_r4_calllog_tally.json",
+   "path": "loop_roots",
+   "min": 8
+  },
+  {
+   "label": "⑨-8",
+   "claim": "被拒原文逐字分组不许漏行（分组键在件里点名）",
+   "artifact": ".fist-loop-20260927/advance_r4_calllog_tally.json",
+   "path": "grouped_by",
+   "min": 10
+  },
+  {
+   "label": "⑩-1",
+   "claim": "计划法1的 needle「cases」必须是 advance_r4_never.json 里的真键名",
+   "artifact": ".fist-loop-20260927/advance_r4_never.json",
+   "path": "cases",
+   "min": 1
+  },
+  {
+   "label": "⑩-2",
+   "claim": "计划法2的 needle「added」必须是 advance_r4_builtins.json 里的真键名",
+   "artifact": ".fist-loop-20260927/advance_r4_builtins.json",
+   "path": "added",
+   "min": 1
+  },
+  {
+   "label": "⑩-3",
+   "claim": "计划法3的 needle「augmented_matrix」必须是 advance_r4_scope_face.json 里的真键名",
+   "artifact": ".fist-loop-20260927/advance_r4_scope_face.json",
+   "path": "augmented_matrix",
+   "min": 1
+  },
+  {
+   "label": "⑩-4",
+   "claim": "计划法4的 needle「lane_prefix_code」必须是 advance_r4_locks.json 里的真键名",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "path": "lane_prefix_code",
+   "min": 1
+  },
+  {
+   "label": "⑩-5",
+   "claim": "计划法5的 needle「all_textual_identical」必须是 advance_r4_codegen_diff.json 里的真键名",
+   "artifact": ".fist-loop-20260927/advance_r4_codegen_diff.json",
+   "path": "all_textual_identical",
+   "min": 1
+  },
+  {
+   "label": "⑩-6",
+   "claim": "计划法6的 needle「samples_scanned」必须是 advance_r4_corpus.json 里的真键名",
+   "artifact": ".fist-loop-20260927/advance_r4_corpus.json",
+   "path": "samples_scanned",
+   "min": 1
+  },
+  {
+   "label": "⑩-7",
+   "claim": "计划法7的 needle「systems」必须是 advance_r4_baselines.json 里的真键名",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "path": "systems",
+   "min": 1
+  },
+  {
+   "label": "⑩-8",
+   "claim": "计划法8的 needle「verdict」必须是 advance_r4_irreversible.json 里的真键名",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "path": "verdict",
+   "min": 1
+  }
+ ]
+}

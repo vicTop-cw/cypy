@@ -1,0 +1,445 @@
+{
+ "started": "2026-09-28T05:21:34+00:00",
+ "law": "已声明未实现/实现错的运算子与类型面逐条量化并给去向（本环不修，只挂账）",
+ "doc_source": "SYNTAX/12-operators.md",
+ "doc_rows_total": 35,
+ "augmented_matrix": [
+  {
+   "op": "+=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:79",
+   "spec_formula": "x = x + 5",
+   "generated": "x = x + 5",
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "op": "-=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:80",
+   "spec_formula": "x = x - 5",
+   "generated": "x = x - 5",
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "op": "*=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:81",
+   "spec_formula": "x = x * 5",
+   "generated": "x = x * 5",
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "op": "/=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:82",
+   "spec_formula": "x = x / 5",
+   "generated": "x = x / 5",
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "op": "//=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:83",
+   "spec_formula": "x = x // 5",
+   "generated": "x = x // 5",
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "op": "%=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:84",
+   "spec_formula": "x = x % 5",
+   "generated": "x = x % 5",
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "op": "**=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:85",
+   "spec_formula": "x = x ** 5",
+   "generated": "",
+   "rc": 1,
+   "state": "rejected",
+   "error_tail": [
+    "- 编译错误: Unexpected token ASSIGN at 3:9"
+   ]
+  },
+  {
+   "op": "<<=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:86",
+   "spec_formula": "x = x << 5",
+   "generated": "x = x << 5",
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "op": ">>=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:87",
+   "spec_formula": "x = x >> 5",
+   "generated": "x = x >> 5",
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "op": "&=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:88",
+   "spec_formula": "x = x & 5",
+   "generated": "",
+   "rc": 1,
+   "state": "rejected",
+   "error_tail": [
+    "- 编译错误: Unexpected token ASSIGN at 3:8"
+   ]
+  },
+  {
+   "op": "|=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:89",
+   "spec_formula": "x = x \\| 5",
+   "generated": "",
+   "rc": 1,
+   "state": "rejected",
+   "error_tail": [
+    "- 编译错误: Unexpected token ASSIGN at 3:8"
+   ]
+  },
+  {
+   "op": "^=",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:90",
+   "spec_formula": "x = x ^ 5",
+   "generated": "x = 5",
+   "rc": 0,
+   "state": "silent_wrong",
+   "error_tail": []
+  }
+ ],
+ "binary_matrix": [
+  {
+   "expr": "a & b",
+   "op": "&",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:55",
+   "generated": [
+    "print(a & b)"
+   ],
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "expr": "a | b",
+   "op": "|",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:56",
+   "generated": [
+    "print(a | b)"
+   ],
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "expr": "a ^ b",
+   "op": "^",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:57",
+   "generated": [],
+   "rc": 1,
+   "state": "rejected",
+   "error_tail": [
+    "- 编译错误: Expected RPAREN, got IDENTIFIER at 4:15"
+   ]
+  },
+  {
+   "expr": "a << 2",
+   "op": "<<",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:59",
+   "generated": [
+    "print(a << 2)"
+   ],
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "expr": "a >> 1",
+   "op": ">>",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:60",
+   "generated": [
+    "print(a >> 1)"
+   ],
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "expr": "a / 2",
+   "op": "/",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:12",
+   "generated": [
+    "print(a / 2)"
+   ],
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "expr": "a // 2",
+   "op": "//",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:13",
+   "generated": [
+    "print(a // 2)"
+   ],
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "expr": "a % 2",
+   "op": "%",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:14",
+   "generated": [
+    "print(a % 2)"
+   ],
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "expr": "a ** 2",
+   "op": "**",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:15",
+   "generated": [
+    "print(a ** 2)"
+   ],
+   "rc": 0,
+   "state": "ok",
+   "error_tail": []
+  },
+  {
+   "expr": "~a",
+   "op": "~",
+   "declared_in_doc": true,
+   "declared_at": "SYNTAX/12-operators.md:58",
+   "generated": [],
+   "rc": 1,
+   "state": "rejected",
+   "error_tail": [
+    "- 编译错误: Unexpected token TILDE at 4:11"
+   ]
+  }
+ ],
+ "other_faces": [
+  {
+   "face": "pointer_char_type",
+   "fixture": ".fist-loop-20260927/advance_r4_probe/a4_ptr_char.cypy",
+   "claim": "PROJECT-SPEC/SYNTAX 声明的 *char 指针返回",
+   "rc": 1,
+   "error_tail": [
+    "[FAIL] Transpile failed:"
+   ],
+   "undefined_names": [
+    "- Undefined name 'char' at 1:36"
+   ]
+  },
+  {
+   "face": "let_reassign_accepted",
+   "fixture": ".fist-loop-20260927/advance_r4_probe/a4_let_reassign.cypy",
+   "claim": "let 的不可变语义",
+   "rc": 0,
+   "error_tail": [],
+   "undefined_names": []
+  }
+ ],
+ "silent_wrong": [
+  "^="
+ ],
+ "declared_rejected": [
+  "&=",
+  "**=",
+  "^",
+  "|=",
+  "~"
+ ],
+ "adjudication_queue": [
+  {
+   "key": "**=",
+   "state": "rejected",
+   "declared_at": "SYNTAX/12-operators.md:85",
+   "disposition": "挂账：修法要碰 `^:`/`~:` 冻结构建块词位，超出本环半径",
+   "bug_card": "",
+   "why_not_this_ring": "本环只补名称表（零 codegen 改动）；词位消歧会动解析器与冻结语法面"
+  },
+  {
+   "key": "&=",
+   "state": "rejected",
+   "declared_at": "SYNTAX/12-operators.md:88",
+   "disposition": "挂账：修法要碰 `^:`/`~:` 冻结构建块词位，超出本环半径",
+   "bug_card": "",
+   "why_not_this_ring": "本环只补名称表（零 codegen 改动）；词位消歧会动解析器与冻结语法面"
+  },
+  {
+   "key": "|=",
+   "state": "rejected",
+   "declared_at": "SYNTAX/12-operators.md:89",
+   "disposition": "挂账：修法要碰 `^:`/`~:` 冻结构建块词位，超出本环半径",
+   "bug_card": "",
+   "why_not_this_ring": "本环只补名称表（零 codegen 改动）；词位消歧会动解析器与冻结语法面"
+  },
+  {
+   "key": "^=",
+   "state": "silent_wrong",
+   "declared_at": "SYNTAX/12-operators.md:90",
+   "disposition": "挂缺陷卡，交 R5-修复",
+   "bug_card": "BUG-74",
+   "why_not_this_ring": "本环只补名称表（零 codegen 改动）；词位消歧会动解析器与冻结语法面"
+  },
+  {
+   "key": "^",
+   "state": "rejected",
+   "declared_at": "SYNTAX/12-operators.md:57",
+   "disposition": "挂账：修法要碰 `^:`/`~:` 冻结构建块词位，超出本环半径",
+   "bug_card": "BUG-75",
+   "why_not_this_ring": "本环只补名称表（零 codegen 改动）；词位消歧会动解析器与冻结语法面"
+  },
+  {
+   "key": "~",
+   "state": "rejected",
+   "declared_at": "SYNTAX/12-operators.md:58",
+   "disposition": "挂账：修法要碰 `^:`/`~:` 冻结构建块词位，超出本环半径",
+   "bug_card": "BUG-75",
+   "why_not_this_ring": "本环只补名称表（零 codegen 改动）；词位消歧会动解析器与冻结语法面"
+  },
+  {
+   "key": "pointer_char_type",
+   "state": "rejected",
+   "declared_at": "PROJECT-SPEC/SYNTAX 声明的 *char 指针返回",
+   "disposition": "挂账：需要类型/内存语义设计，本环不修",
+   "bug_card": "",
+   "why_not_this_ring": "越出「名称表补齐」的安全半径"
+  },
+  {
+   "key": "let_reassign_accepted",
+   "state": "accepted_unchecked",
+   "declared_at": "let 的不可变语义",
+   "disposition": "挂账：既有 let 重赋值语义未强制，动它会撞既有测试",
+   "bug_card": "",
+   "why_not_this_ring": "越出「名称表补齐」的安全半径"
+  }
+ ],
+ "pinned": {
+  "silent_wrong": [
+   "^="
+  ],
+  "declared_rejected": [
+   "**=",
+   "&=",
+   "|=",
+   "^",
+   "~"
+  ]
+ },
+ "trees": {
+  "before_not_used": "本件只测工作区语义面，改前态由法①②承担",
+  "after": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_after_tree",
+   "py_files": 56,
+   "edited_shas": {
+    "scope_analyzer.py": "b7a14e5a5521",
+    "type_checker.py": "cbac2bfb44c7"
+   }
+  },
+  "identity": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_after_tree",
+   "inside": true,
+   "cypyc": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_after_tree\\cypyc\\__init__.py",
+   "scope": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_after_tree\\cypyc\\analyzer\\scope_analyzer.py",
+   "exe": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe"
+  }
+ },
+ "not_edited_this_ring": [
+  "二元 ^ 与一元 ~（词位与 `^:`/`~:` 冻结构建块冲突）",
+  "**= / &= / |=（同一赋值路径）",
+  "*char 指针类型面",
+  "let 不可变（既有语义面，改动会动既有测试）"
+ ],
+ "self_checks": [
+  {
+   "label": "silent_wrong 集合必须逐字等于钉住的已知缺陷（修好了会红，逼人来关账）",
+   "got": [
+    "^="
+   ],
+   "want": [
+    "^="
+   ],
+   "why": "实得 ['^=']",
+   "ok": true
+  },
+  {
+   "label": "declared 但被响亮拒绝的集合也要逐字点名（不许静默扩面）",
+   "got": [
+    "&=",
+    "**=",
+    "^",
+    "|=",
+    "~"
+   ],
+   "want": [
+    "&=",
+    "**=",
+    "^",
+    "|=",
+    "~"
+   ],
+   "why": "实得 ['&=', '**=', '^', '|=', '~']",
+   "ok": true
+  },
+  {
+   "label": "分类器对照：产物丢运算符的合成行必被判 silent_wrong",
+   "got": "silent_wrong",
+   "want": "silent_wrong",
+   "why": "否则这张表是恒绿装饰",
+   "ok": true
+  },
+  {
+   "label": "分类器对照：真实正确行不得被误判",
+   "got": "ok",
+   "want": "ok",
+   "why": "实得 ok（产物 x = x + 5）",
+   "ok": true
+  },
+  {
+   "label": "规格来自文档自己的等价式，不是手抄：12 条复合赋值行都要反解到 formula",
+   "got": 12,
+   "want": 12,
+   "why": "实得 12/12",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T05:21:43+00:00"
+}

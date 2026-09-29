@@ -1,0 +1,30 @@
+{
+ "started_z": "2026-09-29T10:47:53Z",
+ "ns": "cypy-loop-20260929",
+ "lines": [
+  2747,
+  2868
+ ],
+ "headers": 140,
+ "unique_ids": 139,
+ "verbatim": [
+  "## BUG-96 [2026-09-29T03:13:47Z] [medium] OPEN",
+  "## BUG-96 [2026-09-29T03:19:00+00:00] [high] OPEN"
+ ],
+ "filed": [
+  {
+   "tool": "report_bug",
+   "reply_verbatim": "{\"bug_id\": \"BUG-140\", \"id\": \"BUG-140\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  }
+ ],
+ "refusals": [],
+ "skipped_existing": [],
+ "bug_list_shape": "dict",
+ "bug_list_count": 141,
+ "after_headers": 141,
+ "after_unique": 140,
+ "new_id": [
+  "BUG-140"
+ ],
+ "call_log_report_bug_rows": 43
+}

@@ -1,0 +1,30 @@
+{
+  "ledger_before": 10,
+  "ledger_after": 13,
+  "log": [
+    {
+      "tag": "bug_list:before",
+      "count": 10
+    },
+    {
+      "tag": "report:[contract] list 描述称「不传 namespace 则列出全库所有",
+      "result": {
+        "bug_id": "BUG-12",
+        "status": "OPEN",
+        "path": "./memory/bugs.md",
+        "resolved_path": ".",
+        "project_dir": "."
+      }
+    },
+    {
+      "tag": "report:[更正 BUG-10] 停在 [待领取] 的任务有合法出路 `pause`（任意",
+      "result": {
+        "bug_id": "BUG-13",
+        "status": "OPEN",
+        "path": "./memory/bugs.md",
+        "resolved_path": ".",
+        "project_dir": "."
+      }
+    }
+  ]
+}

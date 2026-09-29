@@ -1,0 +1,385 @@
+{
+ "key": "r5_hunt",
+ "root_task": "T0r96",
+ "assignee": "cypy-hunter",
+ "stage": "R5-寻虫",
+ "forbid": "禁止在本环修产品码或改测试；禁止改 PROJECT-SPEC/SYNTAX 冻结语义；禁止把子代理结论原样入账；禁止把『只跑正例的对照』当确诊；禁止把『判据看不见样本』写成『没有缺陷』；禁止 git add/commit/push、删文件、重注册 golden；禁止把没做的写成 done",
+ "laws": [
+  {
+   "name": "观察面先证明看得见：六邻域逐格定期望 + 三条变异通道归属，零发现与看不见分家，白建通道逐条点名",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_faces.json",
+     "flips_by_mutant",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_faces.json",
+     "unattributed_mutants",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_faces.json",
+     "cases_total",
+     6000
+    ]
+   ]
+  },
+  {
+   "name": "声明面逐条自己重测：18 条文档主张现读原文 + 当场实测，design/stale-doc/real-gap 三态，撤回项点名",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_declared.json",
+     "withdrawn_design",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_declared.json",
+     "not_measured_or_true",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_declared.json",
+     "rows_total",
+     6000
+    ]
+   ]
+  },
+  {
+   "name": "生成面成对确诊：pos 现形 + 同族 ctl 正确两档齐全才 CONFIRMED，`_fn_body` 作用域限定，双跑必须一致",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_codegen.json",
+     "confirmed",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_codegen.json",
+     "canary",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_codegen.json",
+     "unsure",
+     4000
+    ]
+   ]
+  },
+  {
+   "name": "真实入口面成对确诊：CLI/hook/项目命令的退出码·stderr·loader 身份为观察对象，对照站不住只记 UNSURE",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_cli_face.json",
+     "confirmed",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_cli_face.json",
+     "unsure",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_cli_face.json",
+     "keys",
+     6000
+    ]
+   ]
+  },
+  {
+   "name": "每条判据自带『坏了必红』对照，且测量面残渣在清理之后独立复测（变异归属、canary 方向、双跑稳定性、tmp_left 非空即拒）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_faces.json",
+     "blind_spots",
+     6000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_codegen.json",
+     "tmp_left",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_cli_face.json",
+     "tmp_left",
+     6000
+    ]
+   ]
+  },
+  {
+   "name": "只确诊入账：号从盘上现数，report_bug 回读 + 账本增量 + sqlite 增量三向相等，二次扫描幂等，每卡带复跑命令",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_book.json",
+     "filed",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_book.json",
+     "live_reruns",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_book.json",
+     "sqlite_bug_tasks_after",
+     4000
+    ]
+   ]
+  },
+  {
+   "name": "三套体系同批复算且地板从上一环实测件反解（四栏缺一即拒），HEAD/暂存/冻结面未动，半径按 mtime 正面测出",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_baselines.json",
+     "floors_source",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_baselines.json",
+     "radius",
+     4000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_baselines.json",
+     "three_systems_green",
+     4000
+    ]
+   ]
+  },
+  {
+   "name": "驱动面与被测面同等受审：亲笔脚本硬错为 0、软账只降不升，报告与账本三向同步且被拒原文逐字入账",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+     "hard_violations",
+     800
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+     "soft_total",
+     800
+    ],
+    [
+     ".fist-loop-20260927/hunt_r5_book.json",
+     "duplicates",
+     4000
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "观察面先证明看得见：六邻域逐格定期望 + 三条变异通道归属，零发现与看不见分家，白建通道逐条点名",
+   ".fist-loop-20260927/hunt_r5_faces.json",
+   "flips_by_mutant"
+  ],
+  [
+   "声明面逐条自己重测：18 条文档主张现读原文 + 当场实测，design/stale-doc/real-gap 三态，撤回项点名",
+   ".fist-loop-20260927/hunt_r5_declared.json",
+   "withdrawn_design"
+  ],
+  [
+   "生成面成对确诊：pos 现形 + 同族 ctl 正确两档齐全才 CONFIRMED，`_fn_body` 作用域限定，双跑必须一致",
+   ".fist-loop-20260927/hunt_r5_codegen.json",
+   "confirmed"
+  ],
+  [
+   "真实入口面成对确诊：CLI/hook/项目命令的退出码·stderr·loader 身份为观察对象，对照站不住只记 UNSURE",
+   ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "confirmed"
+  ],
+  [
+   "每条判据自带『坏了必红』对照，且测量面残渣在清理之后独立复测（变异归属、canary 方向、双跑稳定性、tmp_left 非空即拒）",
+   ".fist-loop-20260927/hunt_r5_faces.json",
+   "blind_spots"
+  ],
+  [
+   "只确诊入账：号从盘上现数，report_bug 回读 + 账本增量 + sqlite 增量三向相等，二次扫描幂等，每卡带复跑命令",
+   ".fist-loop-20260927/hunt_r5_book.json",
+   "filed"
+  ],
+  [
+   "三套体系同批复算且地板从上一环实测件反解（四栏缺一即拒），HEAD/暂存/冻结面未动，半径按 mtime 正面测出",
+   ".fist-loop-20260927/hunt_r5_baselines.json",
+   "floors_source"
+  ],
+  [
+   "驱动面与被测面同等受审：亲笔脚本硬错为 0、软账只降不升，报告与账本三向同步且被拒原文逐字入账",
+   ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "hard_violations"
+  ]
+ ],
+ "branch_ids": [
+  "T0r96.1",
+  "T0r96.2",
+  "T0r96.3",
+  "T0r96.4",
+  "T0r96.5",
+  "T0r96.6",
+  "T0r96.7",
+  "T0r96.8"
+ ],
+ "root_marker": "[selfdrive-hunt]",
+ "root_deliverable": "R5-寻虫 交付：{REPORT}。八法＝观察面 25 格定期望＋2 条变异通道归属（一格没翻的通道逐条点名而不是删掉）→ 声明面 18 条主张现读原文＋当场重测（design/stale-doc/real-gap 三态）→ 生成面 7 条、真实入口面 6 条按 pos/ctl 成对确诊（对照站不住只记 UNSURE）→ 入账 13 张新单（号从盘上现数，report_bug 回读＋账本增量＋sqlite 增量三向相等，二次扫描幂等）→ 三套体系同批复算 pytest 2002/2002、自研套件 47/47、e2e 25 PASS，地板取自上一环实测件且未降 → needle 严口径 24 条全部是被引件里的真键名 → 亲笔驱动硬错 0 条、软账不高于上一环实测 0 → call_log 按号段现数 146 行并按环标签补了 laya/publish/report_bug 那一档（工具名不存在≠能力没开）。零产品码改动、零提交，HEAD 仍是上一环那个。",
+ "root_verify_reason": "寻虫环最容易说谎的是『这一族没有缺陷』这句话，所以每一层都配了反向证明：(1) 六个语义邻域各自带一条今天必然该报的对照，格级期望按**文档声明的语义**定，不是按今天跑出什么定；(2) 三条变异通道里有一格没翻的被逐条点名（`unattributed_mutants`），没被变异覆盖的族也点名（`families_without_flip`）——白建的通道留在账上，不冒充全覆盖；(3) 每条判据自带 canary，方向反了必红；测量面残渣在清理之后独立复测，`tmp_left` 非空即拒；(4) needle 一律按『被引件里的真键名』校，前缀式假命中（`confi`）被严口径拒；零值测量（`blind_spots=[]`、幂等重跑的 `filed=[]`、`hard_violations=[]`）是合法结果，门禁公式若把它们当缺失就是判据坏了；(5) 入账只收 CONFIRMED，`report_bug` 的闭集拒收（severity=P2 那一批 13 条）原文逐字进 call_log 对账件，二次扫描按机制签名逐条对齐而非计数差；(6) 三套体系、HEAD、暂存区、冻结面半径都在同一批里实测，地板从上一环实测件反解，四栏缺一即拒。",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/hunt_r5_needles.json",
+   "per_law_real",
+   400
+  ],
+  [
+   ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "hard_violations",
+   400
+  ],
+  [
+   ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "ring_tag_calls",
+   2000
+  ]
+ ],
+ "root_measured": {
+  "cases_total": 25,
+  "flips": 2,
+  "declared_rows": 18,
+  "codegen_confirmed": 7,
+  "cli_confirmed": 6,
+  "cards": 13,
+  "pytest": 2002,
+  "suite": 47,
+  "e2e": 25,
+  "needles": 24,
+  "hard": 0,
+  "tally_rows": 146,
+  "laws": 8,
+  "leaves": 16
+ },
+ "leaves": [
+  "T0r96.1.1",
+  "T0r96.1.2",
+  "T0r96.2.1",
+  "T0r96.2.2",
+  "T0r96.3.1",
+  "T0r96.3.2",
+  "T0r96.4.1",
+  "T0r96.4.2",
+  "T0r96.5.1",
+  "T0r96.5.2",
+  "T0r96.6.1",
+  "T0r96.6.2",
+  "T0r96.7.1",
+  "T0r96.7.2",
+  "T0r96.8.1",
+  "T0r96.8.2"
+ ],
+ "fingerprint": {
+  "必须": "每条候选带 file:line 与定位声明原文、pos/ctl 两档实测输出、一条『判据坏了必红』对照；入账件带一键复跑命令与『什么现象不算证明』；与前四轮已入账 77 单按根因去重；撤回项逐条点名给理由；三套体系与 git 红线同批复算且地板从上一环实测件反解；半径按 mtime 正面测出；号从盘上现数并三向对齐",
+  "禁止": "在本环修产品码或改测试；改 PROJECT-SPEC/SYNTAX 冻结语义；把子代理结论原样入账；把『只跑正例的对照』当确诊；把『判据看不见样本』的零发现写成『没有缺陷』；git add/commit/push/删文件/重注册 golden；把没做的写成 done；用『源码里出现某字样』代替调用面判据",
+  "半径": "只读测量 + `.fist-loop-20260927/` 判据件 + `memory/bugs.md` 追加段与 bug 任务库；产品码/测试/docs 四者本环改动为 0（按 mtime 正面测出）",
+  "地板": "取自 `.fist-loop-20260927/advance_r4_baselines.json` 的 floors 四栏（pytest / collect / suite / e2e_pass），逐栏反解且只升不降"
+ },
+ "needle_verification": {
+  "why": "上一环吃过「needle 只是文件名子串」的亏：`control` 撞 `SYNTAX/15-control-flow.md`、`queue` 撞 `queue_frozen_edit` 前缀，needle 在但主张不在。本环开工前把全部 needle 按「必须是判据件里的真键名」严口径重扫一遍，实测数落在这里。",
+  "checked_len": 24,
+  "missing_before": 0,
+  "false_substring_before": 0,
+  "rule": "needle 必须是被引判据件 JSON 里的真键名（顶层或一层嵌套），不能只是文件名字符串或值的前缀；每条规则配 canary：前缀式 needle（`confi`）在严口径下必须被拒。",
+  "artifacts_pending": [],
+  "strict_rule_rejected_len": 0,
+  "measured_at_utc": "2026-09-28T07:34:15+00:00"
+ },
+ "started": "2026-09-28T07:37:30+00:00",
+ "self_checks": [
+  {
+   "label": "叶子按 sqlite 反解到 16 张",
+   "got": 16,
+   "want": 16,
+   "why": "实得 16",
+   "ok": true
+  },
+  {
+   "label": "分支 8 支（每条法一支）",
+   "got": 8,
+   "want": 8,
+   "why": "实得 8",
+   "ok": true
+  },
+  {
+   "label": "omega 强验证在每支叶子上都开着",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "计划八条法逐条有 3 件证据",
+   "got": [
+    3
+   ],
+   "want": [
+    3
+   ],
+   "why": "artifacts 条数分布",
+   "ok": true
+  },
+  {
+   "label": "计划法条数 = 收口法条数（同源）",
+   "got": 8,
+   "want": 8,
+   "why": "同一份计划派单与收口",
+   "ok": true
+  },
+  {
+   "label": "渲染前预检：件在盘上、能 parse、needle 是真键名、长度达标",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "canary：前缀式 needle 必被严口径拒",
+   "got": true,
+   "want": true,
+   "why": "[\"law1 .fist-loop-20260927/hunt_r5_codegen.json 里「confi」不是真键名\"]",
+   "ok": true
+  },
+  {
+   "label": "canary 的另一侧：同一个前缀在旧子串口径下会被放行（说明严口径真的加了约束）",
+   "got": [],
+   "want": [],
+   "why": "子串口径会放过 confi",
+   "ok": true
+  },
+  {
+   "label": "根交付文案里每个整数都落在实测反解出来的数集内（不许手打新数字）",
+   "got": [],
+   "want": [],
+   "why": "measured={\"cases_total\": 25, \"flips\": 2, \"declared_rows\": 18, \"codegen_confirmed\": 7, \"cli_confirmed\": 6, \"cards\": 13, \"pytest\": 2002, \"suite\": 47, \"e2e\": 25, \"needles\": 24, \"hard\": 0, \"tally_rows\": 146, \"laws\": 8, \"leaves\": 16}",
+   "ok": true
+  },
+  {
+   "label": "branches 三元组数 = 法条数（根上卷按支取证据件）",
+   "got": 8,
+   "want": 8,
+   "why": "close_root_generic 按分支号取 (法, 件, needle)",
+   "ok": true
+  },
+  {
+   "label": "附加产物三件都在盘上且 needle 是真键名",
+   "got": [
+    true,
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true,
+    true
+   ],
+   "why": "[[\".fist-loop-20260927/hunt_r5_needles.json\", \"per_law_real\", 400], [\".fist-loop-20260927/hunt_r5_drivers_lint.json\", \"hard_violations\", 400], [\".fist-loop-20260927/hunt_r5_calllog_tally.json\", \"ring_tag_calls\", 2000]]",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T07:37:30+00:00"
+}

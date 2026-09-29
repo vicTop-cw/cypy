@@ -1,0 +1,68 @@
+{
+ "refuse": [],
+ "deleted": [
+  "examples/demos/legacy/analyzer/type_checking.cypy",
+  "examples/demos/legacy/builtins/defer_and_guard.cypy",
+  "examples/demos/legacy/builtins/generics.cypy",
+  "examples/demos/legacy/builtins/pointer_operations.cypy",
+  "examples/demos/legacy/codegen/cdef_class_generation.cypy",
+  "examples/demos/legacy/codegen/module_magic_attrs.cypy",
+  "examples/demos/legacy/parser/build_blocks.cypy",
+  "examples/demos/legacy/parser/implicit_policy.cypy",
+  "examples/demos/legacy/parser/struct_definition.cypy",
+  "examples/struct.cypy"
+ ],
+ "modified_count": 77,
+ "dangling_refs": {},
+ "weak_basename_mentions": {
+  "examples/demos/legacy/parser/build_blocks.cypy": [
+   "tests/test_demos.py"
+  ],
+  "examples/struct.cypy": [
+   "tests/test_golden_anchor_probes.py",
+   "tests/test_hot_reload.py",
+   "tests/test_incremental.py",
+   "tests/test_unit_test_modes.py",
+   "cypy_hook/hook.py"
+  ]
+ },
+ "renamed_candidates": {
+  "examples/demos/legacy/parser/build_blocks.cypy": [
+   "examples/demos/patterns_operators/build_blocks.cypy"
+  ]
+ },
+ "ledger": {
+  "heads": 40,
+  "bug_entries": 40,
+  "this_round_status": {
+   "BUG-30": [
+    true,
+    true
+   ],
+   "BUG-31": [
+    true,
+    true
+   ],
+   "BUG-33": [
+    true,
+    true
+   ],
+   "BUG-38": [
+    true,
+    true
+   ]
+  }
+ },
+ "taskbook": {
+  "bug_tree_tasks_ns_bugs": 44,
+  "loop_roots": [
+   "T0r38",
+   "T0r46",
+   "T0r47"
+  ],
+  "loop_roots_archived": [
+   "T0r38",
+   "T0r46"
+  ]
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "lanes": {
+  "work": {
+   "achieved": "green",
+   "summary": "18 passed in 0.39s",
+   "shape_hits": 0,
+   "under_snapshot": true
+  },
+  "pre_r4": {
+   "achieved": "red",
+   "summary": "14 failed, 4 passed in 0.57s",
+   "shape_hits": 11,
+   "under_snapshot": true
+  },
+  "head_code": {
+   "achieved": "red",
+   "summary": "18 failed in 0.87s",
+   "shape_hits": 13,
+   "under_snapshot": true
+  }
+ },
+ "head_files_written": 56,
+ "refuse": []
+}

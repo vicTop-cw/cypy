@@ -1,0 +1,207 @@
+{
+ "name": "20260927.17.30.01",
+ "title": "R2-修复（fix_and_merge）环节报告",
+ "stage": "第 2 轮第 2 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R2",
+ "root_task": "T0r56",
+ "assignee": "cypy-fixer",
+ "marker": "[selfdrive-fix]",
+ "footer": "fixed=BUG-44,BUG-45,BUG-39,BUG-35(范围=分桶),BUG-46(口径修法b),BUG-47 locks=18 carry=BUG-48,BUG-49,BUG-40,BUG-41,BUG-42,BUG-43,BUG-35深嵌套,struct隐式self观察 judge-defects=8 op-defects=6(入账 BUG-50,BUG-51) decisions=4",
+ "fragment": ".fist-loop-20260927/r2_fix_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/fix_r2_lockproof.json",
+  ".fist-loop-20260927/fix_r2_lockproof_revert_bug44.json",
+  ".fist-loop-20260927/fix_r2_lockproof_revert_bug45.json",
+  ".fist-loop-20260927/fix_r2_lockproof_revert_bug39.json",
+  ".fist-loop-20260927/fix_r2_lockproof_revert_bug35.json",
+  ".fist-loop-20260927/fix_r2_lockproof_revert_bug46.json",
+  ".fist-loop-20260927/fix_r2_lockproof_revert_bug47.json",
+  ".fist-loop-20260927/fix_r2_lint.json",
+  ".fist-loop-20260927/fix_r2_lint_selftest.json",
+  ".fist-loop-20260927/fix_r2_baselines.json",
+  ".fist-loop-20260927/fix_r2_file_bug50.json",
+  ".fist-loop-20260927/verify_r2_ledger3way.json",
+  ".fist-loop-20260927/check_claims_selftest.json"
+ ],
+ "gates": [
+  {
+   "label": "①",
+   "claim": "完整树（未回退）18 条锁全部被收集",
+   "artifact": ".fist-loop-20260927/fix_r2_lockproof.json",
+   "path": "full_tree.collected",
+   "min": 15
+  },
+  {
+   "label": "②",
+   "claim": "完整树 rc=0（本轮新增锁在 HEAD 码之外的当前树上全绿）",
+   "artifact": ".fist-loop-20260927/fix_r2_lockproof.json",
+   "path": "full_tree.rc",
+   "equals": 0
+  },
+  {
+   "label": "③",
+   "claim": "6 单回退矩阵的四条判据零违例（承重/混因/对照/收集）",
+   "artifact": ".fist-loop-20260927/fix_r2_lockproof.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "④",
+   "claim": "只回退 BUG-44 ⇒ 它的锁转红 ≥1 条",
+   "artifact": ".fist-loop-20260927/fix_r2_lockproof_revert_bug44.json",
+   "path": "red_locks",
+   "min": 1
+  },
+  {
+   "label": "⑤",
+   "claim": "只回退 BUG-45 ⇒ 它的锁转红 ≥1 条",
+   "artifact": ".fist-loop-20260927/fix_r2_lockproof_revert_bug45.json",
+   "path": "red_locks",
+   "min": 1
+  },
+  {
+   "label": "⑥",
+   "claim": "只回退 BUG-39 ⇒ 它的锁转红 ≥1 条",
+   "artifact": ".fist-loop-20260927/fix_r2_lockproof_revert_bug39.json",
+   "path": "red_locks",
+   "min": 1
+  },
+  {
+   "label": "⑦",
+   "claim": "只回退 BUG-35 ⇒ 它的锁转红 ≥1 条",
+   "artifact": ".fist-loop-20260927/fix_r2_lockproof_revert_bug35.json",
+   "path": "red_locks",
+   "min": 1
+  },
+  {
+   "label": "⑧",
+   "claim": "只回退 BUG-46 ⇒ 它的锁转红 ≥1 条（含 docs 同步那半边）",
+   "artifact": ".fist-loop-20260927/fix_r2_lockproof_revert_bug46.json",
+   "path": "red_locks",
+   "min": 1
+  },
+  {
+   "label": "⑨",
+   "claim": "只回退 BUG-47 ⇒ 它的锁转红 ≥1 条",
+   "artifact": ".fist-loop-20260927/fix_r2_lockproof_revert_bug47.json",
+   "path": "red_locks",
+   "min": 1
+  },
+  {
+   "label": "⑩",
+   "claim": "pytest 全量 passed ≥ 1886（R1-推进 1868 + 本轮 18 条锁，只升不降）",
+   "artifact": ".fist-loop-20260927/fix_r2_baselines.json",
+   "path": "pytest.passed",
+   "min": 1886
+  },
+  {
+   "label": "⑪",
+   "claim": "自研套件 47/47/Failed 0",
+   "artifact": ".fist-loop-20260927/fix_r2_baselines.json",
+   "path": "suite.green",
+   "truthy": true
+  },
+  {
+   "label": "⑫",
+   "claim": "e2e golden PASS=25 FAIL=0 且未重注册基准",
+   "artifact": ".fist-loop-20260927/fix_r2_baselines.json",
+   "path": "e2e.green",
+   "truthy": true
+  },
+  {
+   "label": "⑬",
+   "claim": "本轮亲笔行 black/flake8 零违例（整档存量债不计入本单）",
+   "artifact": ".fist-loop-20260927/fix_r2_lint.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑭",
+   "claim": "lint 判据自身的必然违例自检抓到（否则 ⑬ 是恒绿）",
+   "artifact": ".fist-loop-20260927/fix_r2_lint_selftest.json",
+   "path": "selftest",
+   "equals": "selfprobe-caught"
+  },
+  {
+   "label": "⑮",
+   "claim": "HEAD 仍是 17d68b4（未提交、未推送）",
+   "artifact": ".fist-loop-20260927/fix_r2_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "⑯",
+   "claim": "暂存区 0 文件（未 git add）",
+   "artifact": ".fist-loop-20260927/fix_r2_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "⑰",
+   "claim": "16 张叶子全部走完 claim→omega→execute→submit→output_validate→verify",
+   "artifact": ".fist-loop-20260927/close_r2_fix.out.json",
+   "path": "leaves",
+   "min": 16
+  },
+  {
+   "label": "⑱",
+   "claim": "本轮两条操作缺陷已入账并可用 bug_list 回读（BUG-50/51）",
+   "artifact": ".fist-loop-20260927/fix_r2_file_bug50.json",
+   "path": "filed",
+   "min": 2
+  },
+  {
+   "label": "⑲",
+   "claim": "账本条数反解：bug_list 与 `grep -c '^## BUG-'` 对齐（51 条）",
+   "artifact": ".fist-loop-20260927/fix_r2_file_bug50.json",
+   "path": "tail",
+   "min": 49
+  },
+  {
+   "label": "⑳",
+   "claim": "收口链零失败叶子（failed 为空 ⇒ 没有任何一步被服务端拒绝）",
+   "artifact": ".fist-loop-20260927/close_r2_fix.out.json",
+   "path": "failed",
+   "equals": []
+  },
+  {
+   "label": "㉑",
+   "claim": "账本三向对照已跑（只读取数）：本轮 8 单确为『只发 bug 卡未派生任务』，据此转结而非谎称已闭环",
+   "artifact": ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "path": "cross.bug_card_only_no_task",
+   "min": 8
+  },
+  {
+   "label": "㉒",
+   "claim": "账本条目数在收口后仍是 51（FIXED 段只追加，不新增/删除条目）",
+   "artifact": ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "path": "ledger.entries",
+   "equals": 51
+  },
+  {
+   "label": "㉓",
+   "claim": "账本里带 FIXED 段的条目数（34 是 R1 及以前，本轮再 +7）",
+   "artifact": ".fist-loop-20260927/verify_r2_ledger3way.json",
+   "path": "ledger.fixed_sections",
+   "min": 41
+  },
+  {
+   "label": "㉔",
+   "claim": "审计器三向自检通过：合成号紧邻『已修』必被抓、carry 名单与围栏里的引用必不被误判为已修",
+   "artifact": ".fist-loop-20260927/check_claims_selftest.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㉕",
+   "claim": "对本报告的 A/B/C 类主张核对零拒绝，且被声称已修的号恰好是 6 个",
+   "artifact": ".fist-loop-20260927/check_claims.out.json",
+   "path": "claimed_fixed",
+   "min": 6
+  }
+ ],
+ "closure": {
+  "stage": "close_r2_fix.out.json",
+  "root": "close_r2_fix_root.out.json"
+ }
+}

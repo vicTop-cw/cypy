@@ -1,0 +1,67 @@
+{
+ "key": "r4_hunt",
+ "tag": "[loop:20260927-loop:R4-寻虫]",
+ "assignee": "cypy-hunter",
+ "difficulty": "难",
+ "description": "[loop:20260927-loop:R4-寻虫] 寻虫（hunt）R4：在 R1–R3 已扫过五目录符号表、CLI 旗标台账、golden/基准与文档-实现对照之后，本轮把狩猎面**转向还没被系统扫过的三块**：\n① 函数类型这一层的其余缺口（R3-推进只落了入参元数）——`Callable` 作**返回类型**、作嵌套/别名右侧的其它组合、实参**类型**不符、类型别名在**产物签名**里塌成无标注；每条先做文档声明对表，未声明的形状只挂账不占号；\n② `docs/` 与 `SYNTAX/` 状态表与**今天实现**的陈旧不符（appendix-C 那行「尚未实现」自 R3-推进起变陈旧、USAGE.md 的示例与 `--help` 实读集）——按缺陷入账但修属冻结面 ⇒ 交人工；\n③ bridge/hook 的生成与调用面（`cypy_bridge` 写 setup、`cypy_hook` 的公开门面向 IDE 的实际调用形态）。\n每条候选必须带 file:line、定位声明原文、pos 现形 + ctl 不现形两档实测，并且**新增一条硬门**：每个确诊判据要自带一条「如果判据本身坏了就一定会红」的见证对照（R3-推进实测教训：真实语料里根本没有被测形状的样本时，『零发现』与『看不见』不可分）。子代理给的候选一律逐条亲测；自述未实现/计划中者按 DESIGN 撤回不占号。本环**不修产品码、不改测试**（属修复半径），改动正面测得为空；三套判据体系与 git 红线同一批复算且只升不降（地板 pytest 1938 / 套件 47/47 / e2e 25/25）；omega 强验证与 call_log 全开；不可逆动作一律挂账。",
+ "fingerprint": {
+  "必须": "每条候选有 file:line、定位声明原文、pos/ctl 两条判据的实测输出，外加一条『判据坏了必红』的见证对照；入账单有可一键复跑的复现命令（退出码 0=现形/1=不现形/2=夹具坏 三态）与『什么现象不算证明』；与 R1–R3 已入账 60 单按**根因**去重（不按标签、不按标题字面）；撤回项（DESIGN/REJECTED）逐条点名并给理由；三套判据体系与 git 红线同一批复算；改动半径为空并按 mtime 正面测出；号从盘上现数（max(BUG-NN)+1 起）",
+  "禁止": "在本环修产品码或改测试；改 PROJECT-SPEC/SYNTAX 冻结语义；把子代理结论原样入账；把『只跑正例的对照』当确诊；把『判据看不见样本』的零发现写成『没有缺陷』；git add/commit/push/删文件/重注册 golden；把没做的写成 done；用『源码里出现某字样』代替调用面判据"
+ },
+ "laws": [
+  {
+   "name": "狩猎面清点：三块新面（函数类型其余缺口 / docs 与实现的陈旧 / bridge+hook 生成调用面）逐条入表，并与 R1–R3 已入账单按根因去重",
+   "artifacts": [
+    [".fist-loop-20260927/hunt_r4_faces.json", "faces", 200],
+    [".fist-loop-20260927/hunt_r4_dedup.json", "compared_with", 2]
+   ]
+  },
+  {
+   "name": "定位声明先读后判：每条候选带上它自己的文档/状态表原文与 file:line，自述未实现者按 DESIGN 撤回不占号",
+   "artifacts": [
+    [".fist-loop-20260927/hunt_r4_declared.json", "rows", 300],
+    [".fist-loop-20260927/hunt_r4_declared.json", "withdrawn_design", 2]
+   ]
+  },
+  {
+   "name": "成对对照确诊：pos 现形 + ctl 不现形两档齐全才算 CONFIRMED，缺一档一律 UNSURE 不入账",
+   "artifacts": [
+    [".fist-loop-20260927/hunt_r4_confirm.json", "confirmed", 100],
+    [".fist-loop-20260927/hunt_r4_confirm.json", "unsure", 2]
+   ]
+  },
+  {
+   "name": "判据可观察性硬门：每条确诊判据自带一条『如果判据坏了就一定会红』的见证对照（零发现必须与看不见分家）",
+   "artifacts": [
+    [".fist-loop-20260927/hunt_r4_witness.json", "rows", 200],
+    [".fist-loop-20260927/hunt_r4_witness.json", "blind_spots", 2]
+   ]
+  },
+  {
+   "name": "一键复现三态退出码台账：0=现形 / 1=不现形 / 2=夹具坏，入账件里承诺的复跑命令必须真跑过",
+   "artifacts": [
+    [".fist-loop-20260927/hunt_r4_repro.json", "rows", 200]
+   ]
+  },
+  {
+   "name": "只确诊入账（号从盘上现数）：report_bug 回读 + 账本号增量必须等于入账条数，不在本环修产品码",
+   "artifacts": [
+    [".fist-loop-20260927/hunt_r4_filed.json", "filed", 2],
+    [".fist-loop-20260927/hunt_r4_filed.json", "numbering_from_disk", 100]
+   ]
+  },
+  {
+   "name": "三套判据体系同一批复算且只升不降（pytest 1938 / 套件 47/47 / e2e 25/25），git 红线 HEAD 未动，本环改动半径按 mtime 正面测出为空",
+   "artifacts": [
+    [".fist-loop-20260927/hunt_r4_baselines.json", "three_systems_green", 1],
+    [".fist-loop-20260927/hunt_r4_baselines.json", "radius", 100]
+   ]
+  },
+  {
+   "name": "报告与账本同步：三向对照（md 条目 / FIXED 段 / sqlite bug 任务）+ 被拒原文逐字进报告",
+   "artifacts": [
+    [".fist-loop-20260927/hunt_r4_ledger3way.json", "agree", 1]
+   ]
+  }
+ ]
+}

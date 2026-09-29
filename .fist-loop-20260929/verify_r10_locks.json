@@ -1,0 +1,294 @@
+{
+ "pid": 15648,
+ "cases": {
+  "L0": {
+   "label": "L0 live（修复后）",
+   "mutations": [],
+   "identity": {
+    "parser_has_type_args": true,
+    "parser_has_checker": false,
+    "codegen_has_tuple": false,
+    "analyzer_has_binding": true
+   },
+   "pytest": {
+    "rc": 0,
+    "failed_ids": [],
+    "n_failed": 0,
+    "crash": false,
+    "collect_errors": 0,
+    "summary_line": "============================= 77 passed in 0.96s ==============================",
+    "stdout_tail": "pe.slice.json#5] PASSED [ 97%]\ntests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.type.slice.json#6] PASSED [ 98%]\ntests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.type.slice.json#7] PASSED [100%]\n\n============================= 77 passed in 0.96s ==============================\n"
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=14 passed=14 failed=0 refused=0 accuracy=100.00% rc=0",
+    "parsed": [
+     1,
+     14,
+     14,
+     0,
+     0
+    ]
+   }
+  },
+  "L1": {
+   "label": "L1 三处全退",
+   "mutations": [
+    {
+     "file": "cypyc/parser/parser.py",
+     "needle": "full revert (3 hunks + lookahead block)"
+    },
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "drop _bind_explicit_type_args"
+    },
+    {
+     "file": "cypyc/codegen/cython_generator.py",
+     "needle": "        # 类型实参在产物里必须**擦除**（SYNTAX/11「调用点的类型实参」规则"
+    },
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "            explicit_binding = self._bind_explic"
+    },
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "                if generic_params:\n             "
+    }
+   ],
+   "identity": {
+    "parser_has_type_args": false,
+    "parser_has_checker": true,
+    "codegen_has_tuple": true,
+    "analyzer_has_binding": false
+   },
+   "pytest": {
+    "rc": 1,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#10]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#11]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#12]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#13]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#1]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#3]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#5]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#7]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#8]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#9]",
+     "tests/test_generic_callsite_r10.py::test_callsite_type_arg_is_erased_in_product",
+     "tests/test_generic_callsite_r10.py::test_callsite_type_arg_on_user_type_is_erased",
+     "tests/test_generic_callsite_r10.py::test_explicit_type_arg_overrides_inference",
+     "tests/test_generic_callsite_r10.py::test_generic_struct_ctor_type_arg_erased",
+     "tests/test_generic_callsite_r10.py::test_multiple_type_arguments_parse_and_erase",
+     "tests/test_generic_callsite_r10.py::test_type_argument_count_mismatch_is_reported_with_location",
+     "tests/test_generic_callsite_r10.py::test_type_arguments_on_non_generic_are_reported"
+    ],
+    "n_failed": 18,
+    "crash": false,
+    "collect_errors": 0,
+    "summary_line": "======================== 18 failed, 59 passed in 0.84s ========================",
+    "stdout_tail": "[cypy.generic.callsite.json#11]\nFAILED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#12]\nFAILED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#13]\n======================== 18 failed, 59 passed in 0.84s ========================\n"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=14 passed=3 failed=11 refused=0 accuracy=21.43% rc=1",
+    "parsed": [
+     1,
+     14,
+     3,
+     11,
+     0
+    ]
+   }
+  },
+  "L2": {
+   "label": "L2 只退解析器",
+   "mutations": [
+    {
+     "file": "cypyc/parser/parser.py",
+     "needle": "full revert (3 hunks + lookahead block)"
+    }
+   ],
+   "identity": {
+    "parser_has_type_args": false,
+    "parser_has_checker": true,
+    "codegen_has_tuple": false,
+    "analyzer_has_binding": true
+   },
+   "pytest": {
+    "rc": 1,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#12]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#1]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#3]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#5]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#9]",
+     "tests/test_generic_callsite_r10.py::test_explicit_type_arg_overrides_inference",
+     "tests/test_generic_callsite_r10.py::test_multiple_type_arguments_parse_and_erase",
+     "tests/test_generic_callsite_r10.py::test_type_argument_count_mismatch_is_reported_with_location",
+     "tests/test_generic_callsite_r10.py::test_type_arguments_on_non_generic_are_reported"
+    ],
+    "n_failed": 10,
+    "crash": false,
+    "collect_errors": 0,
+    "summary_line": "======================== 10 failed, 67 passed in 0.94s ========================",
+    "stdout_tail": "ir[cypy.generic.callsite.json#5]\nFAILED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#9]\nFAILED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#12]\n======================== 10 failed, 67 passed in 0.94s ========================\n"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=14 passed=8 failed=6 refused=0 accuracy=57.14% rc=1",
+    "parsed": [
+     1,
+     14,
+     8,
+     6,
+     0
+    ]
+   }
+  },
+  "L3": {
+   "label": "L3 只退分析器",
+   "mutations": [
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "drop _bind_explicit_type_args"
+    },
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "            explicit_binding = self._bind_explic"
+    },
+    {
+     "file": "cypyc/analyzer/type_checker.py",
+     "needle": "                if generic_params:\n             "
+    }
+   ],
+   "identity": {
+    "parser_has_type_args": true,
+    "parser_has_checker": false,
+    "codegen_has_tuple": false,
+    "analyzer_has_binding": false
+   },
+   "pytest": {
+    "rc": 1,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#12]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#3]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#5]",
+     "tests/test_generic_callsite_r10.py::test_explicit_type_arg_overrides_inference",
+     "tests/test_generic_callsite_r10.py::test_type_argument_count_mismatch_is_reported_with_location",
+     "tests/test_generic_callsite_r10.py::test_type_arguments_on_non_generic_are_reported"
+    ],
+    "n_failed": 7,
+    "crash": false,
+    "collect_errors": 0,
+    "summary_line": "======================== 7 failed, 70 passed in 0.87s =========================",
+    "stdout_tail": "ir[cypy.generic.callsite.json#4]\nFAILED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#5]\nFAILED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#12]\n======================== 7 failed, 70 passed in 0.87s =========================\n"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=14 passed=10 failed=4 refused=0 accuracy=71.43% rc=1",
+    "parsed": [
+     1,
+     14,
+     10,
+     4,
+     0
+    ]
+   }
+  },
+  "L4": {
+   "label": "L4 产物退回零参调用形态",
+   "mutations": [
+    {
+     "file": "cypyc/codegen/cython_generator.py",
+     "needle": "        # 类型实参在产物里必须**擦除**（SYNTAX/11「调用点的类型实参」规则"
+    }
+   ],
+   "identity": {
+    "parser_has_type_args": true,
+    "parser_has_checker": false,
+    "codegen_has_tuple": true,
+    "analyzer_has_binding": true
+   },
+   "pytest": {
+    "rc": 1,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#10]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#11]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#13]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#7]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#8]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#9]",
+     "tests/test_generic_callsite_r10.py::test_callsite_type_arg_is_erased_in_product",
+     "tests/test_generic_callsite_r10.py::test_callsite_type_arg_on_user_type_is_erased",
+     "tests/test_generic_callsite_r10.py::test_generic_struct_ctor_type_arg_erased"
+    ],
+    "n_failed": 9,
+    "crash": false,
+    "collect_errors": 0,
+    "summary_line": "======================== 9 failed, 68 passed in 0.87s =========================",
+    "stdout_tail": "[cypy.generic.callsite.json#10]\nFAILED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#11]\nFAILED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#13]\n======================== 9 failed, 68 passed in 0.87s =========================\n"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=14 passed=8 failed=6 refused=0 accuracy=57.14% rc=1",
+    "parsed": [
+     1,
+     14,
+     8,
+     6,
+     0
+    ]
+   }
+  },
+  "L5": {
+   "label": "L5 只改注释（语义不变，对照格）",
+   "mutations": [
+    {
+     "file": "cypyc/codegen/cython_generator.py",
+     "needle": "        # 且类型检查与产物生成都不报错（静默错误产物）。静态代入由分析器负责，产物只留"
+    }
+   ],
+   "identity": {
+    "parser_has_type_args": true,
+    "parser_has_checker": false,
+    "codegen_has_tuple": false,
+    "analyzer_has_binding": true
+   },
+   "pytest": {
+    "rc": 0,
+    "failed_ids": [],
+    "n_failed": 0,
+    "crash": false,
+    "collect_errors": 0,
+    "summary_line": "============================= 77 passed in 0.87s ==============================",
+    "stdout_tail": "pe.slice.json#5] PASSED [ 97%]\ntests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.type.slice.json#6] PASSED [ 98%]\ntests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.type.slice.json#7] PASSED [100%]\n\n============================= 77 passed in 0.87s ==============================\n"
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=14 passed=14 failed=0 refused=0 accuracy=100.00% rc=0",
+    "parsed": [
+     1,
+     14,
+     14,
+     0,
+     0
+    ]
+   }
+  }
+ },
+ "gates": {
+  "L0_pytest_green": true,
+  "L0_gate_100": true,
+  "no_ruler_crash_in_any_case": true,
+  "L1_load_bearing": true,
+  "L2_parser_only_red": true,
+  "L3_analyzer_only_red": true,
+  "L4_erasure_only_red": true,
+  "L5_comment_control_green": true,
+  "identity_mutations_landed": true
+ },
+ "conclusion_ok": true
+}

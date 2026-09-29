@@ -1,0 +1,117 @@
+#!bin cypy
+# ============================================================
+# types.cypy — TypeVar, Generic, and type hint primitives
+# ============================================================
+
+struct TypeVar:
+    # Runtime representation of a TypeVar — bound to a name with optional constraints
+    name: str
+    constraints: list<object>
+    bound: object
+    covariant: bool
+    contravariant: bool
+
+    def __init__(self, name: str, constraints: list<object> = [], bound: object = None, covariant: bool = False, contravariant: bool = False):
+        self.name = name
+        self.constraints = constraints
+        self.bound = bound
+        self.covariant = covariant
+        self.contravariant = contravariant
+
+    def __repr__(self) -> str:
+        return f"TypeVar('{self.name}')"
+
+
+struct TypeVarTuple:
+    # Variadic type variable (Python 3.11+)
+    name: str
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def __repr__(self) -> str:
+        return f"TypeVarTuple('{self.name}')"
+
+
+struct ParamSpec:
+    # Parameter specification (Python 3.10+)
+    name: str
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def __repr__(self) -> str:
+        return f"ParamSpec('{self.name}')"
+
+
+# --- Predefined TypeVars ---
+
+T = TypeVar("T")
+KT = TypeVar("KT")
+VT = TypeVar("VT")
+T_co = TypeVar("T_co", covariant=True)
+T_contra = TypeVar("T_contra", contravariant=True)
+
+
+# --- Type hint helpers ---
+
+struct UnionType:
+    # Union[A, B, ...] representation
+    args: list<object>
+
+    def __init__(self, args: list<object>):
+        self.args = args
+
+    def __repr__(self) -> str:
+        let arg_strs: list<str> = []
+        for a in self.args:
+            arg_strs.append(str(a))
+        return " | ".join(arg_strs)
+
+
+struct OptionalType:
+    # Optional[X] = Union[X, None]
+    inner: object
+
+    def __init__(self, inner: object):
+        self.inner = inner
+
+    def __repr__(self) -> str:
+        return f"Optional[{self.inner}]"
+
+
+struct CallableType:
+    # Callable[[args], ret]
+    args: list<object>
+    ret: object
+
+    def __init__(self, args: list<object>, ret: object):
+        self.args = args
+        self.ret = ret
+
+    def __repr__(self) -> str:
+        return f"Callable[{self.args}, {self.ret}]"
+
+
+struct LiteralType:
+    # Literal[value, ...]
+    values: list<object>
+
+    def __init__(self, values: list<object>):
+        self.values = values
+
+    def __repr__(self) -> str:
+        return f"Literal[{self.values}]"
+
+
+struct AnnotatedType:
+    # Annotated[type, metadata, ...]
+    inner: object
+    metadata: list<object>
+
+    def __init__(self, inner: object, metadata: list<object>):
+        self.inner = inner
+        self.metadata = metadata
+
+    def __repr__(self) -> str:
+        return f"Annotated[{self.inner}, ...]"

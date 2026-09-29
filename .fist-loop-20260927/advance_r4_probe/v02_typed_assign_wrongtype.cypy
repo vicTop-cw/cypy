@@ -1,0 +1,5 @@
+def main() -> int:
+    let x: int = 10
+    x = "hello"
+    print(x)
+    return 0

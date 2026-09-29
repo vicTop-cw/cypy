@@ -1,0 +1,4 @@
+SPEC cypy.annotation.shape cases=18 passed=18
+SPEC cypy.pattern.positional cases=11 passed=10
+  FAIL #8 typecheck 'struct E:' → errors 期望 0，实际 1：['Return type mismatch: expected str, got int at 9:9']
+CONCLUSION specs=2 cases=29 passed=28 failed=1 refused=0 accuracy=96.55% rc=1

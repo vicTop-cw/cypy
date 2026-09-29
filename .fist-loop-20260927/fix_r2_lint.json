@@ -1,0 +1,15 @@
+{
+ "refuse": [],
+ "authored_lines_checked": 323,
+ "files_scanned": [
+  "cypy_hook/__init__.py",
+  "cypy_hook/hook.py",
+  "cypyc/cli.py",
+  "cypyc/codegen/cython_generator.py",
+  "cypyc/parser/macro_expander.py",
+  "cypyc/parser/parser.py",
+  "tests/test_loop_20260927_fix_r2.py"
+ ],
+ "flake8_raw_lines": 492,
+ "flake8_rc": 1
+}

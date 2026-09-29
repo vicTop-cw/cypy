@@ -1,0 +1,391 @@
+{
+ "taken_at_utc": "2026-09-26T05:22:14Z",
+ "git_head": "17d68b4",
+ "files_scanned": 56,
+ "lines_scanned": 29997,
+ "counts": {
+  "TODO": 0,
+  "FIXME": 0,
+  "HACK": 0,
+  "XXX": 0,
+  "type_ignore": 0,
+  "bare_except": 2,
+  "except_swallowed": 20,
+  "broad_except": 46,
+  "mutable_default_arg": 0,
+  "open_without_with": 0,
+  "subprocess_call": 3
+ },
+ "detail": {
+  "TODO": [],
+  "FIXME": [],
+  "HACK": [],
+  "XXX": [],
+  "type_ignore": [],
+  "bare_except": [
+   [
+    "cypy_bridge/compiler.py",
+    3658,
+    "except:"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    3670,
+    "except:"
+   ]
+  ],
+  "except_swallowed": [
+   [
+    "cypyc/cli.py",
+    36,
+    "except (ValueError, OSError, AttributeError):"
+   ],
+   [
+    "cypyc/incremental/file_monitor.py",
+    58,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    110,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    125,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    247,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    272,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    326,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    451,
+    "except Exception:"
+   ],
+   [
+    "cypyc/project/project_compiler.py",
+    826,
+    "except Exception:"
+   ],
+   [
+    "cypyc/transformer/defer_transformer.py",
+    54,
+    "except (AttributeError, TypeError):"
+   ],
+   [
+    "cypyc/transformer/enum_transformer.py",
+    54,
+    "except (AttributeError, TypeError):"
+   ],
+   [
+    "cypyc/transformer/generic_transformer.py",
+    54,
+    "except (AttributeError, TypeError):"
+   ],
+   [
+    "cypyc/transformer/struct_transformer.py",
+    53,
+    "except (AttributeError, TypeError):"
+   ],
+   [
+    "cypyc/transformer/trait_transformer.py",
+    57,
+    "except (AttributeError, TypeError):"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    3583,
+    "except (json.JSONDecodeError, IOError):"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    3658,
+    "except:"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    3670,
+    "except:"
+   ],
+   [
+    "cypy_bridge/pointer.py",
+    142,
+    "except (TypeError, ValueError):"
+   ],
+   [
+    "cypy_bridge/pointer.py",
+    412,
+    "except TypeError:"
+   ],
+   [
+    "cypy_hook/hook.py",
+    926,
+    "except (json.JSONDecodeError, IOError):"
+   ]
+  ],
+  "broad_except": [
+   [
+    "cypyc/cli.py",
+    482,
+    "except Exception as e:"
+   ],
+   [
+    "cypyc/cli.py",
+    539,
+    "except Exception as e:"
+   ],
+   [
+    "cypyc/cli.py",
+    692,
+    "except Exception as e:"
+   ],
+   [
+    "cypyc/codegen/cython_generator.py",
+    2943,
+    "except Exception:"
+   ],
+   [
+    "cypyc/codegen/cython_generator.py",
+    2953,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/file_monitor.py",
+    58,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/file_monitor.py",
+    84,
+    "except Exception as e:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    110,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    125,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    247,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    272,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    326,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    384,
+    "except Exception as e:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    451,
+    "except Exception:"
+   ],
+   [
+    "cypyc/incremental/hot_reload.py",
+    521,
+    "except Exception as e:"
+   ],
+   [
+    "cypyc/parser/macro_expander.py",
+    379,
+    "except Exception as e:"
+   ],
+   [
+    "cypyc/project/project_compiler.py",
+    211,
+    "except Exception as e:"
+   ],
+   [
+    "cypyc/project/project_compiler.py",
+    555,
+    "except Exception as e:"
+   ],
+   [
+    "cypyc/project/project_compiler.py",
+    634,
+    "except Exception as e:"
+   ],
+   [
+    "cypyc/project/project_compiler.py",
+    826,
+    "except Exception:"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    508,
+    "except Exception:"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    2968,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    3736,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    3831,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    3877,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    3958,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    3980,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/defer.py",
+    58,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/defer.py",
+    165,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/memory.py",
+    191,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/pointer.py",
+    102,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/pointer.py",
+    168,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/pointer.py",
+    184,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/pointer.py",
+    296,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/pointer.py",
+    330,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/pointer.py",
+    348,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_bridge/struct.py",
+    86,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_hook/hook.py",
+    279,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_hook/hook.py",
+    314,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_hook/hook.py",
+    404,
+    "except Exception as write_err:"
+   ],
+   [
+    "cypy_hook/hook.py",
+    412,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_hook/hook.py",
+    582,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_hook/hook.py",
+    628,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_hook/hook.py",
+    662,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_hook/hook.py",
+    723,
+    "except Exception as e:"
+   ],
+   [
+    "cypy_hook/hook.py",
+    945,
+    "except Exception:"
+   ]
+  ],
+  "mutable_default_arg": [],
+  "open_without_with": [],
+  "subprocess_call": [
+   [
+    "cypyc/project/project_compiler.py",
+    599,
+    "result = subprocess.run("
+   ],
+   [
+    "cypy_bridge/compiler.py",
+    3795,
+    "result = subprocess.run("
+   ],
+   [
+    "cypy_hook/hook.py",
+    513,
+    "process = subprocess.run("
+   ]
+  ]
+ }
+}

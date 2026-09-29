@@ -1,0 +1,1 @@
+CONCLUSION fill_r13_report tag=a1 landed=1 refusals=0 idempotent=0 refresh=False bytes=14850->15204 self_check={"concl_once": true, "placeholder_gone": true, "refusals_verbatim": true, "own_marker_present": true, "no_ellipsis_in_block": true, "grew": true}

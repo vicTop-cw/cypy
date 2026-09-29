@@ -1,0 +1,38 @@
+{
+ "utc": "2026-09-29T04:13:17+00:00",
+ "specs": 2,
+ "cases_total": 29,
+ "cases_passed": 28,
+ "accuracy_pct": 96.55,
+ "per_spec": [
+  {
+   "op": "cypy.annotation.shape",
+   "n": 18,
+   "passed": 18,
+   "failed": [],
+   "refused": [],
+   "accuracy": 1.0
+  },
+  {
+   "op": "cypy.pattern.positional",
+   "n": 11,
+   "passed": 10,
+   "failed": [
+    {
+     "idx": 8,
+     "side": "expected",
+     "op": "typecheck",
+     "ok": false,
+     "reason": "errors 期望 0，实际 1：['Return type mismatch: expected str, got int at 9:9']",
+     "src_head": "struct E:"
+    }
+   ],
+   "refused": [],
+   "accuracy": 0.9090909090909091
+  }
+ ],
+ "failed": [
+  "cypy.pattern.positional#8: errors 期望 0，实际 1：['Return type mismatch: expected str, got int at 9:9']"
+ ],
+ "refused": []
+}

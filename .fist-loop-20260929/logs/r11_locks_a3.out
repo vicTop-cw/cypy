@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r11_locks.py", line 215, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r11_locks.py", line 158, in main
+    rep["cases"][key] = {"mutations": apply_faces(dst, spec["faces"])}
+                                      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r11_locks.py", line 79, in apply_faces
+    compile(after, str(p), "exec")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\IDEProjects\AI\Cypy\.lockproof_r11_41224\L1\cypyc\parser\parser.py", line 1648
+    )
+    ^
+SyntaxError: positional argument follows keyword argument

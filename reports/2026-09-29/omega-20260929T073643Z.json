@@ -1,0 +1,51 @@
+{
+ "utc": "2026-09-29T07:36:43+00:00",
+ "specs": 5,
+ "cases_total": 100,
+ "cases_passed": 100,
+ "accuracy_pct": 100.0,
+ "per_spec": [
+  {
+   "op": "cypy.annotation.shape",
+   "n": 24,
+   "passed": 24,
+   "failed": [],
+   "refused": [],
+   "accuracy": 1.0
+  },
+  {
+   "op": "cypy.generic.callsite",
+   "n": 20,
+   "passed": 20,
+   "failed": [],
+   "refused": [],
+   "accuracy": 1.0
+  },
+  {
+   "op": "cypy.generic.class",
+   "n": 29,
+   "passed": 29,
+   "failed": [],
+   "refused": [],
+   "accuracy": 1.0
+  },
+  {
+   "op": "cypy.pattern.positional",
+   "n": 19,
+   "passed": 19,
+   "failed": [],
+   "refused": [],
+   "accuracy": 1.0
+  },
+  {
+   "op": "cypy.type.slice",
+   "n": 8,
+   "passed": 8,
+   "failed": [],
+   "refused": [],
+   "accuracy": 1.0
+  }
+ ],
+ "failed": [],
+ "refused": []
+}

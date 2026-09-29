@@ -1,0 +1,19 @@
+#!bin cypy
+# ============================================================
+# validation.cypy — Type coercion + constraint checking
+# ============================================================
+
+from fields import FieldInfo
+from errors import ValidationError
+from registry import lookup
+
+# Known scalar type names
+let SCALAR_TYPES: list<str> = ["str", "int", "float", "bool", "any"]
+
+
+def _is_scalar(t: str) -> bool:
+    return t in SCALAR_TYPES
+
+
+def _fail(name: str, msg: str, typ: str) -> None:
+    raise ValidationError([{"loc": name, "msg": msg, "type": typ}])

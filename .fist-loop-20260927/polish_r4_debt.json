@@ -1,0 +1,262 @@
+{
+ "started": "2026-09-28T02:38:08+00:00",
+ "kit": "loop_kit.py",
+ "kit_apis": [
+  "KV",
+  "PYTEST_SUMMARY",
+  "annotations",
+  "collect_nodeids",
+  "copy_tree",
+  "parse_kv_line",
+  "parse_pytest_summary",
+  "record"
+ ],
+ "equivalence": [
+  {
+   "artifact": "verify_r4_baselines.json",
+   "kind": "pytest",
+   "line": "1956 passed in 721.09s (0:12:01)",
+   "kit": {
+    "passed": 1956,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "recorded": {
+    "passed": 1956,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+   }
+  },
+  {
+   "artifact": "verify_r4_baselines.json",
+   "kind": "suite",
+   "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+   "kit": {
+    "Total": 47,
+    "Passed": 47,
+    "Failed": 0,
+    "Skipped": 0
+   },
+   "recorded": {
+    "Total": 47,
+    "Passed": 47,
+    "Failed": 0,
+    "Skipped": 0
+   }
+  },
+  {
+   "artifact": "fix_r4_baselines.json",
+   "kind": "suite",
+   "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+   "kit": {
+    "Total": 47,
+    "Passed": 47,
+    "Failed": 0,
+    "Skipped": 0
+   },
+   "recorded": {
+    "Total": 47,
+    "Passed": 47,
+    "Failed": 0,
+    "Skipped": 0
+   }
+  },
+  {
+   "artifact": "advance_r3_baselines.json",
+   "kind": "suite",
+   "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+   "kit": {
+    "Total": 47,
+    "Passed": 47,
+    "Failed": 0,
+    "Skipped": 0
+   },
+   "recorded": {
+    "Total": 47,
+    "Passed": 47,
+    "Failed": 0,
+    "Skipped": 0
+   }
+  }
+ ],
+ "shape_divergence": [
+  "advance_r3_baselines.json:suite.Total 旧件记成字符串 \"47\"",
+  "advance_r3_baselines.json:suite.Passed 旧件记成字符串 \"47\"",
+  "advance_r3_baselines.json:suite.Failed 旧件记成字符串 \"0\"",
+  "advance_r3_baselines.json:suite.Skipped 旧件记成字符串 \"0\""
+ ],
+ "shape_divergence_len": 4,
+ "equivalence_artifacts": [
+  "verify_r4_baselines.json",
+  "fix_r4_baselines.json",
+  "advance_r3_baselines.json"
+ ],
+ "copy_tree_face": {
+  "files": 4,
+  "matches_reference": true
+ },
+ "canary": {
+  "junk_zero": [
+   0,
+   0,
+   0
+  ],
+  "good_1976": 1976
+ },
+ "debt_remaining_inline": {
+  "def check(": [
+   "advance_r3_self_audit.py",
+   "fix_r4_baselines.py",
+   "fix_r4_claim.py",
+   "fix_r4_impact.py",
+   "fix_r4_locks.py",
+   "fix_r4_rc.py",
+   "fix_r4_self_audit.py",
+   "polish_r4_appendixC.py",
+   "polish_r4_baselines.py",
+   "polish_r4_debt.py",
+   "polish_r4_docs.py",
+   "polish_r4_ledger.py",
+   "polish_r4_locks.py",
+   "polish_r4_self_audit.py",
+   "verify_r4_appendixC.py",
+   "verify_r4_baselines.py",
+   "verify_r4_callsite.py",
+   "verify_r4_compile.py",
+   "verify_r4_irreversible.py",
+   "verify_r4_ledger3way.py",
+   "verify_r4_lockproof.py",
+   "verify_r4_matrix.py",
+   "verify_r4_self_audit.py"
+  ],
+  "passed|failed|errors?": [
+   "polish_r4_debt.py",
+   "polish_r4_locks.py",
+   "verify_r4_lib.py"
+  ],
+  "Total:": [
+   "advance_r3_baselines.py",
+   "fix_r4_baselines.py",
+   "polish_r4_baselines.py",
+   "polish_r4_debt.py",
+   "verify_r4_baselines.py"
+  ],
+  "rglob": [
+   "advance_r3_baselines.py",
+   "advance_r3_corpus_scan.py",
+   "advance_r3_evidence.py",
+   "advance_r3_irreversible.py",
+   "fix_r4_baselines.py",
+   "fix_r4_impact.py",
+   "polish_r4_appendixC.py",
+   "polish_r4_baselines.py",
+   "polish_r4_debt.py",
+   "polish_r4_docs.py",
+   "polish_r4_structural.py",
+   "verify_r4_baselines.py",
+   "verify_r4_compile.py",
+   "verify_r4_irreversible.py",
+   "verify_r4_lockproof.py"
+  ]
+ },
+ "debt_remaining_counts": {
+  "def check(": 23,
+  "passed|failed|errors?": 3,
+  "Total:": 5,
+  "rglob": 15
+ },
+ "kit_users_this_ring": [
+  "polish_r4_debt.py",
+  "polish_r4_structural.py"
+ ],
+ "scope_note": "本轮只把**新写的件**接进共用骨架；旧环 48/41 个件按四类骨架逐件点名留债，不重跑（重跑＝改动上一环的渲染输入证据）。换骨架属于下一环的半径。",
+ "self_checks": [
+  {
+   "label": "新解析器对旧件记录的每一行都逐字段相等（行为不变的正面证据）",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "旧件之间的**形状差异**必须被点名（R3 把套件计数存成字符串，不许静默归一）",
+   "got": true,
+   "want": true,
+   "why": "[\"advance_r3_baselines.json:suite.Total \\u65e7\\u4ef6\\u8bb0\\u6210\\u5b57\\u7b26\\u4e32 \\\"47\\\"\", \"advance_r3_baselines.json:suite.Passed \\u65e7\\u4ef6\\u8bb0\\u6210\\u5b57\\u7b26\\u4e32 \\\"47\\\"\", \"advance_r3_baselines.json:suite.Failed \\u65e7\\u4ef6\\u8bb0\\u6210\\u5b57\\u7b26\\u4e32 \\\"0\\\"\", \"advance_r3_baselines.json:suite.Skipped \\u65e7\\u4ef6\\u8bb0\\u6210\\u5b57\\u7b26\\u4e32 \\\"0\\\"\"]",
+   "ok": true
+  },
+  {
+   "label": "等价核对至少 3 条比对且覆盖两份以上归档件",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "4 条 / 3 份件",
+   "ok": true
+  },
+  {
+   "label": "canary：畸形/无摘要的文本必须解析为零而不是猜数",
+   "got": [
+    0,
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0,
+    0
+   ],
+   "why": "",
+   "ok": true
+  },
+  {
+   "label": "canary 不误抓：正常摘要行必须解析出该数",
+   "got": 1976,
+   "want": 1976,
+   "why": "1976 passed in 423.40s",
+   "ok": true
+  },
+  {
+   "label": "快照复制器与参考实现复制到的文件集合逐字相同",
+   "got": [
+    4,
+    true
+   ],
+   "want": [
+    4,
+    true
+   ],
+   "why": "kit=4 ref=4",
+   "ok": true
+  },
+  {
+   "label": "复制器真的复制到了东西（空集合会让上一条恒真）",
+   "got": true,
+   "want": true,
+   "why": "4 个文件",
+   "ok": true
+  },
+  {
+   "label": "本环新件确实在用共用骨架（不许只建模块不接线）",
+   "got": true,
+   "want": true,
+   "why": "[\"polish_r4_debt.py\", \"polish_r4_structural.py\"]",
+   "ok": true
+  },
+  {
+   "label": "共用件确在盘上并进了改动半径",
+   "got": true,
+   "want": true,
+   "why": "?? .fist-loop-20260927/loop_kit.py",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T02:38:08+00:00"
+}

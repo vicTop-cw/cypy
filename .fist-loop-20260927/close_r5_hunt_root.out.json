@@ -1,0 +1,51 @@
+{
+ "refused": [],
+ "root_final": "已归档",
+ "root_status_before": "待验收",
+ "root_steps": [
+  "get=待验收",
+  "omega_spec_create/spec_review"
+ ],
+ "leaves_done": 16,
+ "call_log_rows": 400,
+ "call_log_tally": {
+  "archive": 2,
+  "call_log": 6,
+  "claim": 32,
+  "execute": 31,
+  "get": 22,
+  "laya_decide": 1,
+  "omega_result_verify": 50,
+  "omega_spec_create": 49,
+  "omega_spec_review": 49,
+  "omega_status": 16,
+  "output_validate": 33,
+  "publish": 1,
+  "report_bug": 26,
+  "submit": 31,
+  "task_plan_deep": 1,
+  "verify": 50
+ },
+ "root_output_validate": [
+  {
+   "path": "memory/reviews/20260928.15.10.00.md",
+   "contains": "[selfdrive-hunt]",
+   "min_chars": 1500
+  },
+  {
+   "path": ".fist-loop-20260927/hunt_r5_needles.json",
+   "contains": "per_law_real",
+   "min_chars": 400
+  },
+  {
+   "path": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "contains": "hard_violations",
+   "min_chars": 400
+  },
+  {
+   "path": ".fist-loop-20260927/hunt_r5_calllog_tally.json",
+   "contains": "ring_tag_calls",
+   "min_chars": 2000
+  }
+ ]
+}

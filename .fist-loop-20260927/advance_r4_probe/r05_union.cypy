@@ -1,0 +1,9 @@
+def show(v: int | str) -> str:
+    if isinstance(v, int):
+        return "int"
+    return "str"
+
+def main() -> int:
+    print(show(1))
+    print(show("a"))
+    return 0

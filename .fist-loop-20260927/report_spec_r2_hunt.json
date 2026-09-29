@@ -1,0 +1,96 @@
+{
+ "name": "20260927.16.20.01",
+ "title": "R2-寻虫（hunt）环节报告",
+ "stage": "第 2 轮第 1 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R2",
+ "root_task": "T0r55",
+ "assignee": "cypy-hunter",
+ "marker": "[selfdrive-hunt]",
+ "footer": "filed=BUG-46,BUG-47,BUG-48 carry=build-cross-module-judge,reproducible-build-switch,dead-code×2 judge-defects=5",
+ "fragment": ".fist-loop-20260927/r2_hunt_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/hunt_r2_scan.json",
+  ".fist-loop-20260927/hunt_r2_declared.json",
+  ".fist-loop-20260927/hunt_r2_controls.json",
+  ".fist-loop-20260927/hunt_r2_fuzz.json",
+  ".fist-loop-20260927/hunt_r2_file_bugs.json",
+  ".fist-loop-20260927/hunt_r2_baselines.json",
+  ".fist-loop-20260927/hunt_r2_file_bug49.json"
+ ],
+ "gates": [
+  {
+   "label": "①",
+   "claim": "6 个 CLI 子命令的 help 全部可达（每个都有 rc 与 usage 留档）",
+   "artifact": ".fist-loop-20260927/hunt_r2_scan.json",
+   "path": "cli_face.rows",
+   "min": 6
+  },
+  {
+   "label": "②",
+   "claim": "docs/USAGE.md:121-124 声明的 4 个 hook 子命令逐个真调用",
+   "artifact": ".fist-loop-20260927/hunt_r2_declared.json",
+   "path": "hook.declared_subcommands",
+   "min": 4
+  },
+  {
+   "label": "③",
+   "claim": "fuzz 预算内变异跑满，且配了必被抓的合成违例与必不误抓的正例",
+   "artifact": ".fist-loop-20260927/hunt_r2_fuzz.json",
+   "path": "rows",
+   "min": 24
+  },
+  {
+   "label": "④",
+   "claim": "剥掉文档声明的可变量后，同源码两次独立编译逐字节一致",
+   "artifact": ".fist-loop-20260927/hunt_r2_declared.json",
+   "path": "determinism.unstable_after_strip",
+   "equals": []
+  },
+  {
+   "label": "⑤",
+   "claim": "三条确诊从 bug_list 回读可见（BUG-46/47/48 状态 OPEN）",
+   "artifact": ".fist-loop-20260927/hunt_r2_file_bugs.json",
+   "path": "bug_list_tail",
+   "min": 8
+  },
+  {
+   "label": "⑥",
+   "claim": "取证脚本自身零 refuse（声明回核 / 对照 / 索引面覆盖都由脚本自证）",
+   "artifact": ".fist-loop-20260927/hunt_r2_scan.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑦",
+   "claim": "零引用扫描的索引面覆盖全仓（不是只扫了三个目录）",
+   "artifact": ".fist-loop-20260927/hunt_r2_scan.json",
+   "path": "zero_call_symbols.indexed_files",
+   "min": 1000
+  },
+  {
+   "label": "⑧",
+   "claim": "三套基线不回落（pytest≥1868、自研 47/47、e2e 25/25）且基线件自身零 refuse",
+   "artifact": ".fist-loop-20260927/hunt_r2_baselines.json",
+   "path": "pytest.passed",
+   "min": 1868
+  },
+  {
+   "label": "⑨",
+   "claim": "fuzz 那一批自己零 refuse（含两条对照都过），静默型计数才可信",
+   "artifact": ".fist-loop-20260927/hunt_r2_fuzz.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑩",
+   "claim": "BUG-49 报上去后能从 bug_list 回读到同号",
+   "artifact": ".fist-loop-20260927/hunt_r2_file_bug49.json",
+   "path": "filed.readback_ids",
+   "min": 1
+  }
+ ],
+ "closure": {
+  "stage": "close_r2_hunt.out.json",
+  "root": "close_r2_hunt_root.out.json"
+ }
+}

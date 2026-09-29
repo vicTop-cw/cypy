@@ -1,0 +1,140 @@
+[
+  {
+    "tag": "BUG-11:claim",
+    "result": {
+      "id": "T0r16",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已领取",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/project/project_compiler.py:539 项目模式 type_check_module 只上送 TypeChecker 诊断，ScopeAnalyzer 已报出的重名/类型级冲突（SYNTAX/33 C-3.1）被静默丢弃——同一份源码在单文件模式 cypy_hook/hook.py:250 会报错，两个入口给出相反裁决",
+      "deliverable": "",
+      "created_at": "2026-09-26T07:13:26Z",
+      "updated_at": "2026-09-26T07:23:57Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-11:execute",
+    "result": {
+      "id": "T0r16",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "执行中",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/project/project_compiler.py:539 项目模式 type_check_module 只上送 TypeChecker 诊断，ScopeAnalyzer 已报出的重名/类型级冲突（SYNTAX/33 C-3.1）被静默丢弃——同一份源码在单文件模式 cypy_hook/hook.py:250 会报错，两个入口给出相反裁决",
+      "deliverable": "改动文件：cypyc/project/project_compiler.py（type_check_module 内 :541 `errors.extend(scope_analyzer.errors)` + :555 `errors = list(dict.fromkeys(errors))` 按序去重）\n新增回归：tests/test_polish_20260926.py::test_bug11_project_type_check_reports_scope_errors + ::test_bug11_type_level_name_collision_is_reported（各 1 条，共 2 条）\n修复口径：不新增判定规则、不新增诊断文案、不改 TypeChecker —— 只把 ScopeAnalyzer 已经算出来却被丢掉的诊断上达到调用面（cypyc/cli.py:737 的 --check-only、project_compiler.py:768 的 build()），并按序去重两条通道逐字相同的诊断（如 Undefined name）。与单文件管线 cypy_hook/hook.py:250-257 的既有口径对齐，消除『同一份源码两个入口相反裁决』。\n取证探针：python .fist-polish-20260926/probe_scope_drop.py → 三条 DROPPED（dup_func / dup_subtype_class / dup_type_constraint 的 type_check_module 返回 ok=True errors=[]），对照组 uses_undefined 一条不丢（TypeChecker 自己会报同一句）。\nRED：改前 `pytest tests/test_polish_20260926.py -q -k bug11` → 2 failed, 20 deselected（证据 .fist-polish-20260926/pytest_third_sweep_red.log；两条用例各自带前提自证断言，先确认 ScopeAnalyzer 真的报出了该名字，再判调用面）\n开关对照：把新增两行退回改前形态 → 同 2 failed 且失败用例名逐条相同（.fist-polish-20260926/pytest_switchoff_bug11.log），恢复后文件 md5 167b194f99634b280cc3096237bcddc7 与改前记录字节一致\nGREEN：改后 `pytest tests/test_polish_20260926.py tests/test_project_compiler.py tests/test_cli.py tests/test_demos.py -q` → 414 passed, 0 failed\n调用面复核（不只测库函数）：`python .fist-polish-20260926/probe_cli_check_e2e.py` 真起 `python -m cypyc build <临时项目> --check-only -o <临时输出>` → exit 1，stdout 打印 `Name 'f' is already declared in this scope (line 5, col 5)`；源与输出都在临时目录，仓库 `output/`、`dist/` 未写（原始输出 `.fist-polish-20260926/probe_cli_check_e2e.out`）\n基线不回落（本单收尾时的终态实测）：`pytest tests/ -q` → 1 failed, 1813 passed, collected 1814（`.fist-polish-20260926/pytest_final_sweep4.log`）——唯一红条是 tests/test_golden_anchor_probes.py::TestGoldenPairing::test_every_example_has_golden，缺 `examples/subtype_units.out`：属上一轮在途产物与「examples/ 不动」的冲突，本单不顺手注册基准。自研体系 `python scripts/run_tests.py` → Total 47 / Passed 47 / Failed 0（`.fist-polish-20260926/test_suite_after_sweep3.log`）",
+      "created_at": "2026-09-26T07:13:26Z",
+      "updated_at": "2026-09-26T07:23:57Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-11:submit",
+    "result": {
+      "id": "T0r16",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "待验收",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/project/project_compiler.py:539 项目模式 type_check_module 只上送 TypeChecker 诊断，ScopeAnalyzer 已报出的重名/类型级冲突（SYNTAX/33 C-3.1）被静默丢弃——同一份源码在单文件模式 cypy_hook/hook.py:250 会报错，两个入口给出相反裁决",
+      "deliverable": "改动文件：cypyc/project/project_compiler.py（type_check_module 内 :541 `errors.extend(scope_analyzer.errors)` + :555 `errors = list(dict.fromkeys(errors))` 按序去重）\n新增回归：tests/test_polish_20260926.py::test_bug11_project_type_check_reports_scope_errors + ::test_bug11_type_level_name_collision_is_reported（各 1 条，共 2 条）\n修复口径：不新增判定规则、不新增诊断文案、不改 TypeChecker —— 只把 ScopeAnalyzer 已经算出来却被丢掉的诊断上达到调用面（cypyc/cli.py:737 的 --check-only、project_compiler.py:768 的 build()），并按序去重两条通道逐字相同的诊断（如 Undefined name）。与单文件管线 cypy_hook/hook.py:250-257 的既有口径对齐，消除『同一份源码两个入口相反裁决』。\n取证探针：python .fist-polish-20260926/probe_scope_drop.py → 三条 DROPPED（dup_func / dup_subtype_class / dup_type_constraint 的 type_check_module 返回 ok=True errors=[]），对照组 uses_undefined 一条不丢（TypeChecker 自己会报同一句）。\nRED：改前 `pytest tests/test_polish_20260926.py -q -k bug11` → 2 failed, 20 deselected（证据 .fist-polish-20260926/pytest_third_sweep_red.log；两条用例各自带前提自证断言，先确认 ScopeAnalyzer 真的报出了该名字，再判调用面）\n开关对照：把新增两行退回改前形态 → 同 2 failed 且失败用例名逐条相同（.fist-polish-20260926/pytest_switchoff_bug11.log），恢复后文件 md5 167b194f99634b280cc3096237bcddc7 与改前记录字节一致\nGREEN：改后 `pytest tests/test_polish_20260926.py tests/test_project_compiler.py tests/test_cli.py tests/test_demos.py -q` → 414 passed, 0 failed\n调用面复核（不只测库函数）：`python .fist-polish-20260926/probe_cli_check_e2e.py` 真起 `python -m cypyc build <临时项目> --check-only -o <临时输出>` → exit 1，stdout 打印 `Name 'f' is already declared in this scope (line 5, col 5)`；源与输出都在临时目录，仓库 `output/`、`dist/` 未写（原始输出 `.fist-polish-20260926/probe_cli_check_e2e.out`）\n基线不回落（本单收尾时的终态实测）：`pytest tests/ -q` → 1 failed, 1813 passed, collected 1814（`.fist-polish-20260926/pytest_final_sweep4.log`）——唯一红条是 tests/test_golden_anchor_probes.py::TestGoldenPairing::test_every_example_has_golden，缺 `examples/subtype_units.out`：属上一轮在途产物与「examples/ 不动」的冲突，本单不顺手注册基准。自研体系 `python scripts/run_tests.py` → Total 47 / Passed 47 / Failed 0（`.fist-polish-20260926/test_suite_after_sweep3.log`）",
+      "created_at": "2026-09-26T07:13:26Z",
+      "updated_at": "2026-09-26T07:23:57Z",
+      "completed_by": null,
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-11:verify",
+    "result": {
+      "id": "T0r16",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/project/project_compiler.py:539 项目模式 type_check_module 只上送 TypeChecker 诊断，ScopeAnalyzer 已报出的重名/类型级冲突（SYNTAX/33 C-3.1）被静默丢弃——同一份源码在单文件模式 cypy_hook/hook.py:250 会报错，两个入口给出相反裁决",
+      "deliverable": "改动文件：cypyc/project/project_compiler.py（type_check_module 内 :541 `errors.extend(scope_analyzer.errors)` + :555 `errors = list(dict.fromkeys(errors))` 按序去重）\n新增回归：tests/test_polish_20260926.py::test_bug11_project_type_check_reports_scope_errors + ::test_bug11_type_level_name_collision_is_reported（各 1 条，共 2 条）\n修复口径：不新增判定规则、不新增诊断文案、不改 TypeChecker —— 只把 ScopeAnalyzer 已经算出来却被丢掉的诊断上达到调用面（cypyc/cli.py:737 的 --check-only、project_compiler.py:768 的 build()），并按序去重两条通道逐字相同的诊断（如 Undefined name）。与单文件管线 cypy_hook/hook.py:250-257 的既有口径对齐，消除『同一份源码两个入口相反裁决』。\n取证探针：python .fist-polish-20260926/probe_scope_drop.py → 三条 DROPPED（dup_func / dup_subtype_class / dup_type_constraint 的 type_check_module 返回 ok=True errors=[]），对照组 uses_undefined 一条不丢（TypeChecker 自己会报同一句）。\nRED：改前 `pytest tests/test_polish_20260926.py -q -k bug11` → 2 failed, 20 deselected（证据 .fist-polish-20260926/pytest_third_sweep_red.log；两条用例各自带前提自证断言，先确认 ScopeAnalyzer 真的报出了该名字，再判调用面）\n开关对照：把新增两行退回改前形态 → 同 2 failed 且失败用例名逐条相同（.fist-polish-20260926/pytest_switchoff_bug11.log），恢复后文件 md5 167b194f99634b280cc3096237bcddc7 与改前记录字节一致\nGREEN：改后 `pytest tests/test_polish_20260926.py tests/test_project_compiler.py tests/test_cli.py tests/test_demos.py -q` → 414 passed, 0 failed\n调用面复核（不只测库函数）：`python .fist-polish-20260926/probe_cli_check_e2e.py` 真起 `python -m cypyc build <临时项目> --check-only -o <临时输出>` → exit 1，stdout 打印 `Name 'f' is already declared in this scope (line 5, col 5)`；源与输出都在临时目录，仓库 `output/`、`dist/` 未写（原始输出 `.fist-polish-20260926/probe_cli_check_e2e.out`）\n基线不回落（本单收尾时的终态实测）：`pytest tests/ -q` → 1 failed, 1813 passed, collected 1814（`.fist-polish-20260926/pytest_final_sweep4.log`）——唯一红条是 tests/test_golden_anchor_probes.py::TestGoldenPairing::test_every_example_has_golden，缺 `examples/subtype_units.out`：属上一轮在途产物与「examples/ 不动」的冲突，本单不顺手注册基准。自研体系 `python scripts/run_tests.py` → Total 47 / Passed 47 / Failed 0（`.fist-polish-20260926/test_suite_after_sweep3.log`）",
+      "created_at": "2026-09-26T07:13:26Z",
+      "updated_at": "2026-09-26T07:23:57Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "BUG-11:final",
+    "result": {
+      "id": "T0r16",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/project/project_compiler.py:539 项目模式 type_check_module 只上送 TypeChecker 诊断，ScopeAnalyzer 已报出的重名/类型级冲突（SYNTAX/33 C-3.1）被静默丢弃——同一份源码在单文件模式 cypy_hook/hook.py:250 会报错，两个入口给出相反裁决",
+      "deliverable": "改动文件：cypyc/project/project_compiler.py（type_check_module 内 :541 `errors.extend(scope_analyzer.errors)` + :555 `errors = list(dict.fromkeys(errors))` 按序去重）\n新增回归：tests/test_polish_20260926.py::test_bug11_project_type_check_reports_scope_errors + ::test_bug11_type_level_name_collision_is_reported（各 1 条，共 2 条）\n修复口径：不新增判定规则、不新增诊断文案、不改 TypeChecker —— 只把 ScopeAnalyzer 已经算出来却被丢掉的诊断上达到调用面（cypyc/cli.py:737 的 --check-only、project_compiler.py:768 的 build()），并按序去重两条通道逐字相同的诊断（如 Undefined name）。与单文件管线 cypy_hook/hook.py:250-257 的既有口径对齐，消除『同一份源码两个入口相反裁决』。\n取证探针：python .fist-polish-20260926/probe_scope_drop.py → 三条 DROPPED（dup_func / dup_subtype_class / dup_type_constraint 的 type_check_module 返回 ok=True errors=[]），对照组 uses_undefined 一条不丢（TypeChecker 自己会报同一句）。\nRED：改前 `pytest tests/test_polish_20260926.py -q -k bug11` → 2 failed, 20 deselected（证据 .fist-polish-20260926/pytest_third_sweep_red.log；两条用例各自带前提自证断言，先确认 ScopeAnalyzer 真的报出了该名字，再判调用面）\n开关对照：把新增两行退回改前形态 → 同 2 failed 且失败用例名逐条相同（.fist-polish-20260926/pytest_switchoff_bug11.log），恢复后文件 md5 167b194f99634b280cc3096237bcddc7 与改前记录字节一致\nGREEN：改后 `pytest tests/test_polish_20260926.py tests/test_project_compiler.py tests/test_cli.py tests/test_demos.py -q` → 414 passed, 0 failed\n调用面复核（不只测库函数）：`python .fist-polish-20260926/probe_cli_check_e2e.py` 真起 `python -m cypyc build <临时项目> --check-only -o <临时输出>` → exit 1，stdout 打印 `Name 'f' is already declared in this scope (line 5, col 5)`；源与输出都在临时目录，仓库 `output/`、`dist/` 未写（原始输出 `.fist-polish-20260926/probe_cli_check_e2e.out`）\n基线不回落（本单收尾时的终态实测）：`pytest tests/ -q` → 1 failed, 1813 passed, collected 1814（`.fist-polish-20260926/pytest_final_sweep4.log`）——唯一红条是 tests/test_golden_anchor_probes.py::TestGoldenPairing::test_every_example_has_golden，缺 `examples/subtype_units.out`：属上一轮在途产物与「examples/ 不动」的冲突，本单不顺手注册基准。自研体系 `python scripts/run_tests.py` → Total 47 / Passed 47 / Failed 0（`.fist-polish-20260926/test_suite_after_sweep3.log`）",
+      "created_at": "2026-09-26T07:13:26Z",
+      "updated_at": "2026-09-26T07:23:57Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "root:T0",
+    "result": {
+      "id": "T0",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "cypy-polish-20260926",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已归档",
+      "assignee": "polisher",
+      "description": "[mode:polish][issue_up:on][omega:off][laya:off]\nCypy 打磨周 —— 编译器与桥接库缺陷清偿（隔离轮，ns=cypy-polish-20260926）。\n范围：cypyc/ + cypy_bridge/ + cypy_hook/ 三包产品代码；tests/ 与 test_suite/ 只补回归不改语义；examples/、dist/、output/ 不动。\n三路发现：①标记盘点（基线实测 56 文件 / 29997 行：TODO=0 FIXME=0 HACK=0 XXX=0 type:ignore=0、裸 except=2、吞异常 except…pass=20、宽 except=46、subprocess 调用=3）；②pytest 实跑暴露面研判；③按 codegen→analyzer→parser/incremental→bridge/hook 通读代码审查。\n一口入账：确诊缺陷一律 report_bug(publish_task=true) 写 memory/bugs.md，误报不入账，语义待定只挂起请示。\n验收门禁：①`python -m pytest tests/ -q` 全绿且用例数 ≥ 基线（收集口径 1745，只增不减）；②每单修复配 ≥1 条能锁死该缺陷的回归测试；③标记盘点较基线收敛且新增为零；④确诊缺陷 100% 可在 bugs.md 查到；⑤打磨报告落 memory/reviews/yyyyMMdd.HH.mm.ss.md。\n红线：不改语言语义（以 PROJECT-SPEC/ 与 SYNTAX/ 冻结口径为界）、零 git add/commit/push、不触碰现网 cron-cypy 的任务库与命名空间、发现通道不得臆造规则（issue_scan 仅 .mbt 规则域，对 Python 恒空）。",
+      "deliverable": "",
+      "created_at": "2026-09-26T05:22:37Z",
+      "updated_at": "2026-09-26T05:48:29Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  }
+]

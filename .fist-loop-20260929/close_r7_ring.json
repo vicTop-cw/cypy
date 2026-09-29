@@ -1,0 +1,235 @@
+{
+ "started_utc": "2026-09-29T03:43:05+00:00",
+ "ns": "cypy-loop-20260929",
+ "refusals": [
+  {
+   "node": "(建树回读)",
+   "tool": "list",
+   "reply_verbatim": "回读叶数 0 ≠ 交付条数 4（root=T0r113, prefix=T0r113.）⇒ 不逐叶走链"
+  },
+  {
+   "node": "(第 0 条)",
+   "tool": "tree",
+   "reply_verbatim": "叶数 0 ≠ 交付条数 4 ⇒ 不做部分对应，本条整条不打卡"
+  },
+  {
+   "node": "(第 1 条)",
+   "tool": "tree",
+   "reply_verbatim": "叶数 0 ≠ 交付条数 4 ⇒ 不做部分对应，本条整条不打卡"
+  },
+  {
+   "node": "(第 2 条)",
+   "tool": "tree",
+   "reply_verbatim": "叶数 0 ≠ 交付条数 4 ⇒ 不做部分对应，本条整条不打卡"
+  },
+  {
+   "node": "(第 3 条)",
+   "tool": "tree",
+   "reply_verbatim": "叶数 0 ≠ 交付条数 4 ⇒ 不做部分对应，本条整条不打卡"
+  }
+ ],
+ "nodes": {},
+ "ticks": [
+  {
+   "mode": "advance",
+   "reply": "{\"next_mode\": \"advance\", \"next_step_idx\": 1, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 0, \"next_mode\": \"advance\", \"to_idx\": 1, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 1, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:43:06Z\", \"updated_at\": \"2026-09-29T03:43:06Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 33}}"
+  },
+  {
+   "mode": "bugfind",
+   "reply": "{\"next_mode\": \"bugfind\", \"next_step_idx\": 2, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 1, \"next_mode\": \"bugfind\", \"to_idx\": 2, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 2, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:43:06Z\", \"updated_at\": \"2026-09-29T03:43:06Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 33}}"
+  },
+  {
+   "mode": "fix_and_merge",
+   "reply": "{\"next_mode\": \"fix_and_merge\", \"next_step_idx\": 3, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 2, \"next_mode\": \"fix_and_merge\", \"to_idx\": 3, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 3, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:43:06Z\", \"updated_at\": \"2026-09-29T03:43:06Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 33}}"
+  },
+  {
+   "mode": "verify",
+   "reply": "{\"next_mode\": \"verify\", \"next_step_idx\": 4, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 3, \"next_mode\": \"verify\", \"to_idx\": 4, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 4, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:43:06Z\", \"updated_at\": \"2026-09-29T03:43:06Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 33}}"
+  },
+  {
+   "mode": "polish",
+   "reply": "{\"next_mode\": \"polish\", \"next_step_idx\": 5, \"next_round\": 0, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 4, \"next_mode\": \"polish\", \"to_idx\": 5, \"round\": 0, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 5, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:43:06Z\", \"updated_at\": \"2026-09-29T03:43:06Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 33}}"
+  },
+  {
+   "mode": "advance",
+   "reply": "{\"next_mode\": \"advance\", \"next_step_idx\": 0, \"next_round\": 1, \"should_stop\": false, \"stop_reason\": \"\", \"history\": {\"loop_id\": \"cypy-selfdrive-r7\", \"action\": \"tick\", \"from_idx\": 5, \"next_mode\": \"advance\", \"to_idx\": 0, \"round\": 1, \"should_stop\": false, \"stop_reason\": \"\"}, \"loop_after\": {\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 1, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:43:06Z\", \"updated_at\": \"2026-09-29T03:43:06Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 33}}"
+  }
+ ],
+ "bugs": [
+  {
+   "reply": "{\"bug_id\": \"BUG-109\", \"id\": \"BUG-109\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  }
+ ],
+ "tally": {
+  "by_tool": {
+   "bug_list": {
+    "ok": 1,
+    "refused": 0
+   },
+   "claim": {
+    "ok": 6,
+    "refused": 0
+   },
+   "execute": {
+    "ok": 6,
+    "refused": 12
+   },
+   "get": {
+    "ok": 37,
+    "refused": 0
+   },
+   "list": {
+    "ok": 3,
+    "refused": 0
+   },
+   "loop_create": {
+    "ok": 1,
+    "refused": 1
+   },
+   "loop_tick": {
+    "ok": 6,
+    "refused": 0
+   },
+   "omega_result_verify": {
+    "ok": 6,
+    "refused": 12
+   },
+   "omega_spec_create": {
+    "ok": 6,
+    "refused": 12
+   },
+   "omega_spec_review": {
+    "ok": 6,
+    "refused": 0
+   },
+   "project_health": {
+    "ok": 1,
+    "refused": 0
+   },
+   "publish_parallel": {
+    "ok": 2,
+    "refused": 0
+   },
+   "reject": {
+    "ok": 0,
+    "refused": 15
+   },
+   "report_bug": {
+    "ok": 12,
+    "refused": 0
+   },
+   "run_check": {
+    "ok": 18,
+    "refused": 0
+   },
+   "submit": {
+    "ok": 6,
+    "refused": 12
+   },
+   "task_plan_deep": {
+    "ok": 1,
+    "refused": 0
+   },
+   "verify": {
+    "ok": 6,
+    "refused": 12
+   }
+  },
+  "rpc_sent_by_tool": {
+   "publish_parallel": 1,
+   "laya_decide": 1,
+   "task_plan_deep": 1,
+   "list": 1,
+   "loop_create": 1,
+   "bug_list": 1,
+   "loop_tick": 6,
+   "report_bug": 1
+  },
+  "rpc_sent_total": 13,
+  "sent_but_not_logged": [
+   "laya_decide"
+  ],
+  "logged_but_not_sent": [
+   "claim",
+   "execute",
+   "get",
+   "omega_result_verify",
+   "omega_spec_create",
+   "omega_spec_review",
+   "project_health",
+   "reject",
+   "run_check",
+   "submit",
+   "verify"
+  ],
+  "rows": 200,
+  "refused": 76,
+  "root_status": "拆分中",
+  "queried_at_utc": "2026-09-29T03:43:07+00:00"
+ },
+ "baseline_measured": {
+  "collected": 2158,
+  "passed": 2158,
+  "log": ".fist-loop-20260929\\logs\\r7_pytest_r1.log",
+  "conclusion_line_verbatim": "====================== 2158 passed in 413.15s (0:06:53) =======================",
+  "ledger_open_ids": [
+   "BUG-34",
+   "BUG-40",
+   "BUG-43",
+   "BUG-49",
+   "BUG-50",
+   "BUG-52",
+   "BUG-53",
+   "BUG-54",
+   "BUG-65",
+   "BUG-68",
+   "BUG-69",
+   "BUG-70",
+   "BUG-71",
+   "BUG-72",
+   "BUG-73",
+   "BUG-77",
+   "BUG-92",
+   "BUG-94",
+   "BUG-95",
+   "BUG-96",
+   "BUG-97",
+   "BUG-98",
+   "BUG-99",
+   "BUG-100",
+   "BUG-101",
+   "BUG-102",
+   "BUG-103",
+   "BUG-104",
+   "BUG-105",
+   "BUG-106",
+   "BUG-96",
+   "BUG-107",
+   "BUG-108"
+  ],
+  "ledger_closed_ids": 76
+ },
+ "root": {
+  "task_id": "T0r113",
+  "namespace": "cypy-loop-20260929",
+  "message": "已并行追加独立根任务"
+ },
+ "laya": "{\"available\": false, \"sidecar\": \"skipped\", \"decision\": {\"source\": \"fallback\", \"complex\": true, \"feature_route\": \"排程路由\", \"split_n\": 5, \"splits_per_family\": [{\"family\": \"拆解调度\", \"score\": 0}, {\"family\": \"深度验证\", \"score\": 0}, {\"family\": \"预算成本\", \"score\": 0}, {\"family\": \"可靠性容错\", \"score\": 0}, {\"family\": \"排程路由\", \"score\": 2}, {\"family\": \"目标校验\", \"score\": 0}, {\"family\": \"代码质量扫描\", \"score\": 0}, {\"family\": \"自进化强化\", \"score\": 0}], \"reasons\": [\"无 Laya 可用，采用规则式决策（词法子串打分，确定性可复现）\", \"feature_route 命中族 - 排程路由\", \"任务复杂度高 → 建议拆分数 +1\"]}, \"note\": \"调用方显式 no_sidecar=true：跳过 Laya 探测与 sidecar（BUG-18 延迟预算逃生门），直取内建规则式决策分支 laya_route；确定性、零延迟、可复现\"}",
+ "plan_raw": "{\"root\": \"T0r113\", \"by\": \"cypy-selfdrive-agent\", \"split_n\": 4, \"tree\": {\"task_id\": \"T0r113\", \"created\": 5, \"children\": [{\"id\": \"T0r113.1\", \"depth\": 2, \"leaf\": false, \"spec_hash\": \"\", \"depends_on\": [], \"children\": [{\"id\": \"T0r113.1.1\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r113.1.2\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r113.1.3\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}]}, {\"id\": \"T0r113.2\", \"depth\": 2, \"leaf\": false, \"spec_hash\": \"\", \"depends_on\": [], \"children\": [{\"id\": \"T0r113.2.1\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r113.2.2\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r113.2.3\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}]}, {\"id\": \"T0r113.3\", \"depth\": 2, \"leaf\": false, \"spec_hash\": \"\", \"depends_on\": [], \"children\": [{\"id\": \"T0r113.3.1\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r113.3.2\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r113.3.3\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}]}, {\"id\": \"T0r113.4\", \"depth\": 2, \"leaf\": false, \"spec_hash\": \"\", \"depends_on\": [], \"children\": [{\"id\": \"T0r113.4.1\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r113.4.2\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r113.4.3\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}]}, {\"id\": \"T0r113.5\", \"depth\": 2, \"leaf\": false, \"spec_hash\": \"\", \"depends_on\": [], \"children\": [{\"id\": \"T0r113.5.1\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r113.5.2\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}, {\"id\": \"T0r113.5.3\", \"depth\": 1, \"leaf\": true, \"spec_hash\": \"\", \"depends_on\": [], \"children\": []}]}]}, \"plan_decision\": {\"source\": \"self\", \"split_n\": 4, \"difficulty\": 3, \"reason\": \"四条叶分别落在 docs/analyzer/codegen/tests 四个不重叠文件半径\", \"by\": \"cypy-selfdrive-agent\", \"decided_at\": \"2026-09-29T03:43:05Z\"}, \"exec_order\": {\"task_id\": \"T0r113\", \"count\": 20, \"order\": [{\"id\": \"T0r113.1\", \"depth\": 2, \"difficulty\": \"易\", \"depends_on\": [], \"status\": \"拆分中\"}, {\"id\": \"T0r113.2\", \"depth\": 2, \"difficulty\": \"易\", \"depends_on\": [], \"status\": \"拆分中\"}, {\"id\": \"T0r113.3\", \"depth\": 2, \"difficulty\": \"中\", \"depends_on\": [], \"status\": \"拆分中\"}, {\"id\": \"T0r113.4\", \"depth\": 2, \"difficulty\": \"中\", \"depends_on\": [], \"status\": \"拆分中\"}, {\"id\": \"T0r113.5\", \"depth\": 2, \"difficulty\": \"难\", \"depends_on\": [], \"status\": \"拆分中\"}, {\"id\": \"T0r113.1.1\", \"depth\": 1, \"difficulty\": \"易\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.1.2\", \"depth\": 1, \"difficulty\": \"易\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.1.3\", \"depth\": 1, \"difficulty\": \"难\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.2.1\", \"depth\": 1, \"difficulty\": \"易\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.2.2\", \"depth\": 1, \"difficulty\": \"易\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.2.3\", \"depth\": 1, \"difficulty\": \"难\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.3.1\", \"depth\": 1, \"difficulty\": \"中\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.3.2\", \"depth\": 1, \"difficulty\": \"中\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.3.3\", \"depth\": 1, \"difficulty\": \"难\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.4.1\", \"depth\": 1, \"difficulty\": \"中\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.4.2\", \"depth\": 1, \"difficulty\": \"中\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.4.3\", \"depth\": 1, \"difficulty\": \"难\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.5.1\", \"depth\": 1, \"difficulty\": \"难\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.5.2\", \"depth\": 1, \"difficulty\": \"难\", \"depends_on\": [], \"status\": \"待领取\"}, {\"id\": \"T0r113.5.3\", \"depth\": 1, \"difficulty\": \"难\", \"depends_on\": [], \"status\": \"待领取\"}]}}",
+ "tree": {
+  "root": "T0r113",
+  "branches_from_plan": [
+   "T0r113.1",
+   "T0r113.2",
+   "T0r113.3",
+   "T0r113.4",
+   "T0r113.5"
+  ],
+  "listing_rows_in_ns": 0,
+  "leaves_by_flag": [],
+  "leaves_by_depth": [],
+  "leaves_used": [],
+  "leaf_count": 0
+ },
+ "loop_create": "{\"name\": \"cypy-selfdrive-r7\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T03:43:06Z\", \"updated_at\": \"2026-09-29T03:43:06Z\", \"status\": \"active\", \"stop_reason\": \"\", \"goal_reached\": false, \"exceeded\": false, \"baseline_test_count\": 2158, \"baseline_open_bug_count\": 33}"
+}

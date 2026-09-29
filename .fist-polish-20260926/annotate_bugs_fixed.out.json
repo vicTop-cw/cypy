@@ -1,0 +1,134 @@
+{
+  "bugs_md": "memory/bugs.md",
+  "annotated": [
+    {
+      "bug": "BUG-1",
+      "task_id": "T0r6",
+      "tests": [
+        "test_bug1_clear_cache_does_not_claim_success_when_remove_fails"
+      ],
+      "collected_cases": 1,
+      "updated_at": "2026-09-26T05:48:09Z"
+    },
+    {
+      "bug": "BUG-2",
+      "task_id": "T0r7",
+      "tests": [
+        "test_bug2_bridge_build_subprocess_run_passes_timeout",
+        "test_bug2_build_timeout_is_shared_with_sibling_callers"
+      ],
+      "collected_cases": 2,
+      "updated_at": "2026-09-26T05:48:09Z"
+    },
+    {
+      "bug": "BUG-3",
+      "task_id": "T0r8",
+      "tests": [
+        "test_bug3_reparse_failure_is_reported_not_swallowed"
+      ],
+      "collected_cases": 1,
+      "updated_at": "2026-09-26T05:48:09Z"
+    },
+    {
+      "bug": "BUG-4",
+      "task_id": "T0r9",
+      "tests": [
+        "test_bug4_transformer_recursion_is_outside_broad_try"
+      ],
+      "collected_cases": 5,
+      "updated_at": "2026-09-26T05:48:09Z"
+    },
+    {
+      "bug": "BUG-5",
+      "task_id": "T0r10",
+      "tests": [
+        "test_bug5_state_snapshot_reports_getattr_failure",
+        "test_bug5_state_restore_reports_setattr_failure"
+      ],
+      "collected_cases": 2,
+      "updated_at": "2026-09-26T05:48:09Z"
+    },
+    {
+      "bug": "BUG-6",
+      "task_id": "T0r11",
+      "tests": [
+        "test_bug6_cypy_file_with_bom_is_still_detected",
+        "test_bug6_unreadable_cypy_candidate_warns"
+      ],
+      "collected_cases": 2,
+      "updated_at": "2026-09-26T05:48:09Z"
+    },
+    {
+      "bug": "BUG-7",
+      "task_id": "T0r12",
+      "tests": [
+        "test_bug7_corrupt_manifest_warns",
+        "test_bug7_corrupt_bridge_manifest_warns"
+      ],
+      "collected_cases": 2,
+      "updated_at": "2026-09-26T05:48:10Z"
+    },
+    {
+      "bug": "BUG-8",
+      "task_id": "T0r13",
+      "tests": [
+        "test_bug8_macro_reparse_degradation_is_reported"
+      ],
+      "collected_cases": 1,
+      "updated_at": "2026-09-26T06:10:11Z"
+    },
+    {
+      "bug": "BUG-9",
+      "task_id": "T0r14",
+      "tests": [
+        "test_bug9_module_state_snapshot_warns",
+        "test_bug9_module_state_restore_warns"
+      ],
+      "collected_cases": 2,
+      "updated_at": "2026-09-26T06:43:05Z"
+    },
+    {
+      "bug": "BUG-10",
+      "task_id": "T0r15",
+      "tests": [
+        "test_bug10_dependency_analysis_parse_failure_warns",
+        "test_bug10_cache_update_parse_failure_warns"
+      ],
+      "collected_cases": 2,
+      "updated_at": "2026-09-26T07:53:52Z"
+    },
+    {
+      "bug": "BUG-11",
+      "task_id": "T0r16",
+      "tests": [
+        "test_bug11_project_type_check_reports_scope_errors",
+        "test_bug11_type_level_name_collision_is_reported"
+      ],
+      "collected_cases": 2,
+      "updated_at": "2026-09-26T07:23:57Z"
+    },
+    {
+      "bug": "BUG-12",
+      "task_id": "T0r17",
+      "tests": [
+        "test_bug12_gilstate_exit_does_not_replace_user_exception",
+        "test_bug12_gilstate_exit_still_restores_state"
+      ],
+      "collected_cases": 2,
+      "updated_at": "2026-09-26T10:09:29Z"
+    }
+  ],
+  "annotated_count": 12,
+  "skipped_no_annotation": [
+    "BUG-13"
+  ],
+  "regression_defs_total": 20,
+  "regression_cases_total": 24,
+  "regression_cases_annotated": 24,
+  "headings": 13,
+  "bytes_before": 19994,
+  "bytes_after": 30573,
+  "append_only_proof": "strip(所有 FIXED 段) == 原文（逐字节）",
+  "status_heading_untouched": true,
+  "namespace_root": "cypy-polish-20260926"
+}

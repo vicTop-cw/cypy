@@ -1,0 +1,38 @@
+{
+ "started_z": "2026-09-29T09:55:14Z",
+ "ns": "cypy-loop-20260929",
+ "before": {
+  "headers": 137,
+  "open_ring": 38,
+  "open_narrow": 39,
+  "fixed": 90
+ },
+ "ledger_last_id": "BUG-136",
+ "filed": [],
+ "skipped_existing": [
+  {
+   "key": "R13-GENERIC-TYPE-ALIAS-NO-SUBST",
+   "why": "账本已含该 reported_key ⇒ 不重发"
+  }
+ ],
+ "refusals": [],
+ "bug_list_shape": "dict",
+ "bug_list_count_field": 137,
+ "bug_list_rows": 137,
+ "bug_list_has_new_summary": true,
+ "bug_list_row_for_card": "[{\"id\": \"BUG-136\", \"bug_id\": \"BUG-136\", \"ts\": \"2026-09-29T09:53:18Z\", \"severity\": \"medium\", \"status\": \"OPEN\", \"summary\": \"[generics:alias] 泛型类型别名 `type Result<T> = tuple<bool, T>` 收下但不代入不判：四组成对反例（内层类型错/标志位错/两位错/未知类型名）全 0 诊断，而 `SYNTAX_IMPLEMENTATION_STATUS.md:330` 把 `02-type-annotations.md` 标成「✅ 完整/无",
+ "after": {
+  "headers": 137,
+  "open_ring": 38,
+  "open_narrow": 39,
+  "fixed": 90
+ },
+ "new_ids": [],
+ "key_present_after": true,
+ "call_log": {
+  "rows": 1,
+  "error_rows_ok_needle": 0,
+  "error_rows_old_needle": 0,
+  "report_bug_rows": 0
+ }
+}

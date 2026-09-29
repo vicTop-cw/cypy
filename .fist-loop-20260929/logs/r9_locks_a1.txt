@@ -1,0 +1,8 @@
+{
+ "tree": "lockproof_r9_37520",
+ "identity_ok": false,
+ "identity_rc": 0,
+ "identity_tail": "TREE=E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\lockproof_r9_37520\\scripts\\omega_gate.py\n",
+ "cells": [],
+ "refuse": "身份探针不过 ⇒ 副本树没被真正使用，整份矩阵不作数"
+}

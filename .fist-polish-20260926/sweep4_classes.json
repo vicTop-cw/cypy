@@ -1,0 +1,22 @@
+{
+ "A_mutable_default": [],
+ "B_open_no_ctx": [],
+ "C_subprocess_no_timeout": [],
+ "D_lock_no_finally": [
+  {
+   "loc": "cypy_bridge/nogil.py:102",
+   "src": "state.acquire()"
+  },
+  {
+   "loc": "cypy_bridge/nogil.py:80",
+   "src": "self.acquire()"
+  },
+  {
+   "loc": "cypy_bridge/nogil.py:153",
+   "src": "state.acquire()"
+  }
+ ],
+ "E_index_after_filter": [],
+ "files_scanned": 56,
+ "lines_scanned": 30093
+}

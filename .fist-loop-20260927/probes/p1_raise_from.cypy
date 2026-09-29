@@ -1,0 +1,6 @@
+def load() -> int:
+    try:
+        raise FileNotFoundError("nope")
+    except FileNotFoundError as e:
+        raise RuntimeError("Failed to load data") from e
+    return 0

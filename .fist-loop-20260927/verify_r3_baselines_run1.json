@@ -1,0 +1,83 @@
+{
+ "refuse": [],
+ "measured_at_utc": "2026-09-27T17:17:53.948967+00:00",
+ "stage_start_utc": "2026-09-27T17:01:14+00:00",
+ "pytest": {
+  "rc": 0,
+  "passed": 1920,
+  "floor": 1920,
+  "failed": [],
+  "collected": 1920,
+  "collect_rc": 0,
+  "other_counts": {},
+  "line": "1920 passed in 544.16s (0:09:04)"
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": "47",
+   "Passed": "47",
+   "Failed": "0",
+   "Skipped": "0"
+  },
+  "green": true
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+  "fields": {
+   "PASS": "25",
+   "FAIL": "0",
+   "WARN": "0",
+   "UNREG/RUNFAIL": "0"
+  },
+  "green": true
+ },
+ "git": {
+  "head_ok": true,
+  "staged_zero": true,
+  "dirty_rows": 166,
+  "deleted_tracked": 10,
+  "worktrees": [
+   "E:/IDEProjects/AI/Cypy",
+   "E:/IDEProjects/AI/_cypy_head_baseline"
+  ],
+  "foreign_worktree_present": true,
+  "own_snapshot_gone": true,
+  "ahead_of_upstream": "1",
+  "all_ok": true
+ },
+ "radius": {
+  "count": 0,
+  "files": [],
+  "stage_start_utc": "2026-09-27T17:01:14+00:00",
+  "scanned_dirs": [
+   "cypyc",
+   "cypy_hook",
+   "cypy_bridge",
+   "tests",
+   "docs",
+   "scripts",
+   "examples"
+  ]
+ },
+ "lint": {
+  "rc": 0,
+  "files": 8,
+  "hard_violations": 0,
+  "detail": [],
+  "targets": [
+   ".fist-loop-20260927/verify_r3_baselines.py",
+   ".fist-loop-20260927/verify_r3_callsite.py",
+   ".fist-loop-20260927/verify_r3_footer.py",
+   ".fist-loop-20260927/verify_r3_irreversible.py",
+   ".fist-loop-20260927/verify_r3_ledger3way.py",
+   ".fist-loop-20260927/verify_r3_matrix.py",
+   ".fist-loop-20260927/verify_r3_report_audit.py",
+   ".fist-loop-20260927/verify_r3_self_audit.py"
+  ]
+ },
+ "radius_claim_ok": 1,
+ "pytest_ge_floor": 1
+}

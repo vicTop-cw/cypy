@@ -1,0 +1,234 @@
+{
+ "per_id": [
+  {
+   "id": "C1",
+   "rc": 0,
+   "observed": {
+    "id": "C1",
+    "observed": {
+     "generic_nodes": 1,
+     "collected": 0
+    },
+    "defect_present": true
+   }
+  },
+  {
+   "id": "C2",
+   "rc": 0,
+   "observed": {
+    "id": "C2",
+    "observed": {
+     "one_arg": null,
+     "raised": "ValueError: Undefined variable 'b' at compile time"
+    },
+    "defect_present": true
+   }
+  },
+  {
+   "id": "C3",
+   "rc": 0,
+   "observed": {
+    "id": "C3",
+    "observed": {
+     "flag_readers": {
+      "run_default": [
+       "check_only",
+       "emit_ast",
+       "emit_cython",
+       "generate_setup"
+      ],
+      "run_build": [
+       "check_only"
+      ]
+     }
+    },
+    "defect_present": true
+   }
+  },
+  {
+   "id": "C4",
+   "rc": 0,
+   "observed": {
+    "id": "C4",
+    "observed": {
+     "raised": "TypeError: this type has no size"
+    },
+    "defect_present": true
+   }
+  },
+  {
+   "id": "C5",
+   "rc": 0,
+   "observed": {
+    "id": "C5",
+    "observed": {
+     "returned": "None",
+     "annotation": "int"
+    },
+    "defect_present": true
+   }
+  },
+  {
+   "id": "C6",
+   "rc": 0,
+   "observed": {
+    "id": "C6",
+    "observed": {
+     "per_seed_orders": {
+      "0": "['d', 'b', 'c', 'a', 'e']",
+      "1": "['d', 'e', 'a', 'b', 'c']",
+      "7": "['d', 'b', 'a', 'c', 'e']",
+      "42": "['c', 'e', 'b', 'd', 'a']",
+      "99": "['e', 'b', 'a', 'd', 'c']"
+     },
+     "distinct": 5
+    },
+    "defect_present": true
+   }
+  },
+  {
+   "id": "C7",
+   "rc": 1,
+   "observed": {
+    "id": "C7",
+    "observed": {
+     "pass_only_loops": [],
+     "in_degree_loads": 6
+    },
+    "defect_present": false
+   }
+  },
+  {
+   "id": "C8",
+   "rc": 0,
+   "observed": {
+    "id": "C8",
+    "observed": {
+     "node_kinds": [
+      "PointerType"
+     ],
+     "errors": []
+    },
+    "defect_present": true
+   }
+  }
+ ],
+ "refuse": [],
+ "by_id": {
+  "C1": {
+   "id": "C1",
+   "rc": 0,
+   "observed": {
+    "id": "C1",
+    "observed": {
+     "generic_nodes": 1,
+     "collected": 0
+    },
+    "defect_present": true
+   }
+  },
+  "C2": {
+   "id": "C2",
+   "rc": 0,
+   "observed": {
+    "id": "C2",
+    "observed": {
+     "one_arg": null,
+     "raised": "ValueError: Undefined variable 'b' at compile time"
+    },
+    "defect_present": true
+   }
+  },
+  "C3": {
+   "id": "C3",
+   "rc": 0,
+   "observed": {
+    "id": "C3",
+    "observed": {
+     "flag_readers": {
+      "run_default": [
+       "check_only",
+       "emit_ast",
+       "emit_cython",
+       "generate_setup"
+      ],
+      "run_build": [
+       "check_only"
+      ]
+     }
+    },
+    "defect_present": true
+   }
+  },
+  "C4": {
+   "id": "C4",
+   "rc": 0,
+   "observed": {
+    "id": "C4",
+    "observed": {
+     "raised": "TypeError: this type has no size"
+    },
+    "defect_present": true
+   }
+  },
+  "C5": {
+   "id": "C5",
+   "rc": 0,
+   "observed": {
+    "id": "C5",
+    "observed": {
+     "returned": "None",
+     "annotation": "int"
+    },
+    "defect_present": true
+   }
+  },
+  "C6": {
+   "id": "C6",
+   "rc": 0,
+   "observed": {
+    "id": "C6",
+    "observed": {
+     "per_seed_orders": {
+      "0": "['d', 'b', 'c', 'a', 'e']",
+      "1": "['d', 'e', 'a', 'b', 'c']",
+      "7": "['d', 'b', 'a', 'c', 'e']",
+      "42": "['c', 'e', 'b', 'd', 'a']",
+      "99": "['e', 'b', 'a', 'd', 'c']"
+     },
+     "distinct": 5
+    },
+    "defect_present": true
+   }
+  },
+  "C7": {
+   "id": "C7",
+   "rc": 1,
+   "observed": {
+    "id": "C7",
+    "observed": {
+     "pass_only_loops": [],
+     "in_degree_loads": 6
+    },
+    "defect_present": false
+   }
+  },
+  "C8": {
+   "id": "C8",
+   "rc": 0,
+   "observed": {
+    "id": "C8",
+    "observed": {
+     "node_kinds": [
+      "PointerType"
+     ],
+     "errors": []
+    },
+    "defect_present": true
+   }
+  }
+ },
+ "n_per_id": 8,
+ "all_confirmed_rc0": true,
+ "n_probe_broken_rc2": 0
+}

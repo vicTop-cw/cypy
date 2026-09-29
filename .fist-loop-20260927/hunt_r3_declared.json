@@ -1,0 +1,113 @@
+{
+ "per_candidate": [
+  {
+   "id": "C1",
+   "declared_scope_read": "cypyc/transformer/generic_transformer.py:5（自称注册泛型参数）与 :39（读 type_params）",
+   "claim": "generic_transformer 读 `type_params`，parser 的泛型节点带的是 `generic_params` ⇒ 泛型收集恒为空",
+   "verdict": "CONFIRMED",
+   "own_text_evidence": {
+    "collected_with_type_params_attr": 1
+   }
+  },
+  {
+   "id": "C2",
+   "declared_scope_read": "SYNTAX/19-comptime.md:22/:43（自述未实现）对 comptime_evaluator.py:630-632",
+   "claim": "comptime 调用不读 `Param.default_value` ⇒ 但 `comptime def` 整族在 SYNTAX/19 里自述『未实现』，故**撤回**（DESIGN，不入账）",
+   "verdict": "DESIGN",
+   "own_text_evidence": {
+    "declared_in_syntax_doc": [
+     "4. **编译期函数**：`comptime def` 语法未实现",
+     "| `comptime def` 编译期函数 | 未实现 |"
+    ]
+   }
+  },
+  {
+   "id": "C3",
+   "declared_scope_read": "docs/USAGE.md 与 transpile --help 的承诺 vs cypyc/cli.py:435-516",
+   "claim": "`cypyc transpile` 的 --check-only/--emit-ast/--generate-setup/--emit-cython 只被印给用户，run_transpile 一个都不读（读它们的是只能从不可达分支进入的 run_default）",
+   "verdict": "CONFIRMED",
+   "own_text_evidence": {
+    "top_level_choices": [
+     "transpile,compile,build,run,watch,hook",
+     "transpile,compile,build,run,watch,hook"
+    ],
+    "transpile_help_advertises": [
+     "--check-only",
+     "--emit-ast",
+     "--generate-setup",
+     "--emit-cython"
+    ]
+   }
+  },
+  {
+   "id": "C4",
+   "declared_scope_read": "cypy_bridge/union.py:23-31 与 :179 的示例文本",
+   "claim": "CUnion/union 的 docstring 示例 `CUnion(int, float)` 一跑就抛 TypeError（对 Python 内建类型取 ctypes.sizeof）",
+   "verdict": "CONFIRMED",
+   "own_text_evidence": {
+    "with_ctypes_types": "CUnion"
+   }
+  },
+  {
+   "id": "C5",
+   "declared_scope_read": "cypy_bridge/memory.py:195-216",
+   "claim": "realloc(ptr, 0) 先 free 再 `return None`，而签名是 `-> int`、文档只说返回地址，malloc 同一形状走的是抛错分支",
+   "verdict": "CONFIRMED",
+   "own_text_evidence": "malloc(0) raised MemoryError"
+  },
+  {
+   "id": "C6",
+   "declared_scope_read": "cypyc/project/module_dependency_graph.py:200-212（文档只说『跳过循环中的模块』）",
+   "claim": "get_compilation_order 把环内模块塞进 `set` 再 extend ⇒ 环存在时推荐编译序随进程哈希种子变化",
+   "verdict": "CONFIRMED",
+   "own_text_evidence": {
+    "acyclic_order": [
+     "z",
+     "y",
+     "x"
+    ],
+    "edges": "x→y, y→z（x 依赖 y）"
+   }
+  },
+  {
+   "id": "C7",
+   "declared_scope_read": "cypyc/project/module_dependency_graph.py:134-141",
+   "claim": "子代理主张：topological_sort 先算一遍 in_degree 并把某个循环体写成 `pass`，随后整个丢掉重建 ⇒ 前段是死码",
+   "verdict": "REJECTED",
+   "own_text_evidence": {
+    "loaded_names_sample": [
+     "queue"
+    ]
+   }
+  },
+  {
+   "id": "C8",
+   "declared_scope_read": "cypyc/analyzer/build_block_checker.py:5-6（声明）对 :75-84（实现）",
+   "claim": "BuildBlockChecker 的 docstring 规则 2（指针语法只能在构建块内部使用）没有实现：_visit_DerefExpr/_visit_PointerType 只注释『移除』，不 append 任何 error",
+   "verdict": "CONFIRMED",
+   "own_text_evidence": {
+    "errors_from_a_different_rule": [
+     "yield statement is not allowed in assign build blocks (=:) at 7:3"
+    ]
+   }
+  }
+ ],
+ "syntax_self_declared": [
+  {
+   "file": "SYNTAX/19-comptime.md",
+   "lines": [
+    "10:# comptime 表达式（当前仅解析，不进行实际的编译期求值）",
+    "22:4. **编译期函数**：`comptime def` 语法未实现",
+    "36:## 未实现的功能",
+    "38:以下功能是文档中描述但当前未实现的：",
+    "42:| `comptime:` 块形式 | 未实现 |",
+    "43:| `comptime def` 编译期函数 | 未实现 |"
+   ]
+  },
+  {
+   "file": "SYNTAX/11-generics.md",
+   "lines": []
+  }
+ ],
+ "refuse": []
+}

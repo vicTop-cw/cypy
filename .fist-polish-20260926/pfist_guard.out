@@ -1,0 +1,8 @@
+PASS  batch with an errored call exits 1: rc=1 error_frame_in_stdout=True
+PASS  clean batch exits 0: rc=0
+PASS  tools/list works through the pump reader: 116 tools
+PASS  two sequential calls on one connection both match: counts 11 / 11
+PASS  dead server is classified, not the blanket timeout text: server exited (1) during bug_list: (node:38532) ExperimentalWarning: SQLite is an experime
+PASS  ledger untouched: 9665 bytes stable
+PASS  isolated task db untouched: 143360
+failures: none

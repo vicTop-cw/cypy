@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r11_locks.py", line 216, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\verify_r11_locks.py", line 192, in main
+    gates["r10_locks_unaffected_in_live"] = all(
+                                            ~~~^
+        not (live.get("failed_ids") or []))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'bool' object is not iterable

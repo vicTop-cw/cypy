@@ -1,0 +1,93 @@
+{
+ "mixed_files_manifest": [
+  {
+   "file": "tests/test_new_features_boundary.py",
+   "crlf": 341,
+   "lf": 36
+  }
+ ],
+ "eol_before_snapshot": {
+  "crlf_only": 39,
+  "lf_only": 203,
+  "mixed": 1
+ },
+ "mixed_files_now_count": 1,
+ "no_bulk_reformat": true,
+ "changed_lines_per_file": {
+  "cypyc/cli.py": 2,
+  "cypy_hook/hook.py": 8,
+  "docs/USAGE.md": 1,
+  "tests/test_loop_20260927_fix_r3.py": 2
+ },
+ "cap_per_file": 40,
+ "edited_files": [
+  {
+   "file": "cypyc/cli.py",
+   "why": "CLI 改走公开门面 analyze_only()",
+   "before": {
+    "crlf": 0,
+    "lf": 903,
+    "class": "lf"
+   },
+   "after": {
+    "crlf": 0,
+    "lf": 903,
+    "class": "lf"
+   },
+   "changed_lines": 2
+  },
+  {
+   "file": "cypy_hook/hook.py",
+   "why": "新增公开 analyze_only() 委托",
+   "before": {
+    "crlf": 0,
+    "lf": 1170,
+    "class": "lf"
+   },
+   "after": {
+    "crlf": 0,
+    "lf": 1178,
+    "class": "lf"
+   },
+   "changed_lines": 8
+  },
+  {
+   "file": "docs/USAGE.md",
+   "why": "补 --emit-code 文档行",
+   "before": {
+    "crlf": 430,
+    "lf": 0,
+    "class": "crlf"
+   },
+   "after": {
+    "crlf": 431,
+    "lf": 0,
+    "class": "crlf"
+   },
+   "changed_lines": 1
+  },
+  {
+   "file": "tests/test_loop_20260927_fix_r3.py",
+   "why": "BUG-55 夹具换冻结形",
+   "before": {
+    "crlf": 0,
+    "lf": 311,
+    "class": "lf"
+   },
+   "after": {
+    "crlf": 0,
+    "lf": 311,
+    "class": "lf"
+   },
+   "changed_lines": 2
+  }
+ ],
+ "line_ending_class_drift": [],
+ "new_file_profile": {
+  "crlf": 0,
+  "lf": 202,
+  "class": "lf"
+ },
+ "at_utc": "2026-09-27T18:12:14+00:00",
+ "refuse": []
+}

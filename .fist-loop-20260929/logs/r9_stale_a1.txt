@@ -1,0 +1,7 @@
+[A1 目录存在] {"corpus_files": ["cypy.annotation.shape.json", "cypy.pattern.positional.json"], "regression_files": ["test_corpus_pairs.py"], "corpus_dir_exists": true, "regr_dir_exists": true}
+[A2 Ω-gate 可跑] {"rc": 0, "conclusion": "CONCLUSION specs=2 cases=41 passed=41 failed=0 refused=0 accuracy=100.00% rc=0"}
+[A3 回归件可跑] {"rc": 0, "summary": "============================= 44 passed in 0.44s =============================="}
+[B1 元数>字段数 的产物面] {"diagnostics": ["Positional pattern 'E' has 3 slot(s) but type 'E' unpacks only 2 at 8:14"], "lines_with__f": ["if _match_subject_1.a == 1 and _match_subject_1.b == 2 and _match_subject_1.__f2 == 3:"], "claim_holds": true, "diag_count": 1}
+[C0 demo 目录] {"files": [], "n": 0}
+[C1 切片赋值] {"errors": ["Type mismatch: expected list[int], got int at 3:5"], "all_errors": ["Type mismatch: expected list[int], got int at 3:5"], "claim_holds": true}
+CONCLUSION cells=6 corpus_exists=True regr_exists=True gate_rc=0 bug71_still_holds=True bugeta_claim_still_holds=True

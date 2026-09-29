@@ -1,0 +1,9 @@
+MEASURED {"open_bugs": 37, "test_count": 2284, "task_rollup": {"已完成": 101, "待领取": 24, "拆分中": 9}, "blocked_tasks": 0}
+SHAPE_CONTROL {"只传声明键": {"环查无": 24, "成功": 24, "键名被拒": 0, "其它": 0}, "含未声明键": {"键名被拒": 10, "成功": 0, "环查无": 0, "其它": 0}}
+GATES {"pass": true, "bad": []}
+TICK {"__error__": {"code": -32000, "message": "loop not found: cypy-selfdrive-ring-r11"}}
+TICK_PICKED {}
+LOOP_STATUS_before {} refused= True
+LOOP_STATUS_after {} refused= True
+ERROR_NEEDLES {"ok_0_needle_since_0759": 31, "percent_error_needle_same_window": 0, "newest_three_rows": [["2026-09-29T08:10:58Z", 0, "loop not found: cypy-selfdrive-ring-r11"], ["2026-09-29T08:10:58Z", 0, "loop not found: cypy-selfdrive-ring-r11"], ["2026-09-29T08:10:58Z", 0, "loop not found: cypy-selfdrive-ring-r11"]]}
+CONCLUSION stage=loop_tick tick_refused=True state_moved=False shape_control_ok=True control_bad=[] evidence=r11_loop_tick_fix.json

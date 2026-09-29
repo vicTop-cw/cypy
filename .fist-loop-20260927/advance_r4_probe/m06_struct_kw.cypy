@@ -1,0 +1,13 @@
+struct Point:
+    x: int
+    y: int
+
+let p: Point = Point(x=10, y=20)
+
+def main() -> int:
+    match p:
+        case Point(x=0, y=0):
+            print("Origin")
+        case Point(x=x, y=0):
+            print(x)
+    return 0

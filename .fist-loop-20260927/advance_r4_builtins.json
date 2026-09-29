@@ -1,0 +1,679 @@
+{
+ "started": "2026-09-28T03:18:26+00:00",
+ "law": "文档已用、名称表缺席的三个内建名（repr/open/iter）在分析器名称面补齐",
+ "added": [
+  "repr",
+  "open",
+  "iter"
+ ],
+ "not_added": [
+  "chr",
+  "hex",
+  "pow",
+  "round",
+  "divmod",
+  "bytes"
+ ],
+ "doc_evidence": [
+  {
+   "name": "repr",
+   "doc_hits_total": 4,
+   "cited": "SYNTAX/05-struct.md:53",
+   "cited_found": true,
+   "first_hit": {
+    "doc": "SYNTAX/05-struct.md",
+    "line": 53,
+    "text": "print(repr(p1))      # Point(x=1, y=2) (__repr__)"
+   },
+   "cited_text": "print(repr(p1))      # Point(x=1, y=2) (__repr__)"
+  },
+  {
+   "name": "open",
+   "doc_hits_total": 6,
+   "cited": "SYNTAX/14-syntax-sugar.md:174",
+   "cited_found": true,
+   "first_hit": {
+    "doc": "SYNTAX/14-syntax-sugar.md",
+    "line": 174,
+    "text": "let file = open(path, \"r\")"
+   },
+   "cited_text": "let file = open(path, \"r\")"
+  },
+  {
+   "name": "iter",
+   "doc_hits_total": 1,
+   "cited": "SYNTAX/06d-builtin-magic-traits.md:264",
+   "cited_found": true,
+   "first_hit": {
+    "doc": "SYNTAX/06d-builtin-magic-traits.md",
+    "line": 264,
+    "text": "return iter(range(self.start, self.end))"
+   },
+   "cited_text": "return iter(range(self.start, self.end))"
+  }
+ ],
+ "cases": [
+  {
+   "name": "repr",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_repr_ok.cypy",
+   "before_rc": 1,
+   "after_rc": 0,
+   "before_undefined": [
+    "- Undefined name 'repr' at 2:11"
+   ],
+   "after_undefined": [],
+   "before_mentions": true,
+   "after_mentions": false,
+   "after_products": [
+    "a4_repr_ok.pyx"
+   ],
+   "tree_pair": true
+  },
+  {
+   "name": "open",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_open_ok.cypy",
+   "before_rc": 1,
+   "after_rc": 0,
+   "before_undefined": [
+    "- Undefined name 'open' at 2:9"
+   ],
+   "after_undefined": [],
+   "before_mentions": true,
+   "after_mentions": false,
+   "after_products": [
+    "a4_open_ok.pyx"
+   ],
+   "tree_pair": true
+  },
+  {
+   "name": "iter",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_iter_ok.cypy",
+   "before_rc": 1,
+   "after_rc": 0,
+   "before_undefined": [
+    "- Undefined name 'iter' at 3:10"
+   ],
+   "after_undefined": [],
+   "before_mentions": true,
+   "after_mentions": false,
+   "after_products": [
+    "a4_iter_ok.pyx"
+   ],
+   "tree_pair": true
+  },
+  {
+   "name": "chr",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_chr.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'chr' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'chr' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  },
+  {
+   "name": "hex",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_hex.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'hex' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'hex' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  },
+  {
+   "name": "pow",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_pow.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'pow' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'pow' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  },
+  {
+   "name": "round",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_round.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'round' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'round' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  },
+  {
+   "name": "divmod",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_divmod.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'divmod' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'divmod' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  },
+  {
+   "name": "bytes",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_bytes.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'bytes' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'bytes' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  }
+ ],
+ "added_rows": [
+  {
+   "name": "repr",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_repr_ok.cypy",
+   "before_rc": 1,
+   "after_rc": 0,
+   "before_undefined": [
+    "- Undefined name 'repr' at 2:11"
+   ],
+   "after_undefined": [],
+   "before_mentions": true,
+   "after_mentions": false,
+   "after_products": [
+    "a4_repr_ok.pyx"
+   ],
+   "tree_pair": true
+  },
+  {
+   "name": "open",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_open_ok.cypy",
+   "before_rc": 1,
+   "after_rc": 0,
+   "before_undefined": [
+    "- Undefined name 'open' at 2:9"
+   ],
+   "after_undefined": [],
+   "before_mentions": true,
+   "after_mentions": false,
+   "after_products": [
+    "a4_open_ok.pyx"
+   ],
+   "tree_pair": true
+  },
+  {
+   "name": "iter",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_iter_ok.cypy",
+   "before_rc": 1,
+   "after_rc": 0,
+   "before_undefined": [
+    "- Undefined name 'iter' at 3:10"
+   ],
+   "after_undefined": [],
+   "before_mentions": true,
+   "after_mentions": false,
+   "after_products": [
+    "a4_iter_ok.pyx"
+   ],
+   "tree_pair": true
+  }
+ ],
+ "not_added_rows": [
+  {
+   "name": "chr",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_chr.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'chr' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'chr' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  },
+  {
+   "name": "hex",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_hex.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'hex' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'hex' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  },
+  {
+   "name": "pow",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_pow.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'pow' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'pow' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  },
+  {
+   "name": "round",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_round.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'round' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'round' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  },
+  {
+   "name": "divmod",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_divmod.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'divmod' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'divmod' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  },
+  {
+   "name": "bytes",
+   "probe": ".fist-loop-20260927/advance_r4_probe/a4_bytes.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_undefined": [
+    "- Undefined name 'bytes' at 2:11"
+   ],
+   "after_undefined": [
+    "- Undefined name 'bytes' at 2:11"
+   ],
+   "before_mentions": true,
+   "after_mentions": true,
+   "after_products": [],
+   "tree_pair": true,
+   "doc_call_sites": 0,
+   "doc_hits_sample": []
+  }
+ ],
+ "edited_files": [
+  {
+   "path": "cypyc/analyzer/scope_analyzer.py",
+   "before_sha": "df476769e3e0",
+   "after_sha": "b7a14e5a5521"
+  },
+  {
+   "path": "cypyc/analyzer/type_checker.py",
+   "before_sha": "ff9e8821cb22",
+   "after_sha": "cbac2bfb44c7"
+  }
+ ],
+ "trees": {
+  "before": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_before_tree",
+   "py_files": 56,
+   "edited_shas": {
+    "scope_analyzer.py": "df476769e3e0",
+    "type_checker.py": "ff9e8821cb22"
+   }
+  },
+  "after": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_after_tree",
+   "py_files": 56,
+   "edited_shas": {
+    "scope_analyzer.py": "b7a14e5a5521",
+    "type_checker.py": "cbac2bfb44c7"
+   }
+  },
+  "identity_before": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_before_tree",
+   "inside": true,
+   "cypyc": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_before_tree\\cypyc\\__init__.py",
+   "scope": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_before_tree\\cypyc\\analyzer\\scope_analyzer.py",
+   "exe": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe"
+  },
+  "identity_after": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_after_tree",
+   "inside": true,
+   "cypyc": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_after_tree\\cypyc\\__init__.py",
+   "scope": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_after_tree\\cypyc\\analyzer\\scope_analyzer.py",
+   "exe": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe"
+  }
+ },
+ "canary": {
+  "three_added_names_now_accepted": true,
+  "six_undocumented_builtins_still_rejected": true,
+  "red_moves_only_in_name_table": true,
+  "doc_citation_lines_measured_not_copied": true,
+  "undocumented_names_have_zero_doc_call_sites": true
+ },
+ "self_checks": [
+  {
+   "label": "repr：文档声明面必须实测到引用行 SYNTAX/05-struct.md:53",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "实得 4 处，引用行在档 True",
+   "ok": true
+  },
+  {
+   "label": "open：文档声明面必须实测到引用行 SYNTAX/14-syntax-sugar.md:174",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "实得 6 处，引用行在档 True",
+   "ok": true
+  },
+  {
+   "label": "iter：文档声明面必须实测到引用行 SYNTAX/06d-builtin-magic-traits.md:264",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "实得 1 处，引用行在档 True",
+   "ok": true
+  },
+  {
+   "label": "repr：改后名称面放行（rc=0 且不再报 Undefined name）",
+   "got": [
+    0,
+    false
+   ],
+   "want": [
+    0,
+    false
+   ],
+   "why": "after_undefined=[]",
+   "ok": true
+  },
+  {
+   "label": "repr：改前必红且红在该名上",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "before_rc=1 before_undefined=[\"- Undefined name 'repr' at 2:11\"]",
+   "ok": true
+  },
+  {
+   "label": "open：改后名称面放行（rc=0 且不再报 Undefined name）",
+   "got": [
+    0,
+    false
+   ],
+   "want": [
+    0,
+    false
+   ],
+   "why": "after_undefined=[]",
+   "ok": true
+  },
+  {
+   "label": "open：改前必红且红在该名上",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "before_rc=1 before_undefined=[\"- Undefined name 'open' at 2:9\"]",
+   "ok": true
+  },
+  {
+   "label": "iter：改后名称面放行（rc=0 且不再报 Undefined name）",
+   "got": [
+    0,
+    false
+   ],
+   "want": [
+    0,
+    false
+   ],
+   "why": "after_undefined=[]",
+   "ok": true
+  },
+  {
+   "label": "iter：改前必红且红在该名上",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "before_rc=1 before_undefined=[\"- Undefined name 'iter' at 3:10\"]",
+   "ok": true
+  },
+  {
+   "label": "chr：文档未声明的主张要有实测支撑（冻结语料 0 处 `name(`）",
+   "got": 0,
+   "want": 0,
+   "why": "实得 []",
+   "ok": true
+  },
+  {
+   "label": "chr：文档未声明 ⇒ 改后仍须被拒（半径不外溢）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "after_rc=1 after_undefined=[\"- Undefined name 'chr' at 2:11\"]",
+   "ok": true
+  },
+  {
+   "label": "hex：文档未声明的主张要有实测支撑（冻结语料 0 处 `name(`）",
+   "got": 0,
+   "want": 0,
+   "why": "实得 []",
+   "ok": true
+  },
+  {
+   "label": "hex：文档未声明 ⇒ 改后仍须被拒（半径不外溢）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "after_rc=1 after_undefined=[\"- Undefined name 'hex' at 2:11\"]",
+   "ok": true
+  },
+  {
+   "label": "pow：文档未声明的主张要有实测支撑（冻结语料 0 处 `name(`）",
+   "got": 0,
+   "want": 0,
+   "why": "实得 []",
+   "ok": true
+  },
+  {
+   "label": "pow：文档未声明 ⇒ 改后仍须被拒（半径不外溢）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "after_rc=1 after_undefined=[\"- Undefined name 'pow' at 2:11\"]",
+   "ok": true
+  },
+  {
+   "label": "round：文档未声明的主张要有实测支撑（冻结语料 0 处 `name(`）",
+   "got": 0,
+   "want": 0,
+   "why": "实得 []",
+   "ok": true
+  },
+  {
+   "label": "round：文档未声明 ⇒ 改后仍须被拒（半径不外溢）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "after_rc=1 after_undefined=[\"- Undefined name 'round' at 2:11\"]",
+   "ok": true
+  },
+  {
+   "label": "divmod：文档未声明的主张要有实测支撑（冻结语料 0 处 `name(`）",
+   "got": 0,
+   "want": 0,
+   "why": "实得 []",
+   "ok": true
+  },
+  {
+   "label": "divmod：文档未声明 ⇒ 改后仍须被拒（半径不外溢）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "after_rc=1 after_undefined=[\"- Undefined name 'divmod' at 2:11\"]",
+   "ok": true
+  },
+  {
+   "label": "bytes：文档未声明的主张要有实测支撑（冻结语料 0 处 `name(`）",
+   "got": 0,
+   "want": 0,
+   "why": "实得 []",
+   "ok": true
+  },
+  {
+   "label": "bytes：文档未声明 ⇒ 改后仍须被拒（半径不外溢）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "after_rc=1 after_undefined=[\"- Undefined name 'bytes' at 2:11\"]",
+   "ok": true
+  },
+  {
+   "label": "canary 五格必须同时成立（条数也要钉住，空 canary 不算绿）",
+   "got": [
+    5,
+    true
+   ],
+   "want": [
+    5,
+    true
+   ],
+   "why": "{\"three_added_names_now_accepted\": true, \"six_undocumented_builtins_still_rejected\": true, \"red_moves_only_in_name_table\": true, \"doc_citation_lines_measured_not_copied\": true, \"undocumented_names_have_zero_doc_call_sites\": true}",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "note": "只补名称面：产物里对这些调用的翻译沿用既有 codegen（本环未动 codegen）；六个未声明名保持被拒，是本环「半径限已声明未实现」的反向证据",
+ "at_utc": "2026-09-28T03:18:37+00:00"
+}

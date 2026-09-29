@@ -1,0 +1,142 @@
+{
+ "started": "2026-09-28T02:09:39+00:00",
+ "new_test_file": "tests/test_loop_20260927_polish_r4.py",
+ "identity": {
+  "work_type_checker_sha": "ff9e8821cb22",
+  "snap_type_checker_sha": "27a3408faad2",
+  "snap_tree": ".fist-loop-20260927/verify_r4_prefix_snap"
+ },
+ "lane_work": {
+  "rc": 0,
+  "counts": {
+   "passed": 20,
+   "failed": 0,
+   "error": 0
+  },
+  "summary": "20 passed",
+  "red": [],
+  "tail": [
+   "PASSED tests/test_loop_20260927_polish_r4.py::test_usage_doc_does_not_claim_pyd_reuse",
+   "PASSED tests/test_loop_20260927_polish_r4.py::test_bug73_card_present_in_ledger",
+   "20 passed in 7.00s"
+  ]
+ },
+ "lane_prefix_code": {
+  "rc": 1,
+  "counts": {
+   "passed": 5,
+   "failed": 15,
+   "error": 0
+  },
+  "summary": "15 failed",
+  "red": [
+   "test_bug73_card_present_in_ledger",
+   "test_cli_check_only_face[V61a]",
+   "test_cli_check_only_face[V61b]",
+   "test_cli_check_only_face[V61c]",
+   "test_cli_check_only_face[V61e]",
+   "test_cli_check_only_face[V62a]",
+   "test_cli_check_only_face[V62b]",
+   "test_cli_check_only_face[V62e]",
+   "test_cli_check_only_face[V63a]",
+   "test_cli_check_only_face[V63b]",
+   "test_cli_check_only_face[V63c]",
+   "test_cli_check_only_face[V64a]",
+   "test_cli_check_only_face[V64c]",
+   "test_cli_check_only_face[V64d]",
+   "test_usage_doc_does_not_claim_pyd_reuse"
+  ],
+  "tail": [
+   "FAILED tests/test_loop_20260927_polish_r4.py::test_usage_doc_does_not_claim_pyd_reuse",
+   "FAILED tests/test_loop_20260927_polish_r4.py::test_bug73_card_present_in_ledger",
+   "15 failed, 5 passed in 7.73s"
+  ]
+ },
+ "doc_predicate": {
+  "before_text_fails": true,
+  "current_text_passes": true,
+  "before_copy_on_disk": true
+ },
+ "collect_after_locks": 1976,
+ "previous_round_collect_floor": 1956,
+ "self_checks": [
+  {
+   "label": "两条道的产品码必须是两棵树（身份探针）",
+   "got": true,
+   "want": true,
+   "why": "work=ff9e8821cb22 snap=27a3408faad2",
+   "ok": true
+  },
+  {
+   "label": "新锁文件在仓库 tests/ 里（不是只活在 .fist-loop）",
+   "got": "tests",
+   "want": "tests",
+   "why": "永久锁的位置",
+   "ok": true
+  },
+  {
+   "label": "A 工作区道：新锁全绿且恰 20 条",
+   "got": [
+    20,
+    0
+   ],
+   "want": [
+    20,
+    0
+   ],
+   "why": "20 passed",
+   "ok": true
+  },
+  {
+   "label": "B 修前道：必须出现红（否则新锁不承重）",
+   "got": true,
+   "want": true,
+   "why": "{\"passed\": 5, \"failed\": 15, \"error\": 0}",
+   "ok": true
+  },
+  {
+   "label": "B 道的红要落在 CLI 探针上（逐条点名）",
+   "got": true,
+   "want": true,
+   "why": "[\"test_cli_check_only_face[V61a]\", \"test_cli_check_only_face[V61b]\", \"test_cli_check_only_face[V61c]\", \"test_cli_check_only_face[V61e]\", \"test_cli_check_only_face[V62a]\", \"test_cli_check_only_face[V62b]\", \"test_cli_check_only_face[V62e]\", \"test_cli_check_only_face[V63a]\"]",
+   "ok": true
+  },
+  {
+   "label": "B 道的红里必须有文档口径锁（旧文档在那棵树里）",
+   "got": true,
+   "want": true,
+   "why": "[\"test_bug73_card_present_in_ledger\", \"test_cli_check_only_face[V61a]\", \"test_cli_check_only_face[V61b]\", \"test_cli_check_only_face[V61c]\", \"test_cli_check_only_face[V61e]\", \"test_cli_check_only_face[V62a]\", \"test_cli_check_only_face[V62b]\", \"test_cli_check_only_face[V62e]\"]",
+   "ok": true
+  },
+  {
+   "label": "C 合成违例道：改前正文必须被谓词判假（锁能红）",
+   "got": false,
+   "want": false,
+   "why": "归档 USAGE.md.before_polish",
+   "ok": true
+  },
+  {
+   "label": "C 正例道：现文必须被谓词判真（不误抓）",
+   "got": true,
+   "want": true,
+   "why": "docs/USAGE.md 现文",
+   "ok": true
+  },
+  {
+   "label": "收集数只升不降（新锁确实进了仓库收集面）",
+   "got": true,
+   "want": true,
+   "why": "现收集 1976 / 上一环 1956 + 新锁 20",
+   "ok": true
+  },
+  {
+   "label": "新文件被收集到的 node 恰为 20",
+   "got": 20,
+   "want": 20,
+   "why": "[\"tests/test_loop_20260927_polish_r4.py\"]",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T02:09:59+00:00"
+}

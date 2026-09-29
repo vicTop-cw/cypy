@@ -1,0 +1,4 @@
+def main() -> int:
+    let fh = open("data.txt")
+    print(fh)
+    return 0

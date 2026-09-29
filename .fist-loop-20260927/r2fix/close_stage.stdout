@@ -1,0 +1,17 @@
+T0r56.1.1 law=L1 BUG-44：struct 的 @staticmethod/@classmethod 不得注入 self，binding(False) 只挂绑定方法 ov=pass verify=ok err=none
+T0r56.1.2 law=L1 BUG-44：struct 的 @staticmethod/@classmethod 不得注入 self，binding(False) 只挂绑定方法 ov=pass verify=ok err=none
+T0r56.2.1 law=L2 BUG-45：= __implicit_default__ 脱糖成 Type.__implicit_default__()，无注解时带行列诊断 ov=pass verify=ok err=none
+T0r56.2.2 law=L2 BUG-45：= __implicit_default__ 脱糖成 Type.__implicit_default__()，无注解时带行列诊断 ov=pass verify=ok err=none
+T0r56.3.1 law=L3 BUG-39：顶层 return 必须非零退出并带行列，函数内 return 形状不变 ov=pass verify=ok err=none
+T0r56.3.2 law=L3 BUG-39：顶层 return 必须非零退出并带行列，函数内 return 形状不变 ov=pass verify=ok err=none
+T0r56.4.1 law=L4 BUG-35：解析/生成异常与 I/O 失败分桶，行列不得丢（深嵌套守卫另账） ov=pass verify=ok err=none
+T0r56.4.2 law=L4 BUG-35：解析/生成异常与 I/O 失败分桶，行列不得丢（深嵌套守卫另账） ov=pass verify=ok err=none
+T0r56.5.1 law=L5 BUG-46：hook install/status 口径一致（都限定当前进程），docs/USAGE.md 同步收窄 ov=pass verify=ok err=none
+T0r56.5.2 law=L5 BUG-46：hook install/status 口径一致（都限定当前进程），docs/USAGE.md 同步收窄 ov=pass verify=ok err=none
+T0r56.6.1 law=L6 BUG-47：cypy_hook 包级暴露 install_hook/uninstall_hook/is_hook_installed 且 __all__ 对齐 ov=pass verify=ok err=none
+T0r56.6.2 law=L6 BUG-47：cypy_hook 包级暴露 install_hook/uninstall_hook/is_hook_installed 且 __all__ 对齐 ov=pass verify=ok err=none
+T0r56.7.1 law=L7 三套基线与改动半径：pytest ≥1883、自研 47/47、e2e 25/25、HEAD 仍 17d68b4、亲笔行 lint 零违例 ov=pass verify=ok err=none
+T0r56.7.2 law=L7 三套基线与改动半径：pytest ≥1883、自研 47/47、e2e 25/25、HEAD 仍 17d68b4、亲笔行 lint 零违例 ov=pass verify=ok err=none
+T0r56.8.1 law=L8 锁死承重：6 单回退矩阵逐单转红、零混因、对照仍绿、15 条全收集，且有必然违例自检 ov=pass verify=ok err=none
+T0r56.8.2 law=L8 锁死承重：6 单回退矩阵逐单转红、零混因、对照仍绿、15 条全收集，且有必然违例自检 ov=pass verify=ok err=none
+closed=16/16 failed=none

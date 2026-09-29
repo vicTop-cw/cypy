@@ -1,0 +1,132 @@
+==============================================================================
+G10_generic_trait | op=typecheck | stage=parse | errors=1
+  ERR: Expected increased indentation at line 5. Expected 8, got 0
+==============================================================================
+G10_generic_trait | op=codegen | stage=parse | errors=1
+  ERR: Expected increased indentation at line 5. Expected 8, got 0
+  code_len=0
+  AST-ERR ValueError: Expected increased indentation at line 5. Expected 8, got 0
+==============================================================================
+G11_call_undeclared_generic | op=typecheck | stage=ok | errors=1
+  ERR: Undefined name 'mystery' at 2:12
+==============================================================================
+G11_call_undeclared_generic | op=codegen | stage=typecheck | errors=1
+  ERR: Undefined name 'mystery' at 2:12
+  code_len=0
+  AST body kinds=['FuncDef']
+==============================================================================
+G12_generic_return_mismatch | op=typecheck | stage=ok | errors=0
+==============================================================================
+G12_generic_return_mismatch | op=codegen | stage=ok | errors=0
+  code_len=813
+  CODE: __all__ = ["identity", "f"]
+  CODE: def identity(x):
+  CODE: def f():
+  CODE:     s: str = (int(), identity('Alice'))[1]
+  AST body kinds=['FuncDef', 'FuncDef']
+==============================================================================
+G13_nested_generic | op=typecheck | stage=ok | errors=0
+==============================================================================
+G13_nested_generic | op=codegen | stage=ok | errors=0
+  code_len=835
+  CODE: __all__ = ["identity", "f"]
+  CODE: def identity(x):
+  CODE: def f():
+  CODE:     y: list = identity[list[int]](xs)
+  AST body kinds=['FuncDef', 'FuncDef']
+==============================================================================
+G14_generic_struct | op=typecheck | stage=ok | errors=0
+==============================================================================
+G14_generic_struct | op=codegen | stage=ok | errors=0
+  code_len=885
+  CODE: cdef class Wrap:
+  CODE:     cdef public object value
+  CODE:     def __init__(self, value):
+  CODE: def f():
+  AST body kinds=['StructDef', 'FuncDef']
+    StructDef name=Wrap type_params=None
+==============================================================================
+G15_typeparam_used_in_body | op=typecheck | stage=ok | errors=0
+==============================================================================
+G15_typeparam_used_in_body | op=codegen | stage=ok | errors=0
+  code_len=781
+  CODE: def dup(x):
+  CODE: def f():
+  AST body kinds=['FuncDef', 'FuncDef']
+==============================================================================
+G1_identity_int | op=typecheck | stage=ok | errors=0
+==============================================================================
+G1_identity_int | op=codegen | stage=ok | errors=0
+  code_len=808
+  CODE: __all__ = ["identity", "f"]
+  CODE: def identity(x):
+  CODE: def f():
+  CODE:     n: int = (int(), identity(42))[1]
+  AST body kinds=['FuncDef', 'FuncDef']
+==============================================================================
+G2_identity_str | op=typecheck | stage=ok | errors=0
+==============================================================================
+G2_identity_str | op=codegen | stage=ok | errors=0
+  code_len=813
+  CODE: __all__ = ["identity", "f"]
+  CODE: def identity(x):
+  CODE: def f():
+  CODE:     s: str = (str(), identity('Alice'))[1]
+  AST body kinds=['FuncDef', 'FuncDef']
+==============================================================================
+G3_infer_list | op=typecheck | stage=ok | errors=0
+==============================================================================
+G3_infer_list | op=codegen | stage=ok | errors=0
+  code_len=820
+  CODE: def get_first(items):
+  CODE: def f():
+  AST body kinds=['FuncDef', 'FuncDef']
+==============================================================================
+G4_bad_constraint | op=typecheck | stage=ok | errors=1
+  ERR: Generic constraint violation: type 'str' does not satisfy constraint 'int | float' (allowed: int | float) for parameter 'T', in call to 'process' declared at line 1, col 5, reported at line 6, col 12
+==============================================================================
+G4_bad_constraint | op=codegen | stage=typecheck | errors=1
+  ERR: Generic constraint violation: type 'str' does not satisfy constraint 'int | float' (allowed: int | float) for parameter 'T', in call to 'process' declared at line 1, col 5, reported at line 6, col 12
+  code_len=0
+  AST body kinds=['FuncDef', 'FuncDef']
+==============================================================================
+G5_ok_constraint | op=typecheck | stage=ok | errors=0
+==============================================================================
+G5_ok_constraint | op=codegen | stage=ok | errors=0
+  code_len=798
+  CODE: def process(value):
+  CODE: def f():
+  AST body kinds=['FuncDef', 'FuncDef']
+==============================================================================
+G6_generic_class | op=typecheck | stage=parse | errors=1
+  ERR: Expected COLON, got LT at 1:10
+==============================================================================
+G6_generic_class | op=codegen | stage=parse | errors=1
+  ERR: Expected COLON, got LT at 1:10
+  code_len=0
+  AST-ERR ValueError: Expected COLON, got LT at 1:10
+==============================================================================
+G7_multi_params | op=typecheck | stage=parse | errors=1
+  ERR: Unexpected token COMMA at 6:34
+==============================================================================
+G7_multi_params | op=codegen | stage=parse | errors=1
+  ERR: Unexpected token COMMA at 6:34
+  code_len=0
+  AST-ERR ValueError: Unexpected token COMMA at 6:34
+==============================================================================
+G8_arity_mismatch | op=typecheck | stage=ok | errors=1
+  ERR: Return type mismatch: expected int, got tuple[int, object] at 7:1
+==============================================================================
+G8_arity_mismatch | op=codegen | stage=typecheck | errors=1
+  ERR: Return type mismatch: expected int, got tuple[int, object] at 7:1
+  code_len=0
+  AST body kinds=['FuncDef', 'FuncDef']
+==============================================================================
+G9_typearg_vs_param | op=typecheck | stage=ok | errors=1
+  ERR: Return type mismatch: expected int, got str at 7:1
+==============================================================================
+G9_typearg_vs_param | op=codegen | stage=typecheck | errors=1
+  ERR: Return type mismatch: expected int, got str at 7:1
+  code_len=0
+  AST body kinds=['FuncDef', 'FuncDef']
+CONCLUSION probe_cases=15

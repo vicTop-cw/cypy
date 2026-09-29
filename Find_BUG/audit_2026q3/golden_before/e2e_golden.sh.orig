@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+# ============================================================================
+# scripts/e2e_golden.sh —— Cypy 端到端 golden 外部判据（非 LLM 锚点）
+#
+# 与 Pentad/Tnr 同构：真跑 cypyc run examples/*.cypy，剥离 CLI 横幅行后
+# 与 golden 逐字 diff。语义：PASS/FAIL/RUNFAIL/UNREG/WARN 同 Tnr 版。
+# 用法：bash scripts/e2e_golden.sh [--update]
+# 退出码：0 = 无 FAIL；1 = 有 FAIL 或判据空转。
+# ============================================================================
+set -u
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
+
+UPDATE=0
+[ "${1:-}" = "--update" ] && UPDATE=1
+
+# cypyc 经 python -m 调用（源码仓库形态，无独立可执行）
+CY() { python -m cypyc "$@"; }
+
+# 剥离 cypyc run 自身的横幅/状态行，只留程序真实 stdout
+strip_debug() {
+  grep -v -e '^Running ' \
+         -e '^Output directory: ' \
+         -e '^\[OK\] Execution successful' \
+         -e '^  Output: ' \
+         -e '^============' \
+         -e '^  Cypy Transpiler' \
+         -e '^\[[0-9]/3\]' \
+         -e '^\[INFO\]' \
+         -e '^\[OK\] Transpiled successfully' \
+         -e '^\[OK\] Compiled successfully' \
+         -e '^$'
+}
+
+is_deadbeef() {
+  local f="$1" sz
+  sz=$(wc -c < "$f" 2>/dev/null | tr -d ' ')
+  [ "$sz" = "4" ] && [ "$(od -An -tx1 -v "$f" | tr -d ' \n')" = "deadbeef" ]
+}
+
+pass=0; fail=0; runfail=0; warn=0
+report=""
+
+for src in examples/*.cypy; do
+  [ -f "$src" ] || continue
+  case "$(basename "$src")" in _*) continue ;; esac
+  golden="${src%.cypy}.out"
+  name="${src#examples/}"
+
+  raw="$(CY run "$src" 2>&1)"
+  code=$?
+  if [ $code -ne 0 ]; then
+    runfail=$((runfail+1))
+    err_line=$(printf '%s\n' "$raw" | grep -m1 -i -e 'error' -e 'panic' -e 'Traceback' || echo "(无错误摘要)")
+    report="${report}RUNFAIL ${name}  [run exit=${code}] ${err_line}\n"
+    continue
+  fi
+
+  actual="$(printf '%s\n' "$raw" | strip_debug)"
+
+  if [ "$UPDATE" -eq 1 ]; then
+    printf '%s\n' "$actual" > "$golden"
+    pass=$((pass+1))
+    report="${report}GEN   ${name}  -> ${golden}\n"
+    continue
+  fi
+
+  if [ ! -f "$golden" ]; then
+    runfail=$((runfail+1))
+    report="${report}UNREG ${name}  [未注册 golden：可运行但无基准，人工审定后 --update 落库]\n"
+    continue
+  fi
+  if is_deadbeef "$golden"; then
+    fail=$((fail+1))
+    report="${report}FAIL  ${name}  [防伪死码哨兵: ${golden} 是占位文件，不是基准]\n"
+    continue
+  fi
+
+  expected="$(cat "$golden")"
+  if [ "$actual" = "$expected" ]; then
+    if [ -z "$actual" ]; then
+      warn=$((warn+1))
+      report="${report}WARN  ${name}  [golden 为空，基准无约束力]\n"
+    else
+      pass=$((pass+1))
+      report="${report}PASS  ${name}\n"
+    fi
+  else
+    fail=$((fail+1))
+    first_diff=$(diff <(printf '%s\n' "$expected") <(printf '%s\n' "$actual") | grep -m1 -e '^< ' -e '^> ' || echo "")
+    report="${report}FAIL  ${name}  [输出与 golden 不一致] ${first_diff}\n"
+  fi
+done
+
+if [ $pass -eq 0 ] && [ $fail -eq 0 ] && [ $runfail -eq 0 ] && [ $warn -eq 0 ]; then
+  echo "[e2e-golden] 未发现任何 examples/*.cypy，判据空转——FAIL"
+  exit 1
+fi
+
+printf '%b' "$report"
+echo "[e2e-golden] summary: PASS=${pass} FAIL=${fail} UNREG/RUNFAIL=${runfail} WARN=${warn}"
+[ "$fail" -eq 0 ] || exit 1
+exit 0

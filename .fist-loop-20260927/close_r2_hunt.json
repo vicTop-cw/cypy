@@ -1,0 +1,186 @@
+{
+ "key": "r2_hunt",
+ "root_task": "T0r55",
+ "assignee": "cypy-hunter",
+ "stage": "R2-寻虫",
+ "forbid": "在本环修产品码；改 PROJECT-SPEC/SYNTAX 冻结语义；弱化或删除既有测试；git push/删文件/暂存别人的改动；把没做的写成 done；替另一条 lane 的主张签完成",
+ "laws": [
+  {
+   "name": "狩猎面清点与动态入口白名单（五个未覆盖模块的符号台账）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r2_scan.json",
+     "dynamic_entry_whitelist",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r2_scan.json",
+     "orphan_candidates",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "CLI 声明面逐子命令逐旗标打到调用面（含 --help 与 README 声称）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r2_scan.json",
+     "cli_face",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r2_declared.json",
+     "declared_subcommands",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "零调用点符号扫描与 grep 反证（死码 vs 反射入口分栏）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r2_scan.json",
+     "indexed_files",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/r2_hunt_body.md",
+     "死码候选",
+     6000
+    ]
+   ]
+  },
+  {
+   "name": "AST 往返与产物差分对拍（同源码两次编译一致性）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r2_declared.json",
+     "unstable_after_strip",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r2_declared.json",
+     "raw_unstripped_differs",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "fuzz 变异预算内执行与失效面记录",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r2_fuzz.json",
+     "mutants_run",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/hunt_r2_fuzz.json",
+     "silent_defects",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "最小复现与确诊（每条候选成对对照：正例必抓＋固定反例必不抓）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r2_controls.json",
+     "hook_durability",
+     2400
+    ],
+    [
+     ".fist-loop-20260927/hunt_r2_controls.json",
+     "watch_triggers",
+     2400
+    ]
+   ]
+  },
+  {
+   "name": "入账与 quick win 判定（BUG-46 起，静默型优先占号）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r2_file_bugs.json",
+     "BUG-48",
+     1500
+    ],
+    [
+     "memory/bugs.md",
+     "## BUG-46",
+     4000
+    ]
+   ]
+  },
+  {
+   "name": "狩猎报告与转结（含另一条 lane 主张的可观测性复核）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r2_baselines.json",
+     "\"suite\"",
+     480
+    ],
+    [
+     ".fist-loop-20260927/hunt_r2_file_bugs.json",
+     "bug_list_tail",
+     1500
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "狩猎面清点：五模块符号台账与动态入口白名单",
+   ".fist-loop-20260927/hunt_r2_scan.json",
+   "dynamic_entry_whitelist"
+  ],
+  [
+   "CLI 声明面：6 子命令 help + hook 四个子命令真调用",
+   ".fist-loop-20260927/hunt_r2_declared.json",
+   "declared_subcommands"
+  ],
+  [
+   "零引用符号扫描：1368 文件索引 + grep 反证",
+   ".fist-loop-20260927/hunt_r2_scan.json",
+   "indexed_files"
+  ],
+  [
+   "产物差分：剥掉文档承诺的可变量后是否可复现",
+   ".fist-loop-20260927/hunt_r2_declared.json",
+   "unstable_after_strip"
+  ],
+  [
+   "fuzz：预算内变异专找 rc=0 + 横幅 + 产物无符号的静默型",
+   ".fist-loop-20260927/hunt_r2_fuzz.json",
+   "mutants_run"
+  ],
+  [
+   "确诊控制：hook 跨进程状态 + watch 两种触发形状",
+   ".fist-loop-20260927/hunt_r2_controls.json",
+   "hook_durability"
+  ],
+  [
+   "入账：BUG-46/47/48 三条静默型占号",
+   ".fist-loop-20260927/hunt_r2_file_bugs.json",
+   "BUG-48"
+  ],
+  [
+   "报告与转结：三套基线 + 另一条 lane 主张的复核",
+   ".fist-loop-20260927/hunt_r2_baselines.json",
+   "\"suite\""
+  ]
+ ],
+ "root_deliverable": "R2-寻虫 交付：{REPORT}；五模块符号台账 + CLI 声明面逐子命令调用面复算 + fuzz 预算内变异 + 跨进程确诊控制，确诊并入账 3 条静默型缺陷（BUG-46 hook install 报 [OK] 但零持久化、BUG-47 docs 声明的包级 API 未再导出、BUG-48 watch 只印横幅不重编译），另有 3 项观察按口径转结不占号；本轮判据自身缺陷 5 条全部当场修回并留档",
+ "root_marker": "[selfdrive-hunt]",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/hunt_r2_baselines.json",
+   "\"pytest\"",
+   300
+  ],
+  [
+   ".fist-loop-20260927/hunt_r2_fuzz.json",
+   "mutants_run",
+   300
+  ]
+ ],
+ "root_verify_reason": "三条入账缺陷都有：文档声明句 file:line、跨进程可复跑命令、实现来历 file:line、以及『什么现象不算证明』的对照；三套基线当场 L4 通过且未回落"
+}

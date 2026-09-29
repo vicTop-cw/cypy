@@ -1,0 +1,724 @@
+{
+ "started_z": "2026-09-29T06:57:17Z",
+ "ns": "cypy-loop-20260929",
+ "entry_gate": {
+  "pass": true,
+  "reasons": [],
+  "observed": {
+   "gate": "CONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0",
+   "pytest_tail": "sed in 406.00s (0:06:46) =======================\npytest_rc=0",
+   "native": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+   "e2e": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+  }
+ },
+ "refusals": [
+  {
+   "node": "T0r116.1.1",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.1.1:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.1.1",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.1.1:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.1.1",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.1.1",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.1.1",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.1.2",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.1.2:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.1.2",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.1.2:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.1.2",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.1.2",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.1.2",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.2.1",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.2.1:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.2.1",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.2.1:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.2.1",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.2.1",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.2.1",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.2.2",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.2.2:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.2.2",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.2.2:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.2.2",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.2.2",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.2.2",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.3.1",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.3.1:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.3.1",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.3.1:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.3.1",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.3.1",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.3.1",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.3.2",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.3.2:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.3.2",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.3.2:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.3.2",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.3.2",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.3.2",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.1.3",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.1.3:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.1.3",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.1.3:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.1.3",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.1.3",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.1.3",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.2.3",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.2.3:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.2.3",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.2.3:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.2.3",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.2.3",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.2.3",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.3.3",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.3.3:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.3.3",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.3.3:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.3.3",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.3.3",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.3.3",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.4.1",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.4.1:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.4.1",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.4.1:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.4.1",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.4.1",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.4.1",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.4.2",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.4.2:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.4.2",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.4.2:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.4.2",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.4.2",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.4.2",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.4.3",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.4.3:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r116.4.3",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r116.4.3:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r116.4.3",
+   "tool": "execute",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute\"}}"
+  },
+  {
+   "node": "T0r116.4.3",
+   "tool": "submit",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [待验收]\"}}"
+  },
+  {
+   "node": "T0r116.4.3",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失\"}}"
+  },
+  {
+   "node": "T0r116.1",
+   "tool": "omega_result_verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"任务 [T0r116.1] 尚无交付物（deliverable 为空），无可复验成果\"}}"
+  },
+  {
+   "node": "T0r116.1",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r116.1] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}"
+  },
+  {
+   "node": "T0r116.2",
+   "tool": "omega_result_verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"任务 [T0r116.2] 尚无交付物（deliverable 为空），无可复验成果\"}}"
+  },
+  {
+   "node": "T0r116.2",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r116.2] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}"
+  },
+  {
+   "node": "T0r116.3",
+   "tool": "omega_result_verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"任务 [T0r116.3] 尚无交付物（deliverable 为空），无可复验成果\"}}"
+  },
+  {
+   "node": "T0r116.3",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r116.3] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}"
+  },
+  {
+   "node": "T0r116.4",
+   "tool": "omega_result_verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"任务 [T0r116.4] 尚无交付物（deliverable 为空），无可复验成果\"}}"
+  },
+  {
+   "node": "T0r116.4",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r116.4] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}"
+  },
+  {
+   "node": "T0r116",
+   "tool": "omega_result_verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"任务 [T0r116] 尚无交付物（deliverable 为空），无可复验成果\"}}"
+  },
+  {
+   "node": "T0r116",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r116] 尚未做成果复验，请先由验证者执行 omega_result_verify\"}}"
+  }
+ ],
+ "nodes": {
+  "T0r116.1.1": {
+   "kind": "face",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "SHAPE {}\r\nBY_FILE {}\r\nCONCLUSION files=77 parse_fail=0 callsites=0 risk_n=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.1.2": {
+   "kind": "face",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "SPEC cypy.generic.callsite cases=20 passed=20\r\nCONCLUSION specs=1 cases=20 passed=20 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.2.1": {
+   "kind": "face",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "SPEC cypy.generic.callsite cases=20 passed=20\r\nCONCLUSION specs=1 cases=20 passed=20 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.2.2": {
+   "kind": "face",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "SPEC cypy.generic.callsite cases=20 passed=20\r\nCONCLUSION specs=1 cases=20 passed=20 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.3.1": {
+   "kind": "face",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "y.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.3.2": {
+   "kind": "face",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "=======================\r\nTotal: 47 | Passed: 47 | Failed: 0 | Skipped: 0\r\nSuccess Rate: 100.00%\r\n\r\n✓ Passed: 47\r\n✗ Failed: 0\r\n~ Skipped: 0\r\n⏱  Elapsed: 60.06s\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.1.3": {
+   "kind": "boundary-real",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "SPEC cypy.generic.callsite cases=20 passed=20\r\nCONCLUSION specs=1 cases=20 passed=20 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.2.3": {
+   "kind": "boundary-real",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "SPEC cypy.generic.callsite cases=20 passed=20\r\nCONCLUSION specs=1 cases=20 passed=20 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.3.3": {
+   "kind": "boundary-declared-na",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "y.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.4.1": {
+   "kind": "boundary-declared-na",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "y.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.4.2": {
+   "kind": "boundary-declared-na",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "y.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  },
+  "T0r116.4.3": {
+   "kind": "boundary-declared-na",
+   "status_before": "待验收",
+   "steps": {
+    "omega_spec_create": "refused",
+    "omega_spec_review": "refused",
+    "execute": "refused",
+    "run_check": {
+     "state": "passed",
+     "ok": true,
+     "stdout_tail": "y.pattern.positional cases=19 passed=19\r\nSPEC cypy.type.slice cases=8 passed=8\r\nCONCLUSION specs=4 cases=71 passed=71 failed=0 refused=0 accuracy=100.00% rc=0\r\n"
+    },
+    "omega_result_verify": "ok",
+    "submit": "refused",
+    "verify": "refused"
+   },
+   "status_after": "待验收",
+   "assignee": "cypy-selfdrive-agent"
+  }
+ },
+ "loop": {
+  "create": "{\"name\": \"cypy-selfdrive-r10\", \"steps\": [\"advance\", \"bugfind\", \"fix_and_merge\", \"verify\", \"polish\", \"advance\"], \"current_idx\": 0, \"round\": 0, \"max_rounds\": 6, \"stop_on_goal\": false, \"stop_on_exceeded\": false, \"created_at\": \"2026-09-29T06:57:18Z\", \"updated_at\":",
+  "tick": "{\"__error__\": {\"code\": -32000, \"message\": \"loop_tick: 参数名不被接受 「namespace」应为「name」（该工具声明的参数：name, project_health_grade, blocked_tasks, current_test_count, current_open_bug_count）。BUG-23：这类键过去被静默忽略，任务会落进默认命名空间而返回体看不出来。\"}}"
+ },
+ "plan_raw": "",
+ "root_reused": "T0r116",
+ "laya": "{\"available\": false, \"decision\": {\"source\": \"fallback\", \"complex\": true, \"feature_route\": \"拆解调度\", \"split_n\": 4, \"splits_per_family\": [{\"family\": \"拆解调度\", \"score\": 2}, {\"family\": \"深度验证\", \"score\": 0}, {\"family\": \"预算成本\", \"score\": 0}, {\"family\": \"可靠性容错\", \"score\": 0}, {\"family\": \"排程路由\", \"score\": 0}, {\"family\": \"目标校验\", \"score\": 0}, {\"family\": \"代码质量扫描\", \"score\": 2}, {\"family\": \"自进化强化\", \"score\": 0}], \"reas",
+ "ledger_open_measured": 34,
+ "tree_readback": {
+  "root": "T0r116",
+  "rows": 17,
+  "leaves": 12,
+  "branches": 4,
+  "general": [
+   "T0r116.1.1",
+   "T0r116.1.2",
+   "T0r116.2.1",
+   "T0r116.2.2",
+   "T0r116.3.1",
+   "T0r116.3.2"
+  ],
+  "boundary": [
+   "T0r116.1.3",
+   "T0r116.2.3",
+   "T0r116.3.3",
+   "T0r116.4.1",
+   "T0r116.4.2",
+   "T0r116.4.3"
+  ],
+  "unclassified": []
+ },
+ "faces_covered": [
+  "修复·分析侧",
+  "修复·生成侧",
+  "修复·解析侧",
+  "判据",
+  "推进/寻虫",
+  "验证"
+ ],
+ "faces_missing": [],
+ "branch_final": {
+  "T0r116.1": "拆分中",
+  "T0r116.2": "拆分中",
+  "T0r116.3": "拆分中",
+  "T0r116.4": "拆分中"
+ },
+ "root_final": {
+  "execute": "{\"__error__\": {\"code\": -32000, \"message\": \"Omega 强验证门禁：任务 [T0r116] 尚未创建语料，请先由语料创建者执行 omega_spec_create\"}}",
+  "submit": "{\"__error__\": {\"code\": -32000, \"message\": \"非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]\"}}",
+  "final": "拆分中"
+ },
+ "root_final_status": "拆分中",
+ "post_state": {
+  "pending_leaves": 0,
+  "non_terminal": [
+   [
+    "T0r116.1",
+    "拆分中"
+   ],
+   [
+    "T0r116.1.1",
+    "待验收"
+   ],
+   [
+    "T0r116.1.2",
+    "待验收"
+   ],
+   [
+    "T0r116.1.3",
+    "待验收"
+   ],
+   [
+    "T0r116.2",
+    "拆分中"
+   ],
+   [
+    "T0r116.2.1",
+    "待验收"
+   ],
+   [
+    "T0r116.2.2",
+    "待验收"
+   ],
+   [
+    "T0r116.2.3",
+    "待验收"
+   ],
+   [
+    "T0r116.3",
+    "拆分中"
+   ],
+   [
+    "T0r116.3.1",
+    "待验收"
+   ],
+   [
+    "T0r116.3.2",
+    "待验收"
+   ],
+   [
+    "T0r116.3.3",
+    "待验收"
+   ],
+   [
+    "T0r116.4",
+    "拆分中"
+   ],
+   [
+    "T0r116.4.1",
+    "待验收"
+   ],
+   [
+    "T0r116.4.2",
+    "待验收"
+   ],
+   [
+    "T0r116.4.3",
+    "待验收"
+   ]
+  ]
+ },
+ "call_log_error_rows": 0,
+ "rollup": {
+  "待验收": 12,
+  "拆分中": 4
+ },
+ "calls": 117,
+ "finished_z": "2026-09-29T06:58:24Z"
+}

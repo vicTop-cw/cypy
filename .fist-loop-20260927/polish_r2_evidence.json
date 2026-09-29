@@ -1,0 +1,59 @@
+{
+ "refuse": [],
+ "files": {
+  "cypyc/codegen/cython_generator.py": {
+   "CythonGenerator._visit_ExprStmt": {
+    "class_lineno": 31,
+    "definitions": [
+     {
+      "lineno": 1418,
+      "end_lineno": 1424,
+      "body_lines": 6
+     },
+     {
+      "lineno": 2084,
+      "end_lineno": 2098,
+      "body_lines": 14
+     }
+    ]
+   }
+  },
+  "cypyc/analyzer/scope_analyzer.py": {
+   "ScopeAnalyzer._visit_MetaBlock": {
+    "class_lineno": 38,
+    "definitions": [
+     {
+      "lineno": 484,
+      "end_lineno": 494,
+      "body_lines": 10
+     },
+     {
+      "lineno": 926,
+      "end_lineno": 931,
+      "body_lines": 5
+     }
+    ]
+   }
+  }
+ },
+ "live": {
+  "CythonGenerator._visit_ExprStmt": {
+   "class_dict_identity": true,
+   "live_firstlineno": 2084,
+   "candidates": [
+    1418,
+    2084
+   ]
+  },
+  "ScopeAnalyzer._visit_MetaBlock": {
+   "class_dict_identity": true,
+   "live_firstlineno": 926,
+   "candidates": [
+    484,
+    926
+   ]
+  }
+ },
+ "symbol_set": {},
+ "import_clean_rc": 0
+}

@@ -1,0 +1,279 @@
+{
+ "method": "per-ticket isolated revert（每次只回退一单的修复），外加一次全部回退作交叉参照",
+ "reverted_sites": [
+  {
+   "ticket": "BUG-16",
+   "file": "cypyc/parser/parser.py"
+  },
+  {
+   "ticket": "BUG-17",
+   "file": "cypyc/project/project_compiler.py"
+  },
+  {
+   "ticket": "BUG-19",
+   "file": "cypyc/codegen/cython_generator.py"
+  },
+  {
+   "ticket": "BUG-23",
+   "file": "cypy_bridge/pointer.py"
+  },
+  {
+   "ticket": "BUG-24",
+   "file": "cypy_hook/hook.py"
+  },
+  {
+   "ticket": "BUG-25",
+   "file": "cypy_bridge/compiler.py"
+  },
+  {
+   "ticket": "BUG-25",
+   "file": "cypy_bridge/compiler.py"
+  },
+  {
+   "ticket": "BUG-26",
+   "file": "cypy_bridge/compiler.py"
+  },
+  {
+   "ticket": "BUG-27",
+   "file": "cypyc/incremental/hot_reload.py"
+  },
+  {
+   "ticket": "BUG-28",
+   "file": "cypyc/utils/indent_detector.py"
+  },
+  {
+   "ticket": "BUG-28",
+   "file": "cypyc/utils/indent_detector.py"
+  },
+  {
+   "ticket": "BUG-29",
+   "file": "cypy_hook/hook.py"
+  },
+  {
+   "ticket": "BUG-18",
+   "file": "cypyc/incremental/incremental_manager.py"
+  },
+  {
+   "ticket": "BUG-21",
+   "file": "cypyc/analyzer/type_checker.py"
+  },
+  {
+   "ticket": "BUG-32",
+   "file": "cypyc/codegen/cython_generator.py"
+  },
+  {
+   "ticket": "BUG-14",
+   "file": "cypyc/codegen/type_mapper.py"
+  },
+  {
+   "ticket": "BUG-13",
+   "file": "tests/test_incremental.py"
+  },
+  {
+   "ticket": "BUG-15",
+   "file": "cypyc/parser/lexer.py"
+  },
+  {
+   "ticket": "BUG-20",
+   "file": "cypyc/analyzer/comptime_evaluator.py"
+  },
+  {
+   "ticket": "BUG-22",
+   "file": "cypyc/parser/lexer.py"
+  }
+ ],
+ "rows": [
+  {
+   "bug": "BUG-13",
+   "tests": 2,
+   "red_on_prefix_code": [
+    "test_bug13_digest_cost_is_judged_on_cpu_time_not_heap_dependent_wall"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": [
+    "test_bug13_other_timers_not_silently_loosened"
+   ]
+  },
+  {
+   "bug": "BUG-14",
+   "tests": 2,
+   "red_on_prefix_code": [
+    "test_bug14_one_declared_float_has_one_width_in_both_maps",
+    "test_bug14_no_single_precision_cast_survives_in_transpile"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": []
+  },
+  {
+   "bug": "BUG-15",
+   "tests": 2,
+   "red_on_prefix_code": [
+    "test_bug15_stray_double_backtick_does_not_swallow_rest_of_file"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": [
+    "test_bug15_real_triple_backtick_block_still_lexes_as_macro_block"
+   ]
+  },
+  {
+   "bug": "BUG-16",
+   "tests": 2,
+   "red_on_prefix_code": [
+    "test_bug16_value_struct_keeps_decorators_when_a_member_is_decorated"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": [
+    "test_bug16_struct_def_does_not_inherit_a_member_decorator"
+   ]
+  },
+  {
+   "bug": "BUG-17",
+   "tests": 2,
+   "red_on_prefix_code": [
+    "test_bug17_pick_extension_returns_none_for_unrelated_artifacts"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": [
+    "test_bug17_pick_extension_still_prefers_the_matching_artifact"
+   ]
+  },
+  {
+   "bug": "BUG-18",
+   "tests": 3,
+   "red_on_prefix_code": [
+    "test_bug18_changed_dependency_invalidates_the_importer"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": [
+    "test_bug18_unchanged_dependency_stays_a_cache_hit",
+    "test_bug18_dependency_without_any_cache_entry_is_still_changed"
+   ]
+  },
+  {
+   "bug": "BUG-19",
+   "tests": 1,
+   "red_on_prefix_code": [
+    "test_bug19_owned_import_is_inserted_below_cython_directives"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": []
+  },
+  {
+   "bug": "BUG-20",
+   "tests": 3,
+   "red_on_prefix_code": [
+    "test_bug20_comptime_can_evaluate_attribute_method_calls",
+    "test_bug20_unknown_attribute_method_degrades_to_none_without_raising"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": [
+    "test_bug20_builtin_name_calls_are_untouched"
+   ]
+  },
+  {
+   "bug": "BUG-21",
+   "tests": 1,
+   "red_on_prefix_code": [
+    "test_bug21_generic_impl_registers_the_base_type_name"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": []
+  },
+  {
+   "bug": "BUG-22",
+   "tests": 2,
+   "red_on_prefix_code": [
+    "test_bug22_string_prefixes_lex_as_one_string_token"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": [
+    "test_bug22_two_char_names_are_not_swallowed_as_prefixes"
+   ]
+  },
+  {
+   "bug": "BUG-23",
+   "tests": 2,
+   "red_on_prefix_code": [
+    "test_bug23_addr_of_void_p_returns_pointed_value_including_null"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": [
+    "test_bug23_addr_of_scalar_still_returns_storage_address"
+   ]
+  },
+  {
+   "bug": "BUG-24",
+   "tests": 1,
+   "red_on_prefix_code": [
+    "test_bug24_clear_all_cache_actually_removes_cached_files"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": []
+  },
+  {
+   "bug": "BUG-25",
+   "tests": 1,
+   "red_on_prefix_code": [
+    "test_bug25_generated_c_and_setup_are_written_as_utf8"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": []
+  },
+  {
+   "bug": "BUG-26",
+   "tests": 1,
+   "red_on_prefix_code": [
+    "test_bug26_artifact_scan_accepts_non_windows_extensions"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": []
+  },
+  {
+   "bug": "BUG-27",
+   "tests": 1,
+   "red_on_prefix_code": [
+    "test_bug27_delete_only_batch_does_not_blame_the_user_callback"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": []
+  },
+  {
+   "bug": "BUG-28",
+   "tests": 2,
+   "red_on_prefix_code": [
+    "test_bug28_normalize_preserves_structure_of_two_space_sources"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": [
+    "test_bug28_four_space_and_six_space_styles_unchanged"
+   ]
+  },
+  {
+   "bug": "BUG-29",
+   "tests": 1,
+   "red_on_prefix_code": [
+    "test_bug29_bare_hook_command_reports_usage_not_a_traceback"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": []
+  },
+  {
+   "bug": "BUG-32",
+   "tests": 3,
+   "red_on_prefix_code": [
+    "test_bug32_constraint_comment_echoes_declared_member_names",
+    "test_bug32_constraint_comment_resolves_subtype_members_to_base_names"
+   ],
+   "red_controls": [],
+   "green_on_prefix_code": [
+    "test_bug32_alias_still_takes_the_ruled_width"
+   ]
+  }
+ ],
+ "tickets_without_a_red": [],
+ "all_at_once": {
+  "failed_count": 20,
+  "tail": "======================== 20 failed, 18 passed in 1.59s ========================"
+ },
+ "baseline_passed": 32
+}

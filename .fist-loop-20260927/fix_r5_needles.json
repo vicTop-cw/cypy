@@ -1,0 +1,500 @@
+{
+ "started": "2026-09-28T10:58:58+00:00",
+ "ring_files_expected": [
+  "fix_r5_baselines.json",
+  "fix_r5_drivers_lint.json",
+  "fix_r5_impact.json",
+  "fix_r5_intake.json",
+  "fix_r5_ledger.json",
+  "fix_r5_locks.json",
+  "fix_r5_rc.json",
+  "fix_r5_revert.json"
+ ],
+ "ring_files_declared": [
+  "fix_r5_baselines.json",
+  "fix_r5_drivers_lint.json",
+  "fix_r5_impact.json",
+  "fix_r5_intake.json",
+  "fix_r5_ledger.json",
+  "fix_r5_locks.json",
+  "fix_r5_rc.json",
+  "fix_r5_revert.json"
+ ],
+ "off_ring_artifacts": [],
+ "pending_stub_artifacts": [],
+ "rows": [
+  {
+   "law": 1,
+   "file": ".fist-loop-20260927/fix_r5_intake.json",
+   "needle": "planned_keys",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 33507,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 1,
+   "file": ".fist-loop-20260927/fix_r5_intake.json",
+   "needle": "split_columns",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 33507,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 1,
+   "file": ".fist-loop-20260927/fix_r5_intake.json",
+   "needle": "legacy_open_ids",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 33507,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 2,
+   "file": ".fist-loop-20260927/fix_r5_locks.json",
+   "needle": "lock_red_before",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 54139,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 2,
+   "file": ".fist-loop-20260927/fix_r5_locks.json",
+   "needle": "lock_green_after",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 54139,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 2,
+   "file": ".fist-loop-20260927/fix_r5_locks.json",
+   "needle": "assertion_level_red_only",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 54139,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 3,
+   "file": ".fist-loop-20260927/fix_r5_rc.json",
+   "needle": "change_points",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 142086,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 3,
+   "file": ".fist-loop-20260927/fix_r5_rc.json",
+   "needle": "merged_root_causes",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 142086,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 3,
+   "file": ".fist-loop-20260927/fix_r5_rc.json",
+   "needle": "symbols_referenced",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 142086,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 4,
+   "file": ".fist-loop-20260927/fix_r5_revert.json",
+   "needle": "matrix",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 58656,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 4,
+   "file": ".fist-loop-20260927/fix_r5_revert.json",
+   "needle": "sha_restored",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 58656,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 4,
+   "file": ".fist-loop-20260927/fix_r5_revert.json",
+   "needle": "collateral",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 58656,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 5,
+   "file": ".fist-loop-20260927/fix_r5_impact.json",
+   "needle": "new_diagnostics",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 6843,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 5,
+   "file": ".fist-loop-20260927/fix_r5_impact.json",
+   "needle": "new_rejections",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 6843,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 5,
+   "file": ".fist-loop-20260927/fix_r5_impact.json",
+   "needle": "corpus_total",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 6843,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 6,
+   "file": ".fist-loop-20260927/fix_r5_baselines.json",
+   "needle": "floors",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 4352,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 6,
+   "file": ".fist-loop-20260927/fix_r5_baselines.json",
+   "needle": "three_systems_green",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 4352,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 6,
+   "file": ".fist-loop-20260927/fix_r5_baselines.json",
+   "needle": "radius",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 4352,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 7,
+   "file": ".fist-loop-20260927/fix_r5_ledger.json",
+   "needle": "closed_ids",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 32692,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 7,
+   "file": ".fist-loop-20260927/fix_r5_ledger.json",
+   "needle": "fixed_sections",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 32692,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 7,
+   "file": ".fist-loop-20260927/fix_r5_ledger.json",
+   "needle": "three_way",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 32692,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 8,
+   "file": ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "needle": "hard_violations",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 4465,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 8,
+   "file": ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "needle": "previous_round_soft_baseline",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 4465,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 8,
+   "file": ".fist-loop-20260927/fix_r5_drivers_lint.json",
+   "needle": "canary",
+   "min_chars": 2000,
+   "in_text": true,
+   "is_real_key": true,
+   "stub_artifact": false,
+   "file_chars": 4465,
+   "chars_ok": true,
+   "verdict": "real-key"
+  }
+ ],
+ "checked_len": 24,
+ "real_key_len": 24,
+ "per_law_real": {
+  "law1": 3,
+  "law2": 3,
+  "law3": 3,
+  "law4": 3,
+  "law5": 3,
+  "law6": 3,
+  "law7": 3,
+  "law8": 3
+ },
+ "pending_artifacts": [],
+ "prefix_canary": [
+  {
+   "file": "fix_r5_baselines.json",
+   "needle": "floors",
+   "prefix": "flo",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": "fix_r5_baselines.json",
+   "needle": "radius",
+   "prefix": "rad",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": "fix_r5_baselines.json",
+   "needle": "three_systems_green",
+   "prefix": "three_sys",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": "fix_r5_drivers_lint.json",
+   "needle": "canary",
+   "prefix": "can",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": "fix_r5_drivers_lint.json",
+   "needle": "hard_violations",
+   "prefix": "hard_vi",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": "fix_r5_drivers_lint.json",
+   "needle": "previous_round_soft_baseline",
+   "prefix": "previous_round",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": "fix_r5_impact.json",
+   "needle": "corpus_total",
+   "prefix": "corpus",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": "fix_r5_impact.json",
+   "needle": "new_diagnostics",
+   "prefix": "new_dia",
+   "substring_present": true,
+   "is_real_key": false
+  }
+ ],
+ "prefix_canary_len": 24,
+ "needle_verification_written_back": {
+  "checked_len": 24,
+  "missing_before": 0,
+  "false_substring_before": 0,
+  "artifacts_pending": [],
+  "artifacts_declared": [
+   "fix_r5_baselines.json",
+   "fix_r5_drivers_lint.json",
+   "fix_r5_impact.json",
+   "fix_r5_intake.json",
+   "fix_r5_ledger.json",
+   "fix_r5_locks.json",
+   "fix_r5_rc.json",
+   "fix_r5_revert.json"
+  ],
+  "off_ring_artifacts": [],
+  "pending_stub_artifacts": [],
+  "strict_rule_rejected_len": 0,
+  "canary_prefixes": 24,
+  "measured_at_utc": "2026-09-28T10:58:58+00:00"
+ },
+ "self_checks": [
+  {
+   "label": "扫描覆盖面 = 计划里 artifacts 声明总数（不手数）",
+   "got": 24,
+   "want": 24,
+   "why": "两路回加",
+   "ok": true
+  },
+  {
+   "label": "计划引用的判据件文件名 = 本环八件（寻虫环的 faces/declared/codegen/cli_face/book 混进来即红）",
+   "got": [
+    "fix_r5_baselines.json",
+    "fix_r5_drivers_lint.json",
+    "fix_r5_impact.json",
+    "fix_r5_intake.json",
+    "fix_r5_ledger.json",
+    "fix_r5_locks.json",
+    "fix_r5_rc.json",
+    "fix_r5_revert.json"
+   ],
+   "want": [
+    "fix_r5_baselines.json",
+    "fix_r5_drivers_lint.json",
+    "fix_r5_impact.json",
+    "fix_r5_intake.json",
+    "fix_r5_ledger.json",
+    "fix_r5_locks.json",
+    "fix_r5_rc.json",
+    "fix_r5_revert.json"
+   ],
+   "why": "多出来的：[]",
+   "ok": true
+  },
+  {
+   "label": "不合格 verdict 只允许「件还没跑」这一类（严口径不许混进结论）",
+   "got": [],
+   "want": [],
+   "why": "其余一类都算 needle 坏了",
+   "ok": true
+  },
+  {
+   "label": "canary 两侧：前缀必被拒、真键名必放行",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "canary 24 条 / 放行 True",
+   "ok": true
+  },
+  {
+   "label": "每条法的 needle 都按『法号→真键名条数』逐条给数（法号缺一个就是逐条门形同虚设）",
+   "got": [
+    "law1",
+    "law2",
+    "law3",
+    "law4",
+    "law5",
+    "law6",
+    "law7",
+    "law8"
+   ],
+   "want": [
+    "law1",
+    "law2",
+    "law3",
+    "law4",
+    "law5",
+    "law6",
+    "law7",
+    "law8"
+   ],
+   "why": "{\"law1\": 3, \"law2\": 3, \"law3\": 3, \"law4\": 3, \"law5\": 3, \"law6\": 3, \"law7\": 3, \"law8\": 3}",
+   "ok": true
+  },
+  {
+   "label": "每条法的三件证据都验到真键名（少一件就是那一条法的门没承重）",
+   "got": [
+    3
+   ],
+   "want": [
+    3
+   ],
+   "why": "{\"law1\": 3, \"law2\": 3, \"law3\": 3, \"law4\": 3, \"law5\": 3, \"law6\": 3, \"law7\": 3, \"law8\": 3}",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T10:58:58+00:00"
+}

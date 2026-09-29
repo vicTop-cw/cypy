@@ -1,0 +1,28 @@
+{
+ "hard_violations": {
+  "E9": 0,
+  "W605": 0,
+  "F821": 0
+ },
+ "e501_total_before": 355,
+ "e501_total_now": 355,
+ "e501_files_before": 48,
+ "e501_files_now": 48,
+ "baseline_path_style": "backslash",
+ "files_compared_against_baseline": 48,
+ "new_files_not_in_baseline": [],
+ "e501_within_baseline": true,
+ "e501_grew": {},
+ "reduced_by": 0,
+ "own_files_e501": {
+  "tests/test_loop_20260927_polish_r3.py": 0,
+  "cypyc/cli.py": 1,
+  "cypy_hook/hook.py": 11,
+  "tests/test_loop_20260927_fix_r3.py": 0
+ },
+ "own_file_clean": true,
+ "unparsed_lines": 0,
+ "parsed_lines": 4677,
+ "at_utc": "2026-09-27T18:12:14+00:00",
+ "refuse": []
+}

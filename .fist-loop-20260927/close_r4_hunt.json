@@ -1,0 +1,176 @@
+{
+ "key": "r4_hunt",
+ "root_task": "T0r74",
+ "assignee": "cypy-hunter",
+ "stage": "R4-寻虫",
+ "forbid": "在本环修产品码或改测试；改 PROJECT-SPEC/SYNTAX 冻结语义；把子代理结论原样入账；把『只跑正例的对照』当确诊；把『判据看不见样本』的零发现写成『没有缺陷』；git add/commit/push/删文件/重注册 golden；把没做的写成 done；用『源码里出现某字样』代替调用面判据",
+ "laws": [
+  {
+   "name": "狩猎面清点：三块新面（函数类型其余缺口 / docs 与实现的陈旧 / bridge+hook 生成调用面）逐条入表，并与 R1–R3 已入账单按根因去重",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r4_faces.json",
+     "faces",
+     200
+    ],
+    [
+     ".fist-loop-20260927/hunt_r4_dedup.json",
+     "compared_with",
+     2
+    ]
+   ]
+  },
+  {
+   "name": "定位声明先读后判：每条候选带上它自己的文档/状态表原文与 file:line，自述未实现者按 DESIGN 撤回不占号",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r4_declared.json",
+     "rows",
+     300
+    ],
+    [
+     ".fist-loop-20260927/hunt_r4_declared.json",
+     "withdrawn_design",
+     2
+    ]
+   ]
+  },
+  {
+   "name": "成对对照确诊：pos 现形 + ctl 不现形两档齐全才算 CONFIRMED，缺一档一律 UNSURE 不入账",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r4_confirm.json",
+     "confirmed",
+     100
+    ],
+    [
+     ".fist-loop-20260927/hunt_r4_confirm.json",
+     "unsure",
+     2
+    ]
+   ]
+  },
+  {
+   "name": "判据可观察性硬门：每条确诊判据自带一条『如果判据坏了就一定会红』的见证对照（零发现必须与看不见分家）",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r4_witness.json",
+     "rows",
+     200
+    ],
+    [
+     ".fist-loop-20260927/hunt_r4_witness.json",
+     "blind_spots",
+     2
+    ]
+   ]
+  },
+  {
+   "name": "一键复现三态退出码台账：0=现形 / 1=不现形 / 2=夹具坏，入账件里承诺的复跑命令必须真跑过",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r4_repro.json",
+     "rows",
+     200
+    ]
+   ]
+  },
+  {
+   "name": "只确诊入账（号从盘上现数）：report_bug 回读 + 账本号增量必须等于入账条数，不在本环修产品码",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r4_filed.json",
+     "filed",
+     2
+    ],
+    [
+     ".fist-loop-20260927/hunt_r4_filed.json",
+     "numbering_from_disk",
+     100
+    ]
+   ]
+  },
+  {
+   "name": "三套判据体系同一批复算且只升不降（pytest 1938 / 套件 47/47 / e2e 25/25），git 红线 HEAD 未动，本环改动半径按 mtime 正面测出为空",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r4_baselines.json",
+     "three_systems_green",
+     1
+    ],
+    [
+     ".fist-loop-20260927/hunt_r4_baselines.json",
+     "radius",
+     100
+    ]
+   ]
+  },
+  {
+   "name": "报告与账本同步：三向对照（md 条目 / FIXED 段 / sqlite bug 任务）+ 被拒原文逐字进报告",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/hunt_r4_ledger3way.json",
+     "agree",
+     1
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "狩猎面清点：函数类型其余缺口 / docs 陈旧 / bridge+hook 三面逐条入表，并与 60 单按机制签名去重",
+   ".fist-loop-20260927/hunt_r4_faces.json",
+   "faces"
+  ],
+  [
+   "定位声明先读后判：18 条主张带盘上原文与行号，自述未实现者按 DESIGN 撤回不占号",
+   ".fist-loop-20260927/hunt_r4_declared.json",
+   "withdrawn_design"
+  ],
+  [
+   "成对对照确诊：pos 现形 + ctl 今天行为正确两档齐全才 CONFIRMED",
+   ".fist-loop-20260927/hunt_r4_confirm.json",
+   "confirmed_total"
+  ],
+  [
+   "判据可观察性硬门：三种合成载荷 + 真变异树差分，零发现与看不见分栏",
+   ".fist-loop-20260927/hunt_r4_witness.json",
+   "w1_flipped"
+  ],
+  [
+   "一键复现三态退出码台账：0/1/2 三态各自实测可达，入账承诺的命令真跑过",
+   ".fist-loop-20260927/hunt_r4_repro.json",
+   "state_reached"
+  ],
+  [
+   "只确诊入账：号从盘上现数 61 起，report_bug 回读 + 账本增量对齐",
+   ".fist-loop-20260927/hunt_r4_filed.json",
+   "numbering_from_disk"
+  ],
+  [
+   "三套判据体系同批复算只升不降，git 红线未动，改动半径按 mtime 正面测为空",
+   ".fist-loop-20260927/hunt_r4_baselines.json",
+   "three_systems_green"
+  ],
+  [
+   "报告与账本三向对照（md / sqlite bug / call_log 的 report_bug 回执）",
+   ".fist-loop-20260927/hunt_r4_ledger3way.json",
+   "agree_total"
+  ]
+ ],
+ "root_deliverable": "R4-寻虫 交付：{REPORT}；狩猎面按规格转向 R1–R3 未系统扫过的三块——函数类型层其余缺口、docs/SYNTAX 状态表与实现的分道、bridge 的生成与缓存面。八法落地＝六个面逐带『必报对照』（16 上下文探针 + 变异树 15 格差分）→ 12 条候选按 pos/ctl 两档全部 CONFIRMED（0 条 UNSURE）→ 三种合成载荷与真变异树双重见证（零发现与看不见分栏，探针有一格没到达判定被原样记账）→ 18 条文档/bridge 主张逐条当场重测（子代理只指路，未原样入账；1 条 DESIGN 撤回、1 条未测转结）→ 三态退出码台账（0/1/2 三态本轮各自实测可达，其中 2 是我自己写坏谓词当场抓出来的）→ 与盘上 60 单按**机制签名**去重（判重 0、近亲 5 组逐条裁决）→ 10 张新单 BUG-61..BUG-70 （号从盘上现数 61 起，账本 60→70，sqlite bug 行 +10，三向对照 10/10 一致）。三套体系同批复算：pytest 1938/1938（收集数 1938，地板未降）、自研 47/47、e2e 25/25 且 FAIL/WARN/UNREG 三格为零；git 红线 HEAD 17d68b4、暂存 0、外部基线 worktree 仍在；改动半径按 mtime ≥ 本轮起点正面测：产品/测试/冻结面 0 档，判据件与账本 129 档；本环未修任何产品码、未动冻结语义、未做任何不可逆动作。",
+ "root_marker": "[selfdrive-hunt]",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/hunt_r4_repro.json",
+   "state_reached",
+   2
+  ],
+  [
+   ".fist-loop-20260927/hunt_r4_drivers_lint.json",
+   "canary",
+   1
+  ]
+ ],
+ "root_verify_reason": "寻虫环最容易说谎的是『这一族没有缺陷』这句话，所以每一层都配了反向证明：(1) 六族各带一条今天必然该报的对照，F3 一度想用『赋值处会报』当对照被自己否掉——那证明不了实参位置可达，换成实参位的元数违例对照才算数；(2) 分类器被三种合成观察喂过：全静默 / 普通 mismatch / 带内部 repr，标记集合必须等于手推表，恒真或恒假的判据在这里就会被抓；(3) 真变异树（摘掉元数判定那一行）让该变的两格都变了，读的是当前源码不是旧产物；16 上下文探针里有一格根本没走到判定，被记进 blind_spots 而不是算进『全覆盖』；(4) F5 的第一版判据是『报没报错』，抓不到它自己主张的文案形状问题，改成内部 repr 形状判据后才抓到那条候选——同一类坑（token-presence 冒充结构判据）本轮又踩又补；(5) 文档面 18 条全部当场重测，探针崩溃一律降级 not_measured（D16 第一版用错类名、D17 第一版把函数体内的 if 当模块级，都是被这两条规矩打回来的）；(6) 复现三态里『1』与『2』不是文字承诺：把今天行为正确的对照塞进清单必判 1，未知键或坏谓词必判 2，本轮真红过一次才修到 0；(7) 去重按反引号内代码符号比对，第一版退化成比文件名（18 组假近亲）已作废重做，剩下的 5 组逐条写裁决；(8) 号与账本增量为先，账本改由服务端落，回读 md/sqlite/call_log 三面同数。"
+}

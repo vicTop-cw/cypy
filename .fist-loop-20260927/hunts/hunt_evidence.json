@@ -1,0 +1,33 @@
+{
+ "hunt_e_binding_lines": [
+  "        user = _match_subject_1.__f0",
+  "        domain = _match_subject_1.__f1"
+ ],
+ "hunt_e_extractor_called": false,
+ "hunt_e_diagnostics": [
+  "Return type mismatch: expected str, got int at 14:9"
+ ],
+ "hunt_e_cli": {
+  "rc": 1,
+  "tail": [
+   "Output directory: output",
+   "[FAIL] Execution failed:",
+   "  - Return type mismatch: expected str, got int at 14:9"
+  ]
+ },
+ "hunt_f_diagnostics": [
+  "Return type mismatch: expected str, got int at 8:9"
+ ],
+ "hunt_a_cli": {
+  "rc": 0,
+  "tail": [
+   "Output directory: output",
+   "[OK] Execution successful",
+   "  Output: None"
+  ]
+ },
+ "hunt_a_artifact_swallows_return": true,
+ "hunt_b_lines": [
+  "    xs: Constant(line=2, col=9) = [1, 2, 3]"
+ ]
+}

@@ -1,0 +1,11 @@
+[31m[FAIL] Transpile failed:[0m
+[1m
+============================================================[0m
+[1m  Cypy Transpiler[0m
+[1m============================================================
+[0m
+[36m[1/3][0m Source: .fist-loop-20260927/hunts/hunt_f_pattern_binding_int.cypy
+[36m[2/3][0m Output: .fist-loop-20260929/out_r7
+[36m[3/3][0m Using Cython compiler mode
+[34m[INFO] Transpiling to Cython code...[0m
+  [31m-[0m Positional pattern 'Email' has 2 slot(s) but type 'Email' unpacks only 1 at 6:14

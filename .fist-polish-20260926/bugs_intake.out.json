@@ -1,0 +1,8 @@
+[
+  {
+    "tool": "report_bug",
+    "result": {
+      "__error__": "no response from report_bug within timeout"
+    }
+  }
+]

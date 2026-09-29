@@ -1,0 +1,13 @@
+# 负例 N1（危险形态）：这三行今天**不会**被当成语法错误。
+# lexer 不认 constraint -> 整段被吞成
+#   ExprStmt(Name 'constraint') + Assign(Name 'Numeric', BinOp('|', int, float))
+# 唯一拦住它的是 analyzer 顺带报的 "Undefined name 'constraint'"。
+# 只要模块里恰好有一个叫 constraint 的名字（参数/导入/循环变量），
+# 这段就会**静默编译通过**并把 int|float 当成运行时位或赋值给 Numeric。
+# 探针：feat_constraint_01 / feat_constraint_02（case 静默吞）。
+constraint Numeric = int | float
+
+def clamp<T: Numeric>(v: T) -> T:
+    return v
+
+print(clamp(1))

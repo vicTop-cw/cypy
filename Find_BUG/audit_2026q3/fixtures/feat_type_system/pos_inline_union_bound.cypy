@@ -1,0 +1,10 @@
+# 基准正例（今天就能编译、能跑）：内联联合界 T: int | float 的既有行为。
+# 它是 constraint Name = A | B 落地后必须逐字复现的参照行为。
+def pick<T: int | float>(a: T, b: T, flag: bool) -> T:
+    if flag:
+        return a
+    return b
+
+print(pick(1, 2, True))
+print(pick(1.5, 2.5, False))
+print(pick(3, 4.5, True))

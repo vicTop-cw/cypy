@@ -1,0 +1,250 @@
+{
+ "started": "2026-09-28T05:18:46+00:00",
+ "law": "名称面补口与 defer 声明面形状有永久回归锁，且锁在改前码上承重",
+ "new_test_file": "tests/test_loop_20260927_advance_r4.py",
+ "previous_round_collect_floor": 1976,
+ "floor_source": "polish_r4_baselines.json 的实测收集数（不是手打目标）",
+ "collect_after_locks": 2002,
+ "expected_tests": 26,
+ "lock_plan": {
+  "name_face_probes": 14,
+  "doc_worked_example": 1,
+  "pinned_card_locks": 4,
+  "doc_citation_locks": 3,
+  "defer_shape_locks": 4
+ },
+ "plan_prefix_red_ids": [
+  "test_defer_declared_shape[defer_two_exits]",
+  "test_doc_worked_example_maps_to_noreturn",
+  "test_name_face_at_cli_entry[A4-doc_worked_example]",
+  "test_name_face_at_cli_entry[A4-never_in_param_position]",
+  "test_name_face_at_cli_entry[A4-never_min_return]",
+  "test_name_face_at_cli_entry[A4B-iter]",
+  "test_name_face_at_cli_entry[A4B-open]",
+  "test_name_face_at_cli_entry[A4B-repr]"
+ ],
+ "plan_prefix_green_count": 18,
+ "collected_ids": [
+  "test_declared_builtins_still_cited_in_syntax_docs[iter]",
+  "test_declared_builtins_still_cited_in_syntax_docs[open]",
+  "test_declared_builtins_still_cited_in_syntax_docs[repr]",
+  "test_defer_declared_shape[defer_before_return]",
+  "test_defer_declared_shape[defer_two_exits]",
+  "test_defer_declared_shape[single_defer]",
+  "test_defer_declared_shape[two_defers_lifo]",
+  "test_doc_worked_example_maps_to_noreturn",
+  "test_name_face_at_cli_entry[A4-bogus_function_control]",
+  "test_name_face_at_cli_entry[A4-bogus_type_name_control]",
+  "test_name_face_at_cli_entry[A4-doc_worked_example]",
+  "test_name_face_at_cli_entry[A4-never_in_param_position]",
+  "test_name_face_at_cli_entry[A4-never_min_return]",
+  "test_name_face_at_cli_entry[A4B-bytes]",
+  "test_name_face_at_cli_entry[A4B-chr]",
+  "test_name_face_at_cli_entry[A4B-divmod]",
+  "test_name_face_at_cli_entry[A4B-hex]",
+  "test_name_face_at_cli_entry[A4B-iter]",
+  "test_name_face_at_cli_entry[A4B-open]",
+  "test_name_face_at_cli_entry[A4B-pow]",
+  "test_name_face_at_cli_entry[A4B-repr]",
+  "test_name_face_at_cli_entry[A4B-round]",
+  "test_pinned_defects_still_have_a_card[BUG-74]",
+  "test_pinned_defects_still_have_a_card[BUG-75]",
+  "test_pinned_defects_still_have_a_card[BUG-76]",
+  "test_pinned_defects_still_have_a_card[BUG-77]"
+ ],
+ "lane_work": {
+  "rc": 0,
+  "passed": 26,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "summary_line": "26 passed in 6.83s",
+  "red_ids": [],
+  "rootdir": "",
+  "collect": 0,
+  "log": "locks_work.txt",
+  "log_bytes": 99
+ },
+ "lane_prefix_code": {
+  "rc": 1,
+  "passed": 18,
+  "failed": 8,
+  "errors": 0,
+  "skipped": 0,
+  "summary_line": "8 failed, 18 passed in 6.74s",
+  "red_ids": [
+   "test_defer_declared_shape[defer_two_exits]",
+   "test_doc_worked_example_maps_to_noreturn",
+   "test_name_face_at_cli_entry[A4-doc_worked_example]",
+   "test_name_face_at_cli_entry[A4-never_in_param_position]",
+   "test_name_face_at_cli_entry[A4-never_min_return]",
+   "test_name_face_at_cli_entry[A4B-iter]",
+   "test_name_face_at_cli_entry[A4B-open]",
+   "test_name_face_at_cli_entry[A4B-repr]"
+  ],
+  "rootdir": "",
+  "collect": 8,
+  "log": "locks_prefix_code.txt",
+  "log_bytes": 919
+ },
+ "lane_collect": {
+  "rc": 0,
+  "passed": 0,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "summary_line": "",
+  "red_ids": [],
+  "rootdir": "",
+  "collect": 26,
+  "log": "locks_collect.txt",
+  "log_bytes": 2245
+ },
+ "identity": {
+  "work_type_checker_sha": "cbac2bfb44c7",
+  "snap_type_checker_sha": "ff9e8821cb22",
+  "work_scope_sha": "b7a14e5a5521",
+  "snap_scope_sha": "df476769e3e0",
+  "lock_sha_work": "67ba7df1bd6f",
+  "lock_sha_snap": "67ba7df1bd6f"
+ },
+ "red_ids_prefix_code": [
+  "test_defer_declared_shape[defer_two_exits]",
+  "test_doc_worked_example_maps_to_noreturn",
+  "test_name_face_at_cli_entry[A4-doc_worked_example]",
+  "test_name_face_at_cli_entry[A4-never_in_param_position]",
+  "test_name_face_at_cli_entry[A4-never_min_return]",
+  "test_name_face_at_cli_entry[A4B-iter]",
+  "test_name_face_at_cli_entry[A4B-open]",
+  "test_name_face_at_cli_entry[A4B-repr]"
+ ],
+ "canary": {
+  "work_green": true,
+  "prefix_red": true,
+  "identity_differs": true,
+  "collect_stable": true,
+  "red_list_exact_match": true,
+  "collected_ids_equal_plan_universe": true
+ },
+ "generator": ".fist-loop-20260927/advance_r4_gen_locks.py",
+ "sources": [
+  "advance_r4_never.json",
+  "advance_r4_builtins.json",
+  "advance_r4_filed.json",
+  "advance_r4_dormant.json",
+  "advance_r4_lock_plan.json"
+ ],
+ "self_checks": [
+  {
+   "label": "工作区车道：本文件 26 条全绿（条数来自生成器的 plan）",
+   "got": [
+    26,
+    0,
+    0
+   ],
+   "want": [
+    26,
+    0,
+    0
+   ],
+   "why": "26 passed in 6.83s",
+   "ok": true
+  },
+  {
+   "label": "改前码车道：必须出现红（红=锁承重）",
+   "got": true,
+   "want": true,
+   "why": "改前态 8 failed, 18 passed in 6.74s 红点 ['test_defer_declared_shape[defer_two_exits]', 'test_doc_worked_example_maps_to_noreturn', 'test_name_face_at_cli_entry[A4-doc_worked_example]', 'test_name_face_at_cli_entry[A4-never_in_param_position]', 'test_name_face_at_cli_entry[A4-never_min_return]', 'test_name_face_at_cli_entry[A4B-iter]', 'test_name_face_at_cli_entry[A4B-open]', 'test_name_face_at_cli_entry[A4B-repr]']",
+   "ok": true
+  },
+  {
+   "label": "基数自证：两车道「过+红+错」与 --collect-only 都等于 plan 的 26 条（少收＝用例静默消失，绿也不作数）",
+   "got": [
+    26,
+    26,
+    26
+   ],
+   "want": [
+    26,
+    26,
+    26
+   ],
+   "why": "work=26 passed in 6.83s prefix=8 failed, 18 passed in 6.74s",
+   "ok": true
+  },
+  {
+   "label": "改前态的红点名单要**恰好**等于 plan 声明的那批（依赖本轮新名字的探针）",
+   "got": [
+    "test_defer_declared_shape[defer_two_exits]",
+    "test_doc_worked_example_maps_to_noreturn",
+    "test_name_face_at_cli_entry[A4-doc_worked_example]",
+    "test_name_face_at_cli_entry[A4-never_in_param_position]",
+    "test_name_face_at_cli_entry[A4-never_min_return]",
+    "test_name_face_at_cli_entry[A4B-iter]",
+    "test_name_face_at_cli_entry[A4B-open]",
+    "test_name_face_at_cli_entry[A4B-repr]"
+   ],
+   "want": [
+    "test_defer_declared_shape[defer_two_exits]",
+    "test_doc_worked_example_maps_to_noreturn",
+    "test_name_face_at_cli_entry[A4-doc_worked_example]",
+    "test_name_face_at_cli_entry[A4-never_in_param_position]",
+    "test_name_face_at_cli_entry[A4-never_min_return]",
+    "test_name_face_at_cli_entry[A4B-iter]",
+    "test_name_face_at_cli_entry[A4B-open]",
+    "test_name_face_at_cli_entry[A4B-repr]"
+   ],
+   "why": "plan 名单 ['test_defer_declared_shape[defer_two_exits]', 'test_doc_worked_example_maps_to_noreturn', 'test_name_face_at_cli_entry[A4-doc_worked_example]', 'test_name_face_at_cli_entry[A4-never_in_param_position]', 'test_name_face_at_cli_entry[A4-never_min_return]', 'test_name_face_at_cli_entry[A4B-iter]', 'test_name_face_at_cli_entry[A4B-open]', 'test_name_face_at_cli_entry[A4B-repr]']；实得 ['test_defer_declared_shape[defer_two_exits]', 'test_doc_worked_example_maps_to_noreturn', 'test_name_face_at_cli_entry[A4-doc_worked_example]', 'test_name_face_at_cli_entry[A4-never_in_param_position]', 'test_name_face_at_cli_entry[A4-never_min_return]', 'test_name_face_at_cli_entry[A4B-iter]', 'test_name_face_at_cli_entry[A4B-open]', 'test_name_face_at_cli_entry[A4B-repr]']；差集 多红 [] 少红 []",
+   "ok": true
+  },
+  {
+   "label": "两条车道解析到的是各自那棵树的 cypyc（身份探针，不靠 cwd 口头保证）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "work=E:\\IDEProjects\\AI\\Cypy\\cypyc\\__init__.py prefix=E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advance_r4_locksnap\\cypyc\\__init__.py",
+   "ok": true
+  },
+  {
+   "label": "plan 里标为「两态都该绿」的锁（账实锁、文档引用锁、不依赖新名字的 defer 档）在改前态必须不红",
+   "got": [],
+   "want": [],
+   "why": "实红 []（这些锁钉错了东西）",
+   "ok": true
+  },
+  {
+   "label": "canary 六格必须同时成立（第六格：收集到的 id 全集要等于 plan 全集）",
+   "got": [
+    6,
+    [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ]
+   ],
+   "want": [
+    6,
+    [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ]
+   ],
+   "why": "{\"work_green\": true, \"prefix_red\": true, \"identity_differs\": true, \"collect_stable\": true, \"red_list_exact_match\": true, \"collected_ids_equal_plan_universe\": true, \"ids_measured\": 26, \"ids_plan\": 26}",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T05:19:04+00:00"
+}

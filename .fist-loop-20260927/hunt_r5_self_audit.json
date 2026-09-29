@@ -1,0 +1,337 @@
+{
+ "started": "2026-09-28T07:58:44+00:00",
+ "gates_total": 116,
+ "gates_green": 116,
+ "gates_red": [],
+ "fake_min_gates": [],
+ "needle_bad": [],
+ "stale_undeclared": [],
+ "stale_disclosed": [],
+ "placeholders_total": 76,
+ "placeholders_unresolved": [],
+ "placeholders_empty_unjustified": [],
+ "section10_items_declared": 16,
+ "closure": {
+  "leaves": 16,
+  "failed": [],
+  "root_pre_render": "已归档"
+ },
+ "self_checks": [
+  {
+   "label": "门禁全绿（红表必须为空）",
+   "got": [],
+   "want": [],
+   "why": "116/116 绿",
+   "ok": true
+  },
+  {
+   "label": "恒真门（min<=0）必须为 0 道",
+   "got": [],
+   "want": [],
+   "why": "把门焊死不算通过",
+   "ok": true
+  },
+  {
+   "label": "每条门禁的 path 首段是被引件里的真键名",
+   "got": [],
+   "want": [],
+   "why": "子串假命中不算 needle（上一环 control/queue 那类）",
+   "ok": true
+  },
+  {
+   "label": "门禁条数达八法 × 每法至少三道",
+   "got": true,
+   "want": true,
+   "why": "实得 116 道",
+   "ok": true
+  },
+  {
+   "label": "八条法的头号证据件都有门禁家族在场",
+   "got": [],
+   "want": [],
+   "why": "件集 ['close_r5_hunt.json', 'hunt_r5_baselines.json', 'hunt_r5_book.json', 'hunt_r5_calllog_tally.json', 'hunt_r5_cli_face.json', 'hunt_r5_codegen.json', 'hunt_r5_declared.json', 'hunt_r5_drivers_lint.json', 'hunt_r5_faces.json', 'hunt_r5_needles.json']",
+   "ok": true
+  },
+  {
+   "label": "每条法配三道证据件（派单与收口读同一份计划）",
+   "got": [
+    3
+   ],
+   "want": [
+    3
+   ],
+   "why": "artifacts 条数分布",
+   "ok": true
+  },
+  {
+   "label": "收口叶子 16 张",
+   "got": 16,
+   "want": 16,
+   "why": "按 sqlite 反解的叶数",
+   "ok": true
+  },
+  {
+   "label": "收口零失败",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "渲染后阶段：根已上卷归档（sqlite 现读 = 已归档）",
+   "got": "已归档",
+   "want": "已归档",
+   "why": "live root=已归档 / 收口件在盘=True",
+   "ok": true
+  },
+  {
+   "label": "每叶 omega 链走完（verify 结果为已完成）",
+   "got": [
+    "已完成"
+   ],
+   "want": [
+    "已完成"
+   ],
+   "why": "逐叶 verify 字段",
+   "ok": true
+  },
+  {
+   "label": "三套体系同刻为绿",
+   "got": true,
+   "want": true,
+   "why": "baselines 件自报",
+   "ok": true
+  },
+  {
+   "label": "pytest 失败汇总为 0 且 rc=0（字段名从件反解：failed_sum）",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "两栏分列",
+   "ok": true
+  },
+  {
+   "label": "pytest 通过数不低于上一环实测地板",
+   "got": true,
+   "want": true,
+   "why": "passed=2002 floors={'pytest': 2002, 'collect': 2002, 'suite': 47, 'e2e_pass': 25}",
+   "ok": true
+  },
+  {
+   "label": "收集数达地板（解析器活着）",
+   "got": true,
+   "want": true,
+   "why": "collect=2002",
+   "ok": true
+  },
+  {
+   "label": "地板四栏齐全且来源点名上一环件",
+   "got": [
+    "collect",
+    "e2e_pass",
+    "pytest",
+    "suite"
+   ],
+   "want": [
+    "collect",
+    "e2e_pass",
+    "pytest",
+    "suite"
+   ],
+   "why": "advance_r4_baselines.json:{\"pytest\": 2002, \"collect\": 2002, \"suite\": 47, \"e2e_pass\": 25}",
+   "ok": true
+  },
+  {
+   "label": "e2e：PASS 达地板且 FAIL/WARN 为零",
+   "got": [
+    25,
+    0,
+    0
+   ],
+   "want": [
+    25,
+    0,
+    0
+   ],
+   "why": "三栏分列",
+   "ok": true
+  },
+  {
+   "label": "自研套件：Passed 达地板且 Failed 为零",
+   "got": [
+    47,
+    0
+   ],
+   "want": [
+    47,
+    0
+   ],
+   "why": "两栏分列（拿字段比字段是恒真，这里比的是地板）",
+   "ok": true
+  },
+  {
+   "label": "HEAD 未动 / 暂存为 0",
+   "got": [
+    "17d68b4",
+    0
+   ],
+   "want": [
+    "17d68b4",
+    0
+   ],
+   "why": "本环零提交",
+   "ok": true
+  },
+  {
+   "label": "冻结面改动为 0",
+   "got": 0,
+   "want": 0,
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "半径正面测出确实写了东西",
+   "got": true,
+   "want": true,
+   "why": "loop/memory 侧 250 个",
+   "ok": true
+  },
+  {
+   "label": "卡数 = 两批判据件确诊数之和",
+   "got": 13,
+   "want": 13,
+   "why": "确诊 ['G01', 'G02', 'G03', 'G04', 'G05', 'G06', 'G07', 'H01', 'H03', 'H04', 'H05', 'H06', 'H07']",
+   "ok": true
+  },
+  {
+   "label": "每张卡在账本与 bugs 树里都在（在账，不是我记得）",
+   "got": 13,
+   "want": 13,
+   "why": "per_key_on_disk 全命中",
+   "ok": true
+  },
+  {
+   "label": "账本最大号 = 现读 memory/bugs.md",
+   "got": 90,
+   "want": 90,
+   "why": "两路独立现读",
+   "ok": true
+  },
+  {
+   "label": "未确认档不占号（cli_face 的 UNSURE 不许混进卡表）",
+   "got": [],
+   "want": [],
+   "why": "H02 只留件不入账",
+   "ok": true
+  },
+  {
+   "label": "没有判据件比它的驱动脚本旧（除非逐条披露理由）",
+   "got": [],
+   "want": [],
+   "why": "陈旧集 []，已披露 []",
+   "ok": true
+  },
+  {
+   "label": "披露的例外必须真属陈旧（不许拿 stale_ok 当免检通道）",
+   "got": [],
+   "want": [],
+   "why": "披露而不成立 ⇒ 拒",
+   "ok": true
+  },
+  {
+   "label": "每份 JSON 判据件都能 parse",
+   "got": [],
+   "want": [],
+   "why": "{\"hunt_r5_baselines.json\": \"\", \"hunt_r5_book.json\": \"\", \"hunt_r5_calllog_tally.json\": \"\", \"hunt_r5_cli_face.json\": \"\", \"hunt_r5_codegen.json\": \"\", \"hunt_r5_declared.json\": \"\", \"hunt_r5_drivers_lint.json\": \"\", \"hunt_r5_faces.json\": \"\", \"hunt_r5_needles.json\": \"\", \"hunt_r5_progress.json\": \"\", \"hunt_r5",
+   "ok": true
+  },
+  {
+   "label": "parse 覆盖面 = 盘上判据件数（基数门，不手数）",
+   "got": 13,
+   "want": 13,
+   "why": "13 份",
+   "ok": true
+  },
+  {
+   "label": "canary：parse 判据对「相邻字符串续行」必红",
+   "got": "JSONDecodeError",
+   "want": "JSONDecodeError",
+   "why": "不是恒绿的存在性检查",
+   "ok": true
+  },
+  {
+   "label": "canary：parse 判据不误抓合法 JSON",
+   "got": "",
+   "want": "",
+   "why": "同一把尺子的另一侧",
+   "ok": true
+  },
+  {
+   "label": "正文占位全部解析得出来",
+   "got": [],
+   "want": [],
+   "why": "76 个占位",
+   "ok": true
+  },
+  {
+   "label": "空值占位必须有 equals:[] 的门禁背书",
+   "got": [],
+   "want": [],
+   "why": "有背书 3 个",
+   "ok": true
+  },
+  {
+   "label": "§八 失效条目在正文里数得出来（负数=没有该节）",
+   "got": true,
+   "want": true,
+   "why": "实测 16 条",
+   "ok": true
+  },
+  {
+   "label": "needle 严口径：全部 needle 都是真键名",
+   "got": 24,
+   "want": 24,
+   "why": "24/24",
+   "ok": true
+  },
+  {
+   "label": "扫描时不存在判据件必须为空表（法条不许引用空气）",
+   "got": [],
+   "want": [],
+   "why": "收口前复扫",
+   "ok": true
+  },
+  {
+   "label": "前缀式假命中 canary 抓到了东西",
+   "got": true,
+   "want": true,
+   "why": "8 条",
+   "ok": true
+  },
+  {
+   "label": "亲笔驱动硬错为 0",
+   "got": 0,
+   "want": 0,
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "软账不高于上一环基线 0",
+   "got": 0,
+   "want": 0,
+   "why": "码表 {}",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "identity": {
+  "report": "20260928.15.10.00",
+  "root_task": "T0r96"
+ },
+ "at_utc": "2026-09-28T07:58:44+00:00"
+}

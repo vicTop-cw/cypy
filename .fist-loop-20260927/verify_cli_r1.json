@@ -1,0 +1,46 @@
+{
+ "refuse": [],
+ "identity": {
+  "rc": 0,
+  "cypyc_file": "E:\\IDEProjects\\AI\\Cypy\\cypyc\\__init__.py"
+ },
+ "identity_negative_control": {
+  "probe_path": "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+  "flagged": true
+ },
+ "help": {
+  "rc": 0,
+  "tail": [
+   "  -v, --verbose         Enable verbose output (default: False)",
+   "  --version             show program's version number and exit"
+  ],
+  "stdout": "usage: cypyc [-h] [-o OUTPUT] [-v] [--version]\n             {transpile,compile,build,run,watch,hook} ...\n\nCypy compiler - A Python-like language that compiles to Cython\n\npositional arguments:\n  {transpile,compile,build,run,watch,hook}\n                        Available commands\n    transpile           Transpile Cypy source to Cython or C\n    compile             Compile Cypy source to .pyd file\n    build               Build entire project with cross-module type inference\n    run                 Compile and run Cypy code\n    watch               Start hot reload development server\n    hook                Cypy hook for Python integration\n\noptions:\n  -h, --help            show this help message and exit\n  -o, --output OUTPUT   Output directory for generated files (default: output)\n  -v, --verbose         Enable verbose output (default: False)\n  --version             show program's version number and exit\n"
+ },
+ "transpile": {
+  "rc": 0,
+  "tail": [
+   "\u001b[32m[OK] Transpiled successfully\u001b[0m",
+   "  \u001b[36mOutput:\u001b[0m C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_cli_r1_mt7_smvn\\t\\cli_check.pyx"
+  ],
+  "stdout": "\u001b[1m\n============================================================\u001b[0m\n\u001b[1m  Cypy Transpiler\u001b[0m\n\u001b[1m============================================================\n\u001b[0m\n\u001b[36m[1/3]\u001b[0m Source: C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_cli_r1_mt7_smvn\\cli_check.cypy\n\u001b[36m[2/3]\u001b[0m Output: C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_cli_r1_mt7_smvn\\t\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n\u001b[32m[OK] Transpiled successfully\u001b[0m\n  \u001b[36mOutput:\u001b[0m C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_cli_r1_mt7_smvn\\t\\cli_check.pyx\n"
+ },
+ "compile": {
+  "rc": 0,
+  "tail": [
+   "\u001b[32m[OK] Compiled successfully\u001b[0m",
+   "  \u001b[36m.pyd file:\u001b[0m C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_cli_r1_mt7_smvn\\c\\cli_check.cp313-win_amd64.pyd"
+  ],
+  "stdout": "\u001b[1m\n============================================================\u001b[0m\n\u001b[1m  Cypy Compiler\u001b[0m\n\u001b[1m============================================================\n\u001b[0m\n\u001b[36m[1/2]\u001b[0m Source: C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_cli_r1_mt7_smvn\\cli_check.cypy\n\u001b[36m[2/2]\u001b[0m Output: C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_cli_r1_mt7_smvn\\c\n\u001b[34m[INFO] Compiling to .pyd file...\u001b[0m\n\u001b[32m[OK] Compiled successfully\u001b[0m\n  \u001b[36m.pyd file:\u001b[0m C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_cli_r1_mt7_smvn\\c\\cli_check.cp313-win_amd64.pyd\n"
+ },
+ "run": {
+  "rc": 0,
+  "tail": [
+   "[OK] Execution successful",
+   "  Output: 0"
+  ],
+  "stdout": "Running C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_cli_r1_mt7_smvn\\cli_check.cypy...\nOutput directory: output\nv 3.0\n[OK] Execution successful\n  Output: 0\n"
+ },
+ "transpile_artifacts": [
+  "cli_check.pyx"
+ ]
+}

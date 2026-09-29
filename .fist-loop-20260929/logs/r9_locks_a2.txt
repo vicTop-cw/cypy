@@ -1,0 +1,4 @@
+S1 切片形态判断恒假（退回「切片当元素」） | anchor=1 | rc=1 fails=6 | 承重：摘掉即红 FAIL #0 typecheck 'def f(xs: list<int>) ；FAIL #1 typecheck 'def f(xs: list<int>) 
+S2 越界槽位退回发 `__f{i}` 成员访问 | anchor=1 | rc=1 fails=1 | 承重：摘掉即红 FAIL #18 codegen_unchecked 'struct E:' →
+C 对照：只动一行注释 | anchor=1 | rc=0 fails=0 | 对照绿（尺没坏）
+CONCLUSION baseline=CONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0 control_green=True load_bearing=2/2 not_load_bearing=[]

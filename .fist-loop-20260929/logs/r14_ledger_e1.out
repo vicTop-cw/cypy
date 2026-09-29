@@ -1,0 +1,9 @@
+手册对表锁没跑绿（rc=0）⇒ 文档单不能宣称已修：
+ures-16.3, returns-0.26.0, typeguard-4.5.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 29 items / 28 deselected / 1 selected
+
+tests/test_dict_elements_r14.py::test_manual_revokes_the_r13_dict_exemption PASSED [100%]
+
+====================== 1 passed, 28 deselected in 0.17s =======================
+

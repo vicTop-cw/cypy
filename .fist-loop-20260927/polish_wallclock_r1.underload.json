@@ -1,0 +1,102 @@
+{
+ "refuse": [
+  "⑦′ 复跑前 仍有外来 lane 在跑 python：foreign_lane=10 ['C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\python.exe .fist-bugfix-r9/iso_r9.py census sweep_r9_before.json', 'C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\\\python.exe .fist-bugfix-r9/sweep_demos.py', 'C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\\\python.exe -m zhi.cli run C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Tem', 'C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\\\python.exe -m zhi.cli run C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Tem', 'C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\\\python.exe -m zhi.cli run C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Tem'] ⇒ 这次复跑不能用来做无并发归因",
+  "⑦′ 复跑后 仍有外来 lane 在跑 python：foreign_lane=10 ['C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\python.exe .fist-bugfix-r9/iso_r9.py census sweep_r9_before.json', 'C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\\\python.exe .fist-bugfix-r9/sweep_demos.py', 'C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\\\python.exe -m zhi.cli run C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Tem', 'C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\\\python.exe -m zhi.cli run C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Tem', 'C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\\\python.exe -m zhi.cli run C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Tem'] ⇒ 这次复跑不能用来做无并发归因"
+ ],
+ "target": "tests/test_incremental.py::TestDigestCost::test_digest_cost_on_ten_thousand_line_module",
+ "load": {
+  "before": {
+   "measured": true,
+   "total_python": 11,
+   "cypy_lane": 1,
+   "foreign_lane": 10,
+   "foreign_names": [
+    "python3.13.exe"
+   ],
+   "foreign_sample": [
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe .fist-bugfix-r9/iso_r9.py census sweep_r9_before.json",
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe .fist-bugfix-r9/sweep_demos.py",
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -m zhi.cli run C:\\Users\\victo\\AppData\\Local\\Tem",
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -m zhi.cli run C:\\Users\\victo\\AppData\\Local\\Tem",
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -m zhi.cli run C:\\Users\\victo\\AppData\\Local\\Tem"
+   ],
+   "mine_sample": [
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -X utf8 polish_wallclock_r1.py"
+   ]
+  },
+  "after": {
+   "measured": true,
+   "total_python": 11,
+   "cypy_lane": 1,
+   "foreign_lane": 10,
+   "foreign_names": [
+    "python3.13.exe"
+   ],
+   "foreign_sample": [
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe .fist-bugfix-r9/iso_r9.py census sweep_r9_before.json",
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe .fist-bugfix-r9/sweep_demos.py",
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -m zhi.cli run C:\\Users\\victo\\AppData\\Local\\Tem",
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -m zhi.cli run C:\\Users\\victo\\AppData\\Local\\Tem",
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe -m zhi.cli run C:\\Users\\victo\\AppData\\Local\\Tem"
+   ],
+   "mine_sample": [
+    "C:\\Users\\victo\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -X utf8 polish_wallclock_r1.py"
+   ]
+  }
+ },
+ "solo": {
+  "passed": 1,
+  "failed": [],
+  "summary_line": "============================== 1 passed in 2.61s ==============================",
+  "rc": 0
+ },
+ "whole_file": {
+  "passed": 38,
+  "failed": [],
+  "summary_line": "============================= 38 passed in 10.89s =============================",
+  "rc": 0
+ },
+ "timing_evidence": {
+  "found": true,
+  "body": [
+   {
+    "line": 537,
+    "text": "started = time.perf_counter()"
+   },
+   {
+    "line": 539,
+    "text": "parse_elapsed = time.perf_counter() - started"
+   },
+   {
+    "line": 545,
+    "text": "started = time.process_time()"
+   },
+   {
+    "line": 548,
+    "text": "digest_elapsed = time.process_time() - started"
+   },
+   {
+    "line": 550,
+    "text": "assert digest_elapsed < 2.0, \"digest cost too high: %.3fs\" % digest_elapsed"
+   },
+   {
+    "line": 553,
+    "text": "started = time.perf_counter()"
+   },
+   {
+    "line": 555,
+    "text": "compare_elapsed = time.perf_counter() - started"
+   },
+   {
+    "line": 556,
+    "text": "assert compare_elapsed < 5.0"
+   },
+   {
+    "line": 557,
+    "text": "assert parse_elapsed < 60.0"
+   }
+  ],
+  "has_wallclock_assert": true,
+  "has_cpu_time_usage": true
+ }
+}

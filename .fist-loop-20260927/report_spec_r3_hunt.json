@@ -1,0 +1,294 @@
+{
+ "name": "20260927.20.55.00",
+ "title": "R3-寻虫（bug hunt）环节报告",
+ "stage": "第 3 轮第 1 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R3",
+ "root_task": "T0r69",
+ "assignee": "cypy-hunter",
+ "marker": "[selfdrive-hunt]",
+ "footer": "fixed=none new=BUG-55,BUG-56,BUG-57,BUG-58,BUG-59,BUG-60 withdrawn=C2:DESIGN,C7:REJECTED candidates=8 confirmed=6 repro=8/8 rc2=0 judge-defects=8 op-defects=5 carry=BUG-55..60修复,BUG-57与60改文档还是补实现,BUG-56的run_default去留,BUG-59编译序是否进golden,BUG-54跨进程build隔离,BUG-49,BUG-40,BUG-41,BUG-43,BUG-35深嵌套半边,BUG-50,BUG-52,BUG-53 decisions=5",
+ "fragment": ".fist-loop-20260927/r3_hunt_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/hunt_r3_scan.json",
+  ".fist-loop-20260927/hunt_r3_declared.json",
+  ".fist-loop-20260927/hunt_r3_confirm.json",
+  ".fist-loop-20260927/hunt_r3_repro.json",
+  ".fist-loop-20260927/hunt_r3_subagent_claims.json",
+  ".fist-loop-20260927/hunt_r3_filed.json",
+  ".fist-loop-20260927/hunt_r3_ledger3way.json",
+  ".fist-loop-20260927/hunt_r3_baselines.json",
+  ".fist-loop-20260927/close_r3_hunt.out.json"
+ ],
+ "closure": {
+  "stage": "close_r3_hunt.out.json",
+  "root": "close_r3_hunt_root.out.json"
+ },
+ "gates": [
+  {
+   "label": "①",
+   "claim": "清点台账：狩猎面符号表档数（先清点再取虫，否则'没找到'与'没找'同形）",
+   "artifact": ".fist-loop-20260927/hunt_r3_scan.json",
+   "path": "files",
+   "min": 20
+  },
+  {
+   "label": "②",
+   "claim": "CLI 对外承诺按调用面取：`--help` 子命令表非空",
+   "artifact": ".fist-loop-20260927/hunt_r3_scan.json",
+   "path": "cli_declared.subcommands",
+   "min": 1
+  },
+  {
+   "label": "③",
+   "claim": "`transpile --help` 真读到的旗标集（BUG-56 的承诺面）",
+   "artifact": ".fist-loop-20260927/hunt_r3_scan.json",
+   "path": "cli_declared.transpile_flags",
+   "min": 8
+  },
+  {
+   "label": "④",
+   "claim": "清点件自身零拒绝",
+   "artifact": ".fist-loop-20260927/hunt_r3_scan.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑤",
+   "claim": "定位声明清点：8 条候选各带自己的声明原文与判档",
+   "artifact": ".fist-loop-20260927/hunt_r3_declared.json",
+   "path": "per_candidate",
+   "min": 8
+  },
+  {
+   "label": "⑥",
+   "claim": "SYNTAX 自述栏非空（DESIGN 撤回的口径来源）",
+   "artifact": ".fist-loop-20260927/hunt_r3_declared.json",
+   "path": "syntax_self_declared",
+   "min": 1
+  },
+  {
+   "label": "⑦",
+   "claim": "成对确诊：候选总数",
+   "artifact": ".fist-loop-20260927/hunt_r3_confirm.json",
+   "path": "cases",
+   "min": 8
+  },
+  {
+   "label": "⑧",
+   "claim": "成对确诊：CONFIRMED 条数（入账上限）",
+   "artifact": ".fist-loop-20260927/hunt_r3_confirm.json",
+   "path": "confirmed",
+   "min": 6
+  },
+  {
+   "label": "⑨",
+   "claim": "确诊的每一档都是 pos 现形 + ctl 不现形两档齐全（只在 CONFIRMED 子集上断言，见 §五 第 10 条）",
+   "artifact": ".fist-loop-20260927/hunt_r3_confirm.json",
+   "path": "all_confirmed_pairs_ok",
+   "truthy": true
+  },
+  {
+   "label": "⑩",
+   "claim": "探针炸掉的条数为 0（判据坏了不能拿来做产品结论）",
+   "artifact": ".fist-loop-20260927/hunt_r3_confirm.json",
+   "path": "n_probe_broken",
+   "equals": 0
+  },
+  {
+   "label": "⑪",
+   "claim": "确诊件零拒绝",
+   "artifact": ".fist-loop-20260927/hunt_r3_confirm.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑫",
+   "claim": "一键复现：8 条各跑一次",
+   "artifact": ".fist-loop-20260927/hunt_r3_repro.json",
+   "path": "per_id",
+   "min": 8
+  },
+  {
+   "label": "⑬",
+   "claim": "6 条 CONFIRMED 的复现退出码全为 0（入账件承诺可复跑 ⇒ 必须真跑）",
+   "artifact": ".fist-loop-20260927/hunt_r3_repro.json",
+   "path": "all_confirmed_rc0",
+   "truthy": true
+  },
+  {
+   "label": "⑭",
+   "claim": "复现脚本自身跑不动（rc=2）的条数为 0",
+   "artifact": ".fist-loop-20260927/hunt_r3_repro.json",
+   "path": "n_probe_broken_rc2",
+   "equals": 0
+  },
+  {
+   "label": "⑮",
+   "claim": "复现件零拒绝",
+   "artifact": ".fist-loop-20260927/hunt_r3_repro.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑯",
+   "claim": "子代理主张逐条对账（8 条）",
+   "artifact": ".fist-loop-20260927/hunt_r3_subagent_claims.json",
+   "path": "rows",
+   "min": 8
+  },
+  {
+   "label": "⑰",
+   "claim": "其中我亲测确认的条数",
+   "artifact": ".fist-loop-20260927/hunt_r3_subagent_claims.json",
+   "path": "subagent_confirmed_by_me",
+   "min": 6
+  },
+  {
+   "label": "⑱",
+   "claim": "入账条数",
+   "artifact": ".fist-loop-20260927/hunt_r3_filed.json",
+   "path": "filed",
+   "min": 6
+  },
+  {
+   "label": "⑲",
+   "claim": "账本号增量必须等于入账条数（防双发/防漏记）",
+   "artifact": ".fist-loop-20260927/hunt_r3_filed.json",
+   "path": "new_numbers",
+   "min": 6
+  },
+  {
+   "label": "⑳",
+   "claim": "撤回条数（DESIGN+REJECTED 都要点名）",
+   "artifact": ".fist-loop-20260927/hunt_r3_filed.json",
+   "path": "n_withdrawn",
+   "min": 2
+  },
+  {
+   "label": "㉑",
+   "claim": "入账件零拒绝",
+   "artifact": ".fist-loop-20260927/hunt_r3_filed.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㉒",
+   "claim": "账本条目数只升不降（R2 收口 54 + 本环 6）",
+   "artifact": ".fist-loop-20260927/hunt_r3_ledger3way.json",
+   "path": "ledger.entries",
+   "min": 60
+  },
+  {
+   "label": "㉓",
+   "claim": "FIXED 段计数持平（本环不修 ⇒ 不该新增）",
+   "artifact": ".fist-loop-20260927/hunt_r3_ledger3way.json",
+   "path": "ledger.fixed_sections",
+   "min": 43
+  },
+  {
+   "label": "㉔",
+   "claim": "sqlite 侧 bug 任务数随入账增长（双轨必须对得上）",
+   "artifact": ".fist-loop-20260927/hunt_r3_ledger3way.json",
+   "path": "server.bug_tasks",
+   "min": 56
+  },
+  {
+   "label": "㉕",
+   "claim": "三套基线 + git + 半径同一时刻复算，整体零拒绝",
+   "artifact": ".fist-loop-20260927/hunt_r3_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "㉖",
+   "claim": "pytest 全量下限持平不降：passed ≥1903",
+   "artifact": ".fist-loop-20260927/hunt_r3_baselines.json",
+   "path": "pytest.passed",
+   "min": 1903
+  },
+  {
+   "label": "㉗",
+   "claim": "收集数 ≥1903（防用例静默消失）",
+   "artifact": ".fist-loop-20260927/hunt_r3_baselines.json",
+   "path": "pytest.collected",
+   "min": 1903
+  },
+  {
+   "label": "㉘",
+   "claim": "自研套件 47/47 绿",
+   "artifact": ".fist-loop-20260927/hunt_r3_baselines.json",
+   "path": "suite.green",
+   "truthy": true
+  },
+  {
+   "label": "㉙",
+   "claim": "e2e golden 25/25 绿且未重注册",
+   "artifact": ".fist-loop-20260927/hunt_r3_baselines.json",
+   "path": "e2e.green",
+   "truthy": true
+  },
+  {
+   "label": "㉚",
+   "claim": "git 红线：HEAD 未动",
+   "artifact": ".fist-loop-20260927/hunt_r3_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "㉛",
+   "claim": "git 红线：暂存区 0 文件（不得 git add）",
+   "artifact": ".fist-loop-20260927/hunt_r3_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "㉜",
+   "claim": "寻虫环改动半径为 0（按 mtime 正面测出，不是自我声明）",
+   "artifact": ".fist-loop-20260927/hunt_r3_baselines.json",
+   "path": "radius.count",
+   "equals": 0
+  },
+  {
+   "label": "㉝",
+   "claim": "收口链 16 张叶子全走完 claim→omega→execute→submit→output_validate→verify",
+   "artifact": ".fist-loop-20260927/close_r3_hunt.out.json",
+   "path": "leaves",
+   "min": 16
+  },
+  {
+   "label": "㉞",
+   "claim": "收口链零失败叶子",
+   "artifact": ".fist-loop-20260927/close_r3_hunt.out.json",
+   "path": "failed",
+   "equals": []
+  },
+  {
+   "label": "㉟",
+   "claim": "上卷被拒按作用域分栏：根任务 6 条结构性拒绝，不多不少",
+   "artifact": ".fist-loop-20260927/hunt_r3_root_split.json",
+   "path": "by_scope.root",
+   "equals": 6
+  },
+  {
+   "label": "㊱",
+   "claim": "枝干 0 条 ⇒ 本环上卷驱动确实只跑了一次",
+   "artifact": ".fist-loop-20260927/hunt_r3_root_split.json",
+   "path": "by_scope.branch",
+   "equals": 0
+  },
+  {
+   "label": "㊴",
+   "claim": "入账条目的账本实际戳可逐条反解（时间戳证据来自写盘瞬间，不是我手敲）",
+   "artifact": ".fist-loop-20260927/hunt_r3_filed.json",
+   "path": "ledger_stamps",
+   "min": 6
+  },
+  {
+   "label": "㊵",
+   "claim": "收口驱动现在拒绝未知旗标（必然违例对照：带 --dry-run 必须 REFUSE 且不发 RPC）",
+   "artifact": ".fist-loop-20260927/hunt_r3_flag_guard.json",
+   "path": "refused",
+   "equals": true
+  }
+ ]
+}

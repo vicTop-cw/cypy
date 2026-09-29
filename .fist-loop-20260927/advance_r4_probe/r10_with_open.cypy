@@ -1,0 +1,7 @@
+def main() -> int:
+    try:
+        let file = open("data.txt", "r")
+        let content = file.read()
+    except FileNotFoundError:
+        print("File not found")
+    return 0

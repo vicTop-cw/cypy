@@ -1,0 +1,186 @@
+{
+ "key": "r3_polish",
+ "root_task": "T0r72",
+ "assignee": "cypy-polisher",
+ "stage": "R3-打磨",
+ "forbid": "把打磨做成新增语义或扩功能面；弱化/删除既有测试；把产品文件整档交给 black/ruff --fix；改 PROJECT-SPEC 与 SYNTAX 冻结语义；git add/commit/push/删分支/删别人的 worktree；用『读起来更顺』替代可复跑判据；拿上一环的判据件当本轮证据；替另一条 lane 的改动签归属",
+ "laws": [
+  {
+   "name": "锁夹具换冻结形：BUG-55 用 SYNTAX/11 的 `struct Box<T>`，并留非冻结形被容忍的显式对照",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_locks.json",
+     "frozen_fixture_swapped",
+     300
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_locks.json",
+     "nonfrozen_control_kept",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "补三条新锁：bridge 生成 setup / bridge 对 emit-cython 明确 decline / importlib 取子模块",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_locks.json",
+     "new_locks",
+     300
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_locks.json",
+     "each_new_lock_red_when_reverted",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "入口 API 打磨：新增公开 CypyHook.analyze_only()（现只有私有 _parse_and_analyze，cypy_hook/hook.py:221），cypyc/cli.py:495 改走公开面；语义与错误清单一字不动",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_api.json",
+     "public_added",
+     300
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_api.json",
+     "cli_no_private_call",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "文档-帮助-argparse 三向一致：USAGE.md:66-70 的四个 transpile 旗标与 :102 的 build --check-only 都必须既在 --help 里、又被对应子命令读取；判据可复跑",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_docs.json",
+     "flags_three_way",
+     300
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_docs.json",
+     "guard_rerunnable",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "lint 存量只减不增：E9/W605 零、亲笔文件零违例、E501 逐文件不高于开工基线",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_lint.json",
+     "hard_violations",
+     300
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_lint.json",
+     "e501_within_baseline",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "行尾策略只点名不动刀：混用清单实测、新文件统一 LF 的守卫、禁整档重排的理由留字",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_eol.json",
+     "mixed_files_manifest",
+     300
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_eol.json",
+     "no_bulk_reformat",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "三套判据体系与红线复算：收集数随新锁上调，两套测试体系都跑，基线只升不降",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_baselines.json",
+     "pytest",
+     300
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_baselines.json",
+     "git",
+     300
+    ]
+   ]
+  },
+  {
+   "name": "改动半径与报告自洽：每档归属本单、页脚每格从判据件反解",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/polish_r3_baselines.json",
+     "radius",
+     300
+    ],
+    [
+     ".fist-loop-20260927/polish_r3_self_audit.json",
+     "counts_all_equal",
+     300
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "锁夹具换冻结形 + 非冻结形现状对照",
+   ".fist-loop-20260927/polish_r3_locks.json",
+   "frozen_fixture_swapped"
+  ],
+  [
+   "三条新锁 + 回退必红证明",
+   ".fist-loop-20260927/polish_r3_locks.json",
+   "each_new_lock_red_when_reverted"
+  ],
+  [
+   "公开 analyze_only() 门面 + CLI 停调私有",
+   ".fist-loop-20260927/polish_r3_api.json",
+   "public_added"
+  ],
+  [
+   "文档-帮助-argparse 三向一致且守卫可复跑",
+   ".fist-loop-20260927/polish_r3_docs.json",
+   "flags_three_way"
+  ],
+  [
+   "lint 存量只减不增（口径同源归一）",
+   ".fist-loop-20260927/polish_r3_lint.json",
+   "e501_within_baseline"
+  ],
+  [
+   "行尾策略只点名不动刀",
+   ".fist-loop-20260927/polish_r3_eol.json",
+   "no_bulk_reformat"
+  ],
+  [
+   "三套判据体系与红线复算（基线只升不降）",
+   ".fist-loop-20260927/polish_r3_baselines.json",
+   "radius_exact"
+  ],
+  [
+   "改动半径逐档归属 + 报告页脚反解",
+   ".fist-loop-20260927/polish_r3_baselines.json",
+   "radius"
+  ]
+ ],
+ "root_deliverable": "R3-打磨 交付：{REPORT}；八法落地＝9 条新锁（其中 7 条有『回退必红』证明、2 条按性质点名）、BUG-55 夹具换成 SYNTAX/11 冻结形并另立『非冻结形今天仍被容忍』的现状对照锁、CLI 从私有 _parse_and_analyze 改走新增公开 CypyHook.analyze_only()（纯委托，错误清单逐字相等）、文档↔argparse↔--help 三向守卫可当场复跑、lint 与行尾两条硬门（E501 逐文件不升 + 单档改动行数上限 + mtime 半径 ⊆ 本环清单）。三套体系同批复算：pytest 1929/1929（含 9 条新锁在全量收集里现形）、自研 47/47、e2e 25/25 且 FAIL/WARN/UNREG 三格为零；回退矩阵 8/8 组（含『只改注释』对照全绿）；不可逆面 12 条逐项 live/derived/manifest 点名，实测零执行",
+ "root_marker": "[selfdrive-polish]",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/polish_r3_lockproof.json",
+   "groups_ok",
+   300
+  ],
+  [
+   ".fist-loop-20260927/polish_r3_irreversible.json",
+   "live_probe_items",
+   300
+  ]
+ ],
+ "root_verify_reason": "打磨环最容易说谎的两件事都做了反向证明：(1) 每条新锁都配一组『摘掉对应实现』的 mutation，必须只有该红的红（8 组里 3 组另钉 must_stay_green，1 组只改注释必须全绿），同因连带走白名单并逐条写原因；(2) 半径主张不靠自述——从 mtime 反解出开工窗口内被触碰的 5 个文件并与本环清单双向对表（多一个越界、少一个未落地都算红）。lint/行尾两条判据各自带形状自证（基线自求和==声明总量、键口径归一后交集非空、单档改动行数上限），因为本轮真实踩过『反斜杠键查正斜杠现值 ⇒ 48 文件全被判成上涨』和『snap_left 恒真』两个坑"
+}

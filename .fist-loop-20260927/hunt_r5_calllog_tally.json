@@ -1,0 +1,326 @@
+{
+ "started": "2026-09-28T07:26:13+00:00",
+ "self_checks": [
+  {
+   "label": "逐工具计数之和 = 前缀总行数（分组不吞行）",
+   "got": 146,
+   "want": 146,
+   "why": "两路回加",
+   "ok": true
+  },
+  {
+   "label": "refused 计数 = 逐字清单条数（拒收清单不是手数）",
+   "got": 0,
+   "want": 0,
+   "why": "两栏同数",
+   "ok": true
+  },
+  {
+   "label": "不存在前缀必须数出 0 行（过滤器不恒真）",
+   "got": 0,
+   "want": 0,
+   "why": "对照前缀",
+   "ok": true
+  },
+  {
+   "label": "按标签这一路的逐工具合计 = 标签行数（换了过滤器也不吞行）",
+   "got": 28,
+   "want": 28,
+   "why": "两路回加",
+   "ok": true
+  },
+  {
+   "label": "laya：本环标签下确有成功调用（laya_decide）",
+   "got": 1,
+   "want": true,
+   "why": "0 就是不许写『已开启』",
+   "ok": true
+  },
+  {
+   "label": "issue_up：本环标签下确有成功调用（publish/report_bug）",
+   "got": 14,
+   "want": true,
+   "why": "0 就是不许写『已开启』",
+   "ok": true
+  },
+  {
+   "label": "call_log 工具本轮真打了一次且回包看得到本环号段",
+   "got": 1,
+   "want": 1,
+   "why": "sqlite 同口径 146 行 / 回包含 T0r96 146 行",
+   "ok": true
+  }
+ ],
+ "grouped_by": "params_json.task_id 前缀（不按标签、不按回忆）",
+ "stages": {
+  "T0r96": {
+   "label": "R5-寻虫（16 叶 × omega 全链 + 8 支 + 根上卷）",
+   "rows": 146,
+   "distinct_tasks": 17,
+   "by_tool": {
+    "claim": {
+     "ok": 17,
+     "refused": 0
+    },
+    "task_plan_deep": {
+     "ok": 1,
+     "refused": 0
+    },
+    "omega_status": {
+     "ok": 16,
+     "refused": 0
+    },
+    "omega_spec_create": {
+     "ok": 16,
+     "refused": 0
+    },
+    "omega_spec_review": {
+     "ok": 16,
+     "refused": 0
+    },
+    "execute": {
+     "ok": 16,
+     "refused": 0
+    },
+    "submit": {
+     "ok": 16,
+     "refused": 0
+    },
+    "output_validate": {
+     "ok": 16,
+     "refused": 0
+    },
+    "omega_result_verify": {
+     "ok": 16,
+     "refused": 0
+    },
+    "verify": {
+     "ok": 16,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_total": 0,
+   "refused_detail": []
+  }
+ },
+ "control_absent_prefix_rows": 0,
+ "total_call_log_rows": 4925,
+ "stage_seed_rows": {
+  "needle": "%[loop:20260927-loop:R4-%",
+  "total": 27,
+  "by_tool": {
+   "publish": {
+    "ok": 5,
+    "refused": 0,
+    "examples": []
+   },
+   "laya_decide": {
+    "ok": 5,
+    "refused": 0,
+    "examples": []
+   },
+   "report_bug": {
+    "ok": 17,
+    "refused": 0,
+    "examples": []
+   }
+  },
+  "scope": "上一环（R4）号段：跨环正例对照，证明按标签过滤器找得到行；不是本环计数"
+ },
+ "ring_tag_calls": {
+  "tag": "[loop:20260927-loop:R5-寻虫]",
+  "by_tool": {
+   "publish": {
+    "ok": 1,
+    "refused": 0
+   },
+   "laya_decide": {
+    "ok": 1,
+    "refused": 0
+   },
+   "report_bug": {
+    "ok": 13,
+    "refused": 13
+   }
+  },
+  "total": 28,
+  "ok": 15,
+  "refused": 13,
+  "absent_control_rows": 0,
+  "refused_detail": [
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:28Z",
+    "who": "[CODEGEN_binop_parens_dropped_changes_order] 括号分组在产物里被丢掉，同优先级左结合链被改次序（静默产错码）",
+    "err": "report_bug: 非法 severity=P0（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:29Z",
+    "who": "[LEXER_declared_augassign_never_lexed] 文档声明的 `**=`/`&=`/`|=` 词法器从不发 token，写出来必硬解析失败",
+    "err": "report_bug: 非法 severity=P1（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:29Z",
+    "who": "[CODEGEN_nested_defer_runs_eagerly] `if`/`for` 里的 defer 就地发射，清理在函数退出之前跑完",
+    "err": "report_bug: 非法 severity=P1（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:30Z",
+    "who": "[COMPTIME_collection_literal_leaks_ast_repr] comptime 的列表/元组把 AST 节点 repr 写进产物，产物不可编译",
+    "err": "report_bug: 非法 severity=P1（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:30Z",
+    "who": "[COMPTIME_string_result_emitted_unescaped] comptime 的字符串结果被裸插值写进产物，变成活表达式（可劫持 docstring）",
+    "err": "report_bug: 非法 severity=P1（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:31Z",
+    "who": "[COMPTIME_block_form_surfaces_internal_exception] `comptime:` 块形式让转译器抛内部异常，异常文本被当诊断打印",
+    "err": "report_bug: 非法 severity=P2（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:31Z",
+    "who": "[TYPES_documented_pointer_element_names_undefined] 文档工作例里的 `*char` 返回位被判 Undefined name，同名的 let 位却能降码",
+    "err": "report_bug: 非法 severity=P1（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:32Z",
+    "who": "[CLI_global_option_overwritten_by_subparser] 全局 `-o`/`-v` 被子命令同名默认值覆盖，写在子命令前时静默失效",
+    "err": "report_bug: 非法 severity=P1（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:32Z",
+    "who": "[HOOK_bom_marker_silently_not_compiled] 带 BOM 的 `#!bin cypy` 标记让 import hook 静默放行，按普通 .py 执行且零诊断",
+    "err": "report_bug: 非法 severity=P1（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:33Z",
+    "who": "[HOOK_clear_cache_reports_ok_but_keeps_artifacts] `hook clear-cache` 报「已清除」，但缓存目录里的 .pyd 与中间产物原地留着",
+    "err": "report_bug: 非法 severity=P1（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:33Z",
+    "who": "[CLI_build_failure_reason_message_swallowed] `build --entry nosuch` rc=1 却只打 `Failed modules (0)`，原因文案被丢弃",
+    "err": "report_bug: 非法 severity=P2（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:34Z",
+    "who": "[CLI_check_only_ignores_entry_scope] `build --check-only --entry X` 收下 --entry 却完全不读它",
+    "err": "report_bug: 非法 severity=P2（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   },
+   {
+    "tool": "report_bug",
+    "ts": "2026-09-28T06:28:35Z",
+    "who": "[CODEGEN_module_identity_hardcoded_unknown] 每个产物都写死 `__name__ = \"unknown\"` / `__file__ = \"\"`，模块认不出自己",
+    "err": "report_bug: 非法 severity=P2（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）"
+   }
+  ],
+  "refusals_md": "| 被拒原文（逐字） | 工具 | 次数 | 首个见证 |\n| --- | --- | --- | --- |\n| `report_bug: 非法 severity=P0（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）` | report_bug | 1 | [CODEGEN_binop_parens_dropped_changes_order] 括号分组在产物里被丢掉，同优先级左结合链被改次序（静默产错码） @ 2026-09-28T06:28:28Z |\n| `report_bug: 非法 severity=P1（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）` | report_bug | 8 | [LEXER_declared_augassign_never_lexed] 文档声明的 `**=`/`&=`/`|=` 词法器从不发 token，写出来必硬解析失败 @ 2026-09-28T06:28:29Z |\n| `report_bug: 非法 severity=P2（合法值：critical/high/medium/low；缺省 medium。BUG-88：闭集必须等于抬头文法）` | report_bug | 4 | [COMPTIME_block_form_surfaces_internal_exception] `comptime:` 块形式让转译器抛内部异常，异常文本被当诊断打印 @ 2026-09-28T06:28:31Z |",
+  "distinct_refusal_texts": 3,
+  "note": "laya / issue_up 的 params 里没有 task_id，只有环标签 ⇒ 按前缀数它们恒为 0，这一栏才是本环真开过的次数；report_bug 的 refused 是服务端拒收那一批（不是没调）。call_log 工具的回包行数见 call_log_tool_probe（它的 params 不带环标签，不能按标签数）。"
+ },
+ "call_log_tool_probe": {
+  "rows_returned": 2500,
+  "rows_containing_stage": 146,
+  "sqlite_rows": 146,
+  "error": ""
+ },
+ "named_tools_in_this_build": {
+  "laya": {
+   "exact": 0,
+   "substring": 23
+  },
+  "issue_up": {
+   "exact": 0,
+   "substring": 0
+  },
+  "omega_spec_create": {
+   "exact": 551,
+   "substring": 551
+  },
+  "omega_result_verify": {
+   "exact": 548,
+   "substring": 548
+  },
+  "report_bug": {
+   "exact": 118,
+   "substring": 118
+  },
+  "output_validate": {
+   "exact": 441,
+   "substring": 441
+  },
+  "submit": {
+   "exact": 401,
+   "substring": 401
+  },
+  "claim": {
+   "exact": 416,
+   "substring": 416
+  },
+  "verify": {
+   "exact": 603,
+   "substring": 1151
+  }
+ },
+ "spec_named_carriers": {
+  "laya": {
+   "carriers": {
+    "laya_decide": {
+     "whole_db": 23,
+     "this_stage_seed": 5,
+     "this_stage_prefix": 0
+    }
+   },
+   "whole_db_total": 23,
+   "this_stage_total": 5
+  },
+  "issue_up": {
+   "carriers": {
+    "publish": {
+     "whole_db": 25,
+     "this_stage_seed": 5,
+     "this_stage_prefix": 0
+    },
+    "report_bug": {
+     "whole_db": 118,
+     "this_stage_seed": 17,
+     "this_stage_prefix": 0
+    }
+   },
+   "whole_db_total": 143,
+   "this_stage_total": 22
+  },
+  "call_log": {
+   "carriers": {
+    "call_log": {
+     "whole_db": 41,
+     "this_stage_seed": 0,
+     "this_stage_prefix": 1,
+     "client_visible_T0r96_rows": 146,
+     "client_rows_returned": 2500
+    }
+   },
+   "whole_db_total": 41,
+   "this_stage_total": 1
+  }
+ },
+ "distinct_refusal_texts": 0,
+ "refusals_md": "| 被拒原文（逐字） | 工具 | 次数 | 首个见证 |\n| --- | --- | --- | --- |",
+ "note": "规格点名的 laya / issue_up 若在 call_log 里 0 命中，说明本 build 没有这两个工具名；等价能力由谁承担要写在报告里，不许写『已开启』",
+ "refuse": [],
+ "queried_at_utc": "2026-09-28T07:26:14+00:00"
+}

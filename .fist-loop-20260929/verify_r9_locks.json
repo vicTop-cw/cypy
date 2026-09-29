@@ -1,0 +1,104 @@
+{
+ "tree": "lockproof_r9_40232",
+ "identity_ok": true,
+ "identity_rc": 0,
+ "identity_tail": "TREE=E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\lockproof_r9_40232\\scripts\\omega_gate.py\n",
+ "cells": [
+  {
+   "cell": "S1 切片形态判断恒假（退回「切片当元素」）",
+   "file": "cypyc/analyzer/type_checker.py",
+   "anchor_count": 1,
+   "run": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=3 cases=51 passed=45 failed=6 refused=0 accuracy=88.24% rc=1",
+    "counts": {
+     "specs": "3",
+     "cases": "51",
+     "passed": "45",
+     "failed": "6",
+     "refused": "0",
+     "accuracy": "88",
+     "rc": "1"
+    },
+    "failed_rows": [
+     "FAIL #0 typecheck 'def f(xs: list<int>) -> int:' → errors 期望 0，实际 1：['Type mismatch: expected list[int], got int at 2:5']",
+     "FAIL #1 typecheck 'def f(xs: list<int>) -> int:' → errors 期望 0，实际 1：['Type mismatch: expected list[int], got int at 2:5']",
+     "FAIL #2 typecheck 'def f(xs: list<int>) -> int:' → errors 期望 0，实际 1：['Type mismatch: expected list[int], got int at 2:5']",
+     "FAIL #3 typecheck 'def f(xs: list<int>) -> int:' → errors 期望 0，实际 1：['Type mismatch: expected list[int], got int at 2:5']",
+     "FAIL #6 typecheck 'def f(xs: list<int>) -> int:' → 缺片段 'Type mismatch: expected int, got list[int]'；观测=''",
+     "FAIL #7 typecheck 'def f(s: str) -> int:' → 缺片段 'Type mismatch: expected int, got str'；观测=''"
+    ],
+    "n_fail_rows": 6
+   },
+   "restored_bytes_identical": true,
+   "verdict": "承重：摘掉即红 FAIL #0 typecheck 'def f(xs: list<int>) ；FAIL #1 typecheck 'def f(xs: list<int>) "
+  },
+  {
+   "cell": "S2 越界槽位退回发 `__f{i}` 成员访问",
+   "file": "cypyc/codegen/cython_generator.py",
+   "anchor_count": 1,
+   "run": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=3 cases=51 passed=50 failed=1 refused=0 accuracy=98.04% rc=1",
+    "counts": {
+     "specs": "3",
+     "cases": "51",
+     "passed": "50",
+     "failed": "1",
+     "refused": "0",
+     "accuracy": "98",
+     "rc": "1"
+    },
+    "failed_rows": [
+     "FAIL #18 codegen_unchecked 'struct E:' → 缺片段 'and False'；观测='# cython: language_level=3\\n# cython: boundscheck=False\\n# cython: wraparound=False\\n# cy"
+    ],
+    "n_fail_rows": 1
+   },
+   "restored_bytes_identical": true,
+   "verdict": "承重：摘掉即红 FAIL #18 codegen_unchecked 'struct E:' →"
+  },
+  {
+   "cell": "C 对照：只动一行注释",
+   "file": "cypyc/analyzer/type_checker.py",
+   "anchor_count": 1,
+   "run": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0",
+    "counts": {
+     "specs": "3",
+     "cases": "51",
+     "passed": "51",
+     "failed": "0",
+     "refused": "0",
+     "accuracy": "100",
+     "rc": "0"
+    },
+    "failed_rows": [],
+    "n_fail_rows": 0
+   },
+   "restored_bytes_identical": true,
+   "verdict": "对照绿（尺没坏）"
+  }
+ ],
+ "baseline": {
+  "rc": 0,
+  "conclusion": "CONCLUSION specs=3 cases=51 passed=51 failed=0 refused=0 accuracy=100.00% rc=0",
+  "counts": {
+   "specs": "3",
+   "cases": "51",
+   "passed": "51",
+   "failed": "0",
+   "refused": "0",
+   "accuracy": "100",
+   "rc": "0"
+  },
+  "failed_rows": [],
+  "n_fail_rows": 0
+ },
+ "control_green": true,
+ "load_bearing": [
+  "S1 切片形态判断恒假（退回「切片当元素」）",
+  "S2 越界槽位退回发 `__f{i}` 成员访问"
+ ],
+ "not_load_bearing": []
+}

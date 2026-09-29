@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\baseline_r10_typeargs.py", line 101, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\baseline_r10_typeargs.py", line 70, in main
+    for callee, checker, line in collect_calls(ast):
+                                 ~~~~~~~~~~~~~^^^^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\baseline_r10_typeargs.py", line 45, in collect_calls
+    for n in walk(ast):
+             ~~~~^^^^^
+  File "E:\IDEProjects\AI\Cypy\.fist-loop-20260929\baseline_r10_typeargs.py", line 35, in walk
+    for attr in list(vars(cur).values()):
+                     ~~~~^^^^^
+TypeError: vars() argument must have __dict__ attribute

@@ -1,0 +1,26 @@
+[
+  {
+    "tool": "report_bug",
+    "result": {
+      "bug_id": "BUG-105",
+      "id": "BUG-105",
+      "status": "OPEN",
+      "path": "./memory/bugs.md",
+      "resolved_path": ".",
+      "project_dir": ".",
+      "task_namespace": ""
+    }
+  },
+  {
+    "tool": "report_bug",
+    "result": {
+      "bug_id": "BUG-106",
+      "id": "BUG-106",
+      "status": "OPEN",
+      "path": "./memory/bugs.md",
+      "resolved_path": ".",
+      "project_dir": ".",
+      "task_namespace": ""
+    }
+  }
+]

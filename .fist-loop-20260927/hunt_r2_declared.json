@@ -1,0 +1,141 @@
+{
+ "refuse": [],
+ "determinism": {
+  "declaration": {
+   "where": "SYNTAX/22-magic-properties.md:27",
+   "needle": "__compile_time__",
+   "quoted": "print(__compile_time__)  # 编译时间戳"
+  },
+  "rows": [
+   {
+    "src": "_pending_build_blocks.cypy",
+    "rc": 0,
+    "a": "443a36fb220136b6",
+    "b": "443a36fb220136b6",
+    "stable": true
+   },
+   {
+    "src": "_pending_type_defects.cypy",
+    "rc": 0,
+    "a": "0fd3b8528970be5c",
+    "b": "0fd3b8528970be5c",
+    "stable": true
+   },
+   {
+    "src": "basic_types.cypy",
+    "rc": 0,
+    "a": "b8ae47222e7a9fd0",
+    "b": "b8ae47222e7a9fd0",
+    "stable": true
+   },
+   {
+    "src": "concurrency.cypy",
+    "rc": 0,
+    "a": "cb4bc3afed217fc0",
+    "b": "cb4bc3afed217fc0",
+    "stable": true
+   },
+   {
+    "src": "constraint_numeric.cypy",
+    "rc": 0,
+    "a": "3e6bd3a58103635c",
+    "b": "3e6bd3a58103635c",
+    "stable": true
+   }
+  ],
+  "unstable_after_strip": [],
+  "raw_unstripped_differs": false,
+  "raw_pair": [
+   "28023011ba2fa0d6",
+   "28023011ba2fa0d6"
+  ]
+ },
+ "build": {
+  "declaration": {
+   "where": "docs/USAGE.md:105",
+   "needle": "跨模块类型推断",
+   "quoted": "`build` 会做模块发现、依赖图分析、跨模块类型推断，再逐模块编译。"
+  },
+  "build_rc": 0,
+  "build_tail": [
+   "  Compiled modules (2):",
+   "    \u001b[32m[OK]\u001b[0m lib -> C:\\Users\\victo\\AppData\\Local\\Temp\\tmp86sb5_u5\\ob\\lib\\lib.cp313-win_amd64.pyd",
+   "    \u001b[32m[OK]\u001b[0m main -> C:\\Users\\victo\\AppData\\Local\\Temp\\tmp86sb5_u5\\ob\\main\\main.cp313-win_amd64.pyd"
+  ],
+  "build_artifacts": [
+   "lib.c",
+   "lib.cp313-win_amd64.exp",
+   "lib.cp313-win_amd64.lib",
+   "lib.cp313-win_amd64.pyd",
+   "lib.cp313-win_amd64.pyd",
+   "lib.obj",
+   "lib.pyx",
+   "main.c",
+   "main.cp313-win_amd64.exp",
+   "main.cp313-win_amd64.lib",
+   "main.cp313-win_amd64.pyd",
+   "main.cp313-win_amd64.pyd",
+   "main.obj",
+   "main.pyx",
+   "setup.py",
+   "setup.py"
+  ],
+  "build_typed_lines": [],
+  "lib_alone_rc": 0,
+  "lib_alone_typed_lines": [],
+  "negative_control_empty": true
+ },
+ "hook": {
+  "declaration": {
+   "where": "docs/USAGE.md:121",
+   "needle": "cypyc hook install",
+   "quoted": "cypyc hook install        # 安装 import hook（写入用户 sitecustomize / 注册）"
+  },
+  "help_rc": 0,
+  "help_usage": "usage: cypyc hook [-h] [-o OUTPUT] [-v] [--transpile-only] [--compile]",
+  "declared_subcommands": {
+   "install": {
+    "rc": 0,
+    "error_line": "",
+    "tail": [
+     "[OK] Cypy import hook installed successfully",
+     "  Now you can import .py files with '#!bin cypy' header directly"
+    ]
+   },
+   "status": {
+    "rc": 0,
+    "error_line": "",
+    "tail": [
+     "[FAIL] Cypy import hook is not installed"
+    ]
+   },
+   "uninstall": {
+    "rc": 0,
+    "error_line": "",
+    "tail": [
+     "[OK] Cypy import hook uninstalled successfully"
+    ]
+   },
+   "clear-cache": {
+    "rc": 0,
+    "error_line": "",
+    "tail": [
+     "[OK] Cypy compilation cache cleared successfully"
+    ]
+   }
+  },
+  "documented_api_present": "['CypyHook']",
+  "api_rc": 0
+ },
+ "watch": {
+  "declaration": {
+   "where": "docs/USAGE.md:112",
+   "needle": "cypyc watch",
+   "quoted": "cypyc watch ./myproject"
+  },
+  "alive_after_6s": true,
+  "exited_early": null,
+  "new_module_picked_up": false,
+  "output_tail": []
+ }
+}

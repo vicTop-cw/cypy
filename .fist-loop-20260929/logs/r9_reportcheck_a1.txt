@@ -1,0 +1,6 @@
+PASS 39
+FAIL 路径 project-cypy-r6-selfdrive-loop.md: 
+FAIL 路径 tests/test_extractor_pattern.py::test_extractor_pattern_codegen: 
+FAIL open 块 25: 26
+FAIL 正文 open 清单与反解集合相等: ['BUG-117']
+CONCLUSION pass=39 fail=4 rc=1

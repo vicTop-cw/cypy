@@ -1,0 +1,40 @@
+{
+ "started_z": "2026-09-29T08:55:37Z",
+ "ns": "cypy-loop-20260929",
+ "ledger_ids_before": [
+  "BUG-1",
+  "BUG-133",
+  134
+ ],
+ "filed": [
+  {
+   "key": "R12-BOUND-DIAG-NOT-A-CALL",
+   "reply_verbatim": "{\"bug_id\": \"BUG-134\", \"id\": \"BUG-134\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  },
+  {
+   "key": "R12-CTOR-NO-GENERIC-INFERENCE",
+   "reply_verbatim": "{\"bug_id\": \"BUG-135\", \"id\": \"BUG-135\", \"status\": \"OPEN\", \"path\": \"./memory/bugs.md\", \"resolved_path\": \".\", \"project_dir\": \".\", \"task_namespace\": \"\"}"
+  }
+ ],
+ "skipped_existing": [],
+ "refusals": [],
+ "bug_list_rows": "{\"path\": \"./memory/bugs.md\", \"project_dir\": \".\", \"resolved_path\": \".\", \"count\": 136, \"bugs\": [{\"id\": \"BUG-1\", \"bug_id\": \"BUG-1\", \"ts\": \"2026-09-26T05:31:45Z\", \"severity\": \"high\", \"status\": \"OPEN\", \"su",
+ "ledger_ids_after": [
+  "BUG-1",
+  "BUG-135",
+  136
+ ],
+ "new_ids": [
+  "BUG-134",
+  "BUG-135"
+ ],
+ "keys_present_after": {
+  "R12-BOUND-DIAG-NOT-A-CALL": true,
+  "R12-CTOR-NO-GENERIC-INFERENCE": true
+ },
+ "call_log": {
+  "rows": 3,
+  "error_rows_ok_needle": 0,
+  "report_bug_rows": 2
+ }
+}

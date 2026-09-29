@@ -1,0 +1,35 @@
+S10_struct_parity_bad | stage=ok | err=1 | codegen_stage=typecheck
+  ERR: Return type mismatch: expected str, got int at 10:1
+S11_nested_generic | stage=ok | err=0 | codegen_stage=ok
+  HEADERS: ['class Box:', '    def get(self):']
+  CALLSITE: ['        return self.content', 'def f():', '    return 0']
+S12_two_params | stage=ok | err=0 | codegen_stage=ok
+  HEADERS: ['class Pair:', '    def first(self):']
+  CALLSITE: ['        return self.a', 'def f():', '    return p.first()']
+S13_two_params_bad | stage=ok | err=1 | codegen_stage=typecheck
+  ERR: Return type mismatch: expected int, got str at 11:1
+S1_manual_example | stage=ok | err=0 | codegen_stage=ok
+  HEADERS: ['class Box:', '    def get(self):']
+  CALLSITE: ['        return self.content', 'def f():', '    return b.get()']
+S2_field_ok | stage=ok | err=0 | codegen_stage=ok
+  HEADERS: ['class Box:', '    def get(self):']
+  CALLSITE: ['        return self.content', 'def f():', '    return b.content']
+S3_field_bad | stage=ok | err=1 | codegen_stage=typecheck
+  ERR: Return type mismatch: expected str, got int at 10:1
+S4_method_subst_ok | stage=ok | err=0 | codegen_stage=ok
+  HEADERS: ['class Box:', '    def get(self):']
+  CALLSITE: ['        return self.content', 'def f():', '    return b.get()']
+S5_method_subst_bad | stage=ok | err=1 | codegen_stage=typecheck
+  ERR: Return type mismatch: expected int, got str at 10:1
+S6_bare_class_erased | stage=ok | err=0 | codegen_stage=ok
+  HEADERS: ['class Box:', '    def get(self):']
+  CALLSITE: ['        return self.content', 'def f():', '    return b.get()']
+S7_plain_regression_ok | stage=ok | err=0 | codegen_stage=ok
+  HEADERS: ['class Plain:', '    def get(self):']
+  CALLSITE: ['        return self.content', 'def f():', '    return p.get()']
+S8_plain_regression_bad | stage=ok | err=1 | codegen_stage=typecheck
+  ERR: Return type mismatch: expected str, got int at 10:1
+S9_struct_parity_ok | stage=ok | err=0 | codegen_stage=ok
+  HEADERS: ['cdef class Wrap:', '    def __init__(self, value):', '    def get(self):']
+  CALLSITE: ['        return self.value', 'def f():', '    return w.value']
+CONCLUSION cases=13

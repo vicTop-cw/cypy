@@ -1,0 +1,1280 @@
+{
+ "started": "2026-09-28T10:50:40+00:00",
+ "snapshot": {
+  "dir": ".fist-loop-20260927/fix_r5_snap/head",
+  "rc": 0,
+  "head": "17d68b4",
+  "archived_plus_copied_files": 1710,
+  "overwritten_from_worktree": 1462,
+  "identity": {
+   "rc": 0,
+   "file": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\fix_r5_snap\\head\\cypyc\\__init__.py",
+   "resolved_under": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\fix_r5_snap\\head"
+  },
+  "identity_current": {
+   "rc": 0,
+   "file": "E:\\IDEProjects\\AI\\Cypy\\cypyc\\__init__.py",
+   "resolved_under": "E:\\IDEProjects\\AI\\Cypy"
+  }
+ },
+ "self_checks": [
+  {
+   "label": "解析出的节点数必须等于 pytest 自己报的 collected 数（丢行=判据窄于主张）",
+   "got": [
+    {},
+    {}
+   ],
+   "want": [
+    {},
+    {}
+   ],
+   "why": "快照丢行 [] / 当前丢行 []",
+   "ok": true
+  },
+  {
+   "label": "A 路没红的单必须逐张落到 B/D 待证栏（不许第三种状态，也不许悄悄消失）",
+   "got": [],
+   "want": [],
+   "why": "消失的单：[]",
+   "ok": true
+  },
+  {
+   "label": "B 路红档必须真在盘上（红档文件名逐张实测，不是我记得）",
+   "got": [],
+   "want": [],
+   "why": "盘上没有的红档：['r5_fix_lexer_lock.red.log']",
+   "ok": true
+  },
+  {
+   "label": "认领且有锁的单 = 实测跑到的单（没有中途丢文件）",
+   "got": [
+    73,
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "want": [
+    73,
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "why": "有锁 18 张 / 跑到 18 张",
+   "ok": true
+  },
+  {
+   "label": "每条锁的旧码红都不许由夹具缺文件/收集错/内部错承载（那类逐张点名，测量器自己坏了不算锁）",
+   "got": [],
+   "want": [],
+   "why": "夹具类红所在单：[]",
+   "ok": true
+  },
+  {
+   "label": "旧码里一条都不红的单只能落在「车道自述没有交付条目」那张名单里（逐张双向对齐）",
+   "got": [
+    [],
+    [],
+    []
+   ],
+   "want": [
+    [],
+    [],
+    []
+   ],
+   "why": "无红却没被声明未交付：[]；声明未交付却有承重锁：[]；无红但当前树也不绿：[]",
+   "ok": true
+  },
+  {
+   "label": "每条锁都必须「当前绿」：有锁的单数 = 全绿的单数",
+   "got": [
+    73,
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "want": [
+    73,
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "why": "当前不绿的：[]",
+   "ok": true
+  },
+  {
+   "label": "红的承载方式只能是断言或产品异常（每张「有红」的单，其全部红都由这两类承载）",
+   "got": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "want": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "why": "有红但承载方式不合规的单：[]",
+   "ok": true
+  },
+  {
+   "label": "对照1：快照树里 HEAD 就存在的测试必须数得到绿（快照不是恒红）",
+   "got": true,
+   "want": true,
+   "why": "tests/test_codegen_verification.py 在快照里 PASSED 19 条，rc=1",
+   "ok": true
+  },
+  {
+   "label": "对照2：点名一条不存在的锁必须「没跑到」（证明我没把 rc 当结论）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "no_tests_ran=True rc=4",
+   "ok": true
+  },
+  {
+   "label": "对照3：两棵树各自 import 到自己包里的 cypyc（已安装孪生顶掉就全盘失真）",
+   "got": [
+    true,
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true,
+    true
+   ],
+   "why": "快照=E:/IDEProjects/AI/Cypy/.fist-loop-20260927/fix_r5_snap/head/cypyc/__init__.py / 当前=E:/IDEProjects/AI/Cypy/cypyc/__init__.py",
+   "ok": true
+  },
+  {
+   "label": "锁节点总数必须 ≥ 有锁单数（每张单至少一条锁节点被真的跑到）",
+   "got": true,
+   "want": true,
+   "why": "节点 118 / 单 18",
+   "ok": true
+  }
+ ],
+ "self_checks_red": [],
+ "locked_ids": [
+  73,
+  74,
+  75,
+  76,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  91
+ ],
+ "lock_red_before": [
+  74,
+  75,
+  76,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  91
+ ],
+ "lock_green_after": [
+  73,
+  74,
+  75,
+  76,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  91
+ ],
+ "assertion_level_red_only": [
+  74,
+  75,
+  76,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  91
+ ],
+ "locks_missing": [
+  68,
+  69,
+  71,
+  72
+ ],
+ "no_code_lock_ids": [
+  73
+ ],
+ "harness_broken_cards": [],
+ "red_kind_totals": {
+  "assertion": 66,
+  "product_exception": 2,
+  "harness": 0,
+  "empty": 0
+ },
+ "lock_green_on_head": [
+  73
+ ],
+ "red_log_evidence": {
+  "75": [
+   "r5_fix_lexer_lock.red.log"
+  ],
+  "79": [
+   "r5_fix_lexer_lock.red.log"
+  ]
+ },
+ "lock_nodes_total": 118,
+ "runs": [
+  {
+   "bug_id": 73,
+   "files": [
+    {
+     "file": "tests/test_loop_20260927_polish_r4.py",
+     "nodes": 1,
+     "red_before": [],
+     "red_assertion_level": [],
+     "red_by_kind": {
+      "assertion": [],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [],
+     "green_after": [
+      "tests/test_loop_20260927_polish_r4.py::test_bug73_card_present_in_ledger"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 7.2,
+     "current_seconds": 5.0
+    }
+   ]
+  },
+  {
+   "bug_id": 74,
+   "files": [
+    {
+     "file": "tests/codegen/test_r5_fix_codegen.py",
+     "nodes": 4,
+     "red_before": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_lowers_to_declared_equivalent",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_with_variable_rhs_keeps_both_operands"
+     ],
+     "red_assertion_level": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_lowers_to_declared_equivalent",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_with_variable_rhs_keeps_both_operands"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_lowers_to_declared_equivalent",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_with_variable_rhs_keeps_both_operands"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: ['def f(x):', 'x', 'return x']",
+      "AssertionError: ['def f(x, y):', 'x', 'return x']"
+     ],
+     "green_after": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_lowers_to_declared_equivalent",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_with_variable_rhs_keeps_both_operands",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug74_build_value_in_value_position_unchanged",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug74_plain_assignment_not_touched"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.4,
+     "current_seconds": 1.3
+    }
+   ]
+  },
+  {
+   "bug_id": 75,
+   "files": [
+    {
+     "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+     "nodes": 11,
+     "red_before": [
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a & b-a & b]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a ^ b-a ^ b]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[~a-~a]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_infix_xor_parses_to_binop",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_lexer_emits_infix_caret_token",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_unary_invert_parses_to_unaryop",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_xor_precedence_sits_between_bitwise_and_and_or"
+     ],
+     "red_assertion_level": [
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a & b-a & b]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a ^ b-a ^ b]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[~a-~a]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_infix_xor_parses_to_binop",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_lexer_emits_infix_caret_token",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_unary_invert_parses_to_unaryop",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_xor_precedence_sits_between_bitwise_and_and_or"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a & b-a & b]",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a ^ b-a ^ b]",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[~a-~a]",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_infix_xor_parses_to_binop",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_lexer_emits_infix_caret_token",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_unary_invert_parses_to_unaryop",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_xor_precedence_sits_between_bitwise_and_and_or"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: 产物缺 `a & b`：",
+      "AssertionError: 产物缺 `a ^ b`：",
+      "AssertionError: `~a` 走不到出码：ValueError: Unexpected token TILDE at 2:12",
+      "AssertionError: 末条语句不是 return：ExprStmt(line=2, col=16)",
+      "AssertionError: TokenType 缺 XOR：`^` 只作 BUILD_VALUE ⇒ 异或无 token 可发",
+      "AssertionError: `~a` 仍解析失败：ValueError: Unexpected token TILDE at 2:12",
+      "AssertionError: 末条语句不是 return：ExprStmt(line=0, col=0)"
+     ],
+     "green_after": [
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a & b-a & b]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a << 2-a << 2]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a >> 2-a >> 2]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a ^ b-a ^ b]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a | b-a | b]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[~a-~a]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_frozen_caret_lexemes_untouched",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_infix_xor_parses_to_binop",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_lexer_emits_infix_caret_token",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_unary_invert_parses_to_unaryop",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_xor_precedence_sits_between_bitwise_and_and_or"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.2,
+     "current_seconds": 1.1
+    }
+   ]
+  },
+  {
+   "bug_id": 76,
+   "files": [
+    {
+     "file": "tests/codegen/test_r5_fix_codegen.py",
+     "nodes": 4,
+     "red_before": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug76_defer_in_loop_return_emitted_once_per_exit",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug76_nested_return_exit_runs_defer_cleanup"
+     ],
+     "red_assertion_level": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug76_defer_in_loop_return_emitted_once_per_exit",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug76_nested_return_exit_runs_defer_cleanup"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/codegen/test_r5_fix_codegen.py::test_bug76_defer_in_loop_return_emitted_once_per_exit",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug76_nested_return_exit_runs_defer_cleanup"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: ['def scan(n):', \"r = open('t.txt', 'w')\", 'for i in range(n):', 'if i > 0:', 'return i', 'r.close()', ...]",
+      "AssertionError: 2 个出口只发了 1 次清理：['def pick(flag):', \"f = open('t.txt', 'w')\", 'if flag:', 'return 1', 'f.close()', 'return 2']"
+     ],
+     "green_after": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug76_defer_in_loop_return_emitted_once_per_exit",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug76_multiple_defers_keep_reverse_order_at_every_exit",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug76_nested_return_exit_runs_defer_cleanup",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug76_single_exit_still_emits_cleanup_once"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.4,
+     "current_seconds": 1.3
+    }
+   ]
+  },
+  {
+   "bug_id": 78,
+   "files": [
+    {
+     "file": "tests/codegen/test_r5_fix_codegen.py",
+     "nodes": 12,
+     "red_before": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a ^ b) & c-(a ^ b) & c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a | b) & c-(a | b) & c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a % (b % c)-a % (b % c)]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a - (b - c)-a - (b - c)]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a >> (b >> c)-a >> (b >> c)]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a & b | c-a & b | c]"
+     ],
+     "red_assertion_level": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a ^ b) & c-(a ^ b) & c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a | b) & c-(a | b) & c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a % (b % c)-a % (b % c)]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a - (b - c)-a - (b - c)]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a >> (b >> c)-a >> (b >> c)]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a & b | c-a & b | c]"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a | b) & c-(a | b) & c]",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a % (b % c)-a % (b % c)]",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a - (b - c)-a - (b - c)]",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a >> (b >> c)-a >> (b >> c)]",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a & b | c-a & b | c]"
+      ],
+      "product_exception": [
+       "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a ^ b) & c-(a ^ b) & c]"
+      ],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "ValueError: Expected RPAREN, got IDENTIFIER at 2:17",
+      "AssertionError: (a | b) & c -> return a | b",
+      "AssertionError: a % (b % c) -> return a % b % c",
+      "AssertionError: a - (b - c) -> return a - b - c",
+      "AssertionError: a >> (b >> c) -> return a >> b >> c",
+      "AssertionError: a & b | c -> return a"
+     ],
+     "green_after": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a ^ b) & c-(a ^ b) & c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a | b) & c-(a | b) & c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a % (b % c)-a % (b % c)]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a * (b + c)-a * (b + c)]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a - (b - c)-a - (b - c)]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a >> (b >> c)-a >> (b >> c)]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[(a + b) - c-a + b - c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a & b | c-a & b | c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a + b + c-a + b + c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a - b + c-a - b + c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a - b - c-a - b - c]",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug78_power_stays_right_associative"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.4,
+     "current_seconds": 1.3
+    }
+   ]
+  },
+  {
+   "bug_id": 79,
+   "files": [
+    {
+     "file": "tests/parser/test_r5_fix_lexer_tokens.py",
+     "nodes": 15,
+     "red_before": [
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a &= y-a = a & y]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a **= y-a = a ** y]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a |= y-a = a | y]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a &= y-BITAND_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a **= y-POW_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a |= y-BITOR_ASSIGN]"
+     ],
+     "red_assertion_level": [
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a &= y-a = a & y]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a **= y-a = a ** y]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a |= y-a = a | y]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a &= y-BITAND_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a **= y-POW_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a |= y-BITOR_ASSIGN]"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a &= y-a = a & y]",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a **= y-a = a ** y]",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a |= y-a = a | y]",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a &= y-BITAND_ASSIGN]",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a **= y-POW_ASSIGN]",
+       "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a |= y-BITOR_ASSIGN]"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: `a &= y` 走不到出码：ValueError: Unexpected token ASSIGN at 2:8",
+      "AssertionError: `a **= y` 走不到出码：ValueError: Unexpected token ASSIGN at 2:9",
+      "AssertionError: `a |= y` 走不到出码：ValueError: Unexpected token ASSIGN at 2:8",
+      "AssertionError: TokenType 缺 BITAND_ASSIGN：词法器根本没有这个 token 类型",
+      "AssertionError: TokenType 缺 POW_ASSIGN：词法器根本没有这个 token 类型",
+      "AssertionError: TokenType 缺 BITOR_ASSIGN：词法器根本没有这个 token 类型"
+     ],
+     "green_after": [
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a %= y-MOD_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a *= y-MUL_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a += y-PLUS_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a -= y-MINUS_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a //= y-FLOORDIV_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a /= y-DIV_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a <<= y-LSHIFT_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a >>= y-RSHIFT_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a &= y-a = a & y]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a **= y-a = a ** y]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a += y-a = a + y]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a |= y-a = a | y]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a &= y-BITAND_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a **= y-POW_ASSIGN]",
+      "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a |= y-BITOR_ASSIGN]"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.2,
+     "current_seconds": 1.1
+    }
+   ]
+  },
+  {
+   "bug_id": 80,
+   "files": [
+    {
+     "file": "tests/codegen/test_r5_fix_codegen.py",
+     "nodes": 6,
+     "red_before": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_for_runs_once_at_exit",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_if_runs_at_function_exit",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_loop_block_stays_compilable"
+     ],
+     "red_assertion_level": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_for_runs_once_at_exit",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_if_runs_at_function_exit",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_loop_block_stays_compilable"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_for_runs_once_at_exit",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_if_runs_at_function_exit",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_loop_block_stays_compilable"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: ['def f(n):', 'for i in range(n):', \"print('CLEAN')\", \"print('BODY')\", 'return n']",
+      "AssertionError: ['def f(n):', 'if n > 0:', \"print('CLEAN')\", \"print('BODY')\", 'return n']",
+      "AssertionError: [\"print('CLEAN')\", \"print('BODY')\"]"
+     ],
+     "green_after": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_defer_in_nested_function_belongs_to_that_function",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_defer_only_block_stays_compilable",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_for_runs_once_at_exit",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_if_runs_at_function_exit",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_loop_block_stays_compilable",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug80_top_level_defer_still_moved_to_exit"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.4,
+     "current_seconds": 1.3
+    }
+   ]
+  },
+  {
+   "bug_id": 81,
+   "files": [
+    {
+     "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+     "nodes": 20,
+     "red_before": [
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_collection_elements_are_evaluated_not_copied",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[(1, 2)]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2] + [3]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[[1, 2], 3]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[abs(-1), len([1])]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_concatenation_is_pure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_literal_evaluates_to_pure_python_values",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_mixed_scalar_collection_is_pure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_collection_literal_is_pure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_unresolvable_element_is_whole_evaluation_failure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_tuple_literal_evaluates_to_pure_python_values",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_unresolvable_element_is_whole_evaluation_failure"
+     ],
+     "red_assertion_level": [
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_collection_elements_are_evaluated_not_copied",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[(1, 2)]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2] + [3]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[[1, 2], 3]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[abs(-1), len([1])]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_concatenation_is_pure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_literal_evaluates_to_pure_python_values",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_mixed_scalar_collection_is_pure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_collection_literal_is_pure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_unresolvable_element_is_whole_evaluation_failure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_tuple_literal_evaluates_to_pure_python_values",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_unresolvable_element_is_whole_evaluation_failure"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_collection_elements_are_evaluated_not_copied",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[(1, 2)]",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2] + [3]]",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2]]",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[[1, 2], 3]]",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[abs(-1), len([1])]]",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_concatenation_is_pure",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_literal_evaluates_to_pure_python_values",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_mixed_scalar_collection_is_pure",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_collection_literal_is_pure",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_tuple_literal_evaluates_to_pure_python_values",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_unresolvable_element_is_whole_evaluation_failure"
+      ],
+      "product_exception": [
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_unresolvable_element_is_whole_evaluation_failure"
+      ],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: 返回值里仍有 AST 节点：[('value[0]', BinOp(line=0, col=0)), ('value[1]', Constant(line=2, col=27))]",
+      "AssertionError: '(1, 2)' 的求值结果外泄 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19))]",
+      "AssertionError: '[1, 2] + [3]' 的求值结果外泄 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19)), ('value[2]', Constant(line=2, col=25))]",
+      "AssertionError: '[1, 2]' 的求值结果外泄 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19))]",
+      "AssertionError: '[[1, 2], 3]' 的求值结果外泄 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=24))]",
+      "AssertionError: '[abs(-1), len([1])]' 的求值结果外泄 AST 节点：[('value[0]', Call(line=0, col=0)), ('value[1]', Call(line=0, col=0))]",
+      "AssertionError: 返回值里仍有 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19)), ('value[2]', Constant(line=2, col=25))]",
+      "AssertionError: 返回值里仍有 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19))]",
+      "AssertionError: 返回值里仍有 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19)), ('value[2]', Constant(line=2, col=24)), ('value[3]', Constant(line=2, col=30))]",
+      "AssertionError: 返回值里仍有 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=24))]",
+      "assert [Constant(line=2, col=16), Constant(line=2, col=33)] is None",
+      "AssertionError: 返回值里仍有 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19))]",
+      "AssertionError: 求不出来的元素被当成值返回了：[Name(line=2, col=16), Constant(line=2, col=28)]"
+     ],
+     "green_after": [
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_collection_elements_are_evaluated_not_copied",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_control_scalar_comptime_unchanged",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[\"a\" + \"b\"]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[(1, 2)]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[1 + 2 * 3]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[6 * 7]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[True]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2] + [3]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[[1, 2], 3]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[abs(-1), len([1])]]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[len([1, 2, 3])]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[range(3)]",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_concatenation_is_pure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_literal_evaluates_to_pure_python_values",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_mixed_scalar_collection_is_pure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_collection_literal_is_pure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_unresolvable_element_is_whole_evaluation_failure",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_tuple_literal_evaluates_to_pure_python_values",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_unresolvable_element_is_whole_evaluation_failure"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.8,
+     "current_seconds": 1.2
+    },
+    {
+     "file": "tests/codegen/test_r5_fix_codegen.py",
+     "nodes": 3,
+     "red_before": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug81_codegen_renders_container_results_structurally",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug81_comptime_collection_product_is_a_compilable_literal"
+     ],
+     "red_assertion_level": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug81_codegen_renders_container_results_structurally",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug81_comptime_collection_product_is_a_compilable_literal"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/codegen/test_r5_fix_codegen.py::test_bug81_codegen_renders_container_results_structurally",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug81_comptime_collection_product_is_a_compilable_literal"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: # cython: language_level=3",
+      "AssertionError: # cython: language_level=3"
+     ],
+     "green_after": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug81_codegen_renders_container_results_structurally",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug81_comptime_collection_product_is_a_compilable_literal",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug81_scalar_folding_unchanged"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.4,
+     "current_seconds": 1.3
+    }
+   ]
+  },
+  {
+   "bug_id": 82,
+   "files": [
+    {
+     "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+     "nodes": 2,
+     "red_before": [],
+     "red_assertion_level": [],
+     "red_by_kind": {
+      "assertion": [],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [],
+     "green_after": [
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug82_control_int_comptime_on_same_path",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug82_string_comptime_value_is_correct_on_evaluator_side"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.8,
+     "current_seconds": 1.2
+    },
+    {
+     "file": "tests/codegen/test_r5_fix_codegen.py",
+     "nodes": 3,
+     "red_before": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_cannot_hijack_docstring",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_result_is_not_interpolated_raw",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_with_backslash_not_emitted_as_broken_literal"
+     ],
+     "red_assertion_level": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_cannot_hijack_docstring",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_result_is_not_interpolated_raw",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_with_backslash_not_emitted_as_broken_literal"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_cannot_hijack_docstring",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_result_is_not_interpolated_raw",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_with_backslash_not_emitted_as_broken_literal"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: comptime 字符串占了 docstring 位：Expr(value=Constant(value='abc'))",
+      "AssertionError: # cython: language_level=3",
+      "AssertionError: 字符串结果以活字面量落在产物里：['\"a\\\\b\"']"
+     ],
+     "green_after": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_cannot_hijack_docstring",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_result_is_not_interpolated_raw",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_with_backslash_not_emitted_as_broken_literal"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.4,
+     "current_seconds": 1.3
+    }
+   ]
+  },
+  {
+   "bug_id": 83,
+   "files": [
+    {
+     "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+     "nodes": 4,
+     "red_before": [
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_evaluate_entry_also_reports_not_implemented",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_raises_structured_not_implemented_diagnostic",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_surfaces_diagnostic_through_analyzer_face"
+     ],
+     "red_assertion_level": [
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_evaluate_entry_also_reports_not_implemented",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_raises_structured_not_implemented_diagnostic",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_surfaces_diagnostic_through_analyzer_face"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_evaluate_entry_also_reports_not_implemented",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_raises_structured_not_implemented_diagnostic",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_surfaces_diagnostic_through_analyzer_face"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: 求值侧没有结构化的未实现诊断类型 cypyc.analyzer.comptime_evaluator.ComptimeNotImplementedError",
+      "AssertionError: 求值侧没有结构化的未实现诊断类型 cypyc.analyzer.comptime_evaluator.ComptimeNotImplementedError",
+      "AssertionError: 用户拿不到「未实现」措辞：[]"
+     ],
+     "green_after": [
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_evaluate_entry_also_reports_not_implemented",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_raises_structured_not_implemented_diagnostic",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_surfaces_diagnostic_through_analyzer_face",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_inline_form_control_still_clean"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.8,
+     "current_seconds": 1.2
+    }
+   ]
+  },
+  {
+   "bug_id": 84,
+   "files": [
+    {
+     "file": "tests/analyzer/test_r5_fix_comptime_types.py",
+     "nodes": 5,
+     "red_before": [
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_both_analyzer_channels_agree_on_pointer_element_name",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_char_pointer_return_annotation_resolves",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_void_pointer_name_resolves"
+     ],
+     "red_assertion_level": [
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_both_analyzer_channels_agree_on_pointer_element_name",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_char_pointer_return_annotation_resolves",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_void_pointer_name_resolves"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_both_analyzer_channels_agree_on_pointer_element_name",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_char_pointer_return_annotation_resolves",
+       "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_void_pointer_name_resolves"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: [\"Undefined name 'char' at 1:21\", \"Undefined name 'char' at 1:11\"]",
+      "AssertionError: 文档工作例的 *char 返回位被拒：[\"Undefined name 'char' at 1:43\", \"Undefined name 'char' at 1:21\", \"Undefined name 'char' at 1:33\"]",
+      "AssertionError: 文档 04:87 的 *void 被拒：[\"Undefined name 'void' at 1:21\", \"Undefined name 'void' at 1:11\"]"
+     ],
+     "green_after": [
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_both_analyzer_channels_agree_on_pointer_element_name",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_control_documented_pointer_names_stay_clean",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_char_pointer_return_annotation_resolves",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_void_pointer_name_resolves",
+      "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_undocumented_c_integer_names_stay_undefined"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.8,
+     "current_seconds": 1.2
+    }
+   ]
+  },
+  {
+   "bug_id": 85,
+   "files": [
+    {
+     "file": "tests/cli/test_r5_fix_cli_hook.py",
+     "nodes": 8,
+     "red_before": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_output_dir_before_subcommand_is_used",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_parse_args_global_before_subcommand",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_verbose_before_subcommand_prints_steps"
+     ],
+     "red_assertion_level": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_output_dir_before_subcommand_is_used",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_parse_args_global_before_subcommand",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_verbose_before_subcommand_prints_steps"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_output_dir_before_subcommand_is_used",
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_parse_args_global_before_subcommand",
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_verbose_before_subcommand_prints_steps"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: 写在子命令前的 -o 没生效（仍写 output/）：piler\u001b[0m",
+      "AssertionError: assert 'output' == 'DIR'",
+      "AssertionError: 写在子命令前的 -v 没打开详细输出：piler\u001b[0m"
+     ],
+     "green_after": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_output_dir_after_subcommand_still_used",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_output_dir_before_subcommand_is_used",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_output_dir_both_sides_subcommand_wins",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_parse_args_global_after_subcommand_still_works",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_parse_args_global_before_subcommand",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_parse_args_global_default_unchanged",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_verbose_before_subcommand_prints_steps",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_verbose_control_without_flag_stays_quiet"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 5.2,
+     "current_seconds": 5.0
+    }
+   ]
+  },
+  {
+   "bug_id": 86,
+   "files": [
+    {
+     "file": "tests/cli/test_r5_fix_cli_hook.py",
+     "nodes": 4,
+     "red_before": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_bom_marker_still_recognised_as_cypy",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_finder_does_not_silently_pass_bom_file_through"
+     ],
+     "red_assertion_level": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_bom_marker_still_recognised_as_cypy",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_finder_does_not_silently_pass_bom_file_through"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_bom_marker_still_recognised_as_cypy",
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_finder_does_not_silently_pass_bom_file_through"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: 带 BOM 的 #!bin cypy 首行没被认出来",
+      "AssertionError: BOM 版被 import hook 静默放行（既不编译也不给诊断）"
+     ],
+     "green_after": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_bom_marker_still_recognised_as_cypy",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_bom_source_still_transpiles",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_finder_does_not_silently_pass_bom_file_through",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_plain_python_file_is_not_hijacked"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 5.2,
+     "current_seconds": 5.0
+    }
+   ]
+  },
+  {
+   "bug_id": 87,
+   "files": [
+    {
+     "file": "tests/cli/test_r5_fix_cli_hook.py",
+     "nodes": 3,
+     "red_before": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_removes_every_artifact_and_reports_count",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_reports_undeletable_file_in_report",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers"
+     ],
+     "red_assertion_level": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_removes_every_artifact_and_reports_count",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_reports_undeletable_file_in_report",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_removes_every_artifact_and_reports_count",
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_reports_undeletable_file_in_report",
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: 回执报「已清除」，产物却原地留着：['C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-victo\\\\pytest-1315\\\\test_r5_87_clear_cache_removes0\\\\__pycache__\\\\cypy\\\\manifest.json', 'C:\\\\Users\\\\victo\\\\AppData\\",
+      "AssertionError: clear_cache() 不回报任何结果，调用方无从知道删了几个、几个没删掉",
+      "AssertionError: 一个文件都没删掉，命令仍然回报成功（rc=0）"
+     ],
+     "green_after": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_removes_every_artifact_and_reports_count",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_reports_undeletable_file_in_report",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 5.2,
+     "current_seconds": 5.0
+    }
+   ]
+  },
+  {
+   "bug_id": 88,
+   "files": [
+    {
+     "file": "tests/cli/test_r5_fix_cli_hook.py",
+     "nodes": 3,
+     "red_before": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_cycle_reason_reaches_user",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_no_cypy_files_reason_reaches_user",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_rejected_entry_name_reaches_user"
+     ],
+     "red_assertion_level": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_cycle_reason_reaches_user",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_no_cypy_files_reason_reaches_user",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_rejected_entry_name_reaches_user"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_cycle_reason_reaches_user",
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_no_cypy_files_reason_reaches_user",
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_rejected_entry_name_reaches_user"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: cle_reason_reache0\\cyclic",
+      "AssertionError: oject",
+      "AssertionError: 入口点不存在时应当失败：AI\\Cypy\\.fist-loop-20260927\\fix_r5_snap\\head\\examples\\test_project"
+     ],
+     "green_after": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_cycle_reason_reaches_user",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_no_cypy_files_reason_reaches_user",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_rejected_entry_name_reaches_user"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 5.2,
+     "current_seconds": 5.0
+    }
+   ]
+  },
+  {
+   "bug_id": 89,
+   "files": [
+    {
+     "file": "tests/cli/test_r5_fix_cli_hook.py",
+     "nodes": 3,
+     "red_before": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_honours_entry_scope",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_with_unknown_entry_fails_loudly"
+     ],
+     "red_assertion_level": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_honours_entry_scope",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_with_unknown_entry_fails_loudly"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_honours_entry_scope",
+       "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_with_unknown_entry_fails_loudly"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: --check-only 仍然无视 --entry 扫了全部模块：oop-20260927\\fix_r5_snap\\head\\examples\\test_project",
+      "AssertionError: entry 被拒却回报成功：AppData\\Local\\Temp\\pytest-of-victo\\pytest-1315\\test_r5_89_check_only_with_unk0\\out"
+     ],
+     "green_after": [
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_honours_entry_scope",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_with_unknown_entry_fails_loudly",
+      "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_without_entry_still_checks_everything"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 5.2,
+     "current_seconds": 5.0
+    }
+   ]
+  },
+  {
+   "bug_id": 90,
+   "files": [
+    {
+     "file": "tests/codegen/test_r5_fix_codegen.py",
+     "nodes": 6,
+     "red_before": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_file_carries_real_identity",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_without_path_fabricates_nothing",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_identity_literals_round_trip_for_nasty_paths",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_placeholder_identity_not_emitted"
+     ],
+     "red_assertion_level": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_file_carries_real_identity",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_without_path_fabricates_nothing",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_identity_literals_round_trip_for_nasty_paths",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_placeholder_identity_not_emitted"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_file_carries_real_identity",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_without_path_fabricates_nothing",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug90_identity_literals_round_trip_for_nasty_paths",
+       "tests/codegen/test_r5_fix_codegen.py::test_bug90_placeholder_identity_not_emitted"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError: {'__file__': '\"\"', '__name__': '\"unknown\"'}",
+      "AssertionError: # cython: language_level=3",
+      "Failed: __file__ 不是合法字面量：'\"proj\\\\we\\'ird\"q.cypy\"' -> unterminated string literal (detected at line 1) (<unknown>, line 1)",
+      "AssertionError: # cython: language_level=3"
+     ],
+     "green_after": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_file_carries_real_identity",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_without_path_fabricates_nothing",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_identity_literals_round_trip_for_nasty_paths",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_other_module_metadata_still_emitted",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_placeholder_identity_not_emitted",
+      "tests/codegen/test_r5_fix_codegen.py::test_bug90_real_identity_when_source_path_known"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.4,
+     "current_seconds": 1.3
+    }
+   ]
+  },
+  {
+   "bug_id": 91,
+   "files": [
+    {
+     "file": "tests/codegen/test_r5_fix_codegen.py",
+     "nodes": 1,
+     "red_before": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal"
+     ],
+     "red_assertion_level": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal"
+     ],
+     "red_by_kind": {
+      "assertion": [
+       "tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal"
+      ],
+      "product_exception": [],
+      "harness": [],
+      "empty": []
+     },
+     "verbatim_red": [
+      "AssertionError:"
+     ],
+     "green_after": [
+      "tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal"
+     ],
+     "not_green": [],
+     "snapshot_seconds": 1.4,
+     "current_seconds": 1.3
+    }
+   ]
+  }
+ ],
+ "canary_probe": {
+  "file": "tests/test_codegen_verification.py",
+  "passed_in_snapshot": 19
+ },
+ "ghost_probe": {
+  "no_tests_ran": true,
+  "rc": 4
+ },
+ "note": "红/绿都是子进程实测：旧码树 = git archive HEAD 解出后覆盖本轮 tests/ 与 memory/；红按「断言 / 产品异常 / 夹具类」三档分栏，夹具类一律判红；无锁的认领单逐张列在 locks_missing，旧码不红又没有交付条目的单列在 no_code_lock_ids，两者都不并进闭环主张。",
+ "refuse": [],
+ "at_utc": "2026-09-28T10:51:16+00:00"
+}

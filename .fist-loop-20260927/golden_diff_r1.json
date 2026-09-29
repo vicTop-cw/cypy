@@ -1,0 +1,19 @@
+{
+ "refuse": [],
+ "changed_files": {
+  "basic_types.out": {
+   "before_lines": 13,
+   "after_lines": 13
+  }
+ },
+ "unchanged_files": 24,
+ "digit_only_lines": [
+  {
+   "file": "basic_types.out",
+   "line": 5,
+   "before": "auto(int to float): 42",
+   "after": "auto(int to float): 42.0"
+  }
+ ],
+ "other_lines": []
+}

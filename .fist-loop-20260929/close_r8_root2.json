@@ -1,0 +1,167 @@
+{
+ "started_z": "2026-09-29T05:02:15Z",
+ "ns": "cypy-loop-20260929",
+ "root": "T0r114",
+ "nodes": {
+  "T0r114.1": {
+   "omega_spec_create": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"spec_id\": \"spec:T0r114.1:r1\", \"task_id\": \"T0r114.1\", \"round\": 1, \"status\": \"pending\", \"author\": \"spec_author\", \"max_rounds\": 3, \"rounds_rejected\": 0, \"next_action\": \"omega_spec_review\", \"escalated\": false}"
+   },
+   "omega_spec_review": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"verdict\": \"approved\", \"spec_id\": \"spec:T0r114.1:r1\", \"task_id\": \"T0r114.1\", \"reviewer\": \"verifier\", \"reason\": \"R8 枝干：Ω-gate 41/41、pytest 2202 全绿、锁矩阵 5/5 承重（T0r114-cypy-selfdrive-r8-report.md）\", \"next_action\": \"execute\", \"escalated\": false}"
+   },
+   "omega_result_verify": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r114.1:r1\", \"task_id\": \"T0r114.1\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}"
+   },
+   "verify": {
+    "refused": false,
+    "reply": "{\"id\": \"T0r114.1\", \"parent_id\": \"T0r114\", \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 2, \"split_n\": 2, \"status\": \"已完成\", \"assignee\": null, \"description\": \"自驱式组合环 R8（2026-09-29）：推进→寻虫→修复→验证→打磨→推进\\n本轮靶面：把 PROJECT-SPEC 要求的 corpus/ 与 tests/regressio"
+   },
+   "status_after": "已完成"
+  },
+  "T0r114.2": {
+   "omega_spec_create": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"spec_id\": \"spec:T0r114.2:r1\", \"task_id\": \"T0r114.2\", \"round\": 1, \"status\": \"pending\", \"author\": \"spec_author\", \"max_rounds\": 3, \"rounds_rejected\": 0, \"next_action\": \"omega_spec_review\", \"escalated\": false}"
+   },
+   "omega_spec_review": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"verdict\": \"approved\", \"spec_id\": \"spec:T0r114.2:r1\", \"task_id\": \"T0r114.2\", \"reviewer\": \"verifier\", \"reason\": \"R8 枝干：Ω-gate 41/41、pytest 2202 全绿、锁矩阵 5/5 承重（T0r114-cypy-selfdrive-r8-report.md）\", \"next_action\": \"execute\", \"escalated\": false}"
+   },
+   "omega_result_verify": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r114.2:r1\", \"task_id\": \"T0r114.2\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}"
+   },
+   "verify": {
+    "refused": false,
+    "reply": "{\"id\": \"T0r114.2\", \"parent_id\": \"T0r114\", \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 2, \"split_n\": 2, \"status\": \"已完成\", \"assignee\": null, \"description\": \"自驱式组合环 R8（2026-09-29）：推进→寻虫→修复→验证→打磨→推进\\n本轮靶面：把 PROJECT-SPEC 要求的 corpus/ 与 tests/regressio"
+   },
+   "status_after": "已完成"
+  },
+  "T0r114.3": {
+   "omega_spec_create": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"spec_id\": \"spec:T0r114.3:r1\", \"task_id\": \"T0r114.3\", \"round\": 1, \"status\": \"pending\", \"author\": \"spec_author\", \"max_rounds\": 3, \"rounds_rejected\": 0, \"next_action\": \"omega_spec_review\", \"escalated\": false}"
+   },
+   "omega_spec_review": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"verdict\": \"approved\", \"spec_id\": \"spec:T0r114.3:r1\", \"task_id\": \"T0r114.3\", \"reviewer\": \"verifier\", \"reason\": \"R8 枝干：Ω-gate 41/41、pytest 2202 全绿、锁矩阵 5/5 承重（T0r114-cypy-selfdrive-r8-report.md）\", \"next_action\": \"execute\", \"escalated\": false}"
+   },
+   "omega_result_verify": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r114.3:r1\", \"task_id\": \"T0r114.3\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}"
+   },
+   "verify": {
+    "refused": false,
+    "reply": "{\"id\": \"T0r114.3\", \"parent_id\": \"T0r114\", \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 2, \"split_n\": 2, \"status\": \"已完成\", \"assignee\": null, \"description\": \"自驱式组合环 R8（2026-09-29）：推进→寻虫→修复→验证→打磨→推进\\n本轮靶面：把 PROJECT-SPEC 要求的 corpus/ 与 tests/regressio"
+   },
+   "status_after": "已完成"
+  },
+  "T0r114.4": {
+   "omega_spec_create": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"spec_id\": \"spec:T0r114.4:r1\", \"task_id\": \"T0r114.4\", \"round\": 1, \"status\": \"pending\", \"author\": \"spec_author\", \"max_rounds\": 3, \"rounds_rejected\": 0, \"next_action\": \"omega_spec_review\", \"escalated\": false}"
+   },
+   "omega_spec_review": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"verdict\": \"approved\", \"spec_id\": \"spec:T0r114.4:r1\", \"task_id\": \"T0r114.4\", \"reviewer\": \"verifier\", \"reason\": \"R8 枝干：Ω-gate 41/41、pytest 2202 全绿、锁矩阵 5/5 承重（T0r114-cypy-selfdrive-r8-report.md）\", \"next_action\": \"execute\", \"escalated\": false}"
+   },
+   "omega_result_verify": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r114.4:r1\", \"task_id\": \"T0r114.4\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}"
+   },
+   "verify": {
+    "refused": false,
+    "reply": "{\"id\": \"T0r114.4\", \"parent_id\": \"T0r114\", \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 2, \"split_n\": 2, \"status\": \"已完成\", \"assignee\": null, \"description\": \"自驱式组合环 R8（2026-09-29）：推进→寻虫→修复→验证→打磨→推进\\n本轮靶面：把 PROJECT-SPEC 要求的 corpus/ 与 tests/regressio"
+   },
+   "status_after": "已完成"
+  },
+  "T0r114.5": {
+   "omega_spec_create": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"spec_id\": \"spec:T0r114.5:r1\", \"task_id\": \"T0r114.5\", \"round\": 1, \"status\": \"pending\", \"author\": \"spec_author\", \"max_rounds\": 3, \"rounds_rejected\": 0, \"next_action\": \"omega_spec_review\", \"escalated\": false}"
+   },
+   "omega_spec_review": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"verdict\": \"approved\", \"spec_id\": \"spec:T0r114.5:r1\", \"task_id\": \"T0r114.5\", \"reviewer\": \"verifier\", \"reason\": \"R8 枝干：Ω-gate 41/41、pytest 2202 全绿、锁矩阵 5/5 承重（T0r114-cypy-selfdrive-r8-report.md）\", \"next_action\": \"execute\", \"escalated\": false}"
+   },
+   "omega_result_verify": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r114.5:r1\", \"task_id\": \"T0r114.5\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}"
+   },
+   "verify": {
+    "refused": false,
+    "reply": "{\"id\": \"T0r114.5\", \"parent_id\": \"T0r114\", \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 2, \"split_n\": 2, \"status\": \"已完成\", \"assignee\": null, \"description\": \"自驱式组合环 R8（2026-09-29）：推进→寻虫→修复→验证→打磨→推进\\n本轮靶面：把 PROJECT-SPEC 要求的 corpus/ 与 tests/regressio"
+   },
+   "status_after": "已完成"
+  },
+  "T0r114.6": {
+   "omega_spec_create": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"spec_id\": \"spec:T0r114.6:r1\", \"task_id\": \"T0r114.6\", \"round\": 1, \"status\": \"pending\", \"author\": \"spec_author\", \"max_rounds\": 3, \"rounds_rejected\": 0, \"next_action\": \"omega_spec_review\", \"escalated\": false}"
+   },
+   "omega_spec_review": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"verdict\": \"approved\", \"spec_id\": \"spec:T0r114.6:r1\", \"task_id\": \"T0r114.6\", \"reviewer\": \"verifier\", \"reason\": \"R8 枝干：Ω-gate 41/41、pytest 2202 全绿、锁矩阵 5/5 承重（T0r114-cypy-selfdrive-r8-report.md）\", \"next_action\": \"execute\", \"escalated\": false}"
+   },
+   "omega_result_verify": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r114.6:r1\", \"task_id\": \"T0r114.6\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}"
+   },
+   "verify": {
+    "refused": false,
+    "reply": "{\"id\": \"T0r114.6\", \"parent_id\": \"T0r114\", \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 2, \"split_n\": 2, \"status\": \"已完成\", \"assignee\": null, \"description\": \"[边界审视·全局输入域 owner] 根任务 spec 未写的域外行为归本叶：对输入域逐项给出空输入 / 极值 / 非法输入 / 资源极限 四类用例，或显式声明该项不适用并说明依据"
+   },
+   "status_after": "已完成"
+  },
+  "T0r114": {
+   "omega_spec_create": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"spec_id\": \"spec:T0r114:r1\", \"task_id\": \"T0r114\", \"round\": 1, \"status\": \"pending\", \"author\": \"spec_author\", \"max_rounds\": 3, \"rounds_rejected\": 0, \"next_action\": \"omega_spec_review\", \"escalated\": false}"
+   },
+   "omega_spec_review": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"spec\", \"verdict\": \"approved\", \"spec_id\": \"spec:T0r114:r1\", \"task_id\": \"T0r114\", \"reviewer\": \"verifier\", \"reason\": \"R8 根：交付报告已落盘且引用验针 66 项全过（T0r114-cypy-selfdrive-r8-report.md）\", \"next_action\": \"execute\", \"escalated\": false}"
+   },
+   "omega_result_verify": {
+    "refused": false,
+    "reply": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r114:r1\", \"task_id\": \"T0r114\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}"
+   },
+   "verify": {
+    "refused": false,
+    "reply": "{\"id\": \"T0r114\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"已完成\", \"assignee\": null, \"description\": \"[omega:required] 自驱式组合环 R8（2026-09-29）：推进→寻虫→修复→验证→打磨→推进\\n本轮靶面：把 PROJECT-SPEC 要求的 corpus/ 与 test"
+   },
+   "status_after": "已完成"
+  }
+ },
+ "refusals": [],
+ "product_gate": "CONCLUSION pass=66 fail=0 report=T0r114-cypy-selfdrive-r8-report.md rc=0",
+ "counts": {
+  "branches": 6,
+  "leaves": 18,
+  "branch_status_before": {
+   "T0r114.1": "待验收",
+   "T0r114.2": "待验收",
+   "T0r114.3": "待验收",
+   "T0r114.4": "待验收",
+   "T0r114.5": "待验收",
+   "T0r114.6": "待验收"
+  },
+  "root_status_before": "拆分中"
+ },
+ "rpc_sent_by_tool": {
+  "omega_result_verify": 7,
+  "omega_spec_create": 7,
+  "omega_spec_review": 7,
+  "verify": 7
+ },
+ "rpc_sent_total": 28,
+ "rollup_after": {
+  "已完成": 25
+ },
+ "call_log_error_rows": 0,
+ "final_root_status": "已完成"
+}

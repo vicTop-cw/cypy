@@ -1,0 +1,60 @@
+{
+ "declared": 17,
+ "collected": 17,
+ "passed": 17,
+ "pos_total": 11,
+ "ctl_total": 6,
+ "per_bug": {
+  "BUG-55": {
+   "locks": 2,
+   "pos": 1,
+   "ctl": 1,
+   "paired": true,
+   "all_passed": true,
+   "task_id": "T0r63"
+  },
+  "BUG-56": {
+   "locks": 6,
+   "pos": 5,
+   "ctl": 1,
+   "paired": true,
+   "all_passed": true,
+   "task_id": "T0r64"
+  },
+  "BUG-57": {
+   "locks": 3,
+   "pos": 2,
+   "ctl": 1,
+   "paired": true,
+   "all_passed": true,
+   "task_id": "T0r65"
+  },
+  "BUG-58": {
+   "locks": 3,
+   "pos": 1,
+   "ctl": 2,
+   "paired": true,
+   "all_passed": true,
+   "task_id": "T0r66"
+  },
+  "BUG-59": {
+   "locks": 1,
+   "pos": 1,
+   "ctl": 0,
+   "paired": true,
+   "all_passed": true,
+   "task_id": "T0r67"
+  },
+  "BUG-60": {
+   "locks": 2,
+   "pos": 1,
+   "ctl": 1,
+   "paired": true,
+   "all_passed": true,
+   "task_id": "T0r68"
+  }
+ },
+ "test_file": "tests/test_loop_20260927_fix_r3.py",
+ "run_line": "============================= 17 passed in 5.25s ==============================",
+ "refuse": []
+}

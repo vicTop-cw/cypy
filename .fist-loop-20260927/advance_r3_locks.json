@@ -1,0 +1,46 @@
+{
+ "refuse": [],
+ "new_locks": 9,
+ "lock_file": "tests/test_loop_20260927_advance_r3.py",
+ "premise": {
+  "rc": 0,
+  "passed": 9,
+  "reds": [],
+  "total_seen": 9
+ },
+ "groups_total": 5,
+ "groups_ok": 5,
+ "lock_names_total": 9,
+ "revert_covered": 9,
+ "revert_uncovered_locks": [],
+ "revert_uncovered_reason": "空表=9 条锁全被某组 mutation 打红过；非空时逐条点名并给替代承重件",
+ "each_new_lock_red_when_reverted": [
+  "test_advance_alias_form_is_also_checked",
+  "test_advance_arity_and_return_errors_coexist",
+  "test_advance_callable_arity_violation_reported",
+  "test_advance_callable_arity_zero_args_passed_reported",
+  "test_advance_codegen_object_fallback_unchanged",
+  "test_advance_correct_single_arg_call_stays_clean",
+  "test_advance_keyword_arg_call_is_skipped",
+  "test_advance_two_arg_and_zero_arg_forms_match",
+  "test_advance_unrecognized_callable_shape_is_not_judged"
+ ],
+ "control_group_green": true,
+ "narrowness_asserts": 5,
+ "must_stay_green_all_ok": true,
+ "identity": [
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_advance\\snap_9060\\cypy_hook\\hook.py",
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_advance\\snap_9060\\cypyc\\analyzer\\type_checker.py",
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_advance\\snap_9060\\cypyc\\cli.py",
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_advance\\snap_9060\\cypyc\\parser\\parser.py"
+ ],
+ "snap_left": [],
+ "after_restore": {
+  "rc": 0,
+  "passed": 9,
+  "reds": [],
+  "total_seen": 9
+ },
+ "workspace_untouched": true,
+ "at_utc": "2026-09-27T19:22:17+00:00"
+}

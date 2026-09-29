@@ -1,0 +1,22 @@
+struct Email:
+    address: str
+
+    def __unapply__(self) -> tuple<str, str> | None:
+        if '@' in self.address:
+            parts = self.address.split('@')
+            return (parts[0], parts[1])
+        return None
+
+def classify(e: Email) -> str:
+    match e:
+        case Email(user, domain):
+            return user
+        case _:
+            return "none"
+
+def main() -> int:
+    print(classify(Email("a@b.com")))
+    return 0
+
+if __name__ == "__main__":
+    main()

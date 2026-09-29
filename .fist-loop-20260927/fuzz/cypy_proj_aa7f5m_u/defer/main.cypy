@@ -1,0 +1,26 @@
+# defer 语句示例
+# 演示 Cypy 的 defer 资源清理语法
+
+def safe_operation():
+    print("Starting operation")
+    defer:
+        print("Cleaning up resources")
+    
+    print("Performing task")
+    if False:
+        return
+    
+    print("Operation completed")
+
+def multiple_defers():
+    print("=== Multiple defers ===")
+    defer:
+        print("First cleanup")
+    defer:
+        print("Second cleanup")
+    
+    print("Main logic")
+
+safe_operation()
+print("-" * 30)
+multiple_defers()

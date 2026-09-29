@@ -1,0 +1,18 @@
+{
+ "filed": {
+  "resp": {
+   "bug_id": "BUG-49",
+   "id": "BUG-49",
+   "status": "OPEN",
+   "path": "./memory/bugs.md",
+   "resolved_path": ".",
+   "project_dir": ".",
+   "task_namespace": ""
+  },
+  "readback_ids": [
+   "BUG-49"
+  ]
+ },
+ "summary": "SYNTAX/33 的实现状态栏说 constraint 未实现，但同一文件与实测都表明它四层已落地（过期声明会诱使后续",
+ "bug_list_count": 49
+}

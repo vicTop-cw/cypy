@@ -1,0 +1,264 @@
+{
+ "started": "2026-09-27T20:30:25+00:00",
+ "rows": [
+  {
+   "key": "RC1_func_symbol_typed_as_return",
+   "bug_numbers": [
+    "BUG-61"
+   ],
+   "md_entries": 1,
+   "sqlite_task_ids": [
+    "T0r75"
+   ],
+   "sqlite_rows": 1,
+   "call_log_report_bug": 1,
+   "call_log_refused": [],
+   "fixed_sections": [],
+   "agree": true
+  },
+  {
+   "key": "RC2_no_argument_type_check",
+   "bug_numbers": [
+    "BUG-62"
+   ],
+   "md_entries": 1,
+   "sqlite_task_ids": [
+    "T0r76"
+   ],
+   "sqlite_rows": 1,
+   "call_log_report_bug": 1,
+   "call_log_refused": [],
+   "fixed_sections": [],
+   "agree": true
+  },
+  {
+   "key": "RC3_struct_field_type_unresolved",
+   "bug_numbers": [
+    "BUG-63"
+   ],
+   "md_entries": 1,
+   "sqlite_task_ids": [
+    "T0r77"
+   ],
+   "sqlite_rows": 1,
+   "call_log_report_bug": 1,
+   "call_log_refused": [],
+   "fixed_sections": [],
+   "agree": true
+  },
+  {
+   "key": "RC4_internal_repr_in_message",
+   "bug_numbers": [
+    "BUG-64"
+   ],
+   "md_entries": 1,
+   "sqlite_task_ids": [
+    "T0r78"
+   ],
+   "sqlite_rows": 1,
+   "call_log_report_bug": 1,
+   "call_log_refused": [],
+   "fixed_sections": [],
+   "agree": true
+  },
+  {
+   "key": "DOC_status_stale_rows",
+   "bug_numbers": [
+    "BUG-65"
+   ],
+   "md_entries": 1,
+   "sqlite_task_ids": [
+    "T0r79"
+   ],
+   "sqlite_rows": 1,
+   "call_log_report_bug": 1,
+   "call_log_refused": [],
+   "fixed_sections": [],
+   "agree": true
+  },
+  {
+   "key": "DOC_cli_face_mismatch",
+   "bug_numbers": [
+    "BUG-66"
+   ],
+   "md_entries": 1,
+   "sqlite_task_ids": [
+    "T0r80"
+   ],
+   "sqlite_rows": 1,
+   "call_log_report_bug": 1,
+   "call_log_refused": [],
+   "fixed_sections": [],
+   "agree": true
+  },
+  {
+   "key": "DOC_example_fails",
+   "bug_numbers": [
+    "BUG-67"
+   ],
+   "md_entries": 1,
+   "sqlite_task_ids": [
+    "T0r81"
+   ],
+   "sqlite_rows": 1,
+   "call_log_report_bug": 1,
+   "call_log_refused": [],
+   "fixed_sections": [],
+   "agree": true
+  },
+  {
+   "key": "BRIDGE_cache_side_effect",
+   "bug_numbers": [
+    "BUG-68"
+   ],
+   "md_entries": 1,
+   "sqlite_task_ids": [
+    "T0r82"
+   ],
+   "sqlite_rows": 1,
+   "call_log_report_bug": 1,
+   "call_log_refused": [],
+   "fixed_sections": [],
+   "agree": true
+  },
+  {
+   "key": "BRIDGE_c_not_equivalent",
+   "bug_numbers": [
+    "BUG-69"
+   ],
+   "md_entries": 1,
+   "sqlite_task_ids": [
+    "T0r83"
+   ],
+   "sqlite_rows": 1,
+   "call_log_report_bug": 1,
+   "call_log_refused": [],
+   "fixed_sections": [],
+   "agree": true
+  },
+  {
+   "key": "SPEC_file_size_redline",
+   "bug_numbers": [
+    "BUG-70"
+   ],
+   "md_entries": 1,
+   "sqlite_task_ids": [
+    "T0r84"
+   ],
+   "sqlite_rows": 1,
+   "call_log_report_bug": 1,
+   "call_log_refused": [],
+   "fixed_sections": [],
+   "agree": true
+  }
+ ],
+ "agree": [
+  "RC1_func_symbol_typed_as_return",
+  "RC2_no_argument_type_check",
+  "RC3_struct_field_type_unresolved",
+  "RC4_internal_repr_in_message",
+  "DOC_status_stale_rows",
+  "DOC_cli_face_mismatch",
+  "DOC_example_fails",
+  "BRIDGE_cache_side_effect",
+  "BRIDGE_c_not_equivalent",
+  "SPEC_file_size_redline"
+ ],
+ "agree_total": 10,
+ "ledger_total": 70,
+ "fixed_sections_total": 0,
+ "sqlite_bug_rows": 66,
+ "stage_task_rows": 401,
+ "stage_task_status": {
+  "已完成": 360,
+  "已归档": 16,
+  "待领取": 16,
+  "拆分中": 9
+ },
+ "join_key": "summary 前缀 [<根因键>]，sqlite description = '修复 bug: ' + summary",
+ "refuse": [],
+ "self_checks": [
+  {
+   "label": "三向一致：每张计划单在 md/sqlite/call_log 各数到一次",
+   "got": [],
+   "want": [],
+   "why": "不一致的单",
+   "ok": true
+  },
+  {
+   "label": "入账数 == 计划单数 == filed.json 的号数",
+   "got": [
+    10,
+    10,
+    10,
+    10
+   ],
+   "want": [
+    10,
+    10,
+    10,
+    10
+   ],
+   "why": "四栏同数",
+   "ok": true
+  },
+  {
+   "label": "号段与 filed.json 逐一对应",
+   "got": [
+    "BUG-61",
+    "BUG-62",
+    "BUG-63",
+    "BUG-64",
+    "BUG-65",
+    "BUG-66",
+    "BUG-67",
+    "BUG-68",
+    "BUG-69",
+    "BUG-70"
+   ],
+   "want": [
+    "BUG-61",
+    "BUG-62",
+    "BUG-63",
+    "BUG-64",
+    "BUG-65",
+    "BUG-66",
+    "BUG-67",
+    "BUG-68",
+    "BUG-69",
+    "BUG-70"
+   ],
+   "why": "md 号 vs 入账回执号",
+   "ok": true
+  },
+  {
+   "label": "寻虫环不得留下 FIXED 段",
+   "got": 0,
+   "want": 0,
+   "why": "新单里的 FIXED 段总数",
+   "ok": true
+  },
+  {
+   "label": "call_log 里 report_bug 全部 ok=1",
+   "got": [],
+   "want": [],
+   "why": "被拒的入账调用",
+   "ok": true
+  },
+  {
+   "label": "账本总数 = 上一环 60 + 本环 10",
+   "got": 70,
+   "want": 70,
+   "why": "md `## BUG-NN` 计数",
+   "ok": true
+  },
+  {
+   "label": "阶段任务树里根 T0r74 存在",
+   "got": true,
+   "want": true,
+   "why": "ns=cypy-loop-20260927 共 401 行",
+   "ok": true
+  }
+ ],
+ "at_utc": "2026-09-27T20:30:25+00:00"
+}

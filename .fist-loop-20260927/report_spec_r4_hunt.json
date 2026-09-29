@@ -1,0 +1,524 @@
+{
+ "name": "20260928.05.00.00",
+ "title": "R4-寻虫（hunt）环节报告",
+ "stage": "第 4 轮第 1 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R4",
+ "root_task": "T0r74",
+ "assignee": "cypy-hunter",
+ "marker": "[selfdrive-hunt]",
+ "fragment": ".fist-loop-20260927/r4_hunt_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/hunt_r4_probe.json",
+  ".fist-loop-20260927/hunt_r4_faces.json",
+  ".fist-loop-20260927/hunt_r4_confirm.json",
+  ".fist-loop-20260927/hunt_r4_witness.json",
+  ".fist-loop-20260927/hunt_r4_declared.json",
+  ".fist-loop-20260927/hunt_r4_repro.json",
+  ".fist-loop-20260927/hunt_r4_dedup.json",
+  ".fist-loop-20260927/hunt_r4_filed.json",
+  ".fist-loop-20260927/hunt_r4_baselines.json",
+  ".fist-loop-20260927/hunt_r4_ledger3way.json",
+  ".fist-loop-20260927/hunt_r4_drivers_lint.json",
+  ".fist-loop-20260927/close_r4_hunt.out.json",
+  ".fist-loop-20260927/close_r4_hunt_root.out.json",
+  ".fist-loop-20260927/hunt_r4_calllog_tally.json",
+  ".fist-loop-20260927/hunt_r4_self_audit.json"
+ ],
+ "closure": {
+  "stage": ".fist-loop-20260927/close_r4_hunt.out.json",
+  "root": ".fist-loop-20260927/close_r4_hunt_root.out.json"
+ },
+ "gates": [
+  {
+   "label": "①-1",
+   "claim": "法 0：函数类型这一层拆成六个面逐带对照跑，且每带都带『必报的对照』",
+   "artifact": ".fist-loop-20260927/hunt_r4_faces.json",
+   "path": "families",
+   "min": 6
+  },
+  {
+   "label": "①-2",
+   "claim": "六族用例总数（含对照）达 25 条以上，且两两都是当场实跑",
+   "artifact": ".fist-loop-20260927/hunt_r4_faces.json",
+   "path": "cases_total",
+   "min": 25
+  },
+  {
+   "label": "①-3",
+   "claim": "与期望不符的偏差全部被归类为候选缺陷（12 条），无一遗漏",
+   "artifact": ".fist-loop-20260927/hunt_r4_faces.json",
+   "path": "candidate_total",
+   "min": 12
+  },
+  {
+   "label": "①-4",
+   "claim": "faces 件自身拒绝栏为空（含它自己的 6 条自证）",
+   "artifact": ".fist-loop-20260927/hunt_r4_faces.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "①-5",
+   "claim": "没有任何一族因对照不报而被判『看不见』（blind_spots 为空）",
+   "artifact": ".fist-loop-20260927/hunt_r4_faces.json",
+   "path": "blind_spots",
+   "equals": []
+  },
+  {
+   "label": "①-6",
+   "claim": "16 个语句上下文逐个跑过（元数判定覆盖面探针）",
+   "artifact": ".fist-loop-20260927/hunt_r4_probe.json",
+   "path": "battery_cases",
+   "min": 16
+  },
+  {
+   "label": "①-7",
+   "claim": "探针在变异树上有 15 格差分（证明读的是当前源码，不是旧产物）",
+   "artifact": ".fist-loop-20260927/hunt_r4_probe.json",
+   "path": "witness_pos_differ",
+   "min": 15
+  },
+  {
+   "label": "①-8",
+   "claim": "探针件拒绝为空、变异树自删（mutant_left 为空）",
+   "artifact": ".fist-loop-20260927/hunt_r4_probe.json",
+   "path": "mutant_left",
+   "equals": []
+  },
+  {
+   "label": "①-9",
+   "claim": "去重按**机制签名**跑过：两来源都在（md 账本 + sqlite bug 树）",
+   "artifact": ".fist-loop-20260927/hunt_r4_dedup.json",
+   "path": "compared_with",
+   "min": 2
+  },
+  {
+   "label": "①-10",
+   "claim": "盘上已入账 60 条全部参与比对，号从盘上现数=61 起",
+   "artifact": ".fist-loop-20260927/hunt_r4_dedup.json",
+   "path": "numbering_from_disk",
+   "equals": 61
+  },
+  {
+   "label": "①-11",
+   "claim": "机制级判重命中数为 0（近亲逐条裁决，见 §三 表）",
+   "artifact": ".fist-loop-20260927/hunt_r4_dedup.json",
+   "path": "duplicates",
+   "equals": []
+  },
+  {
+   "label": "①-12",
+   "claim": "入账单计划 10 条，每条=一个根因而不是一个观察",
+   "artifact": ".fist-loop-20260927/hunt_r4_dedup.json",
+   "path": "plan_total",
+   "equals": 10
+  },
+  {
+   "label": "①-13",
+   "claim": "30 个观察（12 候选 + 18 文档面）全部归号或被点名未入账",
+   "artifact": ".fist-loop-20260927/hunt_r4_dedup.json",
+   "path": "rows",
+   "min": 10
+  },
+  {
+   "label": "②-1",
+   "claim": "法 1：18 条主张都带回盘上原文与行号（读不到原文就不许立）",
+   "artifact": ".fist-loop-20260927/hunt_r4_declared.json",
+   "path": "rows_total",
+   "min": 18
+  },
+  {
+   "label": "②-2",
+   "claim": "自述未实现者按 DESIGN 撤回、不占号（walrus 那一行了）",
+   "artifact": ".fist-loop-20260927/hunt_r4_declared.json",
+   "path": "withdrawn_design",
+   "min": 1
+  },
+  {
+   "label": "②-3",
+   "claim": "跑不动/需真编译的主张记为未测并写明原因，不写成『没问题』",
+   "artifact": ".fist-loop-20260927/hunt_r4_declared.json",
+   "path": "not_measured_or_true",
+   "min": 1
+  },
+  {
+   "label": "②-4",
+   "claim": "16 条经当场重测确认为陈旧或缺口（子代理结论未原样入账）",
+   "artifact": ".fist-loop-20260927/hunt_r4_declared.json",
+   "path": "stale_or_gap",
+   "min": 16
+  },
+  {
+   "label": "②-5",
+   "claim": "declared 件拒绝为空：每条都有 measured，崩掉的探针没被读成确诊",
+   "artifact": ".fist-loop-20260927/hunt_r4_declared.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "②-6",
+   "claim": "身份探针：分析器跑在工作树 type_checker 上（逐字钉死路径，不是安装副本、不是快照残留）",
+   "artifact": ".fist-loop-20260927/hunt_r4_declared.json",
+   "path": "identity",
+   "equals": "e:/ideprojects/ai/cypy/cypyc/analyzer/type_checker.py"
+  },
+  {
+   "label": "③-1",
+   "claim": "法 2：12 条候选全部 pos+ctl 两档齐全，确诊 12 条",
+   "artifact": ".fist-loop-20260927/hunt_r4_confirm.json",
+   "path": "confirmed_total",
+   "min": 12
+  },
+  {
+   "label": "③-2",
+   "claim": "没有一条被记成 UNSURE（对照都今天行为正确 ⇒ 可归因）",
+   "artifact": ".fist-loop-20260927/hunt_r4_confirm.json",
+   "path": "unsure_total",
+   "equals": 0
+  },
+  {
+   "label": "③-3",
+   "claim": "四个根因各自都有确诊（不存在『一族全靠巧合』）",
+   "artifact": ".fist-loop-20260927/hunt_r4_confirm.json",
+   "path": "by_root_cause",
+   "min": 4
+  },
+  {
+   "label": "③-4",
+   "claim": "confirm 件拒绝为空（含与 faces 电池的两次独立对表）",
+   "artifact": ".fist-loop-20260927/hunt_r4_confirm.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "③-5",
+   "claim": "对照库 7 条全部实测在件里留痕（对照不是脑补）",
+   "artifact": ".fist-loop-20260927/hunt_r4_confirm.json",
+   "path": "ctl_observations",
+   "min": 7
+  },
+  {
+   "label": "④-1",
+   "claim": "法 3：三种合成载荷下分类器给出的集合与手推表精确相符",
+   "artifact": ".fist-loop-20260927/hunt_r4_witness.json",
+   "path": "w1_synthetic_matches",
+   "min": 3
+  },
+  {
+   "label": "④-2",
+   "claim": "12 条候选逐条被合成观察打翻 ⇒ 判据读观察不读常量",
+   "artifact": ".fist-loop-20260927/hunt_r4_witness.json",
+   "path": "w1_flipped",
+   "min": 12
+  },
+  {
+   "label": "④-3",
+   "claim": "真变异树差分：该变的两格（C01 与 arity 对照）都变了",
+   "artifact": ".fist-loop-20260927/hunt_r4_witness.json",
+   "path": "w2_changed",
+   "min": 2
+  },
+  {
+   "label": "④-4",
+   "claim": "零发现的族由对照证明『能看见』，看不见的一律分栏",
+   "artifact": ".fist-loop-20260927/hunt_r4_witness.json",
+   "path": "per_family_visibility",
+   "min": 6
+  },
+  {
+   "label": "④-5",
+   "claim": "探针有一格（struct 成员当回调）没到达判定 ⇒ 原样记 blind_spots 不充数",
+   "artifact": ".fist-loop-20260927/hunt_r4_witness.json",
+   "path": "blind_spot_total",
+   "equals": 1
+  },
+  {
+   "label": "④-6",
+   "claim": "witness 件拒绝为空（含变异树自删、身份两两不同）",
+   "artifact": ".fist-loop-20260927/hunt_r4_witness.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑤-1",
+   "claim": "法 4：10 个复现键全部实跑（三态退出码台账在档）",
+   "artifact": ".fist-loop-20260927/hunt_r4_repro.json",
+   "path": "keys",
+   "min": 10
+  },
+  {
+   "label": "⑤-2",
+   "claim": "入账承诺的命令退出码全为 0（现形），无一条靠推断",
+   "artifact": ".fist-loop-20260927/hunt_r4_repro.json",
+   "path": "all_exit_codes_zero",
+   "equals": true
+  },
+  {
+   "label": "⑤-3",
+   "claim": "1/2 两态本轮都真实发生过（rc=2 由我自己写坏复现谓词触发）",
+   "artifact": ".fist-loop-20260927/hunt_r4_repro.json",
+   "path": "state_reached",
+   "min": 3
+  },
+  {
+   "label": "⑥-1",
+   "claim": "法 5：入账 10 条，号段 BUG-61..BUG-70 连续无洞",
+   "artifact": ".fist-loop-20260927/hunt_r4_filed.json",
+   "path": "filed_total",
+   "equals": 10
+  },
+  {
+   "label": "⑥-2",
+   "claim": "账本条数 60 → 70（每条号都从盘上现数）",
+   "artifact": ".fist-loop-20260927/hunt_r4_filed.json",
+   "path": "ledger_after",
+   "equals": 70
+  },
+  {
+   "label": "⑥-3",
+   "claim": "sqlite bug 树行数增量 == 入账条数",
+   "artifact": ".fist-loop-20260927/hunt_r4_filed.json",
+   "path": "sqlite_bug_rows.delta",
+   "equals": 10
+  },
+  {
+   "label": "⑥-4",
+   "claim": "每张新单在账本里能搜到 summary、复现命令与『不算证明』栏",
+   "artifact": ".fist-loop-20260927/hunt_r4_filed.json",
+   "path": "entries",
+   "min": 10
+  },
+  {
+   "label": "⑥-5",
+   "claim": "filed 件拒绝为空（本环一行产品码都没改）",
+   "artifact": ".fist-loop-20260927/hunt_r4_filed.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑦-1",
+   "claim": "法 7：三向对照（md / sqlite / call_log）10/10 一致",
+   "artifact": ".fist-loop-20260927/hunt_r4_ledger3way.json",
+   "path": "agree_total",
+   "equals": 10
+  },
+  {
+   "label": "⑦-2",
+   "claim": "寻虫环不留 FIXED 段（没有修复动作就不许写已修）",
+   "artifact": ".fist-loop-20260927/hunt_r4_ledger3way.json",
+   "path": "fixed_sections_total",
+   "equals": 0
+  },
+  {
+   "label": "⑦-3",
+   "claim": "阶段任务树与 bug 树各数一遍（两轨记账，不只数一面）",
+   "artifact": ".fist-loop-20260927/hunt_r4_ledger3way.json",
+   "path": "stage_task_rows",
+   "min": 60
+  },
+  {
+   "label": "⑧-1",
+   "claim": "法 6：三套判据体系同一批复算全绿（pytest/自研/e2e）",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "three_systems_green",
+   "equals": true
+  },
+  {
+   "label": "⑧-2",
+   "claim": "pytest 通过数 ≥ 上一环实测下限 1938（只升不降）",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "pytest.passed",
+   "min": 1938
+  },
+  {
+   "label": "⑧-3",
+   "claim": "收集数与通过数同量级：解析器没坏的下限证明",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "collect.nodeids",
+   "min": 1938
+  },
+  {
+   "label": "⑧-4",
+   "claim": "自研套件 47/47",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "suite.fields.Passed",
+   "equals": 47
+  },
+  {
+   "label": "⑧-5",
+   "claim": "e2e 基准 25 通过且 FAIL/WARN/UNREG 三格为零",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "e2e.fields.PASS",
+   "equals": 25
+  },
+  {
+   "label": "⑧-6",
+   "claim": "git 红线：HEAD 仍是 17d68b4（本环零 commit）",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "⑧-7",
+   "claim": "改动半径按 mtime ≥ 本轮起点正面测：产品/测试/冻结面为 0",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "radius.forbidden_total",
+   "equals": 0
+  },
+  {
+   "label": "⑧-8",
+   "claim": "本轮只写了判据件与账本（正面计数 > 0 ⇒ mtime 口径是活的）",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "radius.allowed_touched",
+   "min": 20
+  },
+  {
+   "label": "⑧-9",
+   "claim": "基线件自身拒绝为空（14 条自证全过）",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑨-1",
+   "claim": "本轮亲笔的 11 个判据脚本硬错为零",
+   "artifact": ".fist-loop-20260927/hunt_r4_drivers_lint.json",
+   "path": "hard_violations",
+   "equals": 0
+  },
+  {
+   "label": "⑨-2",
+   "claim": "lint 格不是恒绿：合成超长行必被抓到",
+   "artifact": ".fist-loop-20260927/hunt_r4_drivers_lint.json",
+   "path": "canary.bad_caught",
+   "equals": 1
+  },
+  {
+   "label": "⑨-3",
+   "claim": "本环亲笔引入的软账（E501/E741/E128）如实记账，作为后续只降不升的起点",
+   "artifact": ".fist-loop-20260927/hunt_r4_drivers_lint.json",
+   "path": "soft_total",
+   "min": 1
+  },
+  {
+   "label": "⑩-1",
+   "claim": "16 个叶任务全部归档（每叶走 claim→omega→execute→submit→validate→verify）",
+   "artifact": ".fist-loop-20260927/close_r4_hunt_root.out.json",
+   "path": "leaves_done",
+   "min": 16
+  },
+  {
+   "label": "⑩-2",
+   "claim": "叶任务无失败态",
+   "artifact": ".fist-loop-20260927/close_r4_hunt.out.json",
+   "path": "failed",
+   "equals": []
+  },
+  {
+   "label": "⑩-3",
+   "claim": "根任务被结构门禁拒的 6 条原文逐字入账（不粉饰）",
+   "artifact": ".fist-loop-20260927/close_r4_hunt_root.out.json",
+   "path": "refused",
+   "min": 6
+  },
+  {
+   "label": "⑩-4",
+   "claim": "根任务终态为已归档",
+   "artifact": ".fist-loop-20260927/close_r4_hunt_root.out.json",
+   "path": "root_final",
+   "equals": "已归档"
+  },
+  {
+   "label": "⑧-5b",
+   "claim": "e2e 基准 FAIL 格为零（与 PASS=25 同批）",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "e2e.fields.FAIL",
+   "equals": 0
+  },
+  {
+   "label": "⑧-5c",
+   "claim": "e2e 基准 WARN 格为零",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "e2e.fields.WARN",
+   "equals": 0
+  },
+  {
+   "label": "⑧-6b",
+   "claim": "git 红线：暂存区为空（未 git add）",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "⑧-6c",
+   "claim": "外部 HEAD 基线 worktree 仍在（不属于本环，被删就是事故）",
+   "artifact": ".fist-loop-20260927/hunt_r4_baselines.json",
+   "path": "git.foreign_worktree_present",
+   "equals": true
+  },
+  {
+   "label": "⑪-1",
+   "claim": "call_log 对账：按 params_json.task_id 前缀分组，逐工具之和 == 该前缀行数",
+   "artifact": ".fist-loop-20260927/hunt_r4_calllog_tally.json",
+   "path": "stages.T0r74.rows",
+   "min": 100
+  },
+  {
+   "label": "⑪-2",
+   "claim": "对照前缀（必然不存在）数出 0 行 ⇒ 过滤器不是恒真",
+   "artifact": ".fist-loop-20260927/hunt_r4_calllog_tally.json",
+   "path": "control_absent_prefix_rows",
+   "equals": 0
+  },
+  {
+   "label": "⑪-3",
+   "claim": "本环自证：20 格对账全过且恒绿门禁格为 0",
+   "artifact": ".fist-loop-20260927/hunt_r4_self_audit.json",
+   "path": "checks_failed",
+   "equals": []
+  },
+  {
+   "label": "⑪-4",
+   "claim": "本环自证件拒绝为空（含页脚幂等与三套体系）",
+   "artifact": ".fist-loop-20260927/hunt_r4_self_audit.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑪-5",
+   "claim": "被拒原文按逐字去重后仍有 6 条以上（结构根拒 3 条 + 重跑幂等拒，一条不抹）",
+   "artifact": ".fist-loop-20260927/hunt_r4_calllog_tally.json",
+   "path": "distinct_refusal_texts",
+   "min": 6
+  },
+  {
+   "label": "⑪-6",
+   "claim": "规格点名的 laya 在本环有承担者（laya_decide ≥ 1 次，非『已开启』空话）",
+   "artifact": ".fist-loop-20260927/hunt_r4_calllog_tally.json",
+   "path": "spec_named_carriers.laya.this_stage_total",
+   "min": 1
+  },
+  {
+   "label": "⑪-7",
+   "claim": "规格点名的 issue_up 在本环有承担者（publish + report_bug ≥ 1 次）",
+   "artifact": ".fist-loop-20260927/hunt_r4_calllog_tally.json",
+   "path": "spec_named_carriers.issue_up.this_stage_total",
+   "min": 1
+  },
+  {
+   "label": "⑪-8",
+   "claim": "call_log 工具被真调用过：客户端回包里看得见的 T0r74 行数与 ⑪-1 同量级（≥100）",
+   "artifact": ".fist-loop-20260927/hunt_r4_calllog_tally.json",
+   "path": "spec_named_carriers.call_log.carriers.call_log.client_visible_T0r74_rows",
+   "min": 100
+  },
+  {
+   "label": "⑪-9",
+   "claim": "call_log 对账件自身拒绝为空（分组不吞行、明细不手数、对照前缀为 0）",
+   "artifact": ".fist-loop-20260927/hunt_r4_calllog_tally.json",
+   "path": "refuse",
+   "equals": []
+  }
+ ],
+ "footer": "leaves=16 faces=6 face_cases=25 candidates=12 confirmed=12 unsure=0 root_causes=4 probe_cases=16 probe_differ=15 blind_spots=1 w1_flipped=12 w2_changed=2 declared_rows=18 stale_or_gap=16 design_withdrawn=1 not_measured=1 repro_keys=10 repro_zero=True ledger_cards=60 duplicates=0 symbol_overlap_hits=7 near_notes=12 filed=10 numbers=BUG-61..BUG-70 ledger=60->70 agree3way=10/70 fixed_sections=0 pytest=1938 collect=1938 suite=47/47 e2e=25/000 head=17d68b4 staged=0 radius_forbidden=0 radius_allowed=129 driver_hard=0 driver_soft=112 canary=1 refusal_kinds=30 calllog_rows=284 calllog_refused=60 calllog_verbatims=23 carriers=laya:1/issue_up:11/call_log:1 measured_window=2026-09-27T19:38:23+00:00->2026-09-27T20:53:34+00:00 generated_at=2026-09-27T21:09:49+00:00 handoff=R4-修复：认领 BUG-61..BUG-70（先修四个分析器根因 RC1-RC4，再按冻结面归属把 DOC/BRIDGE/SPEC 五条交人工或改文档）；复现命令 python -X utf8 .fist-loop-20260927/hunt_r4_repro.py <根因键>（0=现形/1=不现形/2=夹具坏）；pytest 地板 1938 / 自研 47 / e2e 25 不得下降；驱动面软 lint 债 112（E501 91、E741 16、E128 5）为只降不升基线；D18（缓存命中复用）与 appendix-C《已实现的限制修复》14 行本轮未复测 ⇒ 转结 R4-验证。"
+}

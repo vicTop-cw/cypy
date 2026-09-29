@@ -1,0 +1,8 @@
+{
+ "started_z": "2026-09-29T04:58:10Z",
+ "ns": "cypy-loop-20260929",
+ "root": "T0r114",
+ "steps": {},
+ "refusals": [],
+ "refuse": "报告引用验针门未过：CONCLUSION pass=66 fail=0 report=T0r114-cypy-selfdrive-r8-report.md rc=0 ⇒ 拒绝收根"
+}

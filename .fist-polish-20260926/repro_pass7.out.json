@@ -1,0 +1,72 @@
+[
+ {
+  "probe": "bug15_clear_cache",
+  "cache_file_survived_clear_all": false,
+  "walk_roots_seen": [
+   "C:\\Users\\victo\\AppData\\Local\\Temp\\tmp78dv_9r_\\__pycache__",
+   "C:\\Users\\victo\\AppData\\Local\\Temp\\tmp78dv_9r_\\__pycache__\\cypy"
+  ],
+  "dirname_comparand": [
+   [
+    "__pycache__",
+    "C:\\Users\\victo\\AppData\\Local\\Temp\\tmp78dv_9r_"
+   ]
+  ],
+  "defect": false
+ },
+ {
+  "probe": "bug16_pick_extension",
+  "asked_for": "mymod",
+  "candidates": [
+   "other_module.cp313-win_amd64.pyd"
+  ],
+  "picked": null,
+  "defect": false
+ },
+ {
+  "probe": "bug17_encoding",
+  "preferred_encoding": "cp936",
+  "writes_without_encoding": [],
+  "locale_encode_failure_reproduced": "UnicodeEncodeError: 'gbk' codec can't encode character '\\u0e01' in position 3: illegal multibyte sequence",
+  "defect": false
+ },
+ {
+  "probe": "bug18_pyd_only",
+  "scan_lines": [
+   "if file.endswith('.pyd') or file.endswith('.so') or file.endswith('.dll'):"
+  ],
+  "detected_platforms": [
+   "elif sys.platform.startswith('linux'):",
+   "elif sys.platform.startswith('darwin'):"
+  ],
+  "linux_artifact_matched_by_scan": [],
+  "defect": true
+ },
+ {
+  "probe": "bug19_addr",
+  "asked": "c_void_p(4096)",
+  "addr_returned": 4096,
+  "expected": 4096,
+  "addr_of_null_pointer": 0,
+  "defect": false
+ },
+ {
+  "probe": "bug20_normalize",
+  "indent_style": "2-space",
+  "detect": [
+   "spaces",
+   2
+  ],
+  "input": "def f():\n  let a = 1\n  if a:\n    let b = 2\n",
+  "output": "def f():\n  let a = 1\n  if a:\n    let b = 2\n",
+  "body_dedented_to_column_0": false,
+  "defect": false
+ },
+ {
+  "probe": "bug21_isfile_none",
+  "bare_cypyc_hook_exitcode": 1,
+  "bare_cypyc_hook_last_stderr_line": "Error: no source file given (try: cypyc hook <file.cypy> [--compile] [--run <fn>])",
+  "isfile_none_raises": "TypeError: _path_isfile: path should be string, bytes, os.PathLike or integer, not NoneType",
+  "defect": false
+ }
+]

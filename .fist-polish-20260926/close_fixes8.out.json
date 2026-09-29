@@ -1,0 +1,91 @@
+[
+ {
+  "bug": "BUG-13",
+  "task_id": "T0r18",
+  "status_before": "已领取",
+  "steps": [
+   {
+    "tool": "get(before)",
+    "ok": true,
+    "reply": "{'id': 'T0r18', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [judge-brittleness] tests/test_incremental.py:547 TestDigestCost 用墙钟阈值 `digest_elapsed < 2.0"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r18', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [judge-brittleness] tests/test_incremental.py:547 TestDigestCost 用墙钟阈值 `digest_elapsed < 2.0"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r18', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [judge-brittleness] tests/test_incremental.py:547 TestDigestCost 用墙钟阈值 `digest_elapsed < 2.0"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r18', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [judge-brittleness] tests/test_incremental.py:547 TestDigestCost 用墙钟阈值 `digest_elapsed < 2.0"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-14",
+  "task_id": "T0r19",
+  "status_before": "已领取",
+  "steps": [
+   {
+    "tool": "get(before)",
+    "ok": true,
+    "reply": "{'id': 'T0r19', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [float-width] cypyc/codegen/type_mapper.py:8 与 :23 对同一声明类型 float 给出两种宽度（cypy_to_cython 出 C f"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r19', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [float-width] cypyc/codegen/type_mapper.py:8 与 :23 对同一声明类型 float 给出两种宽度（cypy_to_cython 出 C f"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r19', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [float-width] cypyc/codegen/type_mapper.py:8 与 :23 对同一声明类型 float 给出两种宽度（cypy_to_cython 出 C f"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r19', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [float-width] cypyc/codegen/type_mapper.py:8 与 :23 对同一声明类型 float 给出两种宽度（cypy_to_cython 出 C f"
+   }
+  ],
+  "green": true
+ },
+ {
+  "bug": "BUG-32",
+  "task_id": "T0r37",
+  "status_before": "待领取",
+  "steps": [
+   {
+    "tool": "get(before)",
+    "ok": true,
+    "reply": "{'id': 'T0r37', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待领取', 'assignee': None, 'description': '修复 bug: [codegen-echo-fidelity] cypyc/codegen/cython_generator.py:3334（修复前号，修复后该行在 :3337）约束注释把成员名过了一遍 type_mapp"
+   },
+   {
+    "tool": "claim",
+    "ok": true,
+    "reply": "{'id': 'T0r37', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已领取', 'assignee': 'cypy-polisher', 'description': '修复 bug: [codegen-echo-fidelity] cypyc/codegen/cython_generator.py:3334（修复前号，修复后该行在 :3337）约束注释把成员名过了一"
+   },
+   {
+    "tool": "execute",
+    "ok": true,
+    "reply": "{'id': 'T0r37', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '执行中', 'assignee': 'cypy-polisher', 'description': '修复 bug: [codegen-echo-fidelity] cypyc/codegen/cython_generator.py:3334（修复前号，修复后该行在 :3337）约束注释把成员名过了一"
+   },
+   {
+    "tool": "submit",
+    "ok": true,
+    "reply": "{'id': 'T0r37', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '待验收', 'assignee': 'cypy-polisher', 'description': '修复 bug: [codegen-echo-fidelity] cypyc/codegen/cython_generator.py:3334（修复前号，修复后该行在 :3337）约束注释把成员名过了一"
+   },
+   {
+    "tool": "verify",
+    "ok": true,
+    "reply": "{'id': 'T0r37', 'parent_id': None, 'project_dir': '.', 'namespace': 'bugs', 'priority': '中', 'importance': '中', 'depth': 3, 'split_n': 3, 'status': '已完成', 'assignee': 'cypy-polisher', 'description': '修复 bug: [codegen-echo-fidelity] cypyc/codegen/cython_generator.py:3334（修复前号，修复后该行在 :3337）约束注释把成员名过了一"
+   }
+  ],
+  "green": true
+ }
+]

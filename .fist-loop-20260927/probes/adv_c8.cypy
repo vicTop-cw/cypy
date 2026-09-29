@@ -1,0 +1,2 @@
+def f(..args) -> int:
+    return 1

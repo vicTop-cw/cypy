@@ -1,0 +1,14 @@
+{
+  "mapping": [
+    {
+      "bug_id": "BUG-14",
+      "task_id": "T0r19",
+      "summary": "[float-width] cypyc/codegen/type_mapper.py:8 与 :23 对同一声明类型 float 给出两种宽度（cypy_to_cython 出 C float=32 位、cypy_to_c 出 double=64 位），且 def 签名与 let 绑定的注解在 Cython 产物里被整段丢弃 —— examples/subtype_units.cypy 一次运行内第 2 行与第 9 行互相矛盾",
+      "fired": true
+    }
+  ],
+  "failures": [],
+  "missing": [],
+  "ledger_before": 13,
+  "ledger_after": 14
+}

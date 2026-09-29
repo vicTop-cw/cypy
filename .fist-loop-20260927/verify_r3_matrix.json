@@ -1,0 +1,375 @@
+{
+ "refuse": [],
+ "snapshot": {
+  "dir": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_verify\\snap_50172",
+  "head": "17d68b4",
+  "extracted_files": 320,
+  "overlaid": [
+   "cypyc/cli.py",
+   "cypyc/transformer/generic_transformer.py",
+   "cypyc/project/module_dependency_graph.py",
+   "cypyc/analyzer/build_block_checker.py",
+   "cypy_bridge/union.py",
+   "cypy_bridge/memory.py",
+   "tests/test_loop_20260927_fix_r3.py"
+  ],
+  "missing_on_disk": [
+   "examples/demos/legacy/analyzer/type_checking.cypy",
+   "examples/demos/legacy/builtins/defer_and_guard.cypy",
+   "examples/demos/legacy/builtins/generics.cypy",
+   "examples/demos/legacy/builtins/pointer_operations.cypy",
+   "examples/demos/legacy/codegen/cdef_class_generation.cypy",
+   "examples/demos/legacy/codegen/module_magic_attrs.cypy",
+   "examples/demos/legacy/parser/build_blocks.cypy",
+   "examples/demos/legacy/parser/implicit_policy.cypy",
+   "examples/demos/legacy/parser/struct_definition.cypy",
+   "examples/struct.cypy"
+  ],
+  "base": "working_tree_tracked",
+  "exists": true
+ },
+ "identity": 6,
+ "identity_probe": {
+  "cypyc.cli": {
+   "path": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_verify\\snap_50172\\cypyc\\cli.py",
+   "inside_snapshot": true
+  },
+  "cypyc.transformer.generic_transformer": {
+   "path": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_verify\\snap_50172\\cypyc\\transformer\\generic_transformer.py",
+   "inside_snapshot": true
+  },
+  "cypyc.project.module_dependency_graph": {
+   "path": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_verify\\snap_50172\\cypyc\\project\\module_dependency_graph.py",
+   "inside_snapshot": true
+  },
+  "cypyc.analyzer.build_block_checker": {
+   "path": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_verify\\snap_50172\\cypyc\\analyzer\\build_block_checker.py",
+   "inside_snapshot": true
+  },
+  "cypy_bridge.union": {
+   "path": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_verify\\snap_50172\\cypy_bridge\\union.py",
+   "inside_snapshot": true
+  },
+  "cypy_bridge.memory": {
+   "path": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_verify\\snap_50172\\cypy_bridge\\memory.py",
+   "inside_snapshot": true
+  }
+ },
+ "premise": {
+  "rc": 0,
+  "passed": 17,
+  "reds": [],
+  "seen_total": 17,
+  "collect_only_rc": 0,
+  "collected": 17
+ },
+ "rows": 6,
+ "sha_verified_rows": 6,
+ "all_restored": 1,
+ "declared_side": {
+  "BUG-55": {
+   "both_names_in_source": true,
+   "claim": "收集器同时认两种属性名（声明侧：模块 docstring 的『注册泛型参数』）",
+   "still_true": true
+  },
+  "BUG-56": {
+   "run_transpile_readers": {
+    "check_only": 1,
+    "emit_ast": 1,
+    "generate_setup": 2,
+    "emit_cython": 2
+   },
+   "all_four_read": true,
+   "documented_in_usage": true,
+   "claim": "docs/USAGE.md 承诺的四个旗标在 run_transpile 里都有读者",
+   "still_true": true
+  },
+  "BUG-57": {
+   "no_builtin_example": true,
+   "builtin_guard_present": true,
+   "claim": "union.py 示例只advertise可运行形状 + 内建类型被诊断",
+   "still_true": true
+  },
+  "BUG-58": {
+   "realloc_annotation_optional_int": true,
+   "doc_states_none_on_zero": true,
+   "claim": "realloc 注解与返回值形状一致且文档写明 size<=0 语义",
+   "still_true": true
+  },
+  "BUG-59": {
+   "cycle_branch_sorted": true,
+   "claim": "环内模块按名定序（文档只说『跳过循环中的模块』）",
+   "still_true": true
+  },
+  "BUG-60": {
+   "old_rule2_literal_gone": true,
+   "mentions_frozen_doc": true,
+   "mentions_function_scope": true,
+   "claim": "规则 2 与 SYNTAX/04 冻结口径一致",
+   "still_true": true
+  }
+ },
+ "declared_side_still_true": 6,
+ "carried_claims_detail": {
+  "BUG-55": {
+   "probe": "C1",
+   "defect_present_now": false,
+   "prev_claim_flipped": true,
+   "claim_holds": true,
+   "observed": {
+    "generic_nodes": 1,
+    "collected": 1
+   }
+  },
+  "BUG-56": {
+   "probe": "C3",
+   "defect_present_now": false,
+   "prev_claim_flipped": true,
+   "claim_holds": true,
+   "observed": {
+    "flag_readers": {
+     "run_transpile": [
+      "check_only",
+      "emit_ast",
+      "emit_cython",
+      "generate_setup"
+     ],
+     "run_default": [
+      "check_only",
+      "emit_ast",
+      "emit_cython",
+      "generate_setup"
+     ],
+     "run_build": [
+      "check_only"
+     ]
+    }
+   }
+  },
+  "BUG-57": {
+   "probe": "C4",
+   "defect_present_now": false,
+   "prev_claim_flipped": true,
+   "claim_holds": true,
+   "observed": {
+    "raised": "UnionTypeError: Union member 'int' is a Python builtin type; pass a ctypes type (ctypes.c_int) or a "
+   }
+  },
+  "BUG-58": {
+   "probe": "C5",
+   "defect_present_now": true,
+   "prev_claim_flipped": false,
+   "claim_holds": true,
+   "observed": {
+    "returned": "None",
+    "annotation": "Optional"
+   }
+  },
+  "BUG-59": {
+   "probe": "C6",
+   "defect_present_now": false,
+   "prev_claim_flipped": true,
+   "claim_holds": true,
+   "observed": {
+    "per_seed_orders": {
+     "0": "['a', 'b', 'c', 'd', 'e']",
+     "1": "['a', 'b', 'c', 'd', 'e']",
+     "7": "['a', 'b', 'c', 'd', 'e']",
+     "42": "['a', 'b', 'c', 'd', 'e']",
+     "99": "['a', 'b', 'c', 'd', 'e']"
+    },
+    "distinct": 1
+   }
+  },
+  "BUG-60": {
+   "probe": "C8",
+   "defect_present_now": true,
+   "prev_claim_flipped": false,
+   "claim_holds": true,
+   "observed": {
+    "node_kinds": [
+     "PointerType"
+    ],
+    "errors": []
+   }
+  }
+ },
+ "carried_claims": 6,
+ "per_bug": {
+  "BUG-55": {
+   "bug": "BUG-55",
+   "patches": 1,
+   "applied": 1,
+   "compiled": true,
+   "pos_red": [
+    "test_bug55_generic_params_nodes_are_collected"
+   ],
+   "ctl_red": [],
+   "collateral_red": [],
+   "restored": true,
+   "sha_before": {
+    "cypyc/transformer/generic_transformer.py": "09393568a8218a35630af832c2f683d97e80992edc2863c73b2b3af60e085f5b"
+   },
+   "sha_after_restore": "09393568a8218a35630af832c2f683d97e80992edc2863c73b2b3af60e085f5b",
+   "sha_equal": true,
+   "touched_files": [
+    "cypyc/transformer/generic_transformer.py"
+   ],
+   "workspace_untouched": true,
+   "matches_prev_head": null,
+   "red_reasons": {
+    "test_bug55_generic_params_nodes_are_collected": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug55_generic_params_nodes_are_collected"
+   },
+   "reds_total": 1,
+   "seen_total": 17
+  },
+  "BUG-56": {
+   "bug": "BUG-56",
+   "patches": 5,
+   "applied": 5,
+   "compiled": true,
+   "pos_red": [
+    "test_bug56_check_only_fails_on_broken_source",
+    "test_bug56_check_only_reports_and_generates_nothing",
+    "test_bug56_emit_ast_prints_parsed_nodes",
+    "test_bug56_emit_cython_prints_cython_code",
+    "test_bug56_generate_setup_writes_buildable_script"
+   ],
+   "ctl_red": [],
+   "collateral_red": [],
+   "restored": true,
+   "sha_before": {
+    "cypyc/cli.py": "e66c34967748497d0413b0875fd0844c98a5dd87759a4f9b8c88ada437bc80da"
+   },
+   "sha_after_restore": "e66c34967748497d0413b0875fd0844c98a5dd87759a4f9b8c88ada437bc80da",
+   "sha_equal": true,
+   "touched_files": [
+    "cypyc/cli.py"
+   ],
+   "workspace_untouched": true,
+   "matches_prev_head": null,
+   "red_reasons": {
+    "test_bug56_check_only_reports_and_generates_nothing": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug56_check_only_reports_and_generates_nothing",
+    "test_bug56_check_only_fails_on_broken_source": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug56_check_only_fails_on_broken_source",
+    "test_bug56_emit_ast_prints_parsed_nodes": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug56_emit_ast_prints_parsed_nodes",
+    "test_bug56_emit_cython_prints_cython_code": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug56_emit_cython_prints_cython_code",
+    "test_bug56_generate_setup_writes_buildable_script": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug56_generate_setup_writes_buildable_script"
+   },
+   "reds_total": 5,
+   "seen_total": 17
+  },
+  "BUG-57": {
+   "bug": "BUG-57",
+   "patches": 3,
+   "applied": 3,
+   "compiled": true,
+   "pos_red": [
+    "test_bug57_builtin_member_type_is_diagnosed",
+    "test_bug57_union_docstrings_advertise_only_runnable_shapes"
+   ],
+   "ctl_red": [],
+   "collateral_red": [],
+   "restored": true,
+   "sha_before": {
+    "cypy_bridge/union.py": "483f368c4f71412cfdb8d4e332d797fde077f92641b62bc6c9bbbec193c94857"
+   },
+   "sha_after_restore": "483f368c4f71412cfdb8d4e332d797fde077f92641b62bc6c9bbbec193c94857",
+   "sha_equal": true,
+   "touched_files": [
+    "cypy_bridge/union.py"
+   ],
+   "workspace_untouched": true,
+   "matches_prev_head": null,
+   "red_reasons": {
+    "test_bug57_builtin_member_type_is_diagnosed": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug57_builtin_member_type_is_diagnosed",
+    "test_bug57_union_docstrings_advertise_only_runnable_shapes": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug57_union_docstrings_advertise_only_runnable_shapes"
+   },
+   "reds_total": 2,
+   "seen_total": 17
+  },
+  "BUG-58": {
+   "bug": "BUG-58",
+   "patches": 2,
+   "applied": 2,
+   "compiled": true,
+   "pos_red": [
+    "test_bug58_realloc_annotation_matches_return_shape"
+   ],
+   "ctl_red": [],
+   "collateral_red": [],
+   "restored": true,
+   "sha_before": {
+    "cypy_bridge/memory.py": "0dcd9c0291f007210509fb62ed55f87d994229c38e90ab3e8dc724854f366288"
+   },
+   "sha_after_restore": "0dcd9c0291f007210509fb62ed55f87d994229c38e90ab3e8dc724854f366288",
+   "sha_equal": true,
+   "touched_files": [
+    "cypy_bridge/memory.py"
+   ],
+   "workspace_untouched": true,
+   "matches_prev_head": null,
+   "red_reasons": {
+    "test_bug58_realloc_annotation_matches_return_shape": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug58_realloc_annotation_matches_return_shape"
+   },
+   "reds_total": 1,
+   "seen_total": 17
+  },
+  "BUG-59": {
+   "bug": "BUG-59",
+   "patches": 2,
+   "applied": 2,
+   "compiled": true,
+   "pos_red": [
+    "test_bug59_compilation_order_stable_across_hash_seeds"
+   ],
+   "ctl_red": [],
+   "collateral_red": [],
+   "restored": true,
+   "sha_before": {
+    "cypyc/project/module_dependency_graph.py": "a0f1d6eff2a982a4047c6f5839f7116e44a575dd66e8b9d1ed72ba280794a7bb"
+   },
+   "sha_after_restore": "a0f1d6eff2a982a4047c6f5839f7116e44a575dd66e8b9d1ed72ba280794a7bb",
+   "sha_equal": true,
+   "touched_files": [
+    "cypyc/project/module_dependency_graph.py"
+   ],
+   "workspace_untouched": true,
+   "matches_prev_head": null,
+   "red_reasons": {
+    "test_bug59_compilation_order_stable_across_hash_seeds": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug59_compilation_order_stable_across_hash_seeds"
+   },
+   "reds_total": 1,
+   "seen_total": 17
+  },
+  "BUG-60": {
+   "bug": "BUG-60",
+   "patches": 1,
+   "applied": 1,
+   "compiled": true,
+   "pos_red": [
+    "test_bug60_docstring_rule2_aligns_with_frozen_syntax"
+   ],
+   "ctl_red": [],
+   "collateral_red": [],
+   "restored": true,
+   "sha_before": {
+    "cypyc/analyzer/build_block_checker.py": "ac70118be159a035063b29fbb46c8ab5216da9e5069677b3be2ce4039bd40909"
+   },
+   "sha_after_restore": "ac70118be159a035063b29fbb46c8ab5216da9e5069677b3be2ce4039bd40909",
+   "sha_equal": true,
+   "touched_files": [
+    "cypyc/analyzer/build_block_checker.py"
+   ],
+   "workspace_untouched": true,
+   "matches_prev_head": null,
+   "red_reasons": {
+    "test_bug60_docstring_rule2_aligns_with_frozen_syntax": "FAILED tests/test_loop_20260927_fix_r3.py::test_bug60_docstring_rule2_aligns_with_frozen_syntax"
+   },
+   "reds_total": 1,
+   "seen_total": 17
+  }
+ },
+ "workspace_sha_after_unchanged": true,
+ "overlay_identical": true,
+ "checks_all_true": true
+}

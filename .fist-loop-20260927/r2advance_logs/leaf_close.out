@@ -1,0 +1,17 @@
+T0r61.1.1 law=L1 转结原话先重测：BUG-48 的『无产物无日志』两半被同一夹具实测推翻，只修真缺的那三件 ov=pass verify=ok err=none
+T0r61.1.2 law=L1 转结原话先重测：BUG-48 的『无产物无日志』两半被同一夹具实测推翻，只修真缺的那三件 ov=pass verify=ok err=none
+T0r61.2.1 law=L2 `-o` 产物发布成立：正例 .pyx/.pyd 落地，反例不设目录时必须是空操作（库默认行为未变） ov=pass verify=ok err=none
+T0r61.2.2 law=L2 `-o` 产物发布成立：正例 .pyx/.pyd 落地，反例不设目录时必须是空操作（库默认行为未变） ov=pass verify=ok err=none
+T0r61.3.1 law=L3 CLI 接线：run_watch 把 -o 当产物目录、挂上 on_reload、把 --debounce 传下去（哨兵断言逐参核对） ov=pass verify=ok err=none
+T0r61.3.2 law=L3 CLI 接线：run_watch 把 -o 当产物目录、挂上 on_reload、把 --debounce 传下去（哨兵断言逐参核对） ov=pass verify=ok err=none
+T0r61.4.1 law=L4 `--debounce` 从被忽略到生效：传 1.23 监控器拿 1.23，不传仍为 0.5（成对） ov=pass verify=ok err=none
+T0r61.4.2 law=L4 `--debounce` 从被忽略到生效：传 1.23 监控器拿 1.23，不传仍为 0.5（成对） ov=pass verify=ok err=none
+T0r61.5.1 law=L5 并发批次互踩是真成因：同一夹具跑开关两态——锁关 3/3 出红且成因为编译类，锁开 3/3 全绿 ov=pass verify=ok err=none
+T0r61.5.2 law=L5 并发批次互踩是真成因：同一夹具跑开关两态——锁关 3/3 出红且成因为编译类，锁开 3/3 全绿 ov=pass verify=ok err=none
+T0r61.6.1 law=L6 失败必须可见且不牵连成功：复制失败打一行且不判整次重载死；无产物批次打 No artifacts 并逐条列错误 ov=pass verify=ok err=none
+T0r61.6.2 law=L6 失败必须可见且不牵连成功：复制失败打一行且不判整次重载死；无产物批次打 No artifacts 并逐条列错误 ov=pass verify=ok err=none
+T0r61.7.1 law=L7 三套判据体系同一时刻复算且只升不降，git 红线 HEAD 未动 ov=pass verify=ok err=none
+T0r61.7.2 law=L7 三套判据体系同一时刻复算且只升不降，git 红线 HEAD 未动 ov=pass verify=ok err=none
+T0r61.8.1 law=L8 文档与账本同步：USAGE 2.5 写成实际行为，BUG-48 的 FIXED 段带原话反驳，BUG-54 入账不修并给出可复跑判据 ov=pass verify=ok err=none
+T0r61.8.2 law=L8 文档与账本同步：USAGE 2.5 写成实际行为，BUG-48 的 FIXED 段带原话反驳，BUG-54 入账不修并给出可复跑判据 ov=pass verify=ok err=none
+closed=16/16 failed=none

@@ -1,0 +1,44 @@
+T0r113 拆分中 -> 拆分中
+T0r113.1 待验收 -> 已完成
+T0r113.2 待验收 -> 已完成
+T0r113.3 拆分中 -> 拆分中
+T0r113.4 拆分中 -> 拆分中
+T0r113.5 待验收 -> 已完成
+T0r113.3.1 待领取 -> 待领取
+T0r113.3.2 待领取 -> 待领取
+T0r113.4.1 待领取 -> 待领取
+T0r113.4.2 待领取 -> 待领取
+T0r112 拆分中 -> 拆分中
+T0r112.1 待验收 -> 已完成
+T0r112.2 待验收 -> 已完成
+T0r112.3 拆分中 -> 拆分中
+T0r112.4 拆分中 -> 拆分中
+T0r112.5 拆分中 -> 拆分中
+T0r112.6 拆分中 -> 拆分中
+T0r112.7 拆分中 -> 拆分中
+T0r112.3.1 待领取 -> 待领取
+T0r112.3.2 待领取 -> 待领取
+T0r112.3.3 待领取 -> 待领取
+T0r112.4.1 待领取 -> 待领取
+T0r112.4.2 待领取 -> 待领取
+T0r112.4.3 待领取 -> 待领取
+T0r112.5.1 待领取 -> 待领取
+T0r112.5.2 待领取 -> 待领取
+T0r112.5.3 待领取 -> 待领取
+T0r112.6.1 待领取 -> 待领取
+T0r112.6.2 待领取 -> 待领取
+T0r112.6.3 待领取 -> 待领取
+T0r112.7.1 待领取 -> 待领取
+T0r112.7.2 待领取 -> 待领取
+T0r112.7.3 待领取 -> 待领取
+CONCLUSION root_T0r113=拆分中 root_T0r112=拆分中 rollup={'T0r113': {'已完成': 14, '待领取': 4, '拆分中': 3}, 'T0r112': {'已完成': 8, '待领取': 15, '拆分中': 6}} calls=38 refused=18 error_rows=0 gates={'T0r113': {'report': 'T0r113-cypy-selfdrive-r7-report.md', 'report_on_disk': True, 'report_bytes': 16939, 'pending_leaves': 4}, 'T0r112': {'report': 'T0r112-cypy-selfdrive-r6-report.md', 'report_on_disk': True, 'report_bytes': 18120, 'pending_leaves': 15}}
+REFUSED T0r113 execute | {"__error__": {"code": -32000, "message": "Omega 强验证门禁：任务 [T0r113] 尚未创建语料，请先由语料创建者执行 omega_spec_create"}}
+REFUSED T0r113 submit | {"__error__": {"code": -32000, "message": "非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]"}}
+REFUSED T0r113.3 execute | {"__error__": {"code": -32000, "message": "Omega 强验证门禁：任务 [T0r113.3] 尚未创建语料，请先由语料创建者执行 omega_spec_create"}}
+REFUSED T0r113.3 submit | {"__error__": {"code": -32000, "message": "非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]"}}
+REFUSED T0r113.4 execute | {"__error__": {"code": -32000, "message": "Omega 强验证门禁：任务 [T0r113.4] 尚未创建语料，请先由语料创建者执行 omega_spec_create"}}
+REFUSED T0r113.4 submit | {"__error__": {"code": -32000, "message": "非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]"}}
+REFUSED T0r112 execute | {"__error__": {"code": -32000, "message": "Omega 强验证门禁：任务 [T0r112] 尚未创建语料，请先由语料创建者执行 omega_spec_create"}}
+REFUSED T0r112 submit | {"__error__": {"code": -32000, "message": "非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]"}}
+REFUSED T0r112.3 execute | {"__error__": {"code": -32000, "message": "Omega 强验证门禁：任务 [T0r112.3] 尚未创建语料，请先由语料创建者执行 omega_spec_create"}}
+REFUSED T0r112.3 submit | {"__error__": {"code": -32000, "message": "非法迁移: submit 要求状态 [执行中]，当前是 [拆分中]"}}

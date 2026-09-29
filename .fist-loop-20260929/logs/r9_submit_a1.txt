@@ -1,0 +1,9 @@
+T0r115.3 | submit | {"id": "T0r115.3", "parent_id": "T0r115", "project_dir": ".", "namespace": "cypy-loop-20260929", "priority": "中", "importance": "中", "depth": 2, "split_n": 2, "status": "待验收", "ass | 待验收
+T0r115.3 | verify | {"id": "T0r115.3", "parent_id": "T0r115", "project_dir": ".", "namespace": "cypy-loop-20260929", "priority": "中", "importance": "中", "depth": 2, "split_n": 2, "status": "已完成", "ass | 已完成
+T0r115.4 | submit | {"id": "T0r115.4", "parent_id": "T0r115", "project_dir": ".", "namespace": "cypy-loop-20260929", "priority": "中", "importance": "中", "depth": 2, "split_n": 2, "status": "待验收", "ass | 待验收
+T0r115.4 | verify | {"id": "T0r115.4", "parent_id": "T0r115", "project_dir": ".", "namespace": "cypy-loop-20260929", "priority": "中", "importance": "中", "depth": 2, "split_n": 2, "status": "已完成", "ass | 已完成
+T0r115.5 | submit | {"id": "T0r115.5", "parent_id": "T0r115", "project_dir": ".", "namespace": "cypy-loop-20260929", "priority": "中", "importance": "中", "depth": 2, "split_n": 2, "status": "待验收", "ass | 待验收
+T0r115.5 | verify | {"id": "T0r115.5", "parent_id": "T0r115", "project_dir": ".", "namespace": "cypy-loop-20260929", "priority": "中", "importance": "中", "depth": 2, "split_n": 2, "status": "已完成", "ass | 已完成
+T0r115 | submit | {"__error__": {"code": -32000, "message": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"}} | 待验收
+T0r115 | verify | {"id": "T0r115", "parent_id": null, "project_dir": ".", "namespace": "cypy-loop-20260929", "priority": "中", "importance": "中", "depth": 3, "split_n": 3, "status": "已完成", "assignee" | 已完成
+CONCLUSION root=已完成 rollup={'已完成': 20, '待领取': 5} error_rows=0

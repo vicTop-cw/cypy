@@ -1,0 +1,4 @@
+def main() -> int:
+    return 0
+    print("never")
+    return 1

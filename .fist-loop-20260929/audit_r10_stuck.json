@@ -1,0 +1,235 @@
+{
+ "tree_roots": [
+  "T0r112",
+  "T0r113",
+  "T0r116"
+ ],
+ "nodes": {
+  "T0r112.3.1": {
+   "id": "T0r112.3.1",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.3.2": {
+   "id": "T0r112.3.2",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.3.3": {
+   "id": "T0r112.3.3",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.4.1": {
+   "id": "T0r112.4.1",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.4.2": {
+   "id": "T0r112.4.2",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.4.3": {
+   "id": "T0r112.4.3",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.5.1": {
+   "id": "T0r112.5.1",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.5.2": {
+   "id": "T0r112.5.2",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.5.3": {
+   "id": "T0r112.5.3",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.6.1": {
+   "id": "T0r112.6.1",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.6.2": {
+   "id": "T0r112.6.2",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.6.3": {
+   "id": "T0r112.6.3",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.7.1": {
+   "id": "T0r112.7.1",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.7.2": {
+   "id": "T0r112.7.2",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112.7.3": {
+   "id": "T0r112.7.3",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r112": {
+   "id": "T0r112",
+   "status": "拆分中",
+   "open_children": [
+    "T0r112.3",
+    "T0r112.4",
+    "T0r112.5",
+    "T0r112.6",
+    "T0r112.7"
+   ],
+   "has_spec": 0
+  },
+  "T0r112.3": {
+   "id": "T0r112.3",
+   "status": "拆分中",
+   "open_children": [
+    "T0r112.3.1",
+    "T0r112.3.2",
+    "T0r112.3.3"
+   ],
+   "has_spec": 0
+  },
+  "T0r112.4": {
+   "id": "T0r112.4",
+   "status": "拆分中",
+   "open_children": [
+    "T0r112.4.1",
+    "T0r112.4.2",
+    "T0r112.4.3"
+   ],
+   "has_spec": 0
+  },
+  "T0r112.5": {
+   "id": "T0r112.5",
+   "status": "拆分中",
+   "open_children": [
+    "T0r112.5.1",
+    "T0r112.5.2",
+    "T0r112.5.3"
+   ],
+   "has_spec": 0
+  },
+  "T0r112.6": {
+   "id": "T0r112.6",
+   "status": "拆分中",
+   "open_children": [
+    "T0r112.6.1",
+    "T0r112.6.2",
+    "T0r112.6.3"
+   ],
+   "has_spec": 0
+  },
+  "T0r112.7": {
+   "id": "T0r112.7",
+   "status": "拆分中",
+   "open_children": [
+    "T0r112.7.1",
+    "T0r112.7.2",
+    "T0r112.7.3"
+   ],
+   "has_spec": 0
+  },
+  "T0r113.3.1": {
+   "id": "T0r113.3.1",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r113.3.2": {
+   "id": "T0r113.3.2",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r113.4.1": {
+   "id": "T0r113.4.1",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r113.4.2": {
+   "id": "T0r113.4.2",
+   "status": "待领取",
+   "open_children": [],
+   "has_spec": 0
+  },
+  "T0r113": {
+   "id": "T0r113",
+   "status": "拆分中",
+   "open_children": [
+    "T0r113.3",
+    "T0r113.4"
+   ],
+   "has_spec": 0
+  },
+  "T0r113.3": {
+   "id": "T0r113.3",
+   "status": "拆分中",
+   "open_children": [
+    "T0r113.3.1",
+    "T0r113.3.2"
+   ],
+   "has_spec": 0
+  },
+  "T0r113.4": {
+   "id": "T0r113.4",
+   "status": "拆分中",
+   "open_children": [
+    "T0r113.4.1",
+    "T0r113.4.2"
+   ],
+   "has_spec": 0
+  }
+ },
+ "summary": {
+  "T0r112": {
+   "total": 29,
+   "non_terminal": 21,
+   "pending_leaves": 15,
+   "closable_now": 15,
+   "blocked_by_children": 6
+  },
+  "T0r113": {
+   "total": 21,
+   "non_terminal": 7,
+   "pending_leaves": 4,
+   "closable_now": 4,
+   "blocked_by_children": 3
+  },
+  "T0r116": {
+   "total": 17,
+   "non_terminal": 0,
+   "pending_leaves": 0,
+   "closable_now": 0,
+   "blocked_by_children": 0
+  }
+ }
+}

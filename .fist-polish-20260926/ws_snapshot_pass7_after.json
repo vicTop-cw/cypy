@@ -1,0 +1,1112 @@
+{
+ "taken_at_utc": "2026-09-26T17:51:24Z",
+ "git_head": "17d68b43696250da1b09ddfa1e91721c97256798",
+ "git_dirty_lines": 155,
+ "git_dirty": [
+  " D examples/demos/legacy/analyzer/type_checking.cypy",
+  " D examples/demos/legacy/builtins/defer_and_guard.cypy",
+  " D examples/demos/legacy/builtins/generics.cypy",
+  " D examples/demos/legacy/builtins/pointer_operations.cypy",
+  " D examples/demos/legacy/codegen/cdef_class_generation.cypy",
+  " D examples/demos/legacy/codegen/module_magic_attrs.cypy",
+  " D examples/demos/legacy/parser/build_blocks.cypy",
+  " D examples/demos/legacy/parser/implicit_policy.cypy",
+  " D examples/demos/legacy/parser/struct_definition.cypy",
+  " D examples/struct.cypy",
+  " M CHANGELOG.md",
+  " M SYNTAX/01-basic-types.md",
+  " M SYNTAX/appendix-A-keywords.md",
+  " M SYNTAX_IMPLEMENTATION_STATUS.md",
+  " M cypy_bridge/__init__.py",
+  " M cypy_bridge/compiler.py",
+  " M cypy_bridge/defer.py",
+  " M cypy_bridge/memory.py",
+  " M cypy_bridge/meta.py",
+  " M cypy_bridge/nogil.py",
+  " M cypy_bridge/pointer.py",
+  " M cypy_bridge/types.py",
+  " M cypy_bridge/union.py",
+  " M cypy_hook/hook.py",
+  " M cypyc/__main__.py",
+  " M cypyc/analyzer/comptime_evaluator.py",
+  " M cypyc/analyzer/defer_analyzer.py",
+  " M cypyc/analyzer/pointer_checker.py",
+  " M cypyc/analyzer/scope_analyzer.py",
+  " M cypyc/analyzer/type_checker.py",
+  " M cypyc/cli.py",
+  " M cypyc/codegen/cython_generator.py",
+  " M cypyc/codegen/type_mapper.py",
+  " M cypyc/incremental/ast_differ.py",
+  " M cypyc/incremental/dependency_graph.py",
+  " M cypyc/incremental/file_monitor.py",
+  " M cypyc/incremental/hot_reload.py",
+  " M cypyc/incremental/incremental_manager.py",
+  " M cypyc/parser/lexer.py",
+  " M cypyc/parser/macro_expander.py",
+  " M cypyc/parser/parser.py",
+  " M cypyc/parser/preprocessor.py",
+  " M cypyc/project/project_compiler.py",
+  " M cypyc/transformer/defer_transformer.py",
+  " M cypyc/transformer/enum_transformer.py",
+  " M cypyc/transformer/generic_transformer.py",
+  " M cypyc/transformer/struct_transformer.py",
+  " M cypyc/transformer/trait_transformer.py",
+  " M cypyc/utils/indent_detector.py",
+  " M docs/SYNTAX_CHANGE_REVIEW.md",
+  " M examples/demos/legacy/integration/array_operations.cypy",
+  " M examples/generic.cypy",
+  " M examples/minimal_test.cypy",
+  " M examples/new_syntax_features.cypy",
+  " M examples/struct_enum.cypy",
+  " M examples/test_duck.cypy",
+  " M examples/test_macro.cypy",
+  " M examples/test_meta.cypy",
+  " M examples/test_new_features.cypy",
+  " M examples/test_union.cypy",
+  " M examples/test_vec.cypy",
+  " M scripts/sync_demo.py",
+  " M setup.py",
+  " M test_suite/core/suite.py",
+  " M test_suite/core/test.py",
+  " M test_suite/fixtures/compiler.py",
+  " M test_suite/fixtures/parser.py",
+  " M test_suite/suites/analyzer_suite.py",
+  " M test_suite/suites/codegen_suite.py",
+  " M test_suite/suites/integration_suite.py",
+  " M test_suite/suites/parser_suite.py",
+  " M tests/test_boundary_comprehensive.py",
+  " M tests/test_bridge_integration.py",
+  " M tests/test_bridge_library.py",
+  " M tests/test_cli.py",
+  " M tests/test_codegen.py",
+  " M tests/test_codegen_cast.py",
+  " M tests/test_codegen_new_features.py",
+  " M tests/test_comptime_func.py",
+  " M tests/test_hook.py",
+  " M tests/test_macro_expansion.py",
+  " M tests/test_macro_features.py",
+  " M tests/test_new_features_boundary.py",
+  " M tests/test_ownership.py",
+  " M tests/test_project_compiler.py",
+  " M tests/test_stage3.py",
+  " M tests/test_union_type_checking.py",
+  "?? .codeartsdoer/",
+  "?? .fist-polish-20260926/",
+  "?? .freebuff/",
+  "?? Find_BUG/",
+  "?? Gen_Prompts/",
+  "?? LICENSE",
+  "?? SYNTAX/33-type-constraints-subtypes-dispatch.md",
+  "?? dist/",
+  "?? examples/_pending_build_blocks.cypy",
+  "?? examples/_pending_type_defects.cypy",
+  "?? examples/basic_types.out",
+  "?? examples/concurrency.out",
+  "?? examples/constraint_numeric.cypy",
+  "?? examples/constraint_numeric.out",
+  "?? examples/control_flow.out",
+  "?? examples/defer.out",
+  "?? examples/demos/legacy/analyzer/type_safety.cypy",
+  "?? examples/demos/legacy/codegen/codegen_basic.cypy",
+  "?? examples/demos/legacy/integration/full_program.cypy",
+  "?? examples/demos/legacy/integration/recursion.cypy",
+  "?? examples/demos/legacy/parser/basic_syntax.cypy",
+  "?? examples/functions.out",
+  "?? examples/generic.out",
+  "?? examples/generics_advanced.out",
+  "?? examples/hello.out",
+  "?? examples/list_comprehension.out",
+  "?? examples/meta.out",
+  "?? examples/metaprogramming.out",
+  "?? examples/minimal_test.out",
+  "?? examples/new_syntax_features.out",
+  "?? examples/pipe_operator.out",
+  "?? examples/pointers.out",
+  "?? examples/struct_enum.out",
+  "?? examples/struct_records.cypy",
+  "?? examples/struct_records.out",
+  "?? examples/subtype_units.cypy",
+  "?? examples/subtype_units.out",
+  "?? examples/test_duck.out",
+  "?? examples/test_macro.out",
+  "?? examples/test_meta.out",
+  "?? examples/test_new_features.out",
+  "?? examples/test_union.out",
+  "?? examples/test_vec.out",
+  "?? fist-mbt.db",
+  "?? fist-mbt.db-shm",
+  "?? fist-mbt.db-wal",
+  "?? markers_after_pass8.json",
+  "?? markers_after_pass9.json",
+  "?? memory/",
+  "?? reports/2026-09-25/",
+  "?? reports/2026-09-26/",
+  "?? scripts/e2e_golden.sh",
+  "?? scripts/fist.py",
+  "?? tests/test_codegen_error_handling.py",
+  "?? tests/test_find_bug_sqlalchemy_core.py",
+  "?? tests/test_find_bug_tenacity.py",
+  "?? tests/test_for_unpacking.py",
+  "?? tests/test_golden_anchor_probes.py",
+  "?? tests/test_incremental.py",
+  "?? tests/test_judge_strictness.py",
+  "?? tests/test_named_constraints.py",
+  "?? tests/test_nominal_subtypes.py",
+  "?? tests/test_polish_20260926.py",
+  "?? tests/test_polish_20260926_pass7.py",
+  "?? tests/test_preprocessor.py",
+  "?? tests/test_test_suite_harness.py",
+  "?? tests/test_trait_isinstance.py",
+  "?? tests/test_type_system_spec_integrity.py"
+ ],
+ "py_files": {
+  "cypyc/__init__.py": [
+   1784698203,
+   80
+  ],
+  "cypyc/__main__.py": [
+   1790385038,
+   508
+  ],
+  "cypyc/analyzer/__init__.py": [
+   1784706870,
+   376
+  ],
+  "cypyc/analyzer/build_block_checker.py": [
+   1786501717,
+   8064
+  ],
+  "cypyc/analyzer/comptime_evaluator.py": [
+   1790430033,
+   25965
+  ],
+  "cypyc/analyzer/cycle_detector.py": [
+   1784707143,
+   7830
+  ],
+  "cypyc/analyzer/defer_analyzer.py": [
+   1789588563,
+   3200
+  ],
+  "cypyc/analyzer/pointer_checker.py": [
+   1790329169,
+   14997
+  ],
+  "cypyc/analyzer/scope_analyzer.py": [
+   1790399696,
+   42459
+  ],
+  "cypyc/analyzer/type_checker.py": [
+   1790429824,
+   201250
+  ],
+  "cypyc/cli.py": [
+   1790332530,
+   24146
+  ],
+  "cypyc/codegen/__init__.py": [
+   1784773309,
+   300
+  ],
+  "cypyc/codegen/bridge_generator.py": [
+   1784809800,
+   7137
+  ],
+  "cypyc/codegen/cython_generator.py": [
+   1790439355,
+   196453
+  ],
+  "cypyc/codegen/setup_generator.py": [
+   1785393484,
+   2109
+  ],
+  "cypyc/codegen/type_mapper.py": [
+   1790433611,
+   3007
+  ],
+  "cypyc/incremental/__init__.py": [
+   1785033775,
+   541
+  ],
+  "cypyc/incremental/ast_differ.py": [
+   1790325551,
+   10014
+  ],
+  "cypyc/incremental/dependency_graph.py": [
+   1790324882,
+   11195
+  ],
+  "cypyc/incremental/file_monitor.py": [
+   1790401051,
+   6818
+  ],
+  "cypyc/incremental/hot_reload.py": [
+   1790429683,
+   26469
+  ],
+  "cypyc/incremental/incremental_manager.py": [
+   1790429824,
+   20228
+  ],
+  "cypyc/parser/__init__.py": [
+   1784698233,
+   138
+  ],
+  "cypyc/parser/lexer.py": [
+   1790430471,
+   39692
+  ],
+  "cypyc/parser/macro_expander.py": [
+   1790402889,
+   22193
+  ],
+  "cypyc/parser/parser.py": [
+   1790429683,
+   188746
+  ],
+  "cypyc/parser/preprocessor.py": [
+   1790325670,
+   11710
+  ],
+  "cypyc/project/__init__.py": [
+   1785398078,
+   424
+  ],
+  "cypyc/project/module_dependency_graph.py": [
+   1785398154,
+   9210
+  ],
+  "cypyc/project/project_compiler.py": [
+   1790429683,
+   38065
+  ],
+  "cypyc/project/type_registry.py": [
+   1785398119,
+   10684
+  ],
+  "cypyc/transformer/__init__.py": [
+   1785296006,
+   535
+  ],
+  "cypyc/transformer/defer_transformer.py": [
+   1790401051,
+   1494
+  ],
+  "cypyc/transformer/enum_transformer.py": [
+   1790401051,
+   1492
+  ],
+  "cypyc/transformer/generic_transformer.py": [
+   1790401051,
+   1521
+  ],
+  "cypyc/transformer/struct_transformer.py": [
+   1790401051,
+   1472
+  ],
+  "cypyc/transformer/trait_transformer.py": [
+   1790401051,
+   1614
+  ],
+  "cypyc/utils/__init__.py": [
+   1784698737,
+   177
+  ],
+  "cypyc/utils/ast_utils.py": [
+   1784698751,
+   1809
+  ],
+  "cypyc/utils/error_reporter.py": [
+   1785064991,
+   9346
+  ],
+  "cypyc/utils/indent_detector.py": [
+   1790429683,
+   2669
+  ],
+  "cypy_bridge/__init__.py": [
+   1790329362,
+   3583
+  ],
+  "cypy_bridge/compiler.py": [
+   1790429683,
+   170737
+  ],
+  "cypy_bridge/core.py": [
+   1784720291,
+   2595
+  ],
+  "cypy_bridge/defer.py": [
+   1790328799,
+   5432
+  ],
+  "cypy_bridge/enum.py": [
+   1784721416,
+   5130
+  ],
+  "cypy_bridge/generics.py": [
+   1784722815,
+   6895
+  ],
+  "cypy_bridge/memory.py": [
+   1790328210,
+   9737
+  ],
+  "cypy_bridge/meta.py": [
+   1790329073,
+   9725
+  ],
+  "cypy_bridge/nogil.py": [
+   1790411105,
+   8648
+  ],
+  "cypy_bridge/pointer.py": [
+   1790429683,
+   19892
+  ],
+  "cypy_bridge/struct.py": [
+   1784719783,
+   5059
+  ],
+  "cypy_bridge/types.py": [
+   1790328131,
+   14977
+  ],
+  "cypy_bridge/union.py": [
+   1790330283,
+   6551
+  ],
+  "cypy_hook/__init__.py": [
+   1784698803,
+   51
+  ],
+  "cypy_hook/hook.py": [
+   1790429683,
+   47025
+  ],
+  "tests/__init__.py": [
+   1784698853,
+   252
+  ],
+  "tests/benchmark/test_performance_comparison.py": [
+   1785380184,
+   20128
+  ],
+  "tests/code_quality/test_code_quality.py": [
+   1786890353,
+   31302
+  ],
+  "tests/run_comprehensive_tests.py": [
+   1785375984,
+   32107
+  ],
+  "tests/test_analyzer.py": [
+   1786612170,
+   2857
+  ],
+  "tests/test_benchmark.py": [
+   1786783941,
+   10585
+  ],
+  "tests/test_boundary_comprehensive.py": [
+   1790325861,
+   40376
+  ],
+  "tests/test_bridge_integration.py": [
+   1790329962,
+   18278
+  ],
+  "tests/test_bridge_library.py": [
+   1790329494,
+   48311
+  ],
+  "tests/test_byte_diff_runner.py": [
+   1786430556,
+   7054
+  ],
+  "tests/test_cli.py": [
+   1790332610,
+   3275
+  ],
+  "tests/test_codegen.py": [
+   1790437540,
+   2296
+  ],
+  "tests/test_codegen_async.py": [
+   1784792384,
+   1916
+  ],
+  "tests/test_codegen_async_cython.py": [
+   1785734168,
+   2471
+  ],
+  "tests/test_codegen_cast.py": [
+   1790437569,
+   2523
+  ],
+  "tests/test_codegen_concurrent.py": [
+   1784792784,
+   2033
+  ],
+  "tests/test_codegen_error_handling.py": [
+   1790329621,
+   15545
+  ],
+  "tests/test_codegen_guard.py": [
+   1785392207,
+   10140
+  ],
+  "tests/test_codegen_new_features.py": [
+   1790329636,
+   12786
+  ],
+  "tests/test_codegen_simd.py": [
+   1784793339,
+   2281
+  ],
+  "tests/test_codegen_verification.py": [
+   1786670417,
+   9633
+  ],
+  "tests/test_comptime_func.py": [
+   1790330347,
+   12238
+  ],
+  "tests/test_demos.py": [
+   1785735902,
+   23883
+  ],
+  "tests/test_duck.py": [
+   1786612180,
+   17399
+  ],
+  "tests/test_dynamic_awareness.py": [
+   1784717058,
+   11014
+  ],
+  "tests/test_e2e_new_features.py": [
+   1785396814,
+   8669
+  ],
+  "tests/test_extractor_pattern.py": [
+   1786672712,
+   12129
+  ],
+  "tests/test_find_bug_sqlalchemy_core.py": [
+   1790160229,
+   3145
+  ],
+  "tests/test_find_bug_tenacity.py": [
+   1788427004,
+   6574
+  ],
+  "tests/test_for_unpacking.py": [
+   1789596059,
+   4477
+  ],
+  "tests/test_generic_types.py": [
+   1785411259,
+   3790
+  ],
+  "tests/test_global_nonlocal.py": [
+   1785734156,
+   3339
+  ],
+  "tests/test_golden_anchor_probes.py": [
+   1790390407,
+   5725
+  ],
+  "tests/test_guarded_strategy.py": [
+   1785724858,
+   3698
+  ],
+  "tests/test_hook.py": [
+   1790329715,
+   6420
+  ],
+  "tests/test_hot_reload.py": [
+   1785059412,
+   22874
+  ],
+  "tests/test_implicit_strategy.py": [
+   1785724798,
+   1619
+  ],
+  "tests/test_incremental.py": [
+   1790433663,
+   27098
+  ],
+  "tests/test_integration_full_stack.py": [
+   1786672710,
+   6541
+  ],
+  "tests/test_integration_type_system.py": [
+   1785724640,
+   9788
+  ],
+  "tests/test_is_not_regression.py": [
+   1786430092,
+   1931
+  ],
+  "tests/test_judge_strictness.py": [
+   1790386903,
+   15099
+  ],
+  "tests/test_lexer_new_keywords.py": [
+   1784801681,
+   2641
+  ],
+  "tests/test_lz_features.py": [
+   1786673683,
+   5379
+  ],
+  "tests/test_lz_type_mapping.py": [
+   1786673616,
+   4292
+  ],
+  "tests/test_macro.py": [
+   1785406551,
+   3119
+  ],
+  "tests/test_macro_expansion.py": [
+   1790325775,
+   13123
+  ],
+  "tests/test_macro_features.py": [
+   1790325905,
+   9613
+  ],
+  "tests/test_module_magic_attrs.py": [
+   1785223488,
+   2774
+  ],
+  "tests/test_named_constraints.py": [
+   1790395660,
+   16015
+  ],
+  "tests/test_never_type.py": [
+   1784703568,
+   1499
+  ],
+  "tests/test_new_features.py": [
+   1786672596,
+   5090
+  ],
+  "tests/test_new_features_boundary.py": [
+   1790329677,
+   11330
+  ],
+  "tests/test_new_syntax_boundary.py": [
+   1785396756,
+   7269
+  ],
+  "tests/test_nominal_subtypes.py": [
+   1790400475,
+   20231
+  ],
+  "tests/test_ownership.py": [
+   1790329760,
+   14141
+  ],
+  "tests/test_parser.py": [
+   1784698873,
+   3190
+  ],
+  "tests/test_parser_async.py": [
+   1784791351,
+   1765
+  ],
+  "tests/test_parser_buildblock.py": [
+   1784783850,
+   2956
+  ],
+  "tests/test_parser_comptime.py": [
+   1784800668,
+   2257
+  ],
+  "tests/test_parser_go.py": [
+   1784780237,
+   2511
+  ],
+  "tests/test_parser_guard.py": [
+   1784779575,
+   2766
+  ],
+  "tests/test_parser_integration.py": [
+   1785221811,
+   4543
+  ],
+  "tests/test_parser_macro.py": [
+   1784800692,
+   2349
+  ],
+  "tests/test_parser_match.py": [
+   1786672655,
+   11122
+  ],
+  "tests/test_parser_pipe.py": [
+   1784781638,
+   3037
+  ],
+  "tests/test_parser_spawn.py": [
+   1784780146,
+   2619
+  ],
+  "tests/test_parser_suite.py": [
+   1785045449,
+   3174
+  ],
+  "tests/test_parser_test.py": [
+   1785222929,
+   3262
+  ],
+  "tests/test_parser_union.py": [
+   1785222931,
+   2618
+  ],
+  "tests/test_parser_vec.py": [
+   1784780447,
+   3128
+  ],
+  "tests/test_pattern_matching.py": [
+   1786671773,
+   55870
+  ],
+  "tests/test_polish_20260926.py": [
+   1790411084,
+   18257
+  ],
+  "tests/test_polish_20260926_pass7.py": [
+   1790439486,
+   17876
+  ],
+  "tests/test_preprocessor.py": [
+   1790326154,
+   10677
+  ],
+  "tests/test_project_compiler.py": [
+   1790329902,
+   19839
+  ],
+  "tests/test_slice_codegen.py": [
+   1786019733,
+   2255
+  ],
+  "tests/test_square_bracket_types.py": [
+   1786775629,
+   4090
+  ],
+  "tests/test_stage2.py": [
+   1786672151,
+   3387
+  ],
+  "tests/test_stage3.py": [
+   1790437540,
+   2835
+  ],
+  "tests/test_stage4.py": [
+   1785412291,
+   2545
+  ],
+  "tests/test_stage5.py": [
+   1785724649,
+   3455
+  ],
+  "tests/test_syntax_integration.py": [
+   1786670806,
+   16933
+  ],
+  "tests/test_test_suite_harness.py": [
+   1790328416,
+   16607
+  ],
+  "tests/test_trait_isinstance.py": [
+   1790159869,
+   7604
+  ],
+  "tests/test_trait_system.py": [
+   1785411080,
+   8550
+  ],
+  "tests/test_transformer.py": [
+   1784698903,
+   1636
+  ],
+  "tests/test_type_checking.py": [
+   1785203042,
+   2622
+  ],
+  "tests/test_type_inference.py": [
+   1785298290,
+   17685
+  ],
+  "tests/test_type_promotion.py": [
+   1785202972,
+   6049
+  ],
+  "tests/test_type_system_spec_integrity.py": [
+   1790391341,
+   3860
+  ],
+  "tests/test_union_type.py": [
+   1786672970,
+   4068
+  ],
+  "tests/test_union_type_checking.py": [
+   1790325810,
+   6887
+  ],
+  "tests/test_unit_test_modes.py": [
+   1786672153,
+   7289
+  ],
+  "tests/test_varargs.py": [
+   1785732083,
+   4481
+  ],
+  "tests/test_vec.py": [
+   1786670299,
+   3262
+  ],
+  "test_suite/__init__.py": [
+   1784878744,
+   530
+  ],
+  "test_suite/core/__init__.py": [
+   1784878746,
+   262
+  ],
+  "test_suite/core/assertions.py": [
+   1784878266,
+   5429
+  ],
+  "test_suite/core/runner.py": [
+   1784878302,
+   5656
+  ],
+  "test_suite/core/suite.py": [
+   1790327758,
+   4163
+  ],
+  "test_suite/core/test.py": [
+   1790327730,
+   3467
+  ],
+  "test_suite/fixtures/__init__.py": [
+   1784878366,
+   147
+  ],
+  "test_suite/fixtures/compiler.py": [
+   1790327767,
+   4826
+  ],
+  "test_suite/fixtures/parser.py": [
+   1790325525,
+   3039
+  ],
+  "test_suite/suites/__init__.py": [
+   1784878815,
+   283
+  ],
+  "test_suite/suites/analyzer_suite.py": [
+   1790328130,
+   7447
+  ],
+  "test_suite/suites/codegen_suite.py": [
+   1790443177,
+   7417
+  ],
+  "test_suite/suites/integration_suite.py": [
+   1790327936,
+   6423
+  ],
+  "test_suite/suites/parser_suite.py": [
+   1790328102,
+   8174
+  ],
+  "test_suite/utils/__init__.py": [
+   1784878317,
+   89
+  ],
+  "test_suite/utils/demo_writer.py": [
+   1784878337,
+   4598
+  ],
+  "memory/bugs.md": [
+   1790440473,
+   74980
+  ],
+  "examples/basic_types.out": [
+   1790434564,
+   202
+  ],
+  "examples/concurrency.out": [
+   1790434588,
+   214
+  ],
+  "examples/constraint_numeric.out": [
+   1790434611,
+   26
+  ],
+  "examples/control_flow.out": [
+   1790434632,
+   340
+  ],
+  "examples/defer.out": [
+   1790434668,
+   172
+  ],
+  "examples/functions.out": [
+   1790434708,
+   158
+  ],
+  "examples/generic.out": [
+   1790434760,
+   57
+  ],
+  "examples/generics_advanced.out": [
+   1790434814,
+   164
+  ],
+  "examples/hello.out": [
+   1790434856,
+   14
+  ],
+  "examples/list_comprehension.out": [
+   1790434892,
+   246
+  ],
+  "examples/meta.out": [
+   1790434919,
+   60
+  ],
+  "examples/metaprogramming.out": [
+   1790434946,
+   144
+  ],
+  "examples/minimal_test.out": [
+   1790434974,
+   18
+  ],
+  "examples/new_syntax_features.out": [
+   1790434998,
+   300
+  ],
+  "examples/pipe_operator.out": [
+   1790435022,
+   84
+  ],
+  "examples/pointers.out": [
+   1790435045,
+   128
+  ],
+  "examples/struct_enum.out": [
+   1790435067,
+   229
+  ],
+  "examples/struct_records.out": [
+   1790435091,
+   46
+  ],
+  "examples/subtype_units.out": [
+   1790435115,
+   48
+  ],
+  "examples/test_duck.out": [
+   1790435138,
+   132
+  ],
+  "examples/test_macro.out": [
+   1790435160,
+   22
+  ],
+  "examples/test_meta.out": [
+   1790435182,
+   58
+  ],
+  "examples/test_new_features.out": [
+   1790435206,
+   56
+  ],
+  "examples/test_union.out": [
+   1790435231,
+   78
+  ],
+  "examples/test_vec.out": [
+   1790435256,
+   40
+  ],
+  "SYNTAX/00-introduction.md": [
+   1785720067,
+   6310
+  ],
+  "SYNTAX/01-basic-types.md": [
+   1790433623,
+   3651
+  ],
+  "SYNTAX/02-type-annotations.md": [
+   1785410828,
+   3013
+  ],
+  "SYNTAX/03-type-conversion.md": [
+   1785722397,
+   2816
+  ],
+  "SYNTAX/04-pointer-types.md": [
+   1785410828,
+   2580
+  ],
+  "SYNTAX/05-struct.md": [
+   1785143963,
+   1859
+  ],
+  "SYNTAX/06-enum.md": [
+   1785038842,
+   2366
+  ],
+  "SYNTAX/06d-builtin-magic-traits.md": [
+   1785724525,
+   7002
+  ],
+  "SYNTAX/07-trait-impl.md": [
+   1785408708,
+   3061
+  ],
+  "SYNTAX/08-class.md": [
+   1785038889,
+   3941
+  ],
+  "SYNTAX/09-functions.md": [
+   1785733940,
+   6148
+  ],
+  "SYNTAX/10-variables.md": [
+   1785719814,
+   3995
+  ],
+  "SYNTAX/11-generics.md": [
+   1785408714,
+   2747
+  ],
+  "SYNTAX/12-operators.md": [
+   1785735434,
+   5839
+  ],
+  "SYNTAX/12-type-alias.md": [
+   1785724487,
+   2111
+  ],
+  "SYNTAX/13-build-blocks.md": [
+   1785392560,
+   3734
+  ],
+  "SYNTAX/14-syntax-sugar.md": [
+   1785733780,
+   7692
+  ],
+  "SYNTAX/15-control-flow.md": [
+   1785410828,
+   3396
+  ],
+  "SYNTAX/16-exceptions.md": [
+   1785410828,
+   3266
+  ],
+  "SYNTAX/17-pattern-matching.md": [
+   1785724494,
+   9488
+  ],
+  "SYNTAX/18-macros.md": [
+   1785405885,
+   2206
+  ],
+  "SYNTAX/19-comptime.md": [
+   1785116966,
+   1829
+  ],
+  "SYNTAX/20-concurrency.md": [
+   1785410828,
+   5006
+  ],
+  "SYNTAX/21-simd-vector.md": [
+   1785720041,
+   2881
+  ],
+  "SYNTAX/22-magic-properties.md": [
+   1785410828,
+   3963
+  ],
+  "SYNTAX/23-compilation.md": [
+   1785410828,
+   7605
+  ],
+  "SYNTAX/24-incremental-hot-reload.md": [
+   1785039305,
+   6853
+  ],
+  "SYNTAX/25-compatibility.md": [
+   1785722307,
+   4048
+  ],
+  "SYNTAX/26-union-type.md": [
+   1785720040,
+   4126
+  ],
+  "SYNTAX/27-constraints.md": [
+   1785408743,
+   10515
+  ],
+  "SYNTAX/30-tutorial-pointers.md": [
+   1785722228,
+   3912
+  ],
+  "SYNTAX/31-tutorial-metaprogramming.md": [
+   1785724548,
+   7159
+  ],
+  "SYNTAX/32-tutorial-concurrency.md": [
+   1785410828,
+   10003
+  ],
+  "SYNTAX/33-type-constraints-subtypes-dispatch.md": [
+   1790391196,
+   67427
+  ],
+  "SYNTAX/appendix-A-keywords.md": [
+   1790400552,
+   13779
+  ],
+  "SYNTAX/appendix-B-operators.md": [
+   1785731640,
+   10672
+  ],
+  "SYNTAX/appendix-C-features.md": [
+   1785733784,
+   16008
+  ],
+  "PROJECT-SPEC/00-总览.md": [
+   1786939070,
+   5417
+  ],
+  "PROJECT-SPEC/01-项目结构规范.md": [
+   1786939073,
+   2918
+  ],
+  "PROJECT-SPEC/02-命名与源码规范.md": [
+   1786939075,
+   2072
+  ],
+  "PROJECT-SPEC/03-测试规范化.md": [
+   1786939078,
+   2149
+  ],
+  "PROJECT-SPEC/04-进度报告规范.md": [
+   1786939080,
+   2745
+  ],
+  "PROJECT-SPEC/05-Omega验证前提.md": [
+   1786939082,
+   3757
+  ]
+ }
+}

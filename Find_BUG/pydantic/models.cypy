@@ -1,0 +1,100 @@
+#!bin cypy
+# ============================================================
+# models.cypy — Example models (demonstrate port capabilities)
+# ============================================================
+
+from fields import Field, FieldInfo
+from errors import ValidationError
+
+def _has_at(s: str) -> bool:
+    let i: int = 0
+    while i < len(s):
+        if s[i] == "@":
+            return True
+        i = i + 1
+    return False
+
+
+struct Address:
+    _base: object  # composition instead of inheritance
+    street: str
+    city: str
+    zip_code: str
+
+    def __init__(self):
+        self.street = ""
+        self.city = ""
+        self.zip_code = ""
+
+    def fields(self) -> dict<str, FieldInfo>:
+        let f: dict<str, FieldInfo> = {}
+        f["street"] = Field(type_name="str", required=True, min_length=1)
+        f["city"] = Field(type_name="str", required=True)
+        f["zip"] = Field(type_name="str", required=True, pattern="100000")
+        return f
+
+    def model_validate(data: dict<str, object>) -> Address:
+        let m: Address = Address()
+        if "street" in data:
+            m.street = str(data["street"])
+        if "city" in data:
+            m.city = str(data["city"])
+        if "zip" in data:
+            m.zip_code = str(data["zip"])
+        return m
+
+
+struct Tag:
+    label: str
+
+    def __init__(self):
+        self.label = ""
+
+    def fields(self) -> dict<str, FieldInfo>:
+        let f: dict<str, FieldInfo> = {}
+        f["label"] = Field(type_name="str", required=True)
+        return f
+
+    def model_validate(data: dict<str, object>) -> Tag:
+        let m: Tag = Tag()
+        if "label" in data:
+            m.label = str(data["label"])
+        return m
+
+
+struct User:
+    id: int
+    name: str
+    email: str
+    age: int
+    active: bool
+
+    def __init__(self):
+        self.id = 0
+        self.name = ""
+        self.email = ""
+        self.age = 0
+        self.active = True
+
+    def fields(self) -> dict<str, FieldInfo>:
+        let f: dict<str, FieldInfo> = {}
+        f["id"] = Field(type_name="int", required=True, ge=1)
+        f["name"] = Field(type_name="str", required=True, min_length=1, max_length=50)
+        f["email"] = Field(type_name="str", required=True)
+        f["age"] = Field(type_name="int", default=0, ge=0, le=150)
+        f["active"] = Field(type_name="bool", default=True)
+        return f
+
+    def model_validate(data: dict<str, object>) -> User:
+        let m: User = User()
+        if "id" in data:
+            m.id = int(data["id"])
+        if "name" in data:
+            m.name = str(data["name"])
+        if "email" in data:
+            m.email = str(data["email"])
+        if "age" in data:
+            m.age = int(data["age"])
+        if "active" in data:
+            m.active = bool(data["active"])
+        return m

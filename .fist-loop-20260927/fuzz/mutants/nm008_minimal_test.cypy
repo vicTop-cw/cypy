@@ -1,0 +1,15 @@
+# 最小可编译/可运行语料（reformat 不变式与 e2e golden 的最短锚点）
+#
+# T0r258.4.2：此前本文件只有一个从不被调用的 test_minimal()，运行成功但零输出，
+# golden 因此被冻结成 29 行编译器诊断（源文件当时已被 UTF-16 式 NUL 垃圾污染）。
+# 恢复 HEAD 干净版后补上 `def main() -> int:` 驱动，让每个 test_* 各出一行可观察输出。
+
+def test_minimal() -> int:
+    count: int = 0
+    for i in range(10):
+        if i < 5:
+            count = count + 1
+    return count
+
+def main() -> int:
+    print�����

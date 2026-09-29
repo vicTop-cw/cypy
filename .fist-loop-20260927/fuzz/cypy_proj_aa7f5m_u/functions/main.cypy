@@ -1,0 +1,40 @@
+# 函数示例
+# 演示 Cypy 的函数定义和调用
+
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+
+def greet_with_default(name: str = "World") -> str:
+    return f"Hello, {name}!"
+
+def print_person(name: str, age: int, city: str = "Unknown") -> None:
+    print(f"Name: {name}, Age: {age}, City: {city}")
+
+def double(x: int) -> int:
+    return x * 2
+
+def square(x: int) -> int:
+    return x ** 2
+
+def factorial(n: int) -> int:
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+def main() -> int:
+    print(greet("Cypy"))
+    print(greet_with_default())
+    print(greet_with_default("Python"))
+
+    print_person(name="Alice", age=30)
+    print_person(name="Bob", age=25, city="New York")
+
+    let result = 5 |> double |> square
+    print(f"5 |> double |> square: {result}")
+
+    print(f"factorial(5): {factorial(5)}")
+
+    return 0
+
+if __name__ == "__main__":
+    main()

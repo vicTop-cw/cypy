@@ -1,0 +1,94 @@
+#!bin cypy
+# ============================================================
+# tenacity 核心子集复刻（压测 Cypy 编译器）
+# 覆盖：带参装饰器工厂 / 嵌套函数 / 闭包捕获 / 异常层级
+#       / try-except / while 循环 / 可变变量 / `and not` 逻辑
+# 目的：在真实库移植里暴露 cypyc 的编译/运行期缺陷。
+# ============================================================
+
+class RetryError(Exception):
+    """重试耗尽时抛出的异常"""
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+struct Attempt:
+    """一次重试尝试的快照"""
+    number: int
+    has_exception: bool
+    exception: object
+
+    def __init__(self, number: int):
+        self.number = number
+        self.has_exception = False
+        self.exception = None
+
+
+# stop 策略：达到最大尝试次数后停止
+struct StopAfterAttempt:
+    max_attempt: int
+
+    def __init__(self, max_attempt: int):
+        self.max_attempt = max_attempt
+
+    def should_stop(self, attempt: Attempt) -> bool:
+        return attempt.number >= self.max_attempt
+
+
+# wait 策略：固定等待时长（秒）
+struct WaitFixed:
+    seconds: float
+
+    def __init__(self, seconds: float):
+        self.seconds = seconds
+
+    def wait_time(self, attempt: Attempt) -> float:
+        return self.seconds
+
+
+# retry 判断：发生异常时继续重试
+struct RetryIfExceptionType:
+    def __init__(self):
+        pass
+
+    def should_retry(self, attempt: Attempt) -> bool:
+        return attempt.has_exception
+
+
+struct Retrying:
+    """重试引擎：循环调用目标函数，按策略决定是否继续"""
+    stop: object
+    wait: object
+    retry: object
+
+    def __init__(self, stop: object, wait: object, retry: object):
+        self.stop = stop
+        self.wait = wait
+        self.retry = retry
+
+    def call(self, fn: object) -> object:
+        mut attempt_no: int = 1
+        while True:
+            let attempt: Attempt = Attempt(number=attempt_no)
+            try:
+                let result: object = fn()
+                return result
+            except Exception as e:
+                attempt.has_exception = True
+                attempt.exception = e
+                if self.retry is not None and not self.retry.should_retry(attempt):
+                    raise e
+                if self.stop is not None and self.stop.should_stop(attempt):
+                    raise RetryError("重试次数耗尽")
+            attempt_no = attempt_no + 1
+        return None
+
+
+def retry(stop: object, wait: object, retry: object) -> object:
+    """@retry(...) 装饰器工厂：返回包裹目标函数的包装器"""
+    let engine: Retrying = Retrying(stop=stop, wait=wait, retry=retry)
+    def make_wrapper(fn: object) -> object:
+        def do_call() -> object:
+            return engine.call(fn)
+        return do_call
+    return make_wrapper

@@ -1,0 +1,1083 @@
+{
+ "name": "20260928.10.35.00",
+ "title": "R4-打磨（polish）环节报告",
+ "stage": "第 4 轮第 4 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R4",
+ "root_task": "T0r90",
+ "assignee": "cypy-polisher",
+ "marker": "[selfdrive-polish]",
+ "fragment": ".fist-loop-20260927/r4_polish_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/spec_r4_polish.json",
+  ".fist-loop-20260927/polish_r4_docs.json",
+  ".fist-loop-20260927/polish_r4_appendixC.json",
+  ".fist-loop-20260927/polish_r4_ledger.json",
+  ".fist-loop-20260927/polish_r4_debt.json",
+  ".fist-loop-20260927/polish_r4_locks.json",
+  ".fist-loop-20260927/polish_r4_structural.json",
+  ".fist-loop-20260927/polish_r4_baselines.json",
+  ".fist-loop-20260927/polish_r4_calllog_tally.json",
+  ".fist-loop-20260927/polish_r4_drivers_lint.json",
+  ".fist-loop-20260927/polish_r4_self_audit.json",
+  ".fist-loop-20260927/close_r4_polish.json"
+ ],
+ "stale_ok": [],
+ "closure_note": "收口链（16 叶 × omega 全链 + 8 支 + 根上卷）在本报告渲染之后才发，其结果与被拒原文一律进 .fist-loop-20260927/loop_progress.md，故此处不留 closure 位——留了就等于要求渲染时收口件已存在，而那会把顺序倒过来",
+ "footer": "radius=product0/frozen0 carry=冻结面形差 + 8 张未派单卡 + 3 条结构债 + 形状分差逐条点名",
+ "gates": [
+  {
+   "label": "①-1",
+   "claim": "法①：USAGE.md 的改写只动那一行（逐字差分恰为 1 删 1 增）",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "diff_changed_lines",
+   "min": 2
+  },
+  {
+   "label": "①-2",
+   "claim": "法①：实测行号 414 而非历史账里的 406（引用号漂移必须被点名）",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "old_line_number_measured",
+   "equals": [
+    414
+   ]
+  },
+  {
+   "label": "①-3",
+   "claim": "法①：改前那句的核心主张「.pyd 会被复用」被实测判假",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "measurement.pyd_reused_between_calls",
+   "equals": false
+  },
+  {
+   "label": "①-4",
+   "claim": "法①：缓存查询面恒 None（不是偶发 miss）",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "measurement.get_cached_pyd_all_none",
+   "equals": true
+  },
+  {
+   "label": "①-5",
+   "claim": "法①：同一次调用连打「命中」与「未命中」两行——文档自相矛盾面被测到",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "measurement.single_call_prints_both_cache_verdicts",
+   "equals": true
+  },
+  {
+   "label": "①-6",
+   "claim": "法①：两行缓存原文进了件（不是我用中文复述）",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "measurement.cache_steps_first_two",
+   "min": 1
+  },
+  {
+   "label": "①-7",
+   "claim": "法①：签名面实读——compile_to_pyd 的四个形参逐字入账",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "call_face_claims.compile_to_pyd_params",
+   "min": 4
+  },
+  {
+   "label": "①-8",
+   "claim": "法①：CompileResult 字段面实读入账",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "call_face_claims.compile_result_fields",
+   "min": 6
+  },
+  {
+   "label": "①-9",
+   "claim": "法①：CLI 子命令从 --help 反解，不是从源码字面抄",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "call_face_claims.cli_subcommands_seen",
+   "min": 5
+  },
+  {
+   "label": "①-10",
+   "claim": "法①：--help 真跑通了（rc=0），否则子命令清单是猜的",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "call_face_claims.cli_help_rc",
+   "equals": 0
+  },
+  {
+   "label": "①-11",
+   "claim": "法①：改写前后的 sha 都留着（改了要看得见，也才可反查）",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "before_sha",
+   "min": 12
+  },
+  {
+   "label": "①-12",
+   "claim": "法①：改后 sha 同规格",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "after_sha",
+   "min": 12
+  },
+  {
+   "label": "①-13",
+   "claim": "法①：这次改写没把 docs/ 里别的东西牵进来（半径自证）",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "docs_new_dirty_by_this_write",
+   "equals": []
+  },
+  {
+   "label": "①-14",
+   "claim": "法①：判据件自身零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r4_docs.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "②-1",
+   "claim": "法②：交人工栏的行号来自冻结表体实测（[1,4,5,6] 而非连续 1..4）",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "path": "queue_frozen_edit",
+   "equals": [
+    1,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "label": "②-2",
+   "claim": "法②：4 条形差逐行带现真证据入账",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "path": "deviations",
+   "min": 4
+  },
+  {
+   "label": "②-3",
+   "claim": "法②：补注行数恰为 4（不多写也不漏写）",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "path": "note_done_rows",
+   "equals": 4
+  },
+  {
+   "label": "②-4",
+   "claim": "法②：非冻结补注文件成文（≥1500B）",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "path": "note_bytes",
+   "min": 1500
+  },
+  {
+   "label": "②-5",
+   "claim": "法②：补注是本环新增，不是拿旧文件冒充",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "path": "existed_before_this_run",
+   "equals": false
+  },
+  {
+   "label": "②-6",
+   "claim": "法②：冻结面逐文件 sha 前后相等",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "path": "frozen_sha_equal",
+   "equals": true
+  },
+  {
+   "label": "②-7",
+   "claim": "法②：相等判定覆盖的冻结文件数必须够全量（≥30）",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "path": "frozen_files",
+   "min": 30
+  },
+  {
+   "label": "②-8",
+   "claim": "法②：canary——副本注入一字节必须被同一谓词抓到",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "path": "canary.caught",
+   "equals": true
+  },
+  {
+   "label": "②-9",
+   "claim": "法②：canary 打的是哪个文件也入账（不许匿名）",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "path": "canary.injected_file",
+   "min": 10
+  },
+  {
+   "label": "②-10",
+   "claim": "法②：判据件自身零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r4_appendixC.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "③-1",
+   "claim": "法③：补记新增行恰为 8（对应 8 张卡）",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "append_only_diff.added",
+   "equals": 8
+  },
+  {
+   "label": "③-2",
+   "claim": "法③：删除行为零——「只增不改」是差分测出来的不是声明的",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "append_only_diff.removed",
+   "equals": 0
+  },
+  {
+   "label": "③-3",
+   "claim": "法③：被删样本清单为空（正文引用这个空集，所以钉成门禁）",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "append_only_diff.removed_samples",
+   "equals": []
+  },
+  {
+   "label": "③-4",
+   "claim": "法③：缺 task_id 的卡片逐张点名，至少 8 张",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "missing_before",
+   "min": 8
+  },
+  {
+   "label": "③-5",
+   "claim": "法③：卡片总数补记前 73",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "cards_total_before",
+   "equals": 73
+  },
+  {
+   "label": "③-6",
+   "claim": "法③：卡片总数补记后仍 73（只补注不新增卡）",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "cards_total_after",
+   "equals": 73
+  },
+  {
+   "label": "③-7",
+   "claim": "法③：合法 task_id 计数补记前 65",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "valid_task_ids_before",
+   "equals": 65
+  },
+  {
+   "label": "③-8",
+   "claim": "法③：合法 task_id 计数补记后仍 65——「未派单」不许冒充有号",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "valid_task_ids_after",
+   "equals": 65
+  },
+  {
+   "label": "③-9",
+   "claim": "法③：bugs 树反查命中为空集（所以措辞只能是「未派单」）",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "resolved_from_sqlite",
+   "equals": {}
+  },
+  {
+   "label": "③-10",
+   "claim": "法③：sqlite 侧 bugs 行数量级对得上（≥60）",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "sqlite_bug_rows",
+   "min": 60
+  },
+  {
+   "label": "③-11",
+   "claim": "法③：差分谓词的 canary——少/多一行必须被抓到",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "canary.added",
+   "equals": 1
+  },
+  {
+   "label": "③-12",
+   "claim": "法③：canary 不误抓（注入的删除行数为 0 之外不产生删除）",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "canary.removed",
+   "equals": 0
+  },
+  {
+   "label": "③-13",
+   "claim": "法③：补记交人工的理由逐字入账",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "adjudication",
+   "min": 30
+  },
+  {
+   "label": "③-14",
+   "claim": "法③：判据件自身零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r4_ledger.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "④-1",
+   "claim": "法④：共用骨架的对外 API 面入账（≥8 个符号）",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "kit_apis",
+   "min": 8
+  },
+  {
+   "label": "④-2",
+   "claim": "法④：行为不变核对至少 4 行",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "equivalence",
+   "min": 4
+  },
+  {
+   "label": "④-3",
+   "claim": "法④：核对覆盖 ≥2 份归档件（单一件自证不算收敛）",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "equivalence_artifacts",
+   "min": 2
+  },
+  {
+   "label": "④-4",
+   "claim": "法④：复制器与参考实现的文件集合逐字相同",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "copy_tree_face.matches_reference",
+   "equals": true
+  },
+  {
+   "label": "④-5",
+   "claim": "法④：集合比对非空（空集合会让上一条恒真）",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "copy_tree_face.files",
+   "min": 1
+  },
+  {
+   "label": "④-6",
+   "claim": "法④：解析 canary 一边——垃圾行必须解出 0/0/0",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "canary.junk_zero",
+   "equals": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "④-7",
+   "claim": "法④：解析 canary 另一边——正常摘要行必须解出 1976",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "canary.good_1976",
+   "equals": 1976
+  },
+  {
+   "label": "④-8",
+   "claim": "法④：形状分差逐格点名（套件计数三个字段至少各一条，条数由件反解）",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "shape_divergence",
+   "min": 3
+  },
+  {
+   "label": "④-9",
+   "claim": "法④：留债按四类骨架分别点数（≥4 类）",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "debt_remaining_counts",
+   "min": 4
+  },
+  {
+   "label": "④-10",
+   "claim": "法④：本环确有件接进骨架（只建模块不接线=假收敛）",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "kit_users_this_ring",
+   "min": 2
+  },
+  {
+   "label": "④-11",
+   "claim": "法④：收敛半径的口径说明逐字入账",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "scope_note",
+   "min": 40
+  },
+  {
+   "label": "④-12",
+   "claim": "法④：判据件自身零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r4_debt.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑤-1",
+   "claim": "法⑤：新锁在工作区档全绿且恰 20 条",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "lane_work.counts.passed",
+   "equals": 20
+  },
+  {
+   "label": "⑤-2",
+   "claim": "法⑤：工作区档零失败（有红就不是锁是债）",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "lane_work.counts.failed",
+   "equals": 0
+  },
+  {
+   "label": "⑤-3",
+   "claim": "法⑤：修前码档必须出现红，且至少 15 条",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "lane_prefix_code.counts.failed",
+   "min": 15
+  },
+  {
+   "label": "⑤-4",
+   "claim": "法⑤：红的用例名逐条点名入账",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "lane_prefix_code.red",
+   "min": 15
+  },
+  {
+   "label": "⑤-5",
+   "claim": "法⑤：两档跑的确实是两棵树（工作区 sha）",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "identity.work_type_checker_sha",
+   "equals": "ff9e8821cb22"
+  },
+  {
+   "label": "⑤-6",
+   "claim": "法⑤：快照树 sha 与之不同（两个字面值不等=身份探针）",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "identity.snap_type_checker_sha",
+   "equals": "27a3408faad2"
+  },
+  {
+   "label": "⑤-7",
+   "claim": "法⑤：文档锁的反向对照——改前正文必须被谓词判假",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "doc_predicate.before_text_fails",
+   "equals": true
+  },
+  {
+   "label": "⑤-8",
+   "claim": "法⑤：正向对照——现文必须被谓词判真（不误抓）",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "doc_predicate.current_text_passes",
+   "equals": true
+  },
+  {
+   "label": "⑤-9",
+   "claim": "法⑤：那份改前副本真在盘上（不是口头假设的前件）",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "doc_predicate.before_copy_on_disk",
+   "equals": true
+  },
+  {
+   "label": "⑤-10",
+   "claim": "法⑤：新锁落进仓库收集面（1976=1956+20）",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "collect_after_locks",
+   "equals": 1976
+  },
+  {
+   "label": "⑤-11",
+   "claim": "法⑤：上一环收集地板实测为 1956（地板取件不取手填）",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "previous_round_collect_floor",
+   "equals": 1956
+  },
+  {
+   "label": "⑤-12",
+   "claim": "法⑤：锁文件在 tests/ 里而不是 .fist-loop 里",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "new_test_file",
+   "equals": "tests/test_loop_20260927_polish_r4.py"
+  },
+  {
+   "label": "⑤-13",
+   "claim": "法⑤：判据件自身零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r4_locks.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑥-1",
+   "claim": "法⑥：3000 行红线的测量面覆盖 ≥50 个产品文件",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "files_measured",
+   "min": 50
+  },
+  {
+   "label": "⑥-2",
+   "claim": "法⑥：越线文件逐张点名（≥4）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "over_redline",
+   "min": 4
+  },
+  {
+   "label": "⑥-3",
+   "claim": "法⑥：type_checker 代码行实测入账（≥3000 才配叫越线）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "type_checker.code_lines",
+   "min": 3000
+  },
+  {
+   "label": "⑥-4",
+   "claim": "法⑥：type_checker 方法数实测入账（≥100）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "type_checker.methods",
+   "min": 100
+  },
+  {
+   "label": "⑥-5",
+   "claim": "法⑥：hook.eval 写侧标记在单文件里字面存在（≥1）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "hook_eval_marker_count",
+   "min": 1
+  },
+  {
+   "label": "⑥-6",
+   "claim": "法⑥：产品面标记总数 ≥ 单文件数（包含关系被测）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "hook_eval_marker_product_face_total",
+   "min": 2
+  },
+  {
+   "label": "⑥-7",
+   "claim": "法⑥：本环执行过的不可逆动作必须为零",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "executed_irreversible",
+   "equals": []
+  },
+  {
+   "label": "⑥-8",
+   "claim": "法⑥：本环窗口内被触碰的产品文件为零（mtime 正面测）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "product_files_touched_this_ring",
+   "equals": []
+  },
+  {
+   "label": "⑥-9",
+   "claim": "法⑥：改名一律为零（R 状态不许出现在本环）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "renamed_verbatim",
+   "equals": []
+  },
+  {
+   "label": "⑥-10",
+   "claim": "法⑥：挂账队列逐条带测量（≥3 条）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "adjudication_queue",
+   "min": 3
+  },
+  {
+   "label": "⑥-11",
+   "claim": "法⑥：canary——刚写下的文件必须被同一谓词判为「碰过」",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "canary.fresh_file_caught",
+   "equals": true
+  },
+  {
+   "label": "⑥-12",
+   "claim": "法⑥：canary 的 scratch 清干净（残留=下一轮的假脏）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "canary.scratch_removed",
+   "equals": true
+  },
+  {
+   "label": "⑥-13",
+   "claim": "法⑥：git 面行数入账（脏状态可审）",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "git.rows",
+   "min": 100
+  },
+  {
+   "label": "⑥-14",
+   "claim": "法⑥：判据件自身零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r4_structural.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑦-1",
+   "claim": "法⑦：pytest 通过数不低于地板且含新锁（≥1976）",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.pytest.passed",
+   "min": 1976
+  },
+  {
+   "label": "⑦-2",
+   "claim": "法⑦：pytest 零失败",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.pytest.failed",
+   "equals": 0
+  },
+  {
+   "label": "⑦-3",
+   "claim": "法⑦：pytest 零错误",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.pytest.errors",
+   "equals": 0
+  },
+  {
+   "label": "⑦-4",
+   "claim": "法⑦：失败用例名必须为空（正文引用这个空集）",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.pytest.failed_names",
+   "equals": []
+  },
+  {
+   "label": "⑦-5",
+   "claim": "法⑦：收集数恰为 1976（地板 1956 + 新锁 20）",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.collect.nodeids",
+   "equals": 1976
+  },
+  {
+   "label": "⑦-6",
+   "claim": "法⑦：地板取 R4-验证 实测件的 pytest 数",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "floors.pytest",
+   "equals": 1956
+  },
+  {
+   "label": "⑦-7",
+   "claim": "法⑦：地板取实测收集数而非手填",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "floors.collect",
+   "equals": 1956
+  },
+  {
+   "label": "⑦-8",
+   "claim": "法⑦：自研套件 Total=47",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.suite.fields.Total",
+   "equals": 47
+  },
+  {
+   "label": "⑦-9",
+   "claim": "法⑦：自研套件 47 全过",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.suite.fields.Passed",
+   "equals": 47
+  },
+  {
+   "label": "⑦-10",
+   "claim": "法⑦：自研套件零失败",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.suite.fields.Failed",
+   "equals": 0
+  },
+  {
+   "label": "⑦-11",
+   "claim": "法⑦：e2e golden PASS ≥ 地板 25",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.e2e.PASS",
+   "min": 25
+  },
+  {
+   "label": "⑦-12",
+   "claim": "法⑦：e2e 零 FAIL",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.e2e.FAIL",
+   "equals": 0
+  },
+  {
+   "label": "⑦-13",
+   "claim": "法⑦：e2e 零 RUNFAIL",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.e2e.RUNFAIL",
+   "equals": 0
+  },
+  {
+   "label": "⑦-14",
+   "claim": "法⑦：e2e 零 WARN",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "systems.e2e.WARN",
+   "equals": 0
+  },
+  {
+   "label": "⑦-15",
+   "claim": "法⑦：三套体系同一时刻同时为绿",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "three_systems_green",
+   "equals": true
+  },
+  {
+   "label": "⑦-16",
+   "claim": "法⑦：红线——HEAD 未动（本环不 commit）",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "⑦-17",
+   "claim": "法⑦：红线——暂存区为空（没有 git add）",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "⑦-18",
+   "claim": "法⑦：半径——产品码零改动",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "radius.product",
+   "equals": []
+  },
+  {
+   "label": "⑦-19",
+   "claim": "法⑦：半径——冻结面零触碰",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "radius.frozen",
+   "equals": []
+  },
+  {
+   "label": "⑦-20",
+   "claim": "法⑦：半径——tests 只含本轮新锁（恰 1 个）",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "radius.tests",
+   "min": 1
+  },
+  {
+   "label": "⑦-21",
+   "claim": "法⑦：半径——docs 含改写与补注两处",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "radius.docs",
+   "min": 2
+  },
+  {
+   "label": "⑦-22",
+   "claim": "法⑦：扫描面必须真扫到文件（空扫描=分栏装饰）",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "scanned_files",
+   "min": 2000
+  },
+  {
+   "label": "⑦-23",
+   "claim": "法⑦：「只升不降」比较函数的 canary 必须报违例",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "canary.only_up_reports_violation",
+   "equals": true
+  },
+  {
+   "label": "⑦-24",
+   "claim": "法⑦：冻结面文件数与上一环同口径（43）",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "frozen_total",
+   "equals": 43
+  },
+  {
+   "label": "⑦-25",
+   "claim": "法⑦：判据件自身零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r4_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑧-1",
+   "claim": "法⑧：call_log 按前缀对账有行（渲染前快照 ≥15）",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "rows_T0r90",
+   "min": 15
+  },
+  {
+   "label": "⑧-2",
+   "claim": "法⑧：前缀下不同任务数 ≥14",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "distinct_tasks",
+   "min": 14
+  },
+  {
+   "label": "⑧-3",
+   "claim": "法⑧：负对照前缀必须数出 0 行（否则过滤器恒真）",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "control_absent_prefix_rows",
+   "equals": 0
+  },
+  {
+   "label": "⑧-4",
+   "claim": "法⑧：全库行数作为分母入账（≥4000）",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "total_call_log_rows",
+   "min": 4000
+  },
+  {
+   "label": "⑧-5",
+   "claim": "法⑧：历轮根合计行数入账（≥3000）",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "loop_roots_total_rows",
+   "min": 3000
+  },
+  {
+   "label": "⑧-6",
+   "claim": "法⑧：不允许任何根零调用（正文引用这个空集）",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "loop_roots_without_calls",
+   "equals": []
+  },
+  {
+   "label": "⑧-7",
+   "claim": "法⑧：渲染前本环被拒为零（不为零就得逐字入账）",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "stages.T0r90.refused",
+   "equals": 0
+  },
+  {
+   "label": "⑧-8",
+   "claim": "法⑧：规格点名的载体工具逐个给数（≥2 类）",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "spec_named_carriers",
+   "min": 2
+  },
+  {
+   "label": "⑧-9",
+   "claim": "法⑧：本 build 实际工具名与全库计数入账（≥4 个名）",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "named_tools_in_this_build",
+   "min": 4
+  },
+  {
+   "label": "⑧-10",
+   "claim": "法⑧：omega 链在本环的计数原样披露（含零值，不许挑好看的写）",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "omega_chain_by_tool",
+   "min": 3
+  },
+  {
+   "label": "⑧-11",
+   "claim": "法⑧：发单/规格面的种子调用 ≥1 次（「开启」的最小证据）",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "stage_seed_rows.total",
+   "min": 1
+  },
+  {
+   "label": "⑧-12",
+   "claim": "法⑧：本环三条形状类主张在 bugs 树各有行",
+   "artifact": ".fist-loop-20260927/polish_r4_calllog_tally.json",
+   "path": "bug_intake_rows",
+   "min": 3
+  },
+  {
+   "label": "⑧-13",
+   "claim": "法⑧：驱动面扫描数 ≥10（口径=本环亲笔脚本）",
+   "artifact": ".fist-loop-20260927/polish_r4_drivers_lint.json",
+   "path": "drivers_scanned",
+   "min": 10
+  },
+  {
+   "label": "⑧-14",
+   "claim": "法⑧：硬错必须为零",
+   "artifact": ".fist-loop-20260927/polish_r4_drivers_lint.json",
+   "path": "hard_violations",
+   "equals": 0
+  },
+  {
+   "label": "⑧-15",
+   "claim": "法⑧：软账只降不升（本环 0）",
+   "artifact": ".fist-loop-20260927/polish_r4_drivers_lint.json",
+   "path": "soft_total",
+   "equals": 0
+  },
+  {
+   "label": "⑧-16",
+   "claim": "法⑧：上一环软账基线实测为 0（地板取件不取手填）",
+   "artifact": ".fist-loop-20260927/polish_r4_drivers_lint.json",
+   "path": "previous_round_soft_baseline",
+   "equals": 0
+  },
+  {
+   "label": "⑧-17",
+   "claim": "法⑧：行长口径与项目声明一致（100）",
+   "artifact": ".fist-loop-20260927/polish_r4_drivers_lint.json",
+   "path": "line_length_declared",
+   "equals": 100
+  },
+  {
+   "label": "⑧-18",
+   "claim": "法⑧：lint 的 canary——超长行必须被抓到",
+   "artifact": ".fist-loop-20260927/polish_r4_drivers_lint.json",
+   "path": "canary.bad_caught",
+   "equals": 1
+  },
+  {
+   "label": "⑧-19",
+   "claim": "法⑧：lint 的 canary 不误抓干净文件",
+   "artifact": ".fist-loop-20260927/polish_r4_drivers_lint.json",
+   "path": "canary.clean_false_positive",
+   "equals": 0
+  },
+  {
+   "label": "⑧-20",
+   "claim": "法⑧：两件证据件各自零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r4_drivers_lint.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑩-1",
+   "claim": "法纪律：计划里的 needle 有 11 处按实测键名校正（改动处数入账）",
+   "artifact": ".fist-loop-20260927/spec_r4_polish.json",
+   "path": "needle_correction.changed_len",
+   "equals": 11
+  },
+  {
+   "label": "⑩-2",
+   "claim": "法纪律：其中 8 个 needle 键名盘上根本不存在",
+   "artifact": ".fist-loop-20260927/spec_r4_polish.json",
+   "path": "needle_correction.missing_before",
+   "equals": 8
+  },
+  {
+   "label": "⑩-3",
+   "claim": "法纪律：2 个 needle 是子串假命中（撞文件名/撞前缀），必须单独点数",
+   "artifact": ".fist-loop-20260927/spec_r4_polish.json",
+   "path": "needle_correction.false_substring_before",
+   "equals": 2
+  },
+  {
+   "label": "⑩-4",
+   "claim": "法纪律：逐处改动带 from/to/理由，不许只给总数",
+   "artifact": ".fist-loop-20260927/spec_r4_polish.json",
+   "path": "needle_correction.changed",
+   "min": 11
+  },
+  {
+   "label": "⑩-5",
+   "claim": "法纪律：校正强度未动——每个槽位仍要求 存在 + 含 needle + ≥ min_chars",
+   "artifact": ".fist-loop-20260927/spec_r4_polish.json",
+   "path": "needle_correction.unchanged_strength",
+   "min": 40
+  },
+  {
+   "label": "⑩-6",
+   "claim": "法纪律：八条法的计划面逐条在盘（收口预检与报告认领同一批）",
+   "artifact": ".fist-loop-20260927/spec_r4_polish.json",
+   "path": "laws",
+   "min": 8
+  },
+  {
+   "label": "⑩-7",
+   "claim": "法纪律：新规则文本入账（needle 必须是真键名）",
+   "artifact": ".fist-loop-20260927/spec_r4_polish.json",
+   "path": "needle_correction.rule",
+   "min": 40
+  },
+  {
+   "label": "⑨-1",
+   "claim": "自证：渲染前每道门禁都当场解一遍（≥100 道）",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "gates_total",
+   "min": 100
+  },
+  {
+   "label": "⑨-2",
+   "claim": "自证：除自引用延后位外全部通过",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "gates_pass",
+   "min": 100
+  },
+  {
+   "label": "⑨-3",
+   "claim": "自证：门禁失败清单必须为空",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "gates_fail",
+   "equals": []
+  },
+  {
+   "label": "⑨-4",
+   "claim": "自证：散文占位全部解析成功（坏占位清单为空）",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "placeholders_bad",
+   "equals": []
+  },
+  {
+   "label": "⑨-5",
+   "claim": "自证：空值占位都有 equals 空值门禁作证（无佐证清单为空）",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "placeholders_empty_unjustified",
+   "equals": []
+  },
+  {
+   "label": "⑨-6",
+   "claim": "自证：needle 必须是被引件里的真键名（违例清单为空）",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "needle_strict_violations",
+   "equals": []
+  },
+  {
+   "label": "⑨-7",
+   "claim": "自证：needle 口径的 canary——旧子串规则确实会放过 control",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "needle_canary.substring_rule_would_pass_control",
+   "equals": true
+  },
+  {
+   "label": "⑨-8",
+   "claim": "自证：needle 口径的 canary——新规则必须拒掉 control",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "needle_canary.strict_rule_rejects_control",
+   "equals": true
+  },
+  {
+   "label": "⑨-9",
+   "claim": "自证：件-脚本同源未披露的过期件为零",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "stale_undisclosed",
+   "equals": []
+  },
+  {
+   "label": "⑨-10",
+   "claim": "自证：同源谓词真的会抓（canary 过期对必须被抓到）",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "stale_canary_caught",
+   "equals": true
+  },
+  {
+   "label": "⑨-11",
+   "claim": "自证：不动点已收敛（收口 spec 引用的格数==本次实测）",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "fixpoint.converged",
+   "equals": true
+  },
+  {
+   "label": "⑨-12",
+   "claim": "自证：不动点漂移 canary 承重（引用漂一格必须被抓）",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "fixpoint.canary_drift_caught",
+   "equals": true
+  },
+  {
+   "label": "⑨-13",
+   "claim": "自证：§十 标题声明条数==正文条数",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "section10_items",
+   "min": 2
+  },
+  {
+   "label": "⑨-14",
+   "claim": "自证：本环件的时间戳不许早于环节窗口（旧件当本轮证据）",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "stale_timestamps",
+   "equals": []
+  },
+  {
+   "label": "⑨-15",
+   "claim": "自证：判据件自带的 refuse 汇总为空",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "artifacts_with_refuse",
+   "equals": []
+  },
+  {
+   "label": "⑨-16",
+   "claim": "自证：自证件自身零拒绝",
+   "artifact": ".fist-loop-20260927/polish_r4_self_audit.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑨-17",
+   "claim": "收口 spec：根交付物逐法点名 8 个标号都在",
+   "artifact": ".fist-loop-20260927/close_r4_polish.json",
+   "path": "root_law_marks_len",
+   "equals": 8
+  },
+  {
+   "label": "⑨-18",
+   "claim": "收口 spec：根交付物正文从件反解且成文（≥900 字）",
+   "artifact": ".fist-loop-20260927/close_r4_polish.json",
+   "path": "root_deliverable",
+   "min": 900
+  },
+  {
+   "label": "⑨-19",
+   "claim": "收口 spec：验收理由成文（≥600 字，不许只写「已完成」）",
+   "artifact": ".fist-loop-20260927/close_r4_polish.json",
+   "path": "root_verify_reason",
+   "min": 600
+  },
+  {
+   "label": "⑨-20",
+   "claim": "收口 spec：引用的自证格数入账（不动点可复核）",
+   "artifact": ".fist-loop-20260927/close_r4_polish.json",
+   "path": "embedded_self_audit.gates_pass",
+   "min": 100
+  }
+ ]
+}

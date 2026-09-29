@@ -1,0 +1,308 @@
+{
+ "started": "2026-09-28T00:51:18+00:00",
+ "target_lock": "tests/test_loop_20260927_fix_r4.py",
+ "runs": [
+  {
+   "lane": "work",
+   "expect": "green",
+   "achieved": "green",
+   "identity": {
+    "cwd": "E:\\IDEProjects\\AI\\Cypy",
+    "loaded": {
+     "pkg": "E:\\IDEProjects\\AI\\Cypy\\cypyc\\__init__.py",
+     "mod": "E:\\IDEProjects\\AI\\Cypy\\cypyc\\analyzer\\type_checker.py"
+    },
+    "under_snapshot": true,
+    "rc": 0,
+    "workspace_leak": false
+   },
+   "run": {
+    "cmd": "pytest tests/test_loop_20260927_fix_r4.py",
+    "rc": 0,
+    "fields": {
+     "passed": 18,
+     "failed": 0,
+     "errors": 0,
+     "skipped": 0
+    },
+    "failed_names": [],
+    "collect_error": false,
+    "summary_line": "18 passed in 0.51s",
+    "tail": "..................                                                       [100%]\n18 passed in 0.51s\n"
+   },
+   "detail": {
+    "lane": "work",
+    "note": "工作区=本轮终态码 + 当前测试"
+   },
+   "target_red_count": 0,
+   "summary": "18 passed in 0.51s",
+   "rc": 0,
+   "failed_names_sample": [],
+   "r4_shape_hits": []
+  },
+  {
+   "lane": "pre_r4",
+   "expect": "red",
+   "achieved": "red",
+   "identity": {
+    "cwd": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap",
+    "loaded": {
+     "pkg": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap\\cypyc\\__init__.py",
+     "mod": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap\\cypyc\\analyzer\\type_checker.py"
+    },
+    "under_snapshot": true,
+    "rc": 0,
+    "workspace_leak": false
+   },
+   "run": {
+    "cmd": "pytest tests/test_loop_20260927_fix_r4.py",
+    "rc": 1,
+    "fields": {
+     "failed": 14,
+     "passed": 4,
+     "errors": 0,
+     "skipped": 0
+    },
+    "failed_names": [
+     "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C09]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C10]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C11]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C12]",
+     "tests/test_loop_20260927_fix_r4.py::test_no_internal_repr_leaks_in_any_fixture_message"
+    ],
+    "collect_error": false,
+    "summary_line": "14 failed, 4 passed in 2.40s",
+    "tail": "20260927_fix_r4.py::test_fixture_matches_declared_expectation[C12]\nFAILED tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli - AssertionError: m[2/3]\u001b[0m Output: C:\\Users\\victo\\AppData\\Local\\Temp\\pytest-of-victo\\pytest-1096\\test_call_face_reports_over_cl0\\out\nFAILED tests/test_loop_20260927_fix_r4.py::test_no_internal_repr_leaks_in_any_fixture_message\n14 failed, 4 passed in 2.40s\n"
+   },
+   "detail": {
+    "lane": "pre_r4",
+    "snapshot": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap",
+    "type_checker_sha": "27a3408faad21e9f409321edab810eb107f8b8ee6f50638d86193587c63f5aa0"
+   },
+   "target_red_count": 14,
+   "summary": "14 failed, 4 passed in 2.40s",
+   "rc": 1,
+   "failed_names_sample": [
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]"
+   ],
+   "r4_shape_hits": [
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C09]",
+    "tests/test_loop_20260927_fix_r4.py::test_no_internal_repr_leaks_in_any_fixture_message"
+   ]
+  },
+  {
+   "lane": "head_code",
+   "expect": "red",
+   "achieved": "red",
+   "identity": {
+    "cwd": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_head_snap",
+    "loaded": {
+     "pkg": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_head_snap\\cypyc\\__init__.py",
+     "mod": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_head_snap\\cypyc\\analyzer\\type_checker.py"
+    },
+    "under_snapshot": true,
+    "rc": 0,
+    "workspace_leak": false
+   },
+   "run": {
+    "cmd": "pytest tests/test_loop_20260927_fix_r4.py",
+    "rc": 1,
+    "fields": {
+     "failed": 18,
+     "passed": 0,
+     "errors": 0,
+     "skipped": 0
+    },
+    "failed_names": [
+     "tests/test_loop_20260927_fix_r4.py::test_arg_type_control_on_dynamic_value_stays_silent",
+     "tests/test_loop_20260927_fix_r4.py::test_arity_control_on_alias_callable_still_reports",
+     "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08_ctl]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C09]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C09_ctl]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C10]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C11]",
+     "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C12]",
+     "tests/test_loop_20260927_fix_r4.py::test_no_internal_repr_leaks_in_any_fixture_message"
+    ],
+    "collect_error": false,
+    "summary_line": "18 failed in 1.00s",
+    "tail": "expectation[C12]\nFAILED tests/test_loop_20260927_fix_r4.py::test_arity_control_on_alias_callable_still_reports\nFAILED tests/test_loop_20260927_fix_r4.py::test_arg_type_control_on_dynamic_value_stays_silent\nFAILED tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli - ...\nFAILED tests/test_loop_20260927_fix_r4.py::test_no_internal_repr_leaks_in_any_fixture_message\n18 failed in 1.00s\n"
+   },
+   "detail": {
+    "lane": "head_code",
+    "snapshot": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_head_snap",
+    "head_py_files_written": 56,
+    "missing_in_head": [],
+    "tree_hash": "965936ac3102defb"
+   },
+   "target_red_count": 18,
+   "summary": "18 failed in 1.00s",
+   "rc": 1,
+   "failed_names_sample": [
+    "tests/test_loop_20260927_fix_r4.py::test_arg_type_control_on_dynamic_value_stays_silent",
+    "tests/test_loop_20260927_fix_r4.py::test_arity_control_on_alias_callable_still_reports",
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]"
+   ],
+   "r4_shape_hits": [
+    "tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C08_ctl]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C09]",
+    "tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C09_ctl]",
+    "tests/test_loop_20260927_fix_r4.py::test_no_internal_repr_leaks_in_any_fixture_message"
+   ]
+  }
+ ],
+ "identity": [
+  {
+   "cwd": "E:\\IDEProjects\\AI\\Cypy",
+   "loaded": {
+    "pkg": "E:\\IDEProjects\\AI\\Cypy\\cypyc\\__init__.py",
+    "mod": "E:\\IDEProjects\\AI\\Cypy\\cypyc\\analyzer\\type_checker.py"
+   },
+   "under_snapshot": true,
+   "rc": 0,
+   "workspace_leak": false
+  },
+  {
+   "cwd": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap",
+   "loaded": {
+    "pkg": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap\\cypyc\\__init__.py",
+    "mod": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap\\cypyc\\analyzer\\type_checker.py"
+   },
+   "under_snapshot": true,
+   "rc": 0,
+   "workspace_leak": false
+  },
+  {
+   "cwd": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_head_snap",
+   "loaded": {
+    "pkg": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_head_snap\\cypyc\\__init__.py",
+    "mod": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_head_snap\\cypyc\\analyzer\\type_checker.py"
+   },
+   "under_snapshot": true,
+   "rc": 0,
+   "workspace_leak": false
+  }
+ ],
+ "head_lane": {
+  "snapshot": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_head_snap",
+  "head_py_files_written": 56,
+  "missing_in_head": [],
+  "tree_hash": "965936ac3102defb"
+ },
+ "pre_lane": {
+  "snapshot": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap",
+  "type_checker_sha": "27a3408faad21e9f409321edab810eb107f8b8ee6f50638d86193587c63f5aa0"
+ },
+ "note": "同一份测试在三棵树上跑：绿→红 的差异只能来自产品码；「红得认得出本轮形状」是防「随便一个红冒充证据」的那道门",
+ "self_checks": [
+  {
+   "label": "work 身份探针必须证明吃的是工作区（不是快照）",
+   "got": true,
+   "want": true,
+   "why": "loaded=E:\\IDEProjects\\AI\\Cypy\\cypyc\\analyzer\\type_checker.py",
+   "ok": true
+  },
+  {
+   "label": "pre_r4 身份探针必须证明吃的是快照树",
+   "got": true,
+   "want": true,
+   "why": "loaded=E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_prefix_snap\\cypyc\\analyzer\\type_checker.py",
+   "ok": true
+  },
+  {
+   "label": "head_code 身份探针必须证明吃的是快照树",
+   "got": true,
+   "want": true,
+   "why": "loaded=E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\verify_r4_head_snap\\cypyc\\analyzer\\type_checker.py",
+   "ok": true
+  },
+  {
+   "label": "work 档：R4 锁必须全绿（本轮终态的自证）",
+   "got": "green",
+   "want": "green",
+   "why": "18 passed in 0.51s",
+   "ok": true
+  },
+  {
+   "label": "pre_r4 档：只回退产品码就必须让锁变红（今天的绿不等于明天的绿）",
+   "got": "red",
+   "want": "red",
+   "why": "14 failed, 4 passed in 2.40s",
+   "ok": true
+  },
+  {
+   "label": "head_code 档：HEAD 码 + 当前测试也必须红",
+   "got": "red",
+   "want": "red",
+   "why": "18 failed in 1.00s",
+   "ok": true
+  },
+  {
+   "label": "pre_r4 档红起来必须认得出本轮四单的形状（不是随便什么红）",
+   "got": true,
+   "want": true,
+   "why": "hits=['tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]']",
+   "ok": true
+  },
+  {
+   "label": "head_code 档同样要红在本轮形状上",
+   "got": true,
+   "want": true,
+   "why": "hits=['tests/test_loop_20260927_fix_r4.py::test_call_face_reports_over_cli', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C01]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C02]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C03]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C04]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C05]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C06]', 'tests/test_loop_20260927_fix_r4.py::test_fixture_matches_declared_expectation[C07]']",
+   "ok": true
+  },
+  {
+   "label": "三档的测试文件必须逐字相同（否则红绿差异不是产品码造成的）",
+   "got": 1,
+   "want": 1,
+   "why": "同一 sha 才算同一份测试",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T00:51:31+00:00"
+}

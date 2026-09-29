@@ -1,0 +1,24 @@
+{
+ "root": "T0r38",
+ "claim": "已领取",
+ "plan_keys": [
+  "by",
+  "exec_order",
+  "plan_decision",
+  "root",
+  "split_n",
+  "tree"
+ ],
+ "plan_summary": {},
+ "laya": {
+  "available": false,
+  "decision": {
+   "source": "fallback",
+   "complex": false,
+   "feature_route": "拆解调度",
+   "split_n": 6
+  }
+ },
+ "leaves": [],
+ "count": 0
+}

@@ -1,0 +1,161 @@
+{
+ "started": "2026-09-28T05:15:46+00:00",
+ "window_start_utc": "2026-09-28T03:00:00",
+ "scanned": [
+  "advance_r4_baselines.py",
+  "advance_r4_builtins.py",
+  "advance_r4_calllog_tally.py",
+  "advance_r4_close_spec.py",
+  "advance_r4_dormant.py",
+  "advance_r4_drivers_lint.py",
+  "advance_r4_filed.py",
+  "advance_r4_gen_locks.py",
+  "advance_r4_irreversible.py",
+  "advance_r4_kit_from_polish.py",
+  "advance_r4_lib.py",
+  "advance_r4_locks.py",
+  "advance_r4_never.py",
+  "advance_r4_probes.py",
+  "advance_r4_progress.py",
+  "advance_r4_render_order.py",
+  "advance_r4_report_spec.py",
+  "advance_r4_scope_face.py",
+  "advance_r4_self_audit.py",
+  "advance_r4_sweep.py"
+ ],
+ "detail": [
+  {
+   "file": "advance_r4_baselines.py",
+   "bytes": 13662,
+   "mtime_utc": "2026-09-28T05:13:01+00:00"
+  },
+  {
+   "file": "advance_r4_builtins.py",
+   "bytes": 8480,
+   "mtime_utc": "2026-09-28T03:18:20+00:00"
+  },
+  {
+   "file": "advance_r4_calllog_tally.py",
+   "bytes": 12501,
+   "mtime_utc": "2026-09-28T05:00:07+00:00"
+  },
+  {
+   "file": "advance_r4_close_spec.py",
+   "bytes": 21129,
+   "mtime_utc": "2026-09-28T05:15:22+00:00"
+  },
+  {
+   "file": "advance_r4_dormant.py",
+   "bytes": 16396,
+   "mtime_utc": "2026-09-28T05:13:58+00:00"
+  },
+  {
+   "file": "advance_r4_drivers_lint.py",
+   "bytes": 6486,
+   "mtime_utc": "2026-09-28T05:13:58+00:00"
+  },
+  {
+   "file": "advance_r4_filed.py",
+   "bytes": 17371,
+   "mtime_utc": "2026-09-28T04:51:10+00:00"
+  },
+  {
+   "file": "advance_r4_gen_locks.py",
+   "bytes": 15352,
+   "mtime_utc": "2026-09-28T05:14:05+00:00"
+  },
+  {
+   "file": "advance_r4_irreversible.py",
+   "bytes": 8562,
+   "mtime_utc": "2026-09-28T03:48:37+00:00"
+  },
+  {
+   "file": "advance_r4_kit_from_polish.py",
+   "bytes": 1848,
+   "mtime_utc": "2026-09-28T05:14:05+00:00"
+  },
+  {
+   "file": "advance_r4_lib.py",
+   "bytes": 5630,
+   "mtime_utc": "2026-09-28T03:48:37+00:00"
+  },
+  {
+   "file": "advance_r4_locks.py",
+   "bytes": 10977,
+   "mtime_utc": "2026-09-28T04:57:47+00:00"
+  },
+  {
+   "file": "advance_r4_never.py",
+   "bytes": 7305,
+   "mtime_utc": "2026-09-28T03:48:37+00:00"
+  },
+  {
+   "file": "advance_r4_probes.py",
+   "bytes": 2778,
+   "mtime_utc": "2026-09-28T03:10:21+00:00"
+  },
+  {
+   "file": "advance_r4_progress.py",
+   "bytes": 15915,
+   "mtime_utc": "2026-09-28T03:51:37+00:00"
+  },
+  {
+   "file": "advance_r4_render_order.py",
+   "bytes": 6411,
+   "mtime_utc": "2026-09-28T03:51:37+00:00"
+  },
+  {
+   "file": "advance_r4_report_spec.py",
+   "bytes": 16048,
+   "mtime_utc": "2026-09-28T05:06:32+00:00"
+  },
+  {
+   "file": "advance_r4_scope_face.py",
+   "bytes": 11382,
+   "mtime_utc": "2026-09-28T03:48:37+00:00"
+  },
+  {
+   "file": "advance_r4_self_audit.py",
+   "bytes": 21350,
+   "mtime_utc": "2026-09-28T05:14:13+00:00"
+  },
+  {
+   "file": "advance_r4_sweep.py",
+   "bytes": 7774,
+   "mtime_utc": "2026-09-28T03:48:37+00:00"
+  }
+ ],
+ "drivers_scanned": 20,
+ "hard_violations": 0,
+ "hard_lines": [],
+ "soft_total": 0,
+ "soft_codes": {},
+ "previous_round_soft_baseline": 0,
+ "generated_lock": {
+  "file": "tests/test_loop_20260927_advance_r4.py",
+  "hard": 0,
+  "e501": 18,
+  "previous_ring_e501": 18,
+  "note": "机器渲染件：表格行与 JSON dump 一行一条主张，超长行按同类的上一环件只减不增"
+ },
+ "canary": {
+  "bad_caught": 1,
+  "clean_false_positive": 0,
+  "bad_line_preview": [
+   "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\advancer4canary_tnrzf7kn\\canary_bad.py:2:101: E501 line too long (185 > 100 characters)"
+  ],
+  "leftover": []
+ },
+ "line_length_declared": 100,
+ "hard_codes": [
+  "E9",
+  "W605",
+  "F821",
+  "F7",
+  "F63",
+  "F841"
+ ],
+ "note": "软账条数只降不升：上一环 verify/polish_r4_drivers_lint.json 的 soft_total 是基线；口径含本轮改到的 loop_kit.py 使用方",
+ "refuse": [],
+ "at_utc": "2026-09-28T05:15:51+00:00"
+}

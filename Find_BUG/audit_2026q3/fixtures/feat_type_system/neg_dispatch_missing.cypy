@@ -1,0 +1,8 @@
+# 负例 N4：多方法分派声明（deferred）。规定（SYNTAX/33 P-1）解析出 DispatchDecl；
+# 带注解形态今天报 "Expected RPAREN, got COLON"，
+# 去掉注解的 `dispatch area(x)` 形态会被静默吞成 ExprStmt(Name)+ExprStmt(Call)。
+dispatch area(x: Shape) -> float:
+    arm Circle:
+        return 3.14 * x.r * x.r
+    arm Shape:
+        return 0.0

@@ -1,0 +1,17 @@
+{
+ "refuse": [],
+ "change_points": 522,
+ "files_this_ring": 17,
+ "symbols_referenced": 507,
+ "merged_root_causes": 354,
+ "unfixed_claimed": [
+  68,
+  69
+ ],
+ "unattributed": [],
+ "covered_only_by_scope": [
+  "tests/codegen/__init__.py"
+ ],
+ "red_checks": [],
+ "self_checks": "5/5"
+}

@@ -1,0 +1,32 @@
+# trait 和类继承示例
+# 演示 Cypy 的 trait 和类继承机制
+
+enum Status:
+    PENDING
+    PROCESSING
+    COMPLETED
+    ERROR
+
+class Document:
+    def __init__(self, title: str):
+        self.title = title
+
+    def print(self) -> None:
+        print(f"Document: {self.title}")
+
+class Report(Document):
+    def __init__(self, title: str, pages: int):
+        Document.__init__(self, title)
+        self.pages = pages
+
+    def print(self) -> None:
+        print(f"Report: {self.title} ({self.pages} pages)")
+
+def process_document(doc) -> None:
+    doc.print()
+
+doc = Document("Meeting Notes")
+report = Report("Quarterly Report", 42)
+
+process_document(doc)
+process_document(report)

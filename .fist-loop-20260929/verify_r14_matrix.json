@@ -1,0 +1,237 @@
+{
+ "pid": 8356,
+ "cells": {
+  "L0 现树（应全绿）": {
+   "edits": [],
+   "identity": [],
+   "pytest": {
+    "rc": 0,
+    "n_failed": 0,
+    "failed_ids": [],
+    "crash": false,
+    "summary": "============================= 208 passed in 1.29s ============================="
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=25 passed=25 failed=0 refused=0 accuracy=100.00% rc=0",
+    "failed": 0
+   }
+  },
+  "M1 字面量退回不推断": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "        return Type(\"dict\", generic_params=[self",
+     "delta_len": 53
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 23,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#14]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#2]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#3]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#5]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#6]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#7]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#8]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#9]",
+     "tests/test_dict_elements_r14.py::test_alias_shaped_dict_reports_value_slot"
+    ],
+    "crash": false,
+    "summary": "======================= 23 failed, 185 passed in 1.22s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=25 passed=17 failed=8 refused=0 accuracy=68.00% rc=1",
+    "failed": 8
+   }
+  },
+  "M2 把 dict 摘出判定集合": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "    _ELEMENT_CHECKED_CONTAINERS = ('list', 'set'",
+     "delta_len": 8
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 23,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#14]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#2]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#3]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#5]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#6]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#7]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#8]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#9]",
+     "tests/test_dict_elements_r14.py::test_alias_shaped_dict_reports_value_slot"
+    ],
+    "crash": false,
+    "summary": "======================= 23 failed, 185 passed in 1.16s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=25 passed=17 failed=8 refused=0 accuracy=68.00% rc=1",
+    "failed": 8
+   }
+  },
+  "M3 撤掉数值阶梯取最宽": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "        if names <= set(self._NUMERIC_WIDENING):",
+     "delta_len": 13
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 2,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#9]",
+     "tests/test_dict_elements_r14.py::test_slot_lub_takes_widest_numeric_in_literal"
+    ],
+    "crash": false,
+    "summary": "======================== 2 failed, 206 passed in 1.20s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=25 passed=24 failed=1 refused=0 accuracy=96.00% rc=1",
+    "failed": 1
+   }
+  },
+  "M4 撤掉 dict 位名文案分支": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "            if want.name == 'dict' and idx in (1",
+     "delta_len": 4
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 22,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#14]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#2]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#3]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#5]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#6]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#7]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#8]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.dict.elements.json#9]",
+     "tests/test_dict_elements_r14.py::test_alias_shaped_dict_reports_value_slot"
+    ],
+    "crash": false,
+    "summary": "======================= 22 failed, 186 passed in 2.75s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=25 passed=17 failed=8 refused=0 accuracy=68.00% rc=1",
+    "failed": 8
+   }
+  },
+  "M5 摘掉赋值位调用": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "                elif declared_type.name == value",
+     "delta_len": 84
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 30,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#0]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#14]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#19]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#1]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#21]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#22]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#2]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#3]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#6]"
+    ],
+    "crash": false,
+    "summary": "======================= 30 failed, 178 passed in 1.19s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=25 passed=17 failed=8 refused=0 accuracy=68.00% rc=1",
+    "failed": 8
+   }
+  },
+  "M6 只改注释（对照格，必须 0 红）": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "    #: 键位是第 1 位、值位是第 2 位，用的还是下面同一把尺；此前排除它的理由（字面量",
+     "delta_len": -1
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "只改注释",
+     "code_unchanged": true,
+     "comment_actually_changed": true
+    }
+   ],
+   "pytest": {
+    "rc": 0,
+    "n_failed": 0,
+    "failed_ids": [],
+    "crash": false,
+    "summary": "============================= 208 passed in 2.56s ============================="
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=25 passed=25 failed=0 refused=0 accuracy=100.00% rc=0",
+    "failed": 0
+   }
+  }
+ }
+}

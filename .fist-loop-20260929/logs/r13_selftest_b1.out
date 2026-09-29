@@ -1,0 +1,23 @@
+[
+ {
+  "check": "canary_fake_bug_id_is_caught",
+  "ok": true,
+  "detail": "不存在编号应被判定抓住"
+ },
+ {
+  "check": "canary_stalled_root_is_not_closed",
+  "ok": true,
+  "detail": "T0r112 live=拆分中（这根若也'已完成'，上面那张门就是复读机）"
+ },
+ {
+  "check": "canary_window_lookup_miss_is_not_credited",
+  "ok": true,
+  "detail": "find 不中必须给空窗口，否则任何编造的条目都能蹭到抓手"
+ },
+ {
+  "check": "canary_fake_cited_file_is_caught",
+  "ok": true,
+  "detail": "混一真一假，只该报出 logs/r13_never_written_z9.out"
+ }
+]
+CONCLUSION checks=41 failed=0 canaries=['canary_fake_bug_id_is_caught', 'canary_stalled_root_is_not_closed', 'canary_window_lookup_miss_is_not_credited', 'canary_fake_cited_file_is_caught'] rc=0

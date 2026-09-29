@@ -1,0 +1,6 @@
+{
+ "orphan": [
+  "CONCLUSION stage=close root=T0r118 root_status=已完成 rollup={'已完成': 17} non_closed=[] pending_leaves=0 calls=89 refused=0 idempotent=0 benign=0 loop_ticks_ok=6 call_log_error_rows=0 old_needle_rows=0 tag=a1"
+ ],
+ "grew": true
+}

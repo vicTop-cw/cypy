@@ -1,0 +1,32 @@
+{
+ "at_utc": "2026-09-28T00:52:01+00:00",
+ "keys": {
+  "SPEC_file_size_redline": {
+   "cases": 1,
+   "reproduced": 1,
+   "not_reproduced": [],
+   "fixture_broken": [],
+   "identity": null,
+   "rows": [
+    {
+     "id": "D15",
+     "verdict_on_disk": "real-gap",
+     "reproduces": true,
+     "fixture_broken": false,
+     "pred_error": null,
+     "quote": "| **阈值** | 单个源文件超过 **3000 行**（不含注释），即视为规模超标 |",
+     "at_line": 42
+    }
+   ],
+   "exit_code": 0
+  }
+ },
+ "started": "2026-09-28T00:52:01+00:00",
+ "state_reached": {
+  "0_all_reproduced": 1,
+  "1_not_reproduced_selftest_rc": 1,
+  "2_fixture_broken_unknown_key_rc": 2,
+  "meaning": "0=全部现形 / 1=把今天正确的形状当复现项必判不现形 / 2=未知键或坏谓词必判夹具坏"
+ },
+ "all_exit_codes_zero": true
+}

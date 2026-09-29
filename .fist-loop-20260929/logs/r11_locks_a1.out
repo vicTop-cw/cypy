@@ -1,0 +1,9 @@
+L0 L0 live（修复后） | red=0 rc=0 crash=False ids=[]
+L1 L1 只退解析器 | red=34 rc=1 crash=False ids=['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#0]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#11]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#12]']
+L2  | red=None rc=None crash=None ids=[]
+L3  | red=None rc=None crash=None ids=[]
+L4  | red=None rc=None crash=None ids=[]
+L5 L5 只退 struct 裸名擦除 | red=2 rc=1 crash=False ids=['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.class.json#23]', 'tests/test_generic_class_r11.py::test_struct_field_substitution_still_judges']
+L6 L6 只改注释（对照格） | red=0 rc=0 crash=False ids=[]
+GATES {"l0_zero_red": true, "l0_identity_all_true": true, "mutation_matrix_no_ruler_crash": true, "load_bearing_every_cell": false, "comment_only_control_zero_red": true, "identity_flips_where_expected": {"L1_parser": false, "L2_annotation_gate": false, "L3_substitution": false, "L4_guard": false}}
+CONCLUSION cells=7 load_bearing=5/5 comment_control_zero_red=True rc=1

@@ -1,0 +1,148 @@
+{
+ "refuse": [],
+ "started_at_utc": "2026-09-27T18:13:35+00:00",
+ "note": "三套体系是**一批连续复算**（各格自带 at_utc），不是同一秒；报告里凡说『同一时刻』都按本件的 start→finish 窗口口径读",
+ "stage_start_utc": "2026-09-27T17:37:27+00:00",
+ "stage_start_basis": "r3_polish_pre_baseline.json 的 measured_at_utc（打磨环开工前实测）",
+ "pytest": {
+  "rc": 0,
+  "passed": 1929,
+  "floor": 1929,
+  "failed": [],
+  "collected": 1929,
+  "collect_rc": 0,
+  "polish_locks_collected": 9,
+  "polish_lock_nodeids": [
+   "test_polish_bridge_emit_cython_declines_explicitly",
+   "test_polish_bridge_generate_setup_writes_parseable_setup",
+   "test_polish_cli_no_longer_calls_private_analyzer",
+   "test_polish_cypy_hook_exposes_public_analyze_only",
+   "test_polish_every_documented_cypyc_flag_is_real",
+   "test_polish_generic_fixture_in_fix_r3_uses_frozen_form",
+   "test_polish_parser_currently_tolerates_non_frozen_keyword",
+   "test_polish_transpile_and_build_flags_three_way_sync",
+   "test_polish_union_submodule_reachable_via_importlib"
+  ],
+  "other_counts": {},
+  "line": "1929 passed in 413.47s (0:06:53)",
+  "at_utc": "2026-09-27T18:20:33+00:00"
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": "47",
+   "Passed": "47",
+   "Failed": "0",
+   "Skipped": "0"
+  },
+  "green": true,
+  "at_utc": "2026-09-27T18:22:03+00:00"
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+  "fields": {
+   "PASS": "25",
+   "FAIL": "0",
+   "WARN": "0",
+   "UNREG/RUNFAIL": "0"
+  },
+  "green": true,
+  "at_utc": "2026-09-27T18:25:43+00:00"
+ },
+ "git": {
+  "head": "17d68b4",
+  "head_ok": true,
+  "staged_rows": 0,
+  "staged_zero": true,
+  "dirty_rows": 167,
+  "deleted_tracked": 10,
+  "worktrees": [
+   "E:/IDEProjects/AI/Cypy",
+   "E:/IDEProjects/AI/_cypy_head_baseline"
+  ],
+  "foreign_worktree_present": true,
+  "temp_snapshots_left": {
+   "tmp_polish": [],
+   "tmp_verify": []
+  },
+  "temp_snapshots_gone": true,
+  "all_ok": true,
+  "at_utc": "2026-09-27T18:25:43+00:00"
+ },
+ "radius": {
+  "count": 5,
+  "files": [
+   {
+    "file": "cypyc/cli.py",
+    "mtime_utc": "2026-09-27T17:50:05+00:00",
+    "attributed": true
+   },
+   {
+    "file": "cypy_hook/hook.py",
+    "mtime_utc": "2026-09-27T17:49:56+00:00",
+    "attributed": true
+   },
+   {
+    "file": "tests/test_loop_20260927_fix_r3.py",
+    "mtime_utc": "2026-09-27T17:50:22+00:00",
+    "attributed": true
+   },
+   {
+    "file": "tests/test_loop_20260927_polish_r3.py",
+    "mtime_utc": "2026-09-27T18:03:07+00:00",
+    "attributed": true
+   },
+   {
+    "file": "docs/USAGE.md",
+    "mtime_utc": "2026-09-27T17:50:13+00:00",
+    "attributed": true
+   }
+  ],
+  "lane_files": [
+   "cypy_hook/hook.py",
+   "cypyc/cli.py",
+   "docs/USAGE.md",
+   "tests/test_loop_20260927_fix_r3.py",
+   "tests/test_loop_20260927_polish_r3.py"
+  ],
+  "lane_attributions": {
+   "cypyc/cli.py": "法 4：CLI 改走公开门面 analyze_only()",
+   "cypy_hook/hook.py": "法 4：新增公开 analyze_only() 委托",
+   "docs/USAGE.md": "法 3：补 --emit-code 文档行",
+   "tests/test_loop_20260927_fix_r3.py": "法 1：BUG-55 夹具换冻结形",
+   "tests/test_loop_20260927_polish_r3.py": "法 2：本轮新增 9 条锁（新文件）"
+  },
+  "unexpected": [],
+  "missing": [],
+  "stage_start_utc": "2026-09-27T17:37:27+00:00",
+  "scanned_dirs": [
+   "cypyc",
+   "cypy_hook",
+   "cypy_bridge",
+   "tests",
+   "docs",
+   "scripts",
+   "examples"
+  ],
+  "at_utc": "2026-09-27T18:25:43+00:00"
+ },
+ "lint": {
+  "rc": 0,
+  "files": 4,
+  "targets": [
+   ".fist-loop-20260927/polish_r3_baselines.py",
+   ".fist-loop-20260927/polish_r3_evidence.py",
+   ".fist-loop-20260927/polish_r3_irreversible.py",
+   ".fist-loop-20260927/polish_r3_lockproof.py"
+  ],
+  "hard_violations": 0,
+  "detail": [],
+  "at_utc": "2026-09-27T18:25:44+00:00"
+ },
+ "pytest_ge_floor": 1,
+ "three_systems_green": 1,
+ "radius_exact": 1,
+ "finished_at_utc": "2026-09-27T18:25:44+00:00"
+}

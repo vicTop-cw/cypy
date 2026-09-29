@@ -1,0 +1,82 @@
+{
+ "key": "r3_verify",
+ "root_task": "T0r71",
+ "assignee": "cypy-verifier",
+ "stage": "R3-验证",
+ "forbid": "把工作区当快照树跑（身份探针必须拦）；改产品码或测试来凑验证绿；弱化/删除既有测试；git add/commit/push/删别人的 worktree/改 PROJECT-SPEC 与 SYNTAX；把『没复验到』写成『已验证』；拿上一环的判据件当本轮证据",
+ "laws": [
+  {
+   "name": "逐单回退矩阵：六件逐个改回修前文本，该件锁必须变红且其余锁不连带",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_matrix.json", "pos_red", 300],
+    [".fist-loop-20260927/verify_r3_matrix.json", "collateral_red", 300]
+   ]
+  },
+  {
+   "name": "矩阵的复原自证：每行 mutation 后文件 sha 必须逐字回到 mutation 前",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_matrix.json", "sha_verified_rows", 300],
+    [".fist-loop-20260927/verify_r3_matrix.json", "all_restored", 300]
+   ]
+  },
+  {
+   "name": "调用面独立复验（与修复环不同脚本、只读盘面）：CLI 四旗标 + bridge 真实构造 + 多哈希种子",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_callsite.json", "checks_all_true", 300],
+    [".fist-loop-20260927/verify_r3_callsite.json", "observed", 300]
+   ]
+  },
+  {
+   "name": "报告与账本自洽审计：正文计数反解 + 逐字被拒对表 + FIXED 段里的复跑命令当场再跑",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_report_audit.json", "counts_all_equal", 300],
+    [".fist-loop-20260927/verify_r3_report_audit.json", "repro_reruns", 300]
+   ]
+  },
+  {
+   "name": "三套判据体系同一时刻复算且不低于 1920 / 47 / 25，git 红线未动",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_baselines.json", "passed", 300],
+    [".fist-loop-20260927/verify_r3_baselines.json", "measured_at_utc", 300]
+   ]
+  },
+  {
+   "name": "负面主张也要正面测：本轮改动半径应为空（验证环不修产品码），mtime 反解而不是自述",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_baselines.json", "radius_claim_ok", 300],
+    [".fist-loop-20260927/verify_r3_baselines.json", "stage_start_utc", 300]
+   ]
+  },
+  {
+   "name": "不可逆动作零执行、只挂账：push/commit/删分支/改冻结文档/合并 PR 逐条点名并给当下状态",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_irreversible.json", "executed_none", 300],
+    [".fist-loop-20260927/verify_r3_irreversible.json", "live_probe_items", 300]
+   ]
+  },
+  {
+   "name": "上一环遗留主张的回算：四件翻没翻、两件声明侧、以及『报告说过但盘面变了』的漂移",
+   "artifacts": [
+    [".fist-loop-20260927/verify_r3_matrix.json", "carried_claims", 300],
+    [".fist-loop-20260927/verify_r3_matrix.json", "declared_side_still_true", 300]
+   ]
+  }
+ ],
+ "branches": [
+  ["逐单回退矩阵（pos 红 + 不连带）", ".fist-loop-20260927/verify_r3_matrix.json", "pos_red"],
+  ["矩阵复原自证（sha 逐字相等）", ".fist-loop-20260927/verify_r3_matrix.json", "sha_verified_rows"],
+  ["调用面独立复验 16 条", ".fist-loop-20260927/verify_r3_callsite.json", "checks_all_true"],
+  ["报告计数与 FIXED 段复跑审计", ".fist-loop-20260927/verify_r3_report_audit.json", "counts_all_equal"],
+  ["三套判据体系同一时刻复算", ".fist-loop-20260927/verify_r3_baselines.json", "measured_at_utc"],
+  ["半径为空的正面测", ".fist-loop-20260927/verify_r3_baselines.json", "radius_claim_ok"],
+  ["不可逆动作点名 + 分级自证", ".fist-loop-20260927/verify_r3_irreversible.json", "live_probe_items"],
+  ["上一环主张回算（flip/声明侧）", ".fist-loop-20260927/verify_r3_matrix.json", "carried_claims"]
+ ],
+ "root_deliverable": "R3-验证 交付：{REPORT}；六件修复在快照树里逐单改回修前文本 ⇒ 该件锁逐组变红、对照与其余四件不受牵连（rows/identity/sha_verified_rows/all_restored 四格实测），16 条调用面独立复验全过（CLI 四旗标 + bridge/内建类型诊断 + realloc 真实读写 + 6 个新哈希种子 + 泛型出码），上一环报告的 23 条计数全部从判据件反解相等、6 条被拒原文双向对表、账本 6 段 FIXED 的复跑命令当场跑且退出码与账本自述一致，三套体系同一时刻复算未回落（pytest 见件、自研 47/47、e2e 25/25），本环改动半径实测为 0，10 条不可逆动作零执行（9 条 live_probe + 1 条清单级并写明为何只能清单级）",
+ "root_marker": "[selfdrive-verify]",
+ "root_extra_artifacts": [
+  [".fist-loop-20260927/verify_r3_matrix.json", "identity", 300],
+  [".fist-loop-20260927/verify_r3_callsite.json", "checks", 300]
+ ],
+ "root_verify_reason": "验证环不复用修复环的结论：矩阵底树改判为『盘面快照』（HEAD 底会引入历轮未提交改动的混因红，run1 已归档并写明），每行 mutation 用字面锚点 + 出现次数断言并 py_compile，跑完按 sha256 逐字复原；身份两重（6 个模块 __file__ 落在快照树 + 工作区 7 个文件全程 sha 不变 ⇒ 红只能来自快照码）；调用面 16 条用与修复环不同的脚本、不同旗标组合与不同种子；报告审计把页脚每条数字都拿去和判据件对表，被拒走双向集合对表（吞条与伪造都抓）"
+}

@@ -1,0 +1,122 @@
+{
+ "key": "r3_advance",
+ "root_task": "T0r73",
+ "assignee": "cypy-advancer",
+ "stage": "R3-推进",
+ "forbid": "改 PROJECT-SPEC 与 SYNTAX 冻结语义；实现文档未声明的形态（`Callable[..., R]` 变长形）；动 codegen 的 object 回退语义；顺手把『已声明未实现』的其余条目做掉；弱化/删除既有测试；git add/commit/push/删分支/删别人的 worktree；重注册 golden 基准；拿上一环的判据件当本轮证据；把自述旗标当承重证明",
+ "laws": [
+  {
+   "name": "元数检查落地：`Callable[[T1..Tn], R]` 被以 m≠n 调用时必报 arity 错，形状不认识则跳过不误判",
+   "artifacts": [
+    [".fist-loop-20260927/advance_r3_arity.json", "violation_cases", 120],
+    [".fist-loop-20260927/advance_r3_arity.json", "clean_cases_green", 4]
+   ]
+  },
+  {
+   "name": "成对回归锁：每条新锁都要『摘掉实现就红』且『只改注释仍绿』，与既有两条 Callable 锁不得互相顶包",
+   "artifacts": [
+    [".fist-loop-20260927/advance_r3_locks.json", "new_locks", 1],
+    [".fist-loop-20260927/advance_r3_locks.json", "each_new_lock_red_when_reverted", 200]
+   ]
+  },
+  {
+   "name": "产物面不动：同一源在改动前/后的 .pyx 逐字差分（除 `__compile_time__`/`__generated_at__` 两行），违例夹具单独分栏",
+   "artifacts": [
+    [".fist-loop-20260927/advance_r3_codegen_diff.json", "cases", 200],
+    [".fist-loop-20260927/advance_r3_codegen_diff.json", "all_textual_identical", 4]
+   ]
+  },
+  {
+   "name": "语料零新增红：同一棵快照树在两/三种状态下逐档对表，且必须自带看得见 arity 行的敏感性对照",
+   "artifacts": [
+    [".fist-loop-20260927/advance_r3_corpus.json", "samples_scanned", 1],
+    [".fist-loop-20260927/advance_r3_corpus.json", "sensitivity_probe", 80]
+   ]
+  },
+  {
+   "name": "半径外形状点名挂账：别名塌缩成 object、`Callable[..., R]` parser 直接拒绝且 SYNTAX 未声明、实参类型判定需先抽共用谓词",
+   "artifacts": [
+    [".fist-loop-20260927/advance_r3_scope_face.json", "outside_radius", 200],
+    [".fist-loop-20260927/advance_r3_scope_face.json", "frozen_doc_rows", 80]
+   ]
+  },
+  {
+   "name": "三套判据体系与红线复算：pytest 地板随新锁上调且收集数同步，套件 47/47、e2e 25/25，git 红线未动",
+   "artifacts": [
+    [".fist-loop-20260927/advance_r3_baselines.json", "pytest", 200],
+    [".fist-loop-20260927/advance_r3_baselines.json", "three_systems_green", 1]
+   ]
+  },
+  {
+   "name": "改动半径逐档归属本单：mtime 反解与清单双向对表（多一档越界、少一档未落地都算红），亲笔 lint 分『新写整档』与『既有档只对新加行负责』两口径",
+   "artifacts": [
+    [".fist-loop-20260927/advance_r3_baselines.json", "radius", 200],
+    [".fist-loop-20260927/advance_r3_baselines.json", "radius_exact", 1]
+   ]
+  },
+  {
+   "name": "不可逆面零执行且判据通道自测必红：逐条 live/derived/manifest 分级，注入假违例必须被抓住，既有测试名逐名对照",
+   "artifacts": [
+    [".fist-loop-20260927/advance_r3_irreversible.json", "self_test", 80],
+    [".fist-loop-20260927/advance_r3_irreversible.json", "test_names_disappeared", 2]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "元数判定落地 + 成对实测（违例必红/正确必不红/未知形状不判）",
+   ".fist-loop-20260927/advance_r3_arity.json",
+   "violation_cases"
+  ],
+  [
+   "9 条回归锁的回退必红矩阵（5 组，含只改注释对照）",
+   ".fist-loop-20260927/advance_r3_locks.json",
+   "groups_ok"
+  ],
+  [
+   "codegen 产物逐字差分 + 违例夹具分栏",
+   ".fist-loop-20260927/advance_r3_codegen_diff.json",
+   "identical_total"
+  ],
+  [
+   "语料三态对表 + 见证夹具敏感性对照",
+   ".fist-loop-20260927/advance_r3_corpus.json",
+   "sensitivity_probe"
+  ],
+  [
+   "半径外形状逐条点名（含两条负面主张的当场复验）",
+   ".fist-loop-20260927/advance_r3_scope_face.json",
+   "outside_radius"
+  ],
+  [
+   "三套判据体系同批复算 + git 红线",
+   ".fist-loop-20260927/advance_r3_baselines.json",
+   "three_systems_green"
+  ],
+  [
+   "改动半径逐档归属 + 亲笔 lint 双口径与注入对照",
+   ".fist-loop-20260927/advance_r3_baselines.json",
+   "radius"
+  ],
+  [
+   "不可逆面 14 条分级点名 + 既有测试逐名对照",
+   ".fist-loop-20260927/advance_r3_irreversible.json",
+   "items"
+  ]
+ ],
+ "root_deliverable": "R3-推进 交付：{REPORT}；按指挥官裁决把半径钉死在『文档已声明、代码未实现』那一条——在分析层补 `Callable[[T1..Tn], R]` 的**入参元数判定**（形状不认识就跳过，不误判），codegen 产物逐字不动。八法落地＝9 条成对回归锁 + 5 组回退矩阵（4 组 mutation + 1 组只改注释对照，全 9 条锁都被打红过）+ 5 档产物差分（4 档逐字相同、1 档违例夹具改后必被挡住）+ 79 档语料三态对表（真实语料 0 影响、见证夹具三栏齐全、过严对照必须冒出新 arity 行）+ 3 条半径外形状点名挂账。三套体系同批复算：pytest 1938/1938（地板从上一环实测 1929 抬到新锁条数）、自研 47/47、e2e 25/25 且 FAIL/WARN/UNREG 三格为零；不可逆面 14 条逐项 live/derived/manifest 点名，实测零执行；改动半径恰好 2 档且逐档归属本单",
+ "root_marker": "[selfdrive-advance]",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/advance_r3_lockproof.json",
+   "snap_left",
+   2
+  ],
+  [
+   ".fist-loop-20260927/advance_r3_irreversible.json",
+   "live_probe_items",
+   1
+  ]
+ ],
+ "root_verify_reason": "推进环最容易说谎的是『补齐声明』这句话本身，所以每一层都配了反向证明：(1) 立单依据不是 appendix-C 那行字，而是开工前逐形状实测（返回类型推断本来就活着，真正缺的只有入参元数），未声明的 `Callable[..., R]` 用当场解析结果证明 parser 就拒 ⇒ 不入半径；(2) 每条锁配 mutation，且第一版 G2 锚点钉错层时是判据（期望红集没红）抓住的，不是我看出来的；(3) 成对锁的『另一边』由宽爆破组 G4 打红，避免『正确调用必不红』只是没人碰它；(4) 语料那句『零新增红』第一次跑出 0 时没有放行，补了敏感性对照与见证夹具，证明扫描器看得见 arity 行之后那句 0 才有含义；(5) 半径与亲笔 lint 双向对表（多一档越界、少一档未落地都拒），既有测试用上一环留存的全量收集名逐名两向对照，而不是数个数"
+}

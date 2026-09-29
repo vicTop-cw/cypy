@@ -1,0 +1,9 @@
+let value: int = 42
+
+def main() -> int:
+    match value:
+        case 0 | 1 | 2:
+            print("Small")
+        case _:
+            print("Large")
+    return 0

@@ -1,0 +1,73 @@
+{
+ "refused": [
+  {
+   "call": "claim",
+   "task_id": "T0r54",
+   "error": "非法迁移: claim 要求状态 [待领取]，当前是 [待验收]"
+  },
+  {
+   "call": "execute",
+   "task_id": "T0r54",
+   "error": "非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute"
+  },
+  {
+   "call": "submit",
+   "task_id": "T0r54",
+   "error": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r54",
+   "error": "任务 [T0r54] 未开启 Omega 强验证（description 缺少 [omega:required] 标记），无需创建语料"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r54",
+   "error": "任务 [T0r54] 未开启 Omega 强验证，无语料可审"
+  },
+  {
+   "call": "omega_result_verify",
+   "task_id": "T0r54",
+   "error": "任务 [T0r54] 未开启 Omega 强验证，无需成果复验"
+  }
+ ],
+ "root_final": "已归档",
+ "leaves_done": 16,
+ "call_log_rows": 400,
+ "call_log_tally": {
+  "archive": 4,
+  "bug_list": 6,
+  "call_log": 1,
+  "claim": 36,
+  "execute": 35,
+  "get": 22,
+  "laya_decide": 1,
+  "omega_result_verify": 50,
+  "omega_spec_create": 50,
+  "omega_spec_review": 50,
+  "omega_status": 16,
+  "output_validate": 34,
+  "publish": 2,
+  "report_bug": 7,
+  "submit": 35,
+  "task_plan_deep": 1,
+  "verify": 50
+ },
+ "root_output_validate": [
+  {
+   "path": "memory/reviews/20260927.15.16.01.md",
+   "contains": "[selfdrive-advance]",
+   "min_chars": 1500
+  },
+  {
+   "path": ".fist-loop-20260927/advance_baselines_r1.json",
+   "contains": "\"pytest\"",
+   "min_chars": 300
+  },
+  {
+   "path": ".fist-loop-20260927/advance_lockproof_r1.json",
+   "contains": "red_locks",
+   "min_chars": 300
+  }
+ ]
+}

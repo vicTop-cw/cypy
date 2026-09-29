@@ -1,0 +1,23 @@
+#!bin cypy
+# ============================================================
+# errors.cypy — 校验错误类型（Pydantic ValidationError 端口）
+# ============================================================
+
+class ValidationError(Exception):
+    # 模型校验失败时抛出，携带每个字段的错误列表。
+    # 每个错误项形如 {"loc": "字段名", "msg": "...", "type": "..."}
+    def __init__(self, errors: list<dict<str, str>> = []):
+        self.errors = errors
+        let msg: str = "validation errors: " + str(len(errors)) + " error(s)"
+        super().__init__(msg)
+        self.message = msg
+
+    def __str__(self) -> str:
+        return self.message
+
+    def error_messages(self) -> list<str>:
+        # 把所有错误压平成一串可读信息。
+        let msgs: list<str> = []
+        for e in self.errors:
+            msgs.append(e.get("loc", "") + ": " + e.get("msg", ""))
+        return msgs

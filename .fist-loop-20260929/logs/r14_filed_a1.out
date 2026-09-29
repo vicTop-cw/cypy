@@ -1,0 +1,3 @@
+R14-DICT-LITERAL-NO-INFER -> {"bug_id": "BUG-141", "id": "BUG-141", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+R14-MANUAL-DANGLING-TEST-PATH -> {"bug_id": "BUG-142", "id": "BUG-142", "status": "OPEN", "path": "./memory/bugs.md", "resolved_path": ".", "project_dir": ".", "task_namespace": ""}
+CONCLUSION r14_filed tag=a1 filed=2 skipped=0 refused=0 new_ids=['BUG-141', 'BUG-142'] id_of_key={'R14-DICT-LITERAL-NO-INFER': 'BUG-141', 'R14-MANUAL-DANGLING-TEST-PATH': 'BUG-142'} bug_list_count=143 headers=141->143 report_bug_rows=45 db=fist-mbt.db(exists) three_way_ok=True out=file_r14_dict_bugs_a1.json

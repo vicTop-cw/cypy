@@ -1,0 +1,39 @@
+{
+ "declared_total": 26,
+ "collected_and_passed": 26,
+ "fix_r3_locks": 17,
+ "polish_locks": 9,
+ "new_locks": 9,
+ "reds": [],
+ "frozen_fixture_swapped": true,
+ "nonfrozen_control_kept": true,
+ "each_new_lock_red_when_reverted": 7,
+ "revert_uncovered_locks": [
+  "test_polish_every_documented_cypyc_flag_is_real",
+  "test_polish_parser_currently_tolerates_non_frozen_keyword"
+ ],
+ "revert_uncovered_reason": {
+  "test_polish_every_documented_cypyc_flag_is_real": "反方向对照：G2 把它钉成 must_stay_green，证明 mutation 是窄的",
+  "test_polish_parser_currently_tolerates_non_frozen_keyword": "现状探针：钉的是 parser 今天的容忍行为，定性留给 R4-寻虫，无对应回退面"
+ },
+ "locks_covered_by_revert_matrix": [
+  "test_polish_bridge_emit_cython_declines_explicitly",
+  "test_polish_bridge_generate_setup_writes_parseable_setup",
+  "test_polish_cli_no_longer_calls_private_analyzer",
+  "test_polish_cypy_hook_exposes_public_analyze_only",
+  "test_polish_generic_fixture_in_fix_r3_uses_frozen_form",
+  "test_polish_transpile_and_build_flags_three_way_sync",
+  "test_polish_union_submodule_reachable_via_importlib"
+ ],
+ "control_group_green": true,
+ "narrowness_asserts": 8,
+ "must_stay_green_all_ok": true,
+ "same_cause_whitelisted": 3,
+ "run_line": "26 passed in 4.26s",
+ "lock_file_sha256": {
+  "tests/test_loop_20260927_polish_r3.py": "eb26b3f8941fdc39",
+  "tests/test_loop_20260927_fix_r3.py": "dcf804aa54c64e60"
+ },
+ "at_utc": "2026-09-27T18:12:07+00:00",
+ "refuse": []
+}

@@ -1,0 +1,9 @@
+Starting operation
+Performing task
+Operation completed
+Cleaning up resources
+------------------------------
+=== Multiple defers ===
+Main logic
+Second cleanup
+First cleanup

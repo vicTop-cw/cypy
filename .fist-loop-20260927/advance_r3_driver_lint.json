@@ -1,0 +1,42 @@
+{
+ "drivers": 9,
+ "files": [
+  ".fist-loop-20260927/advance_r3_baselines.py",
+  ".fist-loop-20260927/advance_r3_calllog_tally.py",
+  ".fist-loop-20260927/advance_r3_corpus_scan.py",
+  ".fist-loop-20260927/advance_r3_driver_lint.py",
+  ".fist-loop-20260927/advance_r3_evidence.py",
+  ".fist-loop-20260927/advance_r3_footer.py",
+  ".fist-loop-20260927/advance_r3_irreversible.py",
+  ".fist-loop-20260927/advance_r3_lockproof.py",
+  ".fist-loop-20260927/advance_r3_self_audit.py"
+ ],
+ "hard_violations": 0,
+ "soft_total": 67,
+ "soft_by_code": {
+  "E501": 49,
+  "E201": 4,
+  "E202": 4,
+  "E127": 3,
+  "F841": 1,
+  "F401": 3,
+  "E129": 1,
+  "E303": 1,
+  "E302": 1
+ },
+ "soft_by_file": {
+  ".fist-loop-20260927/advance_r3_baselines.py": 9,
+  ".fist-loop-20260927/advance_r3_calllog_tally.py": 4,
+  ".fist-loop-20260927/advance_r3_driver_lint.py": 2,
+  ".fist-loop-20260927/advance_r3_evidence.py": 7,
+  ".fist-loop-20260927/advance_r3_footer.py": 14,
+  ".fist-loop-20260927/advance_r3_irreversible.py": 6,
+  ".fist-loop-20260927/advance_r3_lockproof.py": 7,
+  ".fist-loop-20260927/advance_r3_self_audit.py": 18
+ },
+ "canary_caught": 1,
+ "canary_left": [],
+ "policy_note": "驱动口径=E9/W605/F821@200（沿用 R2 起的选择），软码本轮只计数不清理",
+ "at_utc": "2026-09-27T19:33:02+00:00",
+ "refuse": []
+}

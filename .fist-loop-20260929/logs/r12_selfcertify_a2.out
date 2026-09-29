@@ -1,0 +1,3 @@
+REPORT_BYTES 32357 CLAIMS 25 ORPHANS 0
+CONCLUSION self_certify claims=25 orphans=0 cited=14 missing_bug_ids=[] receipts=3 rc=0
+CONCLUSION_STABLE self_certify orphans=0 missing_bug_ids=[] rc=0

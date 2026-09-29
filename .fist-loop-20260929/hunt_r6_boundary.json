@@ -1,0 +1,66 @@
+{
+ "cases": {
+  "空实参": {
+   "rc": 0,
+   "internal_crash": false,
+   "diagnostics": [],
+   "verbatim_tail": ", \"f\"]\n__private__ = []\n__deps__ = []\ncdef struct E:\n    int a\ndef f(e):\n    _match_subject_1 = e\n    if True:\n        return 1\n    elif True:\n        return 0\n============================================================"
+  },
+  "极值实参-32槽": {
+   "rc": 0,
+   "internal_crash": false,
+   "diagnostics": [],
+   "verbatim_tail": ".f28\n        x29 = _match_subject_1.f29\n        x30 = _match_subject_1.f30\n        x31 = _match_subject_1.f31\n        return x0\n    elif True:\n        return 0\n============================================================"
+  },
+  "非法实参-字面量与绑定混写": {
+   "rc": 0,
+   "internal_crash": false,
+   "diagnostics": [],
+   "verbatim_tail": " a\n    int b\ndef f(e):\n    _match_subject_1 = e\n    if _match_subject_1.a == 1:\n        x = _match_subject_1.b\n        return x\n    elif True:\n        return 0\n============================================================"
+  },
+  "未定义类型的提取器": {
+   "rc": 1,
+   "internal_crash": false,
+   "diagnostics": [
+    "Undefined name 'Unknown' at 1:10",
+    "Undefined name 'Unknown' at 3:14"
+   ],
+   "verbatim_tail": "ojects\\AI\\Cypy\\.fist-loop-20260929\\boundary_tmp\\out\n[3/3] Using Cython compiler mode\n[INFO] Transpiling to Cython code...\n  - Undefined name 'Unknown' at 1:10\n  - Undefined name 'Unknown' at 3:14\n[FAIL] Transpile failed:"
+  },
+  "资源极限-嵌套八层": {
+   "rc": 1,
+   "internal_crash": false,
+   "diagnostics": [
+    "编译错误: Unexpected pattern token CASE at 6:24"
+   ],
+   "verbatim_tail": "ypy\n[2/3] Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\boundary_tmp\\out\n[3/3] Using Cython compiler mode\n[INFO] Transpiling to Cython code...\n  - 编译错误: Unexpected pattern token CASE at 6:24\n[FAIL] Transpile failed:"
+  },
+  "空匹配体": {
+   "rc": 1,
+   "internal_crash": false,
+   "diagnostics": [
+    "编译错误: Expected increased indentation at line 6. Expected 8, got 0"
+   ],
+   "verbatim_tail": "DEProjects\\AI\\Cypy\\.fist-loop-20260929\\boundary_tmp\\out\n[3/3] Using Cython compiler mode\n[INFO] Transpiling to Cython code...\n  - 编译错误: Expected increased indentation at line 6. Expected 8, got 0\n[FAIL] Transpile failed:"
+  }
+ },
+ "canary": {
+  "clean": {
+   "rc": 0,
+   "internal_crash": false,
+   "diagnostics": [],
+   "verbatim_tail": "\ndef f(e):\n    _match_subject_1 = e\n    if True:\n        x = _match_subject_1.a\n        y = _match_subject_1.b\n        return x\n    elif True:\n        return 0\n============================================================"
+  },
+  "syntax-error": {
+   "rc": 1,
+   "internal_crash": false,
+   "diagnostics": [
+    "编译错误: Expected IDENTIFIER, got COLON at 1:7"
+   ],
+   "verbatim_tail": "ypy\n[2/3] Output: E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260929\\boundary_tmp\\out\n[3/3] Using Cython compiler mode\n[INFO] Transpiling to Cython code...\n  - 编译错误: Expected IDENTIFIER, got COLON at 1:7\n[FAIL] Transpile failed:"
+  }
+ },
+ "refuse": [],
+ "crash_count": 0,
+ "hang_count": 0
+}

@@ -1,0 +1,222 @@
+{
+  "db": "E:/IDEProjects/AI/Cypy/fist-mbt.db",
+  "read_mode": "sqlite3 mode=ro",
+  "table": "call_log",
+  "total_rows": 333,
+  "first_ts": "2026-09-26T05:20:30Z",
+  "last_ts": "2026-09-26T10:41:49Z",
+  "ns_seen": [
+    "E:\\IDEProjects\\AI\\Cypy",
+    "bugs",
+    "cypy-polish-20260926",
+    "default"
+  ],
+  "per_tool": {
+    "output_validate": {
+      "calls": 82,
+      "failed": 1,
+      "ns": [
+        "bugs",
+        "cypy-polish-20260926"
+      ]
+    },
+    "bug_list": {
+      "calls": 45,
+      "failed": 0,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "get": {
+      "calls": 44,
+      "failed": 0,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "list": {
+      "calls": 30,
+      "failed": 0,
+      "ns": [
+        "bugs",
+        "cypy-polish-20260926",
+        "default"
+      ]
+    },
+    "report_bug": {
+      "calls": 24,
+      "failed": 6,
+      "ns": [
+        "E:\\IDEProjects\\AI\\Cypy",
+        "cypy-polish-20260926"
+      ]
+    },
+    "execute": {
+      "calls": 21,
+      "failed": 2,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "submit": {
+      "calls": 20,
+      "failed": 1,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "verify": {
+      "calls": 20,
+      "failed": 0,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "pause": {
+      "calls": 16,
+      "failed": 0,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "claim": {
+      "calls": 13,
+      "failed": 0,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "archive": {
+      "calls": 12,
+      "failed": 11,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "run_check": {
+      "calls": 2,
+      "failed": 0,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "heartbeat": {
+      "calls": 1,
+      "failed": 0,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "publish": {
+      "calls": 1,
+      "failed": 0,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "reopen_task": {
+      "calls": 1,
+      "failed": 0,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    },
+    "task_plan_deep": {
+      "calls": 1,
+      "failed": 0,
+      "ns": [
+        "cypy-polish-20260926"
+      ]
+    }
+  },
+  "brief_rows_used": [
+    "publish",
+    "claim",
+    "task_plan_deep",
+    "execute",
+    "submit",
+    "verify",
+    "archive",
+    "heartbeat",
+    "report_bug",
+    "bug_list",
+    "output_validate",
+    "list",
+    "get"
+  ],
+  "brief_rows_zero": [
+    "issue_scan"
+  ],
+  "not_in_brief_table": [
+    "pause",
+    "reopen_task",
+    "run_check"
+  ],
+  "detail": {
+    "default_ns_tools": {
+      "list": 2
+    },
+    "default_ns_is_read_only": true,
+    "archive": {
+      "calls": 12,
+      "failed": 11,
+      "failure_msgs": [
+        "archive 仅限人类指挥官",
+        "task not found: T0r1",
+        "非法迁移: complete 要求状态 [待验收]，当前是 [待领取]"
+      ],
+      "succeeded_for": [
+        "T0"
+      ],
+      "succeeded_by": [
+        "human_steward"
+      ]
+    },
+    "run_check": [
+      {
+        "ts": "2026-09-26T07:53:52Z",
+        "task_id": "T0r15",
+        "ok": true,
+        "cmd_basename": "python.exe",
+        "workdir": ".",
+        "args": [
+          "-m",
+          "pytest",
+          "tests/test_polish_20260926.py",
+          "-q",
+          "-p",
+          "no:cacheprovider"
+        ]
+      },
+      {
+        "ts": "2026-09-26T10:09:29Z",
+        "task_id": "T0r17",
+        "ok": true,
+        "cmd_basename": "python.exe",
+        "workdir": ".",
+        "args": [
+          "-m",
+          "pytest",
+          "tests/test_polish_20260926.py",
+          "-q",
+          "-p",
+          "no:cacheprovider"
+        ]
+      }
+    ],
+    "run_check_inside_project_tests": true,
+    "heartbeat": {
+      "calls": 1,
+      "tasks": [
+        "T0r15"
+      ],
+      "first_ts": "2026-09-26T06:58:51Z",
+      "last_ts": "2026-09-26T06:58:51Z"
+    },
+    "report_bug_rejections": {
+      "report_bug: 非法 project_dir（拒绝绝对路径/穿越/盘符）": 6
+    },
+    "pause_calls": 16,
+    "reopen_task_calls": 1
+  }
+}

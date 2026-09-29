@@ -1,0 +1,48 @@
+[
+ {
+  "tool": "loop_create",
+  "args": {
+   "name": "cypy-selfdrive-20260929",
+   "steps": [
+    "advance",
+    "bugfind",
+    "fix_and_merge",
+    "verify",
+    "polish",
+    "advance"
+   ],
+   "max_rounds": 6,
+   "baseline_test_count": 2166,
+   "baseline_open_bug_count": 12,
+   "stop_on_goal": false,
+   "stop_on_exceeded": false,
+   "_omit_defaults": true
+  }
+ },
+ {
+  "tool": "laya_decide",
+  "args": {
+   "context": "R6 组合环根任务 T0r112：修复模式匹配位置形态(BUG-36/37/34)、测试遮蔽(BUG-41)、watch 并发互踩(BUG-54)，并推进 FIST 驱动面对齐上游 0.3.4。请按任务体量给拆分数与难度。",
+   "split_n_hint": 6,
+   "no_sidecar": true,
+   "_omit_defaults": true
+  }
+ },
+ {
+  "tool": "task_plan_deep",
+  "args": {
+   "task_id": "T0r112",
+   "split_n": 6,
+   "omega_strong_verify": true,
+   "gradient": true,
+   "boundary_probe": true,
+   "reinject_context": true,
+   "decide_split_n": 6,
+   "decide_difficulty": 3.5,
+   "decide_reason": "六条切片对应 5 个确诊缺陷 + 1 个驱动面收口，彼此无交叉文件半径，可并行领取",
+   "by": "cypy-selfdrive-agent",
+   "decide_by": "cypy-selfdrive-agent",
+   "_omit_defaults": true
+  }
+ }
+]

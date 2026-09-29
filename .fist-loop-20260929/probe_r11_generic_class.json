@@ -1,0 +1,50 @@
+{
+ "C1_manual_example": {
+  "src": "class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\ndef f() -> int:\n    let int_box: Box<int> = Box<int>(42)\n    return int_box.get()\n"
+ },
+ "C2_multi_params": {
+  "src": "class Pair<T, U>:\n    def first(self) -> T:\n        return self.a\n\n"
+ },
+ "C3_constrained": {
+  "src": "class Num<T: int | float>:\n    def v(self) -> T:\n        return self.x\n\n"
+ },
+ "C4_extends": {
+  "src": "class Box<T> extends Base:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\ndef f() -> int:\n    return 0\n"
+ },
+ "C5_paren_base": {
+  "src": "class Box<T>(Base):\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\ndef f() -> int:\n    return 0\n"
+ },
+ "C6_cdef_class": {
+  "src": "cdef class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\ndef f() -> int:\n    return 0\n"
+ },
+ "C7_field_in_body": {
+  "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n"
+ },
+ "C8_empty_param_list": {
+  "src": "class Box<>:\n    def get(self) -> int:\n        return 0\n\n"
+ },
+ "C9_bare_name_use": {
+  "src": "class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\ndef f() -> int:\n    let b: Box = Box(1)\n    return 0\n"
+ },
+ "C10_arity_over": {
+  "src": "class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\ndef f() -> int:\n    let b: Box<int> = Box<int, str>(42)\n    return 0\n"
+ },
+ "C11_undefined_typearg": {
+  "src": "class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\ndef f() -> int:\n    let b: Box<int> = Box<Mystery>(42)\n    return 0\n"
+ },
+ "C12_nested_generic_ann": {
+  "src": "class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\ndef f() -> int:\n    xs: list<Box<int>> = []\n    return 0\n"
+ },
+ "C13_param_ann": {
+  "src": "class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\ndef use(b: Box<int>) -> int:\n    return b.get()\n\n"
+ },
+ "C14_method_typearg": {
+  "src": "class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\ndef f() -> int:\n    let b: Box<int> = Box<int>(42)\n    return b.get<int>()\n"
+ },
+ "C15_struct_control": {
+  "src": "struct Wrap<T>:\n    value: T\n\n\ndef f() -> int:\n    return 0\n"
+ },
+ "C16_trait_abstract": {
+  "src": "trait Container<T>:\n    def get(self, index: int) -> T\n\n\ndef f() -> int:\n    return 0\n"
+ }
+}

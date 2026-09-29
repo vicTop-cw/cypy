@@ -1,0 +1,611 @@
+{
+ "started": "2026-09-28T07:00:45+00:00",
+ "refuse": [],
+ "families": 6,
+ "faces": [
+  {
+   "face": "F1_func_symbol_typed_as_its_return",
+   "claim_line": 30,
+   "control_ok": true,
+   "candidates": [],
+   "as_expected": [
+    "correct_two_arg_call_of_local_function",
+    "missing_arg_call_of_local_function",
+    "extra_arg_call_of_local_function",
+    "function_with_matching_signature_returned_as_alias"
+   ],
+   "cases": 4
+  },
+  {
+   "face": "F2_plain_function_call_arity_never_checked",
+   "claim_line": 172,
+   "control_ok": true,
+   "candidates": [],
+   "as_expected": [
+    "plain_fn_called_with_extra_arg",
+    "plain_fn_called_with_missing_arg",
+    "plain_fn_called_correctly"
+   ],
+   "cases": 3
+  },
+  {
+   "face": "F3_function_argument_compatibility",
+   "claim_line": 172,
+   "control_ok": true,
+   "candidates": [],
+   "as_expected": [
+    "wrong_signature_passed_to_callback_param",
+    "non_callable_passed_to_callback_param",
+    "right_signature_passed_clean",
+    "str_arg_to_annotated_int_param"
+   ],
+   "cases": 4
+  },
+  {
+   "face": "F4_struct_field_declared_type_unresolved",
+   "claim_line": 30,
+   "control_ok": true,
+   "candidates": [],
+   "as_expected": [
+    "int_field_returned_from_str_method",
+    "nested_field_wrong_type",
+    "field_used_with_wrong_arity_call",
+    "int_field_returned_as_int_clean"
+   ],
+   "cases": 4
+  },
+  {
+   "face": "F5_error_message_internals_leak",
+   "claim_line": 11,
+   "control_ok": true,
+   "candidates": [],
+   "as_expected": [
+    "alias_mismatch_message_is_source_shape"
+   ],
+   "cases": 1
+  },
+  {
+   "face": "F6_arity_check_contexts",
+   "claim_line": 11,
+   "control_ok": true,
+   "candidates": [],
+   "as_expected": [
+    "violation_in_defer_block",
+    "violation_in_struct_method",
+    "correct_call_in_guard_expression"
+   ],
+   "cases": 3
+  }
+ ],
+ "cases_total": 25,
+ "rows": [
+  {
+   "family": "F1_func_symbol_typed_as_its_return",
+   "claim": {
+    "file": "SYNTAX/02-type-annotations.md",
+    "line": 30,
+    "quote": "# 有注解的变量 - 静态类型检查"
+   },
+   "control_proves": "返回值与声明类型不符会被报（返回类型这条通道活着）",
+   "control_case": {
+    "name": "plain_return_int_mismatch",
+    "src": "def mk() -> int:\n    return \"\"\n",
+    "expect": "error",
+    "observed": [
+     "Return type mismatch: expected int, got str at 3:1"
+    ]
+   },
+   "control_ok": true,
+   "cases": [
+    {
+     "case": "correct_two_arg_call_of_local_function",
+     "src": "type Callback = Callable[[int], str]\ndef one(a: int) -> str:\n    return \"\"\n\ndef mk(cb: Callback, n: int) -> Callback:\n    return cb\n\ndef g() -> None:\n    mk(one, 1)\n",
+     "expect": "clean",
+     "observed_errors": [],
+     "reported_a_type_error": false,
+     "fixture_parse_error": [],
+     "candidate": null
+    },
+    {
+     "case": "missing_arg_call_of_local_function",
+     "src": "type Callback = Callable[[int], str]\ndef one(a: int) -> str:\n    return \"\"\n\ndef mk(cb: Callback, n: int) -> Callback:\n    return cb\n\ndef g() -> None:\n    mk(one)\n",
+     "expect": "error",
+     "observed_errors": [
+      "Callable arity mismatch: expected 2, got 1 at 9:5"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null,
+     "mutant_callback_param_still_reports": true,
+     "mutant_declared_sig_still_reports": false,
+     "mutant_legacy_args_still_reports": true,
+     "silenced_by": [
+      "declared_sig"
+     ],
+     "mutant_candidate": "silent_on_wrong_program"
+    },
+    {
+     "case": "extra_arg_call_of_local_function",
+     "src": "type Callback = Callable[[int], str]\ndef one(a: int) -> str:\n    return \"\"\n\ndef mk(cb: Callback, n: int) -> Callback:\n    return cb\n\ndef g() -> None:\n    mk(one, 1, 2)\n",
+     "expect": "error",
+     "observed_errors": [
+      "Callable arity mismatch: expected 2, got 3 at 9:5"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null,
+     "mutant_callback_param_still_reports": true,
+     "mutant_declared_sig_still_reports": false,
+     "mutant_legacy_args_still_reports": true,
+     "silenced_by": [
+      "declared_sig"
+     ],
+     "mutant_candidate": "silent_on_wrong_program"
+    },
+    {
+     "case": "function_with_matching_signature_returned_as_alias",
+     "src": "type Callback = Callable[[int], str]\ndef one(a: int) -> str:\n    return \"\"\n\ndef mk() -> Callback:\n    return one\n",
+     "expect": "clean",
+     "observed_errors": [],
+     "reported_a_type_error": false,
+     "fixture_parse_error": [],
+     "candidate": null
+    }
+   ],
+   "candidates": [],
+   "as_expected": [
+    "correct_two_arg_call_of_local_function",
+    "missing_arg_call_of_local_function",
+    "extra_arg_call_of_local_function",
+    "function_with_matching_signature_returned_as_alias"
+   ],
+   "invalid_fixtures": []
+  },
+  {
+   "family": "F2_plain_function_call_arity_never_checked",
+   "claim": {
+    "file": "SYNTAX/01-basic-types.md",
+    "line": 172,
+    "quote": "| **函数参数** | 有注解的参数进行类型检查，无注解的参数接受任意类型 |"
+   },
+   "control_proves": "调用点元数确实会被判（Callback 形参的违例必报）⇒ F2 的静默不是看不见",
+   "control_case": {
+    "name": "callback_arity_violation_reported",
+    "src": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    return cb(1, 2)\n",
+    "expect": "error",
+    "observed": [
+     "Callable arity mismatch: expected 1, got 2 at 3:12"
+    ]
+   },
+   "control_ok": true,
+   "cases": [
+    {
+     "case": "plain_fn_called_with_extra_arg",
+     "src": "def mk() -> int:\n    return 1\n\ndef g() -> int:\n    return mk(1, 2)\n",
+     "expect": "error",
+     "observed_errors": [
+      "Callable arity mismatch: expected 0, got 2 at 5:12"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null,
+     "mutant_callback_param_still_reports": true,
+     "mutant_declared_sig_still_reports": false,
+     "mutant_legacy_args_still_reports": true,
+     "silenced_by": [
+      "declared_sig"
+     ],
+     "mutant_candidate": "silent_on_wrong_program"
+    },
+    {
+     "case": "plain_fn_called_with_missing_arg",
+     "src": "def mk(k: int) -> int:\n    return k\n\ndef g() -> int:\n    return mk()\n",
+     "expect": "error",
+     "observed_errors": [
+      "Callable arity mismatch: expected 1, got 0 at 5:12"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null,
+     "mutant_callback_param_still_reports": true,
+     "mutant_declared_sig_still_reports": false,
+     "mutant_legacy_args_still_reports": true,
+     "silenced_by": [
+      "declared_sig"
+     ],
+     "mutant_candidate": "silent_on_wrong_program"
+    },
+    {
+     "case": "plain_fn_called_correctly",
+     "src": "def mk(k: int) -> int:\n    return k\n\ndef g() -> int:\n    return mk(1)\n",
+     "expect": "clean",
+     "observed_errors": [],
+     "reported_a_type_error": false,
+     "fixture_parse_error": [],
+     "candidate": null
+    }
+   ],
+   "candidates": [],
+   "as_expected": [
+    "plain_fn_called_with_extra_arg",
+    "plain_fn_called_with_missing_arg",
+    "plain_fn_called_correctly"
+   ],
+   "invalid_fixtures": []
+  },
+  {
+   "family": "F3_function_argument_compatibility",
+   "claim": {
+    "file": "SYNTAX/01-basic-types.md",
+    "line": 172,
+    "quote": "| **函数参数** | 有注解的参数进行类型检查，无注解的参数接受任意类型 |"
+   },
+   "control_proves": "实参位置会被走一遍并能报错（Callback 元数在实参位上被报）⇒ 形参类型静默是缺陷不是看不见",
+   "control_case": {
+    "name": "callback_arity_violation_at_argument_site",
+    "src": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    return cb(1, 2)\n",
+    "expect": "error",
+    "observed": [
+     "Callable arity mismatch: expected 1, got 2 at 3:12"
+    ]
+   },
+   "control_ok": true,
+   "cases": [
+    {
+     "case": "wrong_signature_passed_to_callback_param",
+     "src": "type Callback = Callable[[int], str]\ndef three(a: int, b: int) -> str:\n    return \"\"\ndef apply(f: Callback) -> str:\n    return f(1)\ndef g() -> str:\n    return apply(three)\n",
+     "expect": "error",
+     "observed_errors": [
+      "Argument 1 type mismatch: expected Callable[[int], str], got Callable[[int, int], str] at 7:12"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null
+    },
+    {
+     "case": "non_callable_passed_to_callback_param",
+     "src": "type Callback = Callable[[int], str]\ndef apply(f: Callback) -> str:\n    return f(1)\ndef g() -> str:\n    return apply(42)\n",
+     "expect": "error",
+     "observed_errors": [
+      "Argument 1 type mismatch: expected Callable[[int], str], got int at 5:12"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null
+    },
+    {
+     "case": "right_signature_passed_clean",
+     "src": "type Callback = Callable[[int], str]\ndef one(a: int) -> str:\n    return \"\"\ndef apply(f: Callback) -> str:\n    return f(1)\ndef g() -> str:\n    return apply(one)\n",
+     "expect": "clean",
+     "observed_errors": [],
+     "reported_a_type_error": false,
+     "fixture_parse_error": [],
+     "candidate": null
+    },
+    {
+     "case": "str_arg_to_annotated_int_param",
+     "src": "def apply(n: int) -> int:\n    return n\n\ndef g() -> int:\n    return apply(\"s\")\n",
+     "expect": "error",
+     "observed_errors": [
+      "Argument 1 type mismatch: expected int, got str at 5:12"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null
+    }
+   ],
+   "candidates": [],
+   "as_expected": [
+    "wrong_signature_passed_to_callback_param",
+    "non_callable_passed_to_callback_param",
+    "right_signature_passed_clean",
+    "str_arg_to_annotated_int_param"
+   ],
+   "invalid_fixtures": []
+  },
+  {
+   "family": "F4_struct_field_declared_type_unresolved",
+   "claim": {
+    "file": "SYNTAX/02-type-annotations.md",
+    "line": 30,
+    "quote": "# 有注解的变量 - 静态类型检查"
+   },
+   "control_proves": "局部变量的声明类型会流到返回值判定 ⇒ 类型信息不是整体缺失",
+   "control_case": {
+    "name": "local_let_annotation_checked",
+    "src": "def f() -> str:\n    let n: int = 1\n    return n\n",
+    "expect": "error",
+    "observed": [
+     "Return type mismatch: expected str, got int at 4:1"
+    ]
+   },
+   "control_ok": true,
+   "cases": [
+    {
+     "case": "int_field_returned_from_str_method",
+     "src": "struct S:\n    n: int\n\n    def f(self) -> str:\n        return self.n\n",
+     "expect": "error",
+     "observed_errors": [
+      "Return type mismatch: expected str, got int at 6:1"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null
+    },
+    {
+     "case": "nested_field_wrong_type",
+     "src": "struct Inner:\n    n: int\nstruct Outer:\n    i: Inner\n\n    def f(self) -> str:\n        return self.i.n\n",
+     "expect": "error",
+     "observed_errors": [
+      "Return type mismatch: expected str, got int at 8:1"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null
+    },
+    {
+     "case": "field_used_with_wrong_arity_call",
+     "src": "type Callback = Callable[[int], str]\nstruct S:\n    cb: Callback\n\n    def f(self) -> str:\n        return self.cb(1, 2)\n",
+     "expect": "error",
+     "observed_errors": [
+      "Callable arity mismatch: expected 1, got 2 at 0:0"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null
+    },
+    {
+     "case": "int_field_returned_as_int_clean",
+     "src": "struct S:\n    n: int\n\n    def f(self) -> int:\n        return self.n\n",
+     "expect": "clean",
+     "observed_errors": [],
+     "reported_a_type_error": false,
+     "fixture_parse_error": [],
+     "candidate": null
+    }
+   ],
+   "candidates": [],
+   "as_expected": [
+    "int_field_returned_from_str_method",
+    "nested_field_wrong_type",
+    "field_used_with_wrong_arity_call",
+    "int_field_returned_as_int_clean"
+   ],
+   "invalid_fixtures": []
+  },
+  {
+   "family": "F5_error_message_internals_leak",
+   "claim": {
+    "file": "SYNTAX/12-type-alias.md",
+    "line": 11,
+    "quote": "type Callback = Callable[[int], str]"
+   },
+   "control_proves": "普通类型的 mismatch 文案会被产出 ⇒ 有文案可比",
+   "control_case": {
+    "name": "plain_mismatch_message",
+    "src": "def g() -> None:\n    let x: int = \"s\"\n    return\n",
+    "expect": "error",
+    "observed": [
+     "Type mismatch: expected int, got str at 2:9"
+    ]
+   },
+   "control_ok": true,
+   "cases": [
+    {
+     "case": "alias_mismatch_message_is_source_shape",
+     "src": "type Callback = Callable[[int], str]\ndef g() -> int:\n    let x: Callback = 1\n    return x\n",
+     "expect": "error",
+     "observed_errors": [
+      "Type mismatch: expected Callable[[int], str], got int at 3:9",
+      "Return type mismatch: expected int, got Callable[[int], str] at 5:1"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null,
+     "message_leaks_internal_repr": []
+    }
+   ],
+   "candidates": [],
+   "as_expected": [
+    "alias_mismatch_message_is_source_shape"
+   ],
+   "invalid_fixtures": []
+  },
+  {
+   "family": "F6_arity_check_contexts",
+   "claim": {
+    "file": "SYNTAX/12-type-alias.md",
+    "line": 11,
+    "quote": "type Callback = Callable[[int], str]"
+   },
+   "control_proves": "最普通语句里的元数违例会报 ⇒ 其它上下文若静默就是上下文漏派",
+   "control_case": {
+    "name": "violation_in_plain_body",
+    "src": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    return cb(1, 2)\n",
+    "expect": "error",
+    "observed": [
+     "Callable arity mismatch: expected 1, got 2 at 3:12"
+    ]
+   },
+   "control_ok": true,
+   "cases": [
+    {
+     "case": "violation_in_defer_block",
+     "src": "type Callback = Callable[[int], str]\ndef a(cb: Callback) -> str:\n    defer:\n        cb(1, 2)\n    return \"\"\n",
+     "expect": "error",
+     "observed_errors": [
+      "Callable arity mismatch: expected 1, got 2 at 4:9"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null,
+     "mutant_callback_param_still_reports": true,
+     "mutant_declared_sig_still_reports": true,
+     "mutant_legacy_args_still_reports": false,
+     "silenced_by": [
+      "legacy_args"
+     ],
+     "mutant_candidate": "silent_on_wrong_program"
+    },
+    {
+     "case": "violation_in_struct_method",
+     "src": "type Callback = Callable[[int], str]\nstruct H:\n    def run(self, cb: Callback) -> str:\n        return cb(1, 2)\n",
+     "expect": "error",
+     "observed_errors": [
+      "Callable arity mismatch: expected 1, got 2 at 4:16"
+     ],
+     "reported_a_type_error": true,
+     "fixture_parse_error": [],
+     "candidate": null,
+     "mutant_callback_param_still_reports": true,
+     "mutant_declared_sig_still_reports": true,
+     "mutant_legacy_args_still_reports": false,
+     "silenced_by": [
+      "legacy_args"
+     ],
+     "mutant_candidate": "silent_on_wrong_program"
+    },
+    {
+     "case": "correct_call_in_guard_expression",
+     "src": "type Callback = Callable[[int], str]\ndef a(cb: Callback, n: int) -> str:\n    guard n > 0 else return \"\"\n    return cb(1)\n",
+     "expect": "clean",
+     "observed_errors": [],
+     "reported_a_type_error": false,
+     "fixture_parse_error": [],
+     "candidate": null
+    }
+   ],
+   "candidates": [],
+   "as_expected": [
+    "violation_in_defer_block",
+    "violation_in_struct_method",
+    "correct_call_in_guard_expression"
+   ],
+   "invalid_fixtures": []
+  }
+ ],
+ "blind_spots": [],
+ "mutant_left": [],
+ "candidates": [],
+ "candidate_total": 0,
+ "mutant_candidates": [
+  "F1_func_symbol_typed_as_its_return/missing_arg_call_of_local_function",
+  "F1_func_symbol_typed_as_its_return/extra_arg_call_of_local_function",
+  "F2_plain_function_call_arity_never_checked/plain_fn_called_with_extra_arg",
+  "F2_plain_function_call_arity_never_checked/plain_fn_called_with_missing_arg",
+  "F6_arity_check_contexts/violation_in_defer_block",
+  "F6_arity_check_contexts/violation_in_struct_method"
+ ],
+ "flips_by_mutant": {
+  "declared_sig": 4,
+  "legacy_args": 2
+ },
+ "flips_by_family": {
+  "F1_func_symbol_typed_as_its_return": [
+   "missing_arg_call_of_local_function",
+   "extra_arg_call_of_local_function"
+  ],
+  "F2_plain_function_call_arity_never_checked": [
+   "plain_fn_called_with_extra_arg",
+   "plain_fn_called_with_missing_arg"
+  ],
+  "F6_arity_check_contexts": [
+   "violation_in_defer_block",
+   "violation_in_struct_method"
+  ]
+ },
+ "families_without_flip": [
+  "F3_function_argument_compatibility",
+  "F4_struct_field_declared_type_unresolved",
+  "F5_error_message_internals_leak"
+ ],
+ "unattributed_mutants": [
+  "callback_param"
+ ],
+ "self_checks": [
+  {
+   "label": "白建的变异通道必须逐条点名（是冗余分支还是夹具没覆盖，本环不裁定就挂账）",
+   "got": [
+    [
+     "declared_sig",
+     "legacy_args"
+    ],
+    true
+   ],
+   "want": [
+    [
+     "declared_sig",
+     "legacy_args"
+    ],
+    true
+   ],
+   "why": "每棵翻红格数 {\"declared_sig\": 4, \"legacy_args\": 2}；不可归因 ['callback_param']",
+   "ok": true
+  },
+  {
+   "label": "三个元数族各自至少有一格在变异下发红（判据活着；真实树产零=已修不是失灵）",
+   "got": [
+    "F1_func_symbol_typed_as_its_return",
+    "F2_plain_function_call_arity_never_checked",
+    "F6_arity_check_contexts"
+   ],
+   "want": [
+    "F1_func_symbol_typed_as_its_return",
+    "F2_plain_function_call_arity_never_checked",
+    "F6_arity_check_contexts"
+   ],
+   "why": "各族翻红 {\"F1_func_symbol_typed_as_its_return\": 2, \"F2_plain_function_call_arity_never_checked\": 2, \"F6_arity_check_contexts\": 2}／真实树候选 []",
+   "ok": true
+  },
+  {
+   "label": "变异树翻红的格子在真实树上都被报出（否则归因不成立）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "mutant 候选 6 格",
+   "ok": true
+  },
+  {
+   "label": "候选/符合预期/夹具非法 三栏相加 = 全部用例（没有第四种被静默丢掉）",
+   "got": 19,
+   "want": 19,
+   "why": "逐条分类后回加",
+   "ok": true
+  },
+  {
+   "label": "夹具合法性自证：没有任何用例带解析错误",
+   "got": 0,
+   "want": 0,
+   "why": "fixture_parse_error 计数",
+   "ok": true
+  },
+  {
+   "label": "变异树目录已清干净",
+   "got": 0,
+   "want": 0,
+   "why": "清理后残留",
+   "ok": true
+  },
+  {
+   "label": "六族的对照全部能报（可见性）",
+   "got": [],
+   "want": [],
+   "why": "control_ok=False 的族",
+   "ok": true
+  },
+  {
+   "label": "每个立单原文都能定位",
+   "got": [],
+   "want": [],
+   "why": "doc_claim 未命中",
+   "ok": true
+  }
+ ],
+ "expectation_note": "期望值来自『文档声明的语义应当怎样』，不是『今天怎样』；与期望不符=候选缺陷（假阳性/假阴性两类都算），拒绝只留给判据自己坏了",
+ "at_utc": "2026-09-28T07:00:58+00:00"
+}

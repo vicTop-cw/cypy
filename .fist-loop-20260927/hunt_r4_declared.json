@@ -1,0 +1,563 @@
+{
+ "started": "2026-09-27T20:32:25+00:00",
+ "rows": [
+  {
+   "id": "D01",
+   "face": "SYNTAX/appendix-C 特性状态表",
+   "claim": "这一行把 `Callable[[T], R]` 函数类型标注列为「尚未实现，用 def + 类型推断」",
+   "doc": {
+    "file": "SYNTAX/appendix-C-features.md",
+    "line": 594,
+    "quote": "| `Callable[[T], R]` 函数类型标注 | 使用 `def` + 类型推断 | v0.5 |"
+   },
+   "measured": {
+    "errors": [
+     "Callable arity mismatch: expected 1, got 2 at 3:12"
+    ],
+    "arity_violation_reported": true
+   },
+   "rule": "今天元数判定会报 ⇒ 特性已落地，表里那行陈旧",
+   "verdict": "stale-doc",
+   "frozen_surface": true,
+   "fix_owner": "人工（SYNTAX/ 冻结面）"
+  },
+  {
+   "id": "D02",
+   "face": "SYNTAX/appendix-C 特性状态表",
+   "claim": "「`&` 位运算与取址冲突 ⇒ 用 `|`、`^` 替代」",
+   "doc": {
+    "file": "SYNTAX/appendix-C-features.md",
+    "line": 595,
+    "quote": "| `&` 位运算与取址冲突 | 使用 `|` 和 `^` 替代（`&` 保留给取址） | v0.5 |"
+   },
+   "measured": {
+    "errors": []
+   },
+   "rule": "`a & b` 静态分析零错 ⇒ 「必须换成 | / ^」的说法陈旧",
+   "verdict": "stale-doc",
+   "frozen_surface": true,
+   "fix_owner": "人工（SYNTAX/ 冻结面）"
+  },
+  {
+   "id": "D03",
+   "face": "SYNTAX/appendix-C 特性状态表",
+   "claim": "「walrus `:=` 尚未实现 ⇒ 用构建块 `=:`」",
+   "doc": {
+    "file": "SYNTAX/appendix-C-features.md",
+    "line": 596,
+    "quote": "| walrus 操作符 `:=` | 使用构建块 `=:` 语法 | v0.5+ |"
+   },
+   "measured": {
+    "walrus_errors": [
+     "Compilation error: Expected RPAREN, got COLON at 2:11"
+    ],
+    "control_without_walrus_clean": true,
+    "control_errors": []
+   },
+   "rule": "带 `:=` 报错、同形状去掉 `:=` 干净 ⇒ 确实未实现，且不是夹具自己坏了",
+   "verdict": "design",
+   "frozen_surface": true,
+   "fix_owner": "无人（文档与实现一致 ⇒ 撤回不占号）"
+  },
+  {
+   "id": "D04",
+   "face": "SYNTAX/appendix-C 主类型表",
+   "claim": "类型表把 `i8/i16/i32/i64/u8…` 当一等公民，正文示例 `let x: i32 = 10`",
+   "doc": {
+    "file": "SYNTAX/appendix-C-features.md",
+    "line": 64,
+    "quote": "| 整数 | `i8`、`i16`、`i32`、`i64`、`u8`、`u16`、`u32`、`u64` |"
+   },
+   "measured": {
+    "let_i32": [
+     "Type mismatch: expected i32, got int at 1:5"
+    ],
+    "fn_i32_f64": [
+     "Undefined name 'i32' at 1:10",
+     "Undefined name 'f64' at 1:18"
+    ],
+    "i32_literal_in_compiler": []
+   },
+   "rule": "文档给的头等类型在分析器/生成器里搜不到 ⇒ 声明与实现分道（不在「尚未实现」那一行的豁免范围内，因为它就写在主类型表里）",
+   "verdict": "real-gap",
+   "frozen_surface": true,
+   "fix_owner": "人工（补类型集或改文档，两侧都涉冻结面）"
+  },
+  {
+   "id": "D05",
+   "face": "SYNTAX/appendix-C 指针小节",
+   "claim": "示例写 `mut x: i32 = 42` / `let p: *mut i32 = &x`",
+   "doc": {
+    "file": "SYNTAX/appendix-C-features.md",
+    "line": 264,
+    "quote": "let p: *mut i32 = &x      # 取地址"
+   },
+   "measured": {
+    "mut_errors": [
+     "Type mismatch: expected i32, got int at 2:9"
+    ]
+   },
+   "rule": "示例照抄即词法错误 ⇒ 例子跑不动",
+   "verdict": "stale-doc",
+   "frozen_surface": true,
+   "fix_owner": "人工（SYNTAX/ 冻结面）"
+  },
+  {
+   "id": "D06",
+   "face": "SYNTAX/appendix-C 用法段",
+   "claim": "文档给出 `cypyc --compile x.cypy` / `cypyc build --incremental ./project` 形态",
+   "doc": {
+    "file": "SYNTAX/appendix-C-features.md",
+    "line": 33,
+    "quote": "cypyc --compile input.cypy       # 编译"
+   },
+   "measured": {
+    "flag_compile": {
+     "args": [
+      "--compile",
+      "examples/hello.cypy"
+     ],
+     "rc": 1,
+     "lines": [
+      "<frozen runpy>:130: RuntimeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour",
+      "usage: cypyc [-h] [-o OUTPUT] [-v] [--version]",
+      "{transpile,compile,build,run,watch,hook} ...",
+      "cypyc: error: argument command: invalid choice: 'examples/hello.cypy' (choose from 'transpile', 'compile', 'build', 'run', 'watch', 'hook')"
+     ],
+     "tail": [
+      "usage: cypyc [-h] [-o OUTPUT] [-v] [--version]",
+      "{transpile,compile,build,run,watch,hook} ...",
+      "cypyc: error: argument command: invalid choice: 'examples/hello.cypy' (choose from 'transpile', 'compile', 'build', 'run', 'watch', 'hook')"
+     ]
+    },
+    "build_incremental": {
+     "args": [
+      "build",
+      "--incremental",
+      "examples"
+     ],
+     "rc": 1,
+     "lines": [
+      "<frozen runpy>:130: RuntimeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour",
+      "usage: cypyc [-h] [-o OUTPUT] [-v] [--version]",
+      "{transpile,compile,build,run,watch,hook} ...",
+      "cypyc: error: unrecognized arguments: --incremental"
+     ],
+     "tail": [
+      "usage: cypyc [-h] [-o OUTPUT] [-v] [--version]",
+      "{transpile,compile,build,run,watch,hook} ...",
+      "cypyc: error: unrecognized arguments: --incremental"
+     ]
+    },
+    "control_transpile_rc": 0
+   },
+   "rule": "CLI 本身能用（对照 rc=0），两条文档旗标被 argparse 拒 ⇒ 旗标不存在",
+   "verdict": "real-gap",
+   "frozen_surface": false,
+   "fix_owner": "寻虫环禁改产品码 ⇒ 下一环修或转结"
+  },
+  {
+   "id": "D07",
+   "face": "SYNTAX/appendix-C 语法对照表",
+   "claim": "缩进规则一行写「Cypy: 必须 4 的倍数」",
+   "doc": {
+    "file": "SYNTAX/appendix-C-features.md",
+    "line": 520,
+    "quote": "| 缩进 | 任意 4/8/Tab | 任意 | **必须 4 的倍数** |"
+   },
+   "measured": {
+    "eight_spaces": [
+     "Compilation error: Expected increased indentation at line 2. Expected 4, got 8"
+    ],
+    "four_spaces_clean": true,
+    "two_spaces": [
+     "Compilation error: Invalid indentation level 2 at line 2. Indentation must be a multiple of 4"
+    ]
+   },
+   "rule": "8 空格（4 的倍数）被拒、4 空格干净 ⇒ 真实规则是「每层恰好 +4」，不是「4 的倍数」",
+   "verdict": "stale-doc",
+   "frozen_surface": true,
+   "fix_owner": "人工（SYNTAX/ 冻结面）"
+  },
+  {
+   "id": "D08",
+   "face": "docs/USAGE.md 入口点",
+   "claim": "`cypyc = \"cypy_hook.hook:main\"  # 安装后注册 cypyc 命令`",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 367,
+    "quote": "cypyc = \"cypy_hook.hook:main\"     # 安装后注册 cypyc 命令"
+   },
+   "measured": {
+    "pyproject_scripts": [
+     "cypyc = \"cypyc.cli:main\"",
+     "cypy-hook = \"cypy_hook.hook:main\""
+    ]
+   },
+   "rule": "文档写的入口点与 pyproject 实际的入口点是两个不同程序 ⇒ 照文档排查会走错门",
+   "verdict": "stale-doc",
+   "frozen_surface": false,
+   "fix_owner": "下一环修（docs 非冻结）"
+  },
+  {
+   "id": "D09",
+   "face": "docs/USAGE.md 依赖表",
+   "claim": "依赖表写 Python ≥ 3.8，且引用 `requires-python = \">=3.8\"`",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 19,
+    "quote": "| Python | ≥ 3.8 |"
+   },
+   "measured": {
+    "pyproject_requires": [
+     "requires-python = \">=3.9\""
+    ],
+    "declared_floor_note": "本机只有一个解释器，3.8 能不能跑我测不出 ⇒ 只比**文档引用的声明**与**实际声明**是否一致"
+   },
+   "rule": "文档转述的声明与 pyproject 实际值不同 ⇒ 一致性缺陷（不是兼容性结论）",
+   "verdict": "stale-doc",
+   "frozen_surface": false,
+   "fix_owner": "下一环修"
+  },
+  {
+   "id": "D10",
+   "face": "docs/USAGE.md §2.6 hook 子命令",
+   "claim": "§2.6 只列 install/uninstall/status/clear-cache 四个动作",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 131,
+    "quote": "cypyc hook clear-cache    # 清除 Cypy 编译缓存（__pycache__/cypy）"
+   },
+   "measured": {
+    "help_rc": 0,
+    "undocumented_options": [
+     "--transpile-only",
+     "--compile",
+     "--run",
+     "--eval",
+     "-o",
+     "--output"
+    ],
+    "help_tail": [
+     "--run RUN             Run the specified function after compilation",
+     "--eval EVAL           Evaluate Cypy code directly",
+     "<frozen runpy>:130: RuntimeWarning: 'cypyc.cli' found in sys.modules after import of package 'cypyc', but prior to execution of 'cypyc.cli'; this may result in unpredictable behaviour"
+    ]
+   },
+   "rule": "`--help` 实读集（整篇扫描，不是只看尾巴三行）里出现文档未列的选项 ⇒ 用法面与实现不符",
+   "verdict": "usage-mismatch",
+   "frozen_surface": false,
+   "fix_owner": "下一环修"
+  },
+  {
+   "id": "D11",
+   "face": "docs/USAGE.md §5 项目 API 示例",
+   "claim": "示例读 `result.output_files`",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 333,
+    "quote": "print(\"构建成功:\", result.output_files)"
+   },
+   "measured": {
+    "rc": 0,
+    "json": {
+     "fields": [
+      "success",
+      "compiled_modules",
+      "failed_modules",
+      "errors",
+      "pyd_paths",
+      "warnings",
+      "compilation_order",
+      "cycles_detected",
+      "total_time",
+      "type_registry_stats"
+     ],
+     "has_output_files": false
+    },
+    "tail": [
+     "{\"fields\": [\"success\", \"compiled_modules\", \"failed_modules\", \"errors\", \"pyd_paths\", \"warnings\", \"compilation_order\", \"cycles_detected\", \"total_time\", \"type_registry_stats\"], \"has_output_files\": false}"
+    ]
+   },
+   "rule": "示例引用的属性在返回类型上不存在 ⇒ 照抄即 AttributeError，不需要真编译",
+   "verdict": "example-fails",
+   "frozen_surface": false,
+   "fix_owner": "下一环修"
+  },
+  {
+   "id": "D12",
+   "face": "docs/USAGE.md §4 eval 示例",
+   "claim": "示例声称 `hook.eval(\"let x: int = 21 * 2\\nx\")` 打印 42",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 251,
+    "quote": "value = hook.eval(\"let x: int = 21 * 2\\nx\")"
+   },
+   "measured": {
+    "result_symbol_in_cypyc": [],
+    "only_reader_in_hook": [
+     "cypy_hook/hook.py:759",
+     "cypy_hook/hook.py:760"
+    ]
+   },
+   "rule": "读侧只认 `__result__`，写侧（cypyc 生成器）从不产出它 ⇒ eval 拿不到值；两端都点名才下结论（不靠跑一次编译）",
+   "verdict": "example-fails",
+   "frozen_surface": false,
+   "fix_owner": "下一环修（生成侧补或改文档 ⇒ 交裁决）"
+  },
+  {
+   "id": "D13",
+   "face": "docs/USAGE.md §6 未实现清单",
+   "claim": "「`constraint` / `subtype` / `dispatch` 尚未实现（v0.5 计划）」",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 404,
+    "quote": "4. **`constraint` / `subtype` / `dispatch` 尚未实现**（v0.5 计划），联合类型可用 `type Numeric = int | float`。"
+   },
+   "measured": {
+    "constraint": [
+     "'Numeric' is a constraint, not a type: it can only appear as a generic bound 'T: Numeric'. For a usable union type write 'type Numeric = int | float'. Use 'constraint' as a bound only (SYNTAX/33 C-2.1) at 2:22",
+     "'Numeric' is a constraint, not a type: it can only appear as a generic bound 'T: Numeric'. For a usable union type write 'type Numeric = int | float'. Use 'constraint' as a bound only (SYNTAX/33 C-2.1) at 2:10"
+    ],
+    "subtype": [],
+    "dispatch": [
+     "Compilation error: Expected RPAREN, got COLON at 1:13"
+    ]
+   },
+   "rule": "三个名字逐个当场测：被接受的 ⇒ 该行陈旧；仍被拒的 ⇒ 半句准确，按 design 处理",
+   "verdict": "stale-doc",
+   "frozen_surface": false,
+   "fix_owner": "下一环修",
+   "split_note": {
+    "constraint": "未落地",
+    "subtype": "已落地",
+    "dispatch": "未落地"
+   }
+  },
+  {
+   "id": "D14",
+   "face": "SYNTAX_IMPLEMENTATION_STATUS.md",
+   "claim": "状态表：`SubtypeDecl` 解析/语义/生成均未落",
+   "doc": {
+    "file": "SYNTAX_IMPLEMENTATION_STATUS.md",
+    "line": 106,
+    "quote": "| 子类型声明 `subtype` | SubtypeDecl | ⚠ 仅词法已收（`subtype` 在 `Lexer.KEYWORDS`，已是保留字、不能再用作标识符）；`SubtypeDecl` / 解析 / 语义 / 生成**均未落** | v0.5（`T0r258.2.2`） |"
+   },
+   "measured": {
+    "parser_hits": [
+     "cypyc/parser/parser.py:1328",
+     "cypyc/parser/parser.py:3390"
+    ],
+    "codegen_hits": [
+     "cypyc/analyzer/type_checker.py:125",
+     "cypyc/analyzer/type_checker.py:460",
+     "cypyc/analyzer/type_checker.py:1584"
+    ],
+    "dispatch_hits": [
+     "cypy_bridge/compiler.py:2345"
+    ]
+   },
+   "rule": "表说未落，代码里解析与登记已在 ⇒ 陈旧行（dispatch 那半仍准确）",
+   "verdict": "stale-doc",
+   "frozen_surface": false,
+   "fix_owner": "下一环修"
+  },
+  {
+   "id": "D15",
+   "face": "PROJECT-SPEC 规模红线",
+   "claim": "「单个源文件超过 3000 行（不含注释）即视为规模超标，须按职责拆分」",
+   "doc": {
+    "file": "PROJECT-SPEC/01-项目结构规范.md",
+    "line": 42,
+    "quote": "| **阈值** | 单个源文件超过 **3000 行**（不含注释），即视为规模超标 |"
+   },
+   "measured": {
+    "parser": 3444,
+    "generator": 3108,
+    "type_checker": 2727,
+    "口径": "非注释非字符串 token 覆盖的行数（docstring 也剔掉）"
+   },
+   "rule": "自己的规范阈值被自己的文件越过 ⇒ real-gap；拆分是不可逆大改 ⇒ 只挂账",
+   "verdict": "real-gap",
+   "frozen_surface": true,
+   "fix_owner": "人工（跨文件拆分）"
+  },
+  {
+   "id": "D16",
+   "face": "bridge 缓存目录",
+   "claim": "`_get_base_cache_dir` 的定位是「获取基础缓存目录」的只读查询",
+   "doc": {
+    "file": "cypy_bridge/compiler.py",
+    "line": 3546,
+    "quote": "\"\"\"获取基础缓存目录（__pycache__/cypy/py{major}{minor}/）"
+   },
+   "measured": {
+    "rc": 0,
+    "json": {
+     "created": [
+      "__pycache__",
+      "__pycache__/cypy",
+      "__pycache__/cypy/py313"
+     ],
+     "cached_none": true,
+     "stale": true
+    },
+    "tail": [
+     "{\"created\": [\"__pycache__\", \"__pycache__/cypy\", \"__pycache__/cypy/py313\"], \"cached_none\": true, \"stale\": true}"
+    ]
+   },
+   "rule": "两个只读查询跑完就在**调用方 CWD** 造出目录 ⇒ 与「只读」定位不符",
+   "verdict": "bridge-side-effect",
+   "frozen_surface": false,
+   "fix_owner": "下一环修"
+  },
+  {
+   "id": "D17",
+   "face": "bridge 生成物结构",
+   "claim": "`cypy_bridge` 自述「提供与 Cython 等价的核心功能，作为移除 Cython 依赖的桥接层」",
+   "doc": {
+    "file": "cypy_bridge/__init__.py",
+    "line": 4,
+    "quote": "提供与Cython等价的核心功能，作为移除Cython依赖的桥接层。"
+   },
+   "measured": {
+    "rc": 0,
+    "json": {
+     "len": 1880,
+     "口径": "按花括号净深推前缀和，depth==0 才算模块级",
+     "module_level_if": [
+      "if ((__name__ == \"__main__\")) {"
+     ],
+     "total_if": 7
+    },
+    "tail": [
+     "{\"len\": 1880, \"\\u53e3\\u5f84\": \"\\u6309\\u82b1\\u62ec\\u53f7\\u51c0\\u6df1\\u63a8\\u524d\\u7f00\\u548c\\uff0cdepth==0 \\u624d\\u7b97\\u6a21\\u5757\\u7ea7\", \"module_level_if\": [\"if ((__name__ == \\\"__main__\\\")) {\"], \"total_if\": 7}"
+    ]
+   },
+   "rule": "生成的 C 里出现函数外的模块级 `if (...)` ⇒ 不是可编译的模块结构，「与 Cython 等价」不成立；只看到文本就下结论，真编译留 R4-验证",
+   "verdict": "bridge-not-equivalent",
+   "frozen_surface": false,
+   "fix_owner": "下一环修（真编译验证转结）"
+  },
+  {
+   "id": "D18",
+   "face": "docs/USAGE.md 缓存命中",
+   "claim": "「缓存命中：`transpile_file` / `compile_to_pyd` 默认增量编译，源未变会复用 `.pyd`」",
+   "doc": {
+    "file": "docs/USAGE.md",
+    "line": 406,
+    "quote": "6. **缓存命中**：`transpile_file` / `compile_to_pyd` 默认增量编译，源未变会复用 `.pyd`；调试时可用 `force_recompile=True` 或 `cypyc hook clear-cache`。"
+   },
+   "measured": {
+    "why_not_measured": "要两次真编译（含工具链），单条 30s+ 且会落 .pyd；本环时间盒内不跑 ⇒ 转结 R4-验证实测，本轮不写结论"
+   },
+   "verdict": "not_measured",
+   "frozen_surface": false,
+   "fix_owner": "转结 R4-验证"
+  }
+ ],
+ "rows_total": 18,
+ "identity": "e:/ideprojects/ai/cypy/cypyc/analyzer/type_checker.py",
+ "size_lines": {
+  "parser": 3444,
+  "cython_generator": 3108,
+  "type_checker": 2727,
+  "threshold": 3000
+ },
+ "undocumented_hook_options": [
+  "--transpile-only",
+  "--compile",
+  "--run",
+  "--eval",
+  "-o",
+  "--output"
+ ],
+ "eval_result_symbol_hits": 0,
+ "cache_dirs_created_in_caller_cwd": [
+  "__pycache__",
+  "__pycache__/cypy",
+  "__pycache__/cypy/py313"
+ ],
+ "bridge_module_level_if": [
+  "if ((__name__ == \"__main__\")) {"
+ ],
+ "stale_total": 8,
+ "real_gap_total": 3,
+ "stale_or_gap": [
+  "D01",
+  "D02",
+  "D04",
+  "D05",
+  "D06",
+  "D07",
+  "D08",
+  "D09",
+  "D10",
+  "D11",
+  "D12",
+  "D13",
+  "D14",
+  "D15",
+  "D16",
+  "D17"
+ ],
+ "withdrawn_design": [
+  "D03"
+ ],
+ "not_measured_or_true": [
+  "D18"
+ ],
+ "self_checks": [
+  {
+   "label": "每行的立单原文都在盘上（行号 > 0）",
+   "got": [],
+   "want": [],
+   "why": "doc_quote 未命中",
+   "ok": true
+  },
+  {
+   "label": "每条结论都带 measured",
+   "got": [],
+   "want": [],
+   "why": "measured 缺失",
+   "ok": true
+  },
+  {
+   "label": "未测/仍准确两态都点名了为什么",
+   "got": [],
+   "want": [],
+   "why": "缺理由",
+   "ok": true
+  },
+  {
+   "label": "成对对照真的成对（walrus 与缩进两条各带同族正例）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "control 干净才算 pos 有效",
+   "ok": true
+  },
+  {
+   "label": "CLI 对照：transpile 本身可用（旗标失败不是 CLI 挂了）",
+   "got": 0,
+   "want": 0,
+   "why": "同一次跑的对照",
+   "ok": true
+  },
+  {
+   "label": "临时探针目录自删干净",
+   "got": [],
+   "want": [],
+   "why": "SCRATCH 清点",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "note_on_subagent": "子代理只用来指路。上表 measured 全部由本脚本当场重跑；appendix-C《已实现的限制修复》14 行本轮未逐行复测 ⇒ 不入账、不引用",
+ "at_utc": "2026-09-27T20:32:27+00:00"
+}

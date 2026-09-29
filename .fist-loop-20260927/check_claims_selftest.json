@@ -1,0 +1,33 @@
+{
+ "must_catch": {
+  "text": "- 本环把 BUG-9999 已修并回归",
+  "got": [
+   9999
+  ],
+  "want": [
+   9999
+  ]
+ },
+ "must_not_catch": {
+  "text": "fixed=BUG-41,BUG-42 carry=BUG-48,BUG-49 locks=18",
+  "got": [
+   41,
+   42
+  ],
+  "want": [
+   41,
+   42
+  ]
+ },
+ "must_not_catch_narrative": {
+  "text": "- 首次实跑把转结单 BUG-48 报成了\"报告说它已修\"（假红）",
+  "got": [],
+  "want": []
+ },
+ "must_not_catch_quoted": {
+  "text": "- 报告引用原文：`BUG-9999 已修并回归`",
+  "got": [],
+  "want": []
+ },
+ "refuse": []
+}

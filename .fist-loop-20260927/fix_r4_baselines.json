@@ -1,0 +1,385 @@
+{
+ "started": "2026-09-27T23:05:11+00:00",
+ "window": {
+  "start_utc": "2026-09-27T21:16:43+00:00",
+  "finished_at_utc": "2026-09-27T23:05:11+00:00"
+ },
+ "floors": {
+  "pytest": 1938,
+  "collect": 1938,
+  "suite": 47,
+  "e2e_pass": 25
+ },
+ "pytest": {
+  "passed": 1956,
+  "failed": 0,
+  "errors": 0,
+  "failed_names": [],
+  "tail": [
+   "........................................................................ [ 95%]",
+   "........................................................................ [ 99%]",
+   "............                                                             [100%]",
+   "1956 passed in 535.11s (0:08:55)"
+  ]
+ },
+ "collect": {
+  "nodeids": 1956
+ },
+ "suite": {
+  "fields": {
+   "Total": 47,
+   "Passed": 47,
+   "Failed": 0,
+   "Skipped": 0
+  },
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0"
+ },
+ "e2e": {
+  "fields": {
+   "PASS": 25,
+   "FAIL": 0,
+   "RUNFAIL": 0,
+   "WARN": 0
+  },
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+ },
+ "git": {
+  "head": "17d68b4",
+  "staged": 0,
+  "dirty_rows": 169,
+  "worktrees": [
+   "17d68b4",
+   "17d68b4"
+  ],
+  "foreign_worktree_present": true
+ },
+ "radius": {
+  "product": [
+   "cypyc/analyzer/type_checker.py"
+  ],
+  "tests": [
+   "tests/test_loop_20260927_fix_r4.py",
+   "tests/test_loop_20260927_polish_r3.py"
+  ],
+  "docs": [
+   "docs/USAGE.md"
+  ],
+  "frozen": [],
+  "loop": [
+   ".fist-loop-20260927/bugs_md_before_r4_fix.md",
+   ".fist-loop-20260927/close_r4_fix.json",
+   ".fist-loop-20260927/fix_r4_baselines.err",
+   ".fist-loop-20260927/fix_r4_baselines.json",
+   ".fist-loop-20260927/fix_r4_baselines.out",
+   ".fist-loop-20260927/fix_r4_baselines.py",
+   ".fist-loop-20260927/fix_r4_baselines.r3.err",
+   ".fist-loop-20260927/fix_r4_baselines.r3.out",
+   ".fist-loop-20260927/fix_r4_baselines.r4.err",
+   ".fist-loop-20260927/fix_r4_baselines.r4.out",
+   ".fist-loop-20260927/fix_r4_baselines.run1_headanchor.json",
+   ".fist-loop-20260927/fix_r4_before/type_checker.py",
+   ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   ".fist-loop-20260927/fix_r4_calllog_tally.py",
+   ".fist-loop-20260927/fix_r4_claim.json",
+   ".fist-loop-20260927/fix_r4_claim.py",
+   ".fist-loop-20260927/fix_r4_close_spec.py",
+   ".fist-loop-20260927/fix_r4_docs.json",
+   ".fist-loop-20260927/fix_r4_docs.py",
+   ".fist-loop-20260927/fix_r4_drivers_lint.json",
+   ".fist-loop-20260927/fix_r4_drivers_lint.py",
+   ".fist-loop-20260927/fix_r4_impact.json",
+   ".fist-loop-20260927/fix_r4_impact.py",
+   ".fist-loop-20260927/fix_r4_ledger.json",
+   ".fist-loop-20260927/fix_r4_ledger.py",
+   ".fist-loop-20260927/fix_r4_ledger_check.json",
+   ".fist-loop-20260927/fix_r4_locks.json",
+   ".fist-loop-20260927/fix_r4_locks.py",
+   ".fist-loop-20260927/fix_r4_progress.py",
+   ".fist-loop-20260927/fix_r4_progress.py.mangled",
+   ".fist-loop-20260927/fix_r4_pytest_after.log",
+   ".fist-loop-20260927/fix_r4_pytest_after2.log",
+   ".fist-loop-20260927/fix_r4_pytest_full.log",
+   ".fist-loop-20260927/fix_r4_rc.json",
+   ".fist-loop-20260927/fix_r4_rc.py",
+   ".fist-loop-20260927/fix_r4_render_order.py",
+   ".fist-loop-20260927/fix_r4_revert.json",
+   ".fist-loop-20260927/fix_r4_revert.py",
+   ".fist-loop-20260927/fix_r4_self_audit.py",
+   ".fist-loop-20260927/r4_fix_body.md",
+   ".fist-loop-20260927/report_spec_r4_fix.json",
+   ".fist-loop-20260927/root_r4_fix.out.json",
+   ".fist-loop-20260927/scratch/C01.cypy",
+   ".fist-loop-20260927/scratch/C02.cypy",
+   ".fist-loop-20260927/scratch/C03.cypy",
+   ".fist-loop-20260927/scratch/C04.cypy",
+   ".fist-loop-20260927/scratch/C05.cypy",
+   ".fist-loop-20260927/scratch/C06.cypy",
+   ".fist-loop-20260927/scratch/C07.cypy",
+   ".fist-loop-20260927/scratch/C08.cypy",
+   ".fist-loop-20260927/scratch/C09.cypy",
+   ".fist-loop-20260927/scratch/C10.cypy",
+   ".fist-loop-20260927/scratch/C11.cypy",
+   ".fist-loop-20260927/scratch/C12.cypy",
+   ".fist-loop-20260927/scratch/p2.cypy",
+   ".fist-loop-20260927/scratch/p3.cypy",
+   ".fist-loop-20260927/scratch/p4.cypy",
+   ".fist-loop-20260927/scratch/probe1.cypy",
+   ".fist-loop-20260927/tmp_advance/direct_annot.cypy",
+   ".fist-loop-20260927/tmp_advance/lock_out/direct_annot.pyx"
+  ],
+  "ledger": [
+   "memory/bugs.md"
+  ],
+  "other": [
+   "fist-mbt.db",
+   "fist-mbt.db-shm",
+   "fist-mbt.db-wal",
+   "output/adv1_chain.cp313-win_amd64.pyd",
+   "output/adv1_chain.pyx",
+   "output/basic_types.cp313-win_amd64.pyd",
+   "output/basic_types.pyx",
+   "output/concurrency.cp313-win_amd64.pyd",
+   "output/concurrency.pyx",
+   "output/constraint_numeric.cp313-win_amd64.pyd",
+   "output/constraint_numeric.pyx",
+   "output/control_flow.cp313-win_amd64.pyd",
+   "output/control_flow.pyx",
+   "output/defer.cp313-win_amd64.pyd",
+   "output/defer.pyx",
+   "output/functions.cp313-win_amd64.pyd",
+   "output/functions.pyx",
+   "output/generic.cp313-win_amd64.pyd",
+   "output/generic.pyx",
+   "output/generics_advanced.cp313-win_amd64.pyd",
+   "output/generics_advanced.pyx",
+   "output/hello.cp313-win_amd64.pyd",
+   "output/hello.pyx",
+   "output/list_comprehension.cp313-win_amd64.pyd",
+   "output/list_comprehension.pyx",
+   "output/meta.cp313-win_amd64.pyd",
+   "output/meta.pyx",
+   "output/metaprogramming.cp313-win_amd64.pyd",
+   "output/metaprogramming.pyx",
+   "output/minimal_test.cp313-win_amd64.pyd",
+   "output/minimal_test.pyx",
+   "output/new_syntax_features.cp313-win_amd64.pyd",
+   "output/new_syntax_features.pyx",
+   "output/pipe_operator.cp313-win_amd64.pyd",
+   "output/pipe_operator.pyx",
+   "output/pointers.cp313-win_amd64.pyd",
+   "output/pointers.pyx",
+   "output/setup.py",
+   "output/sqlalchemy_core.pyx",
+   "output/struct_enum.cp313-win_amd64.pyd",
+   "output/struct_enum.pyx",
+   "output/struct_records.cp313-win_amd64.pyd",
+   "output/struct_records.pyx",
+   "output/subtype_units.cp313-win_amd64.pyd",
+   "output/subtype_units.pyx",
+   "output/tenacity.pyx",
+   "output/test_duck.cp313-win_amd64.pyd",
+   "output/test_duck.pyx",
+   "output/test_macro.cp313-win_amd64.pyd",
+   "output/test_macro.pyx",
+   "output/test_meta.cp313-win_amd64.pyd",
+   "output/test_meta.pyx",
+   "output/test_new_features.cp313-win_amd64.pyd",
+   "output/test_new_features.pyx",
+   "output/test_union.cp313-win_amd64.pyd",
+   "output/test_union.pyx",
+   "output/test_vec.cp313-win_amd64.pyd",
+   "output/test_vec.pyx"
+  ]
+ },
+ "frozen_sha": {
+  "PROJECT-SPEC/00-总览.md": "c478fbcd165c",
+  "PROJECT-SPEC/01-项目结构规范.md": "ad2847b2091c",
+  "PROJECT-SPEC/02-命名与源码规范.md": "5db5095fc3cc",
+  "PROJECT-SPEC/03-测试规范化.md": "1f6f678af9b8",
+  "PROJECT-SPEC/04-进度报告规范.md": "c8386fa52a2f",
+  "PROJECT-SPEC/05-Omega验证前提.md": "d8829a529d17",
+  "SYNTAX/00-introduction.md": "06546224bff5",
+  "SYNTAX/01-basic-types.md": "b0bb9655b8ef",
+  "SYNTAX/02-type-annotations.md": "425f9c850424",
+  "SYNTAX/03-type-conversion.md": "a67ad542a775",
+  "SYNTAX/04-pointer-types.md": "a9b43d3a6773",
+  "SYNTAX/05-struct.md": "8513d76e913c",
+  "SYNTAX/06-enum.md": "c5386effee4c",
+  "SYNTAX/06d-builtin-magic-traits.md": "9f0142a11308",
+  "SYNTAX/07-trait-impl.md": "19330908bbf1",
+  "SYNTAX/08-class.md": "6025206b0474",
+  "SYNTAX/09-functions.md": "a8e133711f7a",
+  "SYNTAX/10-variables.md": "85c426324d57",
+  "SYNTAX/11-generics.md": "b20bf2f2a2d2",
+  "SYNTAX/12-operators.md": "69894d3038d0",
+  "SYNTAX/12-type-alias.md": "9af1e4ded121",
+  "SYNTAX/13-build-blocks.md": "5c1cb10078b8",
+  "SYNTAX/14-syntax-sugar.md": "d4dd1e1449f2",
+  "SYNTAX/15-control-flow.md": "75db27ca725f",
+  "SYNTAX/16-exceptions.md": "09fa25b20999",
+  "SYNTAX/17-pattern-matching.md": "47fa56e722d5",
+  "SYNTAX/18-macros.md": "af4582073585",
+  "SYNTAX/19-comptime.md": "87eff0d94795",
+  "SYNTAX/20-concurrency.md": "88d009b3dce4",
+  "SYNTAX/21-simd-vector.md": "aaae367f33bf",
+  "SYNTAX/22-magic-properties.md": "21321559e3e6",
+  "SYNTAX/23-compilation.md": "8a9171980edf",
+  "SYNTAX/24-incremental-hot-reload.md": "2fc484c94735",
+  "SYNTAX/25-compatibility.md": "739b69320e74",
+  "SYNTAX/26-union-type.md": "5fe6a5a9bd9d",
+  "SYNTAX/27-constraints.md": "5f986fe6af67",
+  "SYNTAX/30-tutorial-pointers.md": "2b5b59d7daed",
+  "SYNTAX/31-tutorial-metaprogramming.md": "d6b688af41b1",
+  "SYNTAX/32-tutorial-concurrency.md": "c052b705f446",
+  "SYNTAX/33-type-constraints-subtypes-dispatch.md": "325986f03ef3",
+  "SYNTAX/appendix-A-keywords.md": "3a13cd623477",
+  "SYNTAX/appendix-B-operators.md": "bfd06c530120",
+  "SYNTAX/appendix-C-features.md": "3e78de517b56"
+ },
+ "frozen_total": 43,
+ "three_systems_green": true,
+ "self_checks": [
+  {
+   "label": "pytest 通过数不低于上一环实测",
+   "got": true,
+   "want": true,
+   "why": "1956 vs 地板 1938",
+   "ok": true
+  },
+  {
+   "label": "pytest 零失败零错误",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "........................................................... [ 95%]\n........................................................................ [ 99%]\n............                                                             [100%]\n1956 passed in 535.11s (0:08:55)\n",
+   "ok": true
+  },
+  {
+   "label": "收集数不低于上一环",
+   "got": true,
+   "want": true,
+   "why": "1956 vs 1938",
+   "ok": true
+  },
+  {
+   "label": "自研套件 Total 与地板同为 47",
+   "got": 47,
+   "want": 47,
+   "why": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+   "ok": true
+  },
+  {
+   "label": "自研套件全绿",
+   "got": [
+    47,
+    0
+   ],
+   "want": [
+    47,
+    0
+   ],
+   "why": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+   "ok": true
+  },
+  {
+   "label": "e2e golden PASS 不低于地板",
+   "got": true,
+   "want": true,
+   "why": "{\"PASS\": 25, \"FAIL\": 0, \"RUNFAIL\": 0, \"WARN\": 0}",
+   "ok": true
+  },
+  {
+   "label": "e2e golden 零失败零警告",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "{\"PASS\": 25, \"FAIL\": 0, \"RUNFAIL\": 0, \"WARN\": 0}",
+   "ok": true
+  },
+  {
+   "label": "HEAD 未动（本环不 commit）",
+   "got": "17d68b4",
+   "want": "17d68b4",
+   "why": "git rev-parse",
+   "ok": true
+  },
+  {
+   "label": "暂存区为空（没有 git add）",
+   "got": 0,
+   "want": 0,
+   "why": "0 行",
+   "ok": true
+  },
+  {
+   "label": "外部基线 worktree 仍在",
+   "got": true,
+   "want": true,
+   "why": [
+    "E:/IDEProjects/AI/Cypy                17d68b4 [master]",
+    "E:/IDEProjects/AI/_cypy_head_baseline 17d68b4 (detached HEAD)"
+   ],
+   "ok": true
+  },
+  {
+   "label": "冻结面 mtime 为空",
+   "got": [],
+   "want": [],
+   "why": "PROJECT-SPEC/ 与 SYNTAX/ 未被触碰",
+   "ok": true
+  },
+  {
+   "label": "冻结面自本环锚点未变（对 HEAD 比是错的锚：本轮之前工作区就与 HEAD 分道）",
+   "got": "3e78de517b56",
+   "want": "3e78de517b56",
+   "why": "SYNTAX/appendix-C-features.md sha 3e78de517b56 → 3e78de517b56",
+   "ok": true
+  },
+  {
+   "label": "golden 脚本与目录未被改",
+   "got": [],
+   "want": [],
+   "why": "golden 面",
+   "ok": true
+  },
+  {
+   "label": "产品码改动集非空（正面证明本轮真改了码）",
+   "got": true,
+   "want": true,
+   "why": "[\"cypyc/analyzer/type_checker.py\"]",
+   "ok": true
+  },
+  {
+   "label": "扫描面非空（否则整个半径栏是装饰）",
+   "got": true,
+   "want": true,
+   "why": "实扫 2654 个文件",
+   "ok": true
+  },
+  {
+   "label": "dot 目录不再被吞：loop 栏必须收到本轮驱动件",
+   "got": true,
+   "want": true,
+   "why": "loop 60 个",
+   "ok": true
+  },
+  {
+   "label": "账面文件单独成栏并且真的在窗口内",
+   "got": true,
+   "want": true,
+   "why": "[\"memory/bugs.md\"]",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-27T23:21:08+00:00"
+}

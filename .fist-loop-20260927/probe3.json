@@ -1,0 +1,3 @@
+[{"tool":"omega_status","args":{"task_id":"T0r35"}},
+ {"tool":"bug_list","args":{"project_dir":"."}},
+ {"tool":"status_summary","args":{}}]

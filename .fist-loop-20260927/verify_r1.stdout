@@ -1,0 +1,43 @@
+{
+ "refuse": [],
+ "pytest_full": {
+  "rc": 0,
+  "passed": 1862,
+  "failed": 0,
+  "errors": 0,
+  "summary_line": "====================== 1862 passed in 619.86s (0:10:19) ======================="
+ },
+ "test_suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0"
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+ },
+ "frozen_docs": {
+  "touched_vs_head": [
+   "SYNTAX/01-basic-types.md",
+   "SYNTAX/appendix-A-keywords.md"
+  ],
+  "touched_after_round_start": [],
+  "round_start": "2026-09-26 23:00:00",
+  "per_file_mtime": {
+   "SYNTAX/01-basic-types.md": "2026-09-26 22:40:23",
+   "SYNTAX/appendix-A-keywords.md": "2026-09-26 13:29:12"
+  },
+  "newest_frozen_mtime": "2026-09-26 22:40:23",
+  "newest_frozen_file": "SYNTAX/01-basic-types.md"
+ },
+ "lint_scoped": {
+  "cypy_bridge/__init__.py": 0,
+  "cypy_bridge/types.py": 0,
+  "cypyc/codegen/cython_generator.py": 0,
+  "cypyc/parser/lexer.py": 0,
+  "tests/test_loop_20260927_fix.py": 0
+ },
+ "frozen_mtime": {
+  "SYNTAX/01-basic-types.md": "2026-09-26 22:40:23",
+  "SYNTAX/appendix-A-keywords.md": "2026-09-26 13:29:12"
+ }
+}

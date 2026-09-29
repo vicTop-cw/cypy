@@ -1,0 +1,135 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r93.1.1",
+   "law": "`Never` 在分析器名称面落地：文档工作例真跑 CLI、改前必红改后必绿、产物走既有 NoReturn 映射，且没在文档里的名字仍被拒",
+   "artifact": ".fist-loop-20260927/advance_r4_never.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.1.2",
+   "law": "`Never` 在分析器名称面落地：文档工作例真跑 CLI、改前必红改后必绿、产物走既有 NoReturn 映射，且没在文档里的名字仍被拒",
+   "artifact": ".fist-loop-20260927/advance_r4_never.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.2.1",
+   "law": "`repr/open/iter` 按文档引用行补齐名称面，六个未声明内建名在同一棵改后树仍被拒（白名单没有整片放开）",
+   "artifact": ".fist-loop-20260927/advance_r4_builtins.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.2.2",
+   "law": "`repr/open/iter` 按文档引用行补齐名称面，六个未声明内建名在同一棵改后树仍被拒（白名单没有整片放开）",
+   "artifact": ".fist-loop-20260927/advance_r4_builtins.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.3.1",
+   "law": "半径外的运算子与类型面量化成三态表并逐条给去向，两条已知缺陷真入账且卡号与量表双向对齐",
+   "artifact": ".fist-loop-20260927/advance_r4_scope_face.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.3.2",
+   "law": "半径外的运算子与类型面量化成三态表并逐条给去向，两条已知缺陷真入账且卡号与量表双向对齐",
+   "artifact": ".fist-loop-20260927/advance_r4_filed.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.4.1",
+   "law": "补口配永久回归锁：工作区全绿、改前码树必红，两棵树身份自证、收集数与「过+红+错」基数自证",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.4.2",
+   "law": "补口配永久回归锁：工作区全绿、改前码树必红，两棵树身份自证、收集数与「过+红+错」基数自证",
+   "artifact": ".fist-loop-20260927/advance_r4_locks.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.5.1",
+   "law": "产物面不动：77 档语料两态转译剔除时间戳行后逐字相同，不同处只允许出现在用了新放行名调用点的文件上",
+   "artifact": ".fist-loop-20260927/advance_r4_codegen_diff.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.5.2",
+   "law": "产物面不动：77 档语料两态转译剔除时间戳行后逐字相同，不同处只允许出现在用了新放行名调用点的文件上",
+   "artifact": ".fist-loop-20260927/advance_r4_codegen_diff.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.6.1",
+   "law": "语料零新增红，且两支见证夹具证明这把尺子看得见被测形状（零不是空集蒙出来的）",
+   "artifact": ".fist-loop-20260927/advance_r4_corpus.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.6.2",
+   "law": "语料零新增红，且两支见证夹具证明这把尺子看得见被测形状（零不是空集蒙出来的）",
+   "artifact": ".fist-loop-20260927/advance_r4_corpus.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.7.1",
+   "law": "三套判据体系同刻为绿、地板来自上一环实测件，冻结面两栏未动，半径按 mtime 只到两档分析器，驱动件 lint 硬错零容忍",
+   "artifact": ".fist-loop-20260927/advance_r4_baselines.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.7.2",
+   "law": "三套判据体系同刻为绿、地板来自上一环实测件，冻结面两栏未动，半径按 mtime 只到两档分析器，驱动件 lint 硬错零容忍",
+   "artifact": ".fist-loop-20260927/advance_r4_drivers_lint.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.8.1",
+   "law": "零不可逆动作：产品面无删除/改名/本环新增，账本面无毁灭型工具且 archive 只在本环号段，检测器自带合成违例对照",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  },
+  {
+   "task_id": "T0r93.8.2",
+   "law": "零不可逆动作：产品面无删除/改名/本环新增，账本面无毁灭型工具且 archive 只在本环号段，检测器自带合成违例对照",
+   "artifact": ".fist-loop-20260927/advance_r4_irreversible.json",
+   "ov": "pass",
+   "verify": "已完成",
+   "errors": []
+  }
+ ],
+ "failed": [],
+ "root_task": "T0r93",
+ "stage": "R4-推进"
+}

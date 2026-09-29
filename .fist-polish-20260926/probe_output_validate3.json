@@ -1,0 +1,202 @@
+[
+  {
+    "case": "not_contains 真违例(必 fail)",
+    "expect": "fail",
+    "got": "fail",
+    "agree": true,
+    "pre": {
+      "cypy_bridge/nogil.py::def __exit__": 3,
+      "cypy_bridge/nogil.py::def __enter__": 3,
+      "tests/test_polish_20260926.py::def test_bug12_gilstate_exit_does_not_replace_user_exception": 1,
+      "tests/test_polish_20260926.py::def test_zzz_definitely_not_in_this_repo": 0
+    },
+    "artifacts": [
+      {
+        "path": "cypy_bridge/nogil.py",
+        "not_contains": "def __exit__"
+      }
+    ],
+    "reply": {
+      "verdict": "fail",
+      "layer": "l4-hard-failed",
+      "passed": 0,
+      "failed": 1,
+      "checks": [
+        {
+          "a": "cypy_bridge/nogil.py",
+          "ok": false,
+          "d": "文件含禁止字符串: \"def __exit__\""
+        }
+      ],
+      "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+      "err": null
+    }
+  },
+  {
+    "case": "not_contains 真满足",
+    "expect": "pass",
+    "got": "pass",
+    "agree": true,
+    "pre": {
+      "cypy_bridge/nogil.py::def __exit__": 3,
+      "cypy_bridge/nogil.py::def __enter__": 3,
+      "tests/test_polish_20260926.py::def test_bug12_gilstate_exit_does_not_replace_user_exception": 1,
+      "tests/test_polish_20260926.py::def test_zzz_definitely_not_in_this_repo": 0
+    },
+    "artifacts": [
+      {
+        "path": "cypy_bridge/nogil.py",
+        "not_contains": "def test_zzz_definitely_not_in_this_repo"
+      }
+    ],
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "cypy_bridge/nogil.py",
+          "ok": true,
+          "d": "OK（存在/非空/invariant 全部通过）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  },
+  {
+    "case": "not_contains + contains 混合",
+    "expect": "fail",
+    "got": "fail",
+    "agree": true,
+    "pre": {
+      "cypy_bridge/nogil.py::def __exit__": 3,
+      "cypy_bridge/nogil.py::def __enter__": 3,
+      "tests/test_polish_20260926.py::def test_bug12_gilstate_exit_does_not_replace_user_exception": 1,
+      "tests/test_polish_20260926.py::def test_zzz_definitely_not_in_this_repo": 0
+    },
+    "artifacts": [
+      {
+        "path": "cypy_bridge/nogil.py",
+        "contains": "def __enter__",
+        "not_contains": "def __exit__"
+      }
+    ],
+    "reply": {
+      "verdict": "fail",
+      "layer": "l4-hard-failed",
+      "passed": 0,
+      "failed": 1,
+      "checks": [
+        {
+          "a": "cypy_bridge/nogil.py",
+          "ok": false,
+          "d": "文件含禁止字符串: \"def __exit__\""
+        }
+      ],
+      "note": "1/1 条产物检查失败（证据层: l4-hard-failed）",
+      "err": null
+    }
+  },
+  {
+    "case": "未知字段 contans(拼错)",
+    "expect": "fail",
+    "got": "pass",
+    "agree": false,
+    "pre": {
+      "cypy_bridge/nogil.py::def __exit__": 3,
+      "cypy_bridge/nogil.py::def __enter__": 3,
+      "tests/test_polish_20260926.py::def test_bug12_gilstate_exit_does_not_replace_user_exception": 1,
+      "tests/test_polish_20260926.py::def test_zzz_definitely_not_in_this_repo": 0
+    },
+    "artifacts": [
+      {
+        "path": "tests/test_polish_20260926.py",
+        "contans": "def test_zzz_definitely_not_in_this_repo"
+      }
+    ],
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "tests/test_polish_20260926.py",
+          "ok": true,
+          "d": "OK（存在/非空/invariant 全部通过）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  },
+  {
+    "case": "未知字段 invariant",
+    "expect": "fail",
+    "got": "pass",
+    "agree": false,
+    "pre": {
+      "cypy_bridge/nogil.py::def __exit__": 3,
+      "cypy_bridge/nogil.py::def __enter__": 3,
+      "tests/test_polish_20260926.py::def test_bug12_gilstate_exit_does_not_replace_user_exception": 1,
+      "tests/test_polish_20260926.py::def test_zzz_definitely_not_in_this_repo": 0
+    },
+    "artifacts": [
+      {
+        "path": "tests/test_polish_20260926.py",
+        "invariant": "必须包含 def test_zzz_definitely_not_in_this_repo"
+      }
+    ],
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "tests/test_polish_20260926.py",
+          "ok": true,
+          "d": "OK（存在/非空/invariant 全部通过）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  },
+  {
+    "case": "未知字段 + 合法 contains 同时给",
+    "expect": "pass",
+    "got": "pass",
+    "agree": true,
+    "pre": {
+      "cypy_bridge/nogil.py::def __exit__": 3,
+      "cypy_bridge/nogil.py::def __enter__": 3,
+      "tests/test_polish_20260926.py::def test_bug12_gilstate_exit_does_not_replace_user_exception": 1,
+      "tests/test_polish_20260926.py::def test_zzz_definitely_not_in_this_repo": 0
+    },
+    "artifacts": [
+      {
+        "path": "tests/test_polish_20260926.py",
+        "contains": "def test_bug12_gilstate_exit_does_not_replace_user_exception",
+        "invariant": "def test_zzz_definitely_not_in_this_repo"
+      }
+    ],
+    "reply": {
+      "verdict": "pass",
+      "layer": "l4-pass",
+      "passed": 1,
+      "failed": 0,
+      "checks": [
+        {
+          "a": "tests/test_polish_20260926.py",
+          "ok": true,
+          "d": "OK（存在/非空/invariant 全部通过）"
+        }
+      ],
+      "note": "全部 1 条产物检查通过（证据层: l4-pass）",
+      "err": null
+    }
+  }
+]

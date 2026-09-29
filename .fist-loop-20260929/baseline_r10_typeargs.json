@@ -1,0 +1,116 @@
+{
+ "files": 77,
+ "parse_fail": [],
+ "callsites": [
+  {
+   "file": "examples/demos/traits_duck/duck_advanced.cypy",
+   "callee": "find_max",
+   "type_arg": "Score",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 285
+  },
+  {
+   "file": "examples/demos/traits_duck/duck_advanced.cypy",
+   "callee": "double",
+   "type_arg": "ComplexNum",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 274
+  },
+  {
+   "file": "examples/demos/traits_duck/duck_advanced.cypy",
+   "callee": "process_container",
+   "type_arg": "IntContainer",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 269
+  },
+  {
+   "file": "examples/demos/traits_duck/duck_basic.cypy",
+   "callee": "resize",
+   "type_arg": "SizedBox",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 147
+  },
+  {
+   "file": "examples/demos/traits_duck/duck_basic.cypy",
+   "callee": "display_name",
+   "type_arg": "NamedItem",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 143
+  },
+  {
+   "file": "examples/demos/traits_duck/duck_basic.cypy",
+   "callee": "add_values",
+   "type_arg": "float",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 138
+  },
+  {
+   "file": "examples/demos/traits_duck/duck_basic.cypy",
+   "callee": "find_max",
+   "type_arg": "int",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 132
+  },
+  {
+   "file": "examples/demos/traits_duck/trait_advanced.cypy",
+   "callee": "display_showable",
+   "type_arg": "Color",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 177
+  },
+  {
+   "file": "examples/demos/traits_duck/trait_basic.cypy",
+   "callee": "ListBox",
+   "type_arg": "int",
+   "kind": "generic_struct",
+   "declared_params": 1,
+   "line": 115
+  },
+  {
+   "file": "examples/generics_advanced.cypy",
+   "callee": "Box",
+   "type_arg": "int",
+   "kind": "generic_struct",
+   "declared_params": 1,
+   "line": 36
+  },
+  {
+   "file": "examples/generics_advanced.cypy",
+   "callee": "wrap_in_list",
+   "type_arg": "int",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 32
+  },
+  {
+   "file": "examples/generics_advanced.cypy",
+   "callee": "identity",
+   "type_arg": "str",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 27
+  },
+  {
+   "file": "examples/generics_advanced.cypy",
+   "callee": "identity",
+   "type_arg": "int",
+   "kind": "generic_func",
+   "declared_params": 1,
+   "line": 26
+  }
+ ],
+ "shape": {
+  "generic_func": 11,
+  "generic_struct": 2
+ },
+ "parse_fail_n": 0,
+ "callsite_n": 13
+}

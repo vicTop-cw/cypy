@@ -1,0 +1,180 @@
+{
+  "verify": {
+    "name": "verify",
+    "description": "验收通过（待验收 -> 已完成，父任务自动上卷）。[gate:required] 任务须先有新鲜通过的 run_check 记录；可选 docs_check 开启「文档即实现」门禁（校验 README/CHANGELOG/reports 存在性与交付物回传五段式，不达标打回）。参数：task_id、verifier、docs_check、now。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        },
+        "verifier": {
+          "type": "string",
+          "description": "验收人（必填）"
+        },
+        "docs_check": {
+          "type": "boolean",
+          "description": "是否开启文档一致性门禁(默认 false，不传即现状)：开启后校验项目结构 README.md/CHANGELOG.md/reports 与交付物回传五段式，缺项打回"
+        },
+        "now": {
+          "type": "string",
+          "description": "时间戳(可选)"
+        }
+      },
+      "required": [
+        "task_id",
+        "verifier"
+      ]
+    }
+  },
+  "archive": {
+    "name": "archive",
+    "description": "归档任务（仅限人类指挥官）。参数：task_id、by 操作者。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        },
+        "by": {
+          "type": "string",
+          "description": "操作者(默认 human_steward)"
+        },
+        "now": {
+          "type": "string",
+          "description": "时间戳(可选)"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  },
+  "execute": {
+    "name": "execute",
+    "description": "记录执行交付物（向后兼容）。必填：task_id、deliverable；可选：executor(默认manual)、model、tokens_in、tokens_out、cost、duration_ms、rate_limited、failure_reason、now。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        },
+        "deliverable": {
+          "type": "string",
+          "description": "交付物描述（必填）"
+        },
+        "executor": {
+          "type": "string",
+          "description": "执行器名称(默认 manual)"
+        },
+        "model": {
+          "type": "string",
+          "description": "模型名称(可选)"
+        },
+        "tokens_in": {
+          "type": "integer",
+          "description": "输入 token 数(可选默认0)"
+        },
+        "tokens_out": {
+          "type": "integer",
+          "description": "输出 token 数(可选默认0)"
+        },
+        "cost": {
+          "type": "number",
+          "description": "执行成本(可选默认0)"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "description": "执行耗时毫秒(可选默认0)"
+        },
+        "rate_limited": {
+          "type": "boolean",
+          "description": "是否被限流(可选默认false)"
+        },
+        "failure_reason": {
+          "type": "string",
+          "description": "失败原因(可选)"
+        },
+        "now": {
+          "type": "string",
+          "description": "时间戳(可选)"
+        }
+      },
+      "required": [
+        "task_id",
+        "deliverable"
+      ]
+    }
+  },
+  "heartbeat": {
+    "name": "heartbeat",
+    "description": "活动信号上报（AO ActivityState）：任务执行前/执行中周期性上报，超时静默将触发 heal 回滚。参数：task_id、signal(可选默认 active)、now。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        },
+        "signal": {
+          "type": "string",
+          "description": "信号(可选)：pre-execution/active/submit，默认 active"
+        },
+        "now": {
+          "type": "string",
+          "description": "时间戳(可选，默认内置)"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  },
+  "plan_revise": {
+    "name": "plan_revise",
+    "description": "反馈驱动的计划修订（R98，ReAct arXiv 2210.03629 / CoPAL arXiv 2310.07263 蒸馏）：把「拆完即弃」升级为「执行中持续修订」——给定根任务及子任务执行反馈，计算计划三分：keep（已证有效、承诺保留）/ rework（失败或其依赖链受牵连，需返工，控级联不涟漪）/ ready（依赖全部有效且未执行，下一步可做）。feedback 缺省读真实状态（已完成/已归档=ok；已打回/已暂停=否；其余=未证）；传 [{task_id, ok}] 可显式覆盖。纯计算、只读不写库（决策建议，执行权在 agent/指挥官，与 saga 返回补偿序列同一抽象层）。参数：root_task_id 根任务（必填）、feedback 执行反馈数组（可选，[{task_id, ok}]）、namespace（可选默认 default）。返回 { ok, root_task_id, basis: status|feedback, keep_count, rework_count, ready_count, keep, rework, ready, note }。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "root_task_id": {
+          "type": "string",
+          "description": "根任务 id（必填）"
+        },
+        "feedback": {
+          "type": "array",
+          "description": "执行反馈数组（可选，[{task_id, ok}]，缺省读真实状态）"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "命名空间（可选默认 default）"
+        }
+      },
+      "required": [
+        "root_task_id"
+      ]
+    }
+  },
+  "reopen_task": {
+    "name": "reopen_task",
+    "description": "重开/重派任务：任意非归档任务回滚为已领取（M4 heal/运维重派用）。参数：task_id、now。",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "任务 id（必填）"
+        },
+        "now": {
+          "type": "string",
+          "description": "时间戳(可选)"
+        }
+      },
+      "required": [
+        "task_id"
+      ]
+    }
+  }
+}

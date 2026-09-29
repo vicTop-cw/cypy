@@ -1,0 +1,225 @@
+{
+ "refuse": [],
+ "groups": {
+  "G1 摘掉元数判定的调用点": {
+   "expect": 1,
+   "applied": true,
+   "reds": [
+    "test_advance_alias_form_is_also_checked",
+    "test_advance_arity_and_return_errors_coexist",
+    "test_advance_callable_arity_violation_reported",
+    "test_advance_callable_arity_zero_args_passed_reported"
+   ],
+   "expected": [
+    "test_advance_callable_arity_violation_reported",
+    "test_advance_callable_arity_zero_args_passed_reported",
+    "test_advance_alias_form_is_also_checked",
+    "test_advance_arity_and_return_errors_coexist"
+   ],
+   "ok": true,
+   "note": "本环主张就是这一行调用；摘掉后 4 条违例锁必须红",
+   "restored": true,
+   "compiled": true,
+   "must_stay_green": [
+    "test_advance_unrecognized_callable_shape_is_not_judged",
+    "test_advance_correct_single_arg_call_stays_clean",
+    "test_advance_keyword_arg_call_is_skipped",
+    "test_advance_codegen_object_fallback_unchanged"
+   ],
+   "total_seen": 9,
+   "must_stay_green_ok": true
+  },
+  "G2 把不认识的形状当零参判定": {
+   "expect": 1,
+   "applied": true,
+   "reds": [
+    "test_advance_unrecognized_callable_shape_is_not_judged"
+   ],
+   "expected": [
+    "test_advance_unrecognized_callable_shape_is_not_judged"
+   ],
+   "ok": true,
+   "note": "『宁可不判也不误判』这条主张的承重证明：兜底当成零参 ⇒ 只有那一条红，其余 8 条不该被牵连",
+   "restored": true,
+   "compiled": true,
+   "must_stay_green": [
+    "test_advance_callable_arity_violation_reported",
+    "test_advance_callable_arity_zero_args_passed_reported",
+    "test_advance_alias_form_is_also_checked",
+    "test_advance_arity_and_return_errors_coexist",
+    "test_advance_correct_single_arg_call_stays_clean",
+    "test_advance_two_arg_and_zero_arg_forms_match",
+    "test_advance_keyword_arg_call_is_skipped",
+    "test_advance_codegen_object_fallback_unchanged"
+   ],
+   "total_seen": 9,
+   "must_stay_green_ok": true
+  },
+  "G3 关键字实参不再跳过": {
+   "expect": 1,
+   "applied": true,
+   "reds": [
+    "test_advance_keyword_arg_call_is_skipped"
+   ],
+   "expected": [
+    "test_advance_keyword_arg_call_is_skipped"
+   ],
+   "ok": true,
+   "note": "还原成上一版那个只按 len==2 剔的过滤器 ⇒ 会把 ('x', 1) 当 0 个实参而误报",
+   "restored": true,
+   "compiled": true,
+   "must_stay_green": [
+    "test_advance_callable_arity_violation_reported",
+    "test_advance_callable_arity_zero_args_passed_reported",
+    "test_advance_alias_form_is_also_checked",
+    "test_advance_arity_and_return_errors_coexist",
+    "test_advance_unrecognized_callable_shape_is_not_judged"
+   ],
+   "total_seen": 9,
+   "must_stay_green_ok": true
+  },
+  "G4 判定过严（忘掉最后一项是返回类型）": {
+   "expect": 1,
+   "applied": true,
+   "reds": [
+    "test_advance_alias_form_is_also_checked",
+    "test_advance_arity_and_return_errors_coexist",
+    "test_advance_callable_arity_violation_reported",
+    "test_advance_callable_arity_zero_args_passed_reported",
+    "test_advance_codegen_object_fallback_unchanged",
+    "test_advance_correct_single_arg_call_stays_clean",
+    "test_advance_keyword_arg_call_is_skipped",
+    "test_advance_two_arg_and_zero_arg_forms_match",
+    "test_advance_unrecognized_callable_shape_is_not_judged"
+   ],
+   "expected": [
+    "test_advance_callable_arity_violation_reported",
+    "test_advance_callable_arity_zero_args_passed_reported",
+    "test_advance_alias_form_is_also_checked",
+    "test_advance_arity_and_return_errors_coexist",
+    "test_advance_unrecognized_callable_shape_is_not_judged",
+    "test_advance_correct_single_arg_call_stays_clean",
+    "test_advance_two_arg_and_zero_arg_forms_match",
+    "test_advance_keyword_arg_call_is_skipped",
+    "test_advance_codegen_object_fallback_unchanged"
+   ],
+   "ok": true,
+   "note": "成对锁另一边的承重证明：把声明表读宽一格 ⇒ 正确调用、关键字跳过、产物回退三条也必红（实测这一组是宽爆破：9 条全红，说明 9 条都在盯着这条判定链，没有一条是摆设）",
+   "restored": true,
+   "compiled": true,
+   "must_stay_green": [],
+   "total_seen": 9,
+   "must_stay_green_ok": true
+  },
+  "C1 对照：只改注释": {
+   "expect": 1,
+   "applied": true,
+   "reds": [],
+   "expected": [],
+   "ok": true,
+   "note": "只加一行注释 ⇒ 9 条全绿，否则锁钉在字面噪声上",
+   "restored": true,
+   "compiled": true,
+   "must_stay_green": [],
+   "total_seen": 9,
+   "must_stay_green_ok": true
+  }
+ },
+ "started_at_utc": "2026-09-27T19:21:59+00:00",
+ "snapshot": {
+  "dir": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_advance\\snap_9060",
+  "copied": 210,
+  "untracked_copied": 60,
+  "markers_ok": true,
+  "missing_on_disk": [
+   "examples/demos/legacy/analyzer/type_checking.cypy",
+   "examples/demos/legacy/builtins/defer_and_guard.cypy",
+   "examples/demos/legacy/builtins/generics.cypy",
+   "examples/demos/legacy/builtins/pointer_operations.cypy",
+   "examples/demos/legacy/codegen/cdef_class_generation.cypy",
+   "examples/demos/legacy/codegen/module_magic_attrs.cypy",
+   "examples/demos/legacy/parser/build_blocks.cypy",
+   "examples/demos/legacy/parser/implicit_policy.cypy",
+   "examples/demos/legacy/parser/struct_definition.cypy",
+   "examples/struct.cypy"
+  ],
+  "at_utc": "2026-09-27T19:21:59+00:00",
+  "removed": true
+ },
+ "identity": [
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_advance\\snap_9060\\cypy_hook\\hook.py",
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_advance\\snap_9060\\cypyc\\analyzer\\type_checker.py",
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_advance\\snap_9060\\cypyc\\cli.py",
+  "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_advance\\snap_9060\\cypyc\\parser\\parser.py"
+ ],
+ "witnesses": {
+  "_advance_r3_witness_ok.cypy": {
+   "sha16": "2b65455f9afa0460",
+   "path": ".fist-loop-20260927/tmp_advance/snap_9060/examples/_advance_r3_witness_ok.cypy"
+  },
+  "_advance_r3_witness_bad.cypy": {
+   "sha16": "96c14ec76560546c",
+   "path": ".fist-loop-20260927/tmp_advance/snap_9060/examples/_advance_r3_witness_bad.cypy"
+  }
+ },
+ "premise": {
+  "rc": 0,
+  "passed": 9,
+  "reds": [],
+  "total_seen": 9
+ },
+ "corpus": {
+  "files_scanned": 79,
+  "samples_scanned": 79,
+  "files_changed": 0,
+  "witness": {
+   "ok_in_scan": true,
+   "bad_in_scan": true,
+   "ok_restored": [],
+   "bad_restored": [
+    "Callable arity mismatch: expected 2, got 1 at 3:12"
+   ],
+   "ok_mutation": [],
+   "bad_mutation": []
+  },
+  "changed": {},
+  "new_errors_outside_locks": [],
+  "arity_errors_after": 0,
+  "changes_only_through_the_check": true,
+  "sensitivity_probe": {
+   "files_scanned": 79,
+   "new_error_kinds": 1,
+   "witness_ok_gained": [
+    "Callable arity mismatch: expected 2, got 1 at 3:12"
+   ],
+   "all_through_the_check": true,
+   "sample": [
+    "Callable arity mismatch: expected 2, got 1 at 3:12"
+   ]
+  }
+ },
+ "after_restore": {
+  "rc": 0,
+  "passed": 9,
+  "reds": [],
+  "total_seen": 9
+ },
+ "workspace_untouched": true,
+ "snap_left": [],
+ "groups_total": 5,
+ "groups_ok": 5,
+ "lock_names_total": 9,
+ "revert_covered": [
+  "test_advance_alias_form_is_also_checked",
+  "test_advance_arity_and_return_errors_coexist",
+  "test_advance_callable_arity_violation_reported",
+  "test_advance_callable_arity_zero_args_passed_reported",
+  "test_advance_codegen_object_fallback_unchanged",
+  "test_advance_correct_single_arg_call_stays_clean",
+  "test_advance_keyword_arg_call_is_skipped",
+  "test_advance_two_arg_and_zero_arg_forms_match",
+  "test_advance_unrecognized_callable_shape_is_not_judged"
+ ],
+ "revert_uncovered_locks": [],
+ "finished_at_utc": "2026-09-27T19:22:17+00:00"
+}

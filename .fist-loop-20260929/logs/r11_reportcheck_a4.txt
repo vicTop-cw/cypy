@@ -1,0 +1,15 @@
+PASS  bug_ids_all_exist | cited=16 missing=[]
+PASS  bug_ids_nonvacuous | cited=16（少于 10 说明抽取坏了）
+PASS  paths_all_exist | paths=16 missing=[]
+PASS  paths_nonvacuous | paths=16（实测 17，地板 12）
+PASS  verbatim_claims_backed | claims=8 unbacked=[]
+PASS  verbatim_nonvacuous | claims=8
+PASS  code_anchors_in_range | []
+PASS  ledger_numbers_match | {'open_blocks': {'claim': '37', 'actual': '37'}, 'headers': {'claim': '130', 'actual': '130'}, 'fixed_total': {'claim': '85', 'actual': '85'}, 'high': {'claim': '5', 'actual': '5'}, 'medium': {'claim': '22', 'actual': '2
+PASS  judge_face_ids_named | ['117', '123', '124']
+PASS  spec_cases_29 | fnv1a64:90f410a1d1cd0fd8
+PASS  spec_fp_in_report | 
+PASS  floor_100_matches_corpus | corpus_total=100
+PASS  canary_shifted_range_red | [{'rel': 'cypyc/parser/parser.py', 'still_hits_if_shifted': False}, {'rel': 'cypyc/parser/parser.py', 'still_hits_if_shifted': False}, {'rel': 'cypyc/parser/parser.py', 'still_hits_if_shifted': False}, {'rel': 'cypyc/ana
+PASS  canary_fake_bug_id_red | fake=[9999, 130]
+CONCLUSION checks=14 failed=0 ledger_open=37 bug_ids=16 claims=8 paths=16 section6_deferred=False rc=0

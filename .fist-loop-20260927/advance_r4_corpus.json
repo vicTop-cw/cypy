@@ -1,0 +1,887 @@
+{
+ "started": "2026-09-28T05:21:44+00:00",
+ "sweep": "同一趟两棵树扫描同时供法⑤与法⑥使用",
+ "trees": {
+  "before": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_before_tree",
+   "py_files": 56,
+   "edited_shas": {
+    "scope_analyzer.py": "df476769e3e0",
+    "type_checker.py": "ff9e8821cb22"
+   }
+  },
+  "after": {
+   "tree": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_after_tree",
+   "py_files": 56,
+   "edited_shas": {
+    "scope_analyzer.py": "b7a14e5a5521",
+    "type_checker.py": "cbac2bfb44c7"
+   }
+  }
+ },
+ "witnesses": [
+  {
+   "witness": "witness_never",
+   "fixture": "a4_never_min.cypy",
+   "before_rc": 1,
+   "after_rc": 0,
+   "before_errors": [
+    "- Undefined name 'Never' at 1:28"
+   ],
+   "after_errors": [],
+   "pyx_identical": false
+  },
+  {
+   "witness": "witness_bogus",
+   "fixture": "a4_neg_bogus_type.cypy",
+   "before_rc": 1,
+   "after_rc": 1,
+   "before_errors": [
+    "- Undefined name 'NeverX' at 1:12"
+   ],
+   "after_errors": [
+    "- Undefined name 'NeverX' at 1:12"
+   ],
+   "pyx_identical": true
+  }
+ ],
+ "new_names_whitelisted_this_ring": [
+  "Never",
+  "repr",
+  "open",
+  "iter"
+ ],
+ "at_utc": "2026-09-28T05:22:50+00:00",
+ "law": "语料零新增红：77 档 examples 在两态下诊断集只减不增",
+ "samples_scanned": 77,
+ "files_with_new_errors": [],
+ "new_errors_outside_locks": 0,
+ "files_with_errors_gone": [],
+ "rows": [
+  {
+   "file": "examples/_pending_build_blocks.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/_pending_type_defects.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/basic_types.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/concurrency.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/constraint_numeric.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/control_flow.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/defer.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/basics/control_flow.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/basics/hello.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/basics/types.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/basics/variables.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/boundary_cases/boundary_values.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/boundary_cases/combined_features.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/boundary_cases/composite_declarations.cypy",
+   "uses_new_names": [
+    "repr"
+   ],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/boundary_cases/exception_edges.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/boundary_cases/nested_syntax.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/boundary_cases/special_operators.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/async_await.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/exceptions_demo.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/magic_properties.cypy",
+   "uses_new_names": [
+    "repr"
+   ],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/simd_vector.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/spawn_go.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/concurrency_advanced/union_type.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/data_structures/class_demo.cypy",
+   "uses_new_names": [
+    "repr"
+   ],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/data_structures/enum_demo.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/data_structures/struct_demo.cypy",
+   "uses_new_names": [
+    "repr"
+   ],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/data_structures/type_alias_demo.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/legacy/analyzer/scope_usage.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/legacy/analyzer/type_safety.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/legacy/codegen/codegen_basic.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/legacy/codegen/codegen_struct.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/legacy/integration/array_operations.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/legacy/integration/full_program.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/legacy/integration/recursion.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/legacy/parser/basic_syntax.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/legacy/parser/type_conversion.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/macros/macro_examples.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/memory_metaprogramming/comptime_demo.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/memory_metaprogramming/defer_demo.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/memory_metaprogramming/macros.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/memory_metaprogramming/meta_blocks.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/memory_metaprogramming/pointers.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/patterns_operators/build_blocks.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/patterns_operators/extractor_patterns.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/patterns_operators/pattern_matching.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/patterns_operators/pipe_operator.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/patterns_operators/syntax_sugar.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/simd_vectors/vec_examples.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/traits_duck/duck_advanced.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/traits_duck/duck_basic.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/traits_duck/trait_advanced.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/traits_duck/trait_basic.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/type_system/union_type_examples.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/demos/upcoming_features/planned_features.cypy",
+   "uses_new_names": [],
+   "before_rc": 1,
+   "after_rc": 1,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/functions.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/generic.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/generics_advanced.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/hello.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/list_comprehension.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/meta.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/metaprogramming.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/minimal_test.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/new_syntax_features.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/pipe_operator.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/pointers.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/struct_enum.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/struct_records.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/subtype_units.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/test_duck.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/test_macro.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/test_meta.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/test_new_features.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/test_project/geometry.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/test_project/main.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/test_project/types.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/test_union.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  },
+  {
+   "file": "examples/test_vec.cypy",
+   "uses_new_names": [],
+   "before_rc": 0,
+   "after_rc": 0,
+   "new_error_lines": [],
+   "gone_error_lines": [],
+   "pyx_identical": true,
+   "diff_lines": 0
+  }
+ ],
+ "self_checks": [
+  {
+   "label": "语料面：改后不得有任何文件新增诊断行",
+   "got": [],
+   "want": [],
+   "why": "扫描 77 个文件",
+   "ok": true
+  },
+  {
+   "label": "语料基数：扫描数要等于 examples/*.cypy 的实际数",
+   "got": 77,
+   "want": 77,
+   "why": "少扫＝口径静默收窄（上一环 77 档是基线）",
+   "ok": true
+  },
+  {
+   "label": "见证①：用 Never 的夹具必须两态不同（尺子看得见被测形状，0 才不是空集蒙的）",
+   "got": [
+    false,
+    1,
+    0
+   ],
+   "want": [
+    false,
+    1,
+    0
+   ],
+   "why": "改前红、改后绿且产物确有变化",
+   "ok": true
+  },
+  {
+   "label": "见证②：用 NeverX 的夹具必须两态都报（白名单没有整片放开）",
+   "got": [
+    true,
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true,
+    true
+   ],
+   "why": "before=[\"- Undefined name 'NeverX' at 1:12\"] after=[\"- Undefined name 'NeverX' at 1:12\"]",
+   "ok": true
+  }
+ ],
+ "refuse": []
+}

@@ -1,0 +1,191 @@
+{
+ "key": "r2_advance",
+ "root_task": "T0r61",
+ "assignee": "cypy-advancer",
+ "stage": "R2-推进",
+ "forbid": "改既有测试的断言或数量（只能加不能减）；对产品文件做整档 formatter；动 PROJECT-SPEC/SYNTAX 冻结语义；git add/commit/push；把跨进程 build/ 互踩说成本环已修（只加引擎内串行锁，另立 BUG-54）；用『源码里出现了某字样』代替调用面判据；重跑非幂等的入账/上卷脚本（上卷驱动必须先落报告草稿再跑，且只跑一次）",
+ "laws": [
+  {
+   "name": "L1 转结原话先重测：BUG-48 的『无产物无日志』两半被同一夹具实测推翻，只修真缺的那三件",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r2_watch_probe_before.json",
+     "successfully_reloaded",
+     1500
+    ],
+    [
+     ".fist-loop-20260927/advance_r2_watch_probe.json",
+     "watch_published",
+     1500
+    ]
+   ]
+  },
+  {
+   "name": "L2 `-o` 产物发布成立：正例 .pyx/.pyd 落地，反例不设目录时必须是空操作（库默认行为未变）",
+   "artifacts": [
+    [
+     "tests/test_advance_20260927_r2.py",
+     "test_real_toolchain_publishes_compiled_artifacts",
+     3000
+    ],
+    [
+     "tests/test_advance_20260927_r2.py",
+     "test_publish_artifacts_is_noop_without_artifact_dir",
+     3000
+    ]
+   ]
+  },
+  {
+   "name": "L3 CLI 接线：run_watch 把 -o 当产物目录、挂上 on_reload、把 --debounce 传下去（哨兵断言逐参核对）",
+   "artifacts": [
+    [
+     "tests/test_advance_20260927_r2.py",
+     "test_cli_watch_wires_callback_and_output",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/advance_r2_wiring.json",
+     "on_reload_callable",
+     500
+    ]
+   ]
+  },
+  {
+   "name": "L4 `--debounce` 从被忽略到生效：传 1.23 监控器拿 1.23，不传仍为 0.5（成对）",
+   "artifacts": [
+    [
+     "tests/test_advance_20260927_r2.py",
+     "test_debounce_delay_is_passed_through_and_defaults_keep_old_behaviour",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/advance_r2_wiring.json",
+     "monitor_debounce_measured",
+     500
+    ]
+   ]
+  },
+  {
+   "name": "L5 并发批次互踩是真成因：同一夹具跑开关两态——锁关 3/3 出红且成因为编译类，锁开 3/3 全绿",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r2_race_probe.json",
+     "lock_off_red_rounds",
+     1200
+    ],
+    [
+     ".fist-loop-20260927/advance_r2_race_probe.json",
+     "compileish_failure",
+     1200
+    ]
+   ]
+  },
+  {
+   "name": "L6 失败必须可见且不牵连成功：复制失败打一行且不判整次重载死；无产物批次打 No artifacts 并逐条列错误",
+   "artifacts": [
+    [
+     "tests/test_advance_20260927_r2.py",
+     "test_publish_survives_copy_failure",
+     3000
+    ],
+    [
+     ".fist-loop-20260927/advance_r2_watch_probe.json",
+     "watch_no_artifacts",
+     1500
+    ]
+   ]
+  },
+  {
+   "name": "L7 三套判据体系同一时刻复算且只升不降，git 红线 HEAD 未动",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/advance_r2_baselines.json",
+     "1903 passed",
+     900
+    ],
+    [
+     ".fist-loop-20260927/advance_r2_baselines.json",
+     "PASS=25 FAIL=0",
+     900
+    ]
+   ]
+  },
+  {
+   "name": "L8 文档与账本同步：USAGE 2.5 写成实际行为，BUG-48 的 FIXED 段带原话反驳，BUG-54 入账不修并给出可复跑判据",
+   "artifacts": [
+    [
+     "docs/USAGE.md",
+     "Published N artifact(s)",
+     9601
+    ],
+    [
+     "memory/bugs.md",
+     "BUG-54",
+     60000
+    ]
+   ]
+  }
+ ],
+ "branches": [
+  [
+   "L1 转结原话先重测：BUG-48 的『无产物无日志』两半被同一夹具实测推翻，只修真缺的那三件",
+   ".fist-loop-20260927/advance_r2_watch_probe_before.json",
+   "successfully_reloaded"
+  ],
+  [
+   "L2 `-o` 产物发布成立：正例 .pyx/.pyd 落地，反例不设目录时必须是空操作（库默认行为未变）",
+   "tests/test_advance_20260927_r2.py",
+   "test_real_toolchain_publishes_compiled_artifacts"
+  ],
+  [
+   "L3 CLI 接线：run_watch 把 -o 当产物目录、挂上 on_reload、把 --debounce 传下去（哨兵断言逐参核对）",
+   "tests/test_advance_20260927_r2.py",
+   "test_cli_watch_wires_callback_and_output"
+  ],
+  [
+   "L4 `--debounce` 从被忽略到生效：传 1.23 监控器拿 1.23，不传仍为 0.5（成对）",
+   "tests/test_advance_20260927_r2.py",
+   "test_debounce_delay_is_passed_through_and_defaults_keep_old_behaviour"
+  ],
+  [
+   "L5 并发批次互踩是真成因：同一夹具跑开关两态——锁关 3/3 出红且成因为编译类，锁开 3/3 全绿",
+   ".fist-loop-20260927/advance_r2_race_probe.json",
+   "lock_off_red_rounds"
+  ],
+  [
+   "L6 失败必须可见且不牵连成功：复制失败打一行且不判整次重载死；无产物批次打 No artifacts 并逐条列错误",
+   "tests/test_advance_20260927_r2.py",
+   "test_publish_survives_copy_failure"
+  ],
+  [
+   "L7 三套判据体系同一时刻复算且只升不降，git 红线 HEAD 未动",
+   ".fist-loop-20260927/advance_r2_baselines.json",
+   "1903 passed"
+  ],
+  [
+   "L8 文档与账本同步：USAGE 2.5 写成实际行为，BUG-48 的 FIXED 段带原话反驳，BUG-54 入账不修并给出可复跑判据",
+   "docs/USAGE.md",
+   "Published N artifact(s)"
+  ]
+ ],
+ "root_deliverable": "R2-推进 交付：{REPORT}；半径=已声明未实现的补全，落在 `cypyc watch` 一条链。动手前先重测转结原话：BUG-48 说『无产物无日志』——实测 3 条 [HotReload] File changed、2 次 Successfully reloaded、rc=0、无 traceback ⇒ 两半都不成立，真缺的是 `-o` 收不到产物 / CLI 从不传 on_reload / `--debounce` 被引擎写死 0.5。三件全补：产物从临时目录复制进 -o（正例 a/b 各 .pyx+.pyd 落地、反例不设目录时为空操作），run_watch 挂上批次结论回调并逐项核对实参，debounce 透传（传 1.23 生效、不传仍 0.5）。附带抓到并发批次互踩共享 build/ 的更深缺陷：同夹具开关两态实测（锁关 3/3 红且成因是编译类、锁开 3/3 绿），本环加类级 RLock（`HotReloadEngine._compile_lock`），跨进程那半边入账 BUG-54（T0r62）并给出关闭判据。三套基线 1903/47/25，HEAD 仍 17d68b4、暂存 0；作用域化 lint 亲笔 429 行零违例。本环自身缺陷 8 条当场列 §五",
+ "root_marker": "[selfdrive-advance]",
+ "root_extra_artifacts": [
+  [
+   ".fist-loop-20260927/advance_r2_baselines.json",
+   "1903 passed",
+   900
+  ],
+  [
+   ".fist-loop-20260927/advance_r2_race_probe.json",
+   "lock_off_red_rounds",
+   1200
+  ],
+  [
+   "memory/bugs.md",
+   "BUG-54",
+   60000
+  ]
+ ],
+ "root_verify_reason": "本环结论全部由盘上证据件反解：改码前的 before 探针件（-o 目录为空、事件日志已存在）、改码后的同一夹具（4 份产物 + [Watch] Published 行）、开关两态的并发判据件、CLI 接线的哨兵件、三套基线同一时刻复算、BUG-54 入账回执与账本回读；上卷驱动按'先草稿后驱动且只跑一次'的口径执行，枝干被拒必须为 0"
+}

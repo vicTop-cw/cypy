@@ -1,0 +1,13 @@
+L0 L0 现树（应全绿）: pytest============================== 144 passed in 1.24s ============================= gate=CONCLUSION specs=1 cases=23 passed=23 failed=0 refused=0 accuracy=100.00% rc=0
+M1 摘掉注解位接线: pytest_red=16 gate_failed=8 identity=[{"rel": "cypyc/analyzer/type_checker.py", "kind": "摘除", "anchor_gone": true}]
+    FAILED例: ['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#10]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#12]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#15]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#18]']
+M2 摘掉显式实参构造位接线: pytest_red=2 gate_failed=1 identity=[{"rel": "cypyc/analyzer/type_checker.py", "kind": "摘除", "anchor_gone": true}]
+    FAILED例: ['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#8]', 'tests/test_generic_bounds_r12.py::test_explicit_type_args_at_constructor_reject_violation']
+M3 字面量位退回窄复制: pytest_red=3 gate_failed=1 identity=[{"rel": "cypyc/analyzer/type_checker.py", "kind": "替换", "anchor_gone": true}]
+    FAILED例: ['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#20]', 'tests/test_generic_bounds_r12.py::test_struct_literal_path_reuses_the_shared_checker', 'tests/test_generic_bounds_r12.py::test_struct_literal_position_rejects_union_bound']
+M4 共用件短路（三处接线全成装饰）: pytest_red=22 gate_failed=11 identity=[{"rel": "cypyc/analyzer/type_checker.py", "kind": "替换", "anchor_gone": true}]
+    FAILED例: ['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#10]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#12]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#15]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#18]']
+M5 只改注释（对照格，必须 0 红）: pytest_red=0 gate_failed=0 identity=[{"rel": "cypyc/analyzer/type_checker.py", "kind": "只改注释", "code_unchanged": true, "comment_actually_changed": true}]
+    FAILED例: []
+CONCLUSION cells=6 load_bearing_cells=4 all_red=True comment_control_zero_red=True bad=[] rc=0
+matrix_rc=0

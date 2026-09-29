@@ -1,0 +1,192 @@
+{
+ "refused": [
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r74.1",
+   "error": "语料 [spec:T0r74.1:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r74.1",
+   "error": "语料 [spec:T0r74.1:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r74.1",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r74.2",
+   "error": "语料 [spec:T0r74.2:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r74.2",
+   "error": "语料 [spec:T0r74.2:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r74.2",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r74.3",
+   "error": "语料 [spec:T0r74.3:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r74.3",
+   "error": "语料 [spec:T0r74.3:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r74.3",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r74.4",
+   "error": "语料 [spec:T0r74.4:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r74.4",
+   "error": "语料 [spec:T0r74.4:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r74.4",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r74.5",
+   "error": "语料 [spec:T0r74.5:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r74.5",
+   "error": "语料 [spec:T0r74.5:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r74.5",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r74.6",
+   "error": "语料 [spec:T0r74.6:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r74.6",
+   "error": "语料 [spec:T0r74.6:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r74.6",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r74.7",
+   "error": "语料 [spec:T0r74.7:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r74.7",
+   "error": "语料 [spec:T0r74.7:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r74.7",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r74.8",
+   "error": "语料 [spec:T0r74.8:r1] 已通过审核，无需重复创建"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r74.8",
+   "error": "语料 [spec:T0r74.8:r1] 当前状态为 [approved]，不是待审核状态"
+  },
+  {
+   "call": "verify",
+   "task_id": "T0r74.8",
+   "error": "非法验收: 任务处于 [已完成]，需先 submit"
+  },
+  {
+   "call": "claim",
+   "task_id": "T0r74",
+   "error": "非法迁移: claim 要求状态 [待领取]，当前是 [待验收]"
+  },
+  {
+   "call": "execute",
+   "task_id": "T0r74",
+   "error": "非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute"
+  },
+  {
+   "call": "submit",
+   "task_id": "T0r74",
+   "error": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"
+  },
+  {
+   "call": "omega_spec_create",
+   "task_id": "T0r74",
+   "error": "任务 [T0r74] 未开启 Omega 强验证（description 缺少 [omega:required] 标记），无需创建语料"
+  },
+  {
+   "call": "omega_spec_review",
+   "task_id": "T0r74",
+   "error": "任务 [T0r74] 未开启 Omega 强验证，无语料可审"
+  },
+  {
+   "call": "omega_result_verify",
+   "task_id": "T0r74",
+   "error": "任务 [T0r74] 未开启 Omega 强验证，无需成果复验"
+  }
+ ],
+ "root_final": "已归档",
+ "leaves_done": 16,
+ "call_log_rows": 400,
+ "call_log_tally": {
+  "archive": 2,
+  "call_log": 1,
+  "claim": 27,
+  "execute": 25,
+  "get": 36,
+  "laya_decide": 1,
+  "omega_result_verify": 57,
+  "omega_spec_create": 57,
+  "omega_spec_review": 57,
+  "omega_status": 16,
+  "output_validate": 26,
+  "publish": 1,
+  "report_bug": 10,
+  "submit": 26,
+  "task_plan_deep": 1,
+  "verify": 57
+ },
+ "root_output_validate": [
+  {
+   "path": "memory/reviews/20260928.05.00.00.md",
+   "contains": "[selfdrive-hunt]",
+   "min_chars": 1500
+  },
+  {
+   "path": ".fist-loop-20260927/hunt_r4_repro.json",
+   "contains": "state_reached",
+   "min_chars": 2
+  },
+  {
+   "path": ".fist-loop-20260927/hunt_r4_drivers_lint.json",
+   "contains": "canary",
+   "min_chars": 1
+  }
+ ]
+}

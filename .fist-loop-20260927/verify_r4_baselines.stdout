@@ -1,0 +1,43 @@
+{
+ "floors": {
+  "pytest": 1956,
+  "collect": 1956,
+  "suite": 47,
+  "e2e_pass": 25
+ },
+ "systems": {
+  "pytest": [
+   1956,
+   0,
+   0,
+   0
+  ],
+  "collect": 1956,
+  "suite": {
+   "Total": 47,
+   "Passed": 47,
+   "Failed": 0,
+   "Skipped": 0
+  },
+  "e2e": {
+   "PASS": 25,
+   "FAIL": 0,
+   "RUNFAIL": 0,
+   "WARN": 0
+  }
+ },
+ "radius_counts": {
+  "product": 0,
+  "tests": 0,
+  "docs": 0,
+  "frozen": 0,
+  "loop": 236,
+  "ledger": 1,
+  "other": 57
+ },
+ "head": "17d68b4",
+ "staged": 0,
+ "dirty_rows": 169,
+ "three_green": true,
+ "refuse": []
+}

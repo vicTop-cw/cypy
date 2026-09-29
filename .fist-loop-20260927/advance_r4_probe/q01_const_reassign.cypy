@@ -1,0 +1,6 @@
+const PI: float = 3.14159
+
+def main() -> int:
+    PI = 2.0
+    print(PI)
+    return 0

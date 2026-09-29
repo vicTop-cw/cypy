@@ -1,0 +1,33 @@
+[
+ {
+  "probe": "lex_backtick",
+  "crashed": "ImportError: cannot import name 'parse_source' from 'cypyc.parser.parser' (E:\\IDEProjects\\AI\\Cypy\\cypyc\\parser\\parser.py)"
+ },
+ {
+  "probe": "struct_decorators",
+  "crashed": "ImportError: cannot import name 'parse_source' from 'cypyc.parser.parser' (E:\\IDEProjects\\AI\\Cypy\\cypyc\\parser\\parser.py)"
+ },
+ {
+  "probe": "struct_control",
+  "crashed": "ImportError: cannot import name 'parse_source' from 'cypyc.parser.parser' (E:\\IDEProjects\\AI\\Cypy\\cypyc\\parser\\parser.py)"
+ },
+ {
+  "probe": "incremental_staleness",
+  "crashed": "AttributeError: 'IncrementalCompiler' object has no attribute '_compilation_cache'"
+ },
+ {
+  "probe": "hot_reload_union",
+  "captured_stdout": "raised AttributeError: 'HotReloadEngine' object has no attribute '_module_state'",
+  "callback_invoked": false,
+  "defect": false
+ },
+ {
+  "probe": "fr_string",
+  "crashed": "ImportError: cannot import name 'parse_source' from 'cypyc.parser.parser' (E:\\IDEProjects\\AI\\Cypy\\cypyc\\parser\\parser.py)"
+ },
+ {
+  "probe": "locale_write",
+  "subprocess_output": "preferred=cp936 | UnicodeEncodeError: 'gbk' codec can't encode character '\\u0e01' in position 3: illegal multibyte sequence",
+  "defect": true
+ }
+]

@@ -1,0 +1,18 @@
+# Macro 测试
+#
+# T0r258.4.2：补 `def main() -> int:` 驱动 —— 宏定义在编译期被展开/校验，
+# 运行期至少要给出 test_macro() 的结果（此前零输出，golden 是冻结的崩溃回溯）。
+
+macro double(ts: Tokens) =
+    pass
+
+def test_macro() -> int:
+    x = 21
+    return x * 2
+
+def main() -> int:
+    print(f"macro test value = {test_macro()}")
+    return 0
+
+if __name__ == "__main__":
+    main()

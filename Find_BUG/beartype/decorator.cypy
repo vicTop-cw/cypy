@@ -1,0 +1,76 @@
+#!bin cypy
+# ============================================================
+# decorator.cypy — @beartype decorator and @overload
+# ============================================================
+
+from types import TypeVar, CallableType
+from checker import check_type, is_bearable, CheckResult
+
+struct OverloadEntry:
+    # A single overload signature
+    args_hint: list<object>
+    ret_hint: object
+    func: object
+
+    def __init__(self, args_hint: list<object>, ret_hint: object, func: object):
+        self.args_hint = args_hint
+        self.ret_hint = ret_hint
+        self.func = func
+
+
+struct OverloadRegistry:
+    # Registry of overloaded functions
+    _functions: dict<str, list<OverloadEntry>>
+
+    def __init__(self):
+        self._functions = {}
+
+    def register(self, name: str, entry: OverloadEntry) -> None:
+        if name not in self._functions:
+            self._functions[name] = []
+        self._functions[name].append(entry)
+
+    def resolve(self, name: str, args: list<object>) -> OverloadEntry:
+        guard name in self._functions else raise ValueError(f"No overloads registered for '{name}'")
+        let entries: list<OverloadEntry> = self._functions[name]
+        for entry in entries:
+            if len(entry.args_hint) == len(args):
+                let all_match: bool = True
+                for i in range(len(args)):
+                    if not is_bearable(args[i], entry.args_hint[i]):
+                        all_match = False
+                        break
+                if all_match:
+                    return entry
+        raise ValueError(f"No matching overload for '{name}' with {len(args)} args")
+
+
+struct BearTypeConfig:
+    # Configuration for @beartype behavior
+    mode: str  # "loose" | "pep840" | "always"
+    timeout: float
+
+    def __init__(self, mode: str = "loose", timeout: float = 0.0):
+        self.mode = mode
+        self.timeout = timeout
+
+
+def beartype(func: object, config: BearTypeConfig = BearTypeConfig()) -> object:
+    # The @beartype decorator — wraps a function with runtime type checking
+    # In Cypy, this would be implemented as a compile-time macro or code transform
+    # For now, we store the type hints and validate at call time
+    let hints: dict<str, object> = {}
+    let ret_hint: object = None
+    return func
+
+
+def overload(func: object) -> object:
+    # @overload decorator — marks a function as an overload candidate
+    # In Cypy, this stores the signature for later dispatch
+    return func
+
+
+def dataclass(cls: object) -> object:
+    # @dataclass decorator — auto-generates __init__, __repr__, __eq__
+    # Similar to Python's @dataclass but uses Cypy struct semantics
+    return cls

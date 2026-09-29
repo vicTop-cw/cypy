@@ -1,0 +1,133 @@
+{
+ "key": "r4_fix",
+ "tag": "[loop:20260927-loop:R4-修复]",
+ "assignee": "cypy-fixer",
+ "difficulty": "难",
+ "description": "[omega:required] [loop:20260927-loop:R4-修复] 修复（fix）R4：认领 R4-寻虫 入账的 BUG-61..BUG-70 十张单。范围与纪律：\n① 四个分析器根因（RC1 函数符号被登记成返回类型 / RC2 实参类型从不比对 / RC3 struct 成员类型不解析 / RC4 诊断文案外泄内部表示）在 `cypyc/semantic/type_checker.py` 里**按同一机制合并修**——先抽「可调用签名」与「类型兼容性谓词」两个公共件，再让四处调用点共用，不许一单一个补丁；\n② 每条修先写「修前必红」的锁，跑到红才动实现；修完配「把实现摘回原样锁必红」的回退矩阵，摘不动=锁不承重；\n③ 语义变更影响面正面测：新增诊断对存量语料（仓内全部 `.cypy` + examples + 测试内嵌源）逐档跑，列出「修前无诊断→修后有诊断」的清单；有命中就挂账交裁决，不许为了绿而放宽；\n④ BUG-65（SYNTAX/appendix-C 与状态表 7 行，冻结面）与 BUG-70（parser.py/cython_generator.py 越 3000 行阈值的拆分）只挂账不动刀；BUG-66/67（bridge 缓存落调用方 CWD、生成的 C 与 Cython 不等价）按「下一环可改」处理但本轮只做可逆的最小改动；\n⑤ 三套判据体系同批全量复算且只升不降（pytest ≥1938 / 自研 47/47 / e2e 25/25），HEAD 与暂存区红线不动；\n⑥ 收口顺序纪律（本轮新账）：判据件 → 报告终版 → 叶收口 → 根收口，报告渲染完不再改；根任务这次带 `[omega:required]`，Omega 链要在根上也能跑。",
+ "fingerprint": {
+  "必须": "每单有「修前必红」的锁与「摘回原样必红」的回退矩阵两条实测；根因合并修的证明是改动点共用同一函数/同一数据结构（file:line 列出），不是四张单各自加补丁；语义影响面按存量语料逐档实测并列清单；三套体系与 git 红线同批复算；冻结面按 mtime+sha 正面测；修复单逐单 claim→execute→submit→verify 且被拒原文逐字入账；号与账本条数从盘上现数",
+  "禁止": "改 PROJECT-SPEC/SYNTAX 冻结语义；重注册 golden；git add/commit/push/删文件；为了让测试绿而放宽或删既有断言；把「新增诊断让存量程序报错」偷偷放行或偷偷压掉；用「源码里出现某字样」代替调用面判据；把没做的写成 done；报告归档后再改交付物"
+ },
+ "laws": [
+  {
+   "name": "逐单认领并分栏（本环可修／交人工）：认领表从盘上账本反解，每张单的理由与归属逐条点名，交人工的不占修",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_claim.json",
+     "rows",
+     400
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_claim.json",
+     "handoff",
+     2
+    ]
+   ]
+  },
+  {
+   "name": "锁先行：每单一条「修前必红」的锁，跑到红才动实现；红必须是断言级红，不是收集错或夹具崩",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_locks.json",
+     "red_before",
+     4
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_locks.json",
+     "green_after",
+     4
+    ]
+   ]
+  },
+  {
+   "name": "根因合并修：RC1/RC2/RC3/RC4 的改动点共用同一处签名结构与兼容谓词，用 file:line 与符号引用正面证明，不是四个补丁",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_rc.json",
+     "shared_symbols",
+     2
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_rc.json",
+     "call_sites",
+     4
+    ]
+   ]
+  },
+  {
+   "name": "回退矩阵：每单把实现摘回修前原文，该单锁必须变红且其余锁不牵连；摘完逐文件 sha 复原并自证",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_revert.json",
+     "rows",
+     300
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_revert.json",
+     "collateral",
+     40
+    ]
+   ]
+  },
+  {
+   "name": "语义变更影响面：存量语料逐档跑分析器，「修前无诊断→修后有诊断」清单实测；有命中就挂账交裁决，不放宽不放行",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_impact.json",
+     "corpus",
+     20
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_impact.json",
+     "unadjudicated",
+     40
+    ]
+   ]
+  },
+  {
+   "name": "三套体系同批全量复算且只升不降（pytest ≥1938 / 自研 47/47 / e2e 25/25 且 FAIL/WARN/UNREG 三格零），冻结面与 git 红线按 mtime+sha 正面测",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_baselines.json",
+     "three_systems_green",
+     1
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_baselines.json",
+     "frozen",
+     60
+    ]
+   ]
+  },
+  {
+   "name": "账面闭环：修复单逐单 claim→execute→submit→verify、md 追加 FIXED 段、三向对照一致；被拒原文逐字进报告",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_ledger.json",
+     "cards",
+     2
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_ledger.json",
+     "agree",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "驱动面与顺序自计：本轮新写脚本硬码 lint 为零并配注入对照；报告渲染次数与「渲染后未再改」正面测",
+   "artifacts": [
+    [
+     ".fist-loop-20260927/fix_r4_drivers_lint.json",
+     "canary",
+     1
+    ],
+    [
+     ".fist-loop-20260927/fix_r4_render_order.json",
+     "renders",
+     1
+    ]
+   ]
+  }
+ ]
+}

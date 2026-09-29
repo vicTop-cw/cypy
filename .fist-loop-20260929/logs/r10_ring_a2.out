@@ -1,0 +1,27 @@
+ROOT T0r116 tree {"root": "T0r116", "rows": 17, "leaves": 12, "branches": 4, "general": ["T0r116.1.1", "T0r116.1.2", "T0r116.2.1", "T0r116.2.2", "T0r116.3.1", "T0r116.3.2"], "boundary": ["T0r116.1.3", "T0r116.2.3", "T0r116.3.3", "T0r116.
+T0r116.1.1 face 待验收 -> 待验收
+T0r116.1.2 face 待验收 -> 待验收
+T0r116.2.1 face 待验收 -> 待验收
+T0r116.2.2 face 待验收 -> 待验收
+T0r116.3.1 face 待验收 -> 待验收
+T0r116.3.2 face 待验收 -> 待验收
+T0r116.1.3 boundary-real 待验收 -> 待验收
+T0r116.2.3 boundary-real 待验收 -> 待验收
+T0r116.3.3 boundary-declared-na 待验收 -> 待验收
+T0r116.4.1 boundary-declared-na 待验收 -> 待验收
+T0r116.4.2 boundary-declared-na 待验收 -> 待验收
+T0r116.4.3 boundary-declared-na 待验收 -> 待验收
+BRANCHES {"T0r116.1": "拆分中", "T0r116.2": "拆分中", "T0r116.3": "拆分中", "T0r116.4": "拆分中"}
+CONCLUSION root=T0r116 root_status=拆分中 rollup={'待验收': 12, '拆分中': 4} non_terminal=[['T0r116.1', '拆分中'], ['T0r116.1.1', '待验收'], ['T0r116.1.2', '待验收'], ['T0r116.1.3', '待验收'], ['T0r116.2', '拆分中'], ['T0r116.2.1', '待验收'], ['T0r116.2.2', '待验收'], ['T0r116.2.3', '待验收'], ['T0r116.3', '拆分中'], ['T0r116.3.1', '待验收'], ['T0r116.3.2', '待验收'], ['T0r116.3.3', '待验收'], ['T0r116.4', '拆分中'], ['T0r116.4.1', '待验收'], ['T0r116.4.2', '待验收'], ['T0r116.4.3', '待验收']] calls=117 refused=70 call_log_error_rows=0
+REFUSED T0r116.1.1 omega_spec_create | {"__error__": {"code": -32000, "message": "语料 [spec:T0r116.1.1:r1] 已通过审核，无需重复创建"}}
+REFUSED T0r116.1.1 omega_spec_review | {"__error__": {"code": -32000, "message": "语料 [spec:T0r116.1.1:r1] 当前状态为 [approved]，不是待审核状态"}}
+REFUSED T0r116.1.1 execute | {"__error__": {"code": -32000, "message": "非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute"}}
+REFUSED T0r116.1.1 submit | {"__error__": {"code": -32000, "message": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"}}
+REFUSED T0r116.1.1 verify | {"__error__": {"code": -32000, "message": "文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失"}}
+REFUSED T0r116.1.2 omega_spec_create | {"__error__": {"code": -32000, "message": "语料 [spec:T0r116.1.2:r1] 已通过审核，无需重复创建"}}
+REFUSED T0r116.1.2 omega_spec_review | {"__error__": {"code": -32000, "message": "语料 [spec:T0r116.1.2:r1] 当前状态为 [approved]，不是待审核状态"}}
+REFUSED T0r116.1.2 execute | {"__error__": {"code": -32000, "message": "非法执行: 任务处于 [待验收]。出路：待验收→若要改交付物先 reject（→已打回）再 retry（→执行中），再 execute"}}
+REFUSED T0r116.1.2 submit | {"__error__": {"code": -32000, "message": "非法迁移: submit 要求状态 [执行中]，当前是 [待验收]"}}
+REFUSED T0r116.1.2 verify | {"__error__": {"code": -32000, "message": "文档一致性门禁未通过：回传段: 结论: 缺失；回传段: 证据: 缺失；回传段: 分析: 缺失；回传段: 缺口与风险: 缺失；回传段: 建议入档位置: 缺失"}}
+REFUSED T0r116.2.1 omega_spec_create | {"__error__": {"code": -32000, "message": "语料 [spec:T0r116.2.1:r1] 已通过审核，无需重复创建"}}
+REFUSED T0r116.2.1 omega_spec_review | {"__error__": {"code": -32000, "message": "语料 [spec:T0r116.2.1:r1] 当前状态为 [approved]，不是待审核状态"}}

@@ -1,0 +1,606 @@
+{
+ "name": "20260928.02.55.00",
+ "title": "R3-推进（advance）环节报告",
+ "stage": "第 3 轮第 5 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R3",
+ "root_task": "T0r73",
+ "assignee": "cypy-advancer",
+ "marker": "[selfdrive-advance]",
+ "fragment": ".fist-loop-20260927/r3_advance_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/advance_r3_arity.json",
+  ".fist-loop-20260927/advance_r3_codegen_diff.json",
+  ".fist-loop-20260927/advance_r3_scope_face.json",
+  ".fist-loop-20260927/advance_r3_locks.json",
+  ".fist-loop-20260927/advance_r3_corpus.json",
+  ".fist-loop-20260927/advance_r3_baselines.json",
+  ".fist-loop-20260927/advance_r3_irreversible.json",
+  ".fist-loop-20260927/advance_r3_self_audit.json",
+  ".fist-loop-20260927/advance_r3_pre_baseline.json",
+  ".fist-loop-20260927/close_r3_advance.out.json",
+  ".fist-loop-20260927/close_r3_advance_root.out.json",
+  ".fist-loop-20260927/advance_r3_driver_lint.json",
+  ".fist-loop-20260927/r3_advance_calllog_tally.json"
+ ],
+ "closure": {
+  "stage": ".fist-loop-20260927/close_r3_advance.out.json",
+  "root": ".fist-loop-20260927/close_r3_advance_root.out.json"
+ },
+ "gates": [
+  {
+   "label": "①-1",
+   "claim": "法 1：违例案例集非空（5 种元数不符的形状）",
+   "artifact": ".fist-loop-20260927/advance_r3_arity.json",
+   "path": "violation_cases",
+   "min": 5
+  },
+  {
+   "label": "①-2",
+   "claim": "每条违例都真的报出 arity 错（violation_total == 案例数）",
+   "artifact": ".fist-loop-20260927/advance_r3_arity.json",
+   "path": "violation_total",
+   "min": 5
+  },
+  {
+   "label": "①-3",
+   "claim": "成对锁的另一边：正确调用一律不报",
+   "artifact": ".fist-loop-20260927/advance_r3_arity.json",
+   "path": "clean_cases_green",
+   "equals": true
+  },
+  {
+   "label": "①-4",
+   "claim": "报错都带 `行:列` 位点（缺位点等于没法定位）",
+   "artifact": ".fist-loop-20260927/advance_r3_arity.json",
+   "path": "cases_with_locus",
+   "min": 5
+  },
+  {
+   "label": "①-5",
+   "claim": "形状不认识就不判：跳过集非空且都在件里留了实测错误清单",
+   "artifact": ".fist-loop-20260927/advance_r3_arity.json",
+   "path": "skipped_shapes",
+   "min": 4
+  },
+  {
+   "label": "①-6",
+   "claim": "元数错与返回类型错共存（早退 return 没吞掉另一条判定）",
+   "artifact": ".fist-loop-20260927/advance_r3_arity.json",
+   "path": "coexist_with_return_error",
+   "min": 2
+  },
+  {
+   "label": "①-7",
+   "claim": "报错原文照抄进件（不是转述）",
+   "artifact": ".fist-loop-20260927/advance_r3_arity.json",
+   "path": "measured_message",
+   "min": 20
+  },
+  {
+   "label": "②-1",
+   "claim": "法 2：新增回归锁 9 条",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "new_locks",
+   "equals": 9
+  },
+  {
+   "label": "②-2",
+   "claim": "前提树全绿（快照里 9 条锁先全过，回退证明才有意义）",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "premise.passed",
+   "equals": 9
+  },
+  {
+   "label": "②-3",
+   "claim": "回退矩阵 5 组全合格（4 组 mutation + 1 组只改注释对照）",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "groups_ok",
+   "equals": 5
+  },
+  {
+   "label": "②-4",
+   "claim": "9 条新锁每条都被某组 mutation 打红过（覆盖集大小=9）",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "each_new_lock_red_when_reverted",
+   "min": 9
+  },
+  {
+   "label": "②-5",
+   "claim": "『只改注释』对照组全绿 ⇒ 锁没钉在字面噪声上",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "control_group_green",
+   "equals": true
+  },
+  {
+   "label": "②-6",
+   "claim": "窄性断言（must_stay_green）全过",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "must_stay_green_all_ok",
+   "equals": true
+  },
+  {
+   "label": "②-7",
+   "claim": "身份探针：4 个模块的 __file__ 全取自快照树",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "identity",
+   "min": 4
+  },
+  {
+   "label": "②-8",
+   "claim": "复原后 9 条锁仍全绿（mutation 没留残留）",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "after_restore.passed",
+   "equals": 9
+  },
+  {
+   "label": "②-9",
+   "claim": "快照临时树当场清空",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "snap_left",
+   "equals": []
+  },
+  {
+   "label": "②-10",
+   "claim": "驱动没改工作区任何文件",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "workspace_untouched",
+   "equals": true
+  },
+  {
+   "label": "②-11",
+   "claim": "未被回退证明覆盖的锁=空表（名单一非空就拒，防以后加锁忘了配 mutation）",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "revert_uncovered_locks",
+   "equals": []
+  },
+  {
+   "label": "②-12",
+   "claim": "锁名总数从盘上反解=9（不是手写的 new_locks 旗标）",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "lock_names_total",
+   "equals": 9
+  },
+  {
+   "label": "③-1",
+   "claim": "法 3：产物差分案例集非空",
+   "artifact": ".fist-loop-20260927/advance_r3_codegen_diff.json",
+   "path": "cases",
+   "min": 4
+  },
+  {
+   "label": "③-2",
+   "claim": "剥掉两行时间戳后 .pyx 逐字相同 ⇒ codegen 面一字未动",
+   "artifact": ".fist-loop-20260927/advance_r3_codegen_diff.json",
+   "path": "all_textual_identical",
+   "equals": true
+  },
+  {
+   "label": "③-3",
+   "claim": "差分口径自己声明剥的是哪两行",
+   "artifact": ".fist-loop-20260927/advance_r3_codegen_diff.json",
+   "path": "stripped_line_markers",
+   "min": 2
+  },
+  {
+   "label": "③-4",
+   "claim": "违例夹具分栏：预期被新判定挡住 1 档，实际分类出 1 档",
+   "artifact": ".fist-loop-20260927/advance_r3_codegen_diff.json",
+   "path": "refused_expected_total",
+   "equals": 1
+  },
+  {
+   "label": "③-5",
+   "claim": "挡住它的那句话点名是新判定（不是别的错误）",
+   "artifact": ".fist-loop-20260927/advance_r3_codegen_diff.json",
+   "path": "refused_by_new_check",
+   "min": 1
+  },
+  {
+   "label": "③-6",
+   "claim": "逐字相同那一栏恰好 4 档（两栏加起来=清单总数 5）",
+   "artifact": ".fist-loop-20260927/advance_r3_codegen_diff.json",
+   "path": "identical_total",
+   "equals": 4
+  },
+  {
+   "label": "④-1",
+   "claim": "法 4：语料扫描样本数（≥40 才谈得上覆盖面）",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "path": "samples_scanned",
+   "min": 40
+  },
+  {
+   "label": "④-2",
+   "claim": "两态对表新增的非 arity 错误为 0（改动没漏到别处）",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "path": "new_errors_outside_locks",
+   "equals": []
+  },
+  {
+   "label": "④-3",
+   "claim": "两态扫描文件数一致（口径稳）",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "path": "files_scanned",
+   "min": 40
+  },
+  {
+   "label": "④-4",
+   "claim": "扫描目录与脚本点名（可复跑，不是黑箱）",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "path": "scan_dirs",
+   "min": 5
+  },
+  {
+   "label": "④-5",
+   "claim": "语料扫描的敏感性对照：改成过严判定后必须看得见新的 arity 行",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "path": "sensitivity_probe.new_error_kinds",
+   "min": 1
+  },
+  {
+   "label": "④-6",
+   "claim": "敏感性对照里新增的错误全部经新判定产生（没有旁路错误）",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "path": "sensitivity_probe.all_through_the_check",
+   "equals": true
+  },
+  {
+   "label": "④-7",
+   "claim": "见证夹具①：违例档在复原态必报 arity（扫描器有靶子）",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "path": "witness.bad_restored",
+   "min": 1
+  },
+  {
+   "label": "④-8",
+   "claim": "见证夹具②：合规档两态都不报 ⇒ 判定没有过严",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "path": "witness.ok_restored",
+   "equals": []
+  },
+  {
+   "label": "④-9",
+   "claim": "见证夹具③：摘掉判定的 mutation 态里违例档不报 ⇒ 两态确实分开",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "path": "witness.bad_mutation",
+   "equals": []
+  },
+  {
+   "label": "④-10",
+   "claim": "真实语料（不含夹具）被新判定影响的档数=0",
+   "artifact": ".fist-loop-20260927/advance_r3_corpus.json",
+   "path": "files_changed",
+   "equals": 0
+  },
+  {
+   "label": "⑤-1",
+   "claim": "法 5：半径外形状逐条点名",
+   "artifact": ".fist-loop-20260927/advance_r3_scope_face.json",
+   "path": "outside_radius",
+   "min": 3
+  },
+  {
+   "label": "⑤-2",
+   "claim": "变长写法 `Callable[..., R]` 的实测解析结果照抄在件里",
+   "artifact": ".fist-loop-20260927/advance_r3_scope_face.json",
+   "path": "variadic_probe_outcome",
+   "min": 10
+  },
+  {
+   "label": "⑤-3",
+   "claim": "冻结文档声明行贴原文（≥2 行：限制表 + 用法示例）",
+   "artifact": ".fist-loop-20260927/advance_r3_scope_face.json",
+   "path": "frozen_doc_rows",
+   "min": 2
+  },
+  {
+   "label": "⑤-4",
+   "claim": "本环触碰冻结文档 0 档",
+   "artifact": ".fist-loop-20260927/advance_r3_scope_face.json",
+   "path": "frozen_docs_modified",
+   "equals": 0
+  },
+  {
+   "label": "⑥-1",
+   "claim": "法 6：pytest passed 不低于新地板 1938",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "pytest.passed",
+   "min": 1938
+  },
+  {
+   "label": "⑥-2",
+   "claim": "collected 同步达标（新锁没从收集里静默消失）",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "pytest.collected",
+   "min": 1938
+  },
+  {
+   "label": "⑥-3",
+   "claim": "本轮 9 条新锁在全量收集里现形",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "pytest.advance_locks_collected",
+   "min": 9
+  },
+  {
+   "label": "⑥-4",
+   "claim": "地板抬升量 == 新锁条数（不是抄上一环的数）",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "floor_raised",
+   "equals": 9
+  },
+  {
+   "label": "⑥-5",
+   "claim": "failed 为空表",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "pytest.failed",
+   "equals": []
+  },
+  {
+   "label": "⑥-6",
+   "claim": "自研套件 47/47（第二套体系单独跑，不拿 pytest 的绿抵扣）",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "suite.fields",
+   "min": 4
+  },
+  {
+   "label": "⑥-7",
+   "claim": "e2e golden 25/25 且 FAIL/WARN/UNREG 三格在栏",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "e2e.fields",
+   "min": 4
+  },
+  {
+   "label": "⑥-8",
+   "claim": "三套体系同批全绿旗标",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "three_systems_green",
+   "equals": 1
+  },
+  {
+   "label": "⑥-9",
+   "claim": "git 红线格全过",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "git.all_ok",
+   "equals": true
+  },
+  {
+   "label": "⑥-10",
+   "claim": "亲笔**新写的整档**当场 flake8（仓库口径 100 列）零违例",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "lint.own_new_clean",
+   "equals": true
+  },
+  {
+   "label": "⑥-11",
+   "claim": "改到的既有档：本窗口新加的行上零违例，且整档违例数只减不增",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "lint.product_clean",
+   "equals": true
+  },
+  {
+   "label": "⑥-12",
+   "claim": "行号过滤对照①：注入必然 E501 必须被抓（不是靠空集蒙绿）",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "lint.canary['cypyc/analyzer/type_checker.py:too_long'].codes",
+   "min": 1
+  },
+  {
+   "label": "⑥-13",
+   "claim": "行号过滤对照②：注入合规行必须不误抓",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "lint.canary['cypyc/analyzer/type_checker.py:clean'].on_my_lines",
+   "equals": 0
+  },
+  {
+   "label": "⑥-14",
+   "claim": "本环 9 个驱动文件的硬码门（E9/W605/F821，200 列）零违例",
+   "artifact": ".fist-loop-20260927/advance_r3_driver_lint.json",
+   "path": "hard_violations",
+   "equals": 0
+  },
+  {
+   "label": "⑥-15",
+   "claim": "软码扫描器有对照：已知 140 字符的行必须被数到",
+   "artifact": ".fist-loop-20260927/advance_r3_driver_lint.json",
+   "path": "canary_caught",
+   "min": 1
+  },
+  {
+   "label": "⑥-16",
+   "claim": "驱动面逐档进清单（9 个 advance_r3_*.py 全覆盖，软码只计数不遮挡）",
+   "artifact": ".fist-loop-20260927/advance_r3_driver_lint.json",
+   "path": "files",
+   "min": 9
+  },
+  {
+   "label": "⑥-17",
+   "claim": "call_log 对账的过滤器不是恒真：必然不存在的前缀数出 0 行",
+   "artifact": ".fist-loop-20260927/r3_advance_calllog_tally.json",
+   "path": "control_absent_prefix_rows",
+   "equals": 0
+  },
+  {
+   "label": "⑥-18",
+   "claim": "issue_up 在本构建里不是工具名 ⇒ 0 行如实上报（不谎称已用）",
+   "artifact": ".fist-loop-20260927/r3_advance_calllog_tally.json",
+   "path": "issue_up_tool_rows",
+   "equals": 0
+  },
+  {
+   "label": "⑦-1",
+   "claim": "法 7：半径文件数 == 本环清单 2 档",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "radius.count",
+   "equals": 2
+  },
+  {
+   "label": "⑦-2",
+   "claim": "半径越界为空",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "radius.unexpected",
+   "equals": []
+  },
+  {
+   "label": "⑦-3",
+   "claim": "清单未落地为空（两档都在半径里现形）",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "radius.missing",
+   "equals": []
+  },
+  {
+   "label": "⑦-4",
+   "claim": "半径双向精确旗标",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "radius_exact",
+   "equals": 1
+  },
+  {
+   "label": "⑦-5",
+   "claim": "每档归属写明到法条（清单口径含 attributions）",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "radius.lane_attributions",
+   "min": 2
+  },
+  {
+   "label": "⑧-1",
+   "claim": "法 8：不可逆面逐条点名（≥13 条）",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "items",
+   "min": 13
+  },
+  {
+   "label": "⑧-2",
+   "claim": "其中 live 探针 ≥9 条",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "live_probe_items",
+   "min": 9
+  },
+  {
+   "label": "⑧-3",
+   "claim": "零执行旗标",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "executed_none",
+   "equals": 1
+  },
+  {
+   "label": "⑧-4",
+   "claim": "被执行清单为空表",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "executed",
+   "equals": []
+  },
+  {
+   "label": "⑧-5",
+   "claim": "判据通道自测：注入假违例必被抓",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "self_test.caught",
+   "equals": 1
+  },
+  {
+   "label": "⑧-6",
+   "claim": "golden 基准零重注册（推进环不动基准）",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "golden_baseline_touched",
+   "equals": []
+  },
+  {
+   "label": "⑧-7",
+   "claim": "产品文件改动行数受上限约束（只加判定、不重排整档）",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "changed_lines_in_product",
+   "min": 1
+  },
+  {
+   "label": "⑧-8",
+   "claim": "没有删除既有 def/class",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "removed_definitions",
+   "equals": []
+  },
+  {
+   "label": "⑧-9",
+   "claim": "既有测试名逐名对照：零消失",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "test_names_disappeared",
+   "equals": []
+  },
+  {
+   "label": "⑧-10",
+   "claim": "新增用例名全部来自本环点名的锁文件（半径外没动别的档）",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "test_names_added_stray",
+   "equals": []
+  },
+  {
+   "label": "⑧-11",
+   "claim": "名字级对照的形状自证：上一环 collect 日志与件里 collected 对齐",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "test_names_shape_problems",
+   "equals": []
+  },
+  {
+   "label": "⑧-12",
+   "claim": "逐行对表用的 before 快照身份固定（sha 与开工前件同值）",
+   "artifact": ".fist-loop-20260927/advance_r3_irreversible.json",
+   "path": "before_snapshot_sha",
+   "equals": "4db6e1f3bfc2c7d3"
+  },
+  {
+   "label": "⑨-1",
+   "claim": "页脚每格都能被自审独立重算打回",
+   "artifact": ".fist-loop-20260927/advance_r3_self_audit.json",
+   "path": "counts_all_equal",
+   "equals": 1
+  },
+  {
+   "label": "⑨-2",
+   "claim": "自审格数 ≥30（含成对性现跑与产物差分重算）",
+   "artifact": ".fist-loop-20260927/advance_r3_self_audit.json",
+   "path": "checks",
+   "min": 30
+  },
+  {
+   "label": "⑨-3",
+   "claim": "自审不一致清单为空表",
+   "artifact": ".fist-loop-20260927/advance_r3_self_audit.json",
+   "path": "mismatched",
+   "equals": []
+  },
+  {
+   "label": "⑨-4",
+   "claim": "恒绿门禁格数（min: 0）为 0",
+   "artifact": ".fist-loop-20260927/advance_r3_self_audit.json",
+   "path": "vacuous_gates",
+   "equals": []
+  },
+  {
+   "label": "⑨-5",
+   "claim": "改前快照留档（动手前先落 before，禁 commit 的仓里 HEAD 不是基线）",
+   "artifact": ".fist-loop-20260927/advance_r3_pre_baseline.json",
+   "path": "type_checker_sha_before",
+   "min": 8
+  },
+  {
+   "label": "⑨-6",
+   "claim": "改前分析器错误面基线在档（成对判定的 before 侧）",
+   "artifact": ".fist-loop-20260927/advance_r3_pre_baseline.json",
+   "path": "analyzer_errors_before",
+   "min": 4
+  },
+  {
+   "label": "⑨-7",
+   "claim": "所有判据件自带 refuse 全为空",
+   "artifact": ".fist-loop-20260927/advance_r3_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑨-8",
+   "claim": "回退矩阵件 refuse 为空",
+   "artifact": ".fist-loop-20260927/advance_r3_locks.json",
+   "path": "refuse",
+   "equals": []
+  }
+ ],
+ "footer": "leaves=16 floor_raised=9 pytest=1938 pytest_collected=1938 locks=9 locks_collected_in_full=9 violation_cases=5 clean_green=yes skipped_shapes=4 groups=5/5 identity=4 snap_left=0 corpus_files=79 corpus_new_errors=0 arity_new=0 codegen_identical=yes codegen_cases=5 outside_radius=3 frozen_rows_touched=0 radius=2 suite=47/47 e2e=25/25 e2e_zero=000 irreversible=14(live=11,derived=1,manifest=2) executed=none audit_selftest=1 product_diff_lines=37 revert_covered=9/9 uncovered=0 test_names_gone=0 test_names_added=9 lint_added_lines=37 lint_on_my_lines=0 lint_canary=1 sensitivity=1 judge-defects=13 op-defects=3 decisions=3 refusal_kinds=6 measured_window=2026-09-27T19:02:01Z->2026-09-27T19:18:23Z generated_at=2026-09-27T19:34:17+00:00 handoff=R4-寻虫:Callable 元数判定落地后可搜『产物签名丢类型』与实参类型判定两条新面;裁决面=alias 塌缩/变长写法/实参类型检查三项交人工"
+}

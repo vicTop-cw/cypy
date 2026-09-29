@@ -1,0 +1,6 @@
+func f() -> int:
+    try:
+        x: int = 1 / 0
+    catch e:
+        raise RuntimeError("wrapped") from e
+    return 0

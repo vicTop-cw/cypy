@@ -1,0 +1,65 @@
+#!bin cypy
+# ============================================================
+# run_sql.cypy — SQL execution tool
+# ============================================================
+
+from tool import Tool, ToolContext, ToolResult
+from components import UiComponent, DataFrameComponent, NotificationComponent, SimpleTextComponent
+from sql_runner import SqlRunner, RunSqlArgs, SqlResult
+
+
+struct RunSqlTool:
+    # Tool that executes SQL queries using an injected SqlRunner
+    _sql_runner: SqlRunner
+    _custom_name: str
+    _custom_description: str
+
+    def __init__(self, sql_runner: SqlRunner, custom_name: str = "", custom_description: str = ""):
+        self._sql_runner = sql_runner
+        self._custom_name = custom_name
+        self._custom_description = custom_description
+
+    def name(self) -> str:
+        guard self._custom_name else return "run_sql"
+        return self._custom_name
+
+    def description(self) -> str:
+        guard self._custom_description else return "Execute SQL queries against the configured database"
+        return self._custom_description
+
+    def get_args_schema(self) -> object:
+        return RunSqlArgs
+
+    def access_groups(self) -> list<str>:
+        return []
+
+    def check_access(self, context: ToolContext) -> bool:
+        return True
+
+    def execute(self, context: ToolContext, args: RunSqlArgs) -> ToolResult:
+        try:
+            let sql_result: SqlResult = self._sql_runner.run_sql(RunSqlArgs(sql=args.sql), context.request_context)
+            let query_type: str = args.sql.strip().upper().split()[0]
+            if query_type == "SELECT":
+                return self._handle_select(sql_result, args.sql)
+            else:
+                return self._handle_non_select(sql_result, query_type)
+        except Exception as e:
+            let error_msg: str = f"Error executing query: {str(e)}"
+            return ToolResult(success=False, result_for_llm=error_msg, ui_component=UiComponent.error(error_msg), error=str(e))
+
+    def _handle_select(self, sql_result: SqlResult, sql: str) -> ToolResult:
+        if sql_result.empty():
+            let result_text: str = "Query executed successfully. No rows returned."
+            let ui = UiComponent.text(result_text)
+            return ToolResult(success=True, result_for_llm=result_text, ui_component=ui, metadata={"row_count": "0", "query_type": "SELECT"})
+        let csv_content: str = sql_result.to_csv()
+        let result_text: str = csv_content + "\n\nResults displayed in table above."
+        let ui = UiComponent.text(result_text)
+        return ToolResult(success=True, result_for_llm=result_text, ui_component=ui, metadata={"row_count": str(sql_result.row_count), "columns": ",".join(sql_result.columns), "query_type": "SELECT"})
+
+    def _handle_non_select(self, sql_result: SqlResult, query_type: str) -> ToolResult:
+        let rows_affected: int = sql_result.row_count
+        let result_text: str = f"Query executed successfully. {rows_affected} row(s) affected."
+        let ui = UiComponent.success(result_text)
+        return ToolResult(success=True, result_for_llm=result_text, ui_component=ui, metadata={"rows_affected": str(rows_affected), "query_type": query_type})

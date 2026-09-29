@@ -1,0 +1,762 @@
+{
+ "name": "20260928.06.15.00",
+ "title": "R4-修复（fix）环节报告",
+ "stage": "第 4 轮第 2 环（寻虫→修复→验证→打磨→推进）",
+ "round": "R4",
+ "root_task": "T0r85",
+ "assignee": "cypy-fixer",
+ "marker": "[selfdrive-fix]",
+ "fragment": ".fist-loop-20260927/r4_fix_body.md",
+ "artifacts": [
+  ".fist-loop-20260927/fix_r4_claim.json",
+  ".fist-loop-20260927/fix_r4_locks.json",
+  ".fist-loop-20260927/fix_r4_rc.json",
+  ".fist-loop-20260927/fix_r4_revert.json",
+  ".fist-loop-20260927/fix_r4_impact.json",
+  ".fist-loop-20260927/fix_r4_baselines.json",
+  ".fist-loop-20260927/fix_r4_docs.json",
+  ".fist-loop-20260927/fix_r4_ledger.json",
+  ".fist-loop-20260927/fix_r4_ledger_check.json",
+  ".fist-loop-20260927/fix_r4_drivers_lint.json",
+  ".fist-loop-20260927/fix_r4_calllog_tally.json",
+  ".fist-loop-20260927/fix_r4_before/type_checker.py",
+  "tests/test_loop_20260927_fix_r4.py"
+ ],
+ "gates": [
+  {
+   "label": "①-1",
+   "claim": "法①：十张单从盘上账本反解出十条归属行，无一张无归属",
+   "artifact": ".fist-loop-20260927/fix_r4_claim.json",
+   "path": "rows",
+   "min": 10
+  },
+  {
+   "label": "①-2",
+   "claim": "分析器四条根因判为本环可修，号与 R4-寻虫 入账一致",
+   "artifact": ".fist-loop-20260927/fix_r4_claim.json",
+   "path": "fixed_code",
+   "equals": [
+    "BUG-61",
+    "BUG-62",
+    "BUG-63",
+    "BUG-64"
+   ]
+  },
+  {
+   "label": "①-3",
+   "claim": "文档面两单判为本环可修（非冻结面）",
+   "artifact": ".fist-loop-20260927/fix_r4_claim.json",
+   "path": "fixed_docs",
+   "equals": [
+    "BUG-66",
+    "BUG-67"
+   ]
+  },
+  {
+   "label": "①-4",
+   "claim": "冻结面与不可逆结构改动交人工，本环不动刀",
+   "artifact": ".fist-loop-20260927/fix_r4_claim.json",
+   "path": "handoff",
+   "equals": [
+    "BUG-65",
+    "BUG-70"
+   ]
+  },
+  {
+   "label": "①-5",
+   "claim": "需真编译的两单转下一环，不占本环修",
+   "artifact": ".fist-loop-20260927/fix_r4_claim.json",
+   "path": "next_round",
+   "equals": [
+    "BUG-68",
+    "BUG-69"
+   ]
+  },
+  {
+   "label": "①-6",
+   "claim": "认领表读的是盘上账本本体（memory/bugs.md），不是另一份手抄清单",
+   "artifact": ".fist-loop-20260927/fix_r4_claim.json",
+   "path": "ledger",
+   "equals": "memory/bugs.md"
+  },
+  {
+   "label": "①-7",
+   "claim": "标了可修的文档单确实动了 docs/：docs_touched 非空",
+   "artifact": ".fist-loop-20260927/fix_r4_claim.json",
+   "path": "docs_touched",
+   "min": 1
+  },
+  {
+   "label": "①-8",
+   "claim": "认领件自身拒绝栏为空",
+   "artifact": ".fist-loop-20260927/fix_r4_claim.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "②-1",
+   "claim": "锁先行：修前实测 14 条红（锁承重，不是空文件）",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "path": "before.failed_names",
+   "min": 14
+  },
+  {
+   "label": "②-2",
+   "claim": "修前那一次 pytest 退出码必须是 1（真红过）",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "path": "before.rc",
+   "equals": 1
+  },
+  {
+   "label": "②-3",
+   "claim": "修后红名单为空",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "path": "after.failed_names",
+   "equals": []
+  },
+  {
+   "label": "②-4",
+   "claim": "修后退出码 0",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "path": "after.rc",
+   "equals": 0
+  },
+  {
+   "label": "②-5",
+   "claim": "修后 failed 计数为 0（缺键已显式补 0，不是哨兵 -1）",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "path": "after.fields.failed",
+   "equals": 0
+  },
+  {
+   "label": "②-6",
+   "claim": "修后 errors 计数为 0",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "path": "after.fields.errors",
+   "equals": 0
+  },
+  {
+   "label": "②-7",
+   "claim": "修后 18 条锁全绿（用例数正面测，防空汇总行）",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "path": "after.fields.passed",
+   "min": 18
+  },
+  {
+   "label": "②-8",
+   "claim": "锁件自身含 rc↔计数互校等 5 条自证",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "path": "self_checks",
+   "min": 5
+  },
+  {
+   "label": "②-9",
+   "claim": "锁件自身拒绝栏为空",
+   "artifact": ".fist-loop-20260927/fix_r4_locks.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "③-1",
+   "claim": "合并修的正面证据：四处共用同一批符号（≥2 个共享件）",
+   "artifact": ".fist-loop-20260927/fix_r4_rc.json",
+   "path": "shared_symbols",
+   "min": 2
+  },
+  {
+   "label": "③-2",
+   "claim": "共享件的调用点合计 41 处（不是四个孤立补丁）",
+   "artifact": ".fist-loop-20260927/fix_r4_rc.json",
+   "path": "call_site_total",
+   "min": 40
+  },
+  {
+   "label": "③-3",
+   "claim": "改动量以本轮快照为基线正面测",
+   "artifact": ".fist-loop-20260927/fix_r4_rc.json",
+   "path": "added_lines",
+   "min": 150
+  },
+  {
+   "label": "③-4",
+   "claim": "删除行数说明改写而非纯追加",
+   "artifact": ".fist-loop-20260927/fix_r4_rc.json",
+   "path": "removed_lines",
+   "min": 10
+  },
+  {
+   "label": "③-5",
+   "claim": "新增定义成机制（签名表 / 兼容谓词 / 显示层 / 出口）",
+   "artifact": ".fist-loop-20260927/fix_r4_rc.json",
+   "path": "new_defs",
+   "min": 6
+  },
+  {
+   "label": "③-6",
+   "claim": "逐根因的符号引用计数四张齐全",
+   "artifact": ".fist-loop-20260927/fix_r4_rc.json",
+   "path": "per_rc_symbol_refs",
+   "min": 4
+  },
+  {
+   "label": "③-7",
+   "claim": "改动只落在一个产品文件，路径以实测为准",
+   "artifact": ".fist-loop-20260927/fix_r4_rc.json",
+   "path": "target",
+   "equals": "cypyc/analyzer/type_checker.py"
+  },
+  {
+   "label": "③-8",
+   "claim": "根因件自身拒绝栏为空",
+   "artifact": ".fist-loop-20260927/fix_r4_rc.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "④-1",
+   "claim": "回退矩阵四条腿逐腿实测",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows",
+   "min": 4
+  },
+  {
+   "label": "④-2",
+   "claim": "摘掉 RC1 的登记后该族锁必红",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.0.expected_red_hit",
+   "equals": true
+  },
+  {
+   "label": "④-3",
+   "claim": "摘掉 RC2 的兼容谓词后该族锁必红",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.1.expected_red_hit",
+   "equals": true
+  },
+  {
+   "label": "④-4",
+   "claim": "摘掉 RC3 的 self 守卫后该族锁必红",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.2.expected_red_hit",
+   "equals": true
+  },
+  {
+   "label": "④-5",
+   "claim": "摘掉 RC4 的显示层后文案锁必红",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.3.expected_red_hit",
+   "equals": true
+  },
+  {
+   "label": "④-6",
+   "claim": "四条腿都没有误伤对照组（承重不是靠放宽对照）",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.0.controls_broken",
+   "equals": []
+  },
+  {
+   "label": "④-7",
+   "claim": "RC2 摘除时对照组零误伤",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.1.controls_broken",
+   "equals": []
+  },
+  {
+   "label": "④-8",
+   "claim": "RC3 摘除时对照组零误伤",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.2.controls_broken",
+   "equals": []
+  },
+  {
+   "label": "④-9",
+   "claim": "RC4 摘除时对照组零误伤",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.3.controls_broken",
+   "equals": []
+  },
+  {
+   "label": "④-10",
+   "claim": "RC2 该族红名单 ≥3 条（按用例点名）",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.1.failed",
+   "min": 3
+  },
+  {
+   "label": "④-11",
+   "claim": "RC3 该族红名单 ≥3 条",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.2.failed",
+   "min": 3
+  },
+  {
+   "label": "④-12",
+   "claim": "RC4 该族红名单 ≥1 条",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "rows.3.failed",
+   "min": 1
+  },
+  {
+   "label": "④-13",
+   "claim": "摘完逐文件复原，sha 是 64 位实值不是占位",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "restored_sha256",
+   "min": 60
+  },
+  {
+   "label": "④-14",
+   "claim": "复原后的干净态没有意外失败",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "clean_run_failed",
+   "equals": []
+  },
+  {
+   "label": "④-15",
+   "claim": "回退件自身拒绝栏为空",
+   "artifact": ".fist-loop-20260927/fix_r4_revert.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑤-1",
+   "claim": "影响面按存量语料 203 档逐档实测",
+   "artifact": ".fist-loop-20260927/fix_r4_impact.json",
+   "path": "corpus",
+   "min": 200
+  },
+  {
+   "label": "⑤-2",
+   "claim": "逐档差分记录齐 203 行",
+   "artifact": ".fist-loop-20260927/fix_r4_impact.json",
+   "path": "rows",
+   "min": 200
+  },
+  {
+   "label": "⑤-3",
+   "claim": "修前无诊断→修后有诊断：零命中（无需放宽也无需放行）",
+   "artifact": ".fist-loop-20260927/fix_r4_impact.json",
+   "path": "newly_rejected",
+   "equals": []
+  },
+  {
+   "label": "⑤-4",
+   "claim": "修前有诊断→修后消失：零命中（没有把老缺陷判没了）",
+   "artifact": ".fist-loop-20260927/fix_r4_impact.json",
+   "path": "newly_accepted",
+   "equals": []
+  },
+  {
+   "label": "⑤-5",
+   "claim": "没有'说不清'的档位挂着",
+   "artifact": ".fist-loop-20260927/fix_r4_impact.json",
+   "path": "unadjudicated",
+   "equals": []
+  },
+  {
+   "label": "⑤-6",
+   "claim": "影响面件自身拒绝栏为空（含崩溃与版本身份校验）",
+   "artifact": ".fist-loop-20260927/fix_r4_impact.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑥-1",
+   "claim": "三套体系的地板从上一环实测件反解，不手填",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "floors",
+   "min": 4
+  },
+  {
+   "label": "⑥-2",
+   "claim": "pytest 通过数 ≥ 上一环实测 1938",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "pytest.passed",
+   "min": 1938
+  },
+  {
+   "label": "⑥-3",
+   "claim": "pytest 零失败",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "pytest.failed",
+   "equals": 0
+  },
+  {
+   "label": "⑥-24",
+   "claim": "失败用例逐条点名且本轮为零（只给数字不给名字=判据看不见样本）",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "pytest.failed_names",
+   "equals": []
+  },
+  {
+   "label": "⑥-4",
+   "claim": "pytest 零错误",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "pytest.errors",
+   "equals": 0
+  },
+  {
+   "label": "⑥-5",
+   "claim": "收集数 ≥ 上一环实测（没有用例被静默遮住）",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "collect.nodeids",
+   "min": 1938
+  },
+  {
+   "label": "⑥-6",
+   "claim": "自研套件 Total 仍为 47",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "suite.fields.Total",
+   "equals": 47
+  },
+  {
+   "label": "⑥-7",
+   "claim": "自研套件 Passed ≥ 47",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "suite.fields.Passed",
+   "min": 47
+  },
+  {
+   "label": "⑥-8",
+   "claim": "自研套件零失败",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "suite.fields.Failed",
+   "equals": 0
+  },
+  {
+   "label": "⑥-9",
+   "claim": "e2e golden PASS ≥ 25",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "e2e.fields.PASS",
+   "min": 25
+  },
+  {
+   "label": "⑥-10",
+   "claim": "e2e golden 零失败",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "e2e.fields.FAIL",
+   "equals": 0
+  },
+  {
+   "label": "⑥-11",
+   "claim": "e2e golden 零告警",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "e2e.fields.WARN",
+   "equals": 0
+  },
+  {
+   "label": "⑥-12",
+   "claim": "HEAD 未动（本环不 commit）",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "git.head",
+   "equals": "17d68b4"
+  },
+  {
+   "label": "⑥-13",
+   "claim": "暂存区零行（没有 git add）",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "git.staged",
+   "equals": 0
+  },
+  {
+   "label": "⑥-14",
+   "claim": "外部基线 worktree 仍在（上一环的对照物没被我清掉）",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "git.foreign_worktree_present",
+   "equals": true
+  },
+  {
+   "label": "⑥-15",
+   "claim": "冻结面 mtime 落在本环窗口内的文件数为 0",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "radius.frozen",
+   "equals": []
+  },
+  {
+   "label": "⑥-16",
+   "claim": "产品码改动集恰好是认领的那一个文件",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "radius.product",
+   "equals": [
+    "cypyc/analyzer/type_checker.py"
+   ]
+  },
+  {
+   "label": "⑥-17",
+   "claim": "测试改动集＝本轮锁文件 + 被实测判出假阳性的 R3 文档旗标锁（改锚不改断言强度）",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "radius.tests",
+   "equals": [
+    "tests/test_loop_20260927_fix_r4.py",
+    "tests/test_loop_20260927_polish_r3.py"
+   ]
+  },
+  {
+   "label": "⑥-18",
+   "claim": "文档改动集恰好是 USAGE.md",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "radius.docs",
+   "equals": [
+    "docs/USAGE.md"
+   ]
+  },
+  {
+   "label": "⑥-19",
+   "claim": "半径扫描真的在跑（dot 目录不再被吞，loop 栏收到本轮驱动件）",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "radius.loop",
+   "min": 40
+  },
+  {
+   "label": "⑥-20",
+   "claim": "冻结面逐文件 sha 表覆盖 43 份文档",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "frozen_total",
+   "min": 40
+  },
+  {
+   "label": "⑥-21",
+   "claim": "三套体系同批全绿",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "three_systems_green",
+   "equals": true
+  },
+  {
+   "label": "⑥-22",
+   "claim": "基线件自证条数 ≥ 15",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "self_checks",
+   "min": 15
+  },
+  {
+   "label": "⑥-23",
+   "claim": "基线件自身拒绝栏为空",
+   "artifact": ".fist-loop-20260927/fix_r4_baselines.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑦-1",
+   "claim": "六张修复单逐单驱动到终态",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger.json",
+   "path": "cards",
+   "min": 6
+  },
+  {
+   "label": "⑦-2",
+   "claim": "三向对照（md / sqlite / call_log）六张全一致",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger.json",
+   "path": "agree_total",
+   "equals": 6
+  },
+  {
+   "label": "⑦-3",
+   "claim": "追加 FIXED 段没有多生出账本条目（仍 70 条）",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger.json",
+   "path": "ledger_total",
+   "equals": 70
+  },
+  {
+   "label": "⑦-4",
+   "claim": "三向对照明细六行齐",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger.json",
+   "path": "three_way",
+   "min": 6
+  },
+  {
+   "label": "⑦-5",
+   "claim": "六张条目各自追加了一段留档",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger.json",
+   "path": "appended",
+   "min": 6
+  },
+  {
+   "label": "⑦-6",
+   "claim": "账面件自身拒绝栏为空",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑦-7",
+   "claim": "驱动件落盘后驱动被再格式化 ⇒ 用只读复核件独立重读盘上现状，六张一致",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger_check.json",
+   "path": "agree_total",
+   "equals": 6
+  },
+  {
+   "label": "⑦-8",
+   "claim": "复核件确实覆盖六张",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger_check.json",
+   "path": "total",
+   "equals": 6
+  },
+  {
+   "label": "⑦-9",
+   "claim": "复核件自身拒绝栏为空",
+   "artifact": ".fist-loop-20260927/fix_r4_ledger_check.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑧-1",
+   "claim": "文档面六行逐行按实读判",
+   "artifact": ".fist-loop-20260927/fix_r4_docs.json",
+   "path": "rows",
+   "min": 6
+  },
+  {
+   "label": "⑧-2",
+   "claim": "六行全部与实现一致",
+   "artifact": ".fist-loop-20260927/fix_r4_docs.json",
+   "path": "agreed",
+   "min": 6
+  },
+  {
+   "label": "⑧-3",
+   "claim": "没有'仍然不一致'的行被糊过去",
+   "artifact": ".fist-loop-20260927/fix_r4_docs.json",
+   "path": "still_open",
+   "equals": []
+  },
+  {
+   "label": "⑧-4",
+   "claim": "半开项如实标注（hook.eval 写侧缺口），不假装闭环",
+   "artifact": ".fist-loop-20260927/fix_r4_docs.json",
+   "path": "half_open",
+   "min": 1
+  },
+  {
+   "label": "⑧-5",
+   "claim": "冻结面只读对照：appendix-C 的 stale 行必须仍然 stale",
+   "artifact": ".fist-loop-20260927/fix_r4_docs.json",
+   "path": "frozen_control.appendix_still_claims_compile",
+   "equals": true
+  },
+  {
+   "label": "⑧-6",
+   "claim": "冻结文档字节 sha 留档可复核",
+   "artifact": ".fist-loop-20260927/fix_r4_docs.json",
+   "path": "frozen_bytes_sha",
+   "min": 12
+  },
+  {
+   "label": "⑧-7",
+   "claim": "文档件自身拒绝栏为空",
+   "artifact": ".fist-loop-20260927/fix_r4_docs.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑨-1",
+   "claim": "本轮亲笔驱动脚本按 mtime 窗口 glob 反解（不手写清单）",
+   "artifact": ".fist-loop-20260927/fix_r4_drivers_lint.json",
+   "path": "scanned",
+   "min": 10
+  },
+  {
+   "label": "⑨-2",
+   "claim": "硬错零条（E9/W605/F821/F7/F63）",
+   "artifact": ".fist-loop-20260927/fix_r4_drivers_lint.json",
+   "path": "hard_violations",
+   "equals": 0
+  },
+  {
+   "label": "⑨-3",
+   "claim": "本轮脚本软账清零",
+   "artifact": ".fist-loop-20260927/fix_r4_drivers_lint.json",
+   "path": "soft_total",
+   "equals": 0
+  },
+  {
+   "label": "⑨-4",
+   "claim": "lint 格配了「合成违例必被抓」对照",
+   "artifact": ".fist-loop-20260927/fix_r4_drivers_lint.json",
+   "path": "canary.bad_caught",
+   "min": 1
+  },
+  {
+   "label": "⑨-5",
+   "claim": "干净文件没被误抓（否则 lint 格在自证里造假）",
+   "artifact": ".fist-loop-20260927/fix_r4_drivers_lint.json",
+   "path": "canary.clean_false_positive",
+   "equals": 0
+  },
+  {
+   "label": "⑨-6",
+   "claim": "只降不升：上一环同口径基线留档在件里",
+   "artifact": ".fist-loop-20260927/fix_r4_drivers_lint.json",
+   "path": "previous_round_soft_baseline",
+   "min": 100
+  },
+  {
+   "label": "⑨-7",
+   "claim": "驱动 lint 件自身拒绝栏为空",
+   "artifact": ".fist-loop-20260927/fix_r4_drivers_lint.json",
+   "path": "refuse",
+   "equals": []
+  },
+  {
+   "label": "⑩-1",
+   "claim": "call_log 对账按 task_id 前缀分栏，任务树有账",
+   "artifact": ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "path": "tree_rows",
+   "min": 10
+  },
+  {
+   "label": "⑩-2",
+   "claim": "六张 bugs 修复单各有 4 条驱动调用入账（24 行起）",
+   "artifact": ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "path": "bug_card_rows",
+   "min": 24
+  },
+  {
+   "label": "⑩-3",
+   "claim": "Omega 标记在库：16 张叶全部带 [omega:required]",
+   "artifact": ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "path": "omega_marked.leaves",
+   "equals": 16
+  },
+  {
+   "label": "⑩-4",
+   "claim": "根任务这一环也带标记（上一轮实测：缺标记的根挂不上链）",
+   "artifact": ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "path": "omega_marked.root",
+   "equals": 1
+  },
+  {
+   "label": "⑩-5",
+   "claim": "规格点名的 laya 有载体：本环真调过 laya_decide",
+   "artifact": ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "path": "spec_named_carriers.laya.this_stage_total",
+   "min": 1
+  },
+  {
+   "label": "⑩-6",
+   "claim": "规格点名的 issue_up 有载体：publish / report_bug",
+   "artifact": ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "path": "spec_named_carriers.issue_up.this_stage_total",
+   "min": 1
+  },
+  {
+   "label": "⑩-7",
+   "claim": "call_log 不是我只读 sqlite：真打了一次工具且客户端看得见本环调用",
+   "artifact": ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "path": "spec_named_carriers.call_log.carriers.call_log.client_visible_T0r85_rows",
+   "min": 10
+  },
+  {
+   "label": "⑩-8",
+   "claim": "本 build 的工具名清单实测留档（12 个被点名工具的命中数）",
+   "artifact": ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "path": "named_tools_in_this_build",
+   "min": 12
+  },
+  {
+   "label": "⑩-9",
+   "claim": "对账件自身拒绝栏为空（分组不吞行、对照前缀数出 0）",
+   "artifact": ".fist-loop-20260927/fix_r4_calllog_tally.json",
+   "path": "refuse",
+   "equals": []
+  }
+ ]
+}

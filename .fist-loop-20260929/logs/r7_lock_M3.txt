@@ -1,0 +1,24 @@
+{
+ "cell": "M3 摘掉位置模式元数诊断",
+ "file": "cypyc/analyzer/type_checker.py",
+ "anchor_count": 1,
+ "tests": [
+  "tests/test_extractor_pattern.py"
+ ],
+ "run": {
+  "rc": 1,
+  "failed": 1,
+  "passed": 19,
+  "errors": 0,
+  "skipped": 0,
+  "collected": 20,
+  "count_arith_ok": true,
+  "stray_error_lines": [],
+  "collect_or_internal_errors": 0,
+  "internal_error": false,
+  "summary_line": "======================== 1 failed, 19 passed in 0.36s ========================="
+ },
+ "restored_bytes_identical": true,
+ "verdict": "承重：摘掉即红",
+ "carries": true
+}

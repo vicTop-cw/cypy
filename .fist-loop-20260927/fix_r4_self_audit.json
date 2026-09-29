@@ -1,0 +1,119 @@
+{
+ "started": "2026-09-27T23:30:11+00:00",
+ "spec": "report_spec_r4_fix.json",
+ "report_name": "20260928.06.15.00",
+ "gates_total": 102,
+ "gates_pass": 102,
+ "gates_fail": [],
+ "gates_by_law": {
+  "①": 8,
+  "②": 9,
+  "③": 8,
+  "④": 15,
+  "⑤": 6,
+  "⑥": 24,
+  "⑦": 9,
+  "⑧": 7,
+  "⑨": 7,
+  "⑩": 9
+ },
+ "section8_items": 8,
+ "placeholders_total": 71,
+ "placeholders_bad": [],
+ "placeholders_empty": [
+  "fix_r4_baselines.json|radius.frozen",
+  "fix_r4_baselines.json|refuse",
+  "fix_r4_docs.json|still_open",
+  "fix_r4_impact.json|newly_accepted",
+  "fix_r4_impact.json|newly_rejected",
+  "fix_r4_impact.json|unadjudicated",
+  "fix_r4_revert.json|clean_run_failed",
+  "fix_r4_revert.json|rows.0.controls_broken",
+  "fix_r4_revert.json|rows.1.controls_broken",
+  "fix_r4_revert.json|rows.2.controls_broken",
+  "fix_r4_revert.json|rows.3.controls_broken"
+ ],
+ "artifacts_declared": 13,
+ "body": ".fist-loop-20260927/r4_fix_body.md",
+ "self_checks": [
+  {
+   "label": "门禁 label 不重复",
+   "got": [],
+   "want": [],
+   "why": "按 label 计数",
+   "ok": true
+  },
+  {
+   "label": "不许有 min=0 的恒真门",
+   "got": [],
+   "want": [],
+   "why": "min=0 永远成立",
+   "ok": true
+  },
+  {
+   "label": "每道门禁都自带可判谓词",
+   "got": [],
+   "want": [],
+   "why": "缺 min/equals/truthy",
+   "ok": true
+  },
+  {
+   "label": "散文占位全部解析成功",
+   "got": [],
+   "want": [],
+   "why": "件在盘上且路径可解",
+   "ok": true
+  },
+  {
+   "label": "散文按仓库根路径点名的件都在 artifacts 清单里",
+   "got": [],
+   "want": [],
+   "why": "清单口径不能漏件",
+   "ok": true
+  },
+  {
+   "label": "散文引用的驱动件都在 spec 清单里",
+   "got": [],
+   "want": [],
+   "why": "按 basename 对齐",
+   "ok": true
+  },
+  {
+   "label": "清单里声明的件确实在盘上",
+   "got": [],
+   "want": [],
+   "why": "artifacts 存在性",
+   "ok": true
+  },
+  {
+   "label": "占位非空（空列表必须由 equals:[] 的门禁作证，否则是判据看不见样本）",
+   "got": [],
+   "want": [],
+   "why": "空值占位 11 个，无佐证的 0 个",
+   "ok": true
+  },
+  {
+   "label": "§八 标题声明条数 == 正文条数",
+   "got": 8,
+   "want": 8,
+   "why": "## 八、本环我自己的失效（判据写错，不是产品坏）",
+   "ok": true
+  },
+  {
+   "label": "门禁覆盖八条法 + 账面载体（≥9 组）",
+   "got": true,
+   "want": true,
+   "why": "{\"①\": 8, \"②\": 9, \"③\": 8, \"④\": 15, \"⑤\": 6, \"⑥\": 24, \"⑦\": 9, \"⑧\": 7, \"⑨\": 7, \"⑩\": 9}",
+   "ok": true
+  },
+  {
+   "label": "每道 gates 引用的件都成功解析",
+   "got": 102,
+   "want": 102,
+   "why": "过 102 / 败 0",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-27T23:30:11+00:00"
+}

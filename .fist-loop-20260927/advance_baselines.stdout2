@@ -1,0 +1,64 @@
+{
+ "refuse": [
+  "判据7e 本轮自己写的代码有 lint 违例：['cypyc/codegen/cython_generator.py:1024:101: E501 line too long (102 > 100 characters)', 'cypyc/codegen/cython_generator.py:1059:101: E501 line too long (104 > 100 characters)', 'cypyc/codegen/cython_generator.py:1110:101: E501 line too long (126 > 100 characters)', 'cypyc/codegen/cython_generator.py:1132:1: W293 blank line contains whitespace', 'cypyc/codegen/cython_generator.py:1135:1: W293 blank line contains whitespace', 'cypyc/codegen/cython_generator.py:1146:101: E501 line too long (119 > 100 characters)']"
+ ],
+ "pytest": {
+  "rc": 0,
+  "passed": 1868,
+  "failed_or_error": [],
+  "failed_tests": [],
+  "skipped_lines": 0,
+  "summary_line": "====================== 1868 passed in 274.86s (0:04:34) ======================="
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "green": true,
+  "verdict": "绿"
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+ },
+ "collection": {
+  "rc": 0,
+  "count": 6,
+  "file": "tests/test_loop_20260927_advance.py"
+ },
+ "radius": {
+  "attribution": "mtime ≥ 本轮起点（不是 git diff——工作树里还有上一轮的未提交改动）",
+  "since": "polish 收口之后",
+  "product_files_touched_this_stage": [
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/parser.py"
+  ],
+  "expected": [
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/parser.py"
+  ],
+  "new_token_or_class_defs_in_my_hunks": []
+ },
+ "lint": {
+  "scanned_files": 10,
+  "total_in_scope_files": 673,
+  "attributable_to_this_round": [
+   "cypyc/codegen/cython_generator.py:1024:101: E501 line too long (102 > 100 characters)",
+   "cypyc/codegen/cython_generator.py:1059:101: E501 line too long (104 > 100 characters)",
+   "cypyc/codegen/cython_generator.py:1110:101: E501 line too long (126 > 100 characters)",
+   "cypyc/codegen/cython_generator.py:1132:1: W293 blank line contains whitespace",
+   "cypyc/codegen/cython_generator.py:1135:1: W293 blank line contains whitespace",
+   "cypyc/codegen/cython_generator.py:1146:101: E501 line too long (119 > 100 characters)",
+   "cypyc/codegen/cython_generator.py:1157:101: E501 line too long (105 > 100 characters)",
+   "cypyc/codegen/cython_generator.py:1158:1: W293 blank line contains whitespace",
+   "cypyc/codegen/cython_generator.py:1162:29: F541 f-string is missing placeholders",
+   "cypyc/codegen/cython_generator.py:1201:1: W293 blank line contains whitespace",
+   "cypyc/codegen/cython_generator.py:1205:29: F541 f-string is missing placeholders",
+   "cypyc/codegen/cython_generator.py:1207:1: W293 blank line contains whitespace"
+  ],
+  "e501_only_exempted_files": [
+   ".fist-loop-20260927/gen_report_r1_advance.py"
+  ],
+  "exempted_hits": 8
+ },
+ "doc_rc": 0
+}

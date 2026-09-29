@@ -1,0 +1,28 @@
+{
+ "ok": true,
+ "bug30": true,
+ "bug33": true,
+ "bug38": true,
+ "detail": {
+  "bug30": {
+   "rc": 0,
+   "line": [
+    "probe: <class 'float'> value=42.0"
+   ]
+  },
+  "bug33": {
+   "rc": 1,
+   "diag": [
+    "  \u001b[31m-\u001b[0m 读取文件错误: Unterminated string literal opened at 2:18, reached end of file at 4:1"
+   ]
+  },
+  "bug38": {
+   "rc": 0,
+   "tail": [
+    "\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m",
+    "\u001b[32m[OK] Transpiled successfully\u001b[0m",
+    "  \u001b[36mOutput:\u001b[0m C:\\Users\\victo\\AppData\\Local\\Temp\\cypy_verify_r1_8inki8n4\\out38\\b38.pyx"
+   ]
+  }
+ }
+}

@@ -1,0 +1,4 @@
+SPEC cypy.annotation.shape cases=24 passed=24
+SPEC cypy.pattern.positional cases=14 passed=13
+  FAIL #11 typecheck 'class C:' → 缺片段 "Positional pattern 'C'"；观测=''
+CONCLUSION specs=2 cases=38 passed=37 failed=1 refused=0 accuracy=97.37% rc=1

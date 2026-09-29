@@ -1,0 +1,26 @@
+[L0] L0 live（修复后） | pytest rc=0 red=0 | gate CONCLUSION specs=1 cases=14 passed=14 failed=0 refused=0 accuracy=100.00% rc=0 | ident={"parser_has_type_args": true, "parser_has_checker": false, "codegen_has_tuple": false, "analyzer_has_binding": true}
+[L1] L1 三处全退 | pytest rc=2 red=0 | gate ckproof_r10_40124\L1\cypyc\parser\__init__.py", line 2, in <module>
+    from . | ident={"parser_has_type_args": false, "parser_has_checker": true, "codegen_has_tuple": true, "analyzer_has_binding": false}
+[L2] L2 只退解析器 | pytest rc=2 red=0 | gate ckproof_r10_40124\L2\cypyc\parser\__init__.py", line 2, in <module>
+    from . | ident={"parser_has_type_args": false, "parser_has_checker": true, "codegen_has_tuple": false, "analyzer_has_binding": true}
+[L3] L3 只退分析器 | pytest rc=1 red=7 | gate CONCLUSION specs=1 cases=14 passed=10 failed=4 refused=0 accuracy=71.43% rc=1 | ident={"parser_has_type_args": true, "parser_has_checker": false, "codegen_has_tuple": false, "analyzer_has_binding": false}
+     RED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#12]
+     RED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#3]
+     RED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#4]
+     RED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#5]
+     RED tests/test_generic_callsite_r10.py::test_explicit_type_arg_overrides_inference
+     RED tests/test_generic_callsite_r10.py::test_type_argument_count_mismatch_is_reported_with_location
+     RED tests/test_generic_callsite_r10.py::test_type_arguments_on_non_generic_are_reported
+[L4] L4 产物退回零参调用形态 | pytest rc=1 red=9 | gate CONCLUSION specs=1 cases=14 passed=8 failed=6 refused=0 accuracy=57.14% rc=1 | ident={"parser_has_type_args": true, "parser_has_checker": false, "codegen_has_tuple": false, "analyzer_has_binding": true}
+     RED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#10]
+     RED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#11]
+     RED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#13]
+     RED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#7]
+     RED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#8]
+     RED tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.callsite.json#9]
+     RED tests/test_generic_callsite_r10.py::test_callsite_type_arg_is_erased_in_product
+     RED tests/test_generic_callsite_r10.py::test_callsite_type_arg_on_user_type_is_erased
+     RED tests/test_generic_callsite_r10.py::test_generic_struct_ctor_type_arg_erased
+[L5] L5 只改注释（语义不变，对照格） | pytest rc=0 red=0 | gate CONCLUSION specs=1 cases=14 passed=14 failed=0 refused=0 accuracy=100.00% rc=0 | ident={"parser_has_type_args": true, "parser_has_checker": false, "codegen_has_tuple": false, "analyzer_has_binding": true}
+GATES {"L0_pytest_green": true, "L0_gate_100": true, "L1_load_bearing": false, "L2_parser_only_red": false, "L3_analyzer_only_red": true, "L4_erasure_only_red": true, "L5_comment_control_green": true, "identity_no_stale_tree": false}
+CONCLUSION cases=6 gates_pass=5/8 ok=False

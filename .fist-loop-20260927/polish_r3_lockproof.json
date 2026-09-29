@@ -1,0 +1,206 @@
+{
+ "refuse": [],
+ "snapshot": {
+  "dir": "E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\tmp_polish\\snap_49124",
+  "copied": 320,
+  "missing_on_disk": [
+   "examples/demos/legacy/analyzer/type_checking.cypy",
+   "examples/demos/legacy/builtins/defer_and_guard.cypy",
+   "examples/demos/legacy/builtins/generics.cypy",
+   "examples/demos/legacy/builtins/pointer_operations.cypy",
+   "examples/demos/legacy/codegen/cdef_class_generation.cypy",
+   "examples/demos/legacy/codegen/module_magic_attrs.cypy",
+   "examples/demos/legacy/parser/build_blocks.cypy",
+   "examples/demos/legacy/parser/implicit_policy.cypy",
+   "examples/demos/legacy/parser/struct_definition.cypy",
+   "examples/struct.cypy"
+  ],
+  "markers_ok": true,
+  "at_utc": "2026-09-27T18:11:04+00:00",
+  "untracked_copied": 59,
+  "untracked_skipped": [],
+  "removed": true
+ },
+ "groups": {
+  "G1 夹具退回非冻结形": {
+   "patches": 1,
+   "applied": true,
+   "reds": [
+    "test_polish_generic_fixture_in_fix_r3_uses_frozen_form"
+   ],
+   "expected": [
+    "test_polish_generic_fixture_in_fix_r3_uses_frozen_form"
+   ],
+   "ok": true,
+   "note": "锁 1 钉的是『夹具用冻结形』",
+   "restored": true,
+   "compiled": true,
+   "total_seen": 26,
+   "same_cause_reds": {},
+   "unexplained_reds": [],
+   "must_stay_green_ok": true,
+   "unexpected_reds": []
+  },
+  "G2 撤回 --emit-code 文档行": {
+   "patches": 1,
+   "applied": true,
+   "reds": [
+    "test_polish_transpile_and_build_flags_three_way_sync"
+   ],
+   "expected": [
+    "test_polish_transpile_and_build_flags_three_way_sync"
+   ],
+   "ok": true,
+   "note": "argparse 有旗标没进文档 ⇒ 完整性方向红；反方向（文档里的旗标是否都真实）不该被这次 mutation 影响，故钉成 must_stay_green",
+   "restored": true,
+   "compiled": true,
+   "total_seen": 26,
+   "same_cause_reds": {},
+   "unexplained_reds": [],
+   "must_stay_green_ok": true,
+   "unexpected_reds": []
+  },
+  "G3 CLI 退回直调私有": {
+   "patches": 1,
+   "applied": true,
+   "reds": [
+    "test_polish_cli_no_longer_calls_private_analyzer"
+   ],
+   "expected": [
+    "test_polish_cli_no_longer_calls_private_analyzer"
+   ],
+   "ok": true,
+   "note": "锁 7 钉调用面不再依赖下划线方法",
+   "restored": true,
+   "compiled": true,
+   "total_seen": 26,
+   "same_cause_reds": {},
+   "unexplained_reds": [],
+   "must_stay_green_ok": true,
+   "unexpected_reds": []
+  },
+  "G4 摘掉公开 analyze_only 门面": {
+   "patches": 1,
+   "applied": true,
+   "reds": [
+    "test_bug56_check_only_fails_on_broken_source",
+    "test_bug56_check_only_reports_and_generates_nothing",
+    "test_polish_cypy_hook_exposes_public_analyze_only"
+   ],
+   "expected": [
+    "test_polish_cypy_hook_exposes_public_analyze_only"
+   ],
+   "ok": true,
+   "note": "门面消失 ⇒ 锁 6 红；两条 BUG-56 check-only 锁同因连带（白名单记原因）；锁 7 只读 cli.py 文本，本组不动它 ⇒ 必须仍绿（证明 mutation 是窄的）",
+   "restored": true,
+   "compiled": true,
+   "total_seen": 26,
+   "same_cause_reds": {
+    "test_bug56_check_only_fails_on_broken_source": "同上：同一调用面的第二条锁",
+    "test_bug56_check_only_reports_and_generates_nothing": "CLI 的 --check-only 走这个门面，摘掉必然 AttributeError ⇒ 同因连带，非跨件污染"
+   },
+   "unexplained_reds": [
+    "test_bug56_check_only_fails_on_broken_source",
+    "test_bug56_check_only_reports_and_generates_nothing"
+   ],
+   "must_stay_green_ok": true,
+   "unexpected_reds": []
+  },
+  "G5 让同名函数重新遮蔽子模块": {
+   "patches": 1,
+   "applied": true,
+   "reds": [
+    "test_bug57_union_docstrings_advertise_only_runnable_shapes",
+    "test_polish_union_submodule_reachable_via_importlib"
+   ],
+   "expected": [
+    "test_polish_union_submodule_reachable_via_importlib"
+   ],
+   "ok": true,
+   "note": "锁 5 钉的是『包级名字仍是模块』；同一条遮蔽也解释了为什么 R3-验证 的 run1 会假红",
+   "restored": true,
+   "compiled": true,
+   "total_seen": 26,
+   "same_cause_reds": {
+    "test_bug57_union_docstrings_advertise_only_runnable_shapes": "该锁写 `from cypy_bridge import union as union_mod` 后按模块取 doc ⇒ 遮蔽一复发它就红（同因）"
+   },
+   "unexplained_reds": [
+    "test_bug57_union_docstrings_advertise_only_runnable_shapes"
+   ],
+   "must_stay_green_ok": true,
+   "unexpected_reds": []
+  },
+  "G6 摘掉 bridge 模式的 generate-setup 接线": {
+   "patches": 1,
+   "applied": true,
+   "reds": [
+    "test_polish_bridge_generate_setup_writes_parseable_setup"
+   ],
+   "expected": [
+    "test_polish_bridge_generate_setup_writes_parseable_setup"
+   ],
+   "ok": true,
+   "note": "锁 3 是新补的调用面缺口",
+   "restored": true,
+   "compiled": true,
+   "total_seen": 26,
+   "same_cause_reds": {},
+   "unexplained_reds": [],
+   "must_stay_green_ok": true,
+   "unexpected_reds": []
+  },
+  "G7 摘掉 bridge 对 emit-cython 的明确 decline": {
+   "patches": 1,
+   "applied": true,
+   "reds": [
+    "test_polish_bridge_emit_cython_declines_explicitly"
+   ],
+   "expected": [
+    "test_polish_bridge_emit_cython_declines_explicitly"
+   ],
+   "ok": true,
+   "note": "锁 4 要求『明确说不适用』而不是静默",
+   "restored": true,
+   "compiled": true,
+   "total_seen": 26,
+   "same_cause_reds": {},
+   "unexplained_reds": [],
+   "must_stay_green_ok": true,
+   "unexpected_reds": []
+  },
+  "C1 对照：只改注释": {
+   "patches": 1,
+   "applied": true,
+   "reds": [],
+   "expected": [],
+   "ok": true,
+   "note": "正向对照：只加注释必须全绿，否则说明锁钉在了字面噪声上",
+   "restored": true,
+   "compiled": true,
+   "total_seen": 26,
+   "same_cause_reds": {},
+   "unexplained_reds": [],
+   "must_stay_green_ok": true,
+   "unexpected_reds": []
+  }
+ },
+ "started_at_utc": "2026-09-27T18:11:05+00:00",
+ "premise": {
+  "rc": 0,
+  "passed": 26,
+  "reds": [],
+  "total_seen": 26
+ },
+ "groups_total": 8,
+ "groups_ok": 8,
+ "revert_groups_ok": 7,
+ "control_groups_ok": 1,
+ "workspace_untouched": true,
+ "after_restore": {
+  "passed": 26,
+  "reds": [],
+  "total_seen": 26
+ },
+ "snap_left": [],
+ "finished_at_utc": "2026-09-27T18:12:01+00:00"
+}

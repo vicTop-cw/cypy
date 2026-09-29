@@ -1,0 +1,33 @@
+PASS  bug_ids_all_exist | cited=14 missing=[]
+PASS  bug_ids_nonvacuous | cited=14
+PASS  paths_all_exist | paths=26 missing=[]
+PASS  paths_nonvacuous | paths=26
+PASS  verbatim_claims_backed | claims=26 unbacked=[]
+PASS  derived_quotes_round_trip | derived=1
+PASS  verbatim_nonvacuous | claims=26
+PASS  regex_like_exemption_stays_small | regexish=['CONCLUSION specs=\\d+ cases=', 'Passed: (\\d+)']
+PASS  canary_mutated_claim_red | probe=2284 passed in 3≠1.08s (0:05:01)
+PASS  code_anchors_in_range | []
+PASS  canary_shifted_range_red | [{'rel': 'cypyc/analyzer/type_checker.py', 'needle': 'def _check_declared_boun', 'still_hits_if_shifted': False}, {'rel': 'cypyc/analyzer/type_checker.py', 'needle': 'self._check_declared_bou', 'still_hits_if_shifted': False}, {'rel': 'cypyc/analyzer/type_chec
+PASS  canary_fake_bug_id_red | fake=143 got=[143]
+PASS  ledger_numbers_match | {'headers': {'claim': '137', 'actual': '137'}, 'open_narrow': {'claim': '39', 'actual': '39'}, 'fixed_total': {'claim': '90', 'actual': '90'}, 'open_ring_in_report': {'claim': '38', 'actual': '38'}}
+PASS  open_claim_consistent_all_places | claims=['39', '39'] actual=39
+PASS  new_card_severity_matches_ledger | []
+PASS  legacy_stamp_readings_quoted | {'clock_no_Z': 17, 'minute_precision': 1, 'hard_bad': 0}
+PASS  ledger_hard_sweep_zero | {'clock_no_Z': 17, 'minute_precision': 1, 'hard_bad': 0}
+PASS  report_has_no_uninterpolated_placeholder | []
+PASS  code_span_placeholder_claim_backed_by_ledger_gate | §6.4 讲占位的那段要在，且要点名写坏的件
+PASS  spec_cases_and_fp | fnv1a64:65b49102e98d2fa0
+PASS  corpus_total_and_gate_agree | total=123
+PASS  lock_count_matches | locks=18
+PASS  matrix_claims_match_json | {'cells': 6, 'mut': 4, 'ctrl': 1}
+PASS  close_receipt_appears_once | copies=1
+PASS  close_conclusion_line_quoted | 
+PASS  severity_split_matches_ledger | sev={'low': 11, 'medium': 23, 'high': 5} open=39
+PASS  generics_family_named_as_derived_set | derived=['49', '121', '122', '128', '135', '136'] claim=泛型/类型约束族开口 6 条（49+121+122+128+135+136）
+PASS  style_claim_two_tiers | own_clean=True head_black_diff=1686
+PASS  post_format_reruns_agree | pytest=2325/2325 suite=47/47 gate=123/123 matrix=4/4
+PASS  wallclock_delta_quoted_as_derived | delta=15.86s claimed_in_report=True
+PASS  stalled_roots_counts_derived_from_db | {"T0r112": {"待领取": 15, "拆分中": 6, "已完成": 8}, "T0r113": {"待领取": 4, "拆分中": 3, "已完成": 14}}
+PASS  r13_probe_section_present | §3.4 要点名探针日志与新单号
+CONCLUSION checks=32 failed=0 ledger_open_narrow=39 ledger_open_ring=38 bug_ids=14 claims=26 paths=26 close_appended=True rc=0

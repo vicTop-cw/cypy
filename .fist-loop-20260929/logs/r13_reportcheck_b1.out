@@ -1,0 +1,33 @@
+FAIL every_verbatim_quote_landed_in_evidence | 2 条形如只在报告里：headers=137->140 ;; specs=7 cases=151 passed=151 accuracy=100.00% rc=0
+PASS cited_bug_ids_exist | missing=[] cited=12
+PASS BUG-137_closed_this_round | fixed=True
+PASS BUG-138_closed_this_round | fixed=True
+PASS BUG-139_closed_this_round | fixed=True
+PASS BUG-136_still_open_with_amendment | fixed=False amend=True
+PASS anchors_point_at_what_they_claim | []
+PASS corpus_cases_and_fingerprint_quoted | cases=28 fp=fnv1a64:7349f8d14b3fc9fc
+PASS corpus_total_matches_gate_reading | 151
+PASS lock_counts_derived_not_handadded | def test_ = 31
+PASS suite_total_quoted_with_source | r13_suite_b2.log
+PASS gate_quoted_from_the_valid_run | r13_gate_b3.log -> ('7', '151', '151', '0')
+PASS void_gate_reading_stays_marked_void | 报告须自证 b2 那一次不可采信
+PASS golden_quoted | r13_golden_b2.log
+PASS final_pytest_count_and_wallclock_quoted | ('2390', '378.86')
+PASS matrix_table_cells_match_json | cells=7
+PASS matrix_table_numbers_match_json | {'L0 现树（应全绿）': (0, 0), 'M1 摘掉赋值位调用': (20, 9), 'M2 摘掉返回位调用': (5, 2), 'M3 逐位扫描短路': (21, 10), 'M4 撤掉 UnionType 代入（BUG-139）': (2, 1), 'M5 撤掉别名展开（BUG-138）': (4, 2), 'M6 只改注释（对照格，必须 0 红）': (0, 0)}
+PASS matrix_all_mutations_red_and_control_zero | L0 也必须绿
+PASS matrix_l0_green | 
+PASS ledger_counts_quoted | {'headers': 141, 'unique': 140, 'open': 40, 'fixed': 93, 'amend': 1}
+PASS unique_equals_headers_minus_dups | headers=141 unique=140 dup=['BUG-96']
+PASS duplicate_ids_declared_and_filed | ['BUG-96']
+PASS open_generics_family_named_as_derived_set | open family=[120, 121, 122, 128, 134, 135, 136]
+PASS close_receipt_present_and_unique | copies=0
+PASS close_receipt_root_closed | close 尚未跑：报告必须明写这是待补而不是留空
+PASS close_receipt_verbatim_in_evidence | 起手腿回执在场
+PASS stalled_roots_counts_derived_from_db | {"T0r112": {"已完成": 8, "待领取": 15, "拆分中": 6}, "T0r113": {"已完成": 14, "待领取": 4, "拆分中": 3}}
+PASS self_caught_defect_list_not_empty | count=11
+PASS self_caught_items_name_real_artifacts | ['探针形状写错当成产品红', '过宽的"未插值"针', '中文串里嵌 ASCII 直引号 = SyntaxError', '整档脏检当门', '副本树少拷一个目录 ⇒ L0 恒红', '三向对照只跑了两向', '门与证据同名 ⇒ 复跑原地覆盖', '"仍静默 N 形"混了两类事', '`--op all` 的空跑', '"逐字引用"只在 stdout 里活着', '抬头数与编号数不是一回事']
+PASS own_writes_are_black_clean | 11 份，脏=[]
+PASS black_failure_is_attributable | rc=0 dirty=0（红且无清单 ⇒ 尺子坏了）
+PASS style_claim_is_two_tier | 
+CONCLUSION checks=32 failed=1 ledger_open=40 bug_ids=12 corpus_total=151 rc=1

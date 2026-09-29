@@ -1,0 +1,773 @@
+{
+ "started": "2026-09-28T10:59:01+00:00",
+ "gates_total": 114,
+ "gates_green": 102,
+ "gates_red": [
+  "②-7 门禁未过：≥8，实得 6",
+  "②-11 路径解析不出：.fist-loop-20260927/fix_r5_book91.json::self_checks（键 self_checks 不在件里（实际键：['bug_num', 'calllog_report_bug', 'checks', 'expected_num', 'ledger_after', 'ledger_before', 'measurement', 'refuse']））",
+  "③-6 路径解析不出：.fist-loop-20260927/fix_r5_baselines.json::started（键 started 不在件里（实际键：['all_ok', 'collect', 'e2e', 'finished_at_utc', 'floors', 'floors_source', 'git', 'git_head_expected']））",
+  "法⑤-3 门禁未过：truthy=True，实得 []",
+  "法⑤-6 门禁未过：truthy=True，实得 []",
+  "法⑦-2 门禁未过：==17，实得 [\"CLI_build_failure_reason_message_swallowed\", \"CLI_check_only_ignores_entry_scope\", \"CLI_global_option_overwritten_by_subparser\", \"CODEGEN_augmented_xor_drops_left_operand\", \"CODEGEN_binop_parens_dropped_changes_order\", \"CODEGEN_header_docstring_backslash_escape\", \"CODEGEN_module_identity_hardcoded_unknown\", \"CODEGEN_nested_defer_runs_eagerly\", \"COMPTIME_block_form_surfaces_internal_exception\", \"",
+  "法⑦-3 门禁未过：==5，实得 [\"BRIDGE_c_not_equivalent\", \"BRIDGE_cache_side_effect\", \"CODEGEN_named_conditions_unreachable\", \"PYD_incremental_cache_not_reused\", \"SLICE_typed_as_element\"]",
+  "法⑦-7 门禁未过：truthy=True，实得 []",
+  "法⑦-8 路径解析不出：.fist-loop-20260927/fix_r5_ledger.json::rows（键 rows 不在件里（实际键：['agree_total', 'appended', 'at_utc', 'cards', 'closed_ids', 'closed_keys_len', 'fixed_sections', 'impact_adjudication']））",
+  "法⑧-1 门禁未过：==[]，实得 0",
+  "法⑧-3 门禁未过：≥19，实得 18",
+  "⑫-3 路径解析不出：.fist-loop-20260927/fix_r5_needles.json::canary（键 canary 不在件里（实际键：['at_utc', 'checked_len', 'needle_verification_written_back', 'off_ring_artifacts', 'pending_artifacts', 'pending_stub_artifacts', 'per_law_real', 'prefix_canary']））"
+ ],
+ "fake_min_gates": [],
+ "needle_bad": [],
+ "stale_undeclared": [],
+ "stale_disclosed": [],
+ "placeholders_total": 77,
+ "placeholders_unresolved": [],
+ "placeholders_empty_unjustified": [
+  "fix_r5_impact.json|corpus_adjudication_files"
+ ],
+ "section10_items_declared": 27,
+ "claim": {
+  "cards_total": 36,
+  "planned": 22,
+  "handed_over": 14,
+  "locked": 18,
+  "closed": 17,
+  "leftover": 5,
+  "matrix_rows": 22
+ },
+ "baselines": {
+  "three_systems_green": [
+   true,
+   true,
+   true
+  ],
+  "three_systems_ok": true,
+  "floors": {
+   "pytest": 2002,
+   "collect": 2002,
+   "suite": 47,
+   "e2e_pass": 25
+  },
+  "radius_forbidden": 0
+ },
+ "artifact_self_checks_red": [],
+ "closure": {
+  "leaves": 0,
+  "failed": null,
+  "root_pre_render": "拆分中",
+  "close_root_task": "T0r110",
+  "close_branches": 8
+ },
+ "self_checks": [
+  {
+   "label": "门禁全绿（红表必须为空）",
+   "got": [
+    "②-7 门禁未过：≥8，实得 6",
+    "②-11 路径解析不出：.fist-loop-20260927/fix_r5_book91.json::self_checks（键 self_checks 不在件里（实际键：['bug_num', 'calllog_report_bug', 'checks', 'expected_num', 'ledger_after', 'ledger_before', 'measurement', 'refuse']））",
+    "③-6 路径解析不出：.fist-loop-20260927/fix_r5_baselines.json::started（键 started 不在件里（实际键：['all_ok', 'collect', 'e2e', 'finished_at_utc', 'floors', 'floors_source', 'git', 'git_head_expected']））",
+    "法⑤-3 门禁未过：truthy=True，实得 []",
+    "法⑤-6 门禁未过：truthy=True，实得 []",
+    "法⑦-2 门禁未过：==17，实得 [\"CLI_build_failure_reason_message_swallowed\", \"CLI_check_only_ignores_entry_scope\", \"CLI_global_option_overwritten_by_subparser\", \"CODEGEN_augmented_xor_drops_left_operand\", \"CODEGEN_binop_parens_dropped_changes_order\", \"CODEGEN_header_docstring_backslash_escape\", \"CODEGEN_module_identity_hardcoded_unknown\", \"CODEGEN_nested_defer_runs_eagerly\", \"COMPTIME_block_form_surfaces_internal_exception\", \"",
+    "法⑦-3 门禁未过：==5，实得 [\"BRIDGE_c_not_equivalent\", \"BRIDGE_cache_side_effect\", \"CODEGEN_named_conditions_unreachable\", \"PYD_incremental_cache_not_reused\", \"SLICE_typed_as_element\"]",
+    "法⑦-7 门禁未过：truthy=True，实得 []",
+    "法⑦-8 路径解析不出：.fist-loop-20260927/fix_r5_ledger.json::rows（键 rows 不在件里（实际键：['agree_total', 'appended', 'at_utc', 'cards', 'closed_ids', 'closed_keys_len', 'fixed_sections', 'impact_adjudication']））",
+    "法⑧-1 门禁未过：==[]，实得 0",
+    "法⑧-3 门禁未过：≥19，实得 18",
+    "⑫-3 路径解析不出：.fist-loop-20260927/fix_r5_needles.json::canary（键 canary 不在件里（实际键：['at_utc', 'checked_len', 'needle_verification_written_back', 'off_ring_artifacts', 'pending_artifacts', 'pending_stub_artifacts', 'per_law_real', 'prefix_canary']））"
+   ],
+   "want": [],
+   "why": "102/114 绿",
+   "ok": false
+  },
+  {
+   "label": "恒真门（min<=0）必须为 0 道",
+   "got": [],
+   "want": [],
+   "why": "把门焊死不算通过",
+   "ok": true
+  },
+  {
+   "label": "每条门禁的 path 首段是被引件里的真键名",
+   "got": [],
+   "want": [],
+   "why": "子串假命中不算 needle（上一环 control/queue 那类）",
+   "ok": true
+  },
+  {
+   "label": "门禁条数达八法 × 每法至少三道",
+   "got": true,
+   "want": true,
+   "why": "实得 114 道",
+   "ok": true
+  },
+  {
+   "label": "八条法的头号证据件都有门禁家族在场",
+   "got": [],
+   "want": [],
+   "why": "件集 ['close_r5_fix.json', 'fix_r5_baselines.json', 'fix_r5_book91.json', 'fix_r5_calllog_tally.json', 'fix_r5_drivers_lint.json', 'fix_r5_impact.json', 'fix_r5_intake.json', 'fix_r5_ledger.json', 'fix_r5_locks.json', 'fix_r5_needles.json', 'fix_r5_rc.json', 'fix_r5_revert.json', 'r5_fix_lanes.json']",
+   "ok": true
+  },
+  {
+   "label": "每条法配三道证据件（派单与收口读同一份计划）",
+   "got": [
+    3
+   ],
+   "want": [
+    3
+   ],
+   "why": "artifacts 条数分布",
+   "ok": true
+  },
+  {
+   "label": "收口叶子 16 张",
+   "got": 0,
+   "want": 16,
+   "why": "按 sqlite 反解的叶数",
+   "ok": false
+  },
+  {
+   "label": "派单面与收口面同一批：根号 = 渲染件的根号，8 支 × 16 叶，执行人 cypy-fixer",
+   "got": [
+    true,
+    "cypy-fixer",
+    "R5-修复",
+    [
+     8,
+     16
+    ],
+    false
+   ],
+   "want": [
+    true,
+    "cypy-fixer",
+    "R5-修复",
+    [
+     8,
+     16
+    ],
+    true
+   ],
+   "why": "root=T0r110 支=8 叶=16 输出件叶=0",
+   "ok": false
+  },
+  {
+   "label": "收口零失败",
+   "got": null,
+   "want": [],
+   "why": "null",
+   "ok": false
+  },
+  {
+   "label": "渲染前阶段：根尚未上卷（现读非已归档 且 收口件不在盘上，两条同时成立）",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "live root=拆分中 / root 件在盘=False",
+   "ok": true
+  },
+  {
+   "label": "每叶 omega 链走完（verify 结果为已完成）",
+   "got": [],
+   "want": [
+    "已完成"
+   ],
+   "why": "逐叶 verify 字段",
+   "ok": false
+  },
+  {
+   "label": "三套体系同刻为绿（三栏分别判：pytest / 自研套件 / e2e 各一条，不是拿 all() 蒙一个）",
+   "got": [
+    [
+     true,
+     true,
+     true
+    ],
+    true
+   ],
+   "want": [
+    [
+     true,
+     true,
+     true
+    ],
+    true
+   ],
+   "why": "[true, true, true]",
+   "ok": true
+  },
+  {
+   "label": "pytest 失败汇总为 0 且 rc=0（字段名从件反解：failed_sum）",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "两栏分列",
+   "ok": true
+  },
+  {
+   "label": "pytest 通过数不低于上一环实测地板",
+   "got": true,
+   "want": true,
+   "why": "passed=2119 floors={'pytest': 2002, 'collect': 2002, 'suite': 47, 'e2e_pass': 25}",
+   "ok": true
+  },
+  {
+   "label": "收集数达地板（解析器活着）",
+   "got": true,
+   "want": true,
+   "why": "collect=2119",
+   "ok": true
+  },
+  {
+   "label": "地板四栏齐全且来源点名上一环件",
+   "got": [
+    "collect",
+    "e2e_pass",
+    "pytest",
+    "suite"
+   ],
+   "want": [
+    "collect",
+    "e2e_pass",
+    "pytest",
+    "suite"
+   ],
+   "why": "hunt_r5_baselines.json:{\"pytest\": 2002, \"collect\": 2002, \"suite\": 47, \"e2e_pass\": 25}",
+   "ok": true
+  },
+  {
+   "label": "e2e：PASS 达地板且 FAIL/WARN/UNREG 三格为零（法⑥点名的三格）",
+   "got": [
+    25,
+    0,
+    0,
+    0
+   ],
+   "want": [
+    25,
+    0,
+    0,
+    0
+   ],
+   "why": "{\"PASS\": 25, \"FAIL\": 0, \"UNREG/RUNFAIL\": 0, \"WARN\": 0}",
+   "ok": true
+  },
+  {
+   "label": "自研套件：Passed 达地板、Failed 为零、三栏之和 = Total（分栏不吞行）",
+   "got": [
+    47,
+    0,
+    true
+   ],
+   "want": [
+    47,
+    0,
+    true
+   ],
+   "why": "{\"Total\": 47, \"Passed\": 47, \"Failed\": 0, \"Skipped\": 0}",
+   "ok": true
+  },
+  {
+   "label": "HEAD 未动 / 暂存为 0 / 件里声明的期望 HEAD 就是它 / 外部 HEAD 基线 worktree 仍在",
+   "got": [
+    "17d68b4",
+    true,
+    0,
+    true
+   ],
+   "want": [
+    "17d68b4",
+    true,
+    0,
+    true
+   ],
+   "why": "脏行 180 / 删掉的跟踪文件 10 个",
+   "ok": true
+  },
+  {
+   "label": "冻结面改动为 0",
+   "got": 0,
+   "want": 0,
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "半径正面测出确实写了东西",
+   "got": true,
+   "want": true,
+   "why": "loop/memory 侧 123 个",
+   "ok": true
+  },
+  {
+   "label": "认领表基数：卡表条数 = cards_total，且四栏之和 = 卡表条数（分栏不吞行）",
+   "got": [
+    36,
+    36
+   ],
+   "want": [
+    36,
+    36
+   ],
+   "why": "cards_total=36 栏位 {\"本环认领\": 22, \"交人工或裁决\": 6, \"交人工或裁决（红线：冻结语义）\": 0, \"未认领（转结仍 OPEN）\": 8}",
+   "ok": true
+  },
+  {
+   "label": "本环认领面 = 分栏「本环认领」那一栏（planned_ids 不是第二套手打的号）",
+   "got": [
+    [
+     68,
+     69,
+     71,
+     72,
+     73,
+     74,
+     75,
+     76,
+     78,
+     79,
+     80,
+     81,
+     82,
+     83,
+     84,
+     85,
+     86,
+     87,
+     88,
+     89,
+     90,
+     91
+    ],
+    22
+   ],
+   "want": [
+    [
+     68,
+     69,
+     71,
+     72,
+     73,
+     74,
+     75,
+     76,
+     78,
+     79,
+     80,
+     81,
+     82,
+     83,
+     84,
+     85,
+     86,
+     87,
+     88,
+     89,
+     90,
+     91
+    ],
+    22
+   ],
+   "why": "planned 22 张 / 本环认领栏 22 张 / 交人工面 14 张",
+   "ok": true
+  },
+  {
+   "label": "上一环入账的新单逐张落在本环认领面（漏一张=这张单没人领）",
+   "got": [],
+   "want": [],
+   "why": "新单 13 张 / 账本未闭环旧单 23 张",
+   "ok": true
+  },
+  {
+   "label": "锁先行三栏对齐：绿过=locked；红过=locked 减装饰锁；装饰锁两路（法②点名 vs 车道未交付）同集合",
+   "got": [
+    [],
+    [],
+    []
+   ],
+   "want": [
+    [],
+    [],
+    []
+   ],
+   "why": "有锁 18 张 / 红 17 张 / 装饰锁 [73] / 车道自述未交付 [73]",
+   "ok": true
+  },
+  {
+   "label": "不承重的锁只能逐张点名在案：HEAD 旧码树上就绿的锁必须恰等于装饰锁名单（不许多也不许少）",
+   "got": [],
+   "want": [],
+   "why": "[73]",
+   "ok": true
+  },
+  {
+   "label": "无锁的认领单逐张点名（locks_missing 只能是认领面子集，不并进闭环主张）",
+   "got": [],
+   "want": [],
+   "why": "无锁 [68, 69, 71, 72] / 红档日志 {\"75\": [\"r5_fix_lexer_lock.red.log\"], \"79\": [\"r5_fix_lexer_lock.red.log\"]}",
+   "ok": true
+  },
+  {
+   "label": "回退矩阵里 not_measured 的行 = 「没产品码改动／无交付」∪「没有锁」两张名单的并集（多一行少一行都要点名）",
+   "got": [
+    [],
+    []
+   ],
+   "want": [
+    [],
+    []
+   ],
+   "why": "not_measured [68, 69, 71, 72, 73] / 未修完 [68, 69, 73] / 无锁 [68, 69, 71, 72]",
+   "ok": true
+  },
+  {
+   "label": "回退矩阵条数 = 认领单数（法④的字面主张，两路各自反解）",
+   "got": [
+    22,
+    22
+   ],
+   "want": [
+    22,
+    22
+   ],
+   "why": "matrix_rows=22 行数=22 认领=22",
+   "ok": true
+  },
+  {
+   "label": "摘完逐文件复原：sha 复原数 = 摘回触及的文件数且不为 0，真树没被写脏",
+   "got": [
+    true,
+    true,
+    []
+   ],
+   "want": [
+    true,
+    true,
+    []
+   ],
+   "why": "sha 153/153 脏行 []",
+   "ok": true
+  },
+  {
+   "label": "空操作摘回对照跑过且没把锁摘红（矩阵判据的承重证明）",
+   "got": [
+    true,
+    true,
+    []
+   ],
+   "want": [
+    true,
+    true,
+    []
+   ],
+   "why": "{\"ran\": true, \"meaning\": \"把一条本环没改过的文件按 HEAD 原文重写 = 空操作 ⇒ 所有锁必须仍然全绿；有红就是夹具或环境自己坏了，整套矩阵作废\", \"file\": \"cypyc/__init__.py\", \"head_equals_current\": true, \"nodes_went_bad\": []}",
+   "ok": true
+  },
+  {
+   "label": "组间牵连为零：collateral 空表（摘一组把别组的锁摘红 ⇒ 矩阵作废）",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "账面基数：闭环 ∪ 转结 = 认领面，且两栏不重叠（一张都不许悄悄消失）",
+   "got": [
+    [
+     68,
+     69,
+     71,
+     72,
+     73,
+     74,
+     75,
+     76,
+     78,
+     79,
+     80,
+     81,
+     82,
+     83,
+     84,
+     85,
+     86,
+     87,
+     88,
+     89,
+     90,
+     91
+    ],
+    []
+   ],
+   "want": [
+    [
+     68,
+     69,
+     71,
+     72,
+     73,
+     74,
+     75,
+     76,
+     78,
+     79,
+     80,
+     81,
+     82,
+     83,
+     84,
+     85,
+     86,
+     87,
+     88,
+     89,
+     90,
+     91
+    ],
+    []
+   ],
+   "why": "闭环 17 / 转结 5 / 认领 22",
+   "ok": true
+  },
+  {
+   "label": "交人工与未认领的单没被本环闭环（红线：不占修、不改账本状态）",
+   "got": [],
+   "want": [],
+   "why": "交人工面 14 张 [34, 36, 37, 40, 41, 43, 49, 50, 52, 53, 54, 65, 70, 77]",
+   "ok": true
+  },
+  {
+   "label": "闭环集仍是「旧码红过、当前绿、摘回会红」的交集（三件独立复算，不是 ledger 自报）",
+   "got": [
+    [],
+    [],
+    [],
+    []
+   ],
+   "want": [
+    [],
+    [],
+    [],
+    []
+   ],
+   "why": "闭环 17 / 绿 18 / 摘回红 17 / 认领 22",
+   "ok": true
+  },
+  {
+   "label": "三向对照逐张同意：three_way_bad 空表且 agree_total = 对照行数",
+   "got": [
+    [],
+    17
+   ],
+   "want": [
+    [],
+    17
+   ],
+   "why": "对照 17 行 / 同意 17 / 转结 5",
+   "ok": true
+  },
+  {
+   "label": "账面基数两路对：ledger_total / ledger_open_total = 盘上现读的条目数 / OPEN 数",
+   "got": [
+    91,
+    91
+   ],
+   "want": [
+    91,
+    91
+   ],
+   "why": "现读 91 条 / OPEN 91 条",
+   "ok": true
+  },
+  {
+   "label": "影响面挂账逐张进账（ledger.impact_adjudication = impact.corpus_adjudication_files）",
+   "got": [],
+   "want": [],
+   "why": "影响面 0 档 / 账面 0 档",
+   "ok": true
+  },
+  {
+   "label": "各判据件自身的自证没有红条（四件驱动的 refuse 只装 REFUSE，红条不折进去）",
+   "got": [],
+   "want": [],
+   "why": "{}",
+   "ok": true
+  },
+  {
+   "label": "没有判据件比它的驱动脚本旧（除非逐条披露理由）",
+   "got": [],
+   "want": [],
+   "why": "陈旧集 []，已披露 []",
+   "ok": true
+  },
+  {
+   "label": "披露的例外必须真属陈旧（不许拿 stale_ok 当免检通道）",
+   "got": [],
+   "want": [],
+   "why": "披露而不成立 ⇒ 拒",
+   "ok": true
+  },
+  {
+   "label": "每份 JSON 判据件都能 parse",
+   "got": [],
+   "want": [],
+   "why": "{\"fix_r5_baselines.json\": \"\", \"fix_r5_book91.json\": \"\", \"fix_r5_calllog_tally.json\": \"\", \"fix_r5_drivers_lint.json\": \"\", \"fix_r5_impact.json\": \"\", \"fix_r5_intake.json\": \"\", \"fix_r5_ledger.json\": \"\", \"fix_r5_locks.json\": \"\", \"fix_r5_needles.json\": \"\", \"fix_r5_rc.json\": \"\", \"fix_r5_revert.json\": \"\", \"",
+   "ok": true
+  },
+  {
+   "label": "parse 扫描面盖住 REQUIRED 里在盘的判据件（基数门：改了前缀或漏扫就红）",
+   "got": [],
+   "want": [],
+   "why": "REQUIRED 在盘 10 份 / 扫到 12 份",
+   "ok": true
+  },
+  {
+   "label": "canary：parse 判据对「相邻字符串续行」必红",
+   "got": "JSONDecodeError",
+   "want": "JSONDecodeError",
+   "why": "不是恒绿的存在性检查",
+   "ok": true
+  },
+  {
+   "label": "canary：parse 判据不误抓合法 JSON",
+   "got": "",
+   "want": "",
+   "why": "同一把尺子的另一侧",
+   "ok": true
+  },
+  {
+   "label": "正文占位全部解析得出来",
+   "got": [],
+   "want": [],
+   "why": "77 个占位",
+   "ok": true
+  },
+  {
+   "label": "空值占位必须有 equals:[] 的门禁背书",
+   "got": [
+    "fix_r5_impact.json|corpus_adjudication_files"
+   ],
+   "want": [],
+   "why": "有背书 4 个",
+   "ok": false
+  },
+  {
+   "label": "§八 失效条目在正文里数得出来（负数=没有该节）",
+   "got": true,
+   "want": true,
+   "why": "实测 27 条",
+   "ok": true
+  },
+  {
+   "label": "needle 严口径：全部 needle 都是真键名",
+   "got": 24,
+   "want": 24,
+   "why": "24/24",
+   "ok": true
+  },
+  {
+   "label": "扫描时不存在判据件必须为空表（法条不许引用空气）",
+   "got": [],
+   "want": [],
+   "why": "收口前复扫",
+   "ok": true
+  },
+  {
+   "label": "法条只引本环那八件（needle 件的 off_ring_artifacts 必须是空表）",
+   "got": [],
+   "want": [],
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "前缀式假命中 canary 抓到了东西",
+   "got": true,
+   "want": true,
+   "why": "8 条",
+   "ok": true
+  },
+  {
+   "label": "亲笔驱动硬错为 0",
+   "got": 0,
+   "want": 0,
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "软账不高于上一环实测基线（基线从件里读，不是我记得的 0）",
+   "got": true,
+   "want": true,
+   "why": "soft=0 基线=0 来源=hunt_r5_drivers_lint.json",
+   "ok": true
+  },
+  {
+   "label": "lint 的注入对照两侧都成立：违例必被抓、干净件不误抓（否则硬错门是装饰）",
+   "got": [
+    true,
+    0
+   ],
+   "want": [
+    true,
+    0
+   ],
+   "why": "{\"bad_caught\": 1, \"clean_false_positive\": 0}",
+   "ok": true
+  },
+  {
+   "label": "扫描面只数本环亲笔：清单里外环脚本 = 空表，且清单长度 = drivers_scanned",
+   "got": [
+    [],
+    true
+   ],
+   "want": [
+    [],
+    true
+   ],
+   "why": "清单 18 个 / 件里自报 18 个",
+   "ok": true
+  },
+  {
+   "label": "行长与 ignore 口径跟仓库声明一致（lint 不是自定口径）",
+   "got": [
+    100,
+    [
+     "E203",
+     "W503",
+     "W505"
+    ]
+   ],
+   "want": [
+    100,
+    [
+     "E203",
+     "W503",
+     "W505"
+    ]
+   ],
+   "why": "[\"E203\", \"W503\", \"W505\"]",
+   "ok": true
+  }
+ ],
+ "refuse": [
+  "判据件/收口件缺失，一个数字都不落：['close_r5_fix.out.json']",
+  "判据自证未过：收口叶子 16 张",
+  "判据自证未过：收口零失败",
+  "判据自证未过：每叶 omega 链走完（verify 结果为已完成）",
+  "判据自证未过：派单面与收口面同一批：根号 = 渲染件的根号，8 支 × 16 叶，执行人 cypy-fixer",
+  "判据自证未过：空值占位必须有 equals:[] 的门禁背书",
+  "判据自证未过：门禁全绿（红表必须为空）"
+ ],
+ "identity": {
+  "report": "20260928.PENDING-NAME",
+  "root_task": "T0r110"
+ },
+ "at_utc": "2026-09-28T10:59:01+00:00"
+}

@@ -1,0 +1,18 @@
+{
+ "filed": true,
+ "rpc_bug_id": "BUG-54",
+ "task_id": "T0r62",
+ "ledger_last_number": "BUG-54",
+ "summary_on_disk": true,
+ "raw_keys": [
+  "bug_id",
+  "id",
+  "path",
+  "project_dir",
+  "resolved_path",
+  "status",
+  "task_id",
+  "task_namespace"
+ ],
+ "refuse": []
+}

@@ -1,0 +1,27 @@
+# 并发示例
+# 演示 Cypy 的并发特性
+
+import asyncio
+
+async def fetch_data(url: str) -> str:
+    print(f"Fetching {url}...")
+    await asyncio.sleep(1)
+    return f"Data from {url}"
+
+async def run_concurrent():
+    print("=== go 关键字 (协程) ===")
+
+    let task1 = go fetch_data("https://api.example.com/data1")
+    let task2 = go fetch_data("https://api.example.com/data2")
+
+    let result1 = await task1
+    let result2 = await task2
+    print(f"Result 1: {result1}")
+    print(f"Result 2: {result2}")
+
+def main() -> int:
+    asyncio.run(run_concurrent())
+    return 0
+
+if __name__ == "__main__":
+    main()

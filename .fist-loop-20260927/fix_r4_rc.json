@@ -1,0 +1,260 @@
+{
+ "started": "2026-09-27T21:47:01+00:00",
+ "target": "cypyc/analyzer/type_checker.py",
+ "baseline": "fix_r4_before/type_checker.py（本轮开跑前的快照，只与它比）",
+ "new_defs": [
+  "_call_is_judgable",
+  "_callable_arg_mismatch",
+  "_callable_signature_assignable",
+  "_check_callable_arg_types",
+  "_check_callable_arity",
+  "_mismatch",
+  "_register_callable",
+  "_type_display",
+  "_value_type_for_declared"
+ ],
+ "added_lines": 214,
+ "removed_lines": 15,
+ "shared_symbols": [
+  "_callable_arg_mismatch",
+  "_check_callable_arg_types",
+  "_value_type_for_declared"
+ ],
+ "per_rc_symbol_refs": {
+  "RC1_func_symbol_typed_as_return": {
+   "_register_callable": 2,
+   "callable_sigs": 6,
+   "callable_arity": 3,
+   "_value_type_for_declared": 3,
+   "_check_callable_arity": 6
+  },
+  "RC2_no_argument_type_check": {
+   "_check_callable_arg_types": 4,
+   "_callable_arg_mismatch": 4,
+   "_callable_signature_assignable": 2,
+   "_value_type_for_declared": 3
+  },
+  "RC3_struct_field_type_unresolved": {
+   "_visit_Attribute": 1,
+   "_call_is_judgable": 4,
+   "_check_callable_arg_types": 4,
+   "_value_type_for_declared": 3
+  },
+  "RC4_internal_repr_in_message": {
+   "_type_display": 9,
+   "_mismatch": 7,
+   "_callable_arg_mismatch": 4
+  }
+ },
+ "call_sites": [
+  {
+   "symbol": "_register_callable",
+   "line": 556,
+   "kind": "use"
+  },
+  {
+   "symbol": "_mismatch",
+   "line": 786,
+   "kind": "use"
+  },
+  {
+   "symbol": "_mismatch",
+   "line": 810,
+   "kind": "use"
+  },
+  {
+   "symbol": "_mismatch",
+   "line": 825,
+   "kind": "use"
+  },
+  {
+   "symbol": "_value_type_for_declared",
+   "line": 854,
+   "kind": "use"
+  },
+  {
+   "symbol": "_mismatch",
+   "line": 861,
+   "kind": "use"
+  },
+  {
+   "symbol": "_mismatch",
+   "line": 901,
+   "kind": "use"
+  },
+  {
+   "symbol": "_mismatch",
+   "line": 904,
+   "kind": "use"
+  },
+  {
+   "symbol": "_value_type_for_declared",
+   "line": 1023,
+   "kind": "def"
+  },
+  {
+   "symbol": "_register_callable",
+   "line": 1030,
+   "kind": "def"
+  },
+  {
+   "symbol": "_mismatch",
+   "line": 1062,
+   "kind": "def"
+  },
+  {
+   "symbol": "_type_display",
+   "line": 1063,
+   "kind": "use"
+  },
+  {
+   "symbol": "_type_display",
+   "line": 1065,
+   "kind": "use"
+  },
+  {
+   "symbol": "_type_display",
+   "line": 1066,
+   "kind": "use"
+  },
+  {
+   "symbol": "_type_display",
+   "line": 1068,
+   "kind": "def"
+  },
+  {
+   "symbol": "_type_display",
+   "line": 1080,
+   "kind": "use"
+  },
+  {
+   "symbol": "_type_display",
+   "line": 1081,
+   "kind": "use"
+  },
+  {
+   "symbol": "_type_display",
+   "line": 1084,
+   "kind": "use"
+  },
+  {
+   "symbol": "_type_display",
+   "line": 1087,
+   "kind": "use"
+  },
+  {
+   "symbol": "_callable_signature_assignable",
+   "line": 1092,
+   "kind": "def"
+  },
+  {
+   "symbol": "_check_callable_arity",
+   "line": 1095,
+   "kind": "use"
+  },
+  {
+   "symbol": "_callable_arg_mismatch",
+   "line": 1103,
+   "kind": "use"
+  },
+  {
+   "symbol": "_callable_arg_mismatch",
+   "line": 1106,
+   "kind": "use"
+  },
+  {
+   "symbol": "_callable_arg_mismatch",
+   "line": 1108,
+   "kind": "def"
+  },
+  {
+   "symbol": "_callable_signature_assignable",
+   "line": 1118,
+   "kind": "use"
+  },
+  {
+   "symbol": "_call_is_judgable",
+   "line": 1135,
+   "kind": "def"
+  },
+  {
+   "symbol": "_check_callable_arg_types",
+   "line": 1144,
+   "kind": "def"
+  },
+  {
+   "symbol": "_call_is_judgable",
+   "line": 1145,
+   "kind": "use"
+  },
+  {
+   "symbol": "_check_callable_arity",
+   "line": 1147,
+   "kind": "use"
+  },
+  {
+   "symbol": "_value_type_for_declared",
+   "line": 1152,
+   "kind": "use"
+  },
+  {
+   "symbol": "_callable_arg_mismatch",
+   "line": 1159,
+   "kind": "use"
+  },
+  {
+   "symbol": "_type_display",
+   "line": 1162,
+   "kind": "use"
+  },
+  {
+   "symbol": "_check_callable_arity",
+   "line": 1179,
+   "kind": "def"
+  },
+  {
+   "symbol": "_call_is_judgable",
+   "line": 1218,
+   "kind": "use"
+  },
+  {
+   "symbol": "_check_callable_arity",
+   "line": 1221,
+   "kind": "use"
+  },
+  {
+   "symbol": "_check_callable_arg_types",
+   "line": 1222,
+   "kind": "use"
+  },
+  {
+   "symbol": "_call_is_judgable",
+   "line": 1275,
+   "kind": "use"
+  },
+  {
+   "symbol": "_check_callable_arity",
+   "line": 1276,
+   "kind": "use"
+  },
+  {
+   "symbol": "_check_callable_arg_types",
+   "line": 1278,
+   "kind": "use"
+  },
+  {
+   "symbol": "_check_callable_arity",
+   "line": 1289,
+   "kind": "use"
+  },
+  {
+   "symbol": "_check_callable_arg_types",
+   "line": 1292,
+   "kind": "use"
+  }
+ ],
+ "call_site_total": 41,
+ "note": "共享机制=同一张 `callable_sigs` 表 + 同一个判定入口 `_callable_arg_mismatch`（RC2/RC3/RC4 都走它），不是四张单各一个 if",
+ "refuse": [],
+ "at_utc": "2026-09-27T21:47:01+00:00"
+}

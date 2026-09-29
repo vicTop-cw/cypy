@@ -1,0 +1,209 @@
+{
+ "refuse": [],
+ "probes": {
+  "P1.emits": {
+   "ok": true,
+   "detail": {
+    "rc": 0,
+    "pyx_chars": 1157,
+    "tail": "ut\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n\u001b[32m[OK] Transpiled successfully\u001b[0m\n  \u001b[36mOutput:\u001b[0m .fist-loop-20260927\\verify_r2\\out\\p1_struct_cls.pyx\n"
+   }
+  },
+  "P1.static_no_self": {
+   "ok": true,
+   "detail": [
+    "def blank(n=3):"
+   ]
+  },
+  "P1.class_no_self": {
+   "ok": true,
+   "detail": [
+    "def make(cls, tag='x'):"
+   ]
+  },
+  "P1.bound_keeps_self": {
+   "ok": true,
+   "detail": [
+    "def shout(self, times):"
+   ]
+  },
+  "P1.binding_only_on_bound": {
+   "ok": true,
+   "detail": [
+    "@staticmethod",
+    "@cython.binding(False)"
+   ]
+  },
+  "P0.keyword_observation": {
+   "fact": "模块级 `def go()` 被 lexer 出 GO token，诊断是 'Expected IDENTIFIER, got GO at 16:5'",
+   "doc": "SYNTAX/20-concurrency.md:7 —— `spawn`/`go` 是并发关键字，故这是夹具撞词，不是产品缺陷",
+   "cost": "首版探针因此把 rc=1 读成回归，多花一次定位"
+  },
+  "P2.emits": {
+   "ok": true,
+   "detail": {
+    "rc": 0,
+    "pyx_chars": 930,
+    "tail": "\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n\u001b[32m[OK] Transpiled successfully\u001b[0m\n  \u001b[36mOutput:\u001b[0m .fist-loop-20260927\\verify_r2\\out\\p2_class_static.pyx\n"
+   }
+  },
+  "P2.static_no_self": {
+   "ok": true,
+   "detail": [
+    "def version():"
+   ]
+  },
+  "P2.classmethod_keeps_cls": {
+   "ok": true,
+   "detail": [
+    "def named(cls, tag):"
+   ]
+  },
+  "P2.bound_keeps_self": {
+   "ok": true,
+   "detail": [
+    "def bump(self, by):"
+   ]
+  },
+  "P3.emits": {
+   "ok": true,
+   "detail": {
+    "rc": 0,
+    "pyx_chars": 860,
+    "tail": "[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n\u001b[32m[OK] Transpiled successfully\u001b[0m\n  \u001b[36mOutput:\u001b[0m .fist-loop-20260927\\verify_r2\\out\\p3_param_implicit.pyx\n"
+   }
+  },
+  "P3.param_desugared": {
+   "ok": true,
+   "detail": [
+    "def implicit_sum(cfg=Point.__implicit_default__()):"
+   ]
+  },
+  "P3b.local_default": {
+   "rc": 1,
+   "implicit_lines": [],
+   "tail": "e\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n  \u001b[31m-\u001b[0m Undefined name '__implicit_default__' at 7:16\n  \u001b[31m-\u001b[0m Undefined name '__implicit_default__' at 7:16\n\u001b[31m[FAIL] Transpile failed:\u001b[0m\n"
+  },
+  "P3b.observation_only": {
+   "why": "SYNTAX/06d 只在参数位示例 __implicit_default__，局部绑定位未文档化 ⇒ 只记录不断言",
+   "rc": 1,
+   "diagnostic": [
+    "\u001b[36m[1/3]\u001b[0m Source: .fist-loop-20260927\\verify_r2\\p3b_local_implicit.cypy",
+    "\u001b[31m-\u001b[0m Undefined name '__implicit_default__' at 7:16",
+    "\u001b[31m-\u001b[0m Undefined name '__implicit_default__' at 7:16"
+   ]
+  },
+  "P4.class_return_diagnosed": {
+   "ok": true,
+   "detail": {
+    "rc": 1,
+    "tail": "r2\\out\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n  \u001b[31m-\u001b[0m 编译错误: return must be used inside a function, found at 3:5\n\u001b[31m[FAIL] Transpile failed:\u001b[0m\n"
+   }
+  },
+  "P4.macro_return_legal": {
+   "ok": true,
+   "detail": {
+    "rc": 0,
+    "tail": "\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n\u001b[32m[OK] Transpiled successfully\u001b[0m\n  \u001b[36mOutput:\u001b[0m .fist-loop-20260927\\verify_r2\\out\\p4b_macro_return.pyx\n"
+   }
+  },
+  "P4.module_return_diagnosed": {
+   "ok": true,
+   "detail": {
+    "rc": 1,
+    "tail": "r2\\out\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n  \u001b[31m-\u001b[0m 编译错误: return must be used inside a function, found at 2:1\n\u001b[31m[FAIL] Transpile failed:\u001b[0m\n"
+   }
+  },
+  "P5.syntax_error_not_read_bucket": {
+   "ok": true,
+   "detail": {
+    "rc": 1,
+    "tail": "ypy\n\u001b[36m[2/3]\u001b[0m Output: .fist-loop-20260927\\verify_r2\\out\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n  \u001b[31m-\u001b[0m 编译错误: Expected RBRACKET, got NEWLINE at 2:1\n\u001b[31m[FAIL] Transpile failed:\u001b[0m\n"
+   }
+  },
+  "P5.missing_file_is_read_bucket": {
+   "ok": true,
+   "detail": {
+    "rc": 1,
+    "tail": "927/verify_r2/definitely_absent_xq.cypy...\nOutput directory: output\n[FAIL] Execution failed:\n  - 读取文件错误: [Errno 2] No such file or directory: '.fist-loop-20260927/verify_r2/definitely_absent_xq.cypy'\n"
+   }
+  },
+  "P6.install_scoped_to_process": {
+   "ok": true,
+   "detail": "[OK] Cypy import hook registered for the current process\n  Nothing is written to disk: the hook dies with this process.\n  To enable it in your own process, call cypy_hook.install_hook() at startup.\n"
+  },
+  "P6.status_not_ok_in_fresh_proc": {
+   "ok": true,
+   "detail": "[INFO] Cypy import hook is not active in the current process\n  Cypy writes no persistent registration:\n  the hook lives or dies with the process that installed it.\n"
+  },
+  "P6.package_api": {
+   "ok": true,
+   "detail": "['CypyHook', 'install_hook', 'is_hook_installed', 'uninstall_hook']\n"
+  },
+  "P7.semantic_vs_text": {
+   "parser_py": {
+    "text_lines_delta": "+1398/-487",
+    "ast_nodes_head": 26247,
+    "ast_nodes_work": 28673,
+    "ast_hist_delta": 2426
+   },
+   "macro_expander_py": {
+    "text_lines_delta": "+256/-109",
+    "ast_nodes_head": 1760,
+    "ast_nodes_work": 2339,
+    "ast_hist_delta": 581
+   }
+  },
+  "P7.head_is_not_a_pre_black_base": {
+   "ok": true,
+   "detail": {
+    "reading": "对 HEAD 的 AST 直方图差达上千节点 ⇒ HEAD 里根本没有 09-26/R1 两轮未提交的工作，所以『文本 delta vs HEAD』不能用来单独给 black 定量，只能当上界",
+    "detail": {
+     "parser_py": {
+      "text_lines_delta": "+1398/-487",
+      "ast_nodes_head": 26247,
+      "ast_nodes_work": 28673,
+      "ast_hist_delta": 2426
+     },
+     "macro_expander_py": {
+      "text_lines_delta": "+256/-109",
+      "ast_nodes_head": 1760,
+      "ast_nodes_work": 2339,
+      "ast_hist_delta": 581
+     }
+    }
+   }
+  },
+  "P9.black_noise_split": {
+   "parser_py": {
+    "vs_head_raw": 1893,
+    "vs_head_after_black": 460,
+    "attributable_to_formatting": 1433
+   },
+   "macro_expander_py": {
+    "vs_head_raw": 365,
+    "vs_head_after_black": 185,
+    "attributable_to_formatting": 194
+   }
+  },
+  "P9.formatting_dominates_the_head_delta": {
+   "ok": true,
+   "detail": {
+    "parser_py": {
+     "vs_head_raw": 1893,
+     "vs_head_after_black": 460,
+     "attributable_to_formatting": 1433
+    },
+    "macro_expander_py": {
+     "vs_head_raw": 365,
+     "vs_head_after_black": 185,
+     "attributable_to_formatting": 194
+    }
+   }
+  },
+  "P8.head_unchanged": {
+   "ok": true,
+   "detail": "17d68b4"
+  }
+ }
+}

@@ -1,0 +1,86 @@
+{
+ "refuse": [
+  "pytest 不达标：rc=1 passed=1881 下限=1883 failed=['test_macro_definition_parsing', 'test_macro_interpolation_expression']"
+ ],
+ "pytest": {
+  "rc": 1,
+  "passed": 1881,
+  "floor": 1883,
+  "failed": [
+   "test_macro_definition_parsing",
+   "test_macro_interpolation_expression"
+  ],
+  "other_counts": {
+   "failed": 2
+  },
+  "line": "2 failed, 1881 passed in 373.79s (0:06:13)"
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "fields": {
+   "Total": "47",
+   "Passed": "47",
+   "Failed": "0",
+   "Skipped": "0"
+  },
+  "green": true
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+  "fields": {
+   "PASS": "25",
+   "FAIL": "0",
+   "WARN": "0",
+   "UNREG/RUNFAIL": "0"
+  },
+  "green": true
+ },
+ "git": {
+  "head": "17d68b4",
+  "head_rc": 0,
+  "staged": 0,
+  "dirty_rows": 161
+ },
+ "radius": {
+  "count": 8,
+  "rows": [
+   {
+    "file": "cypy_hook/__init__.py",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "cypy_hook/hook.py",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "cypyc/cli.py",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "cypyc/codegen/cython_generator.py",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "cypyc/parser/macro_expander.py",
+    "attributed_to_this_lane": false
+   },
+   {
+    "file": "cypyc/parser/parser.py",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "docs/USAGE.md",
+    "attributed_to_this_lane": true
+   },
+   {
+    "file": "tests/test_loop_20260927_fix_r2.py",
+    "attributed_to_this_lane": true
+   }
+  ],
+  "unclaimed_by_this_lane": [
+   "cypyc/parser/macro_expander.py"
+  ]
+ }
+}

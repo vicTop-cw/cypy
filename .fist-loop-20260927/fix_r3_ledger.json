@@ -1,0 +1,54 @@
+{
+ "root_task": "T0r70",
+ "mode": "verify",
+ "sections_written": 6,
+ "per_bug": {
+  "BUG-55": {
+   "own_marker_lines": 1,
+   "fix_line_present": true,
+   "needles_present": true,
+   "repro_line_present": true
+  },
+  "BUG-56": {
+   "own_marker_lines": 1,
+   "fix_line_present": true,
+   "needles_present": true,
+   "repro_line_present": true
+  },
+  "BUG-57": {
+   "own_marker_lines": 1,
+   "fix_line_present": true,
+   "needles_present": true,
+   "repro_line_present": true
+  },
+  "BUG-58": {
+   "own_marker_lines": 1,
+   "fix_line_present": true,
+   "needles_present": true,
+   "repro_line_present": true
+  },
+  "BUG-59": {
+   "own_marker_lines": 1,
+   "fix_line_present": true,
+   "needles_present": true,
+   "repro_line_present": true
+  },
+  "BUG-60": {
+   "own_marker_lines": 1,
+   "fix_line_present": true,
+   "needles_present": true,
+   "repro_line_present": true
+  }
+ },
+ "state": {
+  "mode": "verify",
+  "entries_after": 60,
+  "fixed_after": 6,
+  "fixed_expected": 6,
+  "fixed_before": 6,
+  "titles_identical": true,
+  "open_titles_equal_entries": true
+ },
+ "report": "memory/reviews/20260928.00.20.00.md",
+ "refuse": []
+}

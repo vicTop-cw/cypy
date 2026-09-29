@@ -1,0 +1,6 @@
+篡改 spec 后指纹不符                      carries=True {"stored": "fnv1a64:d0dfd8ec6dda1bb9", "recomputed": "fnv1a64:e44e946eadb758fb", "also_recomputed_stable": true}
+少一条用例时地板门为真红                       carries=True {"baseline_cases": 29, "after_removal": 28, "floor": 29}
+未知断言键被 refuse 而不是降级                carries=True {"verdict": null, "reason": "未知断言键 ['expected_output_hash']（闭集：['class_fields', 'contains', 'errors"}
+两向对照：放过非法 / 拦掉合法 都被判红              carries=True {"illegal_expected_clean": {"verdict": false, "reason": "errors 期望 0，实际 1：['Invalid type annotation at 2:8 (期望 类型名或 list<int> /"},
+克隆语料少一条 ⇒ pytest 地板门真红             carries=True {"rc": 1, "tail": "1 failed in 0.77s"}
+CONCLUSION controls=5 carrying=5 corpus_untouched=True all_carry=True

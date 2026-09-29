@@ -1,0 +1,581 @@
+{
+ "started": "2026-09-28T07:07:28+00:00",
+ "cards": 13,
+ "filed": [],
+ "duplicates": [
+  "CODEGEN_binop_parens_dropped_changes_order",
+  "LEXER_declared_augassign_never_lexed",
+  "CODEGEN_nested_defer_runs_eagerly",
+  "COMPTIME_collection_literal_leaks_ast_repr",
+  "COMPTIME_string_result_emitted_unescaped",
+  "COMPTIME_block_form_surfaces_internal_exception",
+  "TYPES_documented_pointer_element_names_undefined",
+  "CLI_global_option_overwritten_by_subparser",
+  "HOOK_bom_marker_silently_not_compiled",
+  "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+  "CLI_build_failure_reason_message_swallowed",
+  "CLI_check_only_ignores_entry_scope",
+  "CODEGEN_module_identity_hardcoded_unknown"
+ ],
+ "keys": [
+  "CODEGEN_binop_parens_dropped_changes_order",
+  "LEXER_declared_augassign_never_lexed",
+  "CODEGEN_nested_defer_runs_eagerly",
+  "COMPTIME_collection_literal_leaks_ast_repr",
+  "COMPTIME_string_result_emitted_unescaped",
+  "COMPTIME_block_form_surfaces_internal_exception",
+  "TYPES_documented_pointer_element_names_undefined",
+  "CLI_global_option_overwritten_by_subparser",
+  "HOOK_bom_marker_silently_not_compiled",
+  "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+  "CLI_build_failure_reason_message_swallowed",
+  "CLI_check_only_ignores_entry_scope",
+  "CODEGEN_module_identity_hardcoded_unknown"
+ ],
+ "key_alias": [
+  {
+   "case": "G01",
+   "ledger_key": "CODEGEN_binop_parens_dropped_changes_order",
+   "battery_key": "CODEGEN_binop_parens_dropped_reassociate"
+  },
+  {
+   "case": "G02",
+   "ledger_key": "LEXER_declared_augassign_never_lexed",
+   "battery_key": "LEXER_declared_augassign_unreachable"
+  },
+  {
+   "case": "G03",
+   "ledger_key": "CODEGEN_nested_defer_runs_eagerly",
+   "battery_key": "CODEGEN_nested_defer_emitted_eagerly"
+  },
+  {
+   "case": "G07",
+   "ledger_key": "COMPTIME_block_form_surfaces_internal_exception",
+   "battery_key": "COMPTIME_block_form_crashes_with_internal_exception"
+  },
+  {
+   "case": "G06",
+   "ledger_key": "TYPES_documented_pointer_element_names_undefined",
+   "battery_key": "TYPES_documented_pointer_element_types_rejected"
+  },
+  {
+   "case": "H01",
+   "ledger_key": "CLI_global_option_overwritten_by_subparser",
+   "battery_key": "CLI_global_output_dir_overwritten_by_subparser"
+  },
+  {
+   "case": "H03",
+   "ledger_key": "HOOK_bom_marker_silently_not_compiled",
+   "battery_key": "HOOK_bom_marker_silently_not_hooked"
+  },
+  {
+   "case": "H05",
+   "ledger_key": "CLI_build_failure_reason_message_swallowed",
+   "battery_key": "CLI_build_entry_failure_reason_swallowed"
+  }
+ ],
+ "key_alias_len": 8,
+ "ledger_before_max": 90,
+ "ledger_after_max": 90,
+ "sqlite_bug_tasks_before": 86,
+ "sqlite_bug_tasks_after": 86,
+ "per_key_on_disk": [
+  {
+   "key": "CODEGEN_binop_parens_dropped_changes_order",
+   "case": "G01",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "LEXER_declared_augassign_never_lexed",
+   "case": "G02",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "CODEGEN_nested_defer_runs_eagerly",
+   "case": "G03",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "COMPTIME_collection_literal_leaks_ast_repr",
+   "case": "G04",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "COMPTIME_string_result_emitted_unescaped",
+   "case": "G05",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "COMPTIME_block_form_surfaces_internal_exception",
+   "case": "G07",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "TYPES_documented_pointer_element_names_undefined",
+   "case": "G06",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "CLI_global_option_overwritten_by_subparser",
+   "case": "H01",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "HOOK_bom_marker_silently_not_compiled",
+   "case": "H03",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+   "case": "H04",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "CLI_build_failure_reason_message_swallowed",
+   "case": "H05",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "CLI_check_only_ignores_entry_scope",
+   "case": "H06",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  },
+  {
+   "key": "CODEGEN_module_identity_hardcoded_unknown",
+   "case": "H07",
+   "ledger_hits": 1,
+   "bug_rows_with_key": 1
+  }
+ ],
+ "on_disk_keys_len": 13,
+ "live_reruns": {
+  "G01": {
+   "id": "G01",
+   "key": "CODEGEN_binop_parens_dropped_reassociate",
+   "pos_observed": "parens_dropped",
+   "ctl_observed": "kept",
+   "want_pos": "parens_dropped",
+   "want_ctl": "kept",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 0,
+    "line": "return a - b - c"
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "line": "return a * (b + c)"
+   }
+  },
+  "G02": {
+   "id": "G02",
+   "key": "LEXER_declared_augassign_unreachable",
+   "pos_observed": "unreachable",
+   "ctl_observed": "lowered",
+   "want_pos": "unreachable",
+   "want_ctl": "lowered",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 1,
+    "diag": [
+     "\u001b[31m-\u001b[0m 编译错误: Unexpected token ASSIGN at 2:9"
+    ]
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "line": "a = a + y"
+   }
+  },
+  "G03": {
+   "id": "G03",
+   "key": "CODEGEN_nested_defer_emitted_eagerly",
+   "pos_observed": "eager",
+   "ctl_observed": "moved_to_exit",
+   "want_pos": "eager",
+   "want_ctl": "moved_to_exit",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 0,
+    "order": [
+     "print('CLEAN')",
+     "print('BODY')"
+    ]
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "order": [
+     "print('BODY')",
+     "print('CLEAN')"
+    ]
+   }
+  },
+  "G04": {
+   "id": "G04",
+   "key": "COMPTIME_collection_literal_leaks_ast_repr",
+   "pos_observed": "ast_leak",
+   "ctl_observed": "clean",
+   "want_pos": "ast_leak",
+   "want_ctl": "clean",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 0,
+    "leaks": [
+     "Constant(line="
+    ],
+    "snippet": "[Constant(line=2, col=16), Constant(line=2, col=19)]"
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "leaks": []
+   }
+  },
+  "G05": {
+   "id": "G05",
+   "key": "COMPTIME_string_result_emitted_unescaped",
+   "pos_observed": "unescaped",
+   "ctl_observed": "commented",
+   "want_pos": "unescaped",
+   "want_ctl": "commented",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 0,
+    "snippet": [
+     "\"a\"b\""
+    ]
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "snippet": []
+   }
+  },
+  "G07": {
+   "id": "G07",
+   "key": "COMPTIME_block_form_crashes_with_internal_exception",
+   "pos_observed": "internal_exception",
+   "ctl_observed": "no_internal_exception",
+   "want_pos": "internal_exception",
+   "want_ctl": "no_internal_exception",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 1,
+    "diag": [
+     "\u001b[31m-\u001b[0m 转译错误: 'list' object has no attribute '__dict__'"
+    ]
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "diag": []
+   }
+  },
+  "G06": {
+   "id": "G06",
+   "key": "TYPES_documented_pointer_element_types_rejected",
+   "pos_observed": "rejected",
+   "ctl_observed": "lowered",
+   "want_pos": "rejected",
+   "want_ctl": "lowered",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 1,
+    "diag": []
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "diag": []
+   }
+  },
+  "H01": {
+   "id": "H01",
+   "key": "CLI_global_output_dir_overwritten_by_subparser",
+   "pos_observed": "ignored",
+   "ctl_observed": "honoured",
+   "want_pos": "ignored",
+   "want_ctl": "honoured",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 0,
+    "dir_made": false,
+    "out": "llo.cypy\n\u001b[36m[2/3]\u001b[0m Output: output\n\u001b[36m[3/3]\u001b[0m Using Cython compiler mode\n\u001b[34m[INFO] Transpiling to Cython code...\u001b[0m\n\u001b[32m[OK] Transpiled successfully\u001b[0m\n  \u001b[36mOutput:\u001b[0m output\\hello.pyx"
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "dir_made": true
+   }
+  },
+  "H03": {
+   "id": "H03",
+   "key": "HOOK_bom_marker_silently_not_hooked",
+   "pos_observed": "not_hooked",
+   "ctl_observed": "hooked",
+   "want_pos": "not_hooked",
+   "want_ctl": "hooked",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 0,
+    "loader": "SourceFileLoader E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\hunt_r5_tmp\\cli_face\\book_h03\\marker_bom.py"
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "loader": "ExtensionFileLoader"
+   }
+  },
+  "H04": {
+   "id": "H04",
+   "key": "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+   "pos_observed": "claimed_but_kept",
+   "ctl_observed": "cleared",
+   "want_pos": "claimed_but_kept",
+   "want_ctl": "cleared",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 0,
+    "claim": "[OK] Cypy compilation cache cleared successfully",
+    "pyd_before": [
+     "marker_ok.cp313-win_amd64.pyd",
+     "marker_ok.cp313-win_amd64.pyd"
+    ],
+    "pyd_after": [
+     "marker_ok.cp313-win_amd64.pyd",
+     "marker_ok.cp313-win_amd64.pyd"
+    ],
+    "manifest_gone": true
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "manifest_before": [
+     "manifest.json"
+    ],
+    "manifest_after": []
+   }
+  },
+  "H05": {
+   "id": "H05",
+   "key": "CLI_build_entry_failure_reason_swallowed",
+   "pos_observed": "no_reason",
+   "ctl_observed": "reason_given",
+   "want_pos": "no_reason",
+   "want_ctl": "reason_given",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 1,
+    "out": "\\AI\\Cypy\\examples\\test_project\n\u001b[36m[2/5]\u001b[0m Output directory: output\n\u001b[36m[3/5]\u001b[0m Mode: Full build\n\u001b[36m[4/5]\u001b[0m Building project...\n\u001b[36m[5/5]\u001b[0m Compilation order: types -> geometry -> main\n\n  Failed modules (0):",
+    "reason_missing": true
+   },
+   "ctl_evidence": {
+    "rc": 0,
+    "out": "geometry.cp313-win_amd64.pyd\n    \u001b[32m[OK]\u001b[0m main -> E:\\IDEProjects\\AI\\Cypy\\.fist-loop-20260927\\hunt_r5_tmp\\cli_face\\k05c\\output\\main\\main.cp313-win_amd64.pyd"
+   }
+  },
+  "H06": {
+   "id": "H06",
+   "key": "CLI_check_only_ignores_entry_scope",
+   "pos_observed": "ignored",
+   "ctl_observed": "honoured",
+   "want_pos": "ignored",
+   "want_ctl": "honoured",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 0,
+    "out": "]\u001b[0m Parsing and type checking...\n\u001b[32m[OK] geometry: type check passed\u001b[0m\n\u001b[32m[OK] main: type check passed\u001b[0m\n\u001b[32m[OK] types: type check passed\u001b[0m\n\u001b[32m[OK] All modules passed type checking\u001b[0m"
+   },
+   "ctl_evidence": {
+    "rc": 1,
+    "out": "ry: output\n\u001b[36m[3/5]\u001b[0m Mode: Full build\n\u001b[36m[4/5]\u001b[0m Building project...\n\u001b[36m[5/5]\u001b[0m Compilation order: types -> geometry -> main\n\n  Failed modules (0):"
+   }
+  },
+  "H07": {
+   "id": "H07",
+   "key": "CODEGEN_module_identity_hardcoded_unknown",
+   "pos_observed": "unknown_identity",
+   "ctl_observed": "real_identity",
+   "want_pos": "unknown_identity",
+   "want_ctl": "real_identity",
+   "pos_visible": true,
+   "ctl_ok": true,
+   "same_direction_as_battery": true,
+   "pos_evidence": {
+    "rc": 0
+   },
+   "ctl_evidence": {
+    "tail": " {name}!'\ndef main():\n    message = greet('World')\n    print(message)\n    return 0\nif __name__ == '__main__':\n    main()"
+   }
+  }
+ },
+ "self_checks": [
+  {
+   "label": "canary：闭集守卫对没映射的档位必红（P9 这类写法不许溜到服务端）",
+   "got": false,
+   "want": false,
+   "why": "未知档位映射得 None ⇒ 必须被就地拒",
+   "ok": true
+  },
+  {
+   "label": "每张卡的机制签名在账本里至少出现一次（在账，不是「我记得开过」）",
+   "got": [],
+   "want": [],
+   "why": "hits<1",
+   "ok": true
+  },
+  {
+   "label": "每张卡在 sqlite bugs 树里都能数到唯一一行",
+   "got": [],
+   "want": [],
+   "why": "≠1 行",
+   "ok": true
+  },
+  {
+   "label": "卡表键名互不重复（一张卡一个根因）",
+   "got": 13,
+   "want": 13,
+   "why": "键名去重后回加",
+   "ok": true
+  },
+  {
+   "label": "卡表条数 = 两批判据件里确诊条数（一张卡一个根因，不多不少）",
+   "got": 13,
+   "want": 13,
+   "why": "确诊 ['G01', 'G02', 'G03', 'G04', 'G05', 'G06', 'G07', 'H01', 'H03', 'H04', 'H05', 'H06', 'H07']",
+   "ok": true
+  },
+  {
+   "label": "每条卡的用例都带 pos/ctl 双档且现场同向",
+   "got": [],
+   "want": [],
+   "why": "两档齐全才入账",
+   "ok": true
+  },
+  {
+   "label": "每条卡的「不算证明」都不是空话（≥20 字）",
+   "got": [],
+   "want": [],
+   "why": "写不出限制就别开单",
+   "ok": true
+  },
+  {
+   "label": "每条卡至少两条症状（单点现象不足以指到根因）",
+   "got": [],
+   "want": [],
+   "why": "症状条数",
+   "ok": true
+  },
+  {
+   "label": "账本号连续：入账前后差 = 真开卡数",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "账本 90→90",
+   "ok": true
+  },
+  {
+   "label": "三向对齐：真开卡数 = sqlite bugs 增量 = call_log report_bug 增量方向",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "sqlite 86→86，call_log report_bug 累计 118 行",
+   "ok": true
+  },
+  {
+   "label": "幂等守卫有牙：本件再跑一遍一条都不会开（全部已在账上）",
+   "got": [
+    "CLI_build_failure_reason_message_swallowed",
+    "CLI_check_only_ignores_entry_scope",
+    "CLI_global_option_overwritten_by_subparser",
+    "CODEGEN_binop_parens_dropped_changes_order",
+    "CODEGEN_module_identity_hardcoded_unknown",
+    "CODEGEN_nested_defer_runs_eagerly",
+    "COMPTIME_block_form_surfaces_internal_exception",
+    "COMPTIME_collection_literal_leaks_ast_repr",
+    "COMPTIME_string_result_emitted_unescaped",
+    "HOOK_bom_marker_silently_not_compiled",
+    "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+    "LEXER_declared_augassign_never_lexed",
+    "TYPES_documented_pointer_element_names_undefined"
+   ],
+   "want": [
+    "CLI_build_failure_reason_message_swallowed",
+    "CLI_check_only_ignores_entry_scope",
+    "CLI_global_option_overwritten_by_subparser",
+    "CODEGEN_binop_parens_dropped_changes_order",
+    "CODEGEN_module_identity_hardcoded_unknown",
+    "CODEGEN_nested_defer_runs_eagerly",
+    "COMPTIME_block_form_surfaces_internal_exception",
+    "COMPTIME_collection_literal_leaks_ast_repr",
+    "COMPTIME_string_result_emitted_unescaped",
+    "HOOK_bom_marker_silently_not_compiled",
+    "HOOK_clear_cache_reports_ok_but_keeps_artifacts",
+    "LEXER_declared_augassign_never_lexed",
+    "TYPES_documented_pointer_element_names_undefined"
+   ],
+   "why": "复扫命中 13 条",
+   "ok": true
+  },
+  {
+   "label": "每条落盘卡都带可复跑命令",
+   "got": [],
+   "want": [],
+   "why": "复跑命令在账上",
+   "ok": true
+  },
+  {
+   "label": "每张卡的用例都能在判据件里数到一行签名（不留悬空卡）",
+   "got": [],
+   "want": [],
+   "why": "悬空 case",
+   "ok": true
+  },
+  {
+   "label": "别名对必须成对且两边不同名（否则等于没点名）",
+   "got": [],
+   "want": [],
+   "why": "形状不合格的别名对",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T07:09:26+00:00"
+}

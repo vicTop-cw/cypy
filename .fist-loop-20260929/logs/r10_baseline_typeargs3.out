@@ -1,0 +1,3 @@
+SHAPE {"generic_func": 11, "generic_struct": 2}
+BY_FILE {"examples/demos/traits_duck/duck_advanced.cypy": 3, "examples/demos/traits_duck/duck_basic.cypy": 4, "examples/demos/traits_duck/trait_advanced.cypy": 1, "examples/demos/traits_duck/trait_basic.cypy": 1, "examples/generics_advanced.cypy": 4}
+CONCLUSION files=77 parse_fail=0 callsites=13 risk_n=0

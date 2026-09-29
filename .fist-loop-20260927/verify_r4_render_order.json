@@ -1,0 +1,26 @@
+{
+ "started": "2026-09-28T01:26:11+00:00",
+ "report": "memory/reviews/20260928.09.25.00.md",
+ "report_bytes": 48474,
+ "report_sha256": "fe5738f91188bf65e4e1c21c9f80acd0856d5f93e0ce2910d04a284dca139a4e",
+ "renders": 1,
+ "same_name_files": [
+  "20260928.09.25.00.md"
+ ],
+ "refused_attempts": 0,
+ "refuse_file_present": false,
+ "gates_in_table": 152,
+ "gates_green": 152,
+ "gates_red": 0,
+ "gates_label_misaligned": [],
+ "gates_label_dupes": [],
+ "gates_canary": {
+  "rows_after_dropping_one": 151,
+  "declared": 152,
+  "caught": true
+ },
+ "unresolved_placeholders": [],
+ "note": "renders=1 是说报告文件只被写过一次；被拒的重试只留 refuse 件、不写报告",
+ "refuse": [],
+ "at_utc": "2026-09-28T01:26:11+00:00"
+}

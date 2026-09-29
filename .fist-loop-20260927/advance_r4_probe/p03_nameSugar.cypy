@@ -1,0 +1,10 @@
+def add_values(a: int, b: int, c: int) -> int:
+    return a + b + c
+
+def main() -> int:
+    let x: int = 10
+    let y: int = 20
+    let c: int = 30
+    let result: int = add_values(x, y, c~)
+    print(result)
+    return 0

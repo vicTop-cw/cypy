@@ -1,0 +1,7 @@
+def fatal_error(message: str) -> Never:
+    raise RuntimeError(message)
+
+def safe_divide(a: float, b: float) -> float:
+    if b == 0:
+        fatal_error("Division by zero")
+    return a / b

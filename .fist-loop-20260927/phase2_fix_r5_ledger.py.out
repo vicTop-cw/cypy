@@ -1,0 +1,33 @@
+{
+ "refuse": [],
+ "closed_ids": [
+  74,
+  75,
+  76,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  91
+ ],
+ "leftover_ids": [
+  68,
+  69,
+  71,
+  72,
+  73
+ ],
+ "agree_total": 17,
+ "ledger_total": 91,
+ "ledger_open_total": 91,
+ "red_checks": []
+}

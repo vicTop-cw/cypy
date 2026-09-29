@@ -1,0 +1,79 @@
+{
+ "refuse": [
+  "判据7e 本轮自己写的代码有 lint 违例：['.fist-loop-20260927/close_root_generic.py:87:9: E122 continuation line missing indentation or outdented']",
+  "判据7f 本轮新写的文件不是 black 干净：['would reformat .fist-loop-20260927\\\\close_root_generic.py', '1 file would be reformatted, 6 files would be left unchanged.']"
+ ],
+ "pytest": {
+  "rc": 0,
+  "passed": 1868,
+  "failed_or_error": [],
+  "failed_tests": [],
+  "skipped_lines": 0,
+  "summary_line": "====================== 1868 passed in 327.40s (0:05:27) ======================="
+ },
+ "suite": {
+  "rc": 0,
+  "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+  "green": true,
+  "verdict": "绿"
+ },
+ "e2e": {
+  "rc": 0,
+  "line": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0"
+ },
+ "collection": {
+  "rc": 0,
+  "count": 6,
+  "file": "tests/test_loop_20260927_advance.py"
+ },
+ "radius": {
+  "attribution": "mtime ≥ 本轮起点（不是 git diff——工作树里还有上一轮的未提交改动）",
+  "since": "polish 收口之后",
+  "product_files_touched_this_stage": [
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/parser.py"
+  ],
+  "expected": [
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/parser.py"
+  ],
+  "new_token_or_class_defs_in_my_hunks": []
+ },
+ "lint": {
+  "scanned_files": 10,
+  "authored_whole": 7,
+  "preexisting_with_hunk_ranges": {
+   "cypyc/codegen/cython_generator.py": [
+    3193,
+    3194,
+    3195,
+    3196,
+    3197,
+    3198,
+    3199,
+    3200
+   ],
+   "cypyc/parser/parser.py": [
+    1592,
+    1593,
+    1594,
+    1595,
+    1596,
+    1597,
+    1598,
+    1599,
+    1600,
+    1601
+   ]
+  },
+  "total_in_scope_files": 669,
+  "attributable_to_this_round": [
+   ".fist-loop-20260927/close_root_generic.py:87:9: E122 continuation line missing indentation or outdented"
+  ],
+  "e501_only_exempted_files": [
+   ".fist-loop-20260927/gen_report_r1_advance.py"
+  ],
+  "exempted_hits": 9
+ },
+ "doc_rc": 0
+}

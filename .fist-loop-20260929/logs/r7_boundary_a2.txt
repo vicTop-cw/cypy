@@ -1,0 +1,21 @@
+probe_self=OK cases=19/19 canary_clean=True canary_diag=True judge_ok=True
+annotation/empty_after_colon                  expect=any       n=0  verdict=CRASH          ValueError: Unexpected token ASSIGN at 2:8
+annotation/plain_valid                        expect=clean     n=0  verdict=ok             
+annotation/generic_valid                      expect=clean     n=1  verdict=FALSE-POSITIVE Type mismatch: expected list[int], got int at 2:5
+annotation/pointer_valid                      expect=clean     n=1  verdict=FALSE-POSITIVE Type mismatch: expected *char, got int at 2:5
+annotation/union_valid                        expect=clean     n=0  verdict=ok             
+annotation/bracket_illegal                    expect=diagnose  n=1  verdict=ok             Invalid type annotation at 2:8 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际是 Constan
+annotation/paren_illegal                      expect=diagnose  n=1  verdict=ok             Invalid type annotation at 2:8 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际是 Constan
+annotation/brace_illegal                      expect=diagnose  n=1  verdict=ok             Invalid type annotation at 2:8 (期望 dict<str, int>，实际是 DictLiteral 字面量形态)
+annotation/nested_bracket_extreme             expect=diagnose  n=12 verdict=ok             Invalid type annotation at 2:19 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际是 Consta
+annotation/huge_tuple_extreme                 expect=diagnose  n=1  verdict=ok             Invalid type annotation at 2:8 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际是 Constan
+annotation/non_type_name_extreme              expect=diagnose  n=1  verdict=ok             Invalid type annotation at 2:8 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际是 Constan
+annotation/comptime_inline_not_annotation     expect=clean     n=0  verdict=ok             
+arity/zero_slots                         expect=any       n=0  verdict=observed       
+arity/exact_slots                        expect=clean     n=0  verdict=ok             
+arity/over_slots                         expect=diagnose  n=1  verdict=ok             Positional pattern 'E' has 2 slot(s) but type 'E' unpacks only 1 at 6:14
+arity/extreme_32_slots                   expect=diagnose  n=1  verdict=ok             Positional pattern 'E' has 32 slot(s) but type 'E' unpacks only 1 at 6:14
+arity/undefined_type                     expect=any       n=0  verdict=observed       
+arity/mixed_literal_and_binding          expect=any       n=0  verdict=observed       
+arity/nested_pattern                     expect=clean     n=0  verdict=ok             
+CONCLUSION judge_ok=True crashes=1 silent=0 false_positive=2 rows_json=.fist-loop-20260929/hunt_r7_boundary.json

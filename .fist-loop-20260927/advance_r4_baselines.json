@@ -1,0 +1,390 @@
+{
+ "started": "2026-09-28T04:59:48+00:00",
+ "law": "三套判据体系同刻为绿、冻结面未动、半径只到两档分析器",
+ "floors": {
+  "pytest": 2002,
+  "collect": 2002,
+  "suite": 47,
+  "e2e_pass": 25
+ },
+ "floors_source": "polish_r4_baselines.json 实测 + 本环新增锁数",
+ "locks_added_this_ring": 26,
+ "systems": {
+  "pytest": {
+   "passed": 2002,
+   "failed": 0,
+   "errors": 0,
+   "skipped": 0,
+   "summary_line": "2002 passed in 519.23s (0:08:39)",
+   "rc": 0
+  },
+  "collect": {
+   "nodeids": 2002
+  },
+  "suite": {
+   "fields": {
+    "Total": 47,
+    "Passed": 47,
+    "Failed": 0,
+    "Skipped": 0
+   },
+   "line": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+   "rc": 0
+  },
+  "e2e": {
+   "PASS": 25,
+   "FAIL": 0,
+   "RUNFAIL": 0,
+   "WARN": 0
+  }
+ },
+ "git": {
+  "head": "17d68b4",
+  "staged": 0,
+  "dirty_rows": 173,
+  "worktrees": 2
+ },
+ "frozen_scope_porcelain": [
+  " M SYNTAX/01-basic-types.md",
+  " M SYNTAX/appendix-A-keywords.md",
+  "?? SYNTAX/33-type-constraints-subtypes-dispatch.md"
+ ],
+ "frozen_now": {
+  "PROJECT-SPEC/00-总览.md": "c478fbcd165c",
+  "PROJECT-SPEC/01-项目结构规范.md": "ad2847b2091c",
+  "PROJECT-SPEC/02-命名与源码规范.md": "5db5095fc3cc",
+  "PROJECT-SPEC/03-测试规范化.md": "1f6f678af9b8",
+  "PROJECT-SPEC/04-进度报告规范.md": "c8386fa52a2f",
+  "PROJECT-SPEC/05-Omega验证前提.md": "d8829a529d17",
+  "SYNTAX/00-introduction.md": "06546224bff5",
+  "SYNTAX/01-basic-types.md": "b0bb9655b8ef",
+  "SYNTAX/02-type-annotations.md": "425f9c850424",
+  "SYNTAX/03-type-conversion.md": "a67ad542a775",
+  "SYNTAX/04-pointer-types.md": "a9b43d3a6773",
+  "SYNTAX/05-struct.md": "8513d76e913c",
+  "SYNTAX/06-enum.md": "c5386effee4c",
+  "SYNTAX/06d-builtin-magic-traits.md": "9f0142a11308",
+  "SYNTAX/07-trait-impl.md": "19330908bbf1",
+  "SYNTAX/08-class.md": "6025206b0474",
+  "SYNTAX/09-functions.md": "a8e133711f7a",
+  "SYNTAX/10-variables.md": "85c426324d57",
+  "SYNTAX/11-generics.md": "b20bf2f2a2d2",
+  "SYNTAX/12-operators.md": "69894d3038d0",
+  "SYNTAX/12-type-alias.md": "9af1e4ded121",
+  "SYNTAX/13-build-blocks.md": "5c1cb10078b8",
+  "SYNTAX/14-syntax-sugar.md": "d4dd1e1449f2",
+  "SYNTAX/15-control-flow.md": "75db27ca725f",
+  "SYNTAX/16-exceptions.md": "09fa25b20999",
+  "SYNTAX/17-pattern-matching.md": "47fa56e722d5",
+  "SYNTAX/18-macros.md": "af4582073585",
+  "SYNTAX/19-comptime.md": "87eff0d94795",
+  "SYNTAX/20-concurrency.md": "88d009b3dce4",
+  "SYNTAX/21-simd-vector.md": "aaae367f33bf",
+  "SYNTAX/22-magic-properties.md": "21321559e3e6",
+  "SYNTAX/23-compilation.md": "8a9171980edf",
+  "SYNTAX/24-incremental-hot-reload.md": "2fc484c94735",
+  "SYNTAX/25-compatibility.md": "739b69320e74",
+  "SYNTAX/26-union-type.md": "5fe6a5a9bd9d",
+  "SYNTAX/27-constraints.md": "5f986fe6af67",
+  "SYNTAX/30-tutorial-pointers.md": "2b5b59d7daed",
+  "SYNTAX/31-tutorial-metaprogramming.md": "d6b688af41b1",
+  "SYNTAX/32-tutorial-concurrency.md": "c052b705f446",
+  "SYNTAX/33-type-constraints-subtypes-dispatch.md": "325986f03ef3",
+  "SYNTAX/appendix-A-keywords.md": "3a13cd623477",
+  "SYNTAX/appendix-B-operators.md": "bfd06c530120",
+  "SYNTAX/appendix-C-features.md": "3e78de517b56"
+ },
+ "frozen_changed": [],
+ "frozen_total": 43,
+ "frozen_dirt_in_ring": [],
+ "frozen_unexplained": [],
+ "frozen_dirty_mtime": {
+  " M SYNTAX/01-basic-types.md": "2026-09-26T14:40:23+00:00",
+  " M SYNTAX/appendix-A-keywords.md": "2026-09-26T05:29:12+00:00",
+  "?? SYNTAX/33-type-constraints-subtypes-dispatch.md": "2026-09-26T02:53:16+00:00"
+ },
+ "frozen_canary_rows": {
+  "fresh": [
+   " M .fist-loop-20260927/advance_r4_self_audit.py",
+   "2026-09-28T05:14:13+00:00"
+  ],
+  "stale": [
+   " M SYNTAX/06-enum.md",
+   "2026-07-26T04:07:22+00:00"
+  ]
+ },
+ "radius": {
+  "product_by_mtime_this_ring": [
+   "cypyc/analyzer/scope_analyzer.py",
+   "cypyc/analyzer/type_checker.py"
+  ],
+  "product_touched_any": [
+   "cypy_bridge/__init__.py",
+   "cypy_bridge/compiler.py",
+   "cypy_bridge/defer.py",
+   "cypy_bridge/memory.py",
+   "cypy_bridge/meta.py",
+   "cypy_bridge/nogil.py",
+   "cypy_bridge/pointer.py",
+   "cypy_bridge/types.py",
+   "cypy_bridge/union.py",
+   "cypy_hook/__init__.py",
+   "cypy_hook/hook.py",
+   "cypyc/__main__.py",
+   "cypyc/analyzer/build_block_checker.py",
+   "cypyc/analyzer/comptime_evaluator.py",
+   "cypyc/analyzer/defer_analyzer.py",
+   "cypyc/analyzer/pointer_checker.py",
+   "cypyc/analyzer/scope_analyzer.py",
+   "cypyc/analyzer/type_checker.py",
+   "cypyc/cli.py",
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/codegen/type_mapper.py",
+   "cypyc/incremental/ast_differ.py",
+   "cypyc/incremental/dependency_graph.py",
+   "cypyc/incremental/file_monitor.py",
+   "cypyc/incremental/hot_reload.py",
+   "cypyc/incremental/incremental_manager.py",
+   "cypyc/parser/lexer.py",
+   "cypyc/parser/macro_expander.py",
+   "cypyc/parser/parser.py",
+   "cypyc/parser/preprocessor.py",
+   "cypyc/project/module_dependency_graph.py",
+   "cypyc/project/project_compiler.py",
+   "cypyc/transformer/defer_transformer.py",
+   "cypyc/transformer/enum_transformer.py",
+   "cypyc/transformer/generic_transformer.py",
+   "cypyc/transformer/struct_transformer.py",
+   "cypyc/transformer/trait_transformer.py",
+   "cypyc/utils/indent_detector.py",
+   "scripts/e2e_golden.sh",
+   "scripts/fist.py",
+   "scripts/sync_demo.py"
+  ],
+  "tests": [
+   "tests/test_codegen_verification.py",
+   "tests/test_loop_20260927_advance_r4.py"
+  ],
+  "tests_new_lock_file": "tests/test_loop_20260927_advance_r4.py",
+  "docs": [],
+  "frozen": [],
+  "loop": [
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_baselines.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_baselines.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_builtins.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_builtins.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_calllog_tally.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_calllog_tally.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_close_spec.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_codegen_diff.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_corpus.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_dormant.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_dormant.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_drivers_lint.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_drivers_lint.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_filed.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_filed.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_gen_locks.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_irreversible.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_irreversible.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_kit_from_polish.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_lib.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_lock_plan.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_locks.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_locks.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_never.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_never.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_probe",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_probes.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_progress.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_render_order.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_report_spec.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_scope_face.json",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_scope_face.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_self_audit.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_sweep.py",
+   "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/advance_r4_tmp"
+  ]
+ },
+ "three_systems_green": true,
+ "canary": {
+  "three_systems_green": true,
+  "floors_came_from_artifact": true,
+  "frozen_face_count_matches_previous": true,
+  "radius_is_exactly_two_product_files": true,
+  "frozen_predicate_flags_a_fresh_row": true,
+  "frozen_predicate_explains_a_stale_row": true,
+  "faces_measured_not_declared": true
+ },
+ "window": {
+  "ring_start": "2026-09-28T03:00:00+00:00",
+  "note": "mtime 归因口径见件首注释"
+ },
+ "self_checks": [
+  {
+   "label": "pytest 全量：零失败零错误且不少于地板",
+   "got": [
+    0,
+    0,
+    true
+   ],
+   "want": [
+    0,
+    0,
+    true
+   ],
+   "why": "2002 passed in 519.23s (0:08:39)；地板 {'pytest': 2002, 'collect': 2002, 'suite': 47, 'e2e_pass': 25}",
+   "ok": true
+  },
+  {
+   "label": "基数自证：收集数 == 跑完的「过+红+错」（对不上是解析器坏了）",
+   "got": 2002,
+   "want": 2002,
+   "why": "collected=2002 run={'passed': 2002, 'failed': 0, 'errors': 0, 'skipped': 0, 'summary_line': '2002 passed in 519.23s (0:08:39)'}",
+   "ok": true
+  },
+  {
+   "label": "自研套件：47 条且零失败",
+   "got": [
+    47,
+    0,
+    0
+   ],
+   "want": [
+    47,
+    0,
+    0
+   ],
+   "why": "Total: 47 | Passed: 47 | Failed: 0 | Skipped: 0",
+   "ok": true
+  },
+  {
+   "label": "e2e golden：PASS 不少于地板且 FAIL/RUNFAIL/WARN 全零",
+   "got": [
+    true,
+    0,
+    0,
+    0
+   ],
+   "want": [
+    true,
+    0,
+    0,
+    0
+   ],
+   "why": "[e2e-golden] summary: PASS=25 FAIL=0 UNREG/RUNFAIL=0 WARN=0",
+   "ok": true
+  },
+  {
+   "label": "底树未漂：HEAD 仍是开工时那一棵",
+   "got": "17d68b4",
+   "want": "17d68b4",
+   "why": "git rev-parse --short HEAD = 17d68b4",
+   "ok": true
+  },
+  {
+   "label": "未暂存：本轮不替别人提交东西",
+   "got": 0,
+   "want": 0,
+   "why": "[]",
+   "ok": true
+  },
+  {
+   "label": "冻结面：上环记录的 43 个 sha 逐字节未变",
+   "got": [
+    [],
+    43
+   ],
+   "want": [
+    [],
+    43
+   ],
+   "why": "sha 变了 []，共比 43 个文件",
+   "ok": true
+  },
+  {
+   "label": "冻结面：mtime 落在本环窗口（≥2026-09-28T03:00:00+00:00）内的脏行为空",
+   "got": [],
+   "want": [],
+   "why": "冻结面脏行与 mtime {' M SYNTAX/01-basic-types.md': '2026-09-26T14:40:23+00:00', ' M SYNTAX/appendix-A-keywords.md': '2026-09-26T05:29:12+00:00', '?? SYNTAX/33-type-constraints-subtypes-dispatch.md': '2026-09-26T02:53:16+00:00'}",
+   "ok": true
+  },
+  {
+   "label": "冻结面每条脏行必须有解释（早于本 loop 开工，或 sha 与上环记录逐字节相等）",
+   "got": [],
+   "want": [],
+   "why": "无解释脏行 []",
+   "ok": true
+  },
+  {
+   "label": "半径按 mtime 归因到本环：产品面只许两档分析器",
+   "got": [
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py"
+   ],
+   "want": [
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py"
+   ],
+   "why": "mtime ≥ 2026-09-28T03:00:00+00:00 的产品文件 ['cypyc/analyzer/scope_analyzer.py', 'cypyc/analyzer/type_checker.py']",
+   "ok": true
+  },
+  {
+   "label": "半径按 mtime 归因：测试面只许「新增锁文件 + 裁决改期望的那一条」，文档面必须为空",
+   "got": [
+    [
+     "tests/test_codegen_verification.py",
+     "tests/test_loop_20260927_advance_r4.py"
+    ],
+    []
+   ],
+   "want": [
+    [
+     "tests/test_codegen_verification.py",
+     "tests/test_loop_20260927_advance_r4.py"
+    ],
+    []
+   ],
+   "why": "tests 面 mtime ≥ 2026-09-28T03:00:00+00:00 的 ['tests/test_codegen_verification.py', 'tests/test_loop_20260927_advance_r4.py']；docs 面 []",
+   "ok": true
+  },
+  {
+   "label": "本环新增的锁文件必须在测试面名单里（不在＝它没被 git 看见）",
+   "got": true,
+   "want": true,
+   "why": "tests/test_loop_20260927_advance_r4.py → ['tests/test_codegen_verification.py', 'tests/test_loop_20260927_advance_r4.py']",
+   "ok": true
+  },
+  {
+   "label": "canary 七格必须同时成立",
+   "got": [
+    7,
+    [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ]
+   ],
+   "want": [
+    7,
+    [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ]
+   ],
+   "why": "{\"three_systems_green\": true, \"floors_came_from_artifact\": true, \"frozen_face_count_matches_previous\": true, \"radius_is_exactly_two_product_files\": true, \"frozen_predicate_flags_a_fresh_row\": true, \"frozen_predicate_explains_a_stale_row\": true, \"faces_measured_not_declared\": true}",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T05:14:14+00:00"
+}

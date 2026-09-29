@@ -1,0 +1,73 @@
+=== B1 idempotence: 25 examples/*.cypy ===
+tight repeat byte-identical failures: 0
+wall-clock (>1s apart) byte-identical failures: 25
+  DIFF(clock) basic_types.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:41"' != '__compile_time__ = "2026-09-27T11:03:42"'
+  DIFF(clock) concurrency.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:42"' != '__compile_time__ = "2026-09-27T11:03:43"'
+  DIFF(clock) constraint_numeric.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:43"' != '__compile_time__ = "2026-09-27T11:03:44"'
+  DIFF(clock) control_flow.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:44"' != '__compile_time__ = "2026-09-27T11:03:46"'
+  DIFF(clock) defer.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:46"' != '__compile_time__ = "2026-09-27T11:03:47"'
+  DIFF(clock) functions.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:47"' != '__compile_time__ = "2026-09-27T11:03:48"'
+  DIFF(clock) generic.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:48"' != '__compile_time__ = "2026-09-27T11:03:49"'
+  DIFF(clock) generics_advanced.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:49"' != '__compile_time__ = "2026-09-27T11:03:50"'
+  DIFF(clock) hello.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:50"' != '__compile_time__ = "2026-09-27T11:03:51"'
+  DIFF(clock) list_comprehension.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:51"' != '__compile_time__ = "2026-09-27T11:03:52"'
+  DIFF(clock) meta.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:52"' != '__compile_time__ = "2026-09-27T11:03:53"'
+  DIFF(clock) metaprogramming.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:53"' != '__compile_time__ = "2026-09-27T11:03:54"'
+  DIFF(clock) minimal_test.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:54"' != '__compile_time__ = "2026-09-27T11:03:55"'
+  DIFF(clock) new_syntax_features.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:55"' != '__compile_time__ = "2026-09-27T11:03:56"'
+  DIFF(clock) pipe_operator.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:56"' != '__compile_time__ = "2026-09-27T11:03:57"'
+  DIFF(clock) pointers.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:57"' != '__compile_time__ = "2026-09-27T11:03:58"'
+  DIFF(clock) struct_enum.cypy :: line 23: '__compile_time__ = "2026-09-27T11:03:58"' != '__compile_time__ = "2026-09-27T11:04:00"'
+  DIFF(clock) struct_records.cypy :: line 23: '__compile_time__ = "2026-09-27T11:04:00"' != '__compile_time__ = "2026-09-27T11:04:01"'
+  DIFF(clock) subtype_units.cypy :: line 23: '__compile_time__ = "2026-09-27T11:04:01"' != '__compile_time__ = "2026-09-27T11:04:02"'
+  DIFF(clock) test_duck.cypy :: line 23: '__compile_time__ = "2026-09-27T11:04:02"' != '__compile_time__ = "2026-09-27T11:04:03"'
+  DIFF(clock) test_macro.cypy :: line 23: '__compile_time__ = "2026-09-27T11:04:03"' != '__compile_time__ = "2026-09-27T11:04:04"'
+  DIFF(clock) test_meta.cypy :: line 23: '__compile_time__ = "2026-09-27T11:04:04"' != '__compile_time__ = "2026-09-27T11:04:05"'
+  DIFF(clock) test_new_features.cypy :: line 23: '__compile_time__ = "2026-09-27T11:04:05"' != '__compile_time__ = "2026-09-27T11:04:06"'
+  DIFF(clock) test_union.cypy :: line 23: '__compile_time__ = "2026-09-27T11:04:06"' != '__compile_time__ = "2026-09-27T11:04:07"'
+  DIFF(clock) test_vec.cypy :: line 23: '__compile_time__ = "2026-09-27T11:04:07"' != '__compile_time__ = "2026-09-27T11:04:08"'
+
+=== B1b generator reuse (one CythonGenerator for two sources) ===
+  DIFF reuse basic_types.cypy->concurrency.cypy :: line 26: '__all__ = ["main", "fetch_data", "run_concurrent", "main"]' != '__all__ = ["fetch_data", "run_concurrent", "main"]'
+  DIFF reuse concurrency.cypy->constraint_numeric.cypy :: line 26: '__all__ = ["fetch_data", "run_concurrent", "main", "clamp", "total", "echo", "main"]' != '__all__ = ["clamp", "total", "echo", "main"]'
+  DIFF reuse constraint_numeric.cypy->control_flow.cypy :: line 26: '__all__ = ["clamp", "total", "echo", "main", "main"]' != '__all__ = ["main"]'
+  DIFF reuse control_flow.cypy->defer.cypy :: line 26: '__all__ = ["main", "safe_operation", "multiple_defers"]' != '__all__ = ["safe_operation", "multiple_defers"]'
+  DIFF reuse defer.cypy->functions.cypy :: line 26: '__all__ = ["safe_operation", "multiple_defers", "greet", "greet_with_default", "print_person", "double", "square", "factorial", "main"]' != '__all__ = ["greet", "greet_with_default", "print_
+  DIFF reuse functions.cypy->generic.cypy :: line 26: '__all__ = ["greet", "greet_with_default", "print_person", "double", "square", "factorial", "main", "add", "multiply", "Container", "get_value", "main"]' != '__all__ = ["add", "multiply", "Co
+  DIFF reuse generic.cypy->generics_advanced.cypy :: line 26: '__all__ = ["add", "multiply", "Container", "get_value", "main", "identity", "wrap_in_list", "Box", "generic_usage", "type_inference"]' != '__all__ = ["identity", "wrap_in_list", "Box", "gene
+  DIFF reuse generics_advanced.cypy->hello.cypy :: line 26: '__all__ = ["identity", "wrap_in_list", "Box", "generic_usage", "type_inference", "greet", "main"]' != '__all__ = ["greet", "main"]'
+  DIFF reuse hello.cypy->list_comprehension.cypy :: line 26: '__all__ = ["greet", "main", "main"]' != '__all__ = ["main"]'
+  DIFF reuse list_comprehension.cypy->meta.cypy :: line 23: '__compile_time__ = "2026-09-27T11:04:08"' != '__compile_time__ = "2026-09-27T11:04:09"'
+  DIFF reuse meta.cypy->metaprogramming.cypy :: line 26: '__all__ = ["Status", "Document", "Report", "process_document", "use_constants", "debug_log"]' != '__all__ = ["use_constants", "debug_log"]'
+  DIFF reuse metaprogramming.cypy->minimal_test.cypy :: line 26: '__all__ = ["use_constants", "debug_log", "test_minimal", "main"]' != '__all__ = ["test_minimal", "main"]'
+  DIFF reuse minimal_test.cypy->new_syntax_features.cypy :: line 26: '__all__ = ["test_minimal", "main", "make_point", "test_named_param_sugar", "add_values", "test_mixed_named_params", "test_guard_in_for_loop", "test_guard_in_while_loop", "test_guard_not_in_l
+  DIFF reuse new_syntax_features.cypy->pipe_operator.cypy :: line 26: '__all__ = ["make_point", "test_named_param_sugar", "add_values", "test_mixed_named_params", "test_guard_in_for_loop", "test_guard_in_while_loop", "test_guard_not_in_loop", "test_guard_single
+  DIFF reuse pipe_operator.cypy->pointers.cypy :: line 26: '__all__ = ["add_one", "multiply_by_two", "square", "basic_pipeline", "filter_even", "sum_list", "list_pipeline", "pointer_concepts", "Vector", "struct_example"]' != '__all__ = ["pointer_conc
+  DIFF reuse pointers.cypy->struct_enum.cypy :: line 26: '__all__ = ["pointer_concepts", "Vector", "struct_example", "Point", "Rectangle", "Circle", "Color", "get_color_name", "main"]' != '__all__ = ["Point", "Rectangle", "Circle", "Color", "get_co
+  DIFF reuse struct_enum.cypy->struct_records.cypy :: line 26: '__all__ = ["Point", "Rectangle", "Circle", "Color", "get_color_name", "main", "Point", "Rectangle", "create_point", "calculate_area", "main"]' != '__all__ = ["Point", "Rectangle", "create_po
+  DIFF reuse struct_records.cypy->subtype_units.cypy :: line 26: '__all__ = ["Point", "Rectangle", "create_point", "calculate_area", "main", "area", "km_per", "raw_meters", "show", "main"]' != '__all__ = ["area", "km_per", "raw_meters", "show", "main"]'
+  DIFF reuse subtype_units.cypy->test_duck.cypy :: line 26: '__all__ = ["area", "km_per", "raw_meters", "show", "main", "sort", "find_max", "add_values", "display", "process_container", "Widget", "main"]' != '__all__ = ["sort", "find_max", "add_values
+  DIFF reuse test_duck.cypy->test_macro.cypy :: line 26: '__all__ = ["sort", "find_max", "add_values", "display", "process_container", "Widget", "main", "double", "test_macro", "main"]' != '__all__ = ["double", "test_macro", "main"]'
+  DIFF reuse test_macro.cypy->test_meta.cypy :: line 26: '__all__ = ["double", "test_macro", "main", "combine", "main"]' != '__all__ = ["combine", "main"]'
+  DIFF reuse test_meta.cypy->test_new_features.cypy :: line 26: '__all__ = ["combine", "main", "double_it", "process", "vec_sum", "main"]' != '__all__ = ["double_it", "process", "vec_sum", "main"]'
+  DIFF reuse test_new_features.cypy->test_union.cypy :: line 26: '__all__ = ["double_it", "process", "vec_sum", "main", "process_value", "test_union", "main"]' != '__all__ = ["process_value", "test_union", "main"]'
+  DIFF reuse test_union.cypy->test_vec.cypy :: line 26: '__all__ = ["process_value", "test_union", "main", "vec_sum", "test_vec_literal", "test_vec_repeat", "main"]' != '__all__ = ["vec_sum", "test_vec_literal", "test_vec_repeat", "main"]'
+
+=== B2 cross-consistency: direct vs CypyHook.transpile vs project-mode ===
+  MISMATCH test_new_features.cypy
+    direct vs hook.transpile: line 23: '__compile_time__ = "2026-09-27T11:04:09"' != '__compile_time__ = "2026-09-27T11:04:10"'
+    direct vs project-mode : line 23: '__compile_time__ = "2026-09-27T11:04:09"' != '__compile_time__ = "2026-09-27T11:04:10"'
+  mismatches: 1/25
+
+=== B1c reparse generated .pyx through the same front-end (robustness probe) ===
+  outcomes: {'ValueError(lex/parse diagnostic)': 25}
+
+=== B2b real ProjectCompiler check vs single-file diagnostics ===
+  diagnostic-set mismatches: 0/25  (temp projects kept in cypy_proj_aa7f5m_u)
+
+=== B-extra: preprocessor directives honoured by single-file mode only ===
+  #define  single-file   OK   generated lines mentioning x: ['x = LIMIT']
+  #line    single-file   OK   generated lines mentioning x: []
+  #define  project-mode  OK   generated lines mentioning x: ['x = LIMIT']
+  #line    project-mode  OK   generated lines mentioning x: []
+  both succeeded, texts equal: True  diff: <no line diff (bytes differ)

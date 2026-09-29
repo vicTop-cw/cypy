@@ -1,0 +1,10 @@
+struct Config:
+    debug: bool
+    verbose: bool
+    timeout: int
+
+let cfg: Config = Config {
+    debug: True,
+    verbose: False,
+    timeout: 30
+}

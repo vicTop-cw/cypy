@@ -1,0 +1,22 @@
+{
+ "attempts": 3,
+ "rcs": [
+  0,
+  2,
+  2
+ ],
+ "module_level_if_lines": [
+  [
+   10,
+   "if ((__name__ == \"__main__\")) {"
+  ]
+ ],
+ "d18_verdict": "no-reuse",
+ "d18_durs": [
+  7.525,
+  8.191
+ ],
+ "golden_equal": true,
+ "golden_files": 26,
+ "refuse": []
+}

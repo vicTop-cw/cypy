@@ -1,0 +1,2026 @@
+{
+ "started": "2026-09-28T10:52:32+00:00",
+ "work_tree": {
+  "dir": ".fist-loop-20260927/fix_r5_snap/revert",
+  "files": 959,
+  "skipped": 7535
+ },
+ "matrix": [
+  {
+   "bug_id": 68,
+   "group": [
+    68
+   ],
+   "group_size": 1,
+   "group_files": [],
+   "revert_mode": "not_measured",
+   "lock_files": [],
+   "has_lock": false,
+   "bearing_files": [],
+   "not_measured": "本环没有这条单的锁（法②要求每单一条会失败的锁测试）",
+   "red_after_revert": [],
+   "red_assertion_level": [],
+   "stayed_green": [],
+   "verbatim_red": [],
+   "collateral_went_red": [],
+   "sha_restored": [],
+   "files": []
+  },
+  {
+   "bug_id": 69,
+   "group": [
+    69
+   ],
+   "group_size": 1,
+   "group_files": [],
+   "revert_mode": "not_measured",
+   "lock_files": [],
+   "has_lock": false,
+   "bearing_files": [],
+   "not_measured": "本环没有这条单的锁（法②要求每单一条会失败的锁测试）",
+   "red_after_revert": [],
+   "red_assertion_level": [],
+   "stayed_green": [],
+   "verbatim_red": [],
+   "collateral_went_red": [],
+   "sha_restored": [],
+   "files": []
+  },
+  {
+   "bug_id": 71,
+   "group": [
+    71
+   ],
+   "group_size": 1,
+   "group_files": [],
+   "revert_mode": "not_measured",
+   "lock_files": [],
+   "has_lock": false,
+   "bearing_files": [],
+   "not_measured": "本环没有这条单的锁（法②要求每单一条会失败的锁测试）",
+   "red_after_revert": [],
+   "red_assertion_level": [],
+   "stayed_green": [],
+   "verbatim_red": [],
+   "collateral_went_red": [],
+   "sha_restored": [],
+   "files": []
+  },
+  {
+   "bug_id": 72,
+   "group": [
+    72
+   ],
+   "group_size": 1,
+   "group_files": [],
+   "revert_mode": "not_measured",
+   "lock_files": [],
+   "has_lock": false,
+   "bearing_files": [],
+   "not_measured": "本环没有这条单的锁（法②要求每单一条会失败的锁测试）",
+   "red_after_revert": [],
+   "red_assertion_level": [],
+   "stayed_green": [],
+   "verbatim_red": [],
+   "collateral_went_red": [],
+   "sha_restored": [],
+   "files": []
+  },
+  {
+   "bug_id": 73,
+   "group": [
+    73
+   ],
+   "group_size": 1,
+   "group_files": [],
+   "revert_mode": "not_measured",
+   "lock_files": [
+    "tests/test_loop_20260927_polish_r4.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [],
+   "not_measured": "摘回本环改过的每一个产品文件都不打红这单的锁 ⇒ 这单没有承重的改动",
+   "red_after_revert": [],
+   "red_assertion_level": [],
+   "stayed_green": [],
+   "verbatim_red": [],
+   "collateral_went_red": [],
+   "sha_restored": [],
+   "files": []
+  },
+  {
+   "bug_id": 74,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/codegen/test_r5_fix_codegen.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_lowers_to_declared_equivalent",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_with_variable_rhs_keeps_both_operands"
+   ],
+   "red_assertion_level": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_lowers_to_declared_equivalent",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug74_augmented_xor_with_variable_rhs_keeps_both_operands"
+   ],
+   "stayed_green": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug74_build_value_in_value_position_unchanged",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug74_plain_assignment_not_touched"
+   ],
+   "verbatim_red": [
+    "AssertionError: ['def f(x):', 'x', 'return x']",
+    "AssertionError: ['def f(x, y):', 'x', 'return x']"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 75,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/parser/test_r5_fix_lexer_tokens.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a & b-a & b]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a ^ b-a ^ b]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[~a-~a]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_infix_xor_parses_to_binop",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_lexer_emits_infix_caret_token",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_unary_invert_parses_to_unaryop",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_xor_precedence_sits_between_bitwise_and_and_or"
+   ],
+   "red_assertion_level": [
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a & b-a & b]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a ^ b-a ^ b]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[~a-~a]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_infix_xor_parses_to_binop",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_lexer_emits_infix_caret_token",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_unary_invert_parses_to_unaryop",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_xor_precedence_sits_between_bitwise_and_and_or"
+   ],
+   "stayed_green": [
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a << 2-a << 2]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a >> 2-a >> 2]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_bitwise_ops_lower[a | b-a | b]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug75_frozen_caret_lexemes_untouched"
+   ],
+   "verbatim_red": [
+    "AssertionError: 产物缺 `a & b`：",
+    "AssertionError: 产物缺 `a ^ b`：",
+    "AssertionError: `~a` 走不到出码：ValueError: Unexpected token TILDE at 2:12",
+    "AssertionError: 末条语句不是 return：ExprStmt(line=2, col=16)"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 76,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/codegen/test_r5_fix_codegen.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug76_defer_in_loop_return_emitted_once_per_exit",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug76_nested_return_exit_runs_defer_cleanup"
+   ],
+   "red_assertion_level": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug76_defer_in_loop_return_emitted_once_per_exit",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug76_nested_return_exit_runs_defer_cleanup"
+   ],
+   "stayed_green": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug76_multiple_defers_keep_reverse_order_at_every_exit",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug76_single_exit_still_emits_cleanup_once"
+   ],
+   "verbatim_red": [
+    "AssertionError: ['def scan(n):', \"r = open('t.txt', 'w')\", 'for i in range(n):', 'if i > 0:', 'return i', 'r.close()', ...]",
+    "AssertionError: 2 个出口只发了 1 次清理：['def pick(flag):', \"f = open('t.txt', 'w')\", 'if flag:', 'return 1', 'f.close()', 'return 2']"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 78,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/codegen/test_r5_fix_codegen.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a ^ b) & c-(a ^ b) & c]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a | b) & c-(a | b) & c]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a % (b % c)-a % (b % c)]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a - (b - c)-a - (b - c)]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a >> (b >> c)-a >> (b >> c)]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a & b | c-a & b | c]"
+   ],
+   "red_assertion_level": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[(a | b) & c-(a | b) & c]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a % (b % c)-a % (b % c)]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a - (b - c)-a - (b - c)]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a >> (b >> c)-a >> (b >> c)]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a & b | c-a & b | c]"
+   ],
+   "stayed_green": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_equal_precedence_right_operand_keeps_parens[a * (b + c)-a * (b + c)]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[(a + b) - c-a + b - c]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a + b + c-a + b + c]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a - b + c-a - b + c]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_left_associative_chain_not_over_parenthesized[a - b - c-a - b - c]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug78_power_stays_right_associative"
+   ],
+   "verbatim_red": [
+    "ValueError: Expected RPAREN, got IDENTIFIER at 2:17",
+    "AssertionError: (a | b) & c -> return a | b",
+    "AssertionError: a % (b % c) -> return a % b % c",
+    "AssertionError: a - (b - c) -> return a - b - c"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 79,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/parser/test_r5_fix_lexer_tokens.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a &= y-a = a & y]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a **= y-a = a ** y]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a |= y-a = a | y]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a &= y-BITAND_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a **= y-POW_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a |= y-BITOR_ASSIGN]"
+   ],
+   "red_assertion_level": [
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a &= y-a = a & y]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a **= y-a = a ** y]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a |= y-a = a | y]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a &= y-BITAND_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a **= y-POW_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_lexer_emits_declared_augassign_token[a |= y-BITOR_ASSIGN]"
+   ],
+   "stayed_green": [
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a %= y-MOD_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a *= y-MUL_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a += y-PLUS_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a -= y-MINUS_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a //= y-FLOORDIV_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a /= y-DIV_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a <<= y-LSHIFT_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_family_still_lexed[a >>= y-RSHIFT_ASSIGN]",
+    "tests/parser/test_r5_fix_lexer_tokens.py::test_bug79_augassign_lowers_to_doc_equivalent[a += y-a = a + y]"
+   ],
+   "verbatim_red": [
+    "AssertionError: `a &= y` 走不到出码：ValueError: Unexpected token ASSIGN at 2:8",
+    "AssertionError: `a **= y` 走不到出码：ValueError: Unexpected token ASSIGN at 2:9",
+    "AssertionError: `a |= y` 走不到出码：ValueError: Unexpected token ASSIGN at 2:8",
+    "AssertionError: TokenType 缺 BITAND_ASSIGN：词法器根本没有这个 token 类型"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 80,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/codegen/test_r5_fix_codegen.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_for_runs_once_at_exit",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_if_runs_at_function_exit",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_loop_block_stays_compilable"
+   ],
+   "red_assertion_level": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_for_runs_once_at_exit",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_if_runs_at_function_exit",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug80_nested_defer_in_loop_block_stays_compilable"
+   ],
+   "stayed_green": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug80_defer_in_nested_function_belongs_to_that_function",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug80_defer_only_block_stays_compilable",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug80_top_level_defer_still_moved_to_exit"
+   ],
+   "verbatim_red": [
+    "AssertionError: ['def f(n):', 'for i in range(n):', \"print('CLEAN')\", \"print('BODY')\", 'return n']",
+    "AssertionError: ['def f(n):', 'if n > 0:', \"print('CLEAN')\", \"print('BODY')\", 'return n']",
+    "AssertionError: [\"print('CLEAN')\", \"print('BODY')\"]"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 81,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/analyzer/test_r5_fix_comptime_types.py",
+    "tests/codegen/test_r5_fix_codegen.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_collection_elements_are_evaluated_not_copied",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[(1, 2)]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2] + [3]]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2]]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[[1, 2], 3]]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[abs(-1), len([1])]]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_concatenation_is_pure",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_literal_evaluates_to_pure_python_values",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_mixed_scalar_collection_is_pure",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_collection_literal_is_pure",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_unresolvable_element_is_whole_evaluation_failure",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_tuple_literal_evaluates_to_pure_python_values",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_unresolvable_element_is_whole_evaluation_failure",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug81_codegen_renders_container_results_structurally",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug81_comptime_collection_product_is_a_compilable_literal"
+   ],
+   "red_assertion_level": [
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_collection_elements_are_evaluated_not_copied",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[(1, 2)]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2] + [3]]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[1, 2]]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[[1, 2], 3]]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[[abs(-1), len([1])]]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_concatenation_is_pure",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_list_literal_evaluates_to_pure_python_values",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_mixed_scalar_collection_is_pure",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_nested_collection_literal_is_pure",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_tuple_literal_evaluates_to_pure_python_values",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_unresolvable_element_is_whole_evaluation_failure",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug81_codegen_renders_container_results_structurally",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug81_comptime_collection_product_is_a_compilable_literal"
+   ],
+   "stayed_green": [
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_control_scalar_comptime_unchanged",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[\"a\" + \"b\"]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[1 + 2 * 3]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[6 * 7]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[True]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[len([1, 2, 3])]",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug81_evaluate_contract_returns_no_ast_node[range(3)]",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug81_scalar_folding_unchanged"
+   ],
+   "verbatim_red": [
+    "AssertionError: 返回值里仍有 AST 节点：[('value[0]', BinOp(line=0, col=0)), ('value[1]', Constant(line=2, col=27))]",
+    "AssertionError: '(1, 2)' 的求值结果外泄 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19))]",
+    "AssertionError: '[1, 2] + [3]' 的求值结果外泄 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19)), ('value[2]', Constant(line=2, col=25))]",
+    "AssertionError: '[1, 2]' 的求值结果外泄 AST 节点：[('value[0]', Constant(line=2, col=16)), ('value[1]', Constant(line=2, col=19))]"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 82,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/analyzer/test_r5_fix_comptime_types.py",
+    "tests/codegen/test_r5_fix_codegen.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_cannot_hijack_docstring",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_result_is_not_interpolated_raw",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_with_backslash_not_emitted_as_broken_literal"
+   ],
+   "red_assertion_level": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_cannot_hijack_docstring",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_result_is_not_interpolated_raw",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug82_comptime_string_with_backslash_not_emitted_as_broken_literal"
+   ],
+   "stayed_green": [
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug82_control_int_comptime_on_same_path",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug82_string_comptime_value_is_correct_on_evaluator_side"
+   ],
+   "verbatim_red": [
+    "AssertionError: comptime 字符串占了 docstring 位：Expr(value=Constant(value='abc'))",
+    "AssertionError: # cython: language_level=3",
+    "AssertionError: 字符串结果以活字面量落在产物里：['\"a\\\\b\"']"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 83,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/analyzer/test_r5_fix_comptime_types.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_evaluate_entry_also_reports_not_implemented",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_raises_structured_not_implemented_diagnostic",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_surfaces_diagnostic_through_analyzer_face"
+   ],
+   "red_assertion_level": [
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_evaluate_entry_also_reports_not_implemented",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_raises_structured_not_implemented_diagnostic",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_block_form_surfaces_diagnostic_through_analyzer_face"
+   ],
+   "stayed_green": [
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug83_inline_form_control_still_clean"
+   ],
+   "verbatim_red": [
+    "AssertionError: 求值侧没有结构化的未实现诊断类型 cypyc.analyzer.comptime_evaluator.ComptimeNotImplementedError",
+    "AssertionError: 求值侧没有结构化的未实现诊断类型 cypyc.analyzer.comptime_evaluator.ComptimeNotImplementedError",
+    "AssertionError: 用户拿不到「未实现」措辞：[]"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 84,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/analyzer/test_r5_fix_comptime_types.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_both_analyzer_channels_agree_on_pointer_element_name",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_char_pointer_return_annotation_resolves",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_void_pointer_name_resolves"
+   ],
+   "red_assertion_level": [
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_both_analyzer_channels_agree_on_pointer_element_name",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_char_pointer_return_annotation_resolves",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_documented_void_pointer_name_resolves"
+   ],
+   "stayed_green": [
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_control_documented_pointer_names_stay_clean",
+    "tests/analyzer/test_r5_fix_comptime_types.py::test_bug84_undocumented_c_integer_names_stay_undefined"
+   ],
+   "verbatim_red": [
+    "AssertionError: [\"Undefined name 'char' at 1:21\", \"Undefined name 'char' at 1:11\"]",
+    "AssertionError: 文档工作例的 *char 返回位被拒：[\"Undefined name 'char' at 1:43\", \"Undefined name 'char' at 1:21\", \"Undefined name 'char' at 1:33\"]",
+    "AssertionError: 文档 04:87 的 *void 被拒：[\"Undefined name 'void' at 1:21\", \"Undefined name 'void' at 1:11\"]"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 85,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/cli/test_r5_fix_cli_hook.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypy_hook/hook.py",
+    "cypyc/cli.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_output_dir_before_subcommand_is_used",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_parse_args_global_before_subcommand",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_verbose_before_subcommand_prints_steps"
+   ],
+   "red_assertion_level": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_output_dir_before_subcommand_is_used",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_parse_args_global_before_subcommand",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_verbose_before_subcommand_prints_steps"
+   ],
+   "stayed_green": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_output_dir_after_subcommand_still_used",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_output_dir_both_sides_subcommand_wins",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_parse_args_global_after_subcommand_still_works",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_parse_args_global_default_unchanged",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_85_verbose_control_without_flag_stays_quiet"
+   ],
+   "verbatim_red": [
+    "AssertionError: 写在子命令前的 -o 没生效（仍写 output/）：piler\u001b[0m",
+    "AssertionError: assert 'output' == 'DIR'",
+    "AssertionError: 写在子命令前的 -v 没打开详细输出：piler\u001b[0m"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 86,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/cli/test_r5_fix_cli_hook.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypy_hook/hook.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_bom_marker_still_recognised_as_cypy",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_finder_does_not_silently_pass_bom_file_through"
+   ],
+   "red_assertion_level": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_bom_marker_still_recognised_as_cypy",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_finder_does_not_silently_pass_bom_file_through"
+   ],
+   "stayed_green": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_bom_source_still_transpiles",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_86_plain_python_file_is_not_hijacked"
+   ],
+   "verbatim_red": [
+    "AssertionError: 带 BOM 的 #!bin cypy 首行没被认出来",
+    "AssertionError: BOM 版被 import hook 静默放行（既不编译也不给诊断）"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 87,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/cli/test_r5_fix_cli_hook.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypy_hook/hook.py",
+    "cypyc/cli.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_removes_every_artifact_and_reports_count",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_reports_undeletable_file_in_report",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers"
+   ],
+   "red_assertion_level": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_removes_every_artifact_and_reports_count",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_clear_cache_reports_undeletable_file_in_report",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_87_cli_clear_cache_does_not_claim_success_on_leftovers"
+   ],
+   "stayed_green": [],
+   "verbatim_red": [
+    "AssertionError: 回执报「已清除」，产物却原地留着：['C:\\\\Users\\\\victo\\\\AppData\\\\Local\\\\Temp\\\\pytest-of-victo\\\\pytest-1332\\\\test_r5_87_clear_cache_removes0\\\\__pycache__\\\\cypy\\\\manifest.json', 'C:\\\\Users\\\\victo\\\\AppData\\",
+    "AssertionError: clear_cache() 不回报任何结果，调用方无从知道删了几个、几个没删掉",
+    "AssertionError: 一个文件都没删掉，命令仍然回报成功（rc=0）"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 88,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/cli/test_r5_fix_cli_hook.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/cli.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_cycle_reason_reaches_user",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_no_cypy_files_reason_reaches_user",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_rejected_entry_name_reaches_user"
+   ],
+   "red_assertion_level": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_cycle_reason_reaches_user",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_no_cypy_files_reason_reaches_user",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_88_rejected_entry_name_reaches_user"
+   ],
+   "stayed_green": [],
+   "verbatim_red": [
+    "AssertionError: cle_reason_reache0\\cyclic",
+    "AssertionError: rc=1 却没给出原因：\\Users\\victo\\AppData\\Local\\Temp\\pytest-of-victo\\pytest-1332\\test_r5_88_no_cypy_files_reaso0\\empty_project",
+    "AssertionError: 入口点不存在时应当失败：\\Cypy\\.fist-loop-20260927\\fix_r5_snap\\revert\\examples\\test_project"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 89,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/cli/test_r5_fix_cli_hook.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/cli.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_honours_entry_scope",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_with_unknown_entry_fails_loudly"
+   ],
+   "red_assertion_level": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_honours_entry_scope",
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_with_unknown_entry_fails_loudly"
+   ],
+   "stayed_green": [
+    "tests/cli/test_r5_fix_cli_hook.py::test_r5_89_check_only_without_entry_still_checks_everything"
+   ],
+   "verbatim_red": [
+    "AssertionError: --check-only 仍然无视 --entry 扫了全部模块：p-20260927\\fix_r5_snap\\revert\\examples\\test_project",
+    "AssertionError: entry 被拒却回报成功：AppData\\Local\\Temp\\pytest-of-victo\\pytest-1332\\test_r5_89_check_only_with_unk0\\out"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 90,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/codegen/test_r5_fix_codegen.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypy_hook/hook.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_file_carries_real_identity",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_without_path_fabricates_nothing",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug90_identity_literals_round_trip_for_nasty_paths",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug90_placeholder_identity_not_emitted"
+   ],
+   "red_assertion_level": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_file_carries_real_identity",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug90_hook_transpile_without_path_fabricates_nothing",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug90_placeholder_identity_not_emitted"
+   ],
+   "stayed_green": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug90_other_module_metadata_still_emitted",
+    "tests/codegen/test_r5_fix_codegen.py::test_bug90_real_identity_when_source_path_known"
+   ],
+   "verbatim_red": [
+    "AssertionError: {'__file__': '\"\"', '__name__': '\"unknown\"'}",
+    "AssertionError: # cython: language_level=3",
+    "Failed: __file__ 不是合法字面量：'\"proj\\\\we\\'ird\"q.cypy\"' -> unterminated string literal (detected at line 1) (<unknown>, line 1)",
+    "AssertionError: # cython: language_level=3"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  },
+  {
+   "bug_id": 91,
+   "group": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "group_size": 17,
+   "group_files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "revert_mode": "整文件摘回 HEAD 原文（按实测承重闭包一起摘）",
+   "lock_files": [
+    "tests/codegen/test_r5_fix_codegen.py"
+   ],
+   "has_lock": true,
+   "bearing_files": [
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py"
+   ],
+   "not_measured": "",
+   "red_after_revert": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal"
+   ],
+   "red_assertion_level": [
+    "tests/codegen/test_r5_fix_codegen.py::test_bug91_windows_path_in_header_docstring_is_a_valid_literal"
+   ],
+   "stayed_green": [],
+   "verbatim_red": [
+    "AssertionError:"
+   ],
+   "collateral_went_red": [],
+   "sha_restored": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ],
+   "files": [
+    "cypy_hook/hook.py",
+    "cypyc/analyzer/comptime_evaluator.py",
+    "cypyc/analyzer/scope_analyzer.py",
+    "cypyc/analyzer/type_checker.py",
+    "cypyc/cli.py",
+    "cypyc/codegen/cython_generator.py",
+    "cypyc/parser/lexer.py",
+    "cypyc/parser/parser.py",
+    "cypyc/project/project_compiler.py"
+   ]
+  }
+ ],
+ "matrix_rows": 22,
+ "groups": [
+  [
+   71,
+   84
+  ],
+  [
+   72,
+   74,
+   75,
+   76,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83,
+   90,
+   91
+  ],
+  [
+   73,
+   86,
+   87
+  ],
+  [
+   85,
+   89
+  ],
+  [
+   88
+  ]
+ ],
+ "groups_len": 5,
+ "self_checks": [
+  {
+   "label": "副本树里 import 到的 cypyc 就是副本那份（摘回没落在别的树上）",
+   "got": true,
+   "want": true,
+   "why": "实测 __file__=E:/IDEProjects/AI/Cypy/.fist-loop-20260927/fix_r5_snap/revert/cypyc/__init__.py 期望在 E:/IDEProjects/AI/Cypy/.fist-loop-20260927/fix_r5_snap/revert 下",
+   "ok": true
+  },
+  {
+   "label": "真树（ROOT）在本矩阵全程未被写入",
+   "got": [],
+   "want": [],
+   "why": "摘回只许发生在 .fist-loop-20260927/fix_r5_snap/revert；被写脏的文件：[]",
+   "ok": true
+  },
+  {
+   "label": "副本树基线全绿（环境忠实——基线有红就不许用这套矩阵做判定）",
+   "got": [
+    0,
+    0
+   ],
+   "want": [
+    0,
+    0
+   ],
+   "why": "基线不绿 0 个节点：[]，rc=0",
+   "ok": true
+  },
+  {
+   "label": "矩阵条数 = 认领单数（没有产品码改动的单也要占一行，写 not_measured 而不是消失）",
+   "got": [
+    68,
+    69,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "want": [
+    68,
+    69,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ],
+   "why": "行 22 / 认领 22；缺 []",
+   "ok": true
+  },
+  {
+   "label": "有锁的单摘回后必须变红；例外只能是法②点名的装饰锁（两个方向都不许扩张）",
+   "got": [
+    [],
+    []
+   ],
+   "want": [
+    [],
+    []
+   ],
+   "why": "既不红又没被法②列为装饰锁：[]；装饰锁名单里有、矩阵里却没有锁节点（口径漂移）：[]",
+   "ok": true
+  },
+  {
+   "label": "红不许是「把树摘坏」那一类（import/收集/内部错），这类一律点名",
+   "got": [],
+   "want": [],
+   "why": "树被摘坏型的单：[]",
+   "ok": true
+  },
+  {
+   "label": "摘完写回后每个文件的 sha 必须与摘前一致，且全量锁恢复绿（复原不是拼接）",
+   "got": [
+    true,
+    []
+   ],
+   "want": [
+    true,
+    []
+   ],
+   "why": "sha 全等 True / 恢复后仍红的节点：[]",
+   "ok": true
+  },
+  {
+   "label": "本环改过的每个产品文件必须至少打红一张单的锁（改了却没锁承重=这块改动没人验过）",
+   "got": [],
+   "want": [],
+   "why": "没有锁承重的产品文件：[]（探针单元 9 个）",
+   "ok": true
+  },
+  {
+   "label": "组间牵连在按承重闭包复扫后必须为零（摘 A 组不许打红 B 组的锁）",
+   "got": [],
+   "want": [],
+   "why": "仍有组间牵连的单：[]；承重探针把 9 个产品文件并成 1 组",
+   "ok": true
+  },
+  {
+   "label": "两次全量跑的节点数必须等于 pytest 自己报的 collected（丢行=矩阵读不到真相）",
+   "got": [
+    false,
+    false
+   ],
+   "want": [
+    false,
+    false
+   ],
+   "why": "baseline 137/137 、restored 137/137",
+   "ok": true
+  },
+  {
+   "label": "反证：空操作摘回（本环没改过的文件）之后所有锁必须仍然全绿",
+   "got": [],
+   "want": [],
+   "why": "{\"ran\": true, \"meaning\": \"把一条本环没改过的文件按 HEAD 原文重写 = 空操作 ⇒ 所有锁必须仍然全绿；有红就是夹具或环境自己坏了，整套矩阵作废\", \"file\": \"cypyc/__init__.py\", \"head_equals_current\": true, \"nodes_went_bad\": []}",
+   "ok": true
+  }
+ ],
+ "self_checks_red": [],
+ "revert_red_ids": [
+  74,
+  75,
+  76,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  91
+ ],
+ "assertion_level_ids": [
+  74,
+  75,
+  76,
+  79,
+  80,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  91
+ ],
+ "collateral": [],
+ "sha_restored": 153,
+ "sha_files_total": 153,
+ "canary_no_op_revert": {
+  "ran": true,
+  "meaning": "把一条本环没改过的文件按 HEAD 原文重写 = 空操作 ⇒ 所有锁必须仍然全绿；有红就是夹具或环境自己坏了，整套矩阵作废",
+  "file": "cypyc/__init__.py",
+  "head_equals_current": true,
+  "nodes_went_bad": []
+ },
+ "extras": {
+  "baseline_not_green": {
+   "nodes": [],
+   "total": 0,
+   "verbatim": []
+  },
+  "units_probed": [
+   "cypy_hook/hook.py",
+   "cypyc/analyzer/comptime_evaluator.py",
+   "cypyc/analyzer/scope_analyzer.py",
+   "cypyc/analyzer/type_checker.py",
+   "cypyc/cli.py",
+   "cypyc/codegen/cython_generator.py",
+   "cypyc/parser/lexer.py",
+   "cypyc/parser/parser.py",
+   "cypyc/project/project_compiler.py"
+  ],
+  "bearing": {
+   "cypy_hook/hook.py": [
+    85,
+    86,
+    87,
+    90
+   ],
+   "cypyc/analyzer/comptime_evaluator.py": [
+    81,
+    83
+   ],
+   "cypyc/analyzer/scope_analyzer.py": [
+    84
+   ],
+   "cypyc/analyzer/type_checker.py": [
+    83
+   ],
+   "cypyc/cli.py": [
+    85,
+    87,
+    88,
+    89
+   ],
+   "cypyc/codegen/cython_generator.py": [
+    74,
+    76,
+    78,
+    80,
+    81,
+    82,
+    90,
+    91
+   ],
+   "cypyc/parser/lexer.py": [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    89,
+    90,
+    91
+   ],
+   "cypyc/parser/parser.py": [
+    74,
+    75,
+    78,
+    79
+   ],
+   "cypyc/project/project_compiler.py": [
+    88
+   ]
+  },
+  "unborne_files": [],
+  "groups2": [
+   [
+    74,
+    75,
+    76,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+   ]
+  ],
+  "declared_face_not_bearing": [
+   "cypy_hook/hook.py",
+   "cypyc/analyzer/type_checker.py",
+   "cypyc/codegen/cython_generator.py"
+  ],
+  "identity": {
+   "imported_cypyc": "E:/IDEProjects/AI/Cypy/.fist-loop-20260927/fix_r5_snap/revert/cypyc/__init__.py",
+   "inside_work_tree": true,
+   "rc": 0,
+   "stderr": ""
+  },
+  "root_tree_sha_before": 8,
+  "root_tree_dirtied": [],
+  "baseline_run": {
+   "rc": 0,
+   "collected": 137,
+   "nodes": 137,
+   "tail": [
+    "tests/test_loop_20260927_polish_r4.py::test_bug73_card_present_in_ledger PASSED [100%]",
+    "============================= 137 passed in 9.77s ============================="
+   ]
+  },
+  "restored_run": {
+   "rc": 0,
+   "collected": 137,
+   "nodes": 137,
+   "tail": [
+    "tests/test_loop_20260927_polish_r4.py::test_bug73_card_present_in_ledger PASSED [100%]",
+    "============================= 137 passed in 8.65s ============================="
+   ]
+  },
+  "measured_rows": [
+   74,
+   75,
+   76,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85,
+   86,
+   87,
+   88,
+   89,
+   90,
+   91
+  ],
+  "rows_with_lock": [
+   73,
+   74,
+   75,
+   76,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85,
+   86,
+   87,
+   88,
+   89,
+   90,
+   91
+  ]
+ },
+ "note": "回退单元=共享产品文件的并查集闭包；矩阵每单一行（条数 = 有产品码改动的认领单数）。摘回一律在 fix_r5_snap/revert 的副本里做，真树只读。",
+ "refuse": [],
+ "at_utc": "2026-09-28T10:55:11+00:00"
+}

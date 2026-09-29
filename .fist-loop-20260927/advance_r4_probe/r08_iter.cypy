@@ -1,0 +1,7 @@
+def main() -> int:
+    let xs: list<int> = [1,2,3]
+    for i in iter(xs):
+        print(i)
+    print(list(xs))
+    print(tuple(xs))
+    return 0

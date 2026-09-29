@@ -1,0 +1,92 @@
+{
+ "refuse": [
+  "服务端有 4 条 bug task 未被账本任何条目引用（可能是隐形标题或漏记）：T0r2,T0r3,T0r4,T0r5"
+ ],
+ "ledger": {
+  "entries": 54,
+  "distinct": 54,
+  "with_task_id": 46,
+  "fixed_sections": 43,
+  "status_counts": {
+   "OPEN": 54
+  }
+ },
+ "server": {
+  "bug_tasks": 50,
+  "orphans": [
+   "T0r2",
+   "T0r3",
+   "T0r4",
+   "T0r5"
+  ],
+  "status_counts": {
+   "已暂停": 4,
+   "已完成": 30,
+   "待领取": 16
+  }
+ },
+ "cross": {
+  "fixed_but_still_marked_OPEN": [
+   "BUG-1",
+   "BUG-2",
+   "BUG-3",
+   "BUG-4",
+   "BUG-5",
+   "BUG-6",
+   "BUG-7",
+   "BUG-8",
+   "BUG-9",
+   "BUG-10",
+   "BUG-11",
+   "BUG-12",
+   "BUG-13",
+   "BUG-14",
+   "BUG-15",
+   "BUG-16",
+   "BUG-17",
+   "BUG-18",
+   "BUG-19",
+   "BUG-20",
+   "BUG-21",
+   "BUG-22",
+   "BUG-23",
+   "BUG-24",
+   "BUG-25",
+   "BUG-26",
+   "BUG-27",
+   "BUG-28",
+   "BUG-29",
+   "BUG-30",
+   "BUG-31",
+   "BUG-32",
+   "BUG-33",
+   "BUG-35",
+   "BUG-38",
+   "BUG-39",
+   "BUG-42",
+   "BUG-44",
+   "BUG-45",
+   "BUG-46",
+   "BUG-47",
+   "BUG-48",
+   "BUG-51"
+  ],
+  "numbers_only_in_reports": [],
+  "bug_card_only_no_task": [
+   "BUG-44",
+   "BUG-45",
+   "BUG-46",
+   "BUG-47",
+   "BUG-48",
+   "BUG-49",
+   "BUG-50",
+   "BUG-51"
+  ],
+  "duplicate_summaries": {
+   "[构建/规范配置] pyproject 声明了 [tool.black] line-length=100，但 156 个 .py 里 142 个不满足，照 PROJECT-SPEC/02 跑 format 会产出巨量不可复审的 diff": [
+    "BUG-52",
+    "BUG-53"
+   ]
+  }
+ }
+}

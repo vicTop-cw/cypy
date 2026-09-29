@@ -1,0 +1,77 @@
+{
+  "stamp": "2026-09-26T07:38:50Z",
+  "server_js": {
+    "mtime": 1790402036.4106927,
+    "size": 2364942
+  },
+  "cypy_ledger_bugs_before": 10,
+  "cypy_ledger_bugs_after": 10,
+  "cypy_db_before": [
+    1790400554.864616,
+    143360
+  ],
+  "cypy_db_after": [
+    1790400554.864616,
+    143360
+  ],
+  "cypy_db_untouched": true,
+  "results": [
+    {
+      "scenario": "A bug_list first call after UNREAD initialize",
+      "first_call": "matched",
+      "lines": 2,
+      "frame_kinds": [
+        "id=1:error",
+        "id=2:result"
+      ],
+      "elapsed_s": 0.26,
+      "deadline_s": 25.0,
+      "server_alive_after": true,
+      "initialize": "unread (left in the buffer, exactly like pfist.py main())",
+      "result_text_head": "{\"path\":\"./memory/bugs.md\",\"project_dir\":\".\",\"resolved_path\":\".\",\"count\":11,\"bugs\":[{\"id\":\"BUG-1\",\"ts\":\"2026-09-26T05:31:45Z\",\"severity\":\"high\",\"status\":\"OPEN\",\"summary\":\"[cache] cypy_bridge/compiler.",
+      "error": null,
+      "stderr_tail": ""
+    },
+    {
+      "scenario": "B bug_list first call after CONSUMED initialize",
+      "first_call": "matched",
+      "lines": 1,
+      "frame_kinds": [
+        "id=2:result"
+      ],
+      "elapsed_s": 0.02,
+      "deadline_s": 25.0,
+      "server_alive_after": true,
+      "initialize": "consumed kind=matched lines=1 ['id=1:error'] in 0.19s",
+      "result_text_head": "{\"path\":\"./memory/bugs.md\",\"project_dir\":\".\",\"resolved_path\":\".\",\"count\":11,\"bugs\":[{\"id\":\"BUG-1\",\"ts\":\"2026-09-26T05:31:45Z\",\"severity\":\"high\",\"status\":\"OPEN\",\"summary\":\"[cache] cypy_bridge/compiler.",
+      "error": null,
+      "stderr_tail": ""
+    },
+    {
+      "scenario": "C rejected report_bug as first call after UNREAD initialize",
+      "first_call": "matched",
+      "lines": 2,
+      "frame_kinds": [
+        "id=1:error",
+        "id=2:error"
+      ],
+      "elapsed_s": 0.23,
+      "deadline_s": 25.0,
+      "server_alive_after": true,
+      "initialize": "unread (left in the buffer, exactly like pfist.py main())",
+      "result_text_head": "",
+      "error": {
+        "code": -32000,
+        "message": "report_bug: 非法 project_dir（拒绝绝对路径/穿越/盘符）"
+      },
+      "stderr_tail": ""
+    },
+    {
+      "scenario": "D pfist.py --batch replay (rejected report_bug payload)",
+      "rc": 0,
+      "elapsed_s": 0.64,
+      "stdout_head": "[\n  {\n    \"tool\": \"report_bug\",\n    \"result\": {\n      \"__error__\": {\n        \"code\": -32000,\n        \"message\": \"report_bug: 非法 project_dir（拒绝绝对路径/穿越/盘符）\"\n      }\n    }\n  }\n]\n",
+      "stderr_head": ""
+    }
+  ]
+}

@@ -1,0 +1,409 @@
+{
+ "started": "2026-09-28T07:34:15+00:00",
+ "rows": [
+  {
+   "law": 1,
+   "file": ".fist-loop-20260927/hunt_r5_faces.json",
+   "needle": "flips_by_mutant",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 18217,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 1,
+   "file": ".fist-loop-20260927/hunt_r5_faces.json",
+   "needle": "unattributed_mutants",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 18217,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 1,
+   "file": ".fist-loop-20260927/hunt_r5_faces.json",
+   "needle": "cases_total",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 18217,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 2,
+   "file": ".fist-loop-20260927/hunt_r5_declared.json",
+   "needle": "withdrawn_design",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 15714,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 2,
+   "file": ".fist-loop-20260927/hunt_r5_declared.json",
+   "needle": "not_measured_or_true",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 15714,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 2,
+   "file": ".fist-loop-20260927/hunt_r5_declared.json",
+   "needle": "rows_total",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 15714,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 3,
+   "file": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "needle": "confirmed",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 7653,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 3,
+   "file": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "needle": "canary",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 7653,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 3,
+   "file": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "needle": "unsure",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 7653,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 4,
+   "file": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "needle": "confirmed",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 10948,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 4,
+   "file": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "needle": "unsure",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 10948,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 4,
+   "file": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "needle": "keys",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 10948,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 5,
+   "file": ".fist-loop-20260927/hunt_r5_faces.json",
+   "needle": "blind_spots",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 18217,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 5,
+   "file": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "needle": "tmp_left",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 7653,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 5,
+   "file": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "needle": "tmp_left",
+   "min_chars": 6000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 10948,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 6,
+   "file": ".fist-loop-20260927/hunt_r5_book.json",
+   "needle": "filed",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 15018,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 6,
+   "file": ".fist-loop-20260927/hunt_r5_book.json",
+   "needle": "live_reruns",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 15018,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 6,
+   "file": ".fist-loop-20260927/hunt_r5_book.json",
+   "needle": "sqlite_bug_tasks_after",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 15018,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 7,
+   "file": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "needle": "floors_source",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 4278,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 7,
+   "file": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "needle": "radius",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 4278,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 7,
+   "file": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "needle": "three_systems_green",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 4278,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 8,
+   "file": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "needle": "hard_violations",
+   "min_chars": 800,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 1772,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 8,
+   "file": ".fist-loop-20260927/hunt_r5_drivers_lint.json",
+   "needle": "soft_total",
+   "min_chars": 800,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 1772,
+   "chars_ok": true,
+   "verdict": "real-key"
+  },
+  {
+   "law": 8,
+   "file": ".fist-loop-20260927/hunt_r5_book.json",
+   "needle": "duplicates",
+   "min_chars": 4000,
+   "in_text": true,
+   "is_real_key": true,
+   "file_chars": 15018,
+   "chars_ok": true,
+   "verdict": "real-key"
+  }
+ ],
+ "checked_len": 24,
+ "real_key_len": 24,
+ "per_law_real": {
+  "law1": 3,
+  "law2": 3,
+  "law3": 3,
+  "law4": 3,
+  "law5": 3,
+  "law6": 3,
+  "law7": 3,
+  "law8": 3
+ },
+ "pending_artifacts": [],
+ "prefix_canary": [
+  {
+   "file": ".fist-loop-20260927/hunt_r5_baselines.json",
+   "prefix": "row",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": ".fist-loop-20260927/hunt_r5_book.json",
+   "prefix": "row",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "prefix": "confi",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": ".fist-loop-20260927/hunt_r5_cli_face.json",
+   "prefix": "row",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "prefix": "confi",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": ".fist-loop-20260927/hunt_r5_codegen.json",
+   "prefix": "row",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": ".fist-loop-20260927/hunt_r5_declared.json",
+   "prefix": "row",
+   "substring_present": true,
+   "is_real_key": false
+  },
+  {
+   "file": ".fist-loop-20260927/hunt_r5_faces.json",
+   "prefix": "unattr",
+   "substring_present": true,
+   "is_real_key": false
+  }
+ ],
+ "needle_verification_written_back": {
+  "why": "上一环吃过「needle 只是文件名子串」的亏：`control` 撞 `SYNTAX/15-control-flow.md`、`queue` 撞 `queue_frozen_edit` 前缀，needle 在但主张不在。本环开工前把全部 needle 按「必须是判据件里的真键名」严口径重扫一遍，实测数落在这里。",
+  "checked_len": 24,
+  "missing_before": 0,
+  "false_substring_before": 0,
+  "rule": "needle 必须是被引判据件 JSON 里的真键名（顶层或一层嵌套），不能只是文件名字符串或值的前缀；每条规则配 canary：前缀式 needle（`confi`）在严口径下必须被拒。",
+  "artifacts_pending": [],
+  "strict_rule_rejected_len": 0,
+  "measured_at_utc": "2026-09-28T07:34:15+00:00"
+ },
+ "self_checks": [
+  {
+   "label": "扫描覆盖面 = 计划里 artifacts 声明总数（不手数）",
+   "got": 24,
+   "want": 24,
+   "why": "两路回加",
+   "ok": true
+  },
+  {
+   "label": "不合格 verdict 只允许「件还没跑」这一种（严口径不许混进结论）",
+   "got": [],
+   "want": [],
+   "why": "其余一类都算 needle 坏了",
+   "ok": true
+  },
+  {
+   "label": "canary 两侧：前缀必被拒、真键名必放行",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "canary 9 条 / 放行 True",
+   "ok": true
+  },
+  {
+   "label": "每条法的 needle 都按『法号→真键名条数』逐条给数（法号缺一个就是逐条门形同虚设）",
+   "got": [
+    "law1",
+    "law2",
+    "law3",
+    "law4",
+    "law5",
+    "law6",
+    "law7",
+    "law8"
+   ],
+   "want": [
+    "law1",
+    "law2",
+    "law3",
+    "law4",
+    "law5",
+    "law6",
+    "law7",
+    "law8"
+   ],
+   "why": "{\"law1\": 3, \"law2\": 3, \"law3\": 3, \"law4\": 3, \"law5\": 3, \"law6\": 3, \"law7\": 3, \"law8\": 3}",
+   "ok": true
+  },
+  {
+   "label": "每条法的三件证据都验到真键名（少一件就是那一条法的门没承重）",
+   "got": [
+    3
+   ],
+   "want": [
+    3
+   ],
+   "why": "{\"law1\": 3, \"law2\": 3, \"law3\": 3, \"law4\": 3, \"law5\": 3, \"law6\": 3, \"law7\": 3, \"law8\": 3}",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T07:34:15+00:00"
+}

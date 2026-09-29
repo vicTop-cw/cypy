@@ -1,0 +1,242 @@
+{
+ "report": "T0r116-cypy-selfdrive-r10-report.md",
+ "report_bytes": 22276,
+ "ledger": {
+  "headers": 126,
+  "open": 34,
+  "open_ids": [
+   "40",
+   "43",
+   "49",
+   "50",
+   "52",
+   "54",
+   "65",
+   "68",
+   "69",
+   "70",
+   "72",
+   "73",
+   "77",
+   "94",
+   "97",
+   "99",
+   "100",
+   "103",
+   "105",
+   "106",
+   "109",
+   "110",
+   "111",
+   "114",
+   "115",
+   "116",
+   "117",
+   "119",
+   "120",
+   "121",
+   "122",
+   "123",
+   "124",
+   "125"
+  ],
+  "severity": {
+   "low": 9,
+   "medium": 19,
+   "high": 6
+  },
+  "judge_face": [
+   "117",
+   "123",
+   "124"
+  ],
+  "product_face": 31,
+  "fixed_sections": 84,
+  "amendment_sections": 7
+ },
+ "cited_bug_ids": [
+  21,
+  55,
+  77,
+  106,
+  109,
+  116,
+  117,
+  118,
+  119,
+  120,
+  121,
+  122,
+  123,
+  124,
+  125
+ ],
+ "cited_paths": 17,
+ "verbatim_claims": 11,
+ "anchors": [
+  {
+   "rel": "cypyc/parser/parser.py",
+   "needle": "self.type_args = type_args or []",
+   "hits": [
+    659
+   ],
+   "claimed": "650-659",
+   "ok": true,
+   "file_lines": 4789
+  },
+  {
+   "rel": "cypyc/parser/parser.py",
+   "needle": "candidate: Optional[List[Any]] = N",
+   "hits": [
+    3869
+   ],
+   "claimed": "3855-3885",
+   "ok": true,
+   "file_lines": 4789
+  },
+  {
+   "rel": "cypyc/parser/parser.py",
+   "needle": "type_args_for_call = []",
+   "hits": [
+    3951
+   ],
+   "claimed": "3943-3951",
+   "ok": true,
+   "file_lines": 4789
+  },
+  {
+   "rel": "cypyc/codegen/cython_generator.py",
+   "needle": "类型实参在产物里必须**擦除**",
+   "hits": [
+    3814
+   ],
+   "claimed": "3814-3818",
+   "ok": true,
+   "file_lines": 4304
+  },
+  {
+   "rel": "cypyc/analyzer/type_checker.py",
+   "needle": "def _bind_explicit_type_args",
+   "hits": [
+    1272
+   ],
+   "claimed": "1272-1301",
+   "ok": true,
+   "file_lines": 4528
+  },
+  {
+   "rel": "cypyc/analyzer/type_checker.py",
+   "needle": "explicit_binding = self._bind_expl",
+   "hits": [
+    1340
+   ],
+   "claimed": "1330-1347",
+   "ok": true,
+   "file_lines": 4528
+  },
+  {
+   "rel": "cypy_bridge/compiler.py",
+   "needle": "调用点的 `<…>` 是类型实参",
+   "hits": [
+    288
+   ],
+   "claimed": "284-289",
+   "ok": true,
+   "file_lines": 4032
+  },
+  {
+   "rel": "SYNTAX/33-type-constraints-subtypes-dispatch.md",
+   "needle": "P-1.8 v1 明确不支持",
+   "hits": [
+    518
+   ],
+   "claimed": "518-518",
+   "ok": true,
+   "file_lines": 783
+  },
+  {
+   "rel": "corpus/cypy.generic.callsite.json",
+   "needle": "fnv1a64:65bd56a87c83d42a",
+   "hits": [
+    265
+   ],
+   "claimed": "1-1000000",
+   "ok": true,
+   "file_lines": 266
+  }
+ ],
+ "checks": [
+  {
+   "name": "bug_ids_all_exist",
+   "ok": true,
+   "detail": "cited=15 missing=[]"
+  },
+  {
+   "name": "bug_ids_nonvacuous",
+   "ok": true,
+   "detail": "cited=15（少于 10 说明抽取坏了）"
+  },
+  {
+   "name": "paths_all_exist",
+   "ok": true,
+   "detail": "paths=17 missing=[]"
+  },
+  {
+   "name": "paths_nonvacuous",
+   "ok": true,
+   "detail": "paths=17（实测 17，地板 12）"
+  },
+  {
+   "name": "verbatim_claims_backed",
+   "ok": true,
+   "detail": "claims=11 unbacked=[]"
+  },
+  {
+   "name": "verbatim_nonvacuous",
+   "ok": true,
+   "detail": "claims=11"
+  },
+  {
+   "name": "code_anchors_in_range",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "name": "ledger_numbers_match",
+   "ok": true,
+   "detail": "{'open_blocks': {'claim': '34', 'actual': '34'}, 'headers': {'claim': '126', 'actual': '126'}, 'fixed_total': {'claim': '84', 'actual': '84'}, 'high': {'claim': '6', 'actual': '6'}, 'medium': {'claim': '19', 'actual': '1"
+  },
+  {
+   "name": "judge_face_ids_named",
+   "ok": true,
+   "detail": "['117', '123', '124']"
+  },
+  {
+   "name": "spec_cases_20",
+   "ok": true,
+   "detail": "fnv1a64:65bd56a87c83d42a"
+  },
+  {
+   "name": "spec_fp_in_report",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "floor_71_matches_corpus",
+   "ok": true,
+   "detail": "corpus_total=71"
+  },
+  {
+   "name": "canary_shifted_range_red",
+   "ok": true,
+   "detail": "[{'rel': 'cypyc/parser/parser.py', 'still_hits_if_shifted': False}, {'rel': 'cypyc/parser/parser.py', 'still_hits_if_shifted': False}, {'rel': 'cypyc/parser/parser.py', 'still_hits_if_shifted': False}, {'rel': 'cypyc/cod"
+  },
+  {
+   "name": "canary_fake_bug_id_red",
+   "ok": true,
+   "detail": "fake=[9999, 130]"
+  }
+ ],
+ "failed": [],
+ "placeholder_section_6": false
+}

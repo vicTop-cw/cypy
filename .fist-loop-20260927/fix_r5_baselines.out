@@ -1,0 +1,56 @@
+{
+ "refuse": [
+  "判据自证未过：自研套件达地板 47/47（实得 46/47）",
+  "判据自证未过：自研套件 rc=0（实得 1）"
+ ],
+ "three_systems_green": [
+  true,
+  false,
+  true
+ ],
+ "pytest": {
+  "rc": 0,
+  "passed": 2116,
+  "failed_sum": 0,
+  "collected_line": null,
+  "tail": [
+   "........................................................................ [ 95%]",
+   "........................................................................ [ 98%]",
+   "............................                                             [100%]",
+   "2116 passed in 651.76s (0:10:51)"
+  ]
+ },
+ "collect": 2116,
+ "suite": {
+  "Total": 47,
+  "Passed": 46,
+  "Failed": 1,
+  "Skipped": 0
+ },
+ "e2e": {
+  "PASS": 25,
+  "FAIL": 0,
+  "UNREG/RUNFAIL": 0,
+  "WARN": 0
+ },
+ "git": {
+  "head": "17d68b4",
+  "dirty_rows": 180,
+  "deleted_tracked": 10,
+  "staged": 0,
+  "ahead_of_upstream": "1",
+  "worktrees": [
+   "E:/IDEProjects/AI/Cypy",
+   "E:/IDEProjects/AI/_cypy_head_baseline"
+  ],
+  "foreign_worktree_present": true
+ },
+ "radius": {
+  "forbidden_total": 0,
+  "allowed_touched": 110,
+  "window_start": "2026-09-28T08:07:06Z",
+  "measured_at": "2026-09-28T09:55:48+00:00"
+ },
+ "self_checks": "14/16"
+}
+BASELINES_EXIT=1

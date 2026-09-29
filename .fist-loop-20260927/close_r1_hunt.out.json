@@ -1,0 +1,550 @@
+{
+ "leaves": [
+  {
+   "task_id": "T0r38.1.1",
+   "law": "对抗样例构造",
+   "artifact": ".fist-loop-20260927/hunts/adv_r1.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.1.2",
+   "law": "对抗样例构造",
+   "artifact": ".fist-loop-20260927/hunts/adv_r1.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.2.1",
+   "law": "差分与不变量对拍",
+   "artifact": ".fist-loop-20260927/hunts/r1_fuzz_diff_report.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.2.2",
+   "law": "差分与不变量对拍",
+   "artifact": ".fist-loop-20260927/hunts/r1_fuzz_diff_report.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.3.1",
+   "law": "fuzz 变异（预算内）",
+   "artifact": ".fist-loop-20260927/fuzz/results_r1.jsonl",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.3.2",
+   "law": "fuzz 变异（预算内）",
+   "artifact": ".fist-loop-20260927/fuzz/fuzz_r1.py",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.4.1",
+   "law": "审查报告与转结项复核",
+   "artifact": ".fist-loop-20260927/hunts/hunt_evidence.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.4.2",
+   "law": "审查报告与转结项复核",
+   "artifact": ".fist-loop-20260927/hunts/hunt_evidence.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.5.1",
+   "law": "模式化读码狩猎",
+   "artifact": ".fist-loop-20260927/hunts/fz_evidence.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.5.2",
+   "law": "模式化读码狩猎",
+   "artifact": ".fist-loop-20260927/hunts/fz_evidence.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.6.1",
+   "law": "最小复现与确诊",
+   "artifact": ".fist-loop-20260927/hunts/hunt_e_extractor_positional.cypy",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.6.2",
+   "law": "最小复现与确诊",
+   "artifact": ".fist-loop-20260927/hunts/fz01_trailing_space_no_newline.cypy",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.7.1",
+   "law": "入账与 quick win 判定",
+   "artifact": ".fist-loop-20260927/intake_r1_hunt.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.7.2",
+   "law": "入账与 quick win 判定",
+   "artifact": ".fist-loop-20260927/intake_r1_hunt.json",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.8.1",
+   "law": "狩猎报告与转结",
+   "artifact": "memory/reviews/20260927.11.15.41.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  },
+  {
+   "task_id": "T0r38.8.2",
+   "law": "狩猎报告与转结",
+   "artifact": "memory/reviews/20260927.11.15.41.md",
+   "steps": {
+    "claim": {
+     "status": "已领取"
+    },
+    "spec_create": {
+     "ok": true,
+     "status": "pending"
+    },
+    "spec_review": {
+     "ok": true,
+     "verdict": "approved"
+    },
+    "execute": {
+     "status": "执行中"
+    },
+    "submit": {
+     "status": "待验收"
+    },
+    "output_validate": {
+     "verdict": "pass"
+    },
+    "result_verify": {
+     "ok": true,
+     "status": "approved"
+    },
+    "verify": {
+     "status": "已完成"
+    }
+   }
+  }
+ ],
+ "failed": [],
+ "root_status": "拆分中"
+}

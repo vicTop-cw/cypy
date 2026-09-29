@@ -1,0 +1,123 @@
+#!bin cypy
+# ============================================================
+# components.cypy — UI component system
+# ============================================================
+
+# --- Component type enum ---
+
+enum ComponentType:
+    TEXT = "text"
+    DATAFRAME = "dataframe"
+    CHART = "chart"
+    NOTIFICATION = "notification"
+    SQL = "sql"
+    MARKDOWN = "markdown"
+
+
+# --- Rich components (rendered by web UI) ---
+
+struct SimpleTextComponent:
+    # Plain text component
+    text: str
+
+    def to_dict(self) -> dict<str, str>:
+        return {"type": "text", "text": self.text}
+
+
+struct DataFrameComponent:
+    # Tabular data component
+    columns: list<str>
+    rows: list<dict<str, str>>
+    title: str
+    description: str
+
+    def __init__(self, columns: list<str> = [], rows: list<dict<str, str>> = [], title: str = "Data", description: str = ""):
+        self.columns = columns
+        self.rows = rows
+        self.title = title
+        self.description = description
+
+    def from_records(records: list<dict<str, str>>, title: str = "Data", description: str = "") -> DataFrameComponent:
+        let cols: list<str> = []
+        if len(records) > 0:
+            cols = list(records[0].keys())
+        return DataFrameComponent(columns=cols, rows=records, title=title, description=description)
+
+    def row_count(self) -> int:
+        return len(self.rows)
+
+    def to_dict(self) -> dict<str, str>:
+        return {"type": "dataframe", "title": self.title, "description": self.description}
+
+
+struct ChartComponent:
+    # Chart visualization component
+    chart_type: str
+    data: dict<str, str>
+    title: str
+    x_label: str
+    y_label: str
+
+    def to_dict(self) -> dict<str, str>:
+        return {"type": "chart", "chart_type": self.chart_type, "title": self.title}
+
+
+struct NotificationComponent:
+    # Notification/alert component
+    level: str
+    message: str
+
+    def to_dict(self) -> dict<str, str>:
+        return {"type": "notification", "level": self.level, "message": self.message}
+
+
+struct SqlComponent:
+    # SQL code block component
+    sql: str
+    language: str
+
+    def to_dict(self) -> dict<str, str>:
+        return {"type": "sql", "sql": self.sql, "language": self.language}
+
+
+# --- Rich component wrapper ---
+
+struct RichComponent:
+    # Union-style wrapper for rich UI components
+    component_type: ComponentType
+    inner: object
+
+    def text(text: str) -> RichComponent:
+        return RichComponent(component_type=ComponentType.TEXT, inner=SimpleTextComponent(text=text))
+
+    def dataframe(columns: list<str>, rows: list<dict<str, str>>, title: str = "Data") -> RichComponent:
+        let comp = DataFrameComponent(columns=columns, rows=rows, title=title)
+        return RichComponent(component_type=ComponentType.DATAFRAME, inner=comp)
+
+    def chart(chart_type: str, data: dict<str, str>, title: str = "Chart") -> RichComponent:
+        let comp = ChartComponent(chart_type=chart_type, data=data, title=title, x_label="", y_label="")
+        return RichComponent(component_type=ComponentType.CHART, inner=comp)
+
+    def notification(level: str, message: str) -> RichComponent:
+        let comp = NotificationComponent(level=level, message=message)
+        return RichComponent(component_type=ComponentType.NOTIFICATION, inner=comp)
+
+
+# --- UiComponent (combines rich + simple) ---
+
+struct UiComponent:
+    # Component with both rich (web) and simple (terminal) representations
+    rich_component: RichComponent
+    simple_component: SimpleTextComponent
+
+    def to_dict(self) -> dict<str, str>:
+        return {"rich": "component", "simple": self.simple_component.text}
+
+    def text(message: str) -> UiComponent:
+        return UiComponent(rich_component=RichComponent.text(message), simple_component=SimpleTextComponent(text=message))
+
+    def success(message: str) -> UiComponent:
+        return UiComponent(rich_component=RichComponent.notification("success", message), simple_component=SimpleTextComponent(text=message))
+
+    def error(message: str) -> UiComponent:
+        return UiComponent(rich_component=RichComponent.notification("error", message), simple_component=SimpleTextComponent(text=message))

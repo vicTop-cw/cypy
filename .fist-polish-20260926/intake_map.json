@@ -1,0 +1,63 @@
+{
+  "payloads": 8,
+  "mapping": [
+    {
+      "bug_id": "BUG-1",
+      "task_id": "T0r6",
+      "summary": "[cache] cypy_bridge/compiler.py:3656 clear_cache 把 .pyd 删除失败当成功：裸 except 吞掉后仍从 manifest 删条目",
+      "fired": false,
+      "note": "already in ledger"
+    },
+    {
+      "bug_id": "BUG-2",
+      "task_id": "T0r7",
+      "summary": "[subprocess] cypy_bridge/compiler.py:3795 subprocess.run 无 timeout；同仓做同一件事的另外两处都有 timeout=120",
+      "fired": false,
+      "note": "already in ledger"
+    },
+    {
+      "bug_id": "BUG-3",
+      "task_id": "T0r8",
+      "summary": "[silent-fail] cypyc/project/project_compiler.py:826 增量重解析异常被吞：失败后仍用陈旧 AST 计算影响集并报告已传播",
+      "fired": false,
+      "note": "already in ledger"
+    },
+    {
+      "bug_id": "BUG-4",
+      "task_id": "T0r9",
+      "summary": "[silent-fail] cypyc/transformer 五个 transformer 把递归调用包进 except (AttributeError, TypeError)，子树真实异常被吞、收集静默截断",
+      "fired": false,
+      "note": "already in ledger"
+    },
+    {
+      "bug_id": "BUG-5",
+      "task_id": "T0r10",
+      "summary": "[silent-fail] cypyc/incremental/hot_reload.py:110 与 :125 状态快照/回滚吞掉 getattr/setattr 异常（含用户 property 执行失败）",
+      "fired": false,
+      "note": "already in ledger"
+    },
+    {
+      "bug_id": "BUG-6",
+      "task_id": "T0r11",
+      "summary": "[silent-fail] cypyc/incremental/file_monitor.py:58 读不到 .py 首行即判定「不是 Cypy 文件」，变更被静默漏掉",
+      "fired": false,
+      "note": "already in ledger"
+    },
+    {
+      "bug_id": "BUG-7",
+      "task_id": "T0r12",
+      "summary": "[diagnostics] cypy_hook/hook.py:926 与 cypy_bridge/compiler.py:3583 manifest 损坏与「文件不存在」不可区分，静默按无缓存继续",
+      "fired": false,
+      "note": "already in ledger"
+    },
+    {
+      "bug_id": "BUG-8",
+      "task_id": "T0r13",
+      "summary": "[silent-fail] cypyc/parser/macro_expander.py:380 宏展开后的代码块解析失败时静默返回原块，整条宏语句从输出中消失且无任何告警",
+      "fired": false,
+      "note": "already in ledger"
+    }
+  ],
+  "failures": [],
+  "ledger_total": 8
+}

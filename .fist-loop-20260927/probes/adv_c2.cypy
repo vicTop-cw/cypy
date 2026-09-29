@@ -1,0 +1,6 @@
+enum Operation:
+    ADD
+    SUBTRACT
+
+    def label(self) -> str:
+        return "op"

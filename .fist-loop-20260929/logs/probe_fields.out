@@ -1,0 +1,45 @@
+{
+ "cases": {
+  "G1_baseline_fields_first": {
+   "class_fields": {},
+   "extractor_types": [],
+   "compared_attrs": [],
+   "bound_attrs": [
+    "__f0",
+    "__f1",
+    "__f0",
+    "__f1"
+   ],
+   "verbatim_condition_lines": []
+  },
+  "B1_method_first": {
+   "class_fields": {},
+   "extractor_types": [],
+   "compared_attrs": [],
+   "bound_attrs": [
+    "__f0",
+    "__f1",
+    "__f0",
+    "__f1"
+   ],
+   "verbatim_condition_lines": []
+  },
+  "B2_init_first": {
+   "class_fields": {},
+   "extractor_types": [],
+   "compared_attrs": [],
+   "bound_attrs": [
+    "__f0",
+    "__f1",
+    "__f0",
+    "__f1"
+   ],
+   "verbatim_condition_lines": []
+  }
+ },
+ "refuse": [
+  "G1_baseline_fields_first 没有生成任何比对行 ⇒ 分支不可达，结论不作数",
+  "B1_method_first 没有生成任何比对行 ⇒ 分支不可达，结论不作数",
+  "B2_init_first 没有生成任何比对行 ⇒ 分支不可达，结论不作数"
+ ]
+}

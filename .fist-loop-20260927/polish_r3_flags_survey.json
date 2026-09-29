@@ -1,0 +1,38 @@
+{
+ "transpile_argparse": [
+  "--bridge",
+  "--check-only",
+  "--emit-ast",
+  "--emit-code",
+  "--emit-cython",
+  "--generate-setup",
+  "--output",
+  "--verbose"
+ ],
+ "build_argparse": [
+  "--check-only",
+  "--entry",
+  "--output",
+  "--verbose"
+ ],
+ "transpile_help": [
+  "--bridge",
+  "--check-only",
+  "--emit-ast",
+  "--emit-code",
+  "--emit-cython",
+  "--generate-setup",
+  "--help",
+  "--output",
+  "--verbose"
+ ],
+ "help_minus_argparse": [],
+ "argparse_minus_help": [],
+ "doc_flags_not_in_any_argparse": [
+  "--repository"
+ ],
+ "transpile_flags_not_documented": [
+  "--emit-code"
+ ],
+ "build_flags_not_documented": []
+}

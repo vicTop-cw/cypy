@@ -1,0 +1,6 @@
+let pi: float = 3.14159
+
+def main() -> int:
+    pi = 3.14
+    print(pi)
+    return 0

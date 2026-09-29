@@ -1,0 +1,116 @@
+{
+ "started_z": "2026-09-29T05:34:57Z",
+ "targets": [
+  "T0r115",
+  "T0r115.3",
+  "T0r115.4",
+  "T0r115.5"
+ ],
+ "nodes": {
+  "T0r115": {
+   "execute": "{\"id\": \"T0r115\", \"parent_id\": null, \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 3, \"split_n\": 3, \"status\": \"执行中\", \"assignee\": null, \"description\": \"[omega:required] 自驱式组合环 R9（2026-09-2",
+   "status_after_execute": "执行中",
+   "omega_spec_create": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115:r1] 已通过审核，无需重复创建\"}}",
+   "omega_spec_review": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115:r1] 当前状态为 [approved]，不是待审核状态\"}}",
+   "omega_result_verify": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r115:r1\", \"task_id\": \"T0r115\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}",
+   "verify": "{\"__error__\": {\"code\": -32000, \"message\": \"非法验收: 任务处于 [执行中]，需先 submit\"}}",
+   "status_final": "执行中"
+  },
+  "T0r115.3": {
+   "execute": "{\"id\": \"T0r115.3\", \"parent_id\": \"T0r115\", \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 2, \"split_n\": 2, \"status\": \"执行中\", \"assignee\": null, \"description\": \"自驱式组合环 R9（2026-09-29）：推进→寻虫→修复",
+   "status_after_execute": "执行中",
+   "omega_spec_create": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.3:r1] 已通过审核，无需重复创建\"}}",
+   "omega_spec_review": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.3:r1] 当前状态为 [approved]，不是待审核状态\"}}",
+   "omega_result_verify": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r115.3:r1\", \"task_id\": \"T0r115.3\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}",
+   "verify": "{\"__error__\": {\"code\": -32000, \"message\": \"非法验收: 任务处于 [执行中]，需先 submit\"}}",
+   "status_final": "执行中"
+  },
+  "T0r115.4": {
+   "execute": "{\"id\": \"T0r115.4\", \"parent_id\": \"T0r115\", \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 2, \"split_n\": 2, \"status\": \"执行中\", \"assignee\": null, \"description\": \"自驱式组合环 R9（2026-09-29）：推进→寻虫→修复",
+   "status_after_execute": "执行中",
+   "omega_spec_create": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.4:r1] 已通过审核，无需重复创建\"}}",
+   "omega_spec_review": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.4:r1] 当前状态为 [approved]，不是待审核状态\"}}",
+   "omega_result_verify": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r115.4:r1\", \"task_id\": \"T0r115.4\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}",
+   "verify": "{\"__error__\": {\"code\": -32000, \"message\": \"非法验收: 任务处于 [执行中]，需先 submit\"}}",
+   "status_final": "执行中"
+  },
+  "T0r115.5": {
+   "execute": "{\"id\": \"T0r115.5\", \"parent_id\": \"T0r115\", \"project_dir\": \".\", \"namespace\": \"cypy-loop-20260929\", \"priority\": \"中\", \"importance\": \"中\", \"depth\": 2, \"split_n\": 2, \"status\": \"执行中\", \"assignee\": null, \"description\": \"自驱式组合环 R9（2026-09-29）：推进→寻虫→修复",
+   "status_after_execute": "执行中",
+   "omega_spec_create": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.5:r1] 已通过审核，无需重复创建\"}}",
+   "omega_spec_review": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.5:r1] 当前状态为 [approved]，不是待审核状态\"}}",
+   "omega_result_verify": "{\"ok\": true, \"stage\": \"result\", \"result_id\": \"result:T0r115.5:r1\", \"task_id\": \"T0r115.5\", \"round\": 1, \"status\": \"approved\", \"reviewer\": \"verifier\", \"reason\": \"\", \"next_action\": \"verify\", \"escalated\": false}",
+   "verify": "{\"__error__\": {\"code\": -32000, \"message\": \"非法验收: 任务处于 [执行中]，需先 submit\"}}",
+   "status_final": "执行中"
+  }
+ },
+ "refusals": [
+  {
+   "node": "T0r115",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r115",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r115",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法验收: 任务处于 [执行中]，需先 submit\"}}"
+  },
+  {
+   "node": "T0r115.3",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.3:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r115.3",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.3:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r115.3",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法验收: 任务处于 [执行中]，需先 submit\"}}"
+  },
+  {
+   "node": "T0r115.4",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.4:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r115.4",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.4:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r115.4",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法验收: 任务处于 [执行中]，需先 submit\"}}"
+  },
+  {
+   "node": "T0r115.5",
+   "tool": "omega_spec_create",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.5:r1] 已通过审核，无需重复创建\"}}"
+  },
+  {
+   "node": "T0r115.5",
+   "tool": "omega_spec_review",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"语料 [spec:T0r115.5:r1] 当前状态为 [approved]，不是待审核状态\"}}"
+  },
+  {
+   "node": "T0r115.5",
+   "tool": "verify",
+   "reply_verbatim": "{\"__error__\": {\"code\": -32000, \"message\": \"非法验收: 任务处于 [执行中]，需先 submit\"}}"
+  }
+ ],
+ "rollup": {
+  "已完成": 16,
+  "待领取": 5,
+  "执行中": 4
+ },
+ "call_log_error_rows": 0,
+ "calls": 20
+}

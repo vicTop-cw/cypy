@@ -1,0 +1,65 @@
+[
+  {
+    "tag": "before:get",
+    "result": {
+      "id": "T0r15",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/incremental/hot_reload.py:457 热重载把依赖分析与增量缓存更新的解析失败整段吞掉（:332 与 :457 两处，注释即『解析失败不影响热重载』）",
+      "deliverable": "改动文件：cypyc/incremental/hot_reload.py（_compile_and_reload_module 缓存更新段 :332 / _analyze_module_dependencies 整段 :457 的 except 改为新增模块级 helper _warn_parse，点名 阶段+源文件+底层异常）\n新增回归：tests/test_polish_20260926.py::test_bug10_dependency_analysis_parse_failure_warns + ::test_bug10_cache_update_parse_failure_warns\n修复口径：热重载继续执行（不抛、不改返回值），只补告警；缓存缺边/依赖边缺失从『不可见』变『可见』。\nRED：改前同 4 failed / stderr ''；缓存段这条还做了一次开关对照——把 :332 的告警退回 `pass` 后 `pytest -k cache_update` → 1 failed，恢复后 → 1 passed（证明判据真的绑定在该站点，而不是被失败分支提前 return 绕过）。\nGREEN：改后 `pytest tests/test_polish_20260926.py -q` → 20 passed",
+      "created_at": "2026-09-26T06:37:48Z",
+      "updated_at": "2026-09-26T06:43:05Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  },
+  {
+    "tag": "try:execute",
+    "result": {
+      "__error__": {
+        "code": -32000,
+        "message": "非法执行: 任务处于 [已完成]"
+      }
+    }
+  },
+  {
+    "tag": "try:heartbeat",
+    "result": {
+      "task_id": "T0r15",
+      "signal": "【验收后加固，非新一轮修复】tests/test_polish_20260926.py 的两条 BUG-10 用例原判据靠 monkeypatch 换掉 cypyc.parser.parser.Parser，单跑 20 passed 但全量",
+      "last_seen": "2026-09-26T06:58:51Z"
+    }
+  },
+  {
+    "tag": "after:get",
+    "result": {
+      "id": "T0r15",
+      "parent_id": null,
+      "project_dir": ".",
+      "namespace": "bugs",
+      "priority": "中",
+      "importance": "中",
+      "depth": 3,
+      "split_n": 3,
+      "status": "已完成",
+      "assignee": "cypy-polisher",
+      "description": "修复 bug: [silent-fail] cypyc/incremental/hot_reload.py:457 热重载把依赖分析与增量缓存更新的解析失败整段吞掉（:332 与 :457 两处，注释即『解析失败不影响热重载』）",
+      "deliverable": "改动文件：cypyc/incremental/hot_reload.py（_compile_and_reload_module 缓存更新段 :332 / _analyze_module_dependencies 整段 :457 的 except 改为新增模块级 helper _warn_parse，点名 阶段+源文件+底层异常）\n新增回归：tests/test_polish_20260926.py::test_bug10_dependency_analysis_parse_failure_warns + ::test_bug10_cache_update_parse_failure_warns\n修复口径：热重载继续执行（不抛、不改返回值），只补告警；缓存缺边/依赖边缺失从『不可见』变『可见』。\nRED：改前同 4 failed / stderr ''；缓存段这条还做了一次开关对照——把 :332 的告警退回 `pass` 后 `pytest -k cache_update` → 1 failed，恢复后 → 1 passed（证明判据真的绑定在该站点，而不是被失败分支提前 return 绕过）。\nGREEN：改后 `pytest tests/test_polish_20260926.py -q` → 20 passed",
+      "created_at": "2026-09-26T06:37:48Z",
+      "updated_at": "2026-09-26T06:43:05Z",
+      "completed_by": "cypy-polisher",
+      "cleanup_mode": "deferred",
+      "depends_on": [],
+      "is_leaf": false
+    }
+  }
+]

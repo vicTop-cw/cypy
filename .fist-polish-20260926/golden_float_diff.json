@@ -1,0 +1,123 @@
+{
+ "changed": [
+  "basic_types.out",
+  "subtype_units.out"
+ ],
+ "gone": [],
+ "rows": [
+  {
+   "file": "basic_types.out",
+   "state": "changed 1 行",
+   "lines": [
+    [
+     5,
+     "auto(int to float): 42.0",
+     "auto(int to float): 42"
+    ]
+   ]
+  },
+  {
+   "file": "concurrency.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "constraint_numeric.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "control_flow.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "defer.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "functions.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "generic.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "generics_advanced.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "hello.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "list_comprehension.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "meta.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "metaprogramming.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "minimal_test.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "new_syntax_features.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "pipe_operator.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "pointers.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "struct_enum.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "struct_records.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "subtype_units.out",
+   "state": "changed 1 行",
+   "lines": [
+    [
+     9,
+     "0.0024999999441206455",
+     "0.0025"
+    ]
+   ]
+  },
+  {
+   "file": "test_duck.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "test_macro.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "test_meta.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "test_new_features.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "test_union.out",
+   "state": "unchanged"
+  },
+  {
+   "file": "test_vec.out",
+   "state": "unchanged"
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+L0 L0 现树（应全绿）: pytest============================== 138 passed in 1.16s ============================= gate=CONCLUSION specs=1 cases=19 passed=19 failed=0 refused=0 accuracy=100.00% rc=0
+M1 摘掉注解位接线: pytest_red=16 gate_failed=8 identity=[{"rel": "cypyc/analyzer/type_checker.py", "anchor_gone": true}]
+    FAILED例: ['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#10]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#12]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#15]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#18]']
+M2 摘掉显式实参构造位接线: pytest_red=2 gate_failed=1 identity=[{"rel": "cypyc/analyzer/type_checker.py", "anchor_gone": true}]
+    FAILED例: ['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#8]', 'tests/test_generic_bounds_r12.py::test_explicit_type_args_at_constructor_reject_violation']
+M3 字面量位退回窄复制: pytest_red=1 gate_failed=0 identity=[{"rel": "cypyc/analyzer/type_checker.py", "anchor_gone": true}]
+    FAILED例: ['tests/test_generic_bounds_r12.py::test_struct_literal_path_reuses_the_shared_checker']
+M4 共用件短路（三处接线全成装饰）: pytest_red=18 gate_failed=9 identity=[{"rel": "cypyc/analyzer/type_checker.py", "anchor_gone": true}]
+    FAILED例: ['tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#10]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#12]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#15]', 'tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.generic.bounds.json#18]']
+M5 只改注释（对照格，必须 0 红）: pytest_red=0 gate_failed=0 identity=[{"rel": "cypyc/analyzer/type_checker.py", "anchor_gone": true}]
+    FAILED例: []
+CONCLUSION cells=6 load_bearing_cells=5 all_red=False comment_control_zero_red=True bad=["M5 只改注释（对照格，必须 0 红） 摘掉后 0 红 ⇒ 锁不承重"] rc=1

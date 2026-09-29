@@ -1,0 +1,24 @@
+{
+ "cell": "C 对照：只动一行注释",
+ "file": "cypyc/codegen/cython_generator.py",
+ "anchor_count": 1,
+ "tests": [
+  "tests/test_annotation_shape.py"
+ ],
+ "run": {
+  "rc": 0,
+  "failed": 0,
+  "passed": 14,
+  "errors": 0,
+  "skipped": 0,
+  "collected": 14,
+  "count_arith_ok": true,
+  "stray_error_lines": [],
+  "collect_or_internal_errors": 0,
+  "internal_error": false,
+  "summary_line": "============================= 14 passed in 0.42s =============================="
+ },
+ "restored_bytes_identical": true,
+ "verdict": "对照绿（尺没坏）",
+ "carries": true
+}

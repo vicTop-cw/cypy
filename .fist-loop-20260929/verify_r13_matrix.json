@@ -1,0 +1,226 @@
+{
+ "pid": 3132,
+ "cells": {
+  "L0 现树（应全绿）": {
+   "edits": [],
+   "identity": [],
+   "pytest": {
+    "rc": 0,
+    "n_failed": 0,
+    "failed_ids": [],
+    "crash": false,
+    "summary": "============================= 191 passed in 1.17s ============================="
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=28 passed=28 failed=0 refused=0 accuracy=100.00% rc=0",
+    "failed": 0
+   }
+  },
+  "M1 摘掉赋值位调用": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "                elif declared_type.name == value",
+     "delta_len": 84
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 20,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#0]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#19]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#1]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#21]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#22]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#2]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#3]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#6]",
+     "tests/test_container_elements_r13.py::test_both_call_sites_share_one_implementation"
+    ],
+    "crash": false,
+    "summary": "======================= 20 failed, 171 passed in 1.09s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=28 passed=19 failed=9 refused=0 accuracy=67.86% rc=1",
+    "failed": 9
+   }
+  },
+  "M2 摘掉返回位调用": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "                    self._check_container_elemen",
+     "delta_len": 140
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 5,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#16]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#17]",
+     "tests/test_container_elements_r13.py::test_both_call_sites_share_one_implementation",
+     "tests/test_container_elements_r13.py::test_return_position_reports_element",
+     "tests/test_container_elements_r13.py::test_return_position_reports_narrowing"
+    ],
+    "crash": false,
+    "summary": "======================== 5 failed, 186 passed in 1.06s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=28 passed=26 failed=2 refused=0 accuracy=92.86% rc=1",
+    "failed": 2
+   }
+  },
+  "M3 逐位扫描短路": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "        gp = list(got.generic_params or [])\n    ",
+     "delta_len": -70
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 21,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#0]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#16]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#17]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#19]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#1]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#21]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#22]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#3]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#4]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#6]"
+    ],
+    "crash": false,
+    "summary": "======================= 21 failed, 170 passed in 1.08s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=28 passed=18 failed=10 refused=0 accuracy=64.29% rc=1",
+    "failed": 10
+   }
+  },
+  "M4 撤掉 UnionType 代入（BUG-139）": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "        if hasattr(type_node, 'kind') and type_n",
+     "delta_len": 490
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "摘除",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 2,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#26]",
+     "tests/test_container_elements_r13.py::test_union_shaped_alias_rejects_foreign_value"
+    ],
+    "crash": false,
+    "summary": "======================== 2 failed, 189 passed in 1.10s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=28 passed=27 failed=1 refused=0 accuracy=96.43% rc=1",
+    "failed": 1
+   }
+  },
+  "M5 撤掉别名展开（BUG-138）": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "            expanded = self._expand_nested_alias",
+     "delta_len": 185
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "替换",
+     "anchor_gone": true
+    }
+   ],
+   "pytest": {
+    "rc": 1,
+    "n_failed": 4,
+    "failed_ids": [
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#20]",
+     "tests/regression/test_corpus_pairs.py::test_corpus_pair[cypy.container.elements.json#21]",
+     "tests/test_container_elements_r13.py::test_nested_alias_expands_fully_for_valid_program",
+     "tests/test_container_elements_r13.py::test_nested_alias_reports_the_inner_element"
+    ],
+    "crash": false,
+    "summary": "======================== 4 failed, 187 passed in 1.06s ========================"
+   },
+   "gate": {
+    "rc": 1,
+    "conclusion": "CONCLUSION specs=1 cases=28 passed=26 failed=2 refused=0 accuracy=92.86% rc=1",
+    "failed": 2
+   }
+  },
+  "M6 只改注释（对照格，必须 0 红）": {
+   "edits": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "anchor": "# 「采用声明类型」不等于「元素位也放行」——后者交 SYNTAX/02 的元素判定（BUG-1",
+     "delta_len": -1
+    }
+   ],
+   "identity": [
+    {
+     "rel": "cypyc/analyzer/type_checker.py",
+     "kind": "只改注释",
+     "code_unchanged": true,
+     "comment_actually_changed": true
+    }
+   ],
+   "pytest": {
+    "rc": 0,
+    "n_failed": 0,
+    "failed_ids": [],
+    "crash": false,
+    "summary": "============================= 191 passed in 1.13s ============================="
+   },
+   "gate": {
+    "rc": 0,
+    "conclusion": "CONCLUSION specs=1 cases=28 passed=28 failed=0 refused=0 accuracy=100.00% rc=0",
+    "failed": 0
+   }
+  }
+ }
+}

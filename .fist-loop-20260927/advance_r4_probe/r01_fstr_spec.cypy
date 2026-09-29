@@ -1,0 +1,5 @@
+def main() -> int:
+    let start: float = 1.5
+    let end: float = 3.0
+    print(f"Function took {end - start:.4f}s")
+    return 0

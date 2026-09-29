@@ -1,0 +1,539 @@
+{
+ "started": "2026-09-27T20:35:09+00:00",
+ "rows": [
+  {
+   "kind": "W1_合成观察",
+   "payload": "silent",
+   "payload_errors": [],
+   "flagged": [
+    "C02",
+    "C04",
+    "C05",
+    "C06",
+    "C07",
+    "C08",
+    "C09",
+    "C10",
+    "C11"
+   ],
+   "expected": [
+    "C02",
+    "C04",
+    "C05",
+    "C06",
+    "C07",
+    "C08",
+    "C09",
+    "C10",
+    "C11"
+   ],
+   "matches": true,
+   "why": "分类器必须只读观察：同一份代码喂不同观察要给出不同标记集"
+  },
+  {
+   "kind": "W1_合成观察",
+   "payload": "mismatch",
+   "payload_errors": [
+    "Type mismatch: expected int, got str at 1:1"
+   ],
+   "flagged": [
+    "C01",
+    "C03"
+   ],
+   "expected": [
+    "C01",
+    "C03"
+   ],
+   "matches": true,
+   "why": "分类器必须只读观察：同一份代码喂不同观察要给出不同标记集"
+  },
+  {
+   "kind": "W1_合成观察",
+   "payload": "leaky",
+   "payload_errors": [
+    "Type mismatch: expected Callable[tuple[int], str], got int at 1:1"
+   ],
+   "flagged": [
+    "C01",
+    "C03",
+    "C12"
+   ],
+   "expected": [
+    "C01",
+    "C03",
+    "C12"
+   ],
+   "matches": true,
+   "why": "分类器必须只读观察：同一份代码喂不同观察要给出不同标记集"
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C01",
+   "case": "correct_two_arg_call_of_local_function",
+   "real_defect_seen": true,
+   "observed_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 9:5"
+   ],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C02",
+   "case": "missing_arg_call_of_local_function",
+   "real_defect_seen": true,
+   "observed_errors": [],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C03",
+   "case": "function_with_matching_signature_returned_as_alias",
+   "real_defect_seen": true,
+   "observed_errors": [
+    "Return type mismatch: expected Callable[tuple[int], str], got str at 7:1"
+   ],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C04",
+   "case": "plain_fn_called_with_extra_arg",
+   "real_defect_seen": true,
+   "observed_errors": [],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C05",
+   "case": "plain_fn_called_with_missing_arg",
+   "real_defect_seen": true,
+   "observed_errors": [],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C06",
+   "case": "wrong_signature_passed_to_callback_param",
+   "real_defect_seen": true,
+   "observed_errors": [],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C07",
+   "case": "non_callable_passed_to_callback_param",
+   "real_defect_seen": true,
+   "observed_errors": [],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C08",
+   "case": "str_arg_to_annotated_int_param",
+   "real_defect_seen": true,
+   "observed_errors": [],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C09",
+   "case": "int_field_returned_from_str_method",
+   "real_defect_seen": true,
+   "observed_errors": [],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C10",
+   "case": "nested_field_wrong_type",
+   "real_defect_seen": true,
+   "observed_errors": [],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C11",
+   "case": "field_used_with_wrong_arity_call",
+   "real_defect_seen": true,
+   "observed_errors": [],
+   "flipped": true
+  },
+  {
+   "kind": "W1_真实观察",
+   "id": "C12",
+   "case": "alias_mismatch_message_is_source_shape",
+   "real_defect_seen": true,
+   "observed_errors": [
+    "Type mismatch: expected Callable[tuple[int], str], got int at 3:9",
+    "Return type mismatch: expected int, got Callable[tuple[int], str] at 5:1"
+   ],
+   "flipped": true
+  }
+ ],
+ "w2_diff": [
+  {
+   "target": "C01",
+   "case": "correct_two_arg_call_of_local_function",
+   "must_change": true,
+   "identical_between_trees": false,
+   "real_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 9:5"
+   ],
+   "mutant_errors": []
+  },
+  {
+   "target": "C02",
+   "case": "missing_arg_call_of_local_function",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "C03",
+   "case": "function_with_matching_signature_returned_as_alias",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [
+    "Return type mismatch: expected Callable[tuple[int], str], got str at 7:1"
+   ],
+   "mutant_errors": [
+    "Return type mismatch: expected Callable[tuple[int], str], got str at 7:1"
+   ]
+  },
+  {
+   "target": "C04",
+   "case": "plain_fn_called_with_extra_arg",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "C05",
+   "case": "plain_fn_called_with_missing_arg",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "C06",
+   "case": "wrong_signature_passed_to_callback_param",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "C07",
+   "case": "non_callable_passed_to_callback_param",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "C08",
+   "case": "str_arg_to_annotated_int_param",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "C09",
+   "case": "int_field_returned_from_str_method",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "C10",
+   "case": "nested_field_wrong_type",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "C11",
+   "case": "field_used_with_wrong_arity_call",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "C12",
+   "case": "alias_mismatch_message_is_source_shape",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [
+    "Type mismatch: expected Callable[tuple[int], str], got int at 3:9",
+    "Return type mismatch: expected int, got Callable[tuple[int], str] at 5:1"
+   ],
+   "mutant_errors": [
+    "Type mismatch: expected Callable[tuple[int], str], got int at 3:9",
+    "Return type mismatch: expected int, got Callable[tuple[int], str] at 5:1"
+   ]
+  },
+  {
+   "target": "ctl:alias_identity_clean",
+   "case": "alias_identity_clean",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "ctl:assignment_mismatch_reported",
+   "case": "assignment_mismatch_reported",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [
+    "Type mismatch: expected int, got str at 2:9"
+   ],
+   "mutant_errors": [
+    "Type mismatch: expected int, got str at 2:9"
+   ]
+  },
+  {
+   "target": "ctl:callback_arity_reported",
+   "case": "callback_arity_reported",
+   "must_change": true,
+   "identical_between_trees": false,
+   "real_errors": [
+    "Callable arity mismatch: expected 1, got 2 at 3:12"
+   ],
+   "mutant_errors": []
+  },
+  {
+   "target": "ctl:int_field_as_int_clean",
+   "case": "int_field_as_int_clean",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [],
+   "mutant_errors": []
+  },
+  {
+   "target": "ctl:local_let_flows_to_return",
+   "case": "local_let_flows_to_return",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [
+    "Return type mismatch: expected str, got int at 4:1"
+   ],
+   "mutant_errors": [
+    "Return type mismatch: expected str, got int at 4:1"
+   ]
+  },
+  {
+   "target": "ctl:plain_message_shape_ok",
+   "case": "plain_message_shape_ok",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [
+    "Type mismatch: expected int, got str at 2:9"
+   ],
+   "mutant_errors": [
+    "Type mismatch: expected int, got str at 2:9"
+   ]
+  },
+  {
+   "target": "ctl:return_mismatch_reported",
+   "case": "return_mismatch_reported",
+   "must_change": false,
+   "identical_between_trees": true,
+   "real_errors": [
+    "Return type mismatch: expected int, got str at 3:1"
+   ],
+   "mutant_errors": [
+    "Return type mismatch: expected int, got str at 3:1"
+   ]
+  }
+ ],
+ "per_family_visibility": {
+  "F1_func_symbol_typed_as_its_return": {
+   "candidates": 3,
+   "control_ok": true,
+   "cases": 4,
+   "control_proves": "返回值与声明类型不符会被报（返回类型这条通道活着）"
+  },
+  "F2_plain_function_call_arity_never_checked": {
+   "candidates": 2,
+   "control_ok": true,
+   "cases": 3,
+   "control_proves": "调用点元数确实会被判（Callback 形参的违例必报）⇒ F2 的静默不是看不见"
+  },
+  "F3_function_argument_compatibility": {
+   "candidates": 3,
+   "control_ok": true,
+   "cases": 4,
+   "control_proves": "实参位置会被走一遍并能报错（Callback 元数在实参位上被报）⇒ 形参类型静默是缺陷不是看不见"
+  },
+  "F4_struct_field_declared_type_unresolved": {
+   "candidates": 3,
+   "control_ok": true,
+   "cases": 4,
+   "control_proves": "局部变量的声明类型会流到返回值判定 ⇒ 类型信息不是整体缺失"
+  },
+  "F5_error_message_internals_leak": {
+   "candidates": 1,
+   "control_ok": true,
+   "cases": 1,
+   "control_proves": "普通类型的 mismatch 文案会被产出 ⇒ 有文案可比"
+  },
+  "F6_arity_check_contexts": {
+   "candidates": 0,
+   "control_ok": true,
+   "cases": 3,
+   "control_proves": "最普通语句里的元数违例会报 ⇒ 其它上下文若静默就是上下文漏派"
+  }
+ },
+ "blind_spots": [
+  {
+   "source": "16 上下文探针",
+   "context": "struct_field_callback",
+   "why": "该形状没有到达元数判定（不是判定放行）⇒ 不许计入「上下文全覆盖」"
+  }
+ ],
+ "blind_spot_total": 1,
+ "w1_flipped": [
+  "C01",
+  "C02",
+  "C03",
+  "C04",
+  "C05",
+  "C06",
+  "C07",
+  "C08",
+  "C09",
+  "C10",
+  "C11",
+  "C12"
+ ],
+ "w1_synthetic_matches": {
+  "silent": true,
+  "mismatch": true,
+  "leaky": true
+ },
+ "w2_changed": [
+  "C01",
+  "ctl:callback_arity_reported"
+ ],
+ "w2_must_change_total": 2,
+ "identity": {
+  "real_tree": "e:/ideprojects/ai/cypy/cypyc/analyzer/type_checker.py",
+  "mutant_tree": "e:/ideprojects/ai/cypy/.fist-loop-20260927/tmp_witness/tree/cypyc/analyzer/type_checker.py"
+ },
+ "self_checks": [
+  {
+   "label": "W1 三张合成载荷的标记集两两不同（恒真/恒假的分类器过不了这一条）",
+   "got": [
+    true,
+    true,
+    3
+   ],
+   "want": [
+    true,
+    true,
+    3
+   ],
+   "why": "期望表自身的区分度",
+   "ok": true
+  },
+  {
+   "label": "W1 三种合成载荷全部与按 kind 推演的集合精确相符",
+   "got": [
+    true,
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true,
+    true
+   ],
+   "why": "silent/mismatch/leaky 三格",
+   "ok": true
+  },
+  {
+   "label": "W1 每条候选都能被某种合成载荷打翻（没有读常量的格子）",
+   "got": [],
+   "want": [],
+   "why": "未翻面的候选",
+   "ok": true
+  },
+  {
+   "label": "真实观察下 12 条候选的现象全部现形（与 confirm 环同结论）",
+   "got": 12,
+   "want": 12,
+   "why": "逐条计数",
+   "ok": true
+  },
+  {
+   "label": "W2 该变的全部变了（含 arity 对照），不该变的保持可比",
+   "got": [
+    "C01",
+    "ctl:callback_arity_reported"
+   ],
+   "want": [
+    "C01",
+    "ctl:callback_arity_reported"
+   ],
+   "why": "arity 判定的活体证据",
+   "ok": true
+  },
+  {
+   "label": "W2 变异树与真树不是同一棵（身份两两点名）",
+   "got": [
+    false,
+    true,
+    true
+   ],
+   "want": [
+    false,
+    true,
+    true
+   ],
+   "why": "identity 探针",
+   "ok": true
+  },
+  {
+   "label": "快照/变异树自删干净",
+   "got": [],
+   "want": [],
+   "why": "SCRATCH 目录清点",
+   "ok": true
+  },
+  {
+   "label": "零发现的族全部有 control 证明可见（否则必须出现在 blind_spots）",
+   "got": [
+    "F6_arity_check_contexts"
+   ],
+   "want": [
+    "F6_arity_check_contexts"
+   ],
+   "why": "零发现族：['F6_arity_check_contexts']",
+   "ok": true
+  },
+  {
+   "label": "faces 与探针两边都没有把看不见写成没缺陷",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "blind_spots / silent 计数",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "rule": "W1 证明分类器读观察不读常量；W2 证明读的是当前源码；W3 把零发现与看不见分栏",
+ "at_utc": "2026-09-27T20:35:10+00:00"
+}

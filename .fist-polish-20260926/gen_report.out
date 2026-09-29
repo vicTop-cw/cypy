@@ -1,0 +1,5 @@
+memory/reviews/20260926.14.05.02.md
+base================== 1 failed, 1791 passed in 509.24s (0:08:29) ==================
+final================== 1 failed, 1806 passed in 501.89s (0:08:21) ==================
+markers bare_except 2->0  swallowed 20->7  broad 46->45
+regress_cases=15 close_rows=7

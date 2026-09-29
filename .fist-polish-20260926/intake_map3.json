@@ -1,0 +1,14 @@
+{
+  "mapping": [
+    {
+      "bug_id": "BUG-11",
+      "task_id": "T0r16",
+      "summary": "[silent-fail] cypyc/project/project_compiler.py:539 项目模式 type_check_module 只上送 TypeChecker 诊断，ScopeAnalyzer 已报出的重名/类型级冲突（SYNTAX/33 C-3.1）被静默丢弃——同一份源码在单文件模式 cypy_hook/hook.py:250 会报错，两个入口给出相反裁决",
+      "fired": true
+    }
+  ],
+  "failures": [],
+  "missing": [],
+  "ledger_before": 10,
+  "ledger_after": 11
+}

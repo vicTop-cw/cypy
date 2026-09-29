@@ -1,0 +1,15 @@
+{
+ "mapping": [
+  {
+   "bug_id": "BUG-32",
+   "task_id": "T0r37",
+   "summary": "[codegen-echo-fidelity] cypyc/codegen/cython_generator.py:3334（修复前号，修复后该行在 :3337）约束注释把成员名过了一遍 type_mapper，BUG-14 裁决（float≡double）落地后产物写成 `# constraint Numeric = int | double`，注释里出现的名字不再是用户声明的那个",
+   "severity": "high",
+   "fired": true
+  }
+ ],
+ "failures": [],
+ "missing": [],
+ "ledger_before": 31,
+ "ledger_after": 32
+}

@@ -1,0 +1,28 @@
+{
+ "bug": "BUG-56",
+ "patches": 5,
+ "applied": 5,
+ "compiled": true,
+ "pos_red": [
+  "test_bug56_check_only_fails_on_broken_source",
+  "test_bug56_check_only_reports_and_generates_nothing",
+  "test_bug56_emit_ast_prints_parsed_nodes",
+  "test_bug56_emit_cython_prints_cython_code",
+  "test_bug56_generate_setup_writes_buildable_script"
+ ],
+ "ctl_red": [],
+ "collateral_red": [],
+ "restored": true,
+ "sha_before": {
+  "cypyc/cli.py": "e66c34967748497d0413b0875fd0844c98a5dd87759a4f9b8c88ada437bc80da"
+ },
+ "sha_after_restore": "e66c34967748497d0413b0875fd0844c98a5dd87759a4f9b8c88ada437bc80da",
+ "sha_equal": true,
+ "touched_files": [
+  "cypyc/cli.py"
+ ],
+ "workspace_untouched": true,
+ "matches_prev_head": null,
+ "reds_total": 5,
+ "seen_total": 17
+}

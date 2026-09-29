@@ -1,0 +1,25 @@
+probe_self=OK cases=23/23 canary_silent=True canary_diag=True canary_arity=True judge_ok=True
+annotation/empty_after_colon                exp=n/a       surf=0  other=0  SYNTAX-CAUGHT  Unexpected token ASSIGN at 2:8
+annotation/plain_valid                      exp=silent    surf=0  other=0  ok             
+annotation/generic_valid                    exp=silent    surf=0  other=0  ok             
+annotation/tuple_valid                      exp=silent    surf=0  other=0  ok             
+annotation/dict_valid                       exp=silent    surf=0  other=0  ok             
+annotation/pointer_valid                    exp=silent    surf=0  other=1  ok             Type mismatch: expected *char, got int at 2:5
+annotation/union_valid                      exp=silent    surf=0  other=0  ok             
+annotation/bracket_illegal                  exp=diagnose  surf=1  other=0  ok             Invalid type annotation at 2:8 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际是
+annotation/paren_illegal                    exp=diagnose  surf=1  other=0  ok             Invalid type annotation at 2:8 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际是
+annotation/brace_illegal                    exp=diagnose  surf=1  other=0  ok             Invalid type annotation at 2:8 (期望 dict<str, int>，实际是 DictLiteral 字面量形态)
+annotation/nested_bracket_extreme           exp=diagnose  surf=12 other=0  ok             Invalid type annotation at 2:19 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际
+annotation/huge_tuple_extreme               exp=diagnose  surf=1  other=0  ok             Invalid type annotation at 2:8 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际是
+annotation/non_type_literal_extreme         exp=diagnose  surf=1  other=0  ok             Invalid type annotation at 2:8 (期望 类型名或 list<int> / tuple<int, int> / dict<str, int>，实际是
+annotation/comptime_inline_not_annotation   exp=silent    surf=0  other=0  ok             
+annotation/param_and_return_valid           exp=silent    surf=0  other=0  ok             
+arity/zero_slots                       exp=n/a       surf=0  other=0  observed       
+arity/exact_slots                      exp=silent    surf=0  other=0  ok             
+arity/under_slots                      exp=n/a       surf=0  other=0  observed       
+arity/over_slots                       exp=diagnose  surf=1  other=0  ok             Positional pattern 'E' has 2 slot(s) but type 'E' unpacks only 1 at 6:14
+arity/extreme_32_slots                 exp=diagnose  surf=1  other=0  ok             Positional pattern 'E' has 32 slot(s) but type 'E' unpacks only 1 at 6:14
+arity/undefined_type                   exp=n/a       surf=0  other=0  observed       
+arity/mixed_literal_and_binding        exp=silent    surf=0  other=0  ok             
+arity/nested_pattern                   exp=silent    surf=0  other=0  ok             
+CONCLUSION judge_ok=True crashes=0 silent=0 false_positive=0 syntax_caught=1 observed=3 rows_json=.fist-loop-20260929/hunt_r7_boundary.json

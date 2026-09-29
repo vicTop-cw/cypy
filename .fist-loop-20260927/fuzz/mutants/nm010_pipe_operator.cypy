@@ -1,0 +1,8 @@
+# 管道操作符示例
+# Cypy 支持 |> 管道操作符，用于函数链式调用
+
+# 基础管道操作
+def add_one(x: int) -> int:
+    return x + 1
+
+def multiply_by_two(x: int) -> in�����

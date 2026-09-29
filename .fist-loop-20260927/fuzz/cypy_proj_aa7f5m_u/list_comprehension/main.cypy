@@ -1,0 +1,23 @@
+# 列表推导式示例
+# 演示 Cypy 的列表推导式语法
+
+def main() -> int:
+    # 基本列表推导式
+    print("=== 基本列表推导式 ===")
+    squares = [x ** 2 for x in range(10)]
+    print(f"Squares: {squares}")
+
+    # 带条件的列表推导式
+    print("\n=== 带条件的列表推导式 ===")
+    even_squares = [x ** 2 for x in range(10) if x % 2 == 0]
+    print(f"Even squares: {even_squares}")
+
+    # 嵌套循环
+    print("\n=== 嵌套循环 ===")
+    pairs = [(x, y) for x in [1, 2, 3] for y in [4, 5, 6]]
+    print(f"Pairs: {pairs}")
+
+    return 0
+
+if __name__ == "__main__":
+    main()

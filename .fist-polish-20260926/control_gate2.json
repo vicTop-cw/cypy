@@ -1,0 +1,147 @@
+{
+  "baseline_rc": 0,
+  "variants": 9,
+  "caught": 9,
+  "missed": [],
+  "rows": [
+    {
+      "variant": "(真实 JSON)",
+      "expect": "rc=0 全项通过",
+      "expect_key": null,
+      "note": "基准：未改动的 JSON 必须让审计器判绿，否则后面所有「抓到了」都不成立",
+      "rc": 0,
+      "reds": []
+    },
+    {
+      "variant": "collected",
+      "expect": "rc!=0 且 RED 命中「日志解析出的用例数」",
+      "expect_key": "日志解析出的用例数",
+      "note": "把 collected 从 24 改成 23（少收一例）",
+      "rc": 1,
+      "reds": [
+        "日志解析出的用例数 24 == JSON 声明的 collected 23"
+      ],
+      "matched": [
+        "日志解析出的用例数 24 == JSON 声明的 collected 23"
+      ],
+      "caught": true
+    },
+    {
+      "variant": "summary",
+      "expect": "rc!=0 且 RED 命中「JSON 汇总行与日志一致」",
+      "expect_key": "JSON 汇总行与日志一致",
+      "note": "汇总行谎称 24 passed",
+      "rc": 1,
+      "reds": [
+        "JSON 汇总行与日志一致（======================== 24 passed, 0 failed in 0.75s ========================）"
+      ],
+      "matched": [
+        "JSON 汇总行与日志一致（======================== 24 passed, 0 failed in 0.75s ========================）"
+      ],
+      "caught": true
+    },
+    {
+      "variant": "drop_control",
+      "expect": "rc!=0 且 RED 命中「BUG-12 日志重算」",
+      "expect_key": "BUG-12 日志重算",
+      "note": "删掉对照声明，拿 GREEN 的对照用例顶数",
+      "rc": 1,
+      "reds": [
+        "BUG-12 日志重算 {'cases': 2, 'lock': 2, 'lock_red': 1, 'ctl_red': 0, 'conf_red': 0} 与 JSON 2/1/1/0/0 一致",
+        "§五.12 BUG-12 三个数字（2/1/1）等于日志重算"
+      ],
+      "matched": [
+        "BUG-12 日志重算 {'cases': 2, 'lock': 2, 'lock_red': 1, 'ctl_red': 0, 'conf_red': 0} 与 JSON 2/1/1/0/0 一致"
+      ],
+      "caught": true
+    },
+    {
+      "variant": "forge_unlocked",
+      "expect": "rc!=0 且 RED 命中「BUG-3 至少 1 条非对照非混因用例在 HEAD 上变红」",
+      "expect_key": "BUG-3 至少 1 条非对照非混因用例在 HEAD 上变红",
+      "note": "把 BUG-3 的红用例改口成对照并把 JSON 改到自洽（只有门禁②判据能抓）",
+      "rc": 1,
+      "reds": [
+        "BUG-3 至少 1 条非对照非混因用例在 HEAD 上变红（门禁②）",
+        "§五.12 BUG-3 三个数字（1/1/1）等于日志重算",
+        "§五.12 BUG-3 没拿对照/混因用例冒充锁"
+      ],
+      "matched": [
+        "BUG-3 至少 1 条非对照非混因用例在 HEAD 上变红（门禁②）"
+      ],
+      "caught": true
+    },
+    {
+      "variant": "shadow_twin",
+      "expect": "rc!=0 且 RED 命中「身份探针：nogil」",
+      "expect_key": "身份探针：nogil",
+      "note": "把探针路径换成工作区真身（即「跑了错的副本」那种事故）",
+      "rc": 1,
+      "reds": [
+        "身份探针：nogil 确实从临时树加载（E:\\IDEProjects\\AI\\Cypy\\cypy_bridge\\nogil.py）"
+      ],
+      "matched": [
+        "身份探针：nogil 确实从临时树加载（E:\\IDEProjects\\AI\\Cypy\\cypy_bridge\\nogil.py）"
+      ],
+      "caught": true
+    },
+    {
+      "variant": "lock_case_green",
+      "expect": "rc!=0 且 RED 命中「BUG-12 报告点名的锁死用例」",
+      "expect_key": "BUG-12 报告点名的锁死用例",
+      "note": "把点名的锁死用例换成日志里为 PASSED 的那条",
+      "rc": 1,
+      "reds": [
+        "BUG-12 报告点名的锁死用例 test_bug12_gilstate_exit_still_restores_state 在日志里确为 FAILED"
+      ],
+      "matched": [
+        "BUG-12 报告点名的锁死用例 test_bug12_gilstate_exit_still_restores_state 在日志里确为 FAILED"
+      ],
+      "caught": true
+    },
+    {
+      "variant": "head_commit",
+      "expect": "rc!=0 且 RED 命中「正文写明对照基准 commit」",
+      "expect_key": "正文写明对照基准 commit",
+      "note": "换掉基准 commit（正文里对不上）",
+      "rc": 1,
+      "reds": [
+        "正文写明对照基准 commit 0000000",
+        "混因依据独立重算（git show 0000000 + 工作区实读）= [None, None, 23, 9] == JSON 声明 [0, 0, 23, 9]"
+      ],
+      "matched": [
+        "正文写明对照基准 commit 0000000"
+      ],
+      "caught": true
+    },
+    {
+      "variant": "differing_zero",
+      "expect": "rc!=0 且 RED 命中「正文锚定句的不同 .py 数」",
+      "expect_key": "正文锚定句的不同 .py 数",
+      "note": "不同的 .py 数写成 0（临时树等于工作区 = 对照空转）",
+      "rc": 1,
+      "reds": [
+        "正文锚定句的不同 .py 数 == JSON 声明且 > 0（正文=56 json=0）"
+      ],
+      "matched": [
+        "正文锚定句的不同 .py 数 == JSON 声明且 > 0（正文=56 json=0）"
+      ],
+      "caught": true
+    },
+    {
+      "variant": "subtype_claimed_present",
+      "expect": "rc!=0 且 RED 命中「混因依据独立重算」",
+      "expect_key": "混因依据独立重算",
+      "note": "谎称 HEAD 已含 subtype 特性码（那条红就从混因变成真缺陷）",
+      "rc": 1,
+      "reds": [
+        "混因依据独立重算（git show 17d68b4 + 工作区实读）= [0, 0, 23, 9] == JSON 声明 [23, 0, 23, 9]",
+        "正文四个 subtype 计数 == JSON（正文=('0', '0', '23', '9') json=[23, 0, 23, 9]）"
+      ],
+      "matched": [
+        "混因依据独立重算（git show 17d68b4 + 工作区实读）= [0, 0, 23, 9] == JSON 声明 [23, 0, 23, 9]"
+      ],
+      "caught": true
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+ "grouped_by": "params_json.task_id 前缀（不按标签、不按回忆）",
+ "stages": {
+  "T0r90": {
+   "label": "R4-打磨（16 叶 × omega 全链 + 8 支 + 根上卷）",
+   "rows": 18,
+   "distinct_tasks": 17,
+   "by_tool": {
+    "claim": {
+     "ok": 1,
+     "refused": 0
+    },
+    "task_plan_deep": {
+     "ok": 1,
+     "refused": 0
+    },
+    "omega_status": {
+     "ok": 16,
+     "refused": 0
+    }
+   },
+   "refused": 0,
+   "refused_detail": []
+  }
+ },
+ "rows": 18,
+ "rows_T0r90": 18,
+ "distinct_tasks": 17,
+ "control_absent_prefix_rows": 0,
+ "total_call_log_rows": 4361,
+ "stage_seed_rows": {
+  "needle": "%[loop:20260927-loop:R4-打磨]%",
+  "total": 2,
+  "by_tool": {
+   "publish": {
+    "ok": 1,
+    "refused": 0,
+    "examples": []
+   },
+   "laya_decide": {
+    "ok": 1,
+    "refused": 0,
+    "examples": []
+   }
+  }
+ },
+ "bug_intake_rows": [
+  {
+   "key": "SLICE_typed_as_element",
+   "sqlite_rows": 1
+  },
+  {
+   "key": "CODEGEN_named_conditions_unreachable",
+   "sqlite_rows": 1
+  },
+  {
+   "key": "PYD_incremental_cache_not_reused",
+   "sqlite_rows": 1
+  }
+ ],
+ "bug_sample": [
+  [
+   "T0r87",
+   "修复 bug: [SLICE_typed_as_element] 切片表达式被判定成容器的**元素**类型：`xs[1:",
+   "待领取"
+  ]
+ ],
+ "named_tools_in_this_build": {
+  "laya": {
+   "exact": 0,
+   "substring": 21
+  },
+  "issue_up": {
+   "exact": 0,
+   "substring": 0
+  },
+  "omega_spec_create": {
+   "exact": 485,
+   "substring": 485
+  },
+  "omega_result_verify": {
+   "exact": 482,
+   "substring": 482
+  },
+  "report_bug": {
+   "exact": 88,
+   "substring": 88
+  },
+  "output_validate": {
+   "exact": 391,
+   "substring": 391
+  },
+  "submit": {
+   "exact": 353,
+   "substring": 353
+  },
+  "claim": {
+   "exact": 366,
+   "substring": 366
+  },
+  "verify": {
+   "exact": 537,
+   "substring": 1019
+  },
+  "run_check": {
+   "exact": 2,
+   "substring": 2
+  },
+  "publish": {
+   "exact": 23,
+   "substring": 23
+  }
+ },
+ "spec_named_carriers": {
+  "laya": {
+   "carriers": {
+    "laya_decide": {
+     "whole_db": 21,
+     "this_stage_seed": 1,
+     "this_stage_prefix": 0
+    }
+   },
+   "this_stage_total": 1
+  },
+  "issue_up": {
+   "carriers": {
+    "publish": {
+     "whole_db": 23,
+     "this_stage_seed": 1,
+     "this_stage_prefix": 0
+    },
+    "report_bug": {
+     "whole_db": 88,
+     "this_stage_seed": 0,
+     "this_stage_prefix": 0
+    }
+   },
+   "this_stage_total": 1
+  },
+  "call_log": {
+   "carriers": {
+    "call_log": {
+     "whole_db": 31,
+     "this_stage_seed": 0,
+     "this_stage_prefix": 1,
+     "client_visible_T0r90_rows": 18,
+     "client_rows_returned": 3000
+    }
+   },
+   "this_stage_total": 1
+  }
+ },
+ "omega_chain_by_tool": {
+  "omega_spec_create": 0,
+  "omega_spec_review": 0,
+  "omega_result_verify": 0
+ },
+ "loop_roots": [
+  {
+   "root": "T0r38",
+   "stage": "[loop:20260927-loop:R1-寻虫] 寻虫（bug hunt）R1：Cypy codeg",
+   "status": "已归档",
+   "rows": 198,
+   "refused": 18
+  },
+  {
+   "root": "T0r46",
+   "stage": "[loop:20260927-loop:R1-修复] 修复与合并（fix_and_merge）R1：按指",
+   "status": "已归档",
+   "rows": 198,
+   "refused": 6
+  },
+  {
+   "root": "T0r47",
+   "stage": "[loop:20260927-loop:R1-验证] 验证模式（verify）R1：对 R1-修复 后的",
+   "status": "已归档",
+   "rows": 198,
+   "refused": 6
+  },
+  {
+   "root": "T0r49",
+   "stage": "[loop:20260927-loop:R1-打磨] 打磨模式（polish）R1：只完善已有功能，不加",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 6
+  },
+  {
+   "root": "T0r50",
+   "stage": "[loop-probe-polish-law1] 探测 mode_list 声明的 forbidden_",
+   "status": "已归档",
+   "rows": 7,
+   "refused": 1
+  },
+  {
+   "root": "T0r54",
+   "stage": "[loop:20260927-loop:R1-推进] 推进模式（advance）R1：半径限「SYNTA",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 6
+  },
+  {
+   "root": "T0r55",
+   "stage": "[loop:20260927-loop:R2-寻虫] 寻虫（bug hunt）R2：狩猎面轮换到 R1 ",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 6
+  },
+  {
+   "root": "T0r56",
+   "stage": "[loop:20260927-loop:R2-修复] 修复与合并（fix_and_merge）R2：清 ",
+   "status": "已归档",
+   "rows": 243,
+   "refused": 35
+  },
+  {
+   "root": "T0r57",
+   "stage": "[loop:20260927-loop:R2-验证] 验证（verify）R2：不复用修复环自己的判据，",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 6
+  },
+  {
+   "root": "T0r60",
+   "stage": "[loop:20260927-loop:R2-打磨] 打磨（polish）R2：半径=「不改变对外语义的",
+   "status": "已归档",
+   "rows": 243,
+   "refused": 35
+  },
+  {
+   "root": "T0r61",
+   "stage": "[loop:20260927-loop:R2-推进] 推进（advance）R2：半径=「已声明未实现」",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 6
+  },
+  {
+   "root": "T0r69",
+   "stage": "[loop:20260927-loop:R3-寻虫] 寻虫（bug hunt）R3：狩猎面轮换到 R1/",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 6
+  },
+  {
+   "root": "T0r70",
+   "stage": "[loop:20260927-loop:R3-修复] 修复（bug fix）R3：修 R3-寻虫 入账的",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 6
+  },
+  {
+   "root": "T0r71",
+   "stage": "[loop:20260927-loop:R3-验证] 验证（verify）R3：不复用修复环自己的结论，",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 6
+  },
+  {
+   "root": "T0r72",
+   "stage": "[loop:20260927-loop:R3-打磨] 打磨（polish）R3：不新增语义、不扩功能面，",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 6
+  },
+  {
+   "root": "T0r73",
+   "stage": "[loop:20260927-loop:R3-推进] 推进（advance）R3，半径严格限在**文档已",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 6
+  },
+  {
+   "root": "T0r74",
+   "stage": "[loop:20260927-loop:R4-寻虫] 寻虫（hunt）R4：在 R1–R3 已扫过五目录",
+   "status": "已归档",
+   "rows": 284,
+   "refused": 60
+  },
+  {
+   "root": "T0r85",
+   "stage": "[omega:required] [loop:20260927-loop:R4-修复] 修复（fix）R",
+   "status": "已归档",
+   "rows": 197,
+   "refused": 3
+  },
+  {
+   "root": "T0r86",
+   "stage": "[omega:required] [loop:20260927-loop:R4-验证] 验证（verif",
+   "status": "已归档",
+   "rows": 196,
+   "refused": 0
+  },
+  {
+   "root": "T0r90",
+   "stage": "[omega:required] [loop:20260927-loop:R4-打磨] 打磨（polis",
+   "status": "拆分中",
+   "rows": 18,
+   "refused": 0
+  }
+ ],
+ "loop_roots_total_rows": 3752,
+ "loop_roots_without_calls": [],
+ "distinct_refusal_texts": 0,
+ "refusals_md": "| 被拒原文（逐字） | 工具 | 次数 | 首个见证 |\n| --- | --- | --- | --- |",
+ "note": "规格点名的 laya / issue_up 不是本 build 的工具名；承担同一能力的实际工具名在 spec_named_carriers 里逐条给数",
+ "refuse": [],
+ "queried_at_utc": "2026-09-28T02:10:11+00:00"
+}

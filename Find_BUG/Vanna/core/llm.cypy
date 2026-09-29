@@ -1,0 +1,75 @@
+#!bin cypy
+# ============================================================
+# llm.cypy — LLM service trait and types
+# ============================================================
+
+from user import RequestContext
+
+struct LlmMessage:
+    # A single message in an LLM conversation
+    role: str
+    content: str
+
+    def __init__(self, role: str, content: str):
+        self.role = role
+        self.content = content
+
+
+struct LlmConfig:
+    # Configuration for LLM calls
+    model: str
+    temperature: float
+    max_tokens: int
+
+    def __init__(self, model: str = "gpt-4", temperature: float = 0.7, max_tokens: int = 2048):
+        self.model = model
+        self.temperature = temperature
+        self.max_tokens = max_tokens
+
+
+struct LlmResponse:
+    # Response from an LLM call
+    content: str
+    model: str
+    tokens_used: int
+
+    def __init__(self, content: str = "", model: str = "", tokens_used: int = 0):
+        self.content = content
+        self.model = model
+        self.tokens_used = tokens_used
+
+
+trait Llm:
+    # Abstract interface for LLM providers (OpenAI, Anthropic, Ollama, etc.)
+
+    def generate(self, messages: list<LlmMessage>, config: LlmConfig) -> LlmResponse:
+        pass
+
+    def generate_sql(self, question: str, context: str, config: LlmConfig) -> str:
+        pass
+
+    def generate_summary(self, question: str, sql: str, data: str, config: LlmConfig) -> str:
+        pass
+
+
+struct MockLlm:
+    # Mock LLM for testing — returns canned responses
+    _responses: dict<str, str>
+
+    def __init__(self):
+        self._responses = {}
+
+    def set_response(self, key: str, value: str) -> None:
+        self._responses[key] = value
+
+    def generate(self, messages: list<LlmMessage>, config: LlmConfig) -> LlmResponse:
+        let content: str = "SELECT 1"
+        return LlmResponse(content=content, model=config.model, tokens_used=0)
+
+    def generate_sql(self, question: str, context: str, config: LlmConfig) -> str:
+        if question in self._responses:
+            return self._responses[question]
+        return f"SELECT * FROM data WHERE question = '{question}'"
+
+    def generate_summary(self, question: str, sql: str, data: str, config: LlmConfig) -> str:
+        return f"Based on the query, here are the results for: {question}"

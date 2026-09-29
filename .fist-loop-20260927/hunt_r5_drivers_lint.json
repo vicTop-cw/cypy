@@ -1,0 +1,87 @@
+{
+ "started": "2026-09-28T07:59:37+00:00",
+ "window_start_note": "本轮亲笔（mtime 在本环号段内）",
+ "drivers_scanned": 16,
+ "driver_list": [
+  "hunt_r5_analyzer.py",
+  "hunt_r5_baselines.py",
+  "hunt_r5_book.py",
+  "hunt_r5_calllog_tally.py",
+  "hunt_r5_cli_face.py",
+  "hunt_r5_codegen.py",
+  "hunt_r5_close_spec.py",
+  "hunt_r5_declared.py",
+  "hunt_r5_drivers_lint.py",
+  "hunt_r5_faces.py",
+  "hunt_r5_kit_from_r4.py",
+  "hunt_r5_needles.py",
+  "hunt_r5_progress.py",
+  "hunt_r5_render_order.py",
+  "hunt_r5_report_spec.py",
+  "hunt_r5_self_audit.py"
+ ],
+ "hard_violations": 0,
+ "hard_lines": [],
+ "hard_codes": [
+  "E9",
+  "W605",
+  "F821",
+  "F7",
+  "F63",
+  "F841"
+ ],
+ "soft_total": 0,
+ "soft_codes": {},
+ "previous_round_soft_baseline": 0,
+ "baseline_source": "advance_r4_drivers_lint.json",
+ "canary": {
+  "bad_caught": 1,
+  "clean_false_positive": 0
+ },
+ "canary_left": [],
+ "line_length_declared": 100,
+ "ignore_declared": [
+  "E203",
+  "W503",
+  "W505"
+ ],
+ "note": "口径与上一环一致：仓库 pyproject 声明 line-length=100 与同款 extend-ignore",
+ "self_checks": [
+  {
+   "label": "上一环软账基线能从实测件现读（不是我记得的数）",
+   "got": true,
+   "want": true,
+   "why": "advance_r4_drivers_lint.json → 0",
+   "ok": true
+  },
+  {
+   "label": "硬错栏点名（含 F841）",
+   "got": [],
+   "want": [],
+   "why": "逐码点名",
+   "ok": true
+  },
+  {
+   "label": "扫描覆盖面 = 清单里在盘的脚本数",
+   "got": 16,
+   "want": 16,
+   "why": "16 个",
+   "ok": true
+  },
+  {
+   "label": "canary 两侧同件：违例必被抓、干净不误抓",
+   "got": [
+    true,
+    true
+   ],
+   "want": [
+    true,
+    true
+   ],
+   "why": "bad=['E:\\\\IDEProjects\\\\AI\\\\Cypy\\\\.fist-loop-20260927\\\\hunt_r5_tmp\\\\r5canary_0zri3pr4\\\\canary_bad.py:2:101: E501 line too long (185 > 100 characters)'] good=[]",
+   "ok": true
+  }
+ ],
+ "refuse": [],
+ "at_utc": "2026-09-28T07:59:43+00:00"
+}
