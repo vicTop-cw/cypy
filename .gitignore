@@ -39,3 +39,41 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# 打包/编译产物（可由 `python -m build` 与 cypyc 重新生成）
+build/
+dist/
+output_after/
+
+# FIST 任务库与其临时副本（运行态，不是交付物）
+fist-mbt.db
+fist-mbt.db-*
+
+# 自驱组合环的可再生面：变异矩阵的副本树、快照树、台账备份
+.fist-loop-*/lockproof_*/
+.fist-loop-*/verify_r*_snap/
+.fist-loop-*/verify_r*_tmp/
+.fist-loop-*/fix_r*_snap/
+.fist-loop-*/hunt_r*_tmp*/
+.fist-loop-*/tmp_*/
+.fist-loop-*/*_tmp*/
+.fist-loop-*/*_before/
+.fist-loop-*/scratch/
+.fist-loop-*/out_after/
+.fist-loop-*/out_before/
+.fist-loop-*/*.pre_*
+.fist-loop-*/bugs_ledger_pre_*.md
+memory/*.pre_*
+# audit_2026q3 里的两个探针由 tests/test_golden_anchor_probes.py 直接执行 ⇒ 只能排它的暂存物
+Find_BUG/audit_2026q3/scratch/
+Find_BUG/audit_2026q3/scratch_runtime/
+Find_BUG/audit_2026q3/output/
+.fist-polish-*/*_float/
+.fist-polish-*/*_tmp/
+
+# 一次性标记快照
+markers_after_pass*.json
+
+# 第三方代理工具的本地状态
+.codeartsdoer/
+.freebuff/
