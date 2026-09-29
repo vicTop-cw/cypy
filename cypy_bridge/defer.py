@@ -36,7 +36,22 @@ class DeferManager:
     
     def execute_all(self):
         """执行所有defer函数（按LIFO顺序）"""
-        while self._defer_stack:
+        self.execute_from(0)
+    
+    def execute_from(self, depth: int = 0):
+        """只执行栈中第 depth 层以上的defer（按LIFO顺序）
+        
+        defer_context()/defer_scope() 是嵌套的：作用域管理器共用同一个单例栈，
+        如果内层退出时把整条栈排空，就会提前执行*外层*登记的defer
+        （典型后果：外层还打开着的文件被内层关掉 -> ValueError: I/O operation
+        on closed file，且外层退出时自己的清理点已经消失）。
+        因此每个作用域只负责自己进入之后登记的那些defer。
+        
+        参数：
+            depth: 进入作用域时栈里已有的条目数，小于该数的条目保持不动
+        """
+        depth = max(0, min(int(depth), len(self._defer_stack)))
+        while len(self._defer_stack) > depth:
             func, args, kwargs = self._defer_stack.pop()
             try:
                 func(*args, **kwargs)
@@ -63,13 +78,15 @@ def defer_context():
             defer(some_function)
             # 代码执行...
         # 退出上下文时自动执行所有defer
+    
+    可以安全嵌套：内层只执行自己登记的defer，不会提前消耗外层的defer。
     """
     manager = DeferManager.get_instance()
+    depth = manager.count  # 记录进入时的栈深，只清理这之上的条目
     try:
         yield
     finally:
-        manager.execute_all()
-        manager.clear()
+        manager.execute_from(depth)
 
 
 def defer(func: Callable, *args, **kwargs):
@@ -101,15 +118,17 @@ class defer_scope:
                 defer(free, ptr)
                 # 使用ptr...
             # 退出with块时自动调用free(ptr)
+    
+    可以安全嵌套：内层作用域只执行自己这一层的defer。
     """
     
     def __enter__(self):
         self._manager = DeferManager.get_instance()
+        self._depth = self._manager.count  # 进入时的栈深 = 外层拥有的条目数
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self._manager.execute_all()
-        self._manager.clear()
+        self._manager.execute_from(getattr(self, '_depth', 0))
         # 不抑制异常
         return False
 

@@ -29,7 +29,7 @@ let x: int = 42
 let y: float = x as float
 """
     cython_code = parse_and_generate(code)
-    assert "<float>x" in cython_code or "x as float" in cython_code
+    assert "<double>x" in cython_code or "x as float" in cython_code
 
 
 def test_cast_expr_custom_type():
@@ -57,7 +57,7 @@ let x: int = 100
 let y: float = (x as float) * 2.5
 """
     cython_code = parse_and_generate(code)
-    assert "<float>x" in cython_code or "x as float" in cython_code
+    assert "<double>x" in cython_code or "x as float" in cython_code
 
 
 def test_try_cast_method():
@@ -88,7 +88,7 @@ let z: int = y as int
 """
     cython_code = parse_and_generate(code)
     # 应该生成两次类型转换
-    assert ("<float>x" in cython_code or "x as float" in cython_code)
+    assert ("<double>x" in cython_code or "x as float" in cython_code)
     assert ("<int>y" in cython_code or "y as int" in cython_code)
 
 

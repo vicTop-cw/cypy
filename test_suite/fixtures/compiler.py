@@ -100,12 +100,13 @@ class CompilerFixture:
         hook.set_output_dir(self.output_dir)
         hook.set_verbose(False)
         
-        try:
-            result, output = hook.run(source_path, "main")
-            if result.success:
-                return output
-        except Exception as e:
-            return None
+        # FIX T0r61.5.2 (defect 3): 不再用 try/except 把夹具内部的真异常折叠成 None
+        # （原先 harness 崩溃与"程序执行失败"不可区分）。
+        # CypyHook.run 自身已把编译/运行失败收敛为 result.success=False，
+        # 这里只在成功时返回输出，其余返回 None；意外异常将原样上抛并被记为 failed。
+        result, output = hook.run(source_path, "main")
+        if result.success:
+            return output
         
         return None
     

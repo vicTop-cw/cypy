@@ -1,0 +1,3 @@
+union int passthrough = 42
+union str passthrough = hello
+union test width = 7

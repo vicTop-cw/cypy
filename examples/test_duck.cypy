@@ -91,3 +91,30 @@ def display<T: Named>(obj: T) -> None:
 def process_container<T: Container<int>>(container: T) -> None:
     """处理存储整数的容器"""
     container.add(42)
+
+
+# ========== 6. 驱动 ==========
+# T0r258.4.2：本文件此前只有声明、零可观察输出，golden 是与其它 6 个示例逐字节
+# 相同的崩溃回溯。现在让 Comparable / Numeric / Named 三个 duck 约束真正被调用，
+# 每个 print 站点都落一行（厚度探针 feat_anchor_01.py 的 R7 规则要求 G >= 打印站点数，
+# 即「写了 print 却没跑到」本身就是锚点失守）。
+# process_container 仍不调用：Container<int> 需要 add/remove/__contains__/__len__
+# 四个方法全满足，而约束求解器在非 main 调用点上会误报（Find_BUG/BUGS.md BUG-030，
+# 归 constraint/subtype 那条线），留待该线完成后补驱动。
+
+struct Widget:
+    name: str
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+def main() -> int:
+    print(f"duck Comparable find_max(3, 7) = {find_max(3, 7)}")
+    print(f"duck Numeric add_values(2, 5) = {add_values(2, 5)}")
+    print(f"duck Comparable sort passthrough = {sort([3, 1, 2])}")
+    let w = Widget(name="duck-named-widget")
+    display(w)
+    return 0
+
+if __name__ == "__main__":
+    main()

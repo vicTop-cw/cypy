@@ -1,0 +1,277 @@
+{
+  "op": "cypy.generic.bounds",
+  "preconditions": [
+    "泛型声明带 `generic_constraints`（class 与 struct 两形同源）",
+    "使用侧写了显式类型实参（注解位 `T<Args>` 或构造位 `Name<Args>(…)`）",
+    "界的形态是 `_check_generic_constraint` 支持的四类：联合／单名／trait／typeclass"
+  ],
+  "laws": [
+    "SYNTAX/11 类型约束：声明界在使用侧必判（BUG-129 的关闭面）",
+    "SYNTAX/11 声明界在使用侧的判定 规则 1/2/3：注解位、显式实参构造位、结构体字面量位共用一份判定",
+    "SYNTAX/11 泛型类的判定口径 规则 3/4：注解位与构造位共用同一份元数判定",
+    "未写类型实参的构造位不做推断 ⇒ 不得凭空产诊断（该面另单 BUG-135）"
+  ],
+  "tests": [
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Num<T: int | float>:\n    v: T\n\n    def get(self) -> T:\n        return self.v\n\n\n\ndef f() -> int:\n    let x: Num<int> = Num(1)\n    return x.get()\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Num<T: int | float>:\n    v: T\n\n    def get(self) -> T:\n        return self.v\n\n\n\ndef f():\n    let x: Num<str> = Num(1)\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Generic constraint violation",
+          "does not satisfy constraint 'int | float'",
+          "(allowed: int | float)",
+          "for parameter 'T'"
+        ],
+        "matches": "reported at line \\d+, col \\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Num<T: int | float>:\n    v: T\n\n    def get(self) -> T:\n        return self.v\n\n\n\ndef f() -> int:\n    let x: Num<str> = Num(1)\n    return x.get()\n"
+      },
+      "error": {
+        "errors": 2,
+        "contains": [
+          "does not satisfy constraint 'int | float'",
+          "Return type mismatch: expected int, got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct NumS<T: int | float>:\n    v: T\n\n\n\ndef f():\n    let x: NumS<float> = NumS(1)\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct NumS<T: int | float>:\n    v: T\n\n\n\ndef f():\n    let x: NumS<str> = NumS(1)\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "does not satisfy constraint 'int | float'"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Two<T: int | float, U: str>:\n    a: T\n    b: U\n\n\n\ndef f():\n    let x: Two<float, str> = Two(1, \"s\")\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Two<T: int | float, U: str>:\n    a: T\n    b: U\n\n\n\ndef f():\n    let x: Two<int, int> = Two(1, \"s\")\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "does not satisfy constraint 'str'",
+          "for parameter 'U'"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct One<T: int>:\n    v: T\n\n\n\ndef f():\n    b = One<int>(v=1)\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct One<T: int>:\n    v: T\n\n\n\ndef f():\n    b = One<str>(v=\"s\")\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "does not satisfy constraint 'int'",
+          "in call to 'One'"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "trait Show:\n    def show(self) -> int\n\nclass Impl:\n    v: int\n\n\nimpl Show for Impl:\n    def show(self) -> int:\n        return 1\n\nclass Only<T: Show>:\n    v: T\n\n    def pick(self) -> T:\n        return self.v\n\n\n\ndef f():\n    let x: Only<Impl> = Only(1)\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "trait Show:\n    def show(self) -> int\n\nclass Impl:\n    v: int\n\n\nimpl Show for Impl:\n    def show(self) -> int:\n        return 1\n\nclass Only<T: Show>:\n    v: T\n\n    def pick(self) -> T:\n        return self.v\n\n\n\ndef f():\n    let x: Only<int> = Only(1)\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "does not implement trait 'Show'"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "typeclass Number:\n    def plus(self) -> int\n\n\nimpl typeclass Number for int:\n    def plus(self) -> int:\n        return 1\n\nclass Cell<T: Number>:\n    v: T\n\n\n\ndef f():\n    let c: Cell<int> = Cell(1)\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "typeclass Number:\n    def plus(self) -> int\n\n\nimpl typeclass Number for int:\n    def plus(self) -> int:\n        return 1\n\nclass Cell<T: Number>:\n    v: T\n\n\n\ndef f():\n    let c: Cell<str> = Cell(\"s\")\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Generic constraint violation",
+          "'Number'"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Pair<T>:\n    v: T\n\n    def get(self) -> T:\n        return self.v\n\n\n\ndef f():\n    let p: Pair<str> = Pair(\"s\")\n    return p.get()\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Pair<T>:\n    v: T\n\n    def get(self) -> T:\n        return self.v\n\n\n\ndef f() -> int:\n    let p: Pair<str> = Pair(\"s\")\n    return p.get()\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Return type mismatch"
+        ],
+        "not_contains": [
+          "Generic constraint violation"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Num<T: int | float>:\n    v: T\n\n    def get(self) -> T:\n        return self.v\n\n\n\ndef f():\n    let x: Num<str, int> = Num(1)\n    return 0\n"
+      },
+      "error": {
+        "errors": 2,
+        "contains": [
+          "Type argument count mismatch",
+          "does not satisfy constraint 'int | float'"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct One<T: int>:\n    v: T\n\n\n\ndef f():\n    b = One(v=\"s\")\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0,
+        "no_diagnostic_contains": [
+          "Generic constraint violation"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Add<T: int>:\n    v: T\n\n    def add(self, o: T) -> T:\n        return self.v\n\n\n\ndef f():\n    let a: Add<int> = Add(1)\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Add<T: int>:\n    v: T\n\n    def add(self, o: T) -> T:\n        return self.v\n\n\n\ndef f():\n    let a: Add<str> = Add(1)\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "does not satisfy constraint 'int'"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct NumS<T: int | float>:\n    v: T\n\n\n\ndef f():\n    a = NumS {v: 1}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct NumS<T: int | float>:\n    v: T\n\n\n\ndef f():\n    a = NumS {v: \"s\"}\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Generic constraint violation",
+          "does not satisfy constraint 'int | float'"
+        ],
+        "matches": "reported at line \\d+, col \\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct One<T: int>:\n    v: T\n\n\n\ndef f():\n    a = One {v: 1}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct One<T: int>:\n    v: T\n\n\n\ndef f():\n    a = One {v: \"s\"}\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "does not satisfy constraint 'int'"
+        ]
+      }
+    }
+  ],
+  "fingerprint": "fnv1a64:65b49102e98d2fa0"
+}

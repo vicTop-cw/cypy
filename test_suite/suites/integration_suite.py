@@ -170,7 +170,10 @@ def main() -> int:
         Assert.is_not_none(result, "Execution failed")
         Assert.equal(result, 15)
     
-    test = integration_suite.tests[-1]
+    # FIX T0r61.5.2 (defect 1): `integration_suite.tests[-1]` 在运行期恒为最后注册的
+    # Test（demo_integration_array），会把别的 Demo 的元数据挂到它身上并互相覆盖
+    # （真实运行只同步出 1 个 integration DEMO）。改用 run() 发布的 current_test。
+    test = integration_suite.current_test
     test.with_demo("integration", "full_program", demo_source)
 
 
@@ -194,7 +197,8 @@ def main() -> int:
         Assert.is_not_none(result, "Execution failed")
         Assert.equal(result, 120)
     
-    test = integration_suite.tests[-1]
+    # FIX T0r61.5.2 (defect 1): 见上文——必须用 current_test，不能用 tests[-1]
+    test = integration_suite.current_test
     test.with_demo("integration", "recursion", demo_source)
 
 
@@ -218,5 +222,6 @@ def main() -> int:
         Assert.is_not_none(result, "Execution failed")
         Assert.equal(result, 15)
     
-    test = integration_suite.tests[-1]
+    # FIX T0r61.5.2 (defect 1): 见上文——必须用 current_test，不能用 tests[-1]
+    test = integration_suite.current_test
     test.with_demo("integration", "array_operations", demo_source)

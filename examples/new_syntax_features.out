@@ -1,0 +1,10 @@
+=== Cypy 新语法特性测试 ===
+1. name~ 语法糖: (1.0, 2.0, 3.0)
+2. 混合命名参数: 60
+3. for 循环 guard: 5
+4. while 循环 guard: 3
+5. 非循环 guard: invalid input
+6. 单行 else 分支 guard: negative
+7. 嵌套循环 guard: 24
+8. 多重 guard: 5
+=== 8 个用例全部调用完毕 ===

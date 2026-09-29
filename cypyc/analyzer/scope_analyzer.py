@@ -40,6 +40,7 @@ class ScopeAnalyzer:
         self.root_scope = Scope(kind="module")
         self.current_scope = self.root_scope
         self.errors: List[str] = []
+        self._builtin_names: set = set()  # 先初始化空集合
         # 注册内置类型和函数
         self._register_builtins()
         # 是否在 meta block 中（meta block 中允许前向引用）
@@ -50,9 +51,15 @@ class ScopeAnalyzer:
             'Dict', 'Set', 'Generator', 'Iterable', 'Iterator', 'Sequence',
         }
         # 用户定义种类（用于重复定义检测）
+        # SYNTAX/33 C-3.1 + 裁决 D-1：`type` 别名、`constraint`、`subtype` 与
+        # class/struct/enum/trait/typeclass/function 共用**同一个**模块级名字空间，
+        # 重名即报错、后声明者被拒。纳入 'type' 顺带修掉 B9（两个 `type N = ...`
+        # 过去会静默互相覆盖，因为 add_symbol 是无条件的 symbols[name] = symbol）。
         self._user_def_kinds = {'function', 'class', 'struct', 'trait',
-                                'typeclass', 'enum'}
-        self._builtin_names: set = set()
+                                'typeclass', 'enum', 'type', 'constraint', 'subtype'}
+        # 类型级声明（别名/约束/名义子类型）：它们与 class/struct 撞名时给出
+        # C-3.1 的专用文案，而不是旧的「already declared in this scope」。
+        self._type_level_kinds = {'type', 'constraint', 'subtype'}
     
     def _register_builtins(self):
         """注册内置类型和函数到根作用域"""
@@ -72,8 +79,15 @@ class ScopeAnalyzer:
             ('callable', 'type'),
             ('object', 'type'),
             ('Any', 'type'),
+            ('Never', 'type'),
             ('Nothing', 'type'),
             ('Null', 'type'),
+            # 指针基类型：SYNTAX/04-pointer-types.md 列出的两个名字。缺了它们，
+            # `def f() -> *char` 这类**注解位**会在这里被判 Undefined name，
+            # 而同名的 `let p: *char`（注解不查作用域）却能降码（BUG-84）。
+            # 只补文档列过的 char/void：long/short/unsigned 在 SYNTAX/*.md 查无此名。
+            ('char', 'type'),
+            ('void', 'type'),
             # 常见内置异常类型
             ('ValueError', 'type'),
             ('TypeError', 'type'),
@@ -105,6 +119,7 @@ class ScopeAnalyzer:
             ('isinstance', 'function'),
             ('getattr', 'function'),
             ('hash', 'function'),
+            ('id', 'function'),
             ('super', 'function'),
             ('abs', 'function'),
             ('min', 'function'),
@@ -117,6 +132,11 @@ class ScopeAnalyzer:
             ('map', 'function'),
             ('filter', 'function'),
             ('reversed', 'function'),
+            # 文档示例里已在用、此前只在名称表缺席：repr（05-struct.md:53）、
+            # open（14-syntax-sugar.md:174）、iter（06d-builtin-magic-traits.md:264）
+            ('repr', 'function'),
+            ('open', 'function'),
+            ('iter', 'function'),
             ('True', 'constant'),
             ('False', 'constant'),
             ('null', 'constant'),
@@ -128,17 +148,44 @@ class ScopeAnalyzer:
             self.root_scope.add_symbol(name, kind, None)
         self._builtin_names = {name for name, _ in builtins}
 
-    def _check_redefinition(self, name: str, node: ASTNode) -> bool:
-        """检测同名用户定义重复声明（跳过内置名）。"""
+    def _check_redefinition(self, name: str, node: ASTNode, kind: str = None) -> bool:
+        """检测同名用户定义重复声明（跳过内置名）。
+
+        `kind` 是**新**声明的种类（如 'constraint'/'type'）。当冲突双方是
+        别名/约束/名义子类型这类「类型级声明」时，用 SYNTAX/33 C-3.1 的模板，
+        因为它必须解释**为什么**二者不能同名：别名对可赋值性是透明的，约束不是。
+        其余情形保持既有文案不变（tests/test_analyzer.py::test_duplicate_declaration
+        与 feat_dispatch_01/03 钉的是「already declared」这段子串）。
+        """
         if not name or name in self._builtin_names:
             return False
         existing = self.current_scope.symbols.get(name)
-        if existing is not None and existing.kind in self._user_def_kinds:
-            self.errors.append(
-                f"Name '{name}' is already declared in this scope "
-                f"(line {node.line}, col {node.col})")
+        if existing is None or existing.kind not in self._user_def_kinds:
+            return False
+        if kind in self._type_level_kinds or existing.kind in self._type_level_kinds:
+            prev_node = existing.node
+            prev_line = getattr(prev_node, 'line', 0) if prev_node is not None else 0
+            prev_col = getattr(prev_node, 'col', 0) if prev_node is not None else 0
+            message = (f"redefinition of '{name}': it is already declared as a "
+                       f"{existing.kind} at line {prev_line}, col {prev_col}")
+            pair = {existing.kind, kind or 'declaration'}
+            if pair == {'type', 'constraint'}:
+                message += (
+                    f". A constraint and a type alias cannot share a name -- "
+                    f"'type {name} = ...' is transparent to assignability, "
+                    f"'constraint {name} = ...' is not (SYNTAX/33 C-3.1)")
+            elif kind == 'constraint' or existing.kind == 'constraint':
+                message += (
+                    f". 'constraint {name} = ...' is a generic bound, not a type, so it "
+                    f"cannot share a name with a {existing.kind} (SYNTAX/33 C-3.1)")
+            else:
+                message += f". Only one type-level declaration of '{name}' is allowed (SYNTAX/33 C-3.1)"
+            self.errors.append(f"{message} (line {node.line}, col {node.col})")
             return True
-        return False
+        self.errors.append(
+            f"Name '{name}' is already declared in this scope "
+            f"(line {node.line}, col {node.col})")
+        return True
 
     def analyze(self, node: ASTNode) -> Scope:
         self._visit(node)
@@ -446,18 +493,6 @@ class ScopeAnalyzer:
         elif block is not None:
             self._visit(block)
 
-    def _visit_MetaBlock(self, node: Any) -> None:
-        """处理 meta 块，确保只能在模块顶级定义"""
-        if self.current_scope.kind != "module":
-            self.errors.append(f"meta block can only be defined at module level (line {node.line}, col {node.col})")
-            return
-        
-        # 设置在 meta block 中标志
-        self.in_meta_block = True
-        for stmt in node.body:
-            self._visit(stmt)
-        self.in_meta_block = False
-
     def _visit_DuckDef(self, node: DuckDef) -> None:
         """处理 duck 约束定义，注册到当前作用域"""
         self.current_scope.add_symbol(node.name, "duck", node)
@@ -505,11 +540,47 @@ class ScopeAnalyzer:
 
     def _visit_TypeAlias(self, node: Any) -> None:
         """处理类型别名定义"""
+        # SYNTAX/33 C-3.1 / 裁决 D-1：别名进同一个名字空间的重名检测
+        # （此前两个 `type N = ...` 会静默互相覆盖，即实测基线 B9）
+        self._check_redefinition(node.name, node, "type")
         self.current_scope.add_symbol(node.name, "type", node)
         # 注册泛型参数作为类型别名
         if hasattr(node, 'generic_params') and node.generic_params:
             for param in node.generic_params:
                 self.current_scope.add_symbol(param, "type", node)
+
+    def _visit_ConstraintDef(self, node: Any) -> None:
+        """处理命名约束声明 `constraint Name = A | B`（SYNTAX/33 §2、C-3.1）。
+
+        成员**不在这里**逐个 visit：「成员必须是已声明的类型名」（C-1.2/C-2.5）
+        由 type_checker 判定（它才持有 class/struct/enum/constraint 的注册表），
+        在这里 visit 会额外刷出 `Undefined name 'int'` 之类的重复诊断。
+        """
+        if self.current_scope.kind != "module":
+            self.errors.append(
+                f"Constraint '{node.name}' can only be defined at module level "
+                f"(line {node.line}, col {node.col})")
+            return
+        self._check_redefinition(node.name, node, "constraint")
+        self.current_scope.add_symbol(node.name, "constraint", node)
+
+    def _visit_SubtypeDef(self, node: Any) -> None:
+        """处理名义子类型声明 `subtype Name <: Base`（SYNTAX/33 §3、S-7.4/C-3.1）。
+
+        与 `_visit_ConstraintDef` 同构，两件事都不在这里做：
+          * **基类型不 visit** —— 「基类型必须是已声明的 builtin/class/struct/enum/
+            subtype」（S-1.2/S-7.3）由 type_checker 判定（它持有那些注册表），在这里
+            visit 只会多刷出一条 `Undefined name 'Flaot'` 的重复诊断。
+          * **重名护栏在这里** —— subtype 与 class/struct/enum/trait/type/constraint
+            共用同一个模块级名字空间（S-7.4 → C-3.1），`_user_def_kinds` 已含 'subtype'。
+        """
+        if self.current_scope.kind != "module":
+            self.errors.append(
+                f"Subtype '{node.name}' can only be defined at module level "
+                f"(line {node.line}, col {node.col})")
+            return
+        self._check_redefinition(node.name, node, "subtype")
+        self.current_scope.add_symbol(node.name, "subtype", node)
 
     def _extract_names(self, node: Any) -> List[str]:
         """从赋值/解构目标中提取所有被绑定的变量名"""
@@ -530,7 +601,7 @@ class ScopeAnalyzer:
                 if node.id != '_':
                     names.append(node.id)
                 return names
-            if k == 'Pattern':
+            if k in ('Pattern', 'SlicePattern'):
                 if getattr(node, 'name', None) and node.name != '_':
                     names.append(node.name)
                 return names
@@ -547,6 +618,20 @@ class ScopeAnalyzer:
                 ps = getattr(node, 'patterns', None) or getattr(node, 'elements', None) or []
                 for p in ps:
                     names.extend(self._extract_names(p))
+                if getattr(node, 'rest_name', None) and node.rest_name != '_':
+                    names.append(node.rest_name)
+                return names
+            if k == 'SlicePattern':
+                # *rest / ..rest 剩余绑定
+                nm = getattr(node, 'name', None)
+                if nm and nm != '_':
+                    names.append(nm)
+                return names
+            if k == 'DictPattern':
+                for _key, val in getattr(node, 'pairs', []) or []:
+                    names.extend(self._extract_names(val))
+                if getattr(node, 'rest_name', None) and node.rest_name != '_':
+                    names.append(node.rest_name)
                 return names
             if k == 'StarExpr':
                 inner = getattr(node, 'value', None) or getattr(node, 'expr', None)

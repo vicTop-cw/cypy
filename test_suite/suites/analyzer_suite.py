@@ -28,6 +28,15 @@ def main() -> int:
     with CompilerFixture() as fixture:
         success, errors = fixture.analyze_only(source)
         Assert.true(success, f"Type check failed: {errors}")
+        Assert.equal(errors, [], "clean program produced type errors")
+        # FIX T0r61.5.2 (defect 3): 配对负例——分析器还必须"拒绝坏程序"。
+        # 此前所有 analyzer 测试只断言 success=True，把分析器整个删掉
+        # （任何输入都返回成功）套件依旧全绿。
+        bad_ok, bad_errors = fixture.analyze_only(
+            'def main() -> int:\n    return "text"\n', "bad_ret_type"
+        )
+        Assert.false(bad_ok, f"analyzer accepted return-type mismatch, errors={bad_errors}")
+        Assert.true(len(bad_errors) > 0, "analyzer reported no error for return-type mismatch")
 
 
 @analyzer_suite.test("type_check_arithmetic")
@@ -43,6 +52,12 @@ def main() -> int:
     with CompilerFixture() as fixture:
         success, errors = fixture.analyze_only(source)
         Assert.true(success, f"Type check failed: {errors}")
+        Assert.equal(errors, [], "clean program produced type errors")
+        # FIX T0r61.5.2 (defect 3): 负例——str + int 必须被拒绝
+        bad_ok, bad_errors = fixture.analyze_only(
+            'def main() -> int:\n    s: str = "a"\n    return s + 1\n', "bad_arith"
+        )
+        Assert.false(bad_ok, f"analyzer accepted str+int, errors={bad_errors}")
 
 
 @analyzer_suite.test("type_check_return_type")
@@ -59,6 +74,7 @@ def main() -> int:
     with CompilerFixture() as fixture:
         success, errors = fixture.analyze_only(source)
         Assert.true(success, f"Type check failed: {errors}")
+        Assert.equal(errors, [], "clean program produced type errors")
 
 
 # ===== 作用域分析测试 =====
@@ -75,6 +91,12 @@ def main() -> int:
     with CompilerFixture() as fixture:
         success, errors = fixture.analyze_only(source)
         Assert.true(success, f"Scope analysis failed: {errors}")
+        Assert.equal(errors, [], "clean program produced scope errors")
+        # FIX T0r61.5.2 (defect 3): 负例——未定义名字必须被拒绝
+        bad_ok, bad_errors = fixture.analyze_only(
+            "def main() -> int:\n    return mystery_var\n", "bad_scope"
+        )
+        Assert.false(bad_ok, f"analyzer accepted undefined name, errors={bad_errors}")
 
 
 @analyzer_suite.test("scope_analysis_global_var")
@@ -89,6 +111,7 @@ def main() -> int:
     with CompilerFixture() as fixture:
         success, errors = fixture.analyze_only(source)
         Assert.true(success, f"Scope analysis failed: {errors}")
+        Assert.equal(errors, [], "clean program produced scope errors")
 
 
 # ===== 参数检查测试 =====
@@ -106,6 +129,12 @@ def main() -> int:
     with CompilerFixture() as fixture:
         success, errors = fixture.analyze_only(source)
         Assert.true(success, f"Param check failed: {errors}")
+        Assert.equal(errors, [], "clean program produced param errors")
+        # FIX T0r61.5.2 (defect 3): 负例——调用未定义函数必须被拒绝
+        bad_ok, bad_errors = fixture.analyze_only(
+            "def main() -> int:\n    return mystery(1)\n", "bad_call"
+        )
+        Assert.false(bad_ok, f"analyzer accepted undefined function call, errors={bad_errors}")
 
 
 @analyzer_suite.test("type_conversion_explicit")
@@ -120,6 +149,7 @@ def main() -> float:
     with CompilerFixture() as fixture:
         success, errors = fixture.analyze_only(source)
         Assert.true(success, f"Explicit conversion failed: {errors}")
+        Assert.equal(errors, [], "clean program produced conversion errors")
 
 
 @analyzer_suite.test("type_conversion_implicit")
@@ -134,6 +164,7 @@ def main() -> float:
     with CompilerFixture() as fixture:
         success, errors = fixture.analyze_only(source)
         Assert.true(success, f"Implicit conversion failed: {errors}")
+        Assert.equal(errors, [], "clean program produced conversion errors")
 
 
 # ===== DEMO 示例测试 =====
@@ -155,8 +186,12 @@ def main() -> int:
     with CompilerFixture() as fixture:
         success, errors = fixture.analyze_only(demo_source)
         Assert.true(success, f"Type safety demo failed: {errors}")
+        Assert.equal(errors, [], "demo program produced type errors")
     
-    test = analyzer_suite.tests[-1]
+    # FIX T0r61.5.2 (defect 1): `analyzer_suite.tests[-1]` 在运行期恒为最后注册的
+    # Test（demo_scope_usage），会把本 Demo 的元数据挂到别的测试上并被覆盖。
+    # 改用 Suite.run() 在执行每个测试前发布的 current_test。
+    test = analyzer_suite.current_test
     test.with_demo("analyzer", "type_safety", demo_source)
 
 
@@ -182,6 +217,8 @@ def main() -> int:
     with CompilerFixture() as fixture:
         success, errors = fixture.analyze_only(demo_source)
         Assert.true(success, f"Scope demo failed: {errors}")
+        Assert.equal(errors, [], "demo program produced scope errors")
     
-    test = analyzer_suite.tests[-1]
+    # FIX T0r61.5.2 (defect 1): 见上文——必须用 current_test，不能用 tests[-1]
+    test = analyzer_suite.current_test
     test.with_demo("analyzer", "scope_usage", demo_source)

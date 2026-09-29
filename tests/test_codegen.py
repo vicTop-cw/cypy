@@ -35,7 +35,8 @@ class TestTypeMapper(unittest.TestCase):
     def test_cypy_to_cython(self):
         mapper = TypeMapper()
         self.assertEqual(mapper.to_cython("int"), "int")
-        self.assertEqual(mapper.to_cython("float"), "float")
+        # BUG-14 裁决（2026-09-26）：Cypy 的 float 跟随 Python 双精度。
+        self.assertEqual(mapper.to_cython("float"), "double")
         self.assertEqual(mapper.to_cython("str"), "str")
 
     def test_cypy_to_c(self):

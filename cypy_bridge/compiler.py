@@ -20,6 +20,9 @@ from typing import Any, Dict, Optional, List
 from .core import BridgeError
 from cypyc.parser.parser import BuildBlockExpr, Constant
 
+# 与 cypy_hook/hook.py、cypyc/project/project_compiler.py 的 build_ext 子进程同一口径
+BUILD_TIMEOUT = 120
+
 
 class CompileError(Exception):
     """编译错误类：包含精确定位信息"""
@@ -281,12 +284,11 @@ class CCodeGenerator:
     def _expr_Call(self, node) -> str:
         func = self._expr_to_str(node.func)
         args = ", ".join(self._expr_to_str(arg) for arg in node.args)
-        
-        # 处理调用时的 checker（func<checker>(args)）
-        checker = getattr(node, 'checker', None)
-        if checker:
-            return f"({checker}(), {func}({args}))"
-        
+
+        # 调用点的 `<…>` 是类型实参（SYNTAX/11「调用点的类型实参」规则 4：产物必须擦除），
+        # 这里过去读 `node.checker` 并生成 `(checker(), f(args))` —— 那等于把类型名当零参函数调用。
+        # 解析器已不再产出该字段，故删掉这条分支；留着就是一条无人认领的死码。
+
         # 特殊处理标准库函数
         if hasattr(node.func, 'id'):
             if node.func.id == 'malloc':
@@ -1633,128 +1635,220 @@ class CCodeGenerator:
         """处理 continue 语句"""
         self._write("continue;")
     
+    _BUILTIN_EXCEPTION_NAMES = None
+
+    def _builtin_exception_names(self):
+        """CPython 内置异常名集合（其 C API 符号为 ``PyExc_<name>``），惰性构建"""
+        if CCodeGenerator._BUILTIN_EXCEPTION_NAMES is None:
+            import builtins
+            names = set()
+            for name in dir(builtins):
+                obj = getattr(builtins, name, None)
+                if isinstance(obj, type) and issubclass(obj, BaseException):
+                    names.add(name)
+            CCodeGenerator._BUILTIN_EXCEPTION_NAMES = frozenset(names)
+        return CCodeGenerator._BUILTIN_EXCEPTION_NAMES
+
+    def _exc_type_to_c(self, exc_type) -> str:
+        """except 子句里的异常类型 → C 表达式
+
+        CPython 的内置异常在 C 里的符号是 ``PyExc_<Name>``。旧实现把 ``ValueError``
+        直接经 ``_expr_to_str`` 输出成裸 C 标识符，生成的 C 引用了未声明符号
+        （MSVC C2065），也就是说任何 ``except ValueError`` 都无法编译。
+        模块自身定义了同名类型时保留原样（走 ``_expr_to_str``）。
+        """
+        if exc_type is None:
+            return "PyExc_BaseException"
+
+        name = None
+        if isinstance(exc_type, str):
+            name = exc_type
+        elif getattr(exc_type, 'kind', None) == 'Name':
+            name = getattr(exc_type, 'id', None)
+
+        if name and name in self._builtin_exception_names():
+            if name not in getattr(self, "_module_type_names", set()):
+                return f"PyExc_{name}"
+
+        return self._expr_to_str(exc_type)
+
     def _visit_TryStmt(self, node):
         """处理 try/except/finally 语句
-        
-        使用 Python C API 的 PyErr_Occurred/PyErr_Clear 实现错误捕获：
-        - try: body -> 设置错误处理标签
-        - except Type as name: handler -> 检查错误类型并处理
-        - finally: cleanup -> 确保清理代码执行
-        
-        使用goto标签实现流程控制，try块内的return/raise跳转到检查点
+
+        使用 Python C API 的 PyErr_Occurred/PyErr_Fetch/PyErr_Restore 实现错误捕获。
+
+        生成的 C 形状（整个构造自带一个 ``{ }`` 作用域，goto 标签按
+        ``_try_<n>`` 唯一化，块内局部量靠作用域隔离，因此同一函数里的两个
+        同级 try 不会重定义，嵌套 try 也不会互相覆盖挂起异常）::
+
+            {
+                PyObject* _exc_type = NULL; PyObject* _exc_value = NULL;
+                PyObject* _exc_tb = NULL;
+                PyObject* <handler名> = NULL;        // 提升到块作用域，finally 可见
+                { <try 体> }
+            _try_<n>_except_check: ;
+                if (PyErr_Occurred()) {
+                    PyErr_Fetch(&_exc_type, &_exc_value, &_exc_tb);
+                    if (PyErr_GivenExceptionMatches(_exc_type, PyExc_X)) {
+                        <绑定 handler名 + Py_INCREF>
+                        <except 体>
+                        <Py_DECREF handler名>
+                        Py_XDECREF(_exc_type); Py_XDECREF(_exc_value); Py_XDECREF(_exc_tb);
+                        _exc_type = NULL; _exc_value = NULL; _exc_tb = NULL;  // 已消费
+                    }
+                    // 其余 except 子句以 else if 串联
+                }
+            _try_<n>_finally: ;
+                { <finally 体> }
+                if (_exc_type != NULL) {            // 未被匹配的异常继续传播
+                    PyErr_Restore(_exc_type, _exc_value, _exc_tb);
+                    <按函数返回类型 return>
+                }
+            }
+
+        注意：这里不再输出 ``PyErr_Clear()``。旧实现在每个 try 块头部无条件
+        ``PyErr_Clear()``（销毁进入本块前已挂起的异常），并在每个 except 子句的
+        if/else 之后无条件 ``PyErr_Clear()``（当非匹配分支 ``goto <内层>_finally``
+        落到外层处理器的尾部时，会紧接 ``PyErr_Restore`` 把刚恢复的异常擦掉）。
+        新实现用 ``Py_XDECREF`` 三元组消费已匹配的异常，用 ``PyErr_Restore`` 传播
+        未匹配的异常，控制流全部靠顺序 fall-through，不再有跳向前端处理器尾部的
+        ``goto``。
         """
-        # 使用 goto 模拟 try/except/finally
         try_label = f"_try_{self.buildblock_counter}"
         self.buildblock_counter += 1
-        
-        self._write(f"// try/except/finally block")
-        
-        # 保存当前返回值状态
-        self._write(f"int _try_result = 0;")
-        self._write(f"PyObject* _try_result_obj = NULL;")
-        self._write(f"int _try_returned = 0;")
-        
-        # 保存旧的try标签（支持嵌套try）
-        old_try_label = self.current_try_label
-        old_try_result_var = self.current_try_result_var
-        self.current_try_label = try_label
-        self.current_try_result_var = "_try_result"
-        
-        # try 块
-        self._write("PyErr_Clear();")
+
+        handlers = list(node.handlers or [])
+        finally_body = list(node.orelse or [])
+
+        self._write("// try/except/finally block")
         self._write("{")
         self.indent += 1
-        
-        for stmt in node.body:
-            if hasattr(stmt, 'kind'):
-                method = f"_visit_{stmt.kind}"
-                if hasattr(self, method):
-                    getattr(self, method)(stmt)
-                else:
-                    self._write(self._expr_to_str(stmt) + ";")
-        
+
+        # 挂起异常的三段（块作用域：活得比 except 子句长，finally 之后仍能恢复）
+        self._write("PyObject* _exc_type = NULL;")
+        self._write("PyObject* _exc_value = NULL;")
+        self._write("PyObject* _exc_tb = NULL;")
+
+        # except 子句绑定的异常名也提升到块作用域，避免 finally 引用时
+        # MSVC C2065（undeclared identifier）；同一块内同名只声明一次。
+        bound_names = []
+        for _exc_type_node, exc_name, _body in handlers:
+            if exc_name and exc_name not in bound_names:
+                bound_names.append(exc_name)
+        for exc_name in bound_names:
+            self._write(f"PyObject* {exc_name} = NULL;")
+
+        # try 块：进入时不清除已有异常（清除会吞掉调用者遗留的错误指示器）
+        old_try_label = self.current_try_label
+        self.current_try_label = try_label
+
+        self._write("{")
+        self.indent += 1
+        self._visit_stmts(node.body)
         self.indent -= 1
         self._write("}")
-        
-        # 恢复try标签
+
+        # 恢复 try 标签：处理体内的 raise 由外层 try 捕获，不被本块再次匹配
         self.current_try_label = old_try_label
-        self.current_try_result_var = old_try_result_var
-        
-        # except 检查点
-        self._write(f"{try_label}_except_check:")
-        
-        # except 子句
-        for i, (exc_type, exc_name, except_body) in enumerate(node.handlers):
-            exc_type_str = "PyExc_BaseException"
-            if exc_type:
-                exc_type_str = self._expr_to_str(exc_type)
-            
-            self._write(f"if (PyErr_Occurred()) {{")
+
+        self._write(f"{try_label}_except_check: ;")
+
+        if handlers:
+            self._write("if (PyErr_Occurred()) {")
             self.indent += 1
-            self._write(f"    PyObject* _exc_type = NULL;")
-            self._write(f"    PyObject* _exc_value = NULL;")
-            self._write(f"    PyObject* _exc_tb = NULL;")
-            self._write(f"    PyErr_Fetch(&_exc_type, &_exc_value, &_exc_tb);")
-            # 用异常类型匹配（PyErr_SetNone 时 value 为 NULL，不能对 value 做 IsInstance）
-            self._write(f"    if (PyErr_GivenExceptionMatches(_exc_type, {exc_type_str})) {{")
-            self.indent += 1
-            
-            # 绑定异常变量
-            if exc_name:
-                self._write(f"    PyObject* {exc_name} = _exc_value ? _exc_value : Py_None;")
-            
-            # 生成 except 块
-            for stmt in except_body:
-                if hasattr(stmt, 'kind'):
-                    method = f"_visit_{stmt.kind}"
-                    if hasattr(self, method):
-                        getattr(self, method)(stmt)
-                    else:
-                        self._write(self._expr_to_str(stmt) + ";")
-            
-            self.indent -= 1
-            self._write("    } else {")
-            self.indent += 1
-            self._write(f"        PyErr_Restore(_exc_type, _exc_value, _exc_tb);")
-            if node.orelse:
-                self._write(f"        goto {try_label}_finally;")
-            else:
-                self._write(f"        return NULL;")
-            self.indent -= 1
-            self._write("    }")
-            self._write(f"    Py_XDECREF(_exc_type);")
-            self._write(f"    Py_XDECREF(_exc_value);")
-            self._write(f"    Py_XDECREF(_exc_tb);")
-            self._write(f"    PyErr_Clear();")
+            self._write("PyErr_Fetch(&_exc_type, &_exc_value, &_exc_tb);")
+            for i, (exc_type, exc_name, except_body) in enumerate(handlers):
+                exc_type_str = self._exc_type_to_c(exc_type)
+                # if / else if 链：只匹配第一个命中的子句
+                opener = "if" if i == 0 else "} else if"
+                self._write(f"{opener} (PyErr_GivenExceptionMatches(_exc_type, {exc_type_str})) {{")
+                self.indent += 1
+                if exc_name:
+                    # 持有自己的引用：_exc_value 随后会被 Py_XDECREF
+                    self._write(f"{exc_name} = _exc_value ? _exc_value : Py_None;")
+                    self._write(f"Py_INCREF({exc_name});")
+                self._visit_stmts(except_body)
+                if exc_name:
+                    self._write(f"Py_DECREF({exc_name});")
+                    self._write(f"{exc_name} = NULL;")
+                # 异常已被本次 except 消费
+                self._write("Py_XDECREF(_exc_type);")
+                self._write("Py_XDECREF(_exc_value);")
+                self._write("Py_XDECREF(_exc_tb);")
+                self._write("_exc_type = NULL; _exc_value = NULL; _exc_tb = NULL;")
+                self.indent -= 1
+                if i == len(handlers) - 1:
+                    self._write("}")
             self.indent -= 1
             self._write("}")
-        
-        # finally 子句
-        if node.orelse:
+        elif finally_body:
+            # 没有 except 子句时仍要摘走挂起异常，让它穿过 finally 继续传播
+            self._write("if (PyErr_Occurred()) {")
+            self.indent += 1
+            self._write("PyErr_Fetch(&_exc_type, &_exc_value, &_exc_tb);")
+            self.indent -= 1
+            self._write("}")
+
+        if finally_body:
             self._write(f"{try_label}_finally:")
             self._write("{")
             self.indent += 1
-            for stmt in node.orelse:
-                if hasattr(stmt, 'kind'):
-                    method = f"_visit_{stmt.kind}"
-                    if hasattr(self, method):
-                        getattr(self, method)(stmt)
-                    else:
-                        self._write(self._expr_to_str(stmt) + ";")
+            self._visit_stmts(finally_body)
             self.indent -= 1
             self._write("}")
+
+        # 未被匹配的异常：恢复并传播（绝不能再被 PyErr_Clear 抹掉）
+        self._write("if (_exc_type != NULL) {")
+        self.indent += 1
+        self._write("PyErr_Restore(_exc_type, _exc_value, _exc_tb);")
+        self._emit_error_return()
+        self.indent -= 1
+        self._write("}")
+
+        self.indent -= 1
+        self._write("}")
+
+    def _visit_stmts(self, stmts):
+        """依次访问语句列表；没有专用 visitor 的语句退回表达式形式输出
+
+        与旧实现保持一致：没有 `kind` 的对象不是语句节点，直接跳过
+        （否则会把 AST 的 repr 写进生成的 C）。
+        """
+        for stmt in stmts or []:
+            if not hasattr(stmt, 'kind'):
+                continue
+            method = f"_visit_{stmt.kind}"
+            if hasattr(self, method):
+                getattr(self, method)(stmt)
+            else:
+                self._write(self._expr_to_str(stmt) + ";")
+
+    def _emit_error_return(self):
+        """按当前函数返回类型输出一条“已设置异常”的错误返回"""
+        if self.current_return_type == "void":
+            self._write("return;")
+        elif self.current_return_type.startswith("PyObject"):
+            self._write("return NULL;")
+        else:
+            # 基本类型无法用返回值表达失败，异常已置位，包装器会检查 PyErr_Occurred()
+            self._write("return 0;")
     
     def _visit_RaiseStmt(self, node):
         """处理 raise 语句
         
         转换规则：
         - raise -> PyErr_SetNone(PyExc_RuntimeError)
+        - raise BuiltinExc -> PyErr_SetNone(PyExc_BuiltinExc)
+        - raise BuiltinExc("literal") -> PyErr_SetString(PyExc_BuiltinExc, "literal")
         - raise exc -> PyErr_SetObject(type(exc), exc)
         - raise exc from cause -> 设置 __cause__ 属性
         
         如果在try块内，跳转到except检查点；否则直接return
         """
-        if node.exc:
+        builtin_exc = self._raise_builtin_to_c(node.exc)
+        if builtin_exc:
+            self._write(builtin_exc)
+        elif node.exc:
             exc_str = self._expr_to_str(node.exc)
             self._write(f"PyErr_SetObject(PyObject_Type({exc_str}), {exc_str});")
         else:
@@ -1765,13 +1859,41 @@ class CCodeGenerator:
             self._write(f"goto {self.current_try_label}_except_check;")
         else:
             # 不在try块内，直接return
-            if self.current_return_type == "void":
-                self._write("return;")
-            elif self.current_return_type.startswith("PyObject"):
-                self._write("return NULL;")
-            else:
-                # 对于基本类型，返回默认值（异常已设置，调用者会检查错误状态）
-                self._write(f"return 0;")
+            self._emit_error_return()
+
+    def _raise_builtin_to_c(self, exc_node):
+        """``raise ValueError`` / ``raise ValueError("msg")`` → 完整的 PyErr_Set* 语句
+
+        内置异常在 C 中的符号是 ``PyExc_<Name>``；命中不了的形式返回 None，
+        由调用方沿用原有的通用路径。
+        """
+        if exc_node is None:
+            return None
+
+        name = None
+        args = None
+        kind = getattr(exc_node, 'kind', None)
+        if kind == 'Name':
+            name = getattr(exc_node, 'id', None)
+        elif kind == 'Call':
+            func = getattr(exc_node, 'func', None)
+            if getattr(func, 'kind', None) == 'Name':
+                name = getattr(func, 'id', None)
+                args = getattr(exc_node, 'args', None)
+
+        if not name or name not in self._builtin_exception_names():
+            return None
+        if name in getattr(self, "_module_type_names", set()):
+            return None
+
+        if args is None:
+            return f"PyErr_SetNone(PyExc_{name});"
+        if len(args) == 0:
+            return f"PyErr_SetNone(PyExc_{name});"
+        if len(args) == 1 and getattr(args[0], 'kind', None) == 'Constant' \
+                and isinstance(args[0].value, str):
+            return f"PyErr_SetString(PyExc_{name}, {self._expr_to_str(args[0])});"
+        return None
     
     def _visit_VecType(self, node):
         """处理 SIMD 向量类型 - vec[ElementType; Size]
@@ -3314,6 +3436,13 @@ class CCodeGenerator:
             func_args = ", ".join(param_names)
             self._write(f"    _result = {func_name}({func_args});")
             
+            # 被调函数用“置位异常 + 返回错误值”表示失败：必须先检查错误指示器，
+            # 否则失败会被静默转换成 0 / 0.0 / False 这样的正常返回值。
+            self._write()
+            self._write("    if (PyErr_Occurred()) {")
+            self._write("        return NULL;")
+            self._write("    }")
+            
             # 根据返回类型生成对应的返回代码
             self._write()
             if return_type == "int":
@@ -3329,9 +3458,23 @@ class CCodeGenerator:
             elif return_type == "_Bool":
                 self._write("    return PyBool_FromLong((long)_result);")
             elif return_type == "const char*":
+                # NULL 的 C 字符串同样是失败信号，PyUnicode_FromString(NULL) 会崩溃
+                self._write("    if (_result == NULL) {")
+                self._write(f'        PyErr_SetString(PyExc_SystemError, "cypy: {func_name} returned NULL string without setting an exception");')
+                self._write("        return NULL;")
+                self._write("    }")
                 self._write("    return PyUnicode_FromString(_result);")
             elif return_type == "PyObject*":
-                self._write("    Py_INCREF(_result);")
+                # 被调函数按“返回新引用”约定已经把所有权交给调用方：
+                # 再 Py_INCREF 一次会让每次成功调用都泄漏一个引用；
+                # 而返回 NULL 是失败信号，对它 Py_INCREF 会解引用地址 0
+                # （真实 .pyd 里表现为 0xC0000005 直接崩掉解释器）。
+                self._write("    if (_result == NULL) {")
+                self._write("        if (!PyErr_Occurred()) {")
+                self._write(f'            PyErr_SetString(PyExc_SystemError, "cypy: {func_name} returned NULL without setting an exception");')
+                self._write("        }")
+                self._write("        return NULL;")
+                self._write("    }")
                 self._write("    return _result;")
             else:
                 # 默认：返回 None
@@ -3340,6 +3483,9 @@ class CCodeGenerator:
             func_args = ", ".join(param_names)
             self._write(f"    {func_name}({func_args});")
             self._write()
+            self._write("    if (PyErr_Occurred()) {")
+            self._write("        return NULL;")
+            self._write("    }")
             self._write("    Py_RETURN_NONE;")
         
         self.indent -= 1
@@ -3370,7 +3516,14 @@ class CCodeGenerator:
         self.module_imports = []  # 存储模块级别的import语句
         self.module_classes = []  # 存储模块级别的类定义
         self.current_try_label = None  # 当前try块的标签（用于嵌套try）
-        self.current_try_result_var = None  # 当前try块的返回值变量
+        # 模块级定义的类型/函数名：except/raise 遇到与内置异常同名的本地类型时
+        # 不能加 PyExc_ 前缀
+        self._module_type_names = set()
+        if hasattr(ast, 'body'):
+            for stmt in ast.body:
+                name = getattr(stmt, 'name', None)
+                if isinstance(name, str):
+                    self._module_type_names.add(name)
         
         # 收集函数
         if hasattr(ast, 'body'):
@@ -3429,8 +3582,10 @@ class BridgeCacheManager:
             try:
                 with open(manifest_path, "r", encoding="utf-8") as f:
                     return json.load(f)
-            except (json.JSONDecodeError, IOError):
-                pass
+            except (json.JSONDecodeError, IOError) as exc:
+                import sys
+                print(f"[cypy][warn] bridge manifest 无法读取，按无缓存重新编译: "
+                      f"{manifest_path} ({exc})", file=sys.stderr)
         return {}
     
     def _save_manifest(self, manifest: Dict) -> None:
@@ -3492,33 +3647,45 @@ class BridgeCacheManager:
         
         self._save_manifest(manifest)
     
-    def clear_cache(self, module_name: str = None) -> None:
-        """清除缓存"""
+    def clear_cache(self, module_name: str = None) -> Dict:
+        """清除缓存；删除失败的条目留在 manifest 里如实汇报，不谎报已清理"""
         manifest = self._load_manifest()
-        
+        removed: List[str] = []
+        failed: List[str] = []
+
+        def _remove(path: str) -> bool:
+            try:
+                os.remove(path)
+                return True
+            except OSError as exc:
+                import sys
+                print(f"[cypy][warn] 缓存文件删除失败，保留其 manifest 条目: "
+                      f"{path} ({exc})", file=sys.stderr)
+                return False
+
         if module_name:
             # 清除单个模块的缓存
             cache_key = f"{module_name}"
             if cache_key in manifest:
                 pyd_path = manifest[cache_key].get("pyd_path")
-                if pyd_path and os.path.exists(pyd_path):
-                    try:
-                        os.remove(pyd_path)
-                    except:
-                        pass
-                del manifest[cache_key]
-                self._save_manifest(manifest)
+                if not pyd_path or not os.path.exists(pyd_path) or _remove(pyd_path):
+                    del manifest[cache_key]
+                    removed.append(cache_key)
+                    self._save_manifest(manifest)
+                else:
+                    failed.append(pyd_path)
         else:
             # 清除所有缓存
             base_cache_dir = self._get_base_cache_dir()
             for root, dirs, files in os.walk(base_cache_dir):
                 for file in files:
                     if file.endswith(".pyd") or file.endswith(".so") or file == "bridge_manifest.json":
-                        try:
-                            os.remove(os.path.join(root, file))
-                        except:
-                            pass
-            self._save_manifest({})
+                        path = os.path.join(root, file)
+                        if not _remove(path):
+                            failed.append(path)
+            if not failed:
+                self._save_manifest({})
+        return {"removed": removed, "failed": failed}
 
 
 class BridgeCompiler:
@@ -3595,7 +3762,9 @@ class BridgeCompiler:
         """将 C 代码编译为动态链接库"""
         with tempfile.TemporaryDirectory() as tmp_dir:
             c_file = os.path.join(tmp_dir, f"{module_name}.c")
-            with open(c_file, 'w') as f:
+            # BUG-25: 不带 encoding 的文本写盘按本地代码页（本机 cp936）落字节，
+            # 与读源码侧的 encoding="utf-8" 不一致，非本地字符直接 UnicodeEncodeError。
+            with open(c_file, 'w', encoding='utf-8') as f:
                 f.write(c_code)
             
             # 使用setuptools进行编译，自动处理环境变量
@@ -3636,7 +3805,7 @@ setup(
 '''
             
             setup_file = os.path.join(tmp_dir, 'setup.py')
-            with open(setup_file, 'w') as f:
+            with open(setup_file, 'w', encoding='utf-8') as f:
                 f.write(setup_code)
             
             try:
@@ -3644,7 +3813,8 @@ setup(
                 result = subprocess.run(
                     [sys.executable, setup_file, 'build_ext', '--inplace'],
                     capture_output=True,
-                    cwd=tmp_dir
+                    cwd=tmp_dir,
+                    timeout=BUILD_TIMEOUT
                 )
 
                 # 以字节读取并容错解码，避免 Windows 下默认 GBK 编码导致的
@@ -3661,7 +3831,10 @@ setup(
                 # 找到生成的.pyd文件
                 output_file = None
                 for file in os.listdir(tmp_dir):
-                    if file.endswith('.pyd'):
+                    # BUG-26: _detect_compiler 支持 linux/darwin，产物扫描却只认 .pyd，
+                    # 非 Windows 上成功的编译会被报成「没找到产物」。与同文件 :3683、
+                    # cypy_hook/hook.py:542 的既有口径统一。
+                    if file.endswith('.pyd') or file.endswith('.so') or file.endswith('.dll'):
                         output_file = os.path.join(tmp_dir, file)
                         break
                 
@@ -3677,6 +3850,9 @@ setup(
                 return final_output
             except FileNotFoundError:
                 raise BridgeError(f"Compiler not found: {self._compiler}")
+            except subprocess.TimeoutExpired:
+                raise BridgeError(
+                    f"Compile failed: build_ext 超过 {BUILD_TIMEOUT}s 未结束，子进程已终止")
             except Exception as e:
                 raise BridgeError(f"Compile failed: {e}")
     

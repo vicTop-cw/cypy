@@ -1,0 +1,292 @@
+{
+  "op": "cypy.annotation.shape",
+  "version": "1.0",
+  "definition": {
+    "signature": "decl ::= name ':' annotation ('=' expr)?; annotation ::= Name | GenericType | PointerType | UnionType | RefType",
+    "note": "依据 SYNTAX/02-type-annotations.md「注解形态闭集（R7 补，2026-09-29）」：方括号/圆括号/花括号形态一律拒绝，诊断必须带 行:列 并点名正确写法；任何形态都不得把 AST 节点的 Python repr 写进产物。"
+  },
+  "preconditions": [
+    "comptime 行内形式（`comptime: [1, 2]`）不是类型注解，不受本节约束",
+    "生成器末路对未知形态只退化为 object（SYNTAX/02 该节规则 3）"
+  ],
+  "laws": [
+    "L1-注解必须是类型形态",
+    "L2-非法形态必须诊断且带行列",
+    "L3-产物不得含 AST repr",
+    "L4-comptime 整类排除"
+  ],
+  "tests": [
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    x: int = 1\n    return x\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    x: list<int> = [1, 2]\n    return x\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    x: tuple<int, int> = (1, 2)\n    return x\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    m: dict<str, int> = {}\n    return m\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    u: int | str = 1\n    return u\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def add(a: int, b: int) -> int:\n    return a + b\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "comptime: [1, 2]\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    x: [int] = [1, 2]\n    return x\n"
+      },
+      "error": {
+        "contains": [
+          "Invalid type annotation"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    x: (int, str) = 1\n    return x\n"
+      },
+      "error": {
+        "contains": [
+          "Invalid type annotation"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    m: {str: int} = 1\n    return m\n"
+      },
+      "error": {
+        "contains": [
+          "Invalid type annotation"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    x: 5 = 1\n    return x\n"
+      },
+      "error": {
+        "contains": [
+          "Invalid type annotation"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    x: list<[int]> = 1\n    return x\n"
+      },
+      "error": {
+        "contains": [
+          "Invalid type annotation"
+        ],
+        "min_count": 1
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    x: [[[[[[[[[[[[int]]]]]]]]]]]] = 1\n    return x\n"
+      },
+      "error": {
+        "contains": [
+          "Invalid type annotation"
+        ],
+        "min_count": 1
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    x: = 1\n    return x\n"
+      },
+      "error": {
+        "stage": "parse",
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "def f():\n    x: list<int> = [1, 2]\n    return x\n"
+      },
+      "expected": {
+        "not_contains": [
+          "line=",
+          "col=",
+          "Constant(",
+          "GenericType(",
+          "List("
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "codegen_unchecked",
+        "src": "def f():\n    m: {str: int} = 1\n    return m\n"
+      },
+      "expected": {
+        "contains": [
+          "m: object"
+        ],
+        "not_contains": [
+          "line=",
+          "col=",
+          "Constant(",
+          "DictLiteral("
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "codegen_unchecked",
+        "src": "def f():\n    x: [int] = [1, 2]\n    return x\n"
+      },
+      "expected": {
+        "not_contains": [
+          "line=",
+          "col=",
+          "Constant(",
+          "List("
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "def f():\n    x: [int] = [1, 2]\n    return x\n"
+      },
+      "error": {
+        "stage": "typecheck",
+        "contains": [
+          "Invalid type annotation"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    x: ref<int> = 1\n    return x\n"
+      },
+      "expected": {
+        "no_diagnostic_contains": [
+          "Invalid type annotation"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    p: *void = 0\n    return p\n"
+      },
+      "expected": {
+        "no_diagnostic_contains": [
+          "Invalid type annotation"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    g: list<list<int>> = []\n    return g\n"
+      },
+      "expected": {
+        "no_diagnostic_contains": [
+          "Invalid type annotation"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    t: tuple<int, int> | None = 0\n    return t\n"
+      },
+      "expected": {
+        "no_diagnostic_contains": [
+          "Invalid type annotation"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    m: dict<str, [int]> = 1\n    return m\n"
+      },
+      "error": {
+        "contains": [
+          "Invalid type annotation"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f():\n    t: tuple<int, [str]> = 0\n    return t\n"
+      },
+      "error": {
+        "contains": [
+          "Invalid type annotation"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    }
+  ],
+  "fingerprint": "fnv1a64:927770342620acae"
+}

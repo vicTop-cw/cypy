@@ -64,10 +64,25 @@ class DeferAnalyzer:
                 self._visit(stmt)
 
     def _visit_ForStmt(self, node: Any) -> None:
-        self._visit(node.target)
+        target = node.target
+        # 多目标解包（`for k, v in ...`）的目标是目标列表，嵌套解包还会出现
+        # 嵌套列表（如 `for idx, (a, b) in ...`），需递归遍历
+        if isinstance(target, (list, tuple)):
+            for t in target:
+                self._visit_for_target(t)
+        else:
+            self._visit(target)
         self._visit(node.iter)
         for stmt in node.body:
             self._visit(stmt)
+
+    def _visit_for_target(self, target: Any) -> None:
+        """递归访问 for 循环目标（兼容嵌套解包产生的嵌套列表）"""
+        if isinstance(target, (list, tuple)):
+            for t in target:
+                self._visit_for_target(t)
+        elif target is not None:
+            self._visit(target)
 
     def _visit_WhileStmt(self, node: Any) -> None:
         self._visit(node.test)

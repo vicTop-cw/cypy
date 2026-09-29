@@ -1,4 +1,7 @@
 # Vec + Union + Macro + Meta 综合测试
+#
+# T0r258.4.2：main() 原本算完就丢（零输出），golden 因此是冻结的崩溃回溯。
+# 现在每个中间结果各出一行可观察输出。
 
 meta:
     duck ValidNum:
@@ -20,12 +23,18 @@ def main() -> int:
     # Vec literal
     numbers = [1, 2, 3, 4, 5]
     s = vec_sum(numbers)
+    print(f"vec sum = {s}")
 
     # Union type usage
     val: object = 42
     result = process(val)
+    print(f"union passthrough = {result}")
 
     # Vec repeat
     zeros = [0] * 10
+    print(f"vec repeat len = {len(zeros)}")
 
     return 0
+
+if __name__ == "__main__":
+    main()

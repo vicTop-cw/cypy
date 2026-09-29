@@ -22,12 +22,102 @@
 不支持：
 - 运行时函数调用
 - 复杂的副作用操作
+- `comptime:` **块形式**：SYNTAX/19-comptime.md:42 标注「未实现」，求值侧抛
+  `ComptimeNotImplementedError`（带行列号的结构化诊断），不再撞内部异常
 """
 
 import ast
 import logging
-from typing import Any, Optional, Dict, List, Set
+from typing import Any, Optional, Dict, List, Tuple
 from cypyc.parser.parser import ASTNode, Constant, BinOp, UnaryOp, Call, Name, LetStmt, ReturnStmt, IfStmt, Param, ComptimeFuncDef, ForStmt, WhileStmt, Assign, ExprStmt
+
+
+#: `comptime:` 块形式的文档声明出处（表里那一行就写着「未实现」）
+COMPTIME_BLOCK_DOC_REF = "SYNTAX/19-comptime.md:42"
+
+
+class ComptimeNotImplementedError(ValueError):
+    """comptime 的「文档标注未实现」形态（块形式）的**结构化诊断**。
+
+    刻意与「求值失败」分开：求值失败沿用既有的 None 降级口径（生成侧写注释），
+    未实现则必须给用户一条带行列号、措辞含「未实现」的诊断，而不是让内部异常
+    （`'list' object has no attribute '__dict__'` 之类）的文本冒充诊断。
+    """
+
+    def __init__(self, feature: str, line: int, col: int, doc_ref: str = ""):
+        self.feature = feature
+        self.line = line
+        self.col = col
+        self.doc_ref = doc_ref
+        suffix = f"（{doc_ref}）" if doc_ref else ""
+        super().__init__(f"{feature}未实现{suffix} at {line}:{col}")
+
+
+def _first_position(node: Any) -> Tuple[int, int]:
+    """从节点（或语句列表的首个带位置的语句）里取行列号。"""
+    candidates = node if isinstance(node, (list, tuple)) else [node]
+    for item in candidates:
+        line = getattr(item, "line", 0) or 0
+        col = getattr(item, "col", 0) or 0
+        if line:
+            return line, col
+    return 0, 0
+
+
+def comptime_block_not_implemented(node: Any) -> ComptimeNotImplementedError:
+    """造出块形式的未实现诊断。
+
+    入参可以是 ComptimeStmt，也可以是块形式的语句列表（codegen 递进来的就是列表）。
+    位置优先取块内首个语句：解析器给 ComptimeStmt 自身的 line 落在块**之后**，
+    用它会把用户指到别的行上。
+    """
+    expr = getattr(node, "expr", None)
+    block = expr if expr is not None else node
+    line, col = _first_position(block)
+    if not line:
+        line, col = _first_position(node)
+    return ComptimeNotImplementedError("comptime: 块形式", line, col, COMPTIME_BLOCK_DOC_REF)
+
+
+def _looks_like_ast_node(value: Any) -> bool:
+    """值树里「仍然是语法树节点」的判定：既有 ASTNode 子类，也兼容鸭子形状。"""
+    if isinstance(value, ASTNode):
+        return True
+    module = type(value).__module__ or ""
+    return (
+        module.startswith("cypyc.")
+        and isinstance(getattr(value, "kind", None), str)
+        and hasattr(value, "line")
+    )
+
+
+def _find_ast_nodes(value: Any, trail: str = "value") -> List[str]:
+    """递归找出返回值树里所有未求值的 AST 节点（按路径报告）。"""
+    found: List[str] = []
+    if _looks_like_ast_node(value):
+        found.append(f"{trail}={type(value).__name__}")
+    if isinstance(value, dict):
+        for key, item in value.items():
+            found.extend(_find_ast_nodes(key, f"{trail}.key"))
+            found.extend(_find_ast_nodes(item, f"{trail}[{key!r}]"))
+    elif isinstance(value, (list, tuple, set, frozenset)):
+        for index, item in enumerate(value):
+            found.extend(_find_ast_nodes(item, f"{trail}[{index}]"))
+    return found
+
+
+def _require_pure_value(value: Any) -> Any:
+    """求值契约的守门人：`evaluate()` 只能交出纯 Python 值，否则判整体求值失败。
+
+    半 AST 的值一旦返回，生成侧对它 repr 就写出 `[Constant(line=2, col=16), …]`
+    这种不可编译的文本（BUG-81）。宁可降级成注释，也不外泄内部表示。
+    """
+    leaked = _find_ast_nodes(value)
+    if leaked:
+        raise ValueError(
+            "Comptime evaluation produced un-evaluated AST nodes: " + ", ".join(leaked[:4])
+        )
+    return value
 
 
 class ComptimeEvaluator:
@@ -115,36 +205,76 @@ class ComptimeEvaluator:
     
     def evaluate(self, node: ASTNode) -> Any:
         """求值 AST 节点
-        
+
+        契约（与生成侧的接口）：返回值**必须是纯 Python 值**，否则整体判「求值失败」
+        （抛 ValueError，由 `evaluate_comptime` 降级成 None）。半 AST 的值不允许返回。
+
         Args:
             node: AST 节点
-            
+
         Returns:
             求值结果（Python 值）
         """
+        return _require_pure_value(self._evaluate_node(node))
+
+    def _evaluate_node(self, node: ASTNode) -> Any:
+        """`evaluate()` 的分派主体（求值契约由 `evaluate()` 收尾把关）。"""
         # 处理 Module 节点
         if hasattr(node, 'body') and isinstance(node.body, list):
             return self._evaluate_module(node)
-        
+
         # 处理 ComptimeStmt 节点
         if hasattr(node, 'expr'):
             return self._evaluate_comptime_stmt(node)
-        
+
         if isinstance(node, Constant):
-            return node.value
-        
+            return self._evaluate_constant(node)
+
         if isinstance(node, BinOp):
+            # and / or 必须先短路：旧代码无条件把左右两边都算完再分派，
+            # 于是 comptime: False and (1/0) 会抛 ZeroDivisionError，
+            # evaluate_comptime 把它当成"不是常量"返回 None，codegen 再把整条语句
+            # 降级成注释（静默丢掉一句话）。Python 的 `left and right` 只对已经算出来的
+            # 值短路，救不了这里。
+            op = node.op
+            if op in ('and', 'AND', '&&'):
+                left_val = self.evaluate(node.left)
+                return self.evaluate(node.right) if left_val else left_val
+            if op in ('or', 'OR', '||'):
+                left_val = self.evaluate(node.left)
+                return left_val if left_val else self.evaluate(node.right)
+            
             left_val = self.evaluate(node.left)
             right_val = self.evaluate(node.right)
-            return self._evaluate_bin_op(node.op, left_val, right_val)
+            return self._evaluate_bin_op(op, left_val, right_val)
         
         if isinstance(node, UnaryOp):
             operand_val = self.evaluate(node.operand)
             return self._evaluate_unary_op(node.op, operand_val)
         
         if isinstance(node, Call):
-            func_name = self._get_func_name(node.func)
+            # BUG-20: func 是 Attribute（"abc".upper()）时 _get_func_name 退回
+            # str(node)，得到带行列号的节点 repr，永远查不进任何表 —— 于是
+            # :188-276 整张字符串/列表方法表不可达，语句被静默丢成注释。
+            # 按 _evaluate_attribute_access 的契约取回已绑定接收者的方法再调用。
+            receiver = getattr(node.func, "value", None)
+            attr = getattr(node.func, "attr", None)
             args = [self.evaluate(arg) for arg in node.args]
+            if receiver is not None and attr:
+                obj_val = self.evaluate(receiver)
+                if obj_val is None:
+                    return None
+                try:
+                    method = self._evaluate_attribute_access(obj_val, attr)
+                except ValueError:
+                    return None          # 表里没有该方法：沿用「无法求值」的既有降级口径
+                if callable(method):
+                    try:
+                        return method(*args)
+                    except TypeError:
+                        return None
+                return method
+            func_name = self._get_func_name(node.func)
             return self._evaluate_call(func_name, args)
         
         if isinstance(node, Name):
@@ -166,12 +296,40 @@ class ComptimeEvaluator:
             obj_val = self.evaluate(node.value)
             return self._evaluate_attribute_access(obj_val, node.attr)
         
-        # 处理语句（块形式）
+        # `comptime:` 块形式：解析器把块体挂成语句列表递到这里。
+        # SYNTAX/19-comptime.md:42 写明这一形态「未实现」⇒ 正确的失败方式是给一条
+        # 带行列号的未实现诊断，而不是让求值路径拿到 list 去撞内部异常（BUG-83）。
         if isinstance(node, list):
-            return self._evaluate_statements(node)
-        
+            raise comptime_block_not_implemented(node)
+
         raise ValueError(f"Cannot evaluate expression at compile time: {node.kind}")
-    
+
+    def _evaluate_constant(self, node: Constant) -> Any:
+        """求值 Constant 节点。
+
+        解析器把 `[1, 2]` / `(1, 2)` 这类**集合字面量**存成
+        `Constant(value=[Constant(…), Constant(…)])` —— 直接把 `node.value` 交出去，
+        生成的就是未求值的元素节点列表（BUG-81：产物里出现
+        `[Constant(line=2, col=16), Constant(line=2, col=19)]` 这种不可编译文本）。
+        这里递归求值每个元素，任一元素求不出来就整体抛错 ⇒ 判求值失败。
+        """
+        return self._evaluate_literal(node.value)
+
+    def _evaluate_literal(self, value: Any) -> Any:
+        """把字面量里挂着的元素节点求值成纯 Python 值（保容器类型）。"""
+        if isinstance(value, (list, tuple)):
+            return type(value)(self._evaluate_literal(item) for item in value)
+        if isinstance(value, (set, frozenset)):
+            return type(value)(self._evaluate_literal(item) for item in value)
+        if isinstance(value, dict):
+            return {
+                self._evaluate_literal(key): self._evaluate_literal(val)
+                for key, val in value.items()
+            }
+        if isinstance(value, ASTNode):
+            return self.evaluate(value)
+        return value
+
     def _evaluate_attribute_access(self, obj: Any, attr: str) -> Any:
         """求值属性访问（用于方法调用）
         
@@ -360,12 +518,12 @@ class ComptimeEvaluator:
         # 求值迭代对象
         iter_value = self.evaluate(stmt.iter)
         
-        # 获取循环变量名
-        target_name = stmt.target.id if hasattr(stmt.target, 'id') else str(stmt.target)
-        
+        # 获取循环变量名（支持 `for k, v in ...` 多目标解包）
+        target_names = self._for_target_names(stmt.target)
+
         # 压入新作用域
         self.push_scope()
-        
+
         result = None
         count = 0
         for item in iter_value:
@@ -373,15 +531,40 @@ class ComptimeEvaluator:
             if count >= self.loop_limit:
                 raise ValueError(f"Comptime loop exceeded limit ({self.loop_limit} iterations)")
             count += 1
-            
-            # 设置循环变量
-            self.set_variable(target_name, item)
-            
+
+            # 设置循环变量（多目标时按顺序解包）
+            if len(target_names) <= 1:
+                if target_names:
+                    self.set_variable(target_names[0], item)
+            else:
+                try:
+                    values = list(item)
+                except TypeError:
+                    raise ValueError(
+                        f"Comptime for-loop cannot unpack {item!r} into "
+                        f"{len(target_names)} targets")
+                if len(values) != len(target_names):
+                    raise ValueError(
+                        f"Comptime for-loop unpack mismatch: {item!r} has "
+                        f"{len(values)} values, expected {len(target_names)}")
+                for name, value in zip(target_names, values):
+                    self.set_variable(name, value)
+
             # 执行循环体
             result = self._evaluate_statements(stmt.body)
-        
+
         self.pop_scope()
         return result
+
+    def _for_target_names(self, target: Any) -> List[str]:
+        """提取 for 循环的目标变量名（支持多目标解包与嵌套目标）"""
+        if isinstance(target, (list, tuple)):
+            names: List[str] = []
+            for t in target:
+                names.extend(self._for_target_names(t))
+            return names
+        nm = getattr(target, 'id', None) or getattr(target, 'name', None)
+        return [nm] if nm else []
     
     def _evaluate_while_statement(self, stmt: WhileStmt) -> Any:
         """求值 while 循环语句
@@ -603,21 +786,29 @@ class ComptimeEvaluator:
 # 配置日志记录器
 _comptime_logger = logging.getLogger('cypyc.comptime')
 
+
 def evaluate_comptime(node: ASTNode, evaluator: Optional[ComptimeEvaluator] = None) -> Optional[Any]:
     """编译期求值入口函数
-    
+
     Args:
         node: AST 节点
         evaluator: 可选的求值器实例（用于共享函数注册）
-        
+
     Returns:
-        求值结果，如果无法求值返回 None
+        求值结果（纯 Python 值），如果无法求值返回 None
+
+    Raises:
+        ComptimeNotImplementedError: 命中文档标注「未实现」的形态（`comptime:` 块形式）。
+            这不是「不是常量」，所以不走返回 None 的降级口径 —— 调用方要把它当诊断处理
+            （带行列号、措辞含「未实现」），而不是让异常文本冒充诊断。
     """
     if evaluator is None:
         evaluator = ComptimeEvaluator()
-    
+
     try:
         return evaluator.evaluate(node)
+    except ComptimeNotImplementedError:
+        raise
     except (ValueError, TypeError, ZeroDivisionError) as e:
         # 记录警告日志，便于调试
         _comptime_logger.warning(f"Comptime evaluation failed: {e}")

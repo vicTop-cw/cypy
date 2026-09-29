@@ -1,6 +1,6 @@
 
 # 数组操作集成示例
-def sum_array(arr: list[int]) -> int:
+def sum_array(arr: list<int>) -> int:
     total: int = 0
     for item in arr:
         total += item

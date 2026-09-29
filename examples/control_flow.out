@@ -1,0 +1,32 @@
+Good!
+For loop:
+  i = 0
+  i = 1
+  i = 2
+  i = 3
+  i = 4
+For loop with step:
+  i = 0
+  i = 2
+  i = 4
+  i = 6
+  i = 8
+List iteration:
+  fruit: apple
+  fruit: banana
+  fruit: cherry
+While loop:
+  count = 0
+  count = 1
+  count = 2
+  count = 3
+  count = 4
+Break and continue:
+  i = 0
+  i = 1
+  i = 2
+  i = 4
+  i = 5
+  i = 6
+Match statement:
+Two

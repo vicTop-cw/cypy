@@ -12,6 +12,16 @@ import argparse
 import sys
 import os
 
+# 修复 Windows 控制台编码问题（GBK 无法输出 ✓/⚠ 等 Unicode 字符）
+# ——与 scripts/run_tests.py:17-22 对齐；此前 --category integration 同步 3 个
+# DEMO 成功后会在打印 ✓ 时 UnicodeEncodeError 崩溃。
+if sys.platform == 'win32':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    except (AttributeError, ValueError):
+        pass
+
 # 添加项目根目录到路径
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
@@ -128,6 +138,17 @@ def main():
         
         total_demos = sum(len(files) for files in synced.values())
         print(f"\n✓ Total {total_demos} DEMO files synced")
+        
+        # FIX T0r61.5.2 (defect 4): DemoWriter 只写不删——把目录中"本次运行没有任何
+        # 测试生成点"的文件列为 orphan 报告出来，让流水线的漂移可见、可被守卫测试钉住。
+        generated = {os.path.abspath(p) for files in synced.values() for p in files}
+        orphans = [p for p in demo_writer.list_demos(args.category)
+                   if os.path.abspath(p) not in generated]
+        if orphans:
+            print(f"\n⚠ {len(orphans)} DEMO file(s) have no generating site in this run "
+                  "(stale/orphan; DemoWriter never deletes):")
+            for path in orphans:
+                print(f"  ? {path}")
     else:
         print("\nNo DEMO examples found")
     

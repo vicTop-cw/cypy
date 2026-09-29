@@ -2,6 +2,8 @@
 
 import os
 import sys
+import time
+import threading
 import importlib
 import tempfile
 import shutil
@@ -10,6 +12,26 @@ from dataclasses import dataclass
 from .file_monitor import CypyFileMonitor, FileChangeEvent
 from .incremental_manager import IncrementalCompiler, IncrementalResult
 from .dependency_graph import DependencyGraph
+
+
+def _safe_rmtree(path: str, max_retries: int = 5, delay: float = 0.1) -> None:
+    """健壮地删除目录，容忍 Windows 上刚导入的 .pyd 文件锁。
+
+    在 Windows 上，模块被 import 后其 .pyd 文件会被锁定，立即删除会抛出
+    PermissionError。稍作等待后操作系统通常会释放锁，因此这里做有限次重试，
+    重试仍失败则静默放弃（避免中断热重载流程）。
+    """
+    for attempt in range(max_retries):
+        try:
+            if os.path.exists(path):
+                shutil.rmtree(path)
+            return
+        except (PermissionError, OSError):
+            if attempt < max_retries - 1:
+                time.sleep(delay)
+            else:
+                # 最终仍失败：静默忽略（Windows 会在模块卸载后由系统回收）
+                pass
 
 
 @dataclass
@@ -21,12 +43,27 @@ class HotReloadResult:
     affected_definitions: Set[str] = None
     errors: List[str] = None
     state_preserved: bool = False
-    
+    published_artifacts: List[str] = None
+
     def __post_init__(self):
         if self.errors is None:
             self.errors = []
         if self.affected_definitions is None:
             self.affected_definitions = set()
+        if self.published_artifacts is None:
+            self.published_artifacts = []
+
+
+def _warn_state(action: str, name: str, exc: BaseException) -> None:
+    """缺了状态的热重载模块会带着空洞继续跑，失败必须可见。"""
+    import sys
+    print(f"[cypy][warn] 热重载状态{action}跳过 {name}: {exc}", file=sys.stderr)
+
+
+def _warn_parse(stage: str, source_path: str, exc: BaseException) -> None:
+    """解析失败会让缓存/依赖图缺边，漏重载比报错更难查，必须点名源文件。"""
+    import sys
+    print(f"[cypy][warn] 热重载{stage}解析失败 {source_path}: {exc}", file=sys.stderr)
 
 
 class CypyProxyModule:
@@ -86,8 +123,8 @@ class CypyProxyModule:
                     elif isinstance(value, type):
                         # 保存类定义（但不保存类的实例）
                         self._state_cache[name] = value
-                except Exception:
-                    pass
+                except Exception as exc:
+                    _warn_state("快照", name, exc)
     
     def _restore_state(self):
         """恢复模块状态"""
@@ -101,8 +138,8 @@ class CypyProxyModule:
                     # 只恢复非函数/非类的状态（函数和类应该使用新的定义）
                     if not callable(current_value) and not isinstance(current_value, type):
                         setattr(self._actual_module, name, value)
-                except Exception:
-                    pass
+                except Exception as exc:
+                    _warn_state("回滚", name, exc)
     
     def _enable_cache(self, enable: bool = True):
         """启用/禁用属性缓存"""
@@ -161,16 +198,30 @@ class CypyProxyModule:
 
 class HotReloadEngine:
     """热重载引擎"""
-    
-    def __init__(self, hook, incremental_compiler=None):
+
+    # 编译串行锁放在**类**上：setuptools 的中间产物固定落在进程共享的
+    # `build\lib.win-amd64-cpython-313\`，冲突面是整个进程而非单个引擎，
+    # 两个引擎并发编译会互删对方的产物（`can't copy ... doesn't exist`
+    # 或 `cl.exe failed with exit code 1`）。
+    # 两者都必须是类属性：既有测试用 `HotReloadEngine.__new__` 绕过 __init__
+    # 造对象，只在 __init__ 里赋的实例属性在那条路径上不存在。
+    _compile_lock = threading.RLock()
+    _artifact_dir: Optional[str] = None
+
+    def __init__(self, hook, incremental_compiler=None, artifact_dir: Optional[str] = None):
         """
         初始化热重载引擎
         
         参数:
             hook: CypyHook实例
             incremental_compiler: IncrementalCompiler实例（可选）
+            artifact_dir: 编译产物发布目录（可选）。热重载为绕开 Windows 文件锁
+                在临时目录里编译，默认产物随临时目录消失；给了这个目录就把
+                .pyx/.pyd 复制过去，让 `-o/--output`（"Output directory for
+                compiled files"）在 watch 路径上名副其实。
         """
         self._hook = hook
+        self._artifact_dir = artifact_dir
         
         # 使用传入的增量编译器，或从hook中获取
         if incremental_compiler:
@@ -223,8 +274,8 @@ class HotReloadEngine:
                     # 只保存可序列化的简单类型
                     if isinstance(value, (int, float, str, bool, tuple, list, dict, set)):
                         state[name] = value
-                except Exception:
-                    pass
+                except Exception as exc:
+                    _warn_state("快照", name, exc)
         
         self._module_state[module_name] = state
     
@@ -248,8 +299,8 @@ class HotReloadEngine:
             if not hasattr(module, name) or getattr(module, name) != value:
                 try:
                     setattr(module, name, value)
-                except Exception:
-                    pass
+                except Exception as exc:
+                    _warn_state("回滚", name, exc)
     
     def _get_module_name_from_path(self, source_path: str) -> str:
         """从源文件路径获取模块名称"""
@@ -260,6 +311,39 @@ class HotReloadEngine:
             return basename[:-3]
         return os.path.splitext(basename)[0]
     
+    def _publish_artifacts(self, temp_dir: str, pyd_path: str) -> List[str]:
+        """把本次编译产物（.pyx/.pyd）发布到 `artifact_dir`；没设目录时是空操作。
+
+        复制失败必须可见（Windows 上 .pyd 可能仍被已加载模块锁住），
+        但不因此判整次热重载失败——重载本身已经成功，缺的只是"落一份给用户看"。
+        """
+        if not self._artifact_dir:
+            return []
+        published: List[str] = []
+        try:
+            os.makedirs(self._artifact_dir, exist_ok=True)
+        except OSError as exc:
+            print(f"[HotReload] 产物目录创建失败 {self._artifact_dir}: {exc}")
+            return []
+        candidates = [pyd_path]
+        for name in sorted(os.listdir(temp_dir)):
+            if name.endswith(('.pyx', '.pyd')):
+                candidates.append(os.path.join(temp_dir, name))
+        seen_dests: Set[str] = set()
+        for src_path in candidates:
+            if not src_path or not os.path.isfile(src_path):
+                continue
+            dest = os.path.join(self._artifact_dir, os.path.basename(src_path))
+            if os.path.abspath(dest) == os.path.abspath(src_path) or dest in seen_dests:
+                continue
+            seen_dests.add(dest)
+            try:
+                shutil.copy2(src_path, dest)
+                published.append(dest)
+            except OSError as exc:
+                print(f"[HotReload] 产物发布失败 {os.path.basename(src_path)}: {exc}")
+        return published
+
     def _compile_and_reload_module(self, source_path: str) -> HotReloadResult:
         """编译并重新加载单个模块（使用代理模式）"""
         module_name = self._get_module_name_from_path(source_path)
@@ -272,7 +356,10 @@ class HotReloadEngine:
         
         try:
             # 编译为.pyd（强制重新编译，跳过增量编译缓存）
-            result = self._hook.compile_to_pyd(source_path, output_dir=temp_dir, force_recompile=True)
+            with self._compile_lock:
+                result = self._hook.compile_to_pyd(
+                    source_path, output_dir=temp_dir, force_recompile=True
+                )
             
             if not result.success or not result.pyd_path:
                 # 恢复状态
@@ -288,6 +375,9 @@ class HotReloadEngine:
             # 更新缓存
             if self._cache_manager:
                 self._cache_manager.cache_pyd(source_path, result.pyd_path)
+
+            # 发布产物到用户指定的输出目录（临时目录稍后会删掉）
+            published = self._publish_artifacts(temp_dir, result.pyd_path)
             
             # 更新增量编译缓存
             if self._incremental_compiler:
@@ -302,8 +392,9 @@ class HotReloadEngine:
                     lexer = Lexer(source_code)
                     new_ast = Parser(lexer.tokenize()).parse()
                     self._incremental_compiler.update_cache(source_path, new_ast)
-                except Exception:
-                    pass  # 解析失败不影响热重载
+                except Exception as exc:
+                    # 继续热重载，但缓存缺边必须可见（BUG-10）
+                    _warn_parse("增量缓存更新", source_path, exc)
             
             # 重新导入模块
             module_dir = os.path.dirname(result.pyd_path)
@@ -349,7 +440,8 @@ class HotReloadEngine:
                         recompiled_modules=[module_name],
                         updated_modules=[module_name],
                         affected_definitions=affected_definitions,
-                        state_preserved=True
+                        state_preserved=True,
+                        published_artifacts=published
                     )
                 else:
                     self._restore_module_state(module_name)
@@ -358,7 +450,8 @@ class HotReloadEngine:
                         recompiled_modules=[],
                         updated_modules=[],
                         errors=[f"Failed to create spec for '{result.pyd_path}'"],
-                        state_preserved=True
+                        state_preserved=True,
+                        published_artifacts=published
                     )
             except Exception as e:
                 self._restore_module_state(module_name)
@@ -367,15 +460,13 @@ class HotReloadEngine:
                     recompiled_modules=[],
                     updated_modules=[],
                     errors=[f"Failed to reload module '{module_name}': {e}"],
-                    state_preserved=True
+                    state_preserved=True,
+                    published_artifacts=published
                 )
         
         finally:
-            # 清理临时目录（忽略Windows文件锁定错误）
-            try:
-                shutil.rmtree(temp_dir)
-            except Exception:
-                pass
+            # 清理临时目录（容忍Windows文件锁定：导入后的.pyd可能被锁，稍后重试）
+            _safe_rmtree(temp_dir)
     
     def _find_affected_modules(self, changed_module: str) -> Set[str]:
         """查找所有受变更影响的模块（包括传递依赖）"""
@@ -430,8 +521,9 @@ class HotReloadEngine:
                                 if imported_name not in self._module_dependencies:
                                     self._module_dependencies[imported_name] = set()
                                 self._module_dependencies[imported_name].add(module_name)
-        except Exception:
-            pass  # 解析失败不影响热重载
+        except Exception as exc:
+            # 继续热重载，但依赖边缺失会让依赖方漏重载，必须点名源文件（BUG-10）
+            _warn_parse("依赖分析", source_path, exc)
     
     def _handle_file_changes(self, events: List[FileChangeEvent]) -> None:
         """处理文件变更事件"""
@@ -495,29 +587,39 @@ class HotReloadEngine:
                     success=all(r.success for r in results),
                     recompiled_modules=[m for r in results for m in r.recompiled_modules],
                     updated_modules=[m for r in results for m in r.updated_modules],
-                    affected_definitions=set.union(*[r.affected_definitions for r in results]),
+                    # BUG-27: set.union 是未绑定方法，results 为空（纯删除批次）时抛
+                    # TypeError 并被下面的 except 误报成「用户回调出错」。
+                    affected_definitions=set().union(*[r.affected_definitions for r in results]),
                     errors=[e for r in results for e in r.errors],
-                    state_preserved=all(r.state_preserved for r in results)
+                    state_preserved=all(r.state_preserved for r in results),
+                    published_artifacts=[p for r in results for p in r.published_artifacts]
                 )
                 self._on_reload(merged_result)
             except Exception as e:
                 print(f"[HotReload] Callback error: {e}")
     
-    def start(self, watch_dirs: List[str], on_reload: Optional[Callable[[HotReloadResult], None]] = None):
+    def start(
+        self,
+        watch_dirs: List[str],
+        on_reload: Optional[Callable[[HotReloadResult], None]] = None,
+        debounce_delay: Optional[float] = None,
+    ):
         """
         启动热重载引擎
         
         参数:
             watch_dirs: 要监控的目录列表
             on_reload: 热重载完成后的回调函数
+            debounce_delay: 防抖延迟（秒）；不传则沿用监控器默认的 0.5
         """
         self._on_reload = on_reload
         
         # 创建文件监控器
+        monitor_kwargs = {} if debounce_delay is None else {"debounce_delay": debounce_delay}
         self._monitor = CypyFileMonitor(
             watch_dirs=watch_dirs,
             callback=self._handle_file_changes,
-            debounce_delay=0.5
+            **monitor_kwargs
         )
         
         # 启动监控器

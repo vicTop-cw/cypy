@@ -5,7 +5,9 @@ class TypeMapper:
     def __init__(self):
         self.cypy_to_cython: Dict[str, str] = {
             "int": "int",
-            "float": "float",
+            # BUG-14 裁决（2026-09-26）：float 跟随 Python 双精度。此前本表出 C float（32 位）、
+            # cypy_to_c 出 double，同一个声明类型在一次产物里两种宽度。
+            "float": "double",
             "str": "str",
             "bool": "bool",
             "None": "None",

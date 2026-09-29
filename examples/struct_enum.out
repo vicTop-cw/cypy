@@ -1,0 +1,12 @@
+p1: (1, 2)
+p2: (3, 4)
+p1 + p2: (4, 6)
+Rectangle area: 50
+Color: 1
+Color value: 1
+Color name: Green
+Immutable point: (10, 20)
+Mutable point after update: (15, 5)
+Circumference: 31.4159
+Contains (3, 4): True
+Contains (6, 0): False

@@ -3,7 +3,9 @@
 
 负责检查构建块（BuildBlockExpr）的语义正确性：
 1. 构建块内部默认unsafe，允许指针语法
-2. 指针语法只能在构建块内部使用
+2. 指针语法不限于构建块内部：按 SYNTAX/04-pointer-types.md「指针使用限制」的口径，
+   指针声明的合法位置是**函数作用域**，构建块只是其中一种。
+   指针的寻址合法性与所有权/defer 清理检查在 `pointer_checker`，本模块不重复把关。
 3. BuildParams trait 约束验证
 4. guard 语句和提前返回检查
 5. yield 语句只能在生成器构建块中使用

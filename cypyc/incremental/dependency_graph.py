@@ -1,12 +1,18 @@
 """依赖图构建器 - 追踪定义之间的依赖关系"""
 
-from typing import Dict, Set, List, Optional
+from typing import Any, Dict, Set, List, Optional
 from cypyc.parser.parser import ASTNode, FuncDef, StructDef, EnumDef, TypeAlias, ExceptionDef, TraitDef
 
 
 class DependencyGraph:
     """定义级别的依赖图"""
-    
+
+    # 标识符节点的类型词表：parser 把标识符降级为 kind="Name" 的 Name 节点
+    # (cypyc/parser/parser.py, class Name)，载荷在 .id 上；解析结果里从来不存在
+    # kind="Identifier" 的节点（IDENTIFIER 只是 lexer 的 token 类型）。
+    # 'Identifier' 作为别名保留，兼容手工构造/历史遗留节点，不再作为唯一匹配项。
+    _IDENTIFIER_KINDS = frozenset({'Name', 'Identifier'})
+
     def __init__(self):
         # 依赖映射: definition_name -> set(dependent_definition_names)
         self._dependencies: Dict[str, Set[str]] = {}
@@ -14,12 +20,26 @@ class DependencyGraph:
         self._reverse_dependencies: Dict[str, Set[str]] = {}
         # 定义类型映射: definition_name -> definition_type
         self._definition_types: Dict[str, str] = {}
-    
+
+    @classmethod
+    def _node_identifier(cls, value: Any) -> Optional[str]:
+        """若 value 是承载标识符的节点则返回其 .id，否则返回 None"""
+        if isinstance(value, ASTNode) and getattr(value, 'kind', None) in cls._IDENTIFIER_KINDS:
+            identifier = getattr(value, 'id', None)
+            if isinstance(identifier, str):
+                return identifier
+        return None
+
     def _extract_identifier_usage(self, node: ASTNode) -> Set[str]:
         """从AST节点中提取所有标识符使用"""
         identifiers = set()
         
         if isinstance(node, ASTNode):
+            # 节点自身就是标识符（例如字段/参数/返回类型直接就是 Name 注解）
+            own_identifier = self._node_identifier(node)
+            if own_identifier is not None:
+                identifiers.add(own_identifier)
+
             # 遍历所有属性
             for attr_name in dir(node):
                 if attr_name.startswith('_'):
@@ -27,10 +47,10 @@ class DependencyGraph:
                 
                 attr_value = getattr(node, attr_name)
                 
-                # 如果是Identifier节点
-                if hasattr(attr_value, 'kind') and attr_value.kind == 'Identifier':
-                    if hasattr(attr_value, 'id'):
-                        identifiers.add(attr_value.id)
+                # 如果是标识符节点（Name，兼容 Identifier）
+                identifier = self._node_identifier(attr_value)
+                if identifier is not None:
+                    identifiers.add(identifier)
                 
                 # 如果是列表或元组，递归处理
                 elif isinstance(attr_value, (list, tuple)):
@@ -42,7 +62,14 @@ class DependencyGraph:
                     identifiers.update(self._extract_identifier_usage(attr_value))
         
         return identifiers
-    
+
+    @staticmethod
+    def _exclude_self_and_generics(definition: ASTNode, dependencies: Set[str]) -> Set[str]:
+        """排除定义自身名称与其泛型形参（泛型形参不是真实依赖，见 FuncDef 分支）"""
+        excluded = {definition.name}
+        excluded.update(getattr(definition, 'generic_params', None) or [])
+        return dependencies - excluded
+
     def _analyze_definition_dependencies(self, definition: ASTNode) -> Set[str]:
         """分析单个定义的依赖关系"""
         dependencies = set()
@@ -65,7 +92,7 @@ class DependencyGraph:
                 dependencies.update(self._extract_identifier_usage(constraint))
             
             # 合并并排除函数自身名称和泛型参数
-            dependencies = (dependencies | body_usage) - {definition.name} - set(definition.generic_params)
+            dependencies = self._exclude_self_and_generics(definition, dependencies | body_usage)
         
         elif isinstance(definition, StructDef):
             # 字段类型注解中的依赖
@@ -82,7 +109,7 @@ class DependencyGraph:
                 dependencies.update(self._analyze_definition_dependencies(method))
             
             # 排除结构体自身名称和泛型参数
-            dependencies -= {definition.name} - set(definition.generic_params)
+            dependencies = self._exclude_self_and_generics(definition, dependencies)
         
         elif isinstance(definition, EnumDef):
             # 变体值中的依赖
@@ -104,8 +131,7 @@ class DependencyGraph:
                     dependencies.update(self._extract_identifier_usage(constraint))
             
             # 排除类型别名自身名称和泛型参数
-            generic_params = getattr(definition, 'generic_params', [])
-            dependencies -= {definition.name} - set(generic_params)
+            dependencies = self._exclude_self_and_generics(definition, dependencies)
         
         elif isinstance(definition, ExceptionDef):
             # 基础类型中的依赖
@@ -125,8 +151,8 @@ class DependencyGraph:
             for method in definition.methods:
                 dependencies.update(self._analyze_definition_dependencies(method))
             
-            # 排除trait自身名称
-            dependencies -= {definition.name}
+            # 排除trait自身名称和泛型参数
+            dependencies = self._exclude_self_and_generics(definition, dependencies)
         
         return dependencies
     

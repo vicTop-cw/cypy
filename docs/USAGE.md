@@ -16,7 +16,7 @@ Cypy 是一门类 Python 语法的编译型语言，源码写 `.cypy`，经 `cyp
 
 | 组件 | 要求 |
 |------|------|
-| Python | ≥ 3.8 |
+| Python | ≥ 3.9（以 `pyproject.toml` 的 `requires-python` 为准） |
 | Cython | ≥ 3.0.0 |
 | setuptools | ≥ 60.0 |
 | watchdog | ≥ 3.0.0（仅 `watch` 需要） |
@@ -64,6 +64,7 @@ python -c "import cypyc, cypy_hook; print(cypyc.__version__)"
 cypyc transpile demo.cypy
 cypyc transpile demo.cypy -o build          # 指定输出目录
 cypyc transpile demo.cypy --emit-cython     # 在终端打印生成的 .pyx 代码
+cypyc transpile demo.cypy --emit-code       # 打印生成的代码（Cython 模式下与 --emit-cython 同义）
 cypyc transpile demo.cypy --emit-ast        # 打印 AST
 cypyc transpile demo.cypy --check-only      # 仅做静态分析/类型检查，不生成代码
 cypyc transpile demo.cypy --bridge          # 使用 bridge 编译器生成 C 代码（而非 Cython）
@@ -111,17 +112,38 @@ cypyc build ./myproject --check-only    # 仅做全项目类型检查
 ```bash
 cypyc watch ./myproject
 cypyc watch ./myproject --debounce 0.3   # 文件变更防抖时延（秒）
+cypyc watch ./myproject -o ./build       # 每批重编译后把 .pyx/.pyd 复制到这个目录
 ```
+
+每次成功批次会在 stdout 打一行 `[Watch] Published N artifact(s) to <目录>: <文件名>`；
+编译失败时打 `[Watch] No artifacts published ...` 并逐条列出错误，不会静默。
+产物先编译到临时目录（绕开 Windows 对已加载 .pyd 的文件锁），再复制进 `-o`；
+同一 `watch` 进程内的多个变更批次串行编译，避免互相踩共享的 `build/` 中间目录。
 
 ### 2.6 `hook` —— Python 导入钩子管理
 
 让普通 Python 进程能直接 `import` 带 Cypy 标记的 `.py` 文件：
 
 ```bash
-cypyc hook install        # 安装 import hook（写入用户 sitecustomize / 注册）
-cypyc hook uninstall      # 卸载
-cypyc hook status         # 查看是否已安装
+cypyc hook install        # 在**当前进程**内注册 import hook（不写盘、不跨进程生效）
+cypyc hook uninstall      # 在当前进程内注销
+cypyc hook status         # 报告当前进程内是否已注册
 cypyc hook clear-cache    # 清除 Cypy 编译缓存（__pycache__/cypy）
+cypyc hook --transpile-only  # 只转译不编译
+cypyc hook --compile      # 编译指定源文件
+cypyc hook --run FUNC     # 编译后运行指定函数
+cypyc hook --eval CODE    # 直接求值一段 Cypy 代码
+cypyc hook -o, --output DIR  # 指定产物目录
+```
+
+> 上面这几个选项由 argparse 现读（`cypyc hook --help`），不是手抄：文档与 `--help` 不一致就是缺陷。
+
+`hook install` 不会修改 sitecustomize、`.pth` 或任何注册表项：import hook 只能装进正在运行的解释器，
+所以 CLI 进程退出后它随之消失。要在自己的进程里获得该能力，在启动路径上显式调用：
+
+```python
+import cypy_hook
+cypy_hook.install_hook()   # uninstall_hook() / is_hook_installed() 同级可用
 ```
 
 ---
@@ -234,7 +256,7 @@ from cypy_hook import CypyHook
 
 hook = CypyHook()
 value = hook.eval("let x: int = 21 * 2\nx")
-print(value)   # 42
+print(value)   # 今天打印的是编译后 import 进来的模块对象，不是 42
 ```
 
 ### 3.7 完整示例（带错误处理）
@@ -315,7 +337,7 @@ compiler = ProjectCompiler(project_root="./myproject", output_dir="output")
 result = compiler.build(entry_point="main")   # entry_point 可空，编译全部
 
 if result.success:
-    print("构建成功:", result.output_files)
+    print("构建成功:", result.pyd_paths)   # 字段名以 ProjectCompileResult 的实际声明为准
 else:
     print("构建失败:", result.errors)
 ```
@@ -345,11 +367,12 @@ else:
 name = "cypyc"
 version = "0.1.0"
 description = "Cypy compiler - A Python-like language that compiles to Cython"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = ["Cython>=3.0.0", "setuptools>=60.0", "watchdog>=3.0.0"]
 
 [project.scripts]
-cypyc = "cypy_hook.hook:main"     # 安装后注册 cypyc 命令
+cypyc = "cypyc.cli:main"            # 安装后注册 cypyc 命令
+cypy-hook = "cypy_hook.hook:main"  # 安装后注册 cypy-hook 命令
 ```
 
 > 发布前建议：把 `version` 与 `cypyc/__init__.py` 中的 `__version__` 保持一致；
@@ -388,7 +411,7 @@ python -c "from cypy_hook import CypyHook; print(CypyHook().transpile('let x=1')
 3. **编译需要 C 编译器**：`compile` / `build` / `run` 依赖本机 MSVC(gcc)，仅 `transpile`/`--check-only` 不需要。
 4. **`constraint` / `subtype` / `dispatch` 尚未实现**（v0.5 计划），联合类型可用 `type Numeric = int | float`。
 5. **CLI 自动识别**：若首参是 `.cypy`/`.py` 文件且非子命令，会自动当作 `transpile`，如 `cypyc demo.cypy`。
-6. **缓存命中**：`transpile_file` / `compile_to_pyd` 默认增量编译，源未变会复用 `.pyd`；调试时可用 `force_recompile=True` 或 `cypyc hook clear-cache`。
+6. **增量缓存只到转译层，`.pyd` 每次都重编译**：同一源、同一 `output_dir` 连调两次 `compile_to_pyd` 实测 `.pyd` 的 mtime 变化、`CypyCacheManager.get_cached_pyd()` 恒返回 `None`，且同一次调用会连打「缓存命中」与「缓存未命中」两行（两套缓存存储不同源，见 `memory/bugs.md` 的 BUG-73）；`force_recompile=True` 与默认路径同样重编译。清缓存用 `cypyc hook clear-cache`。
 7. **导入 Hook 标记**：仅首行 `#!bin cypy` 的 `.py` 文件会被 `cypy_hook` 的 MetaPathFinder 拦截编译。
 
 ---

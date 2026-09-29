@@ -339,3 +339,39 @@ def test_comptime_nested_operations():
     
     result = evaluate_comptime(comptime_stmts[0].expr)
     assert result == 18
+
+
+# ---------------------------------------------------------------------------
+# OMEGA T0r61.3.2 永久回归：comptime 逻辑运算符的边界取值
+# 缺陷：BinOp 先把左右两边都算完再分派 -> `False and (1/0)` 抛异常并被吞成 None。
+# 短路修复后必须保持 Python 的取值语义（返回操作数本身，而不是布尔化结果）。
+# ---------------------------------------------------------------------------
+def _comptime_value(source: str):
+    lexer = Lexer(source)
+    parser = Parser(lexer.tokenize())
+    ast = parser.parse()
+    
+    from cypyc.utils.ast_utils import ASTUtils
+    comptime_stmts = ASTUtils.collect_nodes(ast, 'ComptimeStmt')
+    assert len(comptime_stmts) == 1
+    return evaluate_comptime(comptime_stmts[0].expr)
+
+
+def test_comptime_falsy_non_bool_short_circuits():
+    """非布尔的假值同样要短路，并且返回该假值本身"""
+    assert _comptime_value('comptime: 0 and (1/0)') == 0
+    assert _comptime_value('comptime: "" or "fallback"') == "fallback"
+
+
+def test_comptime_chained_and_or_short_circuits():
+    """链式 and/or（左结合）在第一个假值处就停下来"""
+    assert _comptime_value('comptime: True and False and (1/0)') is False
+    assert _comptime_value('comptime: False or False or 7') == 7
+    assert _comptime_value('comptime: (1 or 0) and 5') == 5
+
+
+def test_comptime_undefined_symbol_still_not_a_constant():
+    """真正无法求值的表达式仍然按"非常量"返回 None（不能因为短路改动而崩溃）"""
+    assert _comptime_value('comptime: totally_unknown_symbol') is None
+    # 短路之后未求值的右侧即使含未定义符号也不影响结果
+    assert _comptime_value('comptime: False and totally_unknown_symbol') is False

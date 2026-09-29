@@ -71,8 +71,13 @@ class GilState:
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """上下文管理器退出：重新获取GIL"""
-        self.acquire()
+        """上下文管理器退出：重新获取GIL
+        
+        区域内已自行 acquire 时不得再 acquire —— 否则 NoGilError 会顶掉用户正在
+        抛出的异常（与本模块 NoGilContext 修过的嵌套缺陷同一族）。
+        """
+        if self._released:
+            self.acquire()
         return False
 
 
@@ -101,17 +106,51 @@ class NoGilContext:
     """nogil上下文管理器和装饰器
     
     模拟Cython的nogil关键字，允许在代码块或函数中标记不需要GIL的区域。
+    
+    可重入：模块级单例 `nogil`、@nogil 装饰器与 nogil_exec() 都可以嵌套使用。
+    每一层进入都创建自己的 GilState 并压入本线程的栈，退出时只释放自己那一层，
+    因此内层不会提前 acquire 外层的 GIL 状态（旧实现把状态存在共享的
+    `self._state` 上，内层覆盖后外层退出即抛 NoGilError("GIL is not released")，
+    并把用户的异常替换掉）。
     """
+    
+    def __init__(self):
+        # 每线程一条状态栈：既解决嵌套覆盖，也避免多线程共用单例时互相踩状态
+        self._local = threading.local()
+    
+    @property
+    def _stack(self) -> list:
+        """当前线程的 nogil 状态栈（惰性创建）"""
+        stack = getattr(self._local, 'stack', None)
+        if stack is None:
+            stack = []
+            self._local.stack = stack
+        return stack
+    
+    @property
+    def _state(self) -> Optional[GilState]:
+        """当前（最内层）nogil区域的 GIL 状态；不在区域内时为 None"""
+        stack = self._stack
+        return stack[-1] if stack else None
+    
+    @property
+    def depth(self) -> int:
+        """当前 nogil 嵌套层数"""
+        return len(self._stack)
     
     def __enter__(self):
         """进入nogil区域"""
-        self._state = GilState()
-        self._state.release()
+        state = GilState()
+        state.release()
+        self._stack.append(state)
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """退出nogil区域"""
-        self._state.acquire()
+        """退出nogil区域（只释放本层，用户的异常原样抛出）"""
+        stack = self._stack
+        state = stack.pop() if stack else None
+        if state is not None:
+            state.acquire()
         return False
     
     def __call__(self, func: Callable) -> Callable:

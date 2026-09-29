@@ -1,0 +1,313 @@
+{
+  "op": "cypy.container.elements",
+  "version": "1.0",
+  "preconditions": [
+    "注解与字面量都是 `SYNTAX/02` 文档化的容器形态（`list<…>` / `tuple<…>` / 具名别名）",
+    "值侧推断出了元素类型（`_visit` 对 Tuple/ListLiteral 返回带 `generic_params` 的 Type）",
+    "两侧元素名都落在 `_SCALAR_ELEMENT_NAMES` 闭合标量表内，或两侧同名容器"
+  ],
+  "laws": [
+    "SYNTAX/02 容器元素位判定 规则 1/2/3：定长判个数与逐位、变长判元素位、数值加宽单向",
+    "SYNTAX/02 容器元素位判定 规则 4：四类占位（无元素信息 / object / None / 声明侧 object）一律放行",
+    "SYNTAX/02 容器元素位判定 规则 5-6：非闭合标量保守放行；dict 键值位不在本节范围",
+    "SYNTAX/12 类型别名「类型安全·编译时完全等价」：别名右端要展开到底（含别名套别名、联合形态）",
+    "赋值位与返回位共用 `_check_container_elements` 一份判定 ⇒ 两侧不得一边判一边不判"
+  ],
+  "tests": [
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let bad: tuple<bool, int> = (True, \"x\")\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Element 2 type mismatch: expected int, got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let bad: tuple<bool, int> = (1, 2)\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Element 1 type mismatch: expected bool, got int"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let bad: tuple<int, int> = (1,)\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Tuple element count mismatch: expected 2, got 1"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let bad: list<int> = [\"s\"]\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Element 1 type mismatch: expected int, got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let bad: list<list<int>> = [[\"s\"]]\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Element 1 type mismatch: expected int, got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let ok: list<float> = [1, 2]\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let bad: list<int> = [1.5]\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Element 1 type mismatch: expected int, got float"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: list<int> = list()\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: list<list<int>> = [[\"s\"], [1]]\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: tuple<bool, int> = (True, None)\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: list<int> = [1, \"s\"]\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: set<int> = set()\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Dog:\n    n: str\n\ndef f() -> int:\n    let x: list<Dog> = [Dog()]\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "trait Speak:\n    def say(self) -> int\n\nclass Dog:\n    n: str\n\ndef f() -> int:\n    let x: list<Speak> = [Dog()]\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, int> = {\"a\": \"b\"}\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Dict value type mismatch: expected int, got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> list<int>:\n    return [1, 2]\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> tuple<bool, int>:\n    return (True, \"x\")\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Return element 2 type mismatch: expected int, got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> list<int>:\n    return [1.5]\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Return element 1 type mismatch: expected int, got float"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type Result<T> = tuple<bool, T>\n\ndef f() -> int:\n    let ok: Result<int> = (True, 2)\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type Result<T> = tuple<bool, T>\n\ndef f() -> int:\n    let bad: Result<int> = (True, \"x\")\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Element 2 type mismatch: expected int, got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type Pair<T> = tuple<T, T>\ntype Triple<T> = Pair<Pair<T>>\n\ndef f() -> int:\n    let ok: Triple<int> = ((1, 2), (3, 4))\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type Pair<T> = tuple<T, T>\ntype Triple<T> = Pair<Pair<T>>\n\ndef f() -> int:\n    let bad: Triple<int> = ((1, 2), (\"x\", 4))\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Element 2 type mismatch: expected int, got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type ID = int\ntype Row = tuple<ID, int>\n\ndef f() -> int:\n    let bad: Row = (\"a\", 1)\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Element 1 type mismatch: expected int, got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type Loop<T> = Loop<T>\n\ndef f() -> int:\n    let x: Loop<int> = 1\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Type mismatch: expected Loop[int], got int"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type Maybe<T> = T | None\n\ndef f() -> int:\n    let ok: Maybe<int> = None\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type Maybe<T> = T | None\n\ndef f() -> int:\n    let ok: Maybe<int> = 3\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type Maybe<T> = T | None\n\ndef f() -> int:\n    let bad: Maybe<int> = \"s\"\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Type mismatch: expected Union[int, None], got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type ListOrSet<T> = list<T> | set<T>\n\ndef f() -> int:\n    let x: ListOrSet<int> = [1, 2]\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    }
+  ],
+  "fingerprint": "fnv1a64:f45c1ff0f323aec1"
+}

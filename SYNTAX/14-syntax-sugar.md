@@ -323,6 +323,18 @@ let even = numbers[::2]        # [0, 2, 4]
 let reversed = numbers[::-1]   # [5, 4, 3, 2, 1, 0]
 ```
 
+### 切片的类型规则（R9 补，2026-09-29）
+
+1. **切片的结果类型 = 被切容器自身的类型**（保持泛型参数）：`xs: list<int>` 的 `xs[1:3]` 仍是 `list<int>`，
+   `s: str` 的 `s[1:3]` 仍是 `str`；因此 `ys: list<int> = xs[1:3]` 必须无诊断，
+   而 `y: int = xs[1:3]` 必须报类型不符（`Type mismatch: expected int, got list[int]` 并带行列）。
+2. **只有下标形态才降到元素类型**：`xs[1]` 得 `int`；形态区分依据是解析器落地的
+   `{"slice": True, "start":…, "end":…, "step":…}`（`cypyc/parser/parser.py:3952-3991`），
+   语言里没有独立的 `Slice` AST 节点。
+3. 切片**不要求常量边界**，也不做越界判定（越界是运行期行为，与 Python 一致）；
+   元组的可变长切片形态（`tuple<int, ...>`）不在本节承诺范围内，见 `SYNTAX/17` 与账本中
+   「`tuple<int, ...>` 进不了解析器」那条。
+
 ## 解包语法
 
 ### 元组解包

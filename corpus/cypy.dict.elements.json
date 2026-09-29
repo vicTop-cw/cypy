@@ -1,0 +1,270 @@
+{
+  "op": "cypy.dict.elements",
+  "version": 1,
+  "preconditions": [
+    "cypyc 可导入",
+    "TypeChecker.check 在 parse 之后运行"
+  ],
+  "laws": [
+    "SYNTAX/02-type-annotations.md「字典字面量的键值位判定（R14 补）」规则 1-6",
+    "SYNTAX/02-type-annotations.md「容器元素位判定（R13 补）」规则 3-5（加宽、占位、保守集）"
+  ],
+  "tests": [
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let n: int = \"s\"\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Type mismatch: expected int, got str at 2:9"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let bad: list<int> = [\"s\"]\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Element 1 type mismatch: expected int, got str at 2:9"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, int> = {\"a\": \"b\"}\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Dict value type mismatch: expected int, got str at 2:9"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<int, str> = {\"a\": \"b\"}\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Dict key type mismatch: expected int, got str at 2:9"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> dict<str, int>:\n    return {\"a\": \"b\"}\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Return dict value type mismatch: expected int, got str at 3:1"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, list<int>> = {\"a\": [\"s\"]}\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Dict value type mismatch: expected int, got str at 2:9"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type Count = dict<str, int>\n\ndef f() -> int:\n    let bad: Count = {\"a\": \"b\"}\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Dict value type mismatch: expected int, got str at 4:9"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, dict<str, int>> = {\"a\": {\"b\": \"c\"}}\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Dict value type mismatch: expected int, got str at 2:9"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, int> = {True: 1}\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Dict key type mismatch: expected str, got bool at 2:9"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, int> = {\"a\": 1, \"b\": 2.5}\n    return 0\n"
+      },
+      "error": {
+        "errors": 1,
+        "contains": [
+          "Dict value type mismatch: expected int, got float at 2:9"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, int> = {\"a\": 1, \"b\": \"c\", 3: 4}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, float> = {\"a\": 1, \"b\": 2.5}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, int> = {}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, int> = {\"a\": 1}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, int> = {\"a\": 1, \"b\": \"c\"}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, float> = {\"a\": 1}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, int> = {\"a\": True}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Dog:\n    n: str\n\ndef f() -> int:\n    let x: dict<str, Dog> = {\"a\": Dog()}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let d = {\"a\": 1}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, list<int>> = {\"a\": [1]}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let x: dict<str, dict<str, int>> = {\"a\": {\"b\": 1}}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def g(d: dict<str, int>) -> int:\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> dict<str, int>:\n    let m: dict<str, int> = {}\n    return m\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f() -> int:\n    let d = {}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "type ID = str\n\ndef f() -> int:\n    let x: dict<ID, int> = {\"a\": 1}\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    }
+  ],
+  "fingerprint": "fnv1a64:de31b469f22cbed7"
+}

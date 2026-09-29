@@ -57,6 +57,17 @@ class ProjectCompiler:
         self._dependency_graph = ModuleDependencyGraph()
         self._source_files: Dict[str, str] = {}  # module_name -> file_path
         self._ast_cache: Dict[str, any] = {}  # module_name -> AST
+        # 解析失败的模块（诊断用；旧实现只在 verbose 日志里提一句就静默跳过）
+        self._parse_errors: Dict[str, str] = {}
+        # 由 `__init__.cypy` 得到的模块名（包），相对导入的基准层级需要这个信息
+        self._package_modules: Set[str] = set()
+        # 规范文件路径 -> 模块名（仅登记未被遮蔽的条目）
+        self._path_to_module: Dict[str, str] = {}
+        # 模块名冲突（`foo.cypy` 与 `foo/__init__.cypy`）：被遮蔽的文件与冲突记录
+        self._shadowed_files: Dict[str, str] = {}
+        self._name_collisions: List[Dict[str, str]] = []
+        # 导入解析诊断（未找到 / 歧义 / 越过顶层包）
+        self._import_diagnostics: List[str] = []
 
         os.makedirs(self._output_dir, exist_ok=True)
 
@@ -65,28 +76,88 @@ class ProjectCompiler:
             print(f"[ProjectCompiler] {message}")
 
     def discover_modules(self, directory: str = None) -> Dict[str, str]:
-        """扫描目录，发现所有 .cypy 模块"""
+        """扫描目录，发现所有 .cypy 模块
+
+        一个模块名可能对应两个文件：`foo.cypy` 与 `foo/__init__.cypy`。
+        旧实现直接 `discovered[module_name] = file_path`，后遍历到的那个静默覆盖前一个，
+        于是某个源文件凭空从项目里消失（既没有诊断也没有构建失败），而且结果依赖
+        os.walk 的遍历顺序。
+
+        现在的规则：
+        * 遍历顺序确定化（dirs / files 排序），同样的目录树永远得到同样的结果；
+        * 按 CPython 的语义 **包优先**：`__init__.cypy` 取得规范名 `foo`；
+        * 被遮蔽的文件不会被丢弃——它以 `<name>@shadowed:<相对路径>` 的键继续出现在
+          返回值中，同时记入 `self._name_collisions`，`build()` 会据此报错并终止构建。
+        """
         scan_dir = os.path.abspath(directory or self._project_root)
-        discovered = {}
+        discovered: Dict[str, str] = {}
+        # module_name -> (file_path, is_package)
+        canonical: Dict[str, Tuple[str, bool]] = {}
+
+        self._package_modules = set()
+        self._path_to_module = {}
+        self._shadowed_files = {}
+        self._name_collisions = []
 
         self._log(f"Scanning directory: {scan_dir}")
 
         for root, dirs, files in os.walk(scan_dir):
-            # 跳过常见的排除目录
-            dirs[:] = [d for d in dirs if d not in (
+            # 跳过常见的排除目录（排序保证遍历确定性）
+            dirs[:] = sorted(d for d in dirs if d not in (
                 '__pycache__', '.git', 'output', 'build', '.cypy_cache',
                 'node_modules', '.venv', 'venv'
-            )]
+            ))
 
-            for file in files:
-                if file.endswith('.cypy'):
-                    file_path = os.path.abspath(os.path.join(root, file))
-                    module_name = self._path_to_module_name(file_path, scan_dir)
+            for file in sorted(files):
+                if not file.endswith('.cypy'):
+                    continue
+
+                file_path = os.path.abspath(os.path.join(root, file))
+                module_name = self._path_to_module_name(file_path, scan_dir)
+                is_package = file == '__init__.cypy'
+
+                existing = canonical.get(module_name)
+                if existing is None:
+                    canonical[module_name] = (file_path, is_package)
                     discovered[module_name] = file_path
+                    self._path_to_module[file_path] = module_name
+                    if is_package:
+                        self._package_modules.add(module_name)
                     self._log(f"  Found module: {module_name} ({file_path})")
+                    continue
+
+                prev_path, prev_is_package = existing
+                if is_package and not prev_is_package:
+                    # 包优先：__init__.cypy 接管规范名，原先的模块文件转为被遮蔽
+                    shadowed_path = prev_path
+                    canonical[module_name] = (file_path, True)
+                    discovered[module_name] = file_path
+                    self._package_modules.add(module_name)
+                    self._path_to_module[file_path] = module_name
+                    self._path_to_module.pop(prev_path, None)
+                else:
+                    shadowed_path = file_path
+
+                shadow_key = "%s@shadowed:%s" % (
+                    module_name,
+                    os.path.relpath(shadowed_path, scan_dir).replace(os.sep, "."),
+                )
+                discovered[shadow_key] = shadowed_path
+                self._shadowed_files[shadow_key] = shadowed_path
+                self._name_collisions.append({
+                    "module_name": module_name,
+                    "kept": discovered[module_name],
+                    "shadowed": shadowed_path,
+                })
+                self._log(f"  Module-name collision on {module_name!r}: "
+                          f"kept {discovered[module_name]}, shadowed {shadowed_path}")
 
         self._source_files = discovered
         return discovered
+
+    def _is_package_module(self, module_name: str) -> bool:
+        """该模块名是否来自某个目录的 `__init__.cypy`（即一个包）"""
+        return module_name in self._package_modules
 
     def _path_to_module_name(self, file_path: str, base_dir: str) -> str:
         """将文件路径转换为模块名"""
@@ -121,6 +192,7 @@ class ProjectCompiler:
         from cypyc.parser.parser import Parser
 
         ast_cache = {}
+        self._parse_errors = {}
 
         for module_name, file_path in self._source_files.items():
             try:
@@ -137,6 +209,8 @@ class ProjectCompiler:
                 self._log(f"  Parsed: {module_name}")
 
             except Exception as e:
+                # 记录而不是只打日志：模块解析失败会让它从类型注册表和依赖图里消失
+                self._parse_errors[module_name] = str(e)
                 self._log(f"  Error parsing {module_name}: {e}")
 
         return ast_cache
@@ -192,32 +266,100 @@ class ProjectCompiler:
                             imports.append((module, names))
         return imports
 
+    def _note_import_diagnostic(self, message: str) -> None:
+        """记录一条导入解析诊断（未找到 / 歧义 / 越过顶层包），同一信息只记一次"""
+        if message not in self._import_diagnostics:
+            self._import_diagnostics.append(message)
+            self._log(f"  Import diagnostic: {message}")
+
     def _resolve_import_target(self, import_path: str, current_module: str) -> Optional[str]:
-        """解析导入路径到模块名"""
-        # 直接匹配
-        if import_path in self._source_files:
-            return import_path
+        """把导入路径解析成项目内的模块名
 
-        # 尝试相对导入
+        * 相对导入：按 CPython 的层级语义推导（见 :meth:`_resolve_relative_import`），
+          返回推导出的名字——是否存在由调用方判断（依赖图只对真实存在的模块建边）。
+        * 绝对导入：只接受精确模块名，或按项目根解析出的候选路径；
+          不再用 `mod_name.endswith('.' + import_path)` 这种模糊后缀匹配
+          （它会把 `pkg.mod` 绑到毫不相关的 `vendor.pkg.mod`，
+          同名模块存在多个时还会静默取 os.walk 的第一个命中）。
+          找不到或有多个候选时输出诊断并返回 None。
+        """
+        if not import_path:
+            return None
+
+        # 相对导入
         if import_path.startswith('.'):
-            # 相对导入
-            parts = import_path.lstrip('.').split('.')
-            dot_count = len(import_path) - len(import_path.lstrip('.'))
+            return self._resolve_relative_import(import_path, current_module)
 
-            # 获取当前模块的父级路径
-            current_parts = current_module.split('.')
-            if dot_count <= len(current_parts):
-                base_parts = current_parts[:len(current_parts) - dot_count + 1]
-                resolved = '.'.join(base_parts + parts)
-                if resolved in self._source_files:
-                    return resolved
-        else:
-            # 绝对导入 - 在所有模块中查找
-            for mod_name in self._source_files:
-                if mod_name == import_path or mod_name.endswith('.' + import_path):
-                    return mod_name
+        candidates: List[str] = []
 
+        # 1) 精确模块名
+        if import_path in self._source_files and '@shadowed:' not in import_path:
+            candidates.append(import_path)
+
+        # 2) 按项目根解析成路径（`a.b` -> <root>/a/b.cypy 或 <root>/a/b/__init__.cypy）
+        rel = import_path.replace('.', os.sep)
+        for path in (os.path.join(self._project_root, rel + '.cypy'),
+                     os.path.join(self._project_root, rel, '__init__.cypy')):
+            name = self._path_to_module.get(os.path.abspath(path))
+            if name and name not in candidates:
+                candidates.append(name)
+
+        if len(candidates) == 1:
+            return candidates[0]
+
+        if len(candidates) > 1:
+            self._note_import_diagnostic(
+                f"ambiguous import {import_path!r} in {current_module!r}: "
+                f"multiple candidates {sorted(candidates)}"
+            )
+            return None
+
+        self._note_import_diagnostic(
+            f"import {import_path!r} in {current_module!r} not found in project "
+            f"(it is not a .cypy module of this project)"
+        )
         return None
+
+    def _resolve_relative_import(self, import_path: str,
+                                 current_module: str) -> Optional[str]:
+        """解析 `.`/`..` 形式的相对导入
+
+        CPython 语义：level=N 的基准是“把当前模块往上剥 N-1 层后所在的那个包”。
+        也就是说，非包模块 `a.b.c` 里 `from .sib import y` 的基准是父包 `a.b`
+        （剥掉的层数是 N），而包自身 `a.b`（来自 `__init__.cypy`）里同样的写法
+        基准是 `a.b`（剥掉的层数是 N-1）。旧实现只有一条
+        `current_parts[:len - dot_count + 1]` 公式——那是包专用的，
+        因为 :meth:`_path_to_module_name` 把 `__init__` 的信息抹掉了；
+        于是叶子模块的相对导入整体下了一层，`pkg.sub.leaf` 里的 `.sib`
+        被解析成 `pkg.sub.leaf.sib`（解析不到，依赖边被静默丢弃），
+        `pkg.sub.leaf` 里的 `..sib` 被解析成 **错误的** `pkg.sub.sib`。
+        现在把“是不是包”从发现阶段带下来，两种情形各自正确。
+        """
+        stripped = import_path.lstrip('.')
+        tail = stripped.split('.') if stripped else []
+        dot_count = len(import_path) - len(stripped)
+
+        current_parts = current_module.split('.')
+        # 包自身就是基准（少剥一层）
+        keep = len(current_parts) - dot_count + (1 if self._is_package_module(current_module) else 0)
+
+        if keep < 0:
+            self._note_import_diagnostic(
+                f"attempted relative import {import_path!r} beyond top-level package "
+                f"(in {current_module!r})"
+            )
+            return None
+
+        base_parts = current_parts[:keep]
+        target_parts = base_parts + tail
+        if not target_parts:
+            self._note_import_diagnostic(
+                f"attempted relative import with no known parent package "
+                f"(in {current_module!r})"
+            )
+            return None
+
+        return '.'.join(target_parts)
 
     def collect_type_exports(self) -> TypeRegistry:
         """第一遍：收集所有模块的类型导出"""
@@ -332,19 +474,54 @@ class ProjectCompiler:
         return 'Any'
 
     def _get_type_str(self, type_node: any) -> str:
-        """获取类型节点的字符串表示"""
+        """获取类型节点的字符串表示
+
+        解析器类型位置产出的 kind 是 Name / GenericType / UnionType / PointerType /
+        RefType / VecType / Constant。旧实现里 ``kind == Identifier`` 与
+        ``kind == TypeAnnotation`` 两个分支从不命中——parser.py 从不产出这两种 kind
+        （IDENTIFIER 只是 lexer 的 token 类型，落到 AST 就是 Name），真正生效的一直是
+        末尾的 ``hasattr(type_node, 'id')`` 兜底，因此删掉死分支并补上此前被漏掉的
+        GenericType / UnionType / PointerType / VecType / 列表常量：
+        ``Vec[int]`` 以前返回 'Any'，``-> [int]``（Constant 包了一个 Name 列表）
+        以前返回 repr 出来的垃圾串 '[Name(line=1, col=20)]'。
+        """
         if type_node is None:
             return 'Any'
-        if hasattr(type_node, 'kind'):
-            if type_node.kind == 'Identifier':
-                return getattr(type_node, 'id', 'Any')
-            elif type_node.kind == 'TypeAnnotation':
-                if hasattr(type_node, 'annotation_type'):
-                    return self._get_type_str(type_node.annotation_type)
+        if isinstance(type_node, str):
+            return type_node
+
+        kind = getattr(type_node, 'kind', None)
+
+        if kind == 'GenericType':
+            args = getattr(type_node, 'args', None) or []
+            name = str(getattr(type_node, 'name', 'Any'))
+            if args:
+                return "%s[%s]" % (name, ",".join(self._get_type_str(a) for a in args))
+            return name
+
+        if kind == 'UnionType':
+            types = getattr(type_node, 'types', None) or []
+            if types:
+                return " | ".join(self._get_type_str(t) for t in types)
+            return 'Any'
+
+        if kind in ('PointerType', 'RefType'):
+            return "*%s" % self._get_type_str(getattr(type_node, 'base_type', None))
+
+        if kind == 'VecType':
+            return "vec[%s; %s]" % (self._get_type_str(getattr(type_node, 'element_type', None)),
+                                     getattr(type_node, 'size', 0))
+
         if hasattr(type_node, 'id'):
             return type_node.id
+
         if hasattr(type_node, 'value'):
-            return str(type_node.value)
+            value = type_node.value
+            if isinstance(value, (list, tuple)):
+                # 形如 `-> [int]` 的列表类型标注：逐个元素递归，避免 repr 泄漏 AST 对象
+                return "[%s]" % ",".join(self._get_type_str(v) for v in value)
+            return str(value)
+
         return 'Any'
 
     def type_check_module(self, module_name: str) -> Tuple[bool, List[str]]:
@@ -361,6 +538,7 @@ class ProjectCompiler:
             # 运行作用域分析
             scope_analyzer = ScopeAnalyzer()
             scope_analyzer.analyze(ast)
+            errors.extend(scope_analyzer.errors)
 
             # 运行类型检查
             type_checker = TypeChecker()
@@ -373,6 +551,8 @@ class ProjectCompiler:
             if hasattr(type_checker, 'errors'):
                 errors.extend(type_checker.errors)
 
+            # 作用域与类型两条通道对同一处会给出逐字相同的诊断（如 Undefined name）
+            errors = list(dict.fromkeys(errors))
             return len(errors) == 0, errors
 
         except Exception as e:
@@ -391,7 +571,9 @@ class ProjectCompiler:
                 return False, None, ["No AST for module"]
 
             # Step 1: 代码生成 (使用已有的 AST)
-            generator = CythonGenerator()
+            # BUG-90：项目模式知道每个模块的源路径，必须传给生成器——否则产物里没有
+            # `__name__`/`__file__`（生成器在无路径时不伪造身份）。
+            generator = CythonGenerator(self._source_files.get(module_name))
             generator.generate(ast)
             cython_code = "\n".join(generator.output)
 
@@ -416,10 +598,14 @@ class ProjectCompiler:
             old_cwd = os.getcwd()
             try:
                 os.chdir(module_output_dir)
+                # 与 cypy_hook.hook.compile_to_pyd 同一套 sys.path 隔离：
+                # 产物目录里与 stdlib 撞名的 .pyd 不得进入 setup.py 的导入路径。
+                from cypy_hook.hook import build_isolated_command, build_isolated_env
                 result = subprocess.run(
-                    [sys.executable, "setup.py", "build_ext", "--inplace"],
+                    build_isolated_command("setup.py", "build_ext", "--inplace"),
                     capture_output=True,
                     timeout=120,
+                    env=build_isolated_env(),
                 )
 
                 # 以字节读取并容错解码，避免 Windows 下默认 GBK 编码导致的
@@ -431,15 +617,18 @@ class ProjectCompiler:
                     errors.append(f"Build failed: {stderr_text[-500:]}")
                     return False, None, errors
 
-                # Step 5: 查找生成的 .pyd 文件
+                # Step 5: 查找生成的扩展模块（名字由解释器的 EXT_SUFFIX 决定，
+                # 不是固定的 .pyd；同时优先 --inplace 落在模块目录里的本次产物）
                 pyd_files = []
                 for root, dirs, files in os.walk(module_output_dir):
+                    dirs[:] = [d for d in dirs if d != "__pycache__"]
                     for file in files:
-                        if file.endswith(".pyd") or file.endswith(".so"):
+                        if file.endswith((".pyd", ".so", ".dll")):
                             pyd_files.append(os.path.abspath(os.path.join(root, file)))
 
-                if pyd_files:
-                    return True, pyd_files[0], []
+                picked = self._pick_extension(pyd_files, module_name, module_output_dir)
+                if picked:
+                    return True, picked, []
                 else:
                     errors.append("No .pyd file generated")
                     return False, None, errors
@@ -449,6 +638,37 @@ class ProjectCompiler:
 
         except Exception as e:
             return False, None, [str(e)]
+
+    @staticmethod
+    def _pick_extension(candidates: List[str], module_name: str,
+                        output_dir: str) -> Optional[str]:
+        """在本次构建的产物里挑出真正属于 module_name 的扩展模块
+
+        旧实现取 `pyd_files[0]`：遍历顺序决定结果，目录里残留的历史产物也可能被当成
+        本次产物回报。这里按 “本目录 > build/ 子目录” 和 “模块名 + EXT_SUFFIX > 同名前缀”
+        排序挑选。
+        """
+        if not candidates:
+            return None
+
+        import sysconfig
+        suffix = sysconfig.get_config_var("EXT_SUFFIX") or ".pyd"
+        stem = module_name.split('.')[-1]
+        out_abs = os.path.abspath(output_dir)
+
+        def score(path: str) -> Tuple[int, int]:
+            here = 0 if os.path.dirname(path) == out_abs else 1
+            named = 0 if os.path.basename(path) == stem + suffix else 1
+            return here + named, here
+
+        for path in sorted(candidates, key=lambda p: (score(p), p)):
+            base = os.path.basename(path)
+            if base == stem or base.startswith(stem + "."):
+                return path
+        # BUG-17: 名字全不匹配时必须返回 None —— 兜底返回 sorted()[0] 会把
+        # 别的模块或历史残留的 .pyd 当成本次该模块的产物，令「No .pyd file
+        # generated」永不触发，与本函数 docstring 声明的挑选目的相反。
+        return None
 
     def build(self, entry_point: str = None) -> ProjectCompileResult:
         """执行项目级编译
@@ -473,9 +693,29 @@ class ProjectCompiler:
             result.errors['_'] = ["No .cypy files found"]
             return result
 
+        # 模块名冲突（foo.cypy 与 foo/__init__.cypy 归一到同一个名字）：
+        # 让构建确定性地失败，而不是按 os.walk 顺序“留下一个、静默丢掉另一个”。
+        if self._name_collisions:
+            result.errors['_discovery'] = [
+                "module name collision: %r is provided by both %s and %s "
+                "(package __init__ wins; the shadowed file is registered as %s and is "
+                "not importable - rename one of them)"
+                % (c["module_name"], c["kept"], c["shadowed"],
+                   "%s@shadowed:..." % c["module_name"])
+                for c in self._name_collisions
+            ]
+            self._log(f"Error: module name collisions: {self._name_collisions}")
+            result.total_time = time.time() - start_time
+            return result
+
         # Step 2: 解析所有模块
         self._log("Step 2: Parsing all modules...")
         self.parse_all_modules()
+        for _name, _err in sorted(self._parse_errors.items()):
+            result.warnings.append(
+                f"module {_name!r} failed to parse and is skipped "
+                f"(no type exports, no dependency edges): {_err}"
+            )
 
         # Step 3: 构建依赖图
         self._log("Step 3: Building dependency graph...")
@@ -489,6 +729,9 @@ class ProjectCompiler:
                 f"Circular dependencies detected: {cycles}"
             )
             self._log(f"Warning: Circular dependencies detected: {cycles}")
+
+        # 导入解析诊断（未找到 / 歧义）作为警告暴露出来，不再静默
+        result.warnings.extend(self._import_diagnostics)
 
         # Step 4: 收集类型导出
         self._log("Step 4: Collecting type exports...")
@@ -504,10 +747,27 @@ class ProjectCompiler:
                 m for m in compilation_order
                 if m == entry_point or m in entry_deps
             ]
+            if not modules_to_compile:
+                result.errors['_entry_point'] = [
+                    f"entry_point {entry_point!r} resolved to nothing: it is not a "
+                    f"discovered module of this project "
+                    f"(known modules: {sorted(self._source_files)})"
+                ]
+
+        # 被拓扑排序（Kahn）丢弃的模块 = 还留在环里的模块，绝不等于“编译过了”
+        dropped_by_cycle = [
+            m for m in self._source_files
+            if m not in compilation_order and '@shadowed:' not in m
+        ]
+        if dropped_by_cycle:
+            result.errors['_cycles'] = [
+                f"{len(dropped_by_cycle)} module(s) were dropped from the compilation "
+                f"order because they take part in a dependency cycle: "
+                f"{sorted(dropped_by_cycle)} (cycles: {cycles})"
+            ]
 
         # Step 6: 逐模块类型检查和编译
         self._log(f"Step 5: Compiling {len(modules_to_compile)} modules...")
-        result.success = True
 
         for module_name in modules_to_compile:
             self._log(f"  Compiling: {module_name}")
@@ -531,8 +791,16 @@ class ProjectCompiler:
             else:
                 result.failed_modules.append(module_name)
                 result.errors[module_name] = compile_errors
-                result.success = False
                 self._log(f"    Compilation failed: {compile_errors}")
+
+        # 成功与否在编译循环 **之后** 计算：
+        # 旧实现在循环之前无条件 `result.success = True`，于是 modules_to_compile 为空
+        # （entry_point 写错、或全部模块都在环里被 Kahn 丢弃）时
+        # 回报 success=True / compiled_modules=[] / errors={}，CLI 打印 “Build succeeded”
+        # 而实际什么都没编译。
+        if modules_to_compile and not result.compiled_modules and not result.errors:
+            result.errors['_'] = ["no module was compiled"]
+        result.success = bool(result.compiled_modules) and not result.errors
 
         result.total_time = time.time() - start_time
 
@@ -563,8 +831,11 @@ class ProjectCompiler:
                 if module_name in self._source_files:
                     try:
                         self._reparse_module(module_name)
-                    except Exception:
-                        pass
+                    except Exception as exc:
+                        import sys
+                        print(f"[cypy][warn] 模块 {module_name} 增量重解析失败，"
+                              f"本次仍使用陈旧 AST，请全量重编以确认: {exc}",
+                              file=sys.stderr)
 
                 # 获取受影响的所有模块
                 affected_modules = self._dependency_graph.get_affected_modules({module_name})

@@ -391,3 +391,52 @@ def test_bang():
 
     # 验证带!后缀的标识符被正确处理
     assert "log!" in c_code
+
+
+def test_comptime_short_circuit_folds_instead_of_degrading_to_comment():
+    """OMEGA T0r61.3.2 永久回归：短路后的常量必须真的被折叠
+    
+    缺陷（comptime_evaluator 的 BinOp 先算两侧再分派）会让 evaluate_comptime() 把
+    `False and (1/0)` 判成"不是常量"并返回 None，cython_generator 的
+    _visit_ComptimeStmt 于是把整条语句降级成 `# comptime: ...` 注释——语句被静默丢掉。
+    """
+    from cypyc.codegen.cython_generator import CythonGenerator
+    
+    source = 'comptime: False and (1/0)\n'
+    lexer = Lexer(source)
+    parser = Parser(lexer.tokenize())
+    ast = parser.parse()
+    
+    code = CythonGenerator().generate(ast)
+    stripped = [line.strip() for line in code.splitlines()]
+    
+    assert "False" in stripped, code
+    assert not any(line.startswith("# comptime:") for line in stripped), code
+
+
+def test_comptime_or_short_circuit_folds_to_true():
+    """`comptime: True or (1/0)` 折叠成 True，同样不能退化成注释"""
+    from cypyc.codegen.cython_generator import CythonGenerator
+    
+    source = 'comptime: True or (1/0)\n'
+    lexer = Lexer(source)
+    parser = Parser(lexer.tokenize())
+    ast = parser.parse()
+    
+    code = CythonGenerator().generate(ast)
+    stripped = [line.strip() for line in code.splitlines()]
+    
+    assert "True" in stripped, code
+    assert not any(line.startswith("# comptime:") for line in stripped), code
+
+
+def test_comptime_arithmetic_still_folds():
+    """回归保护：普通算术常量折叠不受短路改动影响（40 + 2 -> 42）"""
+    from cypyc.codegen.cython_generator import CythonGenerator
+    
+    lexer = Lexer('comptime: 40 + 2\n')
+    ast = Parser(lexer.tokenize()).parse()
+    code = CythonGenerator().generate(ast)
+    stripped = [line.strip() for line in code.splitlines()]
+    assert "42" in stripped, code
+    assert not any(line.startswith("# comptime:") for line in stripped), code

@@ -1,5 +1,7 @@
 """测试提取器模式（参考Scala的unapply）以及优先级系统"""
 
+import re
+
 import pytest
 from cypyc.parser.lexer import Lexer
 from cypyc.parser.parser import Parser, ExtractorPattern, Pattern, Constant
@@ -190,26 +192,43 @@ def test_match(obj):
 
 
 def test_extractor_pattern_type_checker():
-    """测试提取器模式的类型检查"""
+    """提取器/位置模式的类型检查（SYNTAX/17「位置模式的元数与槽位规则」，2026-09-29 R7 更新）。
+
+    原用例断言「1 字段 + 2 实参」`not checker.errors`——那是把 BUG-92 的静默行为钉成了判据。
+    补了规范条款后本用例按规范**变严**：元数不符必须诊断，元数相符必须放行。
+    """
     from cypyc.analyzer.type_checker import TypeChecker
-    
-    source = '''struct Email:
-    address: str
-    
+
+    lexer = Lexer
+    parser_cls = Parser
+
+    def check(src):
+        chk = TypeChecker()
+        chk.check(parser_cls(list(lexer(src).tokenize())).parse())
+        return chk
+
+    # 对照格（合法）：字段数 == 实参数 ⇒ 不应有任何诊断
+    ok = check('''struct Email:
+    user: str
+    domain: str
+
 def test_match(email):
     match email:
         case Email(user, domain):
-            print(user, domain)'''
-    
-    lexer = Lexer(source)
-    tokens = list(lexer.tokenize())
-    parser = Parser(tokens)
-    ast = parser.parse()
-    
-    checker = TypeChecker()
-    checker.check(ast)
-    
-    assert not checker.errors
+            print(user, domain)''')
+    assert ok.errors == [], f"元数相符被误判：{ok.errors}"
+
+    # 拒绝格（BUG-92）：字段只有 1 个却解 2 个位置 ⇒ 必须报，且带行列
+    bad = check('''struct Email:
+    address: str
+
+def test_match(email):
+    match email:
+        case Email(user, domain):
+            print(user, domain)''')
+    assert any("Positional pattern 'Email'" in e for e in bad.errors), bad.errors
+    assert any(re.search(r"unpacks only 1 at \d+:\d+", e) for e in bad.errors), \
+        f"诊断缺少数或行列：{bad.errors}"
 
 
 def test_extractor_pattern_codegen():

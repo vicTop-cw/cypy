@@ -1,0 +1,4 @@
+duck Comparable find_max(3, 7) = 7
+duck Numeric add_values(2, 5) = 7
+duck Comparable sort passthrough = [3, 1, 2]
+duck-named-widget

@@ -1,4 +1,5 @@
 import re
+from math import gcd as _gcd
 from typing import Optional, Tuple
 
 
@@ -27,11 +28,14 @@ class IndentDetector:
                 self.indent_size = 4
                 return self.indent_type, self.indent_size
 
+        # BUG-28: 观测到多种宽度时一律取 4，会让 2 空格风格的第一层体在
+        # normalize() 的 `indent // size` 里塌成 0 层（块结构被毁）。层数单位应是
+        # 观测宽度的最大公约数：{2,4}->2、{3,6}->3、{4,8}->4。
         common_indents = set(indent_counts)
-        if len(common_indents) == 1:
-            self.indent_size = list(common_indents)[0]
-        else:
-            self.indent_size = 4
+        size = 0
+        for value in sorted(common_indents):
+            size = value if not size else _gcd(size, value)
+        self.indent_size = size or 4
 
         self.indent_type = "spaces"
         return self.indent_type, self.indent_size
@@ -43,10 +47,18 @@ class IndentDetector:
         for line in lines:
             stripped = line.lstrip()
             if stripped:
-                original_indent = len(line) - len(stripped)
+                prefix = line[:len(line) - len(stripped)]
                 if self.indent_type == "tabs":
-                    new_indent = "\t" * (original_indent // 4)
+                    # 单位必须是“列”而不是“字符数”：cypyc/parser/lexer.py:419-420
+                    # 以 1 tab == 4 列展开，detect() 也因此对 tab 缩进报告
+                    # indent_size == 4。先把前导空白换算成列，再按 indent_size 取层，
+                    # 于是 1 个 tab -> 4 列 -> 1 层（旧实现直接用字符数 //4，
+                    # 使 1~3 个 tab 全部塌缩成 0 层）。
+                    size = self.indent_size or 4
+                    columns = sum(4 if ch == "\t" else 1 for ch in prefix)
+                    new_indent = "\t" * (columns // size)
                 else:
+                    original_indent = len(prefix)
                     new_indent = " " * self.indent_size * (original_indent // self.indent_size)
                 result.append(new_indent + stripped)
             else:

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="cypyc",
+        name="cypyc",
     version="0.1.0",
     description="Cypy compiler - A Python-like language that compiles to Cython",
     long_description=open("README.md", encoding="utf-8").read() if __file__.endswith(".py") else "",

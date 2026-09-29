@@ -53,7 +53,17 @@ class CypyMetaClass(type):
         return super().__new__(cls, name, bases, attrs)
     
     def __init__(cls, name: str, bases: Tuple[Type, ...], attrs: Dict[str, Any]) -> None:
-        """初始化类对象"""
+        """初始化类对象
+        
+        注意：当被创建的类本身就是一个 Cypy 元类（cls 是 CypyMetaClass 的子类，
+        例如 meta(SingletonMeta) 这种"把元类再实例化一次"的自应用场景）时，
+        零参数 super() 会走"类属性查找"，把 type.__init__ 取成**未绑定**的描述符，
+        于是第一个位置参数 name（一个 str）被当成 self，报
+        "descriptor '__init__' requires a 'type' object but received a 'str'"。
+        这种情况下解释器已经用 type.__new__ 把类型建好，跳过这次空初始化即可。
+        """
+        if issubclass(cls, CypyMetaClass):
+            return
         super().__init__(name, bases, attrs)
     
     def __call__(cls, *args, **kwargs) -> Any:
@@ -164,43 +174,76 @@ class SingletonMeta(CypyMetaClass):
             cls._instances.clear()
 
 
+# 从 vars(类) 复制命名空间时必须丢掉的描述符：它们是解释器为被装饰类自己生成的
+# __dict__/__weakref__ 槽位描述符，塞进新类会得到
+# "TypeError: __dict__ slot disallowed: we already got one"。
+_SLOT_DESCRIPTORS = ('__dict__', '__weakref__')
+
+
+def _class_namespace(target: Type) -> Dict[str, Any]:
+    """复制一个类的命名空间（丢掉实例槽位描述符）"""
+    return {k: v for k, v in vars(target).items() if k not in _SLOT_DESCRIPTORS}
+
+
+def _build_metaclass(body: Type, base: Type) -> Type:
+    """形式1：把 `body` 当作元类的"定义体"，造出一个真正的元类
+    
+    结果类继承自 `base`（默认 CypyMetaClass，是 type 的子类），所以
+    `issubclass(结果, type)` 为 True，可以直接写 `class C(metaclass=结果)`；
+    body 里自定义的 __new__/__init__/__call__ 也会被带走。
+    """
+    return type(body.__name__, (base,), _class_namespace(body))
+
+
+def _apply_metaclass(target: Type, metaclass: Type) -> Type:
+    """形式2：给 `target` 指定元类，保持类名/基类/属性不变
+    
+    结果仍然是一个"普通类"（不是元类），可以正常实例化。
+    """
+    return metaclass(target.__name__, target.__bases__, _class_namespace(target))
+
+
+def _is_metaclass(candidate: Any) -> bool:
+    """candidate 本身是否已经是一个元类（type 的子类）"""
+    return isinstance(candidate, type) and issubclass(candidate, type)
+
+
 def meta(cls: Type = None, *, base: Type = CypyMetaClass) -> Callable:
     """meta装饰器（类似Cython的meta关键字）
     
-    用于定义元类或为类指定元类。
+    三种形式（与文档一致，靠"目标是不是元类"来分派，而不是靠 cls is None）：
     
-    示例：
-        # 方式1：定义元类
+        # 形式1：定义元类（被装饰的是一个普通类，把它当成元类定义体）
         @meta
         class MyMeta:
             def __new__(cls, name, bases, attrs):
                 attrs['custom'] = True
                 return type(name, bases, attrs)
+        # issubclass(MyMeta, type) 为 True，可用于 class C(metaclass=MyMeta)
         
-        # 方式2：为类指定元类
+        # 形式2：为类指定元类（显式给出 base=）
         @meta(base=SingletonMeta)
         class MyClass:
             pass
+        # type(MyClass) is SingletonMeta，MyClass 仍可正常实例化
+        
+        # 形式3：位置参数直接调用
+        meta(SingletonMeta)   # 传进来的已经是元类 -> 把它作为元类应用
+        meta(SomeClass)       # 传进来的是普通类 -> 按形式1造元类
     """
-    def decorator(target: Type) -> Type:
-        if cls is None:
-            # 定义元类：创建一个继承自base的元类
-            class NewMeta(base):
-                pass
-            
-            # 复制目标类的方法到元类
-            for attr_name, attr_value in vars(target).items():
-                if not attr_name.startswith('__') or attr_name in ('__new__', '__init__', '__call__'):
-                    setattr(NewMeta, attr_name, attr_value)
-            
-            return NewMeta
-        else:
-            # 为类指定元类
-            return base(target.__name__, target.__bases__, dict(vars(target)))
-    
     if cls is None:
+        # 形式2：@meta / @meta(base=X) —— 返回装饰器，把 base 装成目标类的元类
+        def decorator(target: Type) -> Type:
+            return _apply_metaclass(target, base if _is_metaclass(base) else CypyMetaClass)
         return decorator
-    return decorator(cls)
+    
+    if _is_metaclass(cls):
+        # 形式3的"传进来的已经是元类"：它自己就是要安装的元类，
+        # 再把它当元类定义体去包装就等于丢掉调用方给的元类
+        return _apply_metaclass(cls, cls)
+    
+    # 形式1：@meta class M / meta(SomeClass) —— 把目标当作元类定义体
+    return _build_metaclass(cls, base if _is_metaclass(base) else CypyMetaClass)
 
 
 def cdef_meta(name: str, bases: Tuple[Type, ...] = (), **attrs) -> Type:

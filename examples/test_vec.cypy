@@ -1,4 +1,7 @@
-# Vec 类型测试
+# Vec（列表字面量 / 重复构造）测试
+#
+# T0r258.4.2：补 `def main() -> int:` 驱动，让两个 test_* 各出一行可观察输出
+#（此前该文件零输出，golden 是一份与其它 6 个示例逐字节相同的编译崩溃回溯）。
 
 def vec_sum(v: list) -> int:
     total = 0
@@ -13,3 +16,11 @@ def test_vec_literal() -> int:
 def test_vec_repeat() -> int:
     v = [0] * 5
     return len(v)
+
+def main() -> int:
+    print(f"vec literal sum = {test_vec_literal()}")
+    print(f"vec repeat len = {test_vec_repeat()}")
+    return 0
+
+if __name__ == "__main__":
+    main()

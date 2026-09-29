@@ -1,0 +1,56 @@
+# Cypy struct 定义、构造与字段访问示例
+#
+# T0r258.4.2 的三处非美化改动：
+#   1. 原名 `struct.cypy`：编译产物 output/struct.*.pyd 遮蔽 stdlib `struct`，
+#      曾让在 output/ 里执行的 setup.py 崩在 `import zipfile -> import struct`，
+#      并把同一份 traceback 冻结成 7 份 golden。通用防线见
+#      cypy_hook/hook.py 的 build_isolated_command()/build_isolated_env()，
+#      改名只是拆掉「示例名撞 stdlib 名」这个具体引信
+#      （机器可检守卫：tests/test_judge_strictness.py::TestStdlibNameCollision）。
+#   2. HEAD 原文是「只有字段声明的 struct」+ 让 struct 跨函数边界
+#      （`create_point(...) -> Point`、`calculate_area(rect: Rectangle)`）。
+#      codegen 把这种 struct 编成 `cdef struct`，而 `def` 函数的形参/返回值
+#      都不带类型，于是跨边界时被装箱成 dict，运行期报
+#      `'dict' object has no attribute 'width'`（Find_BUG/BUGS.md BUG-029）。
+#      这里给 struct 补上显式 `__init__`（= 编译成扩展类型，跨边界安全，
+#      与 examples/struct_enum.cypy 同一形态），原形态挂起到
+#      examples/_pending_type_defects.cypy。
+#   3. 驱动体改为 `def main() -> int:`：cypyc run 是 import 产物再调 main()，
+#      模块级 `let` 与 `if __name__` 守卫都不产生可观察输出 —— 这正是它此前
+#      「25 行编译器诊断当基准」的原因。
+
+struct Point:
+    x: int
+    y: int
+
+    def __init__(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
+
+struct Rectangle:
+    width: float
+    height: float
+
+    def __init__(self, width: float, height: float) -> None:
+        self.width = width
+        self.height = height
+
+def create_point(x: int, y: int) -> Point:
+    return Point(x=x, y=y)
+
+def calculate_area(rect: Rectangle) -> float:
+    return rect.width * rect.height
+
+def main() -> int:
+    let p = create_point(10, 20)
+    print(f"point = ({p.x}, {p.y})")
+
+    let rect = Rectangle(width=5.0, height=3.0)
+    print(f"rect = {rect.width} x {rect.height}")
+
+    let area = calculate_area(rect)
+    print(f"area = {area}")
+    return 0
+
+if __name__ == "__main__":
+    main()

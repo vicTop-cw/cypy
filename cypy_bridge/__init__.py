@@ -17,7 +17,7 @@ from .types import (
     cdef,
     cpdef,
     int_,
-    float_,
+    float32_,
     double_,
     bool_,
     str_,
@@ -81,8 +81,11 @@ from .union import (
     CUnion,
     CUnionType,
     cdef_union,
-    union,
 )
+# `union()` 函数不再被导入成包级属性：那样会把同名的 cypy_bridge.union 子模块遮蔽掉
+# （`cypy_bridge.union.CUnion` 之类写法就变成对一个函数取属性）。
+# 需要该函数时用 `from cypy_bridge.union import union`；包级名字 `union` 现在是子模块。
+from . import union  # noqa: E402  显式把名字绑定回子模块
 
 from .generics import (
     FusedType,
@@ -132,7 +135,7 @@ __all__ = [
     'cdef',
     'cpdef',
     'int_',
-    'float_',
+    'float32_',
     'double_',
     'bool_',
     'str_',

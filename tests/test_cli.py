@@ -58,5 +58,39 @@ class TestCLI(unittest.TestCase):
             self.assertEqual(result, 1)
 
 
+class TestRunRunReportsErrors(unittest.TestCase):
+    """`cypyc run` must not call a failed execution successful.
+
+    hook.run() folds run_module exceptions into result.errors while leaving
+    success=True; the CLI used to report "[OK] Execution successful" anyway,
+    which is how 13 golden examples rotted behind a green pytest run.
+    """
+
+    class Args:
+        source = "x.cypy"
+        output = "output"
+        verbose = False
+        func = "main"
+
+    def _hook(self, errors):
+        from cypy_hook.hook import CompileResult
+        res = CompileResult(success=True)
+        res.pyd_path = "x.pyd"
+        res.errors = errors
+        hook = MagicMock()
+        hook.run.return_value = (res, None if errors else 0)
+        return hook
+
+    def test_run_run_fails_when_hook_reports_errors(self):
+        from cypyc.cli import run_run
+        with patch("cypy_hook.hook.CypyHook", return_value=self._hook(["运行错误: DLL load failed"])):
+            self.assertEqual(run_run(self.Args()), 1)
+
+    def test_run_run_succeeds_without_errors(self):
+        from cypyc.cli import run_run
+        with patch("cypy_hook.hook.CypyHook", return_value=self._hook([])):
+            self.assertEqual(run_run(self.Args()), 0)
+
+
 if __name__ == "__main__":
     unittest.main()

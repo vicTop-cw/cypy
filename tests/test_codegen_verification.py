@@ -1,13 +1,12 @@
 # 代码生成验证测试
 # 验证生成的 Cython 代码语法有效性
 
-import pytest
 from cypy_hook.hook import CypyHook
 
 
 class TestCodegenVerification:
     """验证生成的 Cython 代码语法有效性"""
-    
+
     def test_struct_generation(self):
         """验证结构体代码生成（普通结构体使用 cdef struct）"""
         source = """struct Point:
@@ -19,24 +18,24 @@ def create_point() -> Point:
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         # 普通结构体使用 cdef struct
         assert "cdef struct Point:" in result.cython_code
         assert "int x" in result.cython_code
         assert "int y" in result.cython_code
-    
+
     def test_struct_with_methods(self):
         """验证带方法的结构体代码生成（使用 cdef class）"""
         source = """struct Vector:
     x: float
     y: float
-    
+
     def add(self, other: Vector) -> Vector:
         return Vector(x=self.x + other.x, y=self.y + other.y)
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         assert "cdef class Vector:" in result.cython_code
         assert "def __init__(self, x, y):" in result.cython_code
         assert "@cython.binding(False)" in result.cython_code
@@ -45,7 +44,7 @@ def create_point() -> Point:
         # cdef class 内的方法以 def 生成（保留方法体与返回构造）
         assert "def add(self, other):" in result.cython_code
         assert "Vector(x=self.x + other.x, y=self.y + other.y)" in result.cython_code
-    
+
     def test_struct_with_default_values(self):
         """验证带默认值的结构体代码生成（普通结构体使用 cdef struct）"""
         source = """struct Config:
@@ -54,14 +53,14 @@ def create_point() -> Point:
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         # 带默认值的结构体使用 cdef class（字段以 cdef public 声明，默认值在 __init__ 中）
         assert "cdef class Config:" in result.cython_code
         assert "cdef public str host" in result.cython_code
         assert "cdef public int port" in result.cython_code
         assert "host='localhost'" in result.cython_code
         assert "port=8080" in result.cython_code
-    
+
     def test_function_with_types(self):
         """验证带类型注解的函数代码生成"""
         source = """def add(a: int, b: int) -> int:
@@ -69,13 +68,13 @@ def create_point() -> Point:
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         # 模块级函数以普通 def 生成（剥离类型注解以避免 cpdef 闭包问题）
         assert "def add(a, b):" in result.cython_code
         assert "return a + b" in result.cython_code
         # 模块级函数不使用 @cython.binding(False)（否则无法作为模块属性访问）
         assert "@cython.binding(False)" not in result.cython_code
-    
+
     def test_enum_generation(self):
         """验证枚举代码生成"""
         source = """enum Color:
@@ -85,10 +84,10 @@ def create_point() -> Point:
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         assert "class Color(IntEnum):" in result.cython_code
         assert "RED = 1" in result.cython_code
-    
+
     def test_generic_struct(self):
         """验证泛型结构体代码生成"""
         source = """struct Box<T>:
@@ -96,9 +95,9 @@ def create_point() -> Point:
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         assert "cdef class Box:" in result.cython_code
-    
+
     def test_const_generation(self):
         """验证常量代码生成"""
         source = """const PI = 3.14159
@@ -106,11 +105,11 @@ const MAX_SIZE = 100
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         # const 生成普通模块级赋值（不再使用 cdef readonly）
         assert "PI = 3.14159" in result.cython_code
         assert "MAX_SIZE = 100" in result.cython_code
-    
+
     def test_pipeline_operator(self):
         """验证管道操作符代码生成"""
         source = """def add_one(x: int) -> int:
@@ -124,10 +123,10 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         # 管道操作符应该转换为函数调用
         assert "square(add_one(5))" in result.cython_code
-    
+
     def test_defer_statement(self):
         """验证 defer 语句代码生成"""
         source = """def safe_file():
@@ -138,13 +137,16 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
-        # 如果 defer 语句已实现，应该生成 try-finally
-        if result.success and result.cython_code:
-            assert "try:" in result.cython_code
-            assert "finally:" in result.cython_code
-            assert "f.close()" in result.cython_code
-    
+
+        # 声明面（SYNTAX/14-syntax-sugar.md:167-190、SYNTAX/04-pointer-types.md:59-63）只承诺
+        # "函数退出时自动执行"，从未承诺 try/finally。2026-09-28 指挥官裁决：本用例期望改成
+        # 声明面语义，并去掉 `if result.success` 守卫——守卫让整块断言在编译失败时静默空过。
+        # 异常路径下的清理（多出口只发一次）与其余 7 处同款守卫记在 BUG-76。
+        assert result.success, result.errors
+        code = result.cython_code
+        assert "f.close()" in code, code
+        assert code.rfind("f.close()") > code.rfind("f.write("), code
+
     def test_comptime_expression(self):
         """验证 comptime 表达式代码生成"""
         source = """def demo():
@@ -152,11 +154,11 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         # 如果 comptime 已实现，应该在编译期计算
         if result.success and result.cython_code:
             assert "value = 1024" in result.cython_code
-    
+
     def test_cython_directives(self):
         """验证 Cython 编译指令生成"""
         source = """def simple():
@@ -164,12 +166,12 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         assert "# cython: language_level=3" in result.cython_code
         assert "# cython: boundscheck=False" in result.cython_code
         assert "# cython: wraparound=False" in result.cython_code
         assert "import cython" in result.cython_code
-    
+
     def test_go_statement(self):
         """验证 go 语句代码生成"""
         source = """async def main():
@@ -177,12 +179,12 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         # 如果 go 语句已实现，应该生成 asyncio.create_task
         if result.success and result.cython_code:
             assert "asyncio.create_task" in result.cython_code
             assert "import asyncio" in result.cython_code
-    
+
     def test_spawn_statement(self):
         """验证 spawn 语句代码生成"""
         source = """def main():
@@ -190,10 +192,10 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         assert "threading.Thread" in result.cython_code
         assert "import threading" in result.cython_code
-    
+
     def test_match_statement(self):
         """验证 match 语句代码生成"""
         source = """def demo(x):
@@ -205,12 +207,12 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         # match 语句被转译为 if/elif 链（Cython 不直接支持 match 语法）
         assert "_match_subject_1 = x" in result.cython_code
         assert "if _match_subject_1 == 1:" in result.cython_code
         assert "elif _match_subject_1 == 2:" in result.cython_code
-    
+
     def test_fstring(self):
         """验证 f-string 代码生成"""
         source = """def demo(name: str):
@@ -218,9 +220,9 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         assert "f'Hello, {name}'" in result.cython_code
-    
+
     def test_list_comprehension(self):
         """验证列表推导式代码生成"""
         source = """def demo():
@@ -228,22 +230,24 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
-        # 如果列表推导式已实现
-        if result.success and result.cython_code:
-            assert "[x * 2 for x in range(10) if x % 2 == 0]" in result.cython_code
-    
+
+        # 守卫 `if result.success and result.cython_code:` 让整块断言在编译失败时静默空过
+        # （BUG-77），改成无条件断言：先钉转译成功，再钉产物形状。
+        assert result.success, result.errors
+        code = result.cython_code
+        assert "[x * 2 for x in range(10) if x % 2 == 0]" in code, code
+
     def test_type_alias(self):
         """验证类型别名代码生成"""
         source = """typealias Vector2D = tuple<float, float>
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         # 如果 typealias 已实现
         if result.success and result.cython_code:
             assert "Vector2D = tuple[float, float]" in result.cython_code
-    
+
     def test_let_statement(self):
         """验证 let 语句代码生成"""
         source = """def demo():
@@ -251,9 +255,9 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         assert "x: int = 10" in result.cython_code
-    
+
     def test_pointer_operations(self):
         """验证指针操作代码生成"""
         source = """def demo():
@@ -262,12 +266,12 @@ def compute():
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
+
         # 如果指针操作已实现
         if result.success and result.cython_code:
             assert "cdef int *ptr = &x" in result.cython_code
             assert "from libc.stdlib cimport malloc, free" in result.cython_code
-    
+
     def test_compile_time_constants(self):
         """验证编译期常量代码生成"""
         source = """const DEBUG = True
@@ -275,6 +279,6 @@ const VERSION = "1.0"
 """
         hook = CypyHook()
         result = hook.transpile(source)
-        
-        assert 'DEBUG = True' in result.cython_code
+
+        assert "DEBUG = True" in result.cython_code
         assert "VERSION = '1.0'" in result.cython_code

@@ -308,5 +308,61 @@ comptime def square(x: int) -> int:
         assert evaluator._call_comptime_function('square', [5]) == 25
 
 
+class TestComptimeShortCircuit:
+    """OMEGA T0r61.3.2 永久回归：comptime 的 and / or 必须短路
+    
+    缺陷：cypyc/analyzer/comptime_evaluator.py 的 BinOp 分支先把左右两边都算完再分派，
+    于是 `comptime: False and (1/0)` 抛 ZeroDivisionError -> evaluate_comptime() 把异常
+    吞成 None -> codegen 把整条语句降级成注释（语句被静默丢弃）。
+    """
+    
+    @staticmethod
+    def _eval(source: str):
+        lexer = Lexer(source)
+        parser = Parser(lexer.tokenize())
+        ast = parser.parse()
+        for stmt in ast.body:
+            if hasattr(stmt, 'expr'):
+                return ComptimeEvaluator().evaluate(stmt.expr)
+        raise AssertionError("no comptime statement in %r" % source)
+    
+    def test_and_does_not_evaluate_rhs_when_lhs_false(self):
+        """False and (1/0) -> False（修复前抛 ZeroDivisionError）"""
+        assert self._eval('comptime: False and (1/0)') is False
+    
+    def test_or_does_not_evaluate_rhs_when_lhs_true(self):
+        """True or (1/0) -> True"""
+        assert self._eval('comptime: True or (1/0)') is True
+    
+    def test_short_circuited_rhs_may_be_undefined(self):
+        """被短路掉的右侧连"未定义符号"都不该被求值"""
+        assert self._eval('comptime: False and undefined_symbol') is False
+        assert self._eval('comptime: True or undefined_symbol') is True
+    
+    def test_values_returned_by_and_or_unchanged(self):
+        """短路不能改变取值语义：True and 5 -> 5，False or 7 -> 7"""
+        assert self._eval('comptime: True and 5') == 5
+        assert self._eval('comptime: False or 7') == 7
+        assert self._eval('comptime: 1 == 1 and 2 == 2') is True
+        assert self._eval('comptime: False and True') is False
+        assert self._eval('comptime: True or False') is True
+    
+    def test_non_short_circuited_rhs_still_raises(self):
+        """真正需要右侧时，错误必须照旧抛出（不能被短路逻辑吞掉）"""
+        with pytest.raises(ZeroDivisionError):
+            self._eval('comptime: True and (1/0)')
+        with pytest.raises(ZeroDivisionError):
+            self._eval('comptime: False or (1/0)')
+    
+    def test_public_entry_returns_folded_value(self):
+        """evaluate_comptime() 不能把短路得到的常量当成"无法求值"返回 None"""
+        from cypyc.analyzer.comptime_evaluator import evaluate_comptime
+        
+        and_node = Parser(Lexer('comptime: False and (1/0)\n').tokenize()).parse().body[0]
+        or_node = Parser(Lexer('comptime: True or (1/0)\n').tokenize()).parse().body[0]
+        assert evaluate_comptime(and_node.expr) is False
+        assert evaluate_comptime(or_node.expr) is True
+
+
 if __name__ == '__main__':
     pytest.main([__file__, '-v'])

@@ -52,8 +52,8 @@ class TestTraitImplementation(unittest.TestCase):
         ast = parser.parse()
         generator = CythonGenerator()
         code = generator.generate(ast)
-        self.assertIn("def area(self) -> float:", code)
-        self.assertIn("def perimeter(self) -> float:", code)
+        self.assertIn("def area(self) -> double:", code)
+        self.assertIn("def perimeter(self) -> double:", code)
 
 
 class TestImplBlock(unittest.TestCase):
@@ -65,7 +65,7 @@ class TestImplBlock(unittest.TestCase):
         generator = CythonGenerator()
         code = generator.generate(ast)
         self.assertIn("_Shape__Circle", code)
-        self.assertIn("cpdef float area", code)
+        self.assertIn("cpdef double area", code)
 
 
 if __name__ == "__main__":

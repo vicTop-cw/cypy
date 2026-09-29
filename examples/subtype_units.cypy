@@ -1,0 +1,86 @@
+# subtype Name <: Base —— 名义子类型（SYNTAX/33 §3）
+#
+# `subtype` 给出的是**同一种表示、不同的身份**（S-2.1 / S-6）：`Meter` 在 C 层就是
+# `float`（S-4.1 零运行时表示：不发 ctypedef、不发 cdef class、不发注册表），
+# 但在类型层它是一个有名字的类型，于是可赋值性变成**单向**的（S-3.3）：
+#
+#   Meter → float      隐式放行（S-3.1 upcast）           —— main() 里的 `let raw`
+#   float → Meter      必须显式 `as`（S-3.2 / S-3.2.1）    —— `km_per` 里的 `m as Meter`
+#   Meter → Kilometer  永远拒绝（S-3.3 兄弟不可直转）      —— 见文件末注释的负例 N3
+#
+# 这三条是 `type Meter = float`（别名）给不出来的：别名对可赋值性透明，
+# 两个方向都会静默通过（实测基线 S2），所以下面 `km_per` 里那一次 `as` 不是仪式，
+# 而是「编译器在此处确实知道 Meter 不是 float」的唯一证据。
+subtype Meter <: float
+subtype Kilometer <: float
+
+# S-7.1 链式：CentiMeter <: Meter <: float，upcast 沿链传递，`as` 跨级放行
+subtype CentiMeter <: Meter
+
+# S-1.2 的基类型白名单不止内置标量：class 也能作基类型
+subtype OrderId <: int
+
+def area(side: Meter) -> float:
+    # 形参是 Meter；`CentiMeter` 与 `Meter` 一样是 float 的派生身份（S-3.1）
+    return side * side
+
+def km_per(m: float) -> Kilometer:
+    # S-3.2：float → Kilometer 是**下转**，必须写 `as`；少了它就是一条编译期错误
+    return (m / 1000.0) as Kilometer
+
+def raw_meters(k: Kilometer) -> float:
+    # S-3.1：Kilometer → float 是 upcast，隐式放行，不需要 `as`
+    return k * 1000.0
+
+# S-2.3：约束成员写 subtype 名字时是**名义**判定 —— float 不满足 `Length`，
+# 因为 `Length` 的成员是 Meter/Kilometer 这两个身份，不是它们的基类型。
+constraint Length = Meter | Kilometer
+
+def show<T: Length>(v: T) -> T:
+    return v
+
+def main() -> int:
+    # 字面量没有名义身份，所以直接用 float 字面量初始化 Meter 是放行的
+    let m: Meter = 2.5
+    let c: CentiMeter = 0.04
+    let id1: OrderId = 42
+
+    print(area(m))
+    print(area(c))
+    print(id1 + 8)
+
+    # S-3.1 upcast：Kilometer 的值可以直接交给 float 变量
+    let km: Kilometer = 1.5
+    let raw: float = raw_meters(km)
+    print(raw)
+
+    # S-3.2 downcast：同一个值要回到 Kilometer 就必须 `as`
+    let back: Kilometer = raw as Kilometer
+    print(back)
+
+    print(km_per(2500.0))
+    print(show(m))
+    print(show(km))
+
+    # ---- 负例（取消注释即看到对应条款的编译期诊断，而不是运行时炸）-------------
+    # N1（S-3.2.1）float → Meter 少了 `as`：
+    #   error: cannot assign 'float' to 'Meter': 'Meter' is a nominal subtype of 'float';
+    #          downcast requires an explicit 'f as Meter'
+    # let f: float = 3.0
+    # let bad: Meter = f
+    #
+    # N2（S-3.3）兄弟 subtype 互转：
+    #   error: cannot cast 'Meter' to 'Kilometer': nominal subtypes of the same base are
+    #          not mutually comparable; cast through the base 'float' in two steps
+    # print(m as Kilometer)
+    #
+    # N3（S-4.3）subtype 没有运行时类型对象：
+    #   error: 'Meter' is a subtype with no runtime type object; its runtime type is 'float'
+    # print(isinstance(m, Meter))
+    #
+    # N4（S-7.2）链深度上限 8：
+    #   error: subtype chain too deep (limit 8): S1 -> ... -> S9
+    #
+    # 上面 N2 的**两步**写法是允许的（显式承认跨单位）：
+    print((m as float) / 1000.0 as Kilometer)
+    return 0

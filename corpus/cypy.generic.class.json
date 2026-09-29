@@ -1,0 +1,348 @@
+{
+  "op": "cypy.generic.class",
+  "version": "1.0",
+  "definition": {
+    "signature": "class Name<T, U: Bound>[:|（Base）| extends Base] ；let b: Name<a1, a2> = Name<a1, a2>(args) ；b.member / b.method() 按位代入",
+    "note": "SYNTAX/11「泛型类的判定口径」规则 1-5：定义侧三种前缀与约束由 `_parse_type_param_list`一处实现（struct 同源）；使用侧元数由 `_generic_arity_diagnostic` 一处实现（调用点同源）；接收者的类型实参按声明顺序逐位代入成员/方法类型，裸名按擦除（object）；产物类头不留类型参数，也不留形式参数名。"
+  },
+  "preconditions": [
+    "类声明带 generic_params（`class Box<T>:` 及两种带基类的前缀）",
+    "类型实参是 `_parse_type()` 可解析的类型表达式",
+    "class 的成员是 `.body` 里的 LetStmt / FuncDef（不是 `.fields`）"
+  ],
+  "laws": [
+    "SYNTAX/11 泛型类的判定口径 规则 1",
+    "SYNTAX/11 泛型类的判定口径 规则 2",
+    "SYNTAX/11 泛型类的判定口径 规则 3",
+    "SYNTAX/11 泛型类的判定口径 规则 4",
+    "SYNTAX/11 泛型类的判定口径 规则 5"
+  ],
+  "tests": [
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box<int> = Box<int>(42)\n    return b.get()\n"
+      },
+      "expected": {
+        "errors": 0,
+        "stage": "ok"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Num<T: int | float>:\n    v: T\n\n    def get(self) -> T:\n        return self.v\n\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T> extends Base:\n    def get(self) -> T:\n        return self.content\n\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>(Base):\n    def get(self) -> T:\n        return self.content\n\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Plain:\n    content: int\n\n    def get(self) -> int:\n        return self.content\n\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<>:\n    def get(self) -> int:\n        return 0\n\n"
+      },
+      "error": {
+        "stage": "parse",
+        "contains": [
+          "Generic parameter list cannot be empty"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct Box<>:\n    value: int\n\n"
+      },
+      "error": {
+        "stage": "parse",
+        "contains": [
+          "Generic parameter list cannot be empty"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box<int> = Box<int>(42)\n    return b.get()\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box<int> = Box<int, str>(42)\n    return 0\n"
+      },
+      "error": {
+        "contains": [
+          "Type argument count mismatch: 'Box' declares 1 type parameter(s), got 2"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box<int, str> = Box<int>(42)\n    return 0\n"
+      },
+      "error": {
+        "contains": [
+          "Type argument count mismatch: 'Box' declares 1 type parameter(s), got 2"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Plain:\n    content: int\n\n    def get(self) -> int:\n        return self.content\n\n\ndef f() -> int:\n    let p: Plain<int> = Plain()\n    return 0\n"
+      },
+      "error": {
+        "contains": [
+          "Type arguments on non-generic 'Plain': it declares no type parameter, got 1"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box = Box(1)\n    return b.get()\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    bs: list<Box<int>> = []\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> str:\n    let b: Box<str> = Box<str>(\"x\")\n    return b.get()\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box<str> = Box<str>(\"x\")\n    return b.get()\n"
+      },
+      "error": {
+        "contains": [
+          "Return type mismatch: expected int, got str"
+        ],
+        "min_count": 1
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> str:\n    let b: Box<int> = Box<int>(42)\n    return b.content\n"
+      },
+      "error": {
+        "contains": [
+          "Return type mismatch: expected str, got int"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Pair<T, U>:\n    a: T\n    b: U\n\n    def first(self) -> T:\n        return self.a\n\n    def second(self) -> U:\n        return self.b\n\n\ndef f() -> int:\n    let p: Pair<int, str> = Pair()\n    return p.second()\n"
+      },
+      "error": {
+        "contains": [
+          "Return type mismatch: expected int, got str"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box<str> = Box<str>(\"x\")\n    return b.get()\n"
+      },
+      "error": {
+        "no_diagnostic_contains": [
+          "got T at",
+          "got T,"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box = Box(1)\n    return b.get()\n"
+      },
+      "expected": {
+        "errors": 0,
+        "no_arity_diagnostic": true
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Bag<T>:\n    def all(self) -> list<T>:\n        return self.items\n\n\ndef f() -> int:\n    let g: Bag<int> = Bag()\n    return g.all()\n"
+      },
+      "error": {
+        "min_count": 1,
+        "contains": [
+          "Return type mismatch: expected int, got"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Link<T>:\n    def next(self) -> Link<T>:\n        return self\n\n\ndef f() -> int:\n    let l: Link<int> = Link()\n    return l.next().next()\n"
+      },
+      "error": {
+        "contains": [
+          "Return type mismatch: expected int, got Link[int]"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "class Link<T>:\n    def next(self) -> Link<T>:\n        return self\n\n\n\ndef g() -> Link<int>:\n    let l: Link<int> = Link()\n    return l.next()\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct Wrap<T>:\n    value: T\n\n    def get(self) -> T:\n        return self.value\n\n\ndef f() -> str:\n    let w: Wrap<int> = Wrap(1)\n    return w.value\n"
+      },
+      "error": {
+        "contains": [
+          "Return type mismatch: expected str, got int"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "struct Wrap<T>:\n    value: T\n\n    def get(self) -> T:\n        return self.value\n\n\ndef f() -> int:\n    let w: Wrap = Wrap()\n    return w.value\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "class Box<T>:\n    def __init__(self, content: T):\n        self.content = content\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box<int> = Box<int>(42)\n    return b.get()\n"
+      },
+      "expected": {
+        "errors": 0,
+        "contains": [
+          "class Box:",
+          "def get(self):"
+        ],
+        "not_contains": [
+          "Box<T>",
+          "<int>",
+          "-> T",
+          "(int(),"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "class Pair<T, U>:\n    a: T\n    b: U\n\n    def first(self) -> T:\n        return self.a\n\n    def second(self) -> U:\n        return self.b\n\n\ndef f() -> str:\n    let p: Pair<int, str> = Pair()\n    return p.second()\n"
+      },
+      "expected": {
+        "contains": [
+          "class Pair:"
+        ],
+        "not_contains": [
+          "Pair<T",
+          "T, U",
+          "[int]"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "class Num<T: int | float>:\n    v: T\n\n    def get(self) -> T:\n        return self.v\n\n"
+      },
+      "expected": {
+        "contains": [
+          "class Num:"
+        ],
+        "not_contains": [
+          "Num<T",
+          "int | float"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box<int> = Box<int, str>(42)\n    return 0\n"
+      },
+      "error": {
+        "stage": "typecheck",
+        "contains": [
+          "Type argument count mismatch"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "class Box<T>:\n    content: T\n\n    def get(self) -> T:\n        return self.content\n\n\ndef f() -> int:\n    let b: Box<int> = Box<int>(42)\n    return b.get()\n"
+      },
+      "expected": {
+        "class_fields": {
+          "Box": [
+            "content"
+          ]
+        }
+      }
+    }
+  ],
+  "fingerprint": "fnv1a64:90f410a1d1cd0fd8"
+}

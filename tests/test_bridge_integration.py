@@ -350,6 +350,89 @@ def main() -> int:
         # finally应该执行，但return会覆盖finally中的赋值
         self.assertTrue(result is not None)
 
+    def test_sibling_try_finally_blocks(self):
+        """两个同级 try/finally（审计缺陷 01）
+
+        旧代码在每个 try 块里声明固定局部量 `_try_result` / `_try_result_obj` /
+        `_try_returned`，只有 goto 标签带 buildblock_counter 后缀，因此这种函数
+        在 MSVC 下是硬错误 C2374（重定义）——从来没能编译成功过。
+        """
+        code = '''def two_sibling() -> int:
+    try:
+        let a: int = 1
+    except ValueError as e1:
+        let b: int = 2
+    finally:
+        let c: int = 3
+
+    try:
+        let d: int = 4
+    except TypeError as e2:
+        let f: int = 5
+    finally:
+        let g: int = 6
+
+    return 0'''
+        if not shutil.which("cl"):
+            self.skipTest("需要 MSVC cl.exe 在 PATH 上")
+        module = self._compile_and_import(code, 'test_sibling_try_finally')
+        self.assertEqual(module.two_sibling(), 0)
+
+    def test_unmatched_exception_propagates(self):
+        """内层只接 ValueError 时 RuntimeError 必须逃出函数（审计缺陷 02）
+
+        旧代码在 except 子句的 if/else 之外无条件 PyErr_Clear()，非匹配分支的
+        `goto <内层>_finally` 又向前跳进外层处理器尾部，于是刚 PyErr_Restore 的
+        异常被擦掉：实测 .pyd 里 outer() 静默返回 0 且没有任何异常。
+        """
+        code = '''def outer() -> int:
+    try:
+        raise
+    except BaseException as oe:
+        try:
+            raise
+        except ValueError as ie:
+            let c: int = 3
+        finally:
+            let d: int = 4
+    finally:
+        let e2: int = 5
+    return 0'''
+        if not shutil.which("cl"):
+            self.skipTest("需要 MSVC cl.exe 在 PATH 上")
+        module = self._compile_and_import(code, 'test_unmatched_exception')
+        with self.assertRaises(RuntimeError):
+            module.outer()
+
+    def test_matched_exception_is_handled(self):
+        """匹配到的异常被消费：函数正常返回，且不残留挂起异常"""
+        code = '''def guarded(flag: int) -> int:
+    let out: int = 0
+    try:
+        raise ValueError("bad")
+    except ValueError as e:
+        out = 1
+    finally:
+        out = out + 1
+    return out'''
+        if not shutil.which("cl"):
+            self.skipTest("需要 MSVC cl.exe 在 PATH 上")
+        module = self._compile_and_import(code, 'test_matched_exception')
+        self.assertEqual(module.guarded(0), 2)
+
+    def test_pyobject_wrapper_returns_none_without_crash(self):
+        """PyObject* 返回值的包装器（审计缺陷 03）
+
+        旧代码 `Py_INCREF(_result); return _result;` 没有 NULL 判断：被调函数
+        `return NULL;` 时实测 .pyd 直接 0xC0000005 崩掉解释器。
+        """
+        code = '''def make_none() -> PyObject*:
+    return Py_None'''
+        if not shutil.which("cl"):
+            self.skipTest("需要 MSVC cl.exe 在 PATH 上")
+        module = self._compile_and_import(code, 'test_pyobject_wrapper')
+        self.assertIsNone(module.make_none())
+
     def test_raise(self):
         """测试raise语句"""
         code = '''def test_raise(should_raise: int) -> int:

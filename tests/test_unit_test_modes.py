@@ -1,7 +1,6 @@
 import unittest
 import tempfile
 import os
-import sys
 import shutil
 
 
@@ -101,14 +100,14 @@ class TestCompileMode(unittest.TestCase):
 
         # 检查步骤记录
         self.assertTrue(len(result.steps) > 0)
-        
-        if result.success:
-            self.assertIsNotNone(result.pyd_path)
-            self.assertTrue(os.path.exists(result.pyd_path))
-            self.assertTrue(result.pyd_path.endswith(".pyd") or result.pyd_path.endswith(".so"))
-        else:
-            # 如果编译失败（可能是环境问题），至少确保步骤记录完整
-            self.assertTrue(len(result.steps) > 0)
+
+        # 守卫 `if result.success:` 让整块断言在编译失败时静默空过（BUG-77），改成无条件断言。
+        # 原 else 分支的 `self.assertTrue(len(result.steps) > 0)` 与本方法上方那条断言逐字相同，
+        # 去掉分支不减少任何覆盖。
+        self.assertTrue(result.success, f"Compile failed: {result.errors}")
+        self.assertIsNotNone(result.pyd_path)
+        self.assertTrue(os.path.exists(result.pyd_path))
+        self.assertTrue(result.pyd_path.endswith(".pyd") or result.pyd_path.endswith(".so"))
 
     def test_run_module(self):
         """测试运行已编译模块"""
@@ -124,9 +123,9 @@ class TestCompileMode(unittest.TestCase):
 
         # 检查步骤记录
         self.assertTrue(len(result.steps) > 0)
-        
-        if result.success:
-            self.assertEqual(output, None)  # run返回的是编译结果，不是输出
+
+        # 守卫 `if result.success:` 让这条断言在编译失败时静默空过（BUG-77），改成无条件断言。
+        self.assertEqual(output, None)  # run返回的是编译结果，不是输出
 
 
 class TestHookIntegrationMode(unittest.TestCase):
@@ -158,7 +157,7 @@ def greet(name: str) -> str:
         if not result.success:
             print(f"Errors: {result.errors}")
             print(f"Steps: {result.steps}")
-        
+
         self.assertTrue(result.success, f"Compile failed: {result.errors}")
         self.assertIsNotNone(module)
         self.assertTrue(hasattr(module, "greet"))
@@ -196,11 +195,11 @@ class TestCLIModes(unittest.TestCase):
             f.write("def cli_func() -> int:\n    return 100\n")
 
         from cypy_hook.hook import CypyHook
-        
+
         hook = CypyHook()
         hook.set_output_dir(self.temp_dir)
         result = hook.transpile_file(source_path)
-        
+
         self.assertTrue(result.success)
         pyx_path = os.path.join(self.temp_dir, "cli_test.pyx")
         self.assertTrue(os.path.exists(pyx_path))

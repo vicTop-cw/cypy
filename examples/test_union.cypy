@@ -1,4 +1,7 @@
-# Union Type 测试
+# Union / object 类型透传测试
+#
+# T0r258.4.2：补 `def main() -> int:` 驱动，让 process_value 与 test_union 都有
+# 可观察输出（此前零输出，golden 是与其它 6 个示例逐字节相同的崩溃回溯）。
 
 def process_value(x: object) -> object:
     return x
@@ -6,4 +9,13 @@ def process_value(x: object) -> object:
 def test_union() -> int:
     x: object = 42
     y: object = "hello"
+    return len(str(x)) + len(str(y))
+
+def main() -> int:
+    print(f"union int passthrough = {process_value(42)}")
+    print(f"union str passthrough = {process_value('hello')}")
+    print(f"union test width = {test_union()}")
     return 0
+
+if __name__ == "__main__":
+    main()

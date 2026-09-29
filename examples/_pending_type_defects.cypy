@@ -1,0 +1,48 @@
+# ============================================================================
+# 显式挂起（下划线前缀 = e2e golden 判据的 `_*) continue` 约定，不跑、不注册基准）。
+# 这里放被未修复缺陷挡住的类型构造用例，它们曾经以另一种形式藏在绿灯里：
+# examples/struct.cypy（HEAD 原文）与 examples/struct_enum.cypy 的字符串枚举。
+#
+# 阻塞缺陷（最小复现与证据见 Find_BUG/BUGS.md）：
+#   BUG-028  字符串取值的 enum 成员在编译产物里触发
+#            `invalid literal for int() with base 10: 'pending'`（运行期崩溃），
+#            因为枚举底层类型被写死成 int。
+#   BUG-029  「只有字段声明、无显式 __init__」的 struct 被 codegen 编成
+#            `cdef struct`，而 `def` 函数的形参与返回值都不带类型，于是这种
+#            struct 一跨函数边界就被装箱成 dict：
+#              return Point(x, y)   ->  调用方拿到 {'x': .., 'y': ..}
+#              rect.width           ->  AttributeError: 'dict' object has ...
+#            关键字构造与定位构造都一样（同函数内的局部使用才正常）。
+#            带显式 __init__ 的 struct 编成扩展类型，跨边界安全 —— 见
+#            examples/struct_records.cypy / examples/struct_enum.cypy。
+# ============================================================================
+
+# ---------- BUG-029：字段式 struct 跨函数边界退化为 dict ----------
+
+struct Point2D:
+    x: int
+    y: int
+
+struct Rect:
+    width: float
+    height: float
+
+def create_point_kw(x: int, y: int) -> Point2D:
+    return Point2D(x=x, y=y)          # 返回值被装箱成 dict
+
+def create_point_pos(x: int, y: int) -> Point2D:
+    return Point2D(x, y)              # 定位构造同样被装箱
+
+def area_of(rect: Rect) -> float:
+    return rect.width * rect.height   # 'dict' object has no attribute 'width'
+
+
+# ---------- BUG-028：字符串取值枚举 ----------
+
+enum Status:
+    PENDING = "pending"
+    COMPLETED = "completed"
+    FAILED = "failed"
+
+def describe(status: Status) -> str:
+    return str(status.value)

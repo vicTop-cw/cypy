@@ -205,9 +205,10 @@ class ModuleDependencyGraph:
             cycle_modules = set()
             for cycle in cycles:
                 cycle_modules.update(cycle)
-            # 将循环依赖的模块放在最后
+            # 将循环依赖的模块放在最后（按名排序：`set` 的迭代序随进程字符串哈希
+            # 种子变化，直接 extend 会让同一张图给出不同推荐序）
             ordered = [m for m in sorted_modules if m not in cycle_modules]
-            ordered.extend(cycle_modules)
+            ordered.extend(sorted(cycle_modules))
             return ordered
         return sorted_modules
 

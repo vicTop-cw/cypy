@@ -5,7 +5,22 @@
 
 ## 关键字总览
 
-Cypy 关键字共 61 个，按用途分为 11 个类别。所有关键字均为保留字，不可作为标识符使用。
+**实测快照（2026-09-26 11:24）**：`python -c "from cypyc.parser.lexer import Lexer; print(len(Lexer.KEYWORDS))"`
+→ **65**。**修正前**本表下方分类表实测 **64** 行关键字行、去重 **61** 个词（`meta` / `mut` / `macro`
+各在两个类别里重复列了一次），也就是说本文件原写的「共 61 个」对应的是**旧词表 + 漏项**，已过期：
+`constraint` / `subtype` 由并发的实现轮（`T0r258.1.1` / `T0r258.2.1`）刚加进 `Lexer.KEYWORDS`，
+`true` / `false` 更早就在词表里（`cypyc/parser/lexer.py:232-233`）但本表一直没有列它们。
+**修正前**差集实测：`set(Lexer.KEYWORDS) - {本表行}` = `['constraint', 'false', 'subtype', 'true']`，
+反向差集为空（本表没有词表里不存在的词）。**补齐这四行后于 11:30 重测**：
+分类表 **68** 行 / 去重 **65** 词，双向差集均为 `[]`，文末速查表同样 65 词。
+
+按用途分为 11 个类别。所有关键字均为保留字，不可作为标识符使用。
+
+> **这张表会漂**：词表在特性轮里逐层落地（`dispatch` 本刻仍**不在** `Lexer.KEYWORDS`，故本表不列）。
+> 需要权威数字时，**以上面那条命令当场复测为准**，不要把本文任何总数当不变量；
+> 逐词清单同 `cypyc/parser/lexer.py` 的 `KEYWORDS` 字典一一对应（`True`/`False`/`true`/`false` 四个都映射到
+> `TokenType.TRUE` / `TokenType.FALSE`）。
+> 实现状态（哪层落地、哪层没落）只看 `SYNTAX_IMPLEMENTATION_STATUS.md`，不看本附录。
 
 > **注**：`True` / `False` 在词法分析中作为独立的 `TokenType.TRUE` / `TokenType.FALSE` 处理，但语义上属于布尔值关键字。
 
@@ -70,6 +85,8 @@ Cypy 关键字共 61 个，按用途分为 11 个类别。所有关键字均为�
 |--------|------|------|------|------|
 | `meta` | 类型/元 | `meta <block>` | 元编程块，编译期执行 | `meta: print("compiling")` |
 | `duck` | 类型 | `duck { ... }` | 鸭子类型约束块 | `duck { op "+"; attr "size" }` |
+| `constraint` | 类型 | `constraint Name = A \| B` | 命名类型约束。**本快照实测到的落地深度**：词法层有（`"constraint": TokenType.CONSTRAINT`，`cypyc/parser/lexer.py:189`）、语法层有（`parser.py:263` 的 `class ConstraintDef`，`TokenType.CONSTRAINT` 在 `parser.py` 被引用 2 处）、代码生成层**无**（`grep -c _visit_ConstraintDef cypyc/codegen/cython_generator.py` = 0）。语义规范见 `33-type-constraints-subtypes-dispatch.md`；状态声明以 `SYNTAX_IMPLEMENTATION_STATUS.md` §2.4 为准 | `constraint Numeric = int \| float` |
+| `subtype` | 类型 | `subtype A <: B` | 名义子类型声明。`T0r258.2.2` 已打通四层：词法 `"subtype": TokenType.SUBTYPE_KW`（`cypyc/parser/lexer.py:190`，`<:` 仍复用既有的 `TokenType.SUBTYPE`）、语法 `parser.py` 的 `class SubtypeDef` + `_parse_subtype_def`、分析 `type_checker.subtype_defs` + 边并入 `inheritance_map`（`scope_analyzer._visit_SubtypeDef` 走 C-3.1 重名护栏）、代码生成 `cython_generator._visit_SubtypeDef` **什么都不发**（S-4.1 零运行时表示）。语义规范见 `33-type-constraints-subtypes-dispatch.md` §3 | `subtype Square <: Shape` |
 | `is` | 类型/运算 | `x is T` 或 `x is None` | 身份/类型判断 | `if x is None: ...` |
 | `in` | 类型/运算 | `x in coll` | 成员测试 | `if key in dict: ...` |
 | `Never` | 类型 | `Never` | 永不返回类型（如抛异常、无限循环） | `def fail() -> Never: raise Error()` |
@@ -147,6 +164,8 @@ Cypy 关键字共 61 个，按用途分为 11 个类别。所有关键字均为�
 |--------|------|------|------|------|
 | `True` | 布尔 | `True` | 布尔真值 | `let ok = True` |
 | `False` | 布尔 | `False` | 布尔假值 | `let ok = False` |
+| `true` | 布尔 | `true` | 小写同义写法，`"true": TokenType.TRUE`（`cypyc/parser/lexer.py:232`）——本表原先漏了这一行 | `let ok = true` |
+| `false` | 布尔 | `false` | 小写同义写法，`"false": TokenType.FALSE`（`cypyc/parser/lexer.py:233`）——本表原先漏了这一行 | `let ok = false` |
 
 ---
 
@@ -172,16 +191,20 @@ Cypy 关键字共 61 个，按用途分为 11 个类别。所有关键字均为�
 
 ## 关键字速查表（按字母序）
 
+下表由 2026-09-26 11:24 的 `set(Lexer.KEYWORDS)`（**65** 个）直接生成，
+与上方分类表逐词一致；改词表后请重新生成，不要手补。
+
 ```
-and       as        assert    async     await     break     case
-class     comptime  const     continue  def       defer     del
-duck      elif      else      enum      except    extends   False
-finally   for       from      global    go        guard     if
-impl      import    in        is        lambda    let       macro
-match     meta      mut       Never     nonlocal  not       or
-owned     pass      raise     return    setup     spawn     struct
-suite     test      teardown  trait     True      try       type
-typeclass vec       while     with      yield
+and        as         assert     async      await      break      case
+class      comptime   const      constraint continue   def        defer
+del        duck       elif       else       enum       except     extends
+False      false      finally    for        from       global     go
+guard      if         impl       import     in         is         lambda
+let        macro      match      meta       mut        Never      nonlocal
+not        or         owned      pass       raise      return     setup
+spawn      struct     subtype    suite      teardown   test       trait
+True       true       try        type       typeclass  vec        while
+with       yield
 ```
 
 ## 备注
@@ -191,3 +214,10 @@ typeclass vec       while     with      yield
 3. **`meta` 双重用途**：既属于类型系统（元编程块），也属于元编程关键字，依据上下文区分。
 4. **`and`/`or`/`not`/`is`/`in`** 在词法层是关键字，但在语法层作为运算符使用，参见附录 B。
 5. **`vec` 关键字与 `vec!` 宏调用**：`vec` 单独用于类型 `vec[T; N]`；`vec!` 是 `vec` + `!`（BANG），用于 SIMD 字面量。
+6. **本附录不声明实现状态**：某词进了 `Lexer.KEYWORDS` 只说明它是**保留字**，不说明 parser / codegen 已支持它。
+   2026-09-26 快照里有一个层的差例：`subtype` 当时进了词表但 parser / codegen 零引用
+   （该差例已由 `T0r258.2.2` 补齐，见上表 `subtype` 行）；
+   反过来 `dispatch` 的三件套语义规范（`33-type-constraints-subtypes-dispatch.md`）已经写好，
+   但它**尚未**进 `Lexer.KEYWORDS`（`"dispatch" in Lexer.KEYWORDS` = False），所以按本附录的收录口径
+   （只收词表实有词）它这一行要等 `T0r258.3.1` 落地后再加。
+   权威实现状态：`SYNTAX_IMPLEMENTATION_STATUS.md`。

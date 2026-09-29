@@ -1,5 +1,5 @@
 import re
-from typing import Any, List, Dict, Set
+from typing import Any, List, Dict, Optional, Set
 from cypyc.parser.parser import (
     ASTNode, Module, FuncDef, LetStmt, ReturnStmt, IfStmt, ForStmt, WhileStmt,
     BinOp, UnaryOp, Call, Name, Constant, Attribute, Subscript, StructDef,
@@ -11,14 +11,23 @@ from cypyc.parser.parser import (
     ExtractorPattern, RangePattern, UnionType, TypeClassDef, TypeClassImpl,
     BreakStmt, ContinueStmt, GlobalStmt, NonlocalStmt, VecType, VecLiteral, PipeExpr,
     MacroDef, MacroCall, DuckDef, DuckRequirement,
-    BuildValueExpr, IfExp, AwaitExpr, BacktickBlock
+    BuildValueExpr, IfExp, AwaitExpr, BacktickBlock, RaiseStmt
 )
 from cypyc.codegen.type_mapper import TypeMapper
+from cypyc.utils.ast_utils import ASTUtils
 
 
 import os
 import time
 import platform
+
+# BUG-30：声明带初值时补隐式强转所用的宽度分类（取 to_cython 之后的 Cython 类型名）。
+_INTEGRAL_CYTHON_TYPES = frozenset({
+    "int", "long", "short", "char", "longlong", "bint",
+    "unsigned int", "unsigned long", "unsigned short", "unsigned char", "unsigned longlong",
+})
+_FLOAT_CYTHON_TYPES = frozenset({"double", "float", "long double"})
+
 
 class CythonGenerator:
     def __init__(self, source_file: str = None):
@@ -28,6 +37,11 @@ class CythonGenerator:
         self.in_cdef_context = False
         self.needs_libc_import = False  # 是否需要导入C标准库
         self._current_local_types = {}  # 当前函数内局部变量/参数名 -> Cython 类型字符串
+        # BUG-30：声明带初值时「这个变量在 C 层是什么类型」的记录，只喂给
+        # _float_widen_if_integral。**不能**并进 _current_local_types —— 那张表
+        # 历史上只装参数，_is_int_expr 靠它决定 `/` 是否发 `//`，把局部变量灌进去
+        # 会顺带改掉既有产物的除法形态（超出本单口径）。
+        self._declared_var_types = {}  # 当前函数内 let/def 变量名 -> Cython 类型字符串
         self.source_file = source_file  # 源文件路径
         # 模块符号收集
         self.public_symbols = []
@@ -37,6 +51,11 @@ class CythonGenerator:
         self._current_struct_name = None
         # 类型别名注册表（用于在代码生成阶段展开类型别名）
         self.type_aliases: Dict[str, Any] = {}  # {alias_name: TypeAlias node}
+        # 名义子类型注册表（SYNTAX/33 §3：`subtype Meter <: float`）。
+        # **只用于把标注名字翻译回基类型**（S-4.1 零运行时表示），不发任何产物：
+        # 别名走 `ctypedef`（`_visit_TypeAlias`），subtype 故意什么都不发 ——
+        # 二者在 C 层同构、在类型层不同身份，这个不对称就是 S-3.4 的证据。
+        self.subtype_defs: Dict[str, str] = {}  # {subtype_name: 直接基类型名}
         # 枚举类型注册表（用于类型转换时识别枚举）
         self.enum_defs: Dict[str, EnumDef] = {}  # {enum_name: EnumDef node}
         # 模块级变量注册表（用于在函数中添加global声明）
@@ -51,6 +70,10 @@ class CythonGenerator:
         self._pending_copies: Dict[str, str] = {}
         # 循环嵌套深度（用于循环守卫生成 break 而不是 return）
         self._loop_depth: int = 0
+        # defer 的出口注入上下文（BUG-76/BUG-80）：当前函数的清理集合 + 已被搬走的
+        # DeferStmt 节点 id（就地发射时只留占位语句，不再跑清理）
+        self._pending_defers: Optional[List[Any]] = None
+        self._deferred_stmt_ids: Set[int] = set()
         # 宏定义注册表：{macro_name: MacroDef node}
         self.macro_defs: Dict[str, MacroDef] = {}
         # 泛型参数集合（作为类型标识符时回退为 object）
@@ -61,6 +84,14 @@ class CythonGenerator:
         self._struct_types: Set[str] = set()
         # 类/结构体字段顺序：{type_name: [field_name, ...]}（用于类模式位置参数绑定）
         self._class_fields: Dict[str, list] = {}
+        # 已知 trait 名集合（用于 isinstance(x, Trait) 运行时改写）
+        self._known_traits: Set[str] = set()
+        # trait -> 直接实现的类型名集合（含经由 trait 继承传递的祖先 trait）
+        self._trait_impls: Dict[str, Set[str]] = {}
+        # trait -> 其 super trait 名列表（用于 trait 继承的 isinstance 传递性）
+        self._trait_supers: Dict[str, List[str]] = {}
+        # 类型名 -> 该类定义的方法名列表（struct/class，用于 trait 包装器方法转发）
+        self._type_method_names: Dict[str, List[str]] = {}
         # meta 块编译期命名空间（跨多个 meta 块共享，用于条件生成与常量求值）
         self._meta_namespace: Dict[str, Any] = {}
         # 构建块（=:）转换为嵌套函数时使用的唯一计数器
@@ -86,6 +117,8 @@ class CythonGenerator:
             node = expand_macros(node)
         # 首先收集所有类型别名定义
         self._collect_type_aliases(node)
+        # 收集名义子类型声明（`subtype Name <: Base`，SYNTAX/33 §3）
+        self._collect_subtypes(node)
         # 然后检测是否需要C库导入
         self._detect_libc_usage(node)
         self._visit(node)
@@ -110,9 +143,11 @@ class CythonGenerator:
         return False
     
     def _collect_type_aliases(self, node: ASTNode) -> None:
-        """收集所有类型别名定义到注册表"""
+        """收集所有类型别名定义到注册表（顺带收集名义子类型，见 `_collect_subtypes`）"""
         if hasattr(node, 'kind') and node.kind == 'TypeAlias':
             self.type_aliases[node.name] = node
+        if hasattr(node, 'kind') and node.kind == 'SubtypeDef':
+            self._collect_subtypes(node)
         for attr in dir(node):
             if not attr.startswith("_"):
                 value = getattr(node, attr)
@@ -122,6 +157,16 @@ class CythonGenerator:
                     for item in value:
                         if isinstance(item, ASTNode):
                             self._collect_type_aliases(item)
+
+    def _collect_subtypes(self, node: ASTNode) -> None:
+        """SYNTAX/33 S-4.1：登记 `subtype Name <: Base` 的**基类型名**，供 `_type_to_str`
+        在类型标注位置把名字翻译回基类型。这里只收名字，不收产物 —— 子类型在产物里
+        根本不存在（不发 ctypedef、不发 cdef class、不发注册表）。
+        """
+        base = getattr(node, 'base', None)
+        base_name = getattr(base, 'id', None) or getattr(base, 'name', None)
+        if base_name:
+            self.subtype_defs[node.name] = str(base_name)
     
     def _detect_libc_usage(self, node: ASTNode) -> None:
         """检测代码中是否使用了需要C标准库的函数"""
@@ -284,7 +329,10 @@ class CythonGenerator:
         self._write("# Generated by Cypy compiler")
         self._write('"""')
         self._write(f"Cython module compiled from Cypy source")
-        self._write(f"Source file: {self.source_file or 'unknown'}")
+        # 头注嵌的是路径原文：Windows 的 `C:\Users\...` 直接写进 `"""…"""` 里会被读成
+        # `\U` 转义，产物在 Cython 侧就地语法错误（BUG-91：调用方开始传真路径后才可达）。
+        shown_source = (self.source_file or "<not supplied by caller>").replace("\\", "\\\\")
+        self._write(f"Source file: {shown_source}")
         self._write('"""')
         self._write("")
         
@@ -311,11 +359,102 @@ class CythonGenerator:
         
         # 生成模块级魔法属性
         self._generate_module_magic_attrs()
-        
+
+        # 若模块定义了 trait，发射运行时 isinstance 支持（BUG-023）
+        self._emit_trait_isinstance_support()
+
         # 第二遍：生成代码
         for stmt in node.body:
             self._visit(stmt)
     
+    def _pattern_bound_names(self, pattern: Any) -> list:
+        """收集解构模式中绑定的所有变量名（忽略 _ 与字面量）。
+
+        用于模块级 `let (a, b) = ...` 这类解构声明，把每个绑定名单独注册，
+        避免把模式对象（list）当作可哈希键使用。
+        """
+        names: list = []
+        if pattern is None:
+            return names
+        if isinstance(pattern, str):
+            if pattern != '_':
+                names.append(pattern)
+            return names
+        if isinstance(pattern, dict):
+            if 'pattern' in pattern:
+                return self._pattern_bound_names(pattern['pattern'])
+            for p in pattern.get('or', []) or []:
+                names.extend(self._pattern_bound_names(p))
+            return names
+        if isinstance(pattern, (list, tuple)):
+            for p in pattern:
+                names.extend(self._pattern_bound_names(p))
+            return names
+        if isinstance(pattern, ArrayPattern):
+            for e in pattern.elements:
+                names.extend(self._pattern_bound_names(e))
+            if pattern.rest_name:
+                names.append(pattern.rest_name)
+            return names
+        if isinstance(pattern, SlicePattern):
+            if pattern.name:
+                names.append(pattern.name)
+            return names
+        if isinstance(pattern, DictPattern):
+            for _k, v in pattern.pairs:
+                names.extend(self._pattern_bound_names(v))
+            if pattern.rest_name:
+                names.append(pattern.rest_name)
+            return names
+        if isinstance(pattern, AsPattern):
+            names.extend(self._pattern_bound_names(pattern.pattern))
+            if pattern.name and pattern.name != '_':
+                names.append(pattern.name)
+            return names
+        if getattr(pattern, 'kind', None) == 'Pattern':
+            if pattern.name != '_':
+                names.append(pattern.name)
+            return names
+        bound = getattr(pattern, 'name', None)
+        if isinstance(bound, str) and bound != '_':
+            names.append(bound)
+        return names
+
+    # 提取器成员名（SYNTAX/17-pattern-matching.md §提取器优先级）
+    EXTRACTOR_MEMBERS = ('__unapply__', '__unapply_seq__', '__unwarp__', '__match_args__')
+
+    def _record_pattern_shape(self, name: str, node: Any) -> None:
+        """登记类型的「位置模式字段顺序」与「是否提取器类型」。
+
+        StructDef 的成员存放在 `.fields` / `.methods`，**没有** `.body`
+        （parser.py:117-135；分析器同一事实见 type_checker.py:3300）。
+        旧实现两处都只遍历 `.body`，于是 struct 既检测不到 `__unapply__`，
+        也拿不到字段名，位置模式退化成访问根本不存在的 `__f0/__f1`
+        （memory/bugs.md BUG-36）。
+
+        方法名不得算进字段顺序：否则 `case P(1, 2)` 会把实参拿去和绑定方法比较
+        （恒 False 且零诊断），这里只收「数据成员」。
+        """
+        fields: List[str] = []
+        for f in (getattr(node, 'fields', None) or []):
+            fname = getattr(f, 'name', None)
+            # `__match_args__` 这类 `__`-包围的类属性是模式元数据，不占位置槽（SYNTAX/17 规则 6）；
+            # 判据与分析器共用 ASTUtils.is_positional_member，避免两侧各写一遍再漂移。
+            if fname and ASTUtils.is_positional_member(fname) and fname not in fields:
+                fields.append(fname)
+        members = list(getattr(node, 'methods', None) or []) + list(getattr(node, 'body', None) or [])
+        for m in members:
+            if getattr(m, 'name', None) in self.EXTRACTOR_MEMBERS:
+                self._extractor_types.add(name)
+        for m in (getattr(node, 'body', None) or []):
+            if isinstance(m, FuncDef) or getattr(m, 'kind', None) == 'FuncDef':
+                continue
+            mname = getattr(m, 'name', None)
+            if mname and mname not in fields:
+                fields.append(mname)
+        if fields:
+            self._class_fields[name] = fields
+
     def _collect_module_info(self, node: Module) -> None:
         """收集模块级符号和导入信息"""
         for stmt in node.body:
@@ -332,34 +471,17 @@ class CythonGenerator:
                 else:
                     self.public_symbols.append(name)
                 self._struct_types.add(name)
-                # 检测提取器类型并收集字段顺序
-                fields = []
-                for m in (getattr(stmt, 'body', None) or []):
-                    mname = getattr(m, 'name', None)
-                    if mname in ('__unapply__', '__unapply_seq__', '__unwarp__', '__match_args__'):
-                        self._extractor_types.add(name)
-                        break
-                    if mname:
-                        fields.append(mname)
-                if fields:
-                    self._class_fields[name] = fields
+                # 采集方法名（含运算符双下方法），用于 trait 包装器透明转发
+                self._type_method_names[name] = self._collect_method_names(stmt)
+                self._record_pattern_shape(name, stmt)
             elif isinstance(stmt, ClassDef):
                 name = stmt.name
                 if name.startswith('_'):
                     self.private_symbols.append(name)
                 else:
                     self.public_symbols.append(name)
-                # 检测是否为提取器类型（定义了 __unapply__ 等方法）并收集字段顺序
-                fields = []
-                for m in (getattr(stmt, 'body', None) or []):
-                    mname = getattr(m, 'name', None)
-                    if mname in ('__unapply__', '__unapply_seq__', '__unwarp__', '__match_args__'):
-                        self._extractor_types.add(name)
-                        break
-                    if mname:
-                        fields.append(mname)
-                if fields:
-                    self._class_fields[name] = fields
+                self._type_method_names[name] = self._collect_method_names(stmt)
+                self._record_pattern_shape(name, stmt)
             elif isinstance(stmt, EnumDef):
                 name = stmt.name
                 self.enum_defs[name] = stmt  # 注册枚举类型
@@ -369,7 +491,13 @@ class CythonGenerator:
                     self.public_symbols.append(name)
             elif isinstance(stmt, LetStmt):
                 name = stmt.name
-                self.module_vars.add(name)  # 注册模块级变量
+                if isinstance(name, str):
+                    self.module_vars.add(name)  # 注册模块级变量
+                else:
+                    # 解构绑定（let (a, b) = ... / let [a, b] = ...）：展开为各绑定名
+                    # 否则直接 add(list) 会抛 TypeError: unhashable type: 'list'
+                    for bound in self._pattern_bound_names(name):
+                        self.module_vars.add(bound)
                 # 检查是否是用户自定义的魔法属性
                 if name in ('__all__', '__private__', '__deps__'):
                     self.user_defined_magic_attrs.add(name)
@@ -379,6 +507,19 @@ class CythonGenerator:
                     self.private_symbols.append(name)
                 else:
                     self.public_symbols.append(name)
+                self._known_traits.add(name)
+                self._trait_supers[name] = [
+                    self._trait_class_ref(t)
+                    for t in (getattr(stmt, 'super_traits', None) or [])
+                ]
+            elif isinstance(stmt, ImplStmt):
+                # 注册 trait 实现：记录具体类型名（去泛型参数）到其 trait 及所有祖先 trait
+                trait_name = stmt.trait_name
+                for_type = (self._type_to_str(stmt.for_type)
+                            if isinstance(stmt.for_type, ASTNode) else str(stmt.for_type))
+                base_type = for_type.split('<')[0].split('[')[0].strip()
+                if base_type:
+                    self._trait_impls.setdefault(trait_name, set()).add(base_type)
             elif isinstance(stmt, TypeClassDef):
                 name = stmt.name
                 if name.startswith('_'):
@@ -407,16 +548,90 @@ class CythonGenerator:
                 else:
                     self.public_symbols.append(name)
     
+    def _collect_method_names(self, node: Any) -> Dict[str, int]:
+        """采集类/结构体定义中的方法名 -> 参数个数(不含 self)，保持源定义顺序。
+
+        用于 trait 包装器透明转发 struct 定义的运算符双下方法。
+        """
+        methods: Dict[str, int] = {}
+        for coll in (getattr(node, 'methods', None), getattr(node, 'body', None)):
+            for m in (coll or []):
+                if isinstance(m, FuncDef) and getattr(m, 'name', None):
+                    if m.name not in methods:
+                        methods[m.name] = len(
+                            [p for p in (m.params or []) if getattr(p, 'name', None) != 'self']
+                        )
+        return methods
+
+    def _trait_ancestors(self, trait_name: str) -> List[str]:
+        """返回 trait 自身及其所有祖先 trait（trait 继承链），用于 isinstance 传递性"""
+        result: List[str] = []
+        seen: Set[str] = set()
+        stack = [trait_name]
+        while stack:
+            cur = stack.pop()
+            if cur in seen:
+                continue
+            seen.add(cur)
+            result.append(cur)
+            for sup in self._trait_supers.get(cur, []):
+                if sup not in seen:
+                    stack.append(sup)
+        return result
+
+    def _emit_trait_isinstance_support(self) -> None:
+        """发射 trait 运行时 isinstance 支持：注册表 + 辅助函数。
+
+        Cypy 的 trait 以独立 cdef 包装器实现，具体 struct 并非 trait 子类，
+        故运行时 isinstance(具体实例, Trait) 恒假。此处将 trait -> 实现类型名
+        的映射注册到模块级表，并用 _cypy_is_instance_of 改写 isinstance(x, Trait)，
+        使具体 struct 实例与真正的 trait 子类（包装器）都能被正确识别。
+        """
+        if not self._known_traits:
+            return
+        # 展平 trait 继承：实现类同时注册到其祖先 trait
+        flat: Dict[str, Set[str]] = {}
+        for trait_name, types in self._trait_impls.items():
+            for anc in self._trait_ancestors(trait_name):
+                flat.setdefault(anc, set()).update(types)
+        registry_items = ", ".join(
+            f"{t!r}: {tuple(sorted(flat.get(t, set())))!r}"
+            for t in sorted(self._known_traits)
+        )
+        self._write("# --- trait 运行时 isinstance 支持 (BUG-023) ---")
+        self._write(f"_cypy_trait_registry = {{{registry_items}}}")
+        self._write("def _cypy_is_instance_of(obj, trait_name):")
+        self.indent += 1
+        self._write("if type(obj).__name__ in _cypy_trait_registry.get(trait_name, ()):")
+        self.indent += 1
+        self._write("return True")
+        self.indent -= 1
+        self._write("trait = globals().get(trait_name)")
+        self._write("if trait is not None:")
+        self.indent += 1
+        self._write("try:")
+        self.indent += 1
+        self._write("return isinstance(obj, trait)")
+        self.indent -= 1
+        self._write("except TypeError:")
+        self.indent += 1
+        self._write("return False")
+        self.indent -= 1
+        self.indent -= 1
+        self._write("return False")
+        self.indent -= 1
+        self._write("")
+
     def _generate_module_magic_attrs(self) -> None:
         """生成模块级魔法属性"""
         # 获取模块名（从文件名提取）
-        module_name = "unknown"
+        module_name = None
         if self.source_file:
             module_name = os.path.splitext(os.path.basename(self.source_file))[0]
-        
+
         # 文件路径
-        file_path = self.source_file or ""
-        
+        file_path = self.source_file
+
         # 包信息
         package_name = ""
         path_value = "None"
@@ -425,21 +640,28 @@ class CythonGenerator:
             init_file = os.path.join(dir_name, "__init__.py")
             if os.path.exists(init_file):
                 package_name = os.path.basename(dir_name)
-                path_value = f"['{dir_name}']"
-        
+                path_value = f"[{dir_name!r}]"
+
         # 编译时间
         compile_time = time.strftime("%Y-%m-%dT%H:%M:%S")
-        
+
         # 目标平台
         target_platform = f"{platform.machine()}-{platform.system().lower()}"
-        
-        # 生成魔法属性（始终生成这些基础属性）
-        self._write(f"__name__ = \"{module_name}\"")
-        self._write(f"__file__ = \"{file_path}\"")
-        self._write(f"__package__ = \"{package_name}\"")
+
+        # 生成魔法属性。BUG-90：调用方没给源路径时**不再伪造**身份
+        # （以前恒写 `__name__ = "unknown"` / `__file__ = ""`，把导入机制给的真身份
+        # 覆盖掉，模块认不出自己）；拿到了就发，且走 repr 保证反斜杠/引号不吃掉字符。
+        if module_name is not None:
+            self._write(f"__name__ = {module_name!r}")
+        if file_path:
+            self._write(f"__file__ = {file_path!r}")
+        self._write(f"__package__ = {package_name!r}")
         self._write(f"__path__ = {path_value}")
-        self._write(f"__compile_time__ = \"{compile_time}\"")
-        self._write(f"__target__ = \"{target_platform}\"")
+        # 这三条是编译器自己造的常量（时间戳/平台名/固定档名），不含引号与反斜杠，
+        # 沿用既有的双引号形态：tests/test_demos.py:416 的产物一致性比对按 `"..."` 剔除
+        # 时间戳，改成 repr 会让那把锁失效。
+        self._write(f'__compile_time__ = "{compile_time}"')
+        self._write(f'__target__ = "{target_platform}"')
         self._write(f"__profile__ = \"debug\"")
         
         # __all__：公开API列表（不含_前缀，包含魔法方法）
@@ -470,6 +692,23 @@ class CythonGenerator:
             args_str = ", ".join(self._expr_to_str(arg) for arg in node.args)
             decorator_str += f"({args_str})"
         self._write(decorator_str)
+
+    def _decorator_names(self, node: FuncDef) -> List[str]:
+        return [
+            getattr(decorator.name, "id", str(decorator.name))
+            for decorator in (getattr(node, "decorators", None) or [])
+        ]
+
+    def _is_selfless_method(self, node: FuncDef) -> bool:
+        return any(name in ("staticmethod", "classmethod") for name in self._decorator_names(node))
+
+    def _param_default_str(self, param) -> str:
+        """默认值脱糖：`= __implicit_default__` 按 SYNTAX/06d 取该类型的隐式默认构造。"""
+        default = param.default_value
+        if getattr(default, "id", None) == "__implicit_default__":
+            owner = self._type_to_str(param.type_annotation)
+            return f"{owner}.__implicit_default__()"
+        return self._expr_to_str(default)
 
     def _generate_param_strings(self, node: FuncDef, is_struct_method: bool, has_self: bool, use_types: bool = False) -> List[str]:
         """生成参数字符串列表，处理可变参数和分隔符"""
@@ -519,7 +758,13 @@ class CythonGenerator:
                     self._hoisted_pointer_types[param.name] = self._type_to_str(base) if base is not None else "void"
             else:
                 param_str = param.name
-            
+
+            # 追加默认参数值（如 table: str = "" / attempts: int = 3）
+            # 修复：此前签名生成忽略了 param.default_value，导致默认参数形同必填，
+            # 运行时调用 Column("id") 会报“需要 3 个位置参数，只给了 1 个”
+            if getattr(param, 'default_value', None) is not None:
+                param_str = f"{param_str}={self._param_default_str(param)}"
+
             params.append(param_str)
         
         # 双 .. 模式：自动添加 *args 和 **kwargs（如果还没有）
@@ -576,7 +821,9 @@ class CythonGenerator:
         is_struct_method = getattr(node, 'is_struct_method', False)
         
         # 检查方法是否已经有 self 参数
-        has_self = node.params and node.params[0].name == 'self'
+        # @staticmethod/@classmethod 不绑定实例：视作「已带 self」以跳过自动注入（struct 路径）
+        selfless = self._is_selfless_method(node)
+        has_self = (bool(node.params) and node.params[0].name == "self") or selfless
         
         # 检查是否是生成器函数（包含 yield 语句）
         # Cython 中 cpdef 函数不能包含 yield，必须使用 def
@@ -619,6 +866,7 @@ class CythonGenerator:
 
         # 记录当前函数的参数类型，供代码生成推断（如 int/int 除法）
         saved_local_types = dict(self._current_local_types)
+        saved_declared_types = dict(self._declared_var_types)
         for p in node.params:
             ann = getattr(p, 'type_annotation', None)
             if ann is not None:
@@ -725,15 +973,20 @@ class CythonGenerator:
         self._addr_taken = self._collect_addr_names(node.body)
 
         # 分离defer语句和普通语句
-        defer_stmts = []
-        normal_stmts = []
-        
-        for stmt in node.body:
-            if isinstance(stmt, DeferStmt):
-                defer_stmts.append(stmt)
-            else:
-                normal_stmts.append(stmt)
-        
+        # BUG-80：收集范围是**整个函数体**（不跨进嵌套函数/类/构建块），顶层之外的
+        # defer 同样只能在函数出口执行；就地发射会让清理在函数体之前就跑完。
+        # BUG-76：出口不止顶层 return —— 嵌套在 if/for/while 里的 return 也是出口。
+        # 收集按声明顺序（顶层与其间的嵌套 defer 混排），发射时整体逆序。
+        normal_stmts = [s for s in node.body if not isinstance(s, DeferStmt)]
+        defer_stmts = self._collect_defer_stmts(node.body)
+        # 已被搬走的 defer 就地发射时只留一个占位语句，不重复跑清理；
+        # _pending_defers 是本函数的出口清理集合，嵌套函数进来时先清空，
+        # 否则内层函数的 return 会去发外层的清理。
+        old_pending_defers = getattr(self, '_pending_defers', None)
+        old_deferred_ids = getattr(self, '_deferred_stmt_ids', set())
+        self._pending_defers = None
+        self._deferred_stmt_ids = set(id(d) for d in defer_stmts)
+
         # 检测函数体中使用的模块级变量，添加global声明
         used_module_vars = self._find_used_module_vars(node.body)
         if used_module_vars:
@@ -760,25 +1013,25 @@ class CythonGenerator:
         # 检查是否有defer语句
         if defer_stmts:
             # 不在 try/finally 中包裹（Cython 不允许在 try 内声明 cdef 变量），
-            # 改为在每个顶层 return 之前、以及函数体末尾注入 defer 语句（逆序执行）
-            def _emit_deferred():
-                for defer_stmt in reversed(defer_stmts):
-                    for stmt in defer_stmt.body:
-                        if isinstance(stmt, (Call, BinOp, UnaryOp, Name, Constant)):
-                            self._write(self._expr_to_str(stmt))
-                        else:
-                            self._visit(stmt)
-
+            # 改为在每个 return 之前、以及函数体末尾注入 defer 语句（逆序执行）。
+            # 顶层 return 由下面的循环显式注入（注入期间关掉 _pending_defers，避免
+            # `_visit_ReturnStmt` 再发一次）；嵌套 return 由 `_visit_ReturnStmt` 接手。
+            self._pending_defers = defer_stmts
             emitted_at_return = False
             for stmt in normal_stmts:
                 if isinstance(stmt, ReturnStmt):
                     # 在 return 之前执行 defer（每个 return 处各注入一次）
-                    _emit_deferred()
+                    self._emit_defer_stmts(defer_stmts)
                     emitted_at_return = True
-                self._visit(stmt)
+                    self._pending_defers = None
+                    self._visit(stmt)
+                    self._pending_defers = defer_stmts
+                else:
+                    self._visit(stmt)
+            self._pending_defers = None
             # 仅在函数没有显式 return 时才在函数末尾注入（避免与 return 前的注入重复）
             if not emitted_at_return:
-                _emit_deferred()
+                self._emit_defer_stmts(defer_stmts)
         else:
             # 没有defer语句，直接输出所有语句
             for stmt in node.body:
@@ -794,11 +1047,16 @@ class CythonGenerator:
         self._hoisted_pointer_types = old_hoisted_types
         self._addr_taken = old_addr_taken
 
+        # 恢复 defer 的出口注入上下文（嵌套函数有自己的 defer 与出口）
+        self._pending_defers = old_pending_defers
+        self._deferred_stmt_ids = old_deferred_ids
+
         # 恢复泛型参数集合
         self._generic_params = saved_generic_params
 
         # 恢复局部类型记录
         self._current_local_types = saved_local_types
+        self._declared_var_types = saved_declared_types
 
         self._write("")
 
@@ -978,6 +1236,9 @@ class CythonGenerator:
                     # 如果需要隐式转换，添加转换代码
                     if needs_implicit_conversion:
                         value = self._generate_implicit_conversion(node, value)
+                    else:
+                        value = self._float_widen_if_integral(node, cdef_type, value)
+                    self._record_declared_var(node, cdef_type)
                     # 被 addr()/& 取地址的变量必须声明为 cdef 才能取址
                     if node.name in getattr(self, '_addr_taken', set()):
                         self._write(f"cdef {cdef_type} {node.name} = {value}")
@@ -1063,6 +1324,9 @@ class CythonGenerator:
                 # 如果需要隐式转换，生成转换代码
                 if needs_implicit_conversion:
                     value = self._generate_implicit_conversion(node, value)
+                else:
+                    value = self._float_widen_if_integral(node, cdef_type, value)
+                self._record_declared_var(node, cdef_type)
                 # 被 addr()/& 取地址的变量必须声明为 cdef 才能取址
                 if node.name in getattr(self, '_addr_taken', set()):
                     self._write(f"cdef {cdef_type} {node.name} = {value}")
@@ -1098,8 +1362,19 @@ class CythonGenerator:
 
     def _ensure_owned_import(self) -> None:
         """确保导入所有权相关的函数"""
-        if 'from cypy_bridge.pointer import own, transfer_ownership, borrow, Owned, Borrowed' not in self.output:
-            self.output.insert(0, 'from cypy_bridge.pointer import own, transfer_ownership, borrow, Owned, Borrowed')
+        line = 'from cypy_bridge.pointer import own, transfer_ownership, borrow, Owned, Borrowed'
+        if line not in self.output:
+            # BUG-19: 不能插到第 0 行 —— :299 规定 `# cython:` 指令必须在文件最
+            # 顶部，否则整组指令失效（文档字符串也会从首语句降级）。插到开头
+            # 连续的注释/指令块之后。
+            at = 0
+            while at < len(self.output):
+                text = self.output[at].strip()
+                if text.startswith('#') or text.startswith('"""') or text.startswith("'''"):
+                    at += 1
+                    continue
+                break
+            self.output.insert(at, line)
 
     def _generate_implicit_conversion(self, node: Any, value_expr: str) -> str:
         """生成隐式转换代码，调用 __implicit_into__ 或守卫策略"""
@@ -1123,6 +1398,53 @@ class CythonGenerator:
         # 如果没有找到魔法方法，返回原始表达式
         return value_expr
 
+    def _record_declared_var(self, node: Any, cdef_type: str) -> None:
+        """BUG-30：把带标注的局部变量登记进宽度表（解构绑定的 name 是列表，跳过）。"""
+        if isinstance(node.name, str) and not isinstance(node.type_annotation, PointerType):
+            self._declared_var_types[node.name] = cdef_type
+
+    def _declared_cython_type_of(self, name: str) -> Optional[str]:
+        return self._declared_var_types.get(name) or self._current_local_types.get(name)
+
+    def _is_integral_value_expr(self, node: Any) -> bool:
+        """初值表达式是否**确定为整数**：只认整数面，判不准一律 False（不补强转）。
+
+        `/` 走的是真除法（`_is_int_expr` 命中才发 `//`），所以除法结果不当整数；
+        函数调用/属性访问/字符串/浮点字面量同样不当整数。
+        """
+        if isinstance(node, ComptimeStmt):
+            node = node.expr
+        if isinstance(node, Constant):
+            return isinstance(node.value, int) and not isinstance(node.value, bool)
+        if isinstance(node, Name):
+            return self._declared_cython_type_of(node.id) in _INTEGRAL_CYTHON_TYPES
+        if isinstance(node, UnaryOp) and node.op in ('+', '-', '~'):
+            return self._is_integral_value_expr(node.operand)
+        if isinstance(node, BinOp):
+            if node.op == '/':
+                return False
+            if node.op in ('//', '%', '+', '-', '*', '&', '|', '^', '<<', '>>'):
+                return (self._is_integral_value_expr(node.left)
+                        and self._is_integral_value_expr(node.right))
+            return False
+        return False
+
+    def _float_widen_if_integral(self, node: Any, cdef_type: str, value: str) -> str:
+        """BUG-30：`let e: float = <整数表达式>` 的产物必须是 `<double>x`。
+
+        带初值的声明走 `name: double = value` 注解形式，Cython 不改变值的身份，
+        于是运行期 `type(e)` 仍是 int —— 声明类型对「值是什么」不起作用。
+        只在**目标为浮点 C 类型且初值确定为整数**时补强转；复合表达式加括号，
+        避免 `<double>a - b` 被读成 `<double>a` 再减。
+        """
+        if cdef_type not in _FLOAT_CYTHON_TYPES:
+            return value
+        if not self._is_integral_value_expr(node.value):
+            return value
+        if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*|\d+", value):
+            return f"<{cdef_type}>{value}"
+        return f"<{cdef_type}>({value})"
+
     def register_magic_methods(self, magic_methods: Dict[str, Dict[str, Any]]) -> None:
         """注册魔法方法信息到代码生成器"""
         self.magic_methods = magic_methods
@@ -1132,19 +1454,69 @@ class CythonGenerator:
         self._pending_copies = pending_copies
         self._pending_conversions = pending_conversions
 
-    def _visit_ExprStmt(self, node: Any) -> None:
-        """表达式语句：解包内部节点并写出（使用 _visit 以正确分发语句型节点）"""
-        inner = getattr(node, 'value', None)
-        if inner is not None:
-            self._visit(inner)
-        elif getattr(node, 'value', None) is not None:
-            self._visit(node.value)
-
     def _visit_PassStmt(self, node: Any) -> None:
         """pass 语句"""
         self._write("pass")
 
+    def _collect_defer_stmts(self, stmts: List[Any]) -> List[DeferStmt]:
+        """按声明顺序收集函数体内所有 DeferStmt（BUG-80）。
+
+        不跨进嵌套函数/类/构建块：那些作用域有自己的出口，defer 属于它们自己。
+        也不深入 defer 自己的清理体（`defer:` 里再写 `defer:` 不改函数出口集合）。
+        """
+        found: List[DeferStmt] = []
+
+        def scan(node: Any) -> None:
+            if node is None:
+                return
+            if isinstance(node, list):
+                for item in node:
+                    scan(item)
+                return
+            if not isinstance(node, ASTNode):
+                return
+            if isinstance(node, DeferStmt):
+                found.append(node)
+                return
+            if getattr(node, 'kind', None) in (
+                'FuncDef', 'AsyncFuncDef', 'ClassDef', 'StructDef', 'TypeClassDef',
+                'TraitDef', 'BuildBlockExpr', 'LambdaExpr', 'SuiteDef', 'TestDef',
+            ):
+                return
+            for value in vars(node).values():
+                if isinstance(value, (ASTNode, list)):
+                    scan(value)
+
+        for stmt in stmts:
+            scan(stmt)
+        return found
+
+    def _emit_defer_stmts(self, defer_stmts: List[DeferStmt]) -> None:
+        """在函数出口发射清理体（逆序 = 后声明的先执行）。"""
+        for defer_stmt in reversed(defer_stmts):
+            for stmt in defer_stmt.body:
+                if isinstance(stmt, (Call, BinOp, UnaryOp, Name, Constant)):
+                    self._write(self._expr_to_str(stmt))
+                else:
+                    self._visit(stmt)
+
+    def _visit_DeferStmt(self, node: DeferStmt) -> None:
+        """defer 的清理已被搬到函数出口（每个 return 之前 / 体末），这里不就地发射。
+
+        块体里只剩这一条 defer 时，搬空后必须有语句可站，故发 `pass`。
+        没被收集走的 defer（函数外、模块级）沿用既有的就地降级。
+        """
+        if id(node) in getattr(self, '_deferred_stmt_ids', set()):
+            self._write("pass  # defer: 清理已搬到函数出口执行")
+            return
+        self._visit_children(node)
+
     def _visit_ReturnStmt(self, node: ReturnStmt) -> None:
+        # BUG-76：嵌套在 if/for/while 里的 return 同样是函数出口，
+        # defer 的清理必须在这条 return 之前发出，否则该出口静默漏清理。
+        pending = getattr(self, '_pending_defers', None)
+        if pending:
+            self._emit_defer_stmts(pending)
         if node.value:
             self._write(f"return {self._expr_to_str(node.value)}")
         else:
@@ -1164,13 +1536,27 @@ class CythonGenerator:
             self.indent -= 1
 
     def _visit_ForStmt(self, node: ForStmt) -> None:
-        self._write(f"for {self._expr_to_str(node.target)} in {self._expr_to_str(node.iter)}:")
+        target_str = self._for_target_to_str(node.target)
+        self._write(f"for {target_str} in {self._expr_to_str(node.iter)}:")
         self.indent += 1
         self._loop_depth += 1  # 进入循环
         for stmt in node.body:
             self._visit(stmt)
         self._loop_depth -= 1  # 退出循环
         self.indent -= 1
+
+    def _for_target_to_str(self, target: Any) -> str:
+        """渲染 for 循环目标，支持多目标解包 `for k, v in ...`。
+
+        - 目标为列表（解析器产出的多目标解包，或元组模式）→ `(k, v)`
+        - 目标为 ArrayPattern / SlicePattern（嵌套解包、*rest）→ 复用 _pattern_to_str
+        - 其余情况按普通表达式渲染（Name / Attribute / Subscript）
+        """
+        if isinstance(target, (list, tuple)):
+            return "(" + ", ".join(self._for_target_to_str(t) for t in target) + ")"
+        if getattr(target, 'kind', None) in ('ArrayPattern', 'SlicePattern'):
+            return self._pattern_to_str(target)
+        return self._expr_to_str(target)
 
     def _visit_WhileStmt(self, node: WhileStmt) -> None:
         self._write(f"while {self._expr_to_str(node.test)}:")
@@ -1268,10 +1654,39 @@ class CythonGenerator:
         if isinstance(pattern, Constant):
             return (f"{subject_var} == {repr(pattern.value)}", [], {}, [])
         if isinstance(pattern, list):
-            conds = [f"isinstance({subject_var}, tuple)", f"len({subject_var}) == {len(pattern)}"]
+            star_idx = next((i for i, e in enumerate(pattern)
+                             if getattr(e, 'kind', None) == 'SlicePattern'), None)
+            if star_idx is None:
+                conds = [f"isinstance({subject_var}, (list, tuple))", f"len({subject_var}) == {len(pattern)}"]
+                binds, subs, pres = [], {}, []
+                for i, e in enumerate(pattern):
+                    ec, eb, es, ep = self._pattern_match_info(f"{subject_var}[{i}]", e)
+                    conds.append(ec)
+                    binds.extend(eb)
+                    subs.update(es)
+                    pres.extend(ep)
+                return (" and ".join(conds), binds, subs, pres)
+            # 含 *rest 的元组模式：(first, *rest) / (first, *rest, last)
+            num_after = len(pattern) - star_idx - 1
+            conds = [f"isinstance({subject_var}, (list, tuple))",
+                     f"len({subject_var}) >= {len(pattern) - 1}"]
             binds, subs, pres = [], {}, []
             for i, e in enumerate(pattern):
-                ec, eb, es, ep = self._pattern_match_info(f"{subject_var}[{i}]", e)
+                if getattr(e, 'kind', None) == 'SlicePattern':
+                    if e.name:
+                        if num_after > 0:
+                            slice_expr = f"{subject_var}[{i}:len({subject_var})-{num_after}]"
+                        else:
+                            slice_expr = f"{subject_var}[{i}:]"
+                        binds.append(f"{e.name} = {slice_expr}")
+                        subs[e.name] = slice_expr
+                    continue
+                if i > star_idx:
+                    pos = f"len({subject_var}) - {num_after} + {i - star_idx - 1}"
+                    sub_expr = f"{subject_var}[{pos}]"
+                else:
+                    sub_expr = f"{subject_var}[{i}]"
+                ec, eb, es, ep = self._pattern_match_info(sub_expr, e)
                 conds.append(ec)
                 binds.extend(eb)
                 subs.update(es)
@@ -1376,7 +1791,14 @@ class CythonGenerator:
             if type_name not in self._struct_types:
                 conds.append(f"isinstance({subject_var}, {type_name})")
             binds, subs = [], {}
+            fields_known = (type_name in self._class_fields) or (type_name in self._struct_types)
             for i, arg in enumerate(pattern.args):
+                # SYNTAX/17 规则 5 + 规则 8：字段集合在本模块**可见**时，越界槽位不得生成属性访问，
+                # 而是让该 case 恒不命中（产物末段 `and False`）——分析器已按规则 1 报元数错。
+                # 字段不可见（外部类，规则 4）时维持运行期解包形态 `__f{i}`，本轮不改那一侧语义。
+                if fields_known and i >= len(fields):
+                    conds.append("False")
+                    continue
                 field_name = fields[i] if i < len(fields) else f"__f{i}"
                 if isinstance(arg, Constant):
                     conds.append(f"{subject_var}.{field_name} == {repr(arg.value)}")
@@ -1853,7 +2275,13 @@ class CythonGenerator:
             if rest_idx is not None:
                 self._emit_list_rest_unpack(tgt_elts, node.value, rest_idx)
                 return
-        target = self._expr_to_str(node.target)
+        target_node = node.target
+        # BUG-74：词法器把裸 `^` 恒判成 BUILD_VALUE 词位，于是 `x ^= 5` 的左操作数
+        # 被包成 `BuildValueExpr(operand=x)` 挂在赋值号左边，落码时只取了 operand
+        # 就把 `^` 丢了 ⇒ 产物 `x = 5`（静默产错码）。SYNTAX/12-operators.md:90 声明
+        # `x ^= 3` ≡ `x = x ^ 3`，这里按声明把异或补回右值。
+        is_augmented_xor = isinstance(target_node, BuildValueExpr)
+        target = self._expr_to_str(target_node.operand if is_augmented_xor else target_node)
         if isinstance(node.value, ComptimeStmt):
             # comptime 在编译时求值，结果作为常量
             value = self._expr_to_str(node.value.expr)
@@ -1864,6 +2292,8 @@ class CythonGenerator:
             base = getattr(self, '_hoisted_pointer_types', {}).get(target)
             if base:
                 value = value.replace('<void*>', f'<{base}*>', 1)
+        if is_augmented_xor:
+            value = f"{target} ^ {value}"
         self._write(f"{target} = {value}")
 
     def _visit_StructDef(self, node: StructDef) -> None:
@@ -1927,25 +2357,29 @@ class CythonGenerator:
                     self._write(f"cdef public {field_type} {field.name}")
             
             # 生成参数化 __init__ 方法用于初始化字段
-            init_params = []
-            init_body = []
-            for field in node.fields:
-                if isinstance(field, StructField):
-                    param_name = field.name
-                    if field.default_value is not None:
-                        init_params.append(f"{param_name}={self._expr_to_str(field.default_value)}")
-                        init_body.append(f"self.{param_name} = {param_name}")
-                    else:
-                        init_params.append(param_name)
-                        init_body.append(f"self.{param_name} = {param_name}")
-            
-            # 添加 @cython.final 装饰器用于优化
-            self._write("@cython.final")
-            self._write(f"def __init__(self{', ' + ', '.join(init_params) if init_params else ''}):")
-            self.indent += 1
-            for line in init_body:
-                self._write(line)
-            self.indent -= 1
+            # 若用户已显式定义 __init__，则不再生成自动全参构造器，
+            # 否则会与方法体里用户版的 __init__ 重复定义（后者覆盖前者并丢失字段赋值）
+            has_user_init = any(getattr(m, 'name', None) == '__init__' for m in (node.methods or []))
+            if not has_user_init:
+                init_params = []
+                init_body = []
+                for field in node.fields:
+                    if isinstance(field, StructField):
+                        param_name = field.name
+                        if field.default_value is not None:
+                            init_params.append(f"{param_name}={self._expr_to_str(field.default_value)}")
+                            init_body.append(f"self.{param_name} = {param_name}")
+                        else:
+                            init_params.append(param_name)
+                            init_body.append(f"self.{param_name} = {param_name}")
+
+                # 添加 @cython.final 装饰器用于优化
+                self._write("@cython.final")
+                self._write(f"def __init__(self{', ' + ', '.join(init_params) if init_params else ''}):")
+                self.indent += 1
+                for line in init_body:
+                    self._write(line)
+                self.indent -= 1
             
             # 如果有 @value 装饰器，生成自动方法
             if has_value_decorator:
@@ -1954,8 +2388,9 @@ class CythonGenerator:
             # 生成方法 - 标记为结构体方法，并添加 @cython.binding(False) 优化
             for method in node.methods:
                 method.is_struct_method = True
-                # 在访问方法之前添加优化装饰器
-                self._write("@cython.binding(False)")
+                # 在访问方法之前添加优化装饰器；binding(False) 只对绑定方法有意义（BUG-44）
+                if not self._is_selfless_method(method):
+                    self._write("@cython.binding(False)")
                 self._visit(method)
             
             self.indent -= 1
@@ -2120,6 +2555,12 @@ class CythonGenerator:
                 self._write(f"return {self._expr_to_str(orelse.value)}")
             else:
                 self._write(f"return")
+        elif isinstance(orelse, RaiseStmt):
+            # else raise [exc]: 直接生成 raise
+            if orelse.exc is not None:
+                self._write(f"raise {self._expr_to_str(orelse.exc)}")
+            else:
+                self._write(f"raise")
         else:
             # 单行形式：else expr（普通表达式）
             if in_loop:
@@ -2132,29 +2573,71 @@ class CythonGenerator:
 
     def _visit_ComptimeStmt(self, node: ComptimeStmt) -> None:
         """生成 comptime 语句的 Cython 代码
-        
-        在编译期求值表达式，将结果替换为常量
+
+        在编译期求值表达式，可安全落码的标量结果折叠成常量；其余形态按文档降级成
+        注释（`SYNTAX/19-comptime.md:21`「独立的 `comptime:` 语句被转换为注释」）。
         """
         from cypyc.analyzer.comptime_evaluator import evaluate_comptime
-        
+
         # 尝试编译期求值
         result = evaluate_comptime(node.expr)
-        
-        if result is not None:
-            # 求值成功，生成常量代码
-            # 根据结果类型生成相应的代码
-            if isinstance(result, str):
-                self._write(f'"{result}"')
-            elif isinstance(result, bool):
-                self._write("True" if result else "False")
-            elif isinstance(result, (int, float)):
-                self._write(str(result))
-            else:
-                # 其他类型，使用 repr
-                self._write(repr(result))
+        folded = self._fold_comptime_result(result)
+
+        if folded is not None:
+            # 求值成功且能安全落码
+            self._write(folded)
         else:
-            # 求值失败，保留原表达式作为注释
+            # 求值失败（None）或结果不能安全落码，保留原表达式作为注释
             self._write(f"# comptime: {self._expr_to_str(node.expr)}")
+
+    def _fold_comptime_result(self, result: Any) -> Optional[str]:
+        """把 comptime 结果渲染成产物里的一行；不可安全渲染时返回 None（走注释）。
+
+        BUG-82：字符串以前是 `f'"{result}"'` 直插，引号与反斜杠一概不转义
+        （`comptime: "a" + "\\"" + "b"` 落成 `"a"b"`，产物当场断掉），而即便转义，
+        落在函数体首行的裸字符串仍会被 Cython 认成 docstring（可被劫持）。文档对独立
+        comptime 语句声明的降码本来就是注释，字符串结果因此不折叠成活表达式。
+        BUG-81：容器结果以前整体走 `repr(result)`，求值侧一旦交回挂着 AST 节点的元素，
+        节点 repr 就进了产物（`[Constant(line=…, col=…)]`，不可编译）。这里逐元素渲染。
+        """
+        if result is None or isinstance(result, str):
+            return None
+        if isinstance(result, bool):
+            return "True" if result else "False"
+        if isinstance(result, (int, float)):
+            return repr(result)
+        if isinstance(result, (list, tuple, set, frozenset)):
+            parts = [self._render_comptime_item(item) for item in result]
+            if any(part is None for part in parts):
+                return None
+            if isinstance(result, (set, frozenset)):
+                return "{" + ", ".join(parts) + "}" if parts else "set()"
+            if isinstance(result, tuple):
+                return f"({parts[0]},)" if len(parts) == 1 else f"({', '.join(parts)})"
+            return f"[{', '.join(parts)}]"
+        if isinstance(result, dict):
+            items = []
+            for key, val in result.items():
+                key_str = self._render_comptime_item(key)
+                val_str = self._render_comptime_item(val)
+                if key_str is None or val_str is None:
+                    return None
+                items.append(f"{key_str}: {val_str}")
+            return "{" + ", ".join(items) + "}"
+        return repr(result)
+
+    def _render_comptime_item(self, item: Any) -> Optional[str]:
+        """渲染 comptime 容器结果的一个元素。
+
+        元素是 AST 节点时（求值侧没求干净）走表达式通道，产出字面量而不是节点 repr；
+        渲染结果仍带内部表示（`line=`）就判不可安全落码，交回上层降级成注释。
+        """
+        if isinstance(item, ASTNode):
+            text = self._expr_to_str(item)
+            return None if not text or "line=" in text else text
+        if isinstance(item, (list, tuple, set, frozenset, dict)):
+            return self._fold_comptime_result(item)
+        return repr(item)
 
     def _visit_ComptimeFuncDef(self, node: ComptimeFuncDef) -> None:
         """生成编译期函数的 Cython 代码
@@ -2356,7 +2839,7 @@ class CythonGenerator:
         self._write(f"[{elt_str} {gen_str}]")
 
     def _visit_TraitDef(self, node: TraitDef) -> None:
-        base_classes = [self._type_to_str(t) for t in node.super_traits]
+        base_classes = [self._trait_class_ref(t) for t in node.super_traits]
         if not base_classes:
             base_classes = ["object"]
 
@@ -2518,7 +3001,25 @@ class CythonGenerator:
                 for stmt in method.body:
                     self._visit(stmt)
                 self.indent -= 1
-        
+
+        # BUG-023(a)：转发具体 struct 定义的运算符双下方法（__and__/__eq__/__lt__ ...），
+        # 委托给 __inner__。trait 基类不定义运算符，故无签名冲突；
+        # Cython 要求特殊方法参数个数精确，故按 struct 方法的元数生成固定位置参数。
+        _base_type = for_type.split('<')[0].split('[')[0].strip()
+        _skip_dunders = {'__init__', '__dealloc__', '__cinit__', '__new__', '__slots__',
+                         '__dict__', '__weakref__', '__reduce__', '__reduce_ex__'}
+        for _mname, _arity in self._type_method_names.get(_base_type, {}).items():
+            if _mname in method_impls or _mname in _skip_dunders:
+                continue
+            if not (_mname.startswith('__') and _mname.endswith('__')):
+                continue
+            _arg_names = [f"_a{i}" for i in range(_arity)]
+            _sig = "self" + (", " + ", ".join(_arg_names) if _arg_names else "")
+            self._write(f"def {_mname}({_sig}):")
+            self.indent += 1
+            self._write(f"return self.__inner__.{_mname}({', '.join(_arg_names)})")
+            self.indent -= 1
+
         self.indent -= 1
         self._write("")
 
@@ -2858,7 +3359,9 @@ class CythonGenerator:
     def _visit_RaiseStmt(self, node: Any) -> None:
         """生成 raise 语句的 Cython 代码"""
         if node.exc:
-            self._write(f"raise {self._expr_to_str(node.exc)}")
+            cause = getattr(node, "cause", None)
+            cause_str = f" from {self._expr_to_str(cause)}" if cause is not None else ""
+            self._write(f"raise {self._expr_to_str(node.exc)}{cause_str}")
         else:
             self._write("raise")
 
@@ -3056,6 +3559,54 @@ class CythonGenerator:
                 self._write(f"ctypedef {target_type} {node.name}")
         self._write("")
     
+    def _visit_ConstraintDef(self, node: Any) -> None:
+        """命名约束的产物形态：**只发一条注释**（SYNTAX/33 §5 的 constraint 列）。
+
+        不发 `ctypedef`、不发类型别名、不发注册表 —— C-2.2 规定约束不是类型，
+        它没有可替换的目标（它的「展开」是一组候选类型而不是单个类型）。
+        发出任何可被引用的名字都等于伪造可用性：那正是实测基线 B2
+        （`type Numeric = int | float` 当界用时 `int` 反而「不满足 Numeric」）的成因。
+        """
+        # 这条注释是对声明的逐字回显（SYNTAX/33 §5）：**不过 type_mapper**，否则 BUG-14 裁决
+        # （float≡double）之后用户写 `int | float` 会得到 `int | double`。
+        # 但也不能无条件回显：S-4.1 规定子类型名不得出现在产物里，所以 subtype/alias 仍要
+        # 化成它的基类型**名字**（`Meter` → `float`），只有标量名保持原样。
+        members = " | ".join(self._constraint_member_name(m)
+                             for m in getattr(node, 'members', []) or [])
+        self._write(f"# constraint {node.name} = {members}")
+        self._write("")
+
+    def _constraint_member_name(self, node: Any) -> str:
+        """约束成员的回显名：标量取声明时的原名，subtype/alias 递归化成基类型名。"""
+        for _ in range(8):                      # 链式 subtype（CentiMeter <: Meter <: float）
+            name = getattr(node, 'id', None)
+            if not name:
+                break
+            base = self._subtype_to_base(name)
+            if base is not None:
+                node = base
+                continue
+            if name in self.type_aliases:
+                node = self.type_aliases[name].target
+                continue
+            return name
+        return self._type_to_str(node)
+
+    def _visit_SubtypeDef(self, node: Any) -> None:
+        """名义子类型的产物形态：**什么都不发**（SYNTAX/33 §5 的 subtype 列、S-4.1）。
+
+        与 `_visit_ConstraintDef`（只发注释）还要更严一格：连注释都不发，因为
+        `subtype Meter <: float` 的产物必须与它的基类型**逐字节同构**（S-4.1），
+        而 `_collect_type_aliases` 那种递归收集器会把任何嵌套节点也送进来。
+
+        这里必须存在一个显式的空实现：没有它 `_visit` 会退回 `_visit_children`，
+        那会把 `base` 这个 Name 节点当表达式处理，等于凭空多一条产物行 —— 正是
+        任务包 §四 禁止的「AST 节点被 codegen 忽略 / 半处理」形态的反面。
+        对比：trait 的运行时身份表在 `_emit_trait_isinstance_support`，
+        subtype **故意不复用**它（S-4.3 / S-5.1 的理由就在那儿）。
+        """
+        return None
+
     def _visit_ExceptionDef(self, node: ExceptionDef) -> None:
         """生成异常类型的 Cython 代码"""
         base_type = self._type_to_str(node.base_type) if node.base_type else "Exception"
@@ -3087,18 +3638,23 @@ class CythonGenerator:
         self._write("")
 
     def _visit_BinOp(self, node: BinOp) -> str:
-        # 运算符优先级（从高到低）
+        # 运算符优先级（从高到低）。BUG-78：这张表必须按**产物语言（Python/Cython）的
+        # 分级**给分，不能把 `&`/`^`/`|` 压成同一档 —— 压平之后 `(a | b) & c` 会被
+        # 写成 `a | b & c`（Cython 里 `&` 更紧，等于 `a | (b & c)`），静默改了次序。
+        # 表里没有的运算符（比较、布尔、in/is）留 None，走下面的保守判据，不动既有产物。
         precedence = {
-            '**': 5,
-            '*': 4, '/': 4, '%': 4, '//': 4,
-            '+': 3, '-': 3,
-            '<<': 2, '>>': 2,
-            '&': 1, '^': 1, '|': 1,
+            '**': 7,
+            '*': 6, '/': 6, '%': 6, '//': 6,
+            '+': 5, '-': 5,
+            '<<': 4, '>>': 4,
+            '&': 3,
+            '^': 2,
+            '|': 1,
         }
-        
+
         left_str = self._expr_to_str(node.left)
         right_str = self._expr_to_str(node.right)
-        
+
         # 检查是否需要为左操作数添加括号
         if isinstance(node.left, BinOp):
             left_prec = precedence.get(node.left.op, 0)
@@ -3106,19 +3662,29 @@ class CythonGenerator:
             # 如果左操作数优先级低于当前运算符，或者是右结合的幂运算
             if left_prec < current_prec or (node.op == '**' and left_prec <= current_prec):
                 left_str = f"({left_str})"
-        
+
         # 检查是否需要为右操作数添加括号
         if isinstance(node.right, BinOp):
             right_prec = precedence.get(node.right.op, 0)
             current_prec = precedence.get(node.op, 0)
-            # 如果右操作数优先级低于当前运算符，或者是幂运算（右结合）
-            if right_prec < current_prec or (node.op == '**' and right_prec <= current_prec):
+            # BUG-78：表内的运算符除 `**` 外全是**左结合**，等优先级的右操作数必须补
+            # 括号，否则 `a - (b - c)` / `a % (b % c)` / `a >> (b >> c)` 落成扁平链就
+            # 换了算法次序。`**` 是右结合，旧代码本来就用 `<=` 特例保括号，一并覆盖。
+            # 表外运算符（比较/布尔）沿用旧的 `<` 判据，本单不扩面。
+            both_known = node.right.op in precedence and node.op in precedence
+            if right_prec < current_prec or (both_known and right_prec <= current_prec):
                 right_str = f"({right_str})"
         
         # 处理 "not is" → "is not"（Python/Cython 语法要求）
         op = node.op
         if op == "not is":
             op = "is not"
+        # 逻辑运算符的 C 风格别名必须归一化为 Python/Cython 关键字
+        # （Cython 不支持 && / ||，否则生成非法代码）
+        elif op == "&&":
+            op = "and"
+        elif op == "||":
+            op = "or"
         # int / int 使用整数除法（与类型检查器一致：int / int -> int）
         if op == '/' and self._is_int_expr(node.left) and self._is_int_expr(node.right):
             op = '//'
@@ -3229,12 +3795,26 @@ class CythonGenerator:
                 return f"{func_name}({args})"
             elif func_name == 'free':
                 return f"{func_name}({args})"
+            elif func_name == 'id':
+                # id(obj) 转换为 Cython 的内存地址获取
+                if node.args:
+                    first_arg = node.args[0]
+                    if isinstance(first_arg, tuple):
+                        first_arg = first_arg[1]
+                    first_str = self._expr_to_str(first_arg)
+                    return f"<size_t><void*>{first_str}"
+                return f"id({args})"
+            elif func_name == 'isinstance' and len(node.args) == 2 \
+                    and isinstance(node.args[1], Name) \
+                    and node.args[1].id in self._known_traits:
+                # isinstance(x, Trait) 改写为运行时注册表查询（BUG-023）
+                obj_str = self._expr_to_str(node.args[0])
+                return f"_cypy_is_instance_of({obj_str}, {node.args[1].id!r})"
         
-        # 如果有调用时的 checker，在调用前调用 checker
-        # 使用逗号表达式：(checker(), func(args))[1] 获取函数调用结果
-        if node.checker:
-            return f"({node.checker}(), {self._expr_to_str(node.func)}({args}))[1]"
-
+        # 类型实参在产物里必须**擦除**（SYNTAX/11「调用点的类型实参」规则 4）：
+        # 过去的写法是 `(类型名(), f(args))[1]` —— 那是把类型名当零参函数调用一次，
+        # 对 `int`/`str` 只是侥幸能跑，对带必填字段的 struct/class 必然在运行期抛 TypeError，
+        # 且类型检查与产物生成都不报错（静默错误产物）。静态代入由分析器负责，产物只留调用本身。
         func_node = node.func
         func_str = self._expr_to_str(func_node)
         # 函数表达式是 lambda / 调用 / 运算等复杂形式时必须加括号，
@@ -3499,8 +4079,32 @@ class CythonGenerator:
             return self._is_int_expr(node.left) and self._is_int_expr(node.right)
         return False
 
+    def _subtype_to_base(self, name: str) -> Optional[Name]:
+        """SYNTAX/33 S-4.1：`subtype Meter <: float` 在**类型标注位置**一律渲染成基类型名。
+
+        链式声明（S-7.1 `subtype A <: B; subtype B <: float`）一路向上到第一个非
+        subtype 的名字；seen 集合是防御 —— 环在 analyzer 就是硬错误，但 codegen 也会被
+        单测直接调用（`CythonGenerator().generate(parse(src))`），不能在这里死循环。
+        返回 None 表示 name 不是 subtype。
+        """
+        if name not in self.subtype_defs:
+            return None
+        seen = {name}
+        cur = self.subtype_defs.get(name)
+        while cur in self.subtype_defs and cur not in seen:
+            seen.add(cur)
+            cur = self.subtype_defs.get(cur)
+        if not cur or cur in seen:
+            return None
+        return Name(cur, 0, 0)
+
     def _type_to_str(self, node: ASTNode) -> str:
         if hasattr(node, 'id') and node.id in ('None', 'Nothing', 'null'):
+            return "object"
+        # trait 作为变量/参数/字段类型时回退为 object（鸭子类型）：
+        # Cypy 的 trait 由独立 cdef 包装器实现，具体 struct 并非其子类，
+        # 若保留 trait 扩展类型，Cython 会对赋值做严格类型检查而拒绝具体 struct。
+        if hasattr(node, 'id') and node.id in self._known_traits:
             return "object"
         # never / Never 返回类型映射到 Python 的 NoReturn（表示该函数不返回）
         if hasattr(node, 'id') and node.id in ('never', 'Never', 'NeverType'):
@@ -3512,6 +4116,11 @@ class CythonGenerator:
         if isinstance(node, VecType):
             return self._visit_VecType(node)
         if isinstance(node, Name):
+            # 名义子类型：标注位置换成**基类型名**（S-4.1 零运行时表示；与别名的
+            # `ctypedef` 不同，这里不产生任何可引用的名字）
+            base_node = self._subtype_to_base(node.id)
+            if base_node is not None:
+                return self._type_to_str(base_node)
             # 检查是否是类型别名，如果是则展开
             if node.id in self.type_aliases:
                 alias_node = self.type_aliases[node.id]
@@ -3530,6 +4139,10 @@ class CythonGenerator:
         if isinstance(node, GenericType):
             return self._visit_GenericType(node)
         if hasattr(node, "id"):
+            # 名义子类型（非 Name 节点的兜底分支，与上面 Name 分支同一规则）
+            base_node = self._subtype_to_base(node.id)
+            if base_node is not None:
+                return self._type_to_str(base_node)
             # 检查是否是类型别名
             if node.id in self.type_aliases:
                 alias_node = self.type_aliases[node.id]
@@ -3538,7 +4151,20 @@ class CythonGenerator:
             if node.id in self.enum_defs:
                 return "object"
             return self.type_mapper.to_cython(node.id)
-        return str(node)
+        # 兜底不得把 ASTNode 的 Python repr 写进产物（`Constant(line=2, col=9)` 这类，
+        # BUG-34/BUG-108）：分析器已经拒绝非法标注形态，这里再退化成 object，
+        # 保证即使有人绕过分析器直接生成，产物也是可编译的而不是幽灵类型名。
+        return "object"
+
+    def _trait_class_ref(self, node: Any) -> str:
+        """super trait / trait 基类的类名。
+
+        必须与 _type_to_str 区分：后者把 trait 作为*值类型*时回退为 object，
+        但作为*基类标识符*时必须保留真实 trait 类名（否则 trait 继承与方法合并失效）。
+        """
+        if isinstance(node, Name):
+            return node.id
+        return self._type_to_str(node) if isinstance(node, ASTNode) else str(node)
 
     def _visit_SuiteDef(self, node: SuiteDef) -> None:
         """生成测试套件定义的 Cython 代码"""

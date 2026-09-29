@@ -13,6 +13,7 @@ import unittest
 from cypyc.parser.lexer import Lexer
 from cypyc.parser.parser import Parser
 from cypyc.codegen.cython_generator import CythonGenerator
+from cypyc.utils.indent_detector import IndentDetector
 
 
 class BoundaryTestResult:
@@ -196,7 +197,7 @@ class TestDeferBoundary(TestBoundaryFramework):
 
 # ==================== 指针操作测试 ====================
 
-class TestPointerBoundary(TestBoundaryFramework):
+class TestPointerBoundaryShadowedOnce(TestBoundaryFramework):
     def test_pointer_error_double_deref(self):
         """错误写法：双重解引用"""
         source = "def foo(ptr: int**):\n    return &&ptr\n"
@@ -278,7 +279,7 @@ class TestNeverBoundary(TestBoundaryFramework):
 
 # ==================== 管道操作符测试 ====================
 
-class TestPipelineBoundary(TestBoundaryFramework):
+class TestPipelineBoundaryShadowedOnce(TestBoundaryFramework):
     def test_pipeline_error_empty(self):
         """错误写法：空管道"""
         source = "result = 5 |>\n"
@@ -523,6 +524,64 @@ class TestIndentationBoundary(TestBoundaryFramework):
         source = "def foo():\n x: int = 1\n"
         _, error = self._parse_code(source)
         self.assertIsNotNone(error)
+
+
+class TestIndentationNormalize(unittest.TestCase):
+    """IndentDetector.normalize 的制表符层级（2026-Q3 审计 T0r61.2.2 缺陷 05）。
+
+    旧实现把“前导空白的字符数 // 4”当层级，而 lexer.py:419-420 的约定是
+    1 个 tab 展开成 4 列：于是 1~3 个 tab 全部塌缩到 0 层，normalize() 的产物
+    反而无法解析。修复只落在 normalize() 内部，不改 lexer 的列展开约定。
+    """
+
+    T = "\t"
+
+    def _parse_ok(self, source):
+        try:
+            Parser(list(Lexer(source).tokenize())).parse()
+            return True
+        except Exception:
+            return False
+
+    def test_one_tab_per_level_is_preserved(self):
+        src = ("def add(a, b):\n"
+               + self.T + "let s = a + b\n"
+               + self.T + "if s > 0:\n"
+               + self.T * 2 + "return s\n"
+               + self.T + "return 0\n")
+        norm = IndentDetector().normalize(src)
+        self.assertEqual(norm, src)
+        self.assertGreater(norm.count(self.T), 0)
+        self.assertTrue(self._parse_ok(norm))
+
+    def test_deeper_tab_levels_are_not_flattened(self):
+        """1~3 个 tab 的前导空白不得再被压成 0 层（旧实现 chars//4 == 0）。"""
+        for tabs in (1, 2, 3):
+            src = "def f():\n" + self.T * tabs + "let x = 1\n"
+            self.assertEqual(IndentDetector().normalize(src), src,
+                             f"{tabs} 个 tab 被 normalize() 抹平了")
+
+    def test_two_tabs_per_level_keeps_source_semantics(self):
+        # 词法层约定是 1 tab == 4 列（lexer.py:419-420），因此“2 个 tab 一层”
+        # 本来就不是合法缩进；normalize() 的职责只是不再破坏它。
+        src = ("def f():\n" + self.T * 2 + "let x = 1\n"
+               + self.T * 2 + "if x:\n" + self.T * 4 + "return 1\n")
+        norm = IndentDetector().normalize(src)
+        self.assertEqual(norm.count(self.T), src.count(self.T))
+        self.assertEqual(self._parse_ok(norm), self._parse_ok(src))
+
+    def test_space_indentation_unchanged(self):
+        src = "def add(a, b):\n    let s = a + b\n    if s:\n        return s\n"
+        self.assertEqual(IndentDetector().normalize(src), src)
+
+    def test_mixed_tab_and_space_uses_column_expansion(self):
+        # 1 tab == 4 列：'\t ' 共 5 列 -> 5 // 4 == 1 层（多余的列被丢弃）
+        src = "def f():\n\t let x = 1\n"
+        self.assertEqual(IndentDetector().normalize(src), "def f():\n\tlet x = 1\n")
+
+    def test_blank_lines_kept(self):
+        src = "def f():\n\n    let x = 1\n"
+        self.assertEqual(IndentDetector().normalize(src), src)
 
 
 # ==================== go/spawn 并发语句测试 ====================
@@ -1066,13 +1125,28 @@ class Derived(Base):
         self.assertIsNone(error)
     
     def test_class_with_type_param(self):
-        """错误写法：带类型参数的类（当前不支持）"""
+        """正确写法：带类型参数的类（SYNTAX/11「泛型类的判定口径」规则 1）。
+
+        本单原文是「错误写法：当前类不支持泛型语法」，钉住的是 memory/bugs.md BUG-119 的坏形态。
+        R11 收口该缺陷时不删锁、不 xfail，而是按双向格改严：
+        收下参数表（正向）＋ 空参数表仍硬拒（反向，见下一单）。
+        """
         source = """class Container<T>:
     value: T
 """
+        parsed, error = self._parse_code(source)
+        self.assertIsNone(error)
+        class_def = parsed[0].body[0]
+        self.assertEqual(list(getattr(class_def, "generic_params", [])), ["T"])
+
+    def test_class_with_empty_type_param_list(self):
+        """错误写法：类的空参数表仍要硬拒，文案与 struct 同源（规则 2）。"""
+        source = """class Container<>:
+    value: int
+"""
         _, error = self._parse_code(source)
-        # 当前类不支持泛型语法，只有 struct 支持
         self.assertIsNotNone(error)
+        self.assertIn("Generic parameter list cannot be empty", str(error))
 
 
 # ==================== 结构体边界测试 ====================

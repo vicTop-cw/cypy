@@ -84,12 +84,32 @@ class PointerChecker:
             self._visit(stmt)
 
     def _visit_FuncDef(self, node: FuncDef) -> None:
+        # 所有权状态是"每个函数一套"：进入函数时把 owned/moved/defer-cleaned 三个集合
+        # 清空。之前它们在 __init__ 里创建后从不重置，函数A里 move 掉的变量名会在
+        # :107 处把函数B里同名 owned 变量"必须清理"的诊断吞掉（假阴性，
+        # 并且检查结果依赖函数的先后顺序）。
+        # owned_vars 另外在作用域弹出时把本函数的绑定摘掉——它表示"还活着的 owned 绑定"；
+        # moved/defer_cleaned 保留到下一次进入函数，便于调用方在 check() 之后
+        # 仍能看到刚才那个函数对哪个变量做了转移。
+        self.owned_vars = set()
+        self.moved_vars = set()
+        self.defer_cleaned_vars = set()
+        
         func_scope: Dict[str, Any] = {}
         
         for param in node.params:
             if param.type_annotation:
                 type_name = str(param.type_annotation)
-                func_scope[param.name] = type_name
+                # 存成和其它变量一致的 dict 结构：{name: 'int'} 这种裸字符串会让
+                # _check_transfer_call 的 {**scope[var]} 抛
+                # TypeError: 'str' object is not a mapping
+                func_scope[param.name] = {
+                    'type': type_name,
+                    'is_owned': getattr(param, 'is_owned', False),
+                    'is_mutable': False,
+                    'is_const': False,
+                    'is_moved': False,
+                }
         
         self.scope_type_stack.append(func_scope)
         
@@ -99,6 +119,7 @@ class PointerChecker:
         self._check_owned_vars_cleanup(func_scope)
         
         self.scope_type_stack.pop()
+        self.owned_vars = {name for name in self.owned_vars if name not in func_scope}
 
     def _check_owned_vars_cleanup(self, scope: Dict[str, Any]) -> None:
         """检查作用域内的owned变量是否都已清理"""
@@ -229,12 +250,24 @@ class PointerChecker:
             
             for scope in reversed(self.scope_type_stack):
                 if var_name in scope:
-                    scope[var_name] = {**scope[var_name], 'is_moved': True}
+                    scope[var_name] = self._with_moved(scope[var_name])
                     break
             if var_name in self.module_type_map:
-                self.module_type_map[var_name] = {**self.module_type_map[var_name], 'is_moved': True}
+                self.module_type_map[var_name] = self._with_moved(self.module_type_map[var_name])
             
             self.moved_vars.add(var_name)
+    
+    @staticmethod
+    def _with_moved(info: Any) -> Dict[str, Any]:
+        """把变量信息标记为 is_moved=True
+        
+        变量信息既可能是 _visit_single_let 写的 dict，也可能是外部调用 check(type_map=...)
+        传进来的裸类型名字符串（或参数表里的旧格式）；对字符串直接 {**info} 会抛
+        TypeError: 'str' object is not a mapping。
+        """
+        if isinstance(info, dict):
+            return {**info, 'is_moved': True}
+        return {'type': str(info), 'is_owned': False, 'is_moved': True}
 
     def _check_malloc_call(self, node: Any) -> None:
         pos_args = [arg[1] if isinstance(arg, tuple) and len(arg) == 2 else arg for arg in node.args]
@@ -288,13 +321,29 @@ class PointerChecker:
         for stmt in node.body:
             self._visit(stmt)
             
-            if hasattr(stmt, 'kind') and stmt.kind == 'Call':
-                if hasattr(stmt.func, 'id'):
-                    func_name = stmt.func.id
+            for call in self._iter_deferred_calls(stmt):
+                if hasattr(call.func, 'id'):
+                    func_name = call.func.id
                     if func_name == 'free':
-                        pos_args = [arg[1] if isinstance(arg, tuple) and len(arg) == 2 else arg for arg in stmt.args]
+                        pos_args = [arg[1] if isinstance(arg, tuple) and len(arg) == 2 else arg for arg in call.args]
                         if pos_args and isinstance(pos_args[0], Name):
                             var_name = pos_args[0].id
                             self.defer_cleaned_vars.add(var_name)
         
         self.in_defer = old_in_defer
+    
+    @staticmethod
+    def _iter_deferred_calls(stmt: Any) -> List[Any]:
+        """取出 defer 块里"被调用的那个 Call 节点"
+        
+        解析器把 `defer: free(x)` 里的表达式调用包在 ExprStmt 里（kind=='ExprStmt'，
+        调用在 .value 上），旧代码只判 `stmt.kind == 'Call'`，所以
+        defer_cleaned_vars 永远是空集，:107 的 defer 分支是死代码。
+        """
+        calls = []
+        node = stmt
+        if getattr(node, 'kind', None) == 'ExprStmt':
+            node = getattr(node, 'value', None) or getattr(node, 'expr', None)
+        if node is not None and getattr(node, 'kind', None) == 'Call':
+            calls.append(node)
+        return calls

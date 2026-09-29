@@ -35,8 +35,10 @@ class GenericTransformer:
         Args:
             node: AST 节点
         """
-        # 检查是否有类型参数
-        if hasattr(node, 'type_params') and node.type_params:
+        # parser 给泛型节点（FuncDef/StructDef）用的属性名是 `generic_params`，
+        # `type_params` 是 DuckDef 那一族的叫法 ⇒ 只读其中一个会静默漏收。
+        params = getattr(node, 'generic_params', None) or getattr(node, 'type_params', None)
+        if params:
             self.generic_defs.append(node)
         
         # 递归处理子节点
@@ -45,11 +47,11 @@ class GenericTransformer:
                 continue
             try:
                 value = getattr(node, attr_name)
-                if isinstance(value, ASTNode):
-                    self._collect_generics(value)
-                elif isinstance(value, list):
-                    for item in value:
-                        if isinstance(item, ASTNode):
-                            self._collect_generics(item)
             except (AttributeError, TypeError):
-                pass
+                continue
+            if isinstance(value, ASTNode):
+                self._collect_generics(value)
+            elif isinstance(value, list):
+                for item in value:
+                    if isinstance(item, ASTNode):
+                        self._collect_generics(item)

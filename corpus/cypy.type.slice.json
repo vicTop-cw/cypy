@@ -1,0 +1,98 @@
+{
+  "op": "cypy.type.slice",
+  "version": "1.0",
+  "definition": {
+    "signature": "slice(container, start?, stop?, step?) -> same container type",
+    "note": "SYNTAX/14 切片语法节的类型规则 1-2：切片结果是被切容器自身的类型；只有下标形态才降到元素类型。形态判据是解析器落地的 {\"slice\": True, …} dict。"
+  },
+  "preconditions": [
+    "容器类型可解析（list<T> / str）",
+    "切片形态与下标形态可按 AST 区分"
+  ],
+  "laws": [
+    "SYNTAX/14 切片规则 1",
+    "SYNTAX/14 切片规则 2",
+    "SYNTAX/14 切片规则 3"
+  ],
+  "tests": [
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f(xs: list<int>) -> int:\n    ys: list<int> = xs[1:3]\n    return len(ys)\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f(xs: list<int>) -> int:\n    ys: list<int> = xs[:]\n    return len(ys)\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f(xs: list<int>) -> int:\n    ys: list<int> = xs[::2]\n    return len(ys)\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f(xs: list<int>) -> int:\n    ys: list<int> = xs[-2:]\n    return len(ys)\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f(s: str) -> str:\n    t: str = s[1:3]\n    return t\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f(xs: list<int>) -> int:\n    y: int = xs[1]\n    return y\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f(xs: list<int>) -> int:\n    y: int = xs[1:3]\n    return y\n"
+      },
+      "error": {
+        "contains": [
+          "Type mismatch: expected int, got list[int]"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f(s: str) -> int:\n    t: int = s[1:3]\n    return t\n"
+      },
+      "error": {
+        "contains": [
+          "Type mismatch: expected int, got str"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    }
+  ],
+  "fingerprint": "fnv1a64:580098c7d0fbf2aa"
+}

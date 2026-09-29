@@ -51,12 +51,19 @@ class CypyFileMonitor:
         
         # 检查.py文件是否有#!bin cypy头
         if file_path.endswith(".py"):
+            # 按字节读首行：文本模式遇到 BOM/非法编码会抛异常，把 Cypy 入口文件
+            # 静默归类成「不是 Cypy 文件」，热重载因此漏编译。
             try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    first_line = f.readline().strip()
-                    return first_line == "#!bin cypy"
-            except Exception:
-                pass
+                with open(file_path, "rb") as f:
+                    first_line = f.readline().decode("utf-8-sig", errors="replace").strip()
+            except FileNotFoundError:
+                return False
+            except OSError as exc:
+                import sys
+                print(f"[cypy][warn] 无法读取 {file_path} 首行，按非 Cypy 文件处理: {exc}",
+                      file=sys.stderr)
+                return False
+            return first_line == "#!bin cypy"
         
         return False
     

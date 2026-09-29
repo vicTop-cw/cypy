@@ -4,6 +4,7 @@ import pytest
 from cypyc.parser.lexer import Lexer
 from cypyc.parser.parser import Parser
 from cypyc.parser.macro_expander import expand_macros
+from cypyc.codegen.cython_generator import CythonGenerator
 from cypy_bridge.compiler import CCodeGenerator
 
 
@@ -140,7 +141,10 @@ def test_usage():
     codegen = CCodeGenerator()
     c_code = codegen.generate(expanded_ast, "test_mod")
 
-    # 验证代码生成成功
+    # 验证宏已在编译期展开并生成正确代码
+    assert "Calling..." in c_code
+    assert "Done." in c_code
+    # 普通语句体宏（非反引号宏）仍由生成器渲染为函数
     assert "log_call" in c_code
 
 
@@ -293,6 +297,60 @@ def test_usage():
     # 验证展开后的 LetStmt 存在
     let_stmts = ASTUtils.collect_nodes(expanded_ast, 'LetStmt')
     assert len(let_stmts) >= 1
+
+
+def test_raw_backtick_block_is_not_interpolated():
+    """r```...``` 原始块：$name 与 $$ 都不处理（插值扫描器不得越界）"""
+    source = '''macro keep(x: Tokens) -> Tokens =
+    r```
+        literal $x and $$y
+    ```
+
+def test_usage():
+    @keep!(v)
+    return 0'''
+
+    ast = Parser(Lexer(source).tokenize()).parse()
+    expanded = expand_macros(ast)
+
+    from cypyc.utils.ast_utils import ASTUtils
+    blocks = ASTUtils.collect_nodes(expanded, 'BacktickBlock')
+    assert len(blocks) == 1
+    assert blocks[0].content == 'literal $x and $$y'
+
+
+def test_non_parameter_interpolation_keeps_expression_parentheses():
+    """$(expr) 中 expr 不是形参时按表达式处理：保留括号，不改写文本"""
+    source = '''macro show(expr: Tokens) -> Tokens =
+    f```
+        print($(1 + 2))
+    ```
+
+def test_usage():
+    @show!(q)
+    return 0'''
+
+    code = CythonGenerator('mtest').generate(expand_macros(Parser(Lexer(source).tokenize()).parse()))
+    assert 'print(1 + 2)' in code
+
+
+def test_macro_body_comment_and_double_quoted_string_are_not_interpolated():
+    """宏体里的注释与双引号字面量是普通文本：其中的 $name 不被插值（2026-Q3 缺陷 04）"""
+    source = '''macro p(x: Tokens) -> Tokens =
+    f```
+        # note about $x
+        label = "value=$x"
+        print(label)
+    ```
+
+def test_usage():
+    @p!(9)
+    return 0'''
+
+    code = CythonGenerator('mtest').generate(expand_macros(Parser(Lexer(source).tokenize()).parse()))
+    assert '# note about $x' not in code      # 注释不会变成 "# note about 9"
+    assert 'value=$x' in code
+    assert 'value=9' not in code
 
 
 if __name__ == '__main__':

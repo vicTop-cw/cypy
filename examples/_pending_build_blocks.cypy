@@ -1,0 +1,69 @@
+# ============================================================================
+# 显式挂起（下划线前缀 = scripts/e2e_golden.sh 的 `_*) continue` 挂起约定，
+# 判据不跑、不注册 golden）。这里放的是被**未修复的编译器缺陷**挡住、
+# 无法产出可信输出的构建块用例：与其让它们在 examples/new_syntax_features.cypy
+# 里被冻结成 traceback 基准（T0r258.4.1 实测的假绿机制），不如显式挂起 + 登记缺陷。
+#
+# 阻塞本文件的缺陷（复现证据与最小复现见 Find_BUG/BUGS.md）：
+#   BUG-025  负索引 `xs[-1]` / 链式 `d[k][-1]` 在编译产物里段错误（exit 139）
+#            -> `^:` 索引构建块的规范语义就是 `container[key][-1]`，因此整体不可用
+#   BUG-026  `~:` 在 return 位置被静默误编译：`return f ~: 21` 生成
+#              return f
+#              21
+#            返回函数对象，且声明的 `-> int` 没拦住
+#   BUG-027  `~:` 的规范形态 `f(args) ~: lambda x: ...`（SYNTAX/13-build-blocks.md）
+#            根本不可解析：`Expected ARROW, got INTEGER at 11:23`
+#
+# 修复上述任一缺陷后，把对应的 test_* 搬回 examples/new_syntax_features.cypy
+# 并 --update 注册基准。
+# ============================================================================
+
+# ========== ^: 索引构建块（被 BUG-025 挡住）==========
+
+def get_last_item(items: list, key: str):
+    result = items ^:
+        key
+    return result
+
+
+def process_with_index(items: list, keys: list):
+    results: list = []
+    for key in keys:
+        value = items ^:
+            key
+        results.append(value)
+    return results
+
+
+def test_caret_build_block() -> int:
+    items = [10, 20, 30]
+    last = get_last_item(items, "last")
+    return 0
+
+
+# ========== ~: 去括号语法（被 BUG-026 / BUG-027 挡住）==========
+
+def double_value(x: int) -> int:
+    return x * 2
+
+def compute(x: int, y: int) -> int:
+    return x + y
+
+def test_deparens_basic() -> int:
+    return double_value ~:
+        21
+
+def test_deparens_chained() -> int:
+    result = double_value ~:
+        double_value(5)
+    return result
+
+def test_deparens_with_named_arg() -> int:
+    value = 10
+    return double_value ~:
+        value
+
+def test_deparens_in_expression() -> int:
+    x = compute(10, 20)
+    return double_value ~:
+        x

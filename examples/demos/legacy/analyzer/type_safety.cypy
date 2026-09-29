@@ -1,0 +1,11 @@
+
+# 类型安全示例
+def safe_compute(a: int, b: float) -> float:
+    # 显式转换确保类型安全
+    result = (a as float) + b
+    return result
+
+def main() -> int:
+    x = safe_compute(10, 3.14)
+    print(x)
+    return 0

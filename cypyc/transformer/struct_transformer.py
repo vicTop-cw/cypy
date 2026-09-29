@@ -44,11 +44,11 @@ class StructTransformer:
                 continue
             try:
                 value = getattr(node, attr_name)
-                if isinstance(value, ASTNode):
-                    self._collect_structs(value)
-                elif isinstance(value, list):
-                    for item in value:
-                        if isinstance(item, ASTNode):
-                            self._collect_structs(item)
             except (AttributeError, TypeError):
-                pass
+                continue
+            if isinstance(value, ASTNode):
+                self._collect_structs(value)
+            elif isinstance(value, list):
+                for item in value:
+                    if isinstance(item, ASTNode):
+                        self._collect_structs(item)

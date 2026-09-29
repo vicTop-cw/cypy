@@ -1,0 +1,8 @@
+int identity: 42
+str identity: hello
+int list: [10]
+box value: 100
+updated box: 200
+------------------------------
+推断类型: 3.14
+列表类型推断: [1, 2, 3]

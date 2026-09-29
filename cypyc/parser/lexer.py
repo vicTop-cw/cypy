@@ -34,6 +34,7 @@ class TokenType:
     RSHIFT = "RSHIFT"  # >>
     LSHIFT_ASSIGN = "LSHIFT_ASSIGN"  # <<=
     RSHIFT_ASSIGN = "RSHIFT_ASSIGN"  # >>=
+    XOR = "XOR"  # ^ 按位异或（中缀，SYNTAX/12-operators.md:57）
 
     ASSIGN = "ASSIGN"
     PLUS_ASSIGN = "PLUS_ASSIGN"
@@ -43,6 +44,9 @@ class TokenType:
     MOD_ASSIGN = "MOD_ASSIGN"
     FLOORDIV = "FLOORDIV"
     FLOORDIV_ASSIGN = "FLOORDIV_ASSIGN"
+    POW_ASSIGN = "POW_ASSIGN"  # **= (SYNTAX/12-operators.md:85)
+    BITAND_ASSIGN = "BITAND_ASSIGN"  # &= (SYNTAX/12-operators.md:88)
+    BITOR_ASSIGN = "BITOR_ASSIGN"  # |= (SYNTAX/12-operators.md:89)
 
     AND = "AND"
     OR = "OR"
@@ -89,6 +93,12 @@ class TokenType:
     IMPL = "IMPL"
     IMPLEMENTS = "IMPLEMENTS"
     EXTENDS = "EXTENDS"
+    # 命名联合类型约束声明关键字（SYNTAX/33 C-7.1 / 裁决 D-4，本轮进 KEYWORDS）
+    CONSTRAINT = "CONSTRAINT"
+    # `subtype` 声明关键字。注意：TokenType.SUBTYPE 已被 `<:` 运算符占用
+    # （SYNTAX/33 S-1.4），因此关键字用独立的 token 类型，避免 parser 混淆
+    # 「`subtype` 这个词」与「`<:` 这个符号」。
+    SUBTYPE_KW = "SUBTYPE_KW"
     IMPORT = "IMPORT"
     FROM = "FROM"
     AS = "AS"
@@ -178,6 +188,10 @@ class Lexer:
         "from": TokenType.FROM,
         "as": TokenType.AS,
         "type": TokenType.TYPE,
+        # SYNTAX/33 C-7.1 / 裁决 D-4：本轮硬保留字只有这两个词
+        # （`dispatch` 随下一轮 dispatch 实现一起进，避免悬空关键字）。
+        "constraint": TokenType.CONSTRAINT,
+        "subtype": TokenType.SUBTYPE_KW,
         "let": TokenType.LET,
         "const": TokenType.CONST,
         "defer": TokenType.DEFER,
@@ -234,6 +248,7 @@ class Lexer:
         self._indent_type = None  # 记录当前使用的缩进类型：'spaces' 或 'tabs'
         self._in_backtick_block = False  # 标记是否在反引号代码块内部
         self._prev_token_was_block_start = False  # 标记前一个token是否是块起始
+        self._paren_depth = 0  # 括号深度：括号内忽略缩进和换行
 
     def _peek(self) -> Optional[str]:
         if self.pos >= len(self.source):
@@ -247,6 +262,53 @@ class Lexer:
             return None
         return self.source[target_pos]
 
+    def _current_line_starts_with(self, word: str) -> bool:
+        """当前物理行去掉前导空白后是否以 `word ` 开头（用于按形态放行词法期待）"""
+        start = self.source.rfind("\n", 0, self.pos) + 1
+        segment = self.source[start:self.pos].lstrip()
+        return segment == word or segment.startswith(word + " ")
+
+    # `^` 的三重身份（SYNTAX/appendix-B-operators.md:219）：中缀异或、构建值、`^:` 索引构建块。
+    # 下面两个字符集只用来区分前两者——`^:` 在词法的 `:` 分支里先判掉，属冻结语义。
+    _VALUE_END_CHARS = ")]}\"'`"
+    _VALUE_START_CHARS = "_([{~!\"'`"
+
+    def _caret_is_infix(self) -> bool:
+        """刚消费掉 `^` 之后判断它是不是中缀异或（调用点必须在 `self._advance()` 之后）。
+
+        BUG-75：词法器过去把裸 `^` 一律发成 BUILD_VALUE，文档声明的 `a ^ b` 因此不可达。
+        判据取左右邻位（各自只越过水平空白，不跨行）：左邻必须能**收束**一个操作数、
+        右邻必须能**起始**一个操作数。于是 `a ^ b`/`0x55 ^ 0xAA` 是异或，
+        行尾的构建值后缀 `x^`、行首/`(`/`= ` 之后的前缀 `^x` 都不改判；
+        `^=`（silent_wrong，另单在册）与 `^:` 一样保持原词位，本单不顺手动它们。
+        """
+        i = self.pos - 2  # pos-1 是刚消费的 '^'
+        while i >= 0 and self.source[i] in " \t":
+            i -= 1
+        if i < 0 or self.source[i] in "\n\r":
+            return False
+        prev = self.source[i]
+        if prev.isalnum() or prev == "_":
+            word_end = i
+            while i >= 0 and (self.source[i].isalnum() or self.source[i] == "_"):
+                i -= 1
+            word = self.source[i + 1 : word_end + 1]
+            # 关键字收束不了操作数（`return ^x` 仍是前缀构建值）；布尔字面量除外
+            if word in self.KEYWORDS and word not in ("True", "False", "true", "false"):
+                return False
+        elif prev not in self._VALUE_END_CHARS:
+            return False
+
+        j = self.pos
+        while j < len(self.source) and self.source[j] in " \t":
+            j += 1
+        if j >= len(self.source):
+            return False
+        nxt = self.source[j]
+        if nxt in ("=", ":"):
+            return False
+        return nxt.isalnum() or nxt in self._VALUE_START_CHARS
+
     def _advance(self) -> str:
         char = self.source[self.pos]
         self.pos += 1
@@ -258,7 +320,9 @@ class Lexer:
         return char
 
     def _skip_whitespace(self) -> None:
-        while self._peek() in " \t":
+        # BUG-38: `_peek()` 在 EOF 返回 None，`None in " \t"` 抛 TypeError——源文件以空格
+        # 结尾且无末换行时整份编译崩在未声明异常上。成员判断改用显式元组，None 自然为 False。
+        while self._peek() in (" ", "\t"):
             self._advance()
 
     def _skip_comment(self) -> None:
@@ -267,6 +331,7 @@ class Lexer:
                 self._advance()
 
     def _tokenize_string(self, quote: str = None, consume_quote: bool = True) -> str:
+        open_line, open_col = self.line, self.col
         if quote is None:
             quote = self._advance()
         elif consume_quote:
@@ -301,6 +366,12 @@ class Lexer:
                 break
             else:
                 result += char
+        else:
+            # BUG-33: 循环因走到 EOF 而结束（没 break 到闭合引号）。以前直接 return，
+            # 未闭合的字面量会把其后整段源码吃进去——函数体静默消失、零报错、产物照写。
+            raise ValueError(
+                f"Unterminated string literal opened at {open_line}:{open_col}, "
+                f"reached end of file at {self.line}:{self.col}")
         return result
 
     def _tokenize_triple_backtick(self) -> str:
@@ -436,8 +507,10 @@ class Lexer:
                 raise ValueError(f"Inconsistent indentation at line {self.line}: "
                                f"expected {self._indent_type}, got {current_indent_type}")
 
-        # 在反引号代码块内部，跳过缩进检查
-        if self._in_backtick_block:
+        # 在反引号代码块或括号内部，跳过缩进检查
+        if self._in_backtick_block or self._paren_depth > 0:
+            # 重置期望缩进标记（括号内不需要缩进检查）
+            self._expect_indent = False
             if self._peek() is not None and self._peek() != "#":
                 yield Token(TokenType.NEWLINE, "", self.line, self.col)
             elif self._peek() is None:
@@ -516,7 +589,9 @@ class Lexer:
 
             if char == "`":
                 # 检查是否是三反引号（用于宏代码捕获）
-                if self.source[self.pos:self.pos+2] == "``":
+                # BUG-15: 判定只看 2 个字符却消费 3 个 —— 一对游离反引号即会吞掉
+                # 其后整份文件（后面所有定义静默消失、零报错）。按消费长度判 3 个。
+                if self.source[self.pos:self.pos+3] == "```":
                     # 三反引号代码块 - 解析为BACKTICK_BLOCK
                     start_line = self.line
                     start_col = self.col
@@ -630,13 +705,21 @@ class Lexer:
 
             if char.isalpha() or char == "_":
                 # 检查是否是 f-string 前缀 (支持 f, F, rf, fr)
-                if char in ('f', 'F', 'r', 'R') and self._peek_ahead(1) in ('"', "'", 'f', 'F'):
+                # BUG-22: 第二字符集合里没有 r/R，注释承诺的 `fr"..."` 实际被拆成
+                # IDENTIFIER `fr` + STRING（`rf"..."` 却能过），报错点远在 parse。
+                # 组合前缀只承认 rf/fr 两种，且**必须紧跟引号** —— 否则 `free(`、
+                # `readfile` 这类普通标识符会被当成前缀吞掉（第一版修复就踩了这个坑）。
+                _nxt = self._peek_ahead(1)
+                _combo = ((_nxt in ('r', 'R') and char in ('f', 'F')) or
+                          (_nxt in ('f', 'F') and char in ('r', 'R'))) and \
+                    self._peek_ahead(2) in ('"', "'")
+                if char in ('f', 'F', 'r', 'R') and (_nxt in ('"', "'") or _combo):
                     prefix_chars = char
                     # 检查组合前缀 (rf, fr)
-                    if self._peek_ahead(1) in ('f', 'F'):
-                        prefix_chars += self._peek_ahead(1)
+                    if _combo:
+                        prefix_chars += _nxt
                         self._advance()  # 消费第一个字符
-                        self._advance()  # 消费第二个字符 (f/F)
+                        self._advance()  # 消费第二个字符 (f/F/r/R)
                     else:
                         self._advance()  # 消费单个前缀字符
                     quote = self._peek()
@@ -689,7 +772,13 @@ class Lexer:
                     yield Token(TokenType.MUL_ASSIGN, "*=", self.line, self.col - 2)
                 elif self._peek() == "*":
                     self._advance()
-                    yield Token(TokenType.POW, "**", self.line, self.col - 2)
+                    # BUG-79: 文档声明的 `**=`（SYNTAX/12-operators.md:85）过去拆成 POW + ASSIGN，
+                    # parser 的复合赋值表只认 *_ASSIGN 词位 ⇒ 硬解析失败。
+                    if self._peek() == "=":
+                        self._advance()
+                        yield Token(TokenType.POW_ASSIGN, "**=", self.line, self.col - 3)
+                    else:
+                        yield Token(TokenType.POW, "**", self.line, self.col - 2)
                 elif self._peek() == ":" and has_prev_whitespace:
                     # 构建块符号 *: 必须前面有空白，后面有换行
                     self._advance()
@@ -752,8 +841,11 @@ class Lexer:
                         yield Token(TokenType.ASSIGN, "=", self.line, self.col - 2)
                         yield Token(TokenType.COLON, ":", self.line, self.col - 1)
                 else:
-                    # 检查 = 后是否有换行（如 macro name = ... 或赋值语句）
-                    if self._peek() == "\n":
+                    # 检查 = 后是否有换行（如 macro name = / def f() = 的块体续写）
+                    # 例外：`constraint Name =` 的成员表必须在同一行（SYNTAX/33 C-1.4），
+                    # 所以这里不置 _expect_indent —— 让 parser 报「0 成员」的定向语法错
+                    # （C-1.1），而不是被词法的缩进期待吞掉一句无法定位的抱怨。
+                    if self._peek() == "\n" and not self._current_line_starts_with("constraint"):
                         self._expect_indent = True
                     yield Token(TokenType.ASSIGN, "=", self.line, self.col - 1)
                 continue
@@ -813,6 +905,11 @@ class Lexer:
                 if self._peek() == "&":
                     self._advance()
                     yield Token(TokenType.AND, "&&", self.line, self.col - 2)
+                elif self._peek() == "=":
+                    # BUG-79: `&=`（SYNTAX/12-operators.md:88）必须是一个复合赋值词位，
+                    # 拆成 DEREF + ASSIGN 走不到 parser 的赋值分支。
+                    self._advance()
+                    yield Token(TokenType.BITAND_ASSIGN, "&=", self.line, self.col - 2)
                 else:
                     yield Token(TokenType.DEREF, "&", self.line, self.col - 1)
                 continue
@@ -825,6 +922,10 @@ class Lexer:
                 elif self._peek() == ">":
                     self._advance()
                     yield Token(TokenType.PIPE_GT, "|>", self.line, self.col - 2)
+                elif self._peek() == "=":
+                    # BUG-79: `|=`（SYNTAX/12-operators.md:89）同上，须单独成词位。
+                    self._advance()
+                    yield Token(TokenType.BITOR_ASSIGN, "|=", self.line, self.col - 2)
                 else:
                     yield Token(TokenType.PIPE, "|", self.line, self.col - 1)
                 continue
@@ -860,31 +961,37 @@ class Lexer:
 
             if char == "(":
                 self._advance()
+                self._paren_depth += 1
                 yield Token(TokenType.LPAREN, "(", self.line, self.col - 1)
                 continue
 
             if char == ")":
                 self._advance()
+                self._paren_depth = max(0, self._paren_depth - 1)
                 yield Token(TokenType.RPAREN, ")", self.line, self.col - 1)
                 continue
 
             if char == "[":
                 self._advance()
+                self._paren_depth += 1
                 yield Token(TokenType.LBRACKET, "[", self.line, self.col - 1)
                 continue
 
             if char == "]":
                 self._advance()
+                self._paren_depth = max(0, self._paren_depth - 1)
                 yield Token(TokenType.RBRACKET, "]", self.line, self.col - 1)
                 continue
 
             if char == "{":
                 self._advance()
+                self._paren_depth += 1
                 yield Token(TokenType.LBRACE, "{", self.line, self.col - 1)
                 continue
 
             if char == "}":
                 self._advance()
+                self._paren_depth = max(0, self._paren_depth - 1)
                 yield Token(TokenType.RBRACE, "}", self.line, self.col - 1)
                 continue
 
@@ -920,8 +1027,14 @@ class Lexer:
                         yield Token(TokenType.BUILD_VALUE, "^", self.line, self.col - 2)
                         yield Token(TokenType.COLON, ":", self.line, self.col - 1)
                 else:
-                    # 单独的 ^ 符号，用于构建值表达式
-                    yield Token(TokenType.BUILD_VALUE, "^", self.line, self.col - 1)
+                    # BUG-75: 裸 `^` 过去只有 BUILD_VALUE 一个身份，文档声明的中缀异或
+                    # `a ^ b`（SYNTAX/12-operators.md:57）因此发不出可用词位。
+                    # 左右邻位判定见 _caret_is_infix()：`x^` 后缀与 `^x` 前缀身份保持不变。
+                    if self._caret_is_infix():
+                        yield Token(TokenType.XOR, "^", self.line, self.col - 1)
+                    else:
+                        # 单独的 ^ 符号，用于构建值表达式
+                        yield Token(TokenType.BUILD_VALUE, "^", self.line, self.col - 1)
                 continue
 
             self._advance()

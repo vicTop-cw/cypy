@@ -88,25 +88,45 @@ def test_parse_cast_with_arithmetic():
 
 # ===== 隐式策略语法测试 =====
 # ===== 构建块语法测试 =====
+# FIX T0r61.5.2 (defect 3): 三个测试体曾是空 `pass`（恒真计数），
+# 现改为对 BuildBlockExpr 的真实结构断言；测试名与注册数量(47)保持不变。
 @parser_suite.test("parse_build_assign")
 def test_parse_build_assign():
     """测试解析构建块赋值"""
-    # 跳过：构建块语法尚未完全支持
-    pass
+    source = "result =:\n    x = 1\n    y = 2\n    x + y\n"
+    ast = fixture.parse_statement(source)
+    Assert.is_not_none(ast)
+    Assert.equal(ast.kind, "Assign")
+    Assert.is_not_none(ast.value)
+    Assert.equal(ast.value.kind, "BuildBlockExpr")
+    Assert.equal(ast.value.block_type, "assign")
+    Assert.equal(len(ast.value.body), 3)
 
 
 @parser_suite.test("parse_build_call")
 def test_parse_build_call():
     """测试解析构建块调用"""
-    # 跳过：构建块语法尚未完全支持
-    pass
+    source = "result ~:\n    compute()\n"
+    ast = fixture.parse_statement(source)
+    Assert.is_not_none(ast)
+    Assert.equal(ast.kind, "Assign")
+    Assert.is_not_none(ast.value)
+    Assert.equal(ast.value.kind, "BuildBlockExpr")
+    Assert.equal(ast.value.block_type, "call")
+    Assert.equal(len(ast.value.body), 1)
 
 
 @parser_suite.test("parse_build_gen")
 def test_parse_build_gen():
     """测试解析构建块生成"""
-    # 跳过：构建块语法尚未完全支持
-    pass
+    source = "result *:\n    yield (100,)\n    yield (200,)\n"
+    ast = fixture.parse_statement(source)
+    Assert.is_not_none(ast)
+    Assert.equal(ast.kind, "Assign")
+    Assert.is_not_none(ast.value)
+    Assert.equal(ast.value.kind, "BuildBlockExpr")
+    Assert.equal(ast.value.block_type, "generator")
+    Assert.equal(len(ast.value.body), 2)
 
 
 # ===== 控制流测试 =====
@@ -188,9 +208,14 @@ def test_tokenize_basic_tokens():
 @parser_suite.test("parse_backtick_block")
 def test_parse_backtick_block():
     """测试解析反引号代码块"""
+    # FIX T0r61.5.2 (defect 3): 原来只有 is_not_none 一条冒烟断言；
+    # 增加对模块结构的值断言（不锁定反引号的具体 lowering，该特性尚未定版）。
     source = "`x + y`"
     ast = fixture.parse_expression(source)
     Assert.is_not_none(ast)
+    module = fixture.parse(source)
+    Assert.equal(module.kind, "Module")
+    Assert.true(len(module.body) >= 1, "backtick 源码应至少解析出一条语句")
 
 
 # ===== DEMO 示例测试 =====
@@ -207,9 +232,16 @@ def main() -> int:
 """
     ast = fixture.parse(demo_source)
     Assert.is_not_none(ast)
+    # FIX T0r61.5.2 (defect 3): 值断言，而非仅 is_not_none
+    Assert.equal(ast.kind, "Module")
+    Assert.equal(len(ast.body), 1)
+    Assert.equal(ast.body[0].kind, "FuncDef")
     
     # 关联 DEMO
-    test = parser_suite.tests[-1]
+    # FIX T0r61.5.2 (defect 1): 原写法 `parser_suite.tests[-1]` 在运行期恒指向
+    # 最后注册的 Test（import 期注册、run() 期不再增删），会把元数据挂错对象。
+    # 改用 Suite.run() 在执行每个测试前发布的 current_test。
+    test = parser_suite.current_test
     test.with_demo("parser", "basic_syntax", demo_source)
 
 
@@ -226,6 +258,11 @@ def convert_values() -> float:
 """
     ast = fixture.parse(demo_source)
     Assert.is_not_none(ast)
+    # FIX T0r61.5.2 (defect 3): 值断言，而非仅 is_not_none
+    Assert.equal(ast.kind, "Module")
+    Assert.equal(len(ast.body), 1)
+    Assert.equal(ast.body[0].kind, "FuncDef")
     
-    test = parser_suite.tests[-1]
+    # FIX T0r61.5.2 (defect 1): 见上文——必须用 current_test，不能用 tests[-1]
+    test = parser_suite.current_test
     test.with_demo("parser", "type_conversion", demo_source)

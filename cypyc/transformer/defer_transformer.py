@@ -45,11 +45,11 @@ class DeferTransformer:
                 continue
             try:
                 value = getattr(node, attr_name)
-                if isinstance(value, ASTNode):
-                    self._collect_defers(value)
-                elif isinstance(value, list):
-                    for item in value:
-                        if isinstance(item, ASTNode):
-                            self._collect_defers(item)
             except (AttributeError, TypeError):
-                pass
+                continue
+            if isinstance(value, ASTNode):
+                self._collect_defers(value)
+            elif isinstance(value, list):
+                for item in value:
+                    if isinstance(item, ASTNode):
+                        self._collect_defers(item)

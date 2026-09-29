@@ -313,10 +313,19 @@ class IncrementalCompiler:
         for module_name in imported_modules:
             # 尝试找到模块对应的文件
             module_file = self._find_module_file(module_name)
-            if module_file and os.path.exists(module_file):
-                # 检查模块的缓存是否失效
-                if not self.is_cached(module_file):
-                    return True
+            if not (module_file and os.path.exists(module_file)):
+                continue
+            # BUG-18: is_cached() 只回答「有没有条目」，不回答「条目还有效吗」。
+            # 只看存在性时，改过的依赖只要缓存过就被判成没变，导入方复用陈旧 .pyd。
+            # 这里比对依赖自己的 file_hash 与当前内容摘要（口径同 :248）。
+            if not self.is_cached(module_file):
+                return True
+            entry = self._load_cache(module_file)
+            if entry is None:
+                return True
+            recorded = getattr(entry, "file_hash", None)
+            if recorded != self._compute_file_hash(module_file):
+                return True
         return False
     
     def _find_module_file(self, module_name: str) -> Optional[str]:

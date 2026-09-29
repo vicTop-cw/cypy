@@ -1,0 +1,7 @@
+
+# 基本语法示例
+def main() -> int:
+    x: int = 42
+    y: float = 3.14
+    z = x + int(y)
+    return z

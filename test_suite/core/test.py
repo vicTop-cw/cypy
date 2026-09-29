@@ -10,7 +10,10 @@ class Test:
     def __init__(self, name: str, fn: Callable):
         self.name = name
         self.fn = fn
-        self.skip = False
+        # FIX T0r61.5.2 (defect 2): 实例标志位改名为 `skipped`。
+        # 原名 `self.skip` 会遮蔽下面同名方法 skip()，导致
+        # Test(name, fn).skip(reason) 抛出 TypeError: 'bool' object is not callable。
+        self.skipped = False
         self.skip_reason = ""
         self.demo_category = None
         self.demo_name = None
@@ -19,13 +22,13 @@ class Test:
     def skip_if(self, condition: bool, reason: str = "") -> 'Test':
         """条件跳过"""
         if condition:
-            self.skip = True
+            self.skipped = True
             self.skip_reason = reason
         return self
     
     def skip(self, reason: str = "") -> 'Test':
         """无条件跳过"""
-        self.skip = True
+        self.skipped = True
         self.skip_reason = reason
         return self
     
@@ -38,7 +41,7 @@ class Test:
     
     def run(self) -> 'TestResult':
         """运行单个测试用例"""
-        if self.skip:
+        if self.skipped:
             return TestResult(
                 suite_name="",
                 test_name=self.name,
@@ -74,7 +77,7 @@ class Test:
             )
     
     def __repr__(self) -> str:
-        return f"Test(name='{self.name}', skip={self.skip})"
+        return f"Test(name='{self.name}', skipped={self.skipped})"
 
 
 class TestResult:

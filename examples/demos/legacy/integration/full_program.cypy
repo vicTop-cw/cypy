@@ -1,0 +1,21 @@
+
+# 完整程序集成示例
+struct Calculator:
+    result: int = 0
+    
+    def add(self, value: int):
+        self.result += value
+    
+    def subtract(self, value: int):
+        self.result -= value
+    
+    def multiply(self, value: int):
+        self.result *= value
+
+def main() -> int:
+    calc = Calculator {}
+    calc.add(10)
+    calc.multiply(2)
+    calc.subtract(5)
+    print(f"Final result: {calc.result}")
+    return calc.result

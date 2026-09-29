@@ -1,0 +1,3 @@
+vec sum = 15
+union passthrough = 42
+vec repeat len = 10

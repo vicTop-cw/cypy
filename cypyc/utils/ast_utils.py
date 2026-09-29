@@ -4,6 +4,16 @@ from cypyc.parser.parser import ASTNode
 
 class ASTUtils:
     @staticmethod
+    def is_positional_member(name: Any) -> bool:
+        """名字能否占一个位置槽（SYNTAX/17-pattern-matching.md「位置模式的元数与槽位规则」规则 6）。
+
+        `__`-包围的类属性（`__match_args__` 等）是给模式匹配用的元数据，不是数据字段；
+        把它算进槽位数会让 `case Point(a, b, c)` 通过元数检查并生成 `.__match_args__ ==` 比较。
+        分析器与生成器共用这一个判据，避免两侧各写一遍再漂移。
+        """
+        return isinstance(name, str) and not (name.startswith("__") and name.endswith("__"))
+
+    @staticmethod
     def get_children(node: ASTNode) -> List[ASTNode]:
         children = []
         for attr in dir(node):

@@ -156,10 +156,10 @@ class TestBridgeTypes(unittest.TestCase):
     
     def test_type_aliases(self):
         """测试类型别名"""
-        from cypy_bridge.types import int_, float_, double_, bool_, str_, void, size_t
+        from cypy_bridge.types import int_, float32_, double_, bool_, str_, void, size_t
         
         self.assertEqual(int_, ctypes.c_int)
-        self.assertEqual(float_, ctypes.c_float)
+        self.assertEqual(float32_, ctypes.c_float)
         self.assertEqual(double_, ctypes.c_double)
         self.assertEqual(bool_, ctypes.c_bool)
         self.assertEqual(size_t, ctypes.c_size_t)
@@ -971,7 +971,7 @@ class TestBridgeImport(unittest.TestCase):
         """测试导入所有API"""
         from cypy_bridge import (
             TypeMapper, cdef, cpdef,
-            int_, float_, double_, bool_, str_, void, size_t,
+            int_, float32_, double_, bool_, str_, void, size_t,
             malloc, free, sizeof, aligned_alloc,
             Pointer, ptr, deref, addr,
             Struct, struct,
@@ -1002,6 +1002,430 @@ class TestBridgeImport(unittest.TestCase):
         self.assertIsNotNone(cypy_bridge.enum)
         self.assertIsNotNone(cypy_bridge.compiler)
         self.assertIsNotNone(cypy_bridge.core)
+
+
+class TestBridgeRegressionT0r61(unittest.TestCase):
+    """OMEGA T0r61.3.2 永久回归用例
+    
+    对应 Find_BUG/audit_2026q3/repro_runtime_01..09.py 的 9 个运行时/桥接缺陷，
+    每个用例都锁定"修复前的可观测错误行为"，防止回归。
+    """
+    
+    # ---------- 缺陷 1：pointer.py Owned/ptr ----------
+    def test_owned_accepts_non_weakrefable_values(self):
+        """Owned 必须能吃下 int/float/str/tuple/list/dict/bool/None（旧实现抛 TypeError）"""
+        from cypy_bridge.pointer import Owned
+        
+        for value in (5, 3.14, "text", (1, 2), [1], {1: 2}, True, None):
+            owned = Owned(value)
+            self.assertTrue(owned.is_valid, repr(value))
+            self.assertEqual(owned.take(), value)
+            self.assertFalse(owned.is_valid)
+    
+    def test_owned_accepts_temporary_ctypes_object(self):
+        """Owned(ctypes.c_int(42)) 不能是静默的 NULL 句柄"""
+        from cypy_bridge.pointer import Owned
+        
+        owned = Owned(ctypes.c_int(42))
+        self.assertTrue(owned.is_valid, repr(owned))
+        self.assertEqual(owned.take().value, 42)
+    
+    def test_owned_keeps_real_weakref_semantics(self):
+        """可弱引用对象仍然走弱引用：原对象销毁后 Owned 失效"""
+        import gc
+        
+        from cypy_bridge.pointer import Owned
+        
+        class Holder:
+            def __init__(self, data):
+                self.data = data
+        
+        obj = Holder(7)
+        owned = Owned(obj)
+        self.assertTrue(owned.is_valid)
+        del obj
+        gc.collect()
+        self.assertFalse(owned.is_valid)
+    
+    def test_ptr_resolves_base_type_to_ctypes_type(self):
+        """ptr() 的 base_type 必须是 ctypes 类型，而不是 _type_ 里的单字符字符串"""
+        from cypy_bridge.pointer import ptr
+        
+        p = ptr(ctypes.c_int(42))
+        self.assertIsNotNone(p)
+        self.assertIsInstance(p.base_type, type)
+        ctypes.sizeof(p.base_type)  # 不抛 "this type has no size"
+        self.assertEqual(p.deref(), 42)
+        self.assertEqual(p.offset(1).base_type, p.base_type)
+    
+    def test_ptr_on_plain_python_int(self):
+        """ptr(5) 不能抛 PointerError，且能读回 5"""
+        from cypy_bridge.pointer import ptr
+        
+        p = ptr(5)
+        self.assertEqual(p.deref(), 5)
+        p.assign(6)
+        self.assertEqual(p.deref(), 6)
+    
+    def test_byref_based_pointer_supports_address_arithmetic(self):
+        """byref() 构造的 Pointer 也必须能算自己的地址（offset/__eq__/__repr__）"""
+        from cypy_bridge.pointer import Pointer
+        
+        arr = (ctypes.c_int * 4)(10, 20, 30, 40)
+        p = Pointer(ctypes.byref(arr), ctypes.c_int)
+        self.assertEqual(p.deref(), 10)
+        self.assertEqual((p + 1).deref(), 20)
+        self.assertIn("Pointer(", repr(p))
+        self.assertEqual(p, Pointer(ctypes.byref(arr), ctypes.c_int))
+    
+    def test_pointer_is_hashable(self):
+        """__eq__ 定义后必须仍有 __hash__，否则 Pointer 不能当 dict 键"""
+        from cypy_bridge.pointer import Pointer
+        
+        self.assertIsNotNone(Pointer.__hash__)
+        table = {Pointer(ctypes.c_void_p(1), ctypes.c_int): "x"}
+        self.assertEqual(table[Pointer(ctypes.c_void_p(1), ctypes.c_int)], "x")
+    
+    # ---------- 缺陷 2：defer.py 共享栈 ----------
+    def test_nested_defer_context_does_not_steal_outer_defers(self):
+        """内层作用域只能执行自己登记的 defer"""
+        from cypy_bridge.defer import DeferManager, defer, defer_context
+        
+        manager = DeferManager.get_instance()
+        manager.clear()
+        events = []
+        try:
+            with defer_context():
+                defer(events.append, "OUTER")
+                with defer_context():
+                    defer(events.append, "INNER")
+                self.assertEqual(events, ["INNER"])
+                self.assertEqual(manager.count, 1)
+            self.assertEqual(events, ["INNER", "OUTER"])
+        finally:
+            manager.clear()
+    
+    def test_nested_defer_context_keeps_resource_open(self):
+        """外层打开的资源不能被内层的 defer 提前关掉（use-after-close）"""
+        import io
+        import os
+        import tempfile
+        
+        from cypy_bridge.defer import DeferManager, defer, defer_context
+        
+        manager = DeferManager.get_instance()
+        manager.clear()
+        fd, path = tempfile.mkstemp(suffix=".defer")
+        os.close(fd)
+        try:
+            with defer_context():
+                fh = open(path, "w")
+                defer(fh.close)
+                with defer_context():
+                    defer(lambda: None)
+                fh.write("still-open\n")  # 修复前：ValueError: I/O operation on closed file
+                self.assertIsInstance(fh, io.IOBase)
+            self.assertTrue(fh.closed)
+            with open(path) as check:
+                self.assertEqual(check.read(), "still-open\n")
+        finally:
+            manager.clear()
+            os.unlink(path)
+    
+    def test_nested_defer_scope_isolated(self):
+        """defer_scope 同样按子栈执行"""
+        from cypy_bridge.defer import DeferManager, defer, defer_scope
+        
+        manager = DeferManager.get_instance()
+        manager.clear()
+        seq = []
+        try:
+            with defer_scope():
+                defer(seq.append, "outer")
+                with defer_scope():
+                    defer(seq.append, "inner")
+                self.assertEqual(seq, ["inner"])
+                seq.append("outer-body-done")
+            self.assertEqual(seq, ["inner", "outer-body-done", "outer"])
+        finally:
+            manager.clear()
+    
+    def test_execute_defers_still_drains_everything(self):
+        """execute_all()/execute_defers() 的整体排空语义不变"""
+        from cypy_bridge.defer import DeferManager, defer, execute_defers
+        
+        manager = DeferManager.get_instance()
+        manager.clear()
+        got = []
+        defer(got.append, 1)
+        defer(got.append, 2)
+        execute_defers()
+        self.assertEqual(got, [2, 1])
+        self.assertEqual(manager.count, 0)
+    
+    # ---------- 缺陷 3：nogil.py 单例状态被覆盖 ----------
+    def test_nogil_is_reentrant(self):
+        """嵌套 with nogil / @nogil / nogil_exec 都不再抛 NoGilError"""
+        from cypy_bridge.nogil import NoGilContext, nogil, nogil_exec
+        
+        with nogil:
+            with nogil:
+                pass
+            self.assertTrue(nogil._state.released)  # 外层仍然处于释放状态
+        self.assertIsNone(nogil._state)
+        
+        @nogil
+        def double(x):
+            return x * 2
+        
+        with nogil:
+            self.assertEqual(double(21), 42)
+            self.assertEqual(nogil_exec(lambda: 7), 7)
+        
+        with nogil:
+            with nogil:
+                with nogil:
+                    pass
+        
+        self.assertIsNone(NoGilContext()._state)
+    
+    def test_nogil_does_not_mask_user_exception(self):
+        """nogil 区域内抛出的异常必须原样传播，不被 NoGilError 顶掉"""
+        from cypy_bridge.nogil import nogil
+        
+        with self.assertRaises(ValueError):
+            with nogil:
+                with nogil:
+                    raise ValueError("user error")
+        self.assertIsNone(nogil._state)
+    
+    # ---------- 缺陷 6：meta.py 分派反了 ----------
+    def test_meta_bare_form_defines_a_metaclass(self):
+        """@meta class M 必须得到一个真正的元类（旧实现给的是普通类）"""
+        from cypy_bridge.meta import meta
+        
+        @meta
+        class MyMeta:
+            def __new__(cls, name, bases, attrs):
+                attrs['custom'] = True
+                return type(name, bases, attrs)
+        
+        self.assertTrue(issubclass(MyMeta, type))
+        
+        class UsesMeta(metaclass=MyMeta):
+            pass
+        
+        # 这条不变量在修复前"碰巧"成立，修复后必须仍然成立
+        self.assertTrue(UsesMeta.custom)
+    
+    def test_meta_marker_form_usable_as_metaclass(self):
+        """没有自定义 __new__ 的 @meta 定义体也能直接当 metaclass 用"""
+        from cypy_bridge.meta import meta
+        
+        @meta
+        class MarkerOnly:
+            pass
+        
+        self.assertTrue(issubclass(MarkerOnly, type))
+        
+        class UsesMarker(metaclass=MarkerOnly):
+            pass
+        
+        self.assertIs(type(UsesMarker), MarkerOnly)
+    
+    def test_meta_base_form_assigns_metaclass_and_keeps_identity(self):
+        """@meta(base=X) class C 给 C 装上元类 X，而不是把 C 换成元类"""
+        from cypy_bridge.meta import SingletonMeta, meta
+        
+        @meta(base=SingletonMeta)
+        class Config:
+            x = 1
+        
+        self.assertIs(type(Config), SingletonMeta)
+        self.assertEqual(Config.__name__, "Config")
+        self.assertEqual(Config.x, 1)
+        self.assertFalse(issubclass(Config, type))
+        self.assertIs(Config(), Config())
+    
+    def test_meta_positional_form_does_not_lose_base(self):
+        """meta(SomeMeta) 不能再把调用方的元类换成默认 CypyMetaClass"""
+        from cypy_bridge.meta import SingletonMeta, meta
+        
+        result = meta(SingletonMeta)
+        self.assertTrue(type(result) is SingletonMeta
+                        or issubclass(type(result), SingletonMeta))
+        # 位置参数是普通类时等价于 @meta：得到元类
+        class Body:
+            pass
+        
+        self.assertTrue(issubclass(meta(Body), type))
+    
+    # ---------- 缺陷 7：memory.aligned_alloc ----------
+    def test_aligned_alloc_rejects_zero_alignment(self):
+        """alignment=0 通过 (0 & -1) 的检查并让 malloc(size-1) 少分配一字节"""
+        from cypy_bridge.core import MemoryError as BridgeMemoryError
+        from cypy_bridge.memory import aligned_alloc
+        
+        with self.assertRaises(BridgeMemoryError):
+            aligned_alloc(0, 64)
+        with self.assertRaises(BridgeMemoryError):
+            aligned_alloc(0, 1)
+    
+    def test_aligned_alloc_actually_aligns_and_is_freeable(self):
+        """返回地址必须真的按 alignment 对齐，并且能被 free() 正确释放"""
+        from cypy_bridge.memory import aligned_alloc, free
+        from cypy_bridge.memory import aligned_block_count
+        
+        before = aligned_block_count()
+        for alignment in (16, 32, 64, 128, 256, 1024):
+            pointers = [aligned_alloc(alignment, alignment * 2) for _ in range(8)]
+            for p in pointers:
+                self.assertEqual(p % alignment, 0, "alignment=%d addr=%r" % (alignment, p))
+            for p in pointers:
+                free(p)  # 内部换算回 malloc 的原始地址，不能把中间指针交给CRT
+        self.assertEqual(aligned_block_count(), before)
+    
+    def test_aligned_alloc_rejects_negative_and_non_power_of_two(self):
+        """负数与非2的幂对齐继续被拒绝（修复前后都该如此）"""
+        from cypy_bridge.core import MemoryError as BridgeMemoryError
+        from cypy_bridge.memory import aligned_alloc
+        
+        for bad in (-16, -1, 3, 12, 100):
+            with self.assertRaises(BridgeMemoryError):
+                aligned_alloc(bad, 64)
+    
+    # ---------- 缺陷 9：memory NULL 守卫 + 注解 ----------
+    def test_memory_ops_reject_null(self):
+        """memmove/memcpy/memset 收到 NULL 必须在调用C库之前报错（旧实现直接崩）"""
+        from cypy_bridge.core import MemoryError as BridgeMemoryError
+        from cypy_bridge.memory import memcpy, memmove, memset
+        
+        null = ctypes.c_void_p(None)
+        with self.assertRaises(BridgeMemoryError):
+            memmove(null, null, 8)
+        with self.assertRaises(BridgeMemoryError):
+            memcpy(null, null, 8)
+        with self.assertRaises(BridgeMemoryError):
+            memset(null, 0, 8)
+        with self.assertRaises(BridgeMemoryError):
+            memset(None, 0, 8)
+        with self.assertRaises(BridgeMemoryError):
+            memset(0, 0, 8)
+    
+    def test_mem_ops_accept_malloc_result_types(self):
+        """指针归一化要同时接受 int / c_void_p / byref()，且数据真的被搬动"""
+        from cypy_bridge.memory import free, malloc, memmove
+        
+        dst = malloc(16)
+        payload = ctypes.create_string_buffer(b"01234567", 8)
+        # 三种指针表示混用：int 地址、c_void_p、byref() 的 CArgObject
+        memmove(ctypes.c_void_p(dst), ctypes.byref(payload), 8)
+        self.assertEqual(ctypes.string_at(dst, 8), b"01234567")
+        memmove(dst, ctypes.c_void_p(dst), 8)
+        self.assertEqual(ctypes.string_at(dst, 8), b"01234567")
+        free(dst)
+    
+    def test_memory_annotations_match_return_values(self):
+        """malloc/calloc/aligned_alloc 的返回类型注解不能再撒谎"""
+        import typing
+        
+        from cypy_bridge.memory import aligned_alloc, calloc, free, malloc
+        
+        cases = (
+            (malloc, malloc(16)),
+            (calloc, calloc(2, 8)),
+            (aligned_alloc, aligned_alloc(16, 16)),
+        )
+        for func, returned in cases:
+            self.assertIs(typing.get_type_hints(func).get("return"), type(returned),
+                          "%s() annotation lies about %s" % (func.__name__, type(returned)))
+            self.assertIsInstance(returned, int)
+            free(returned)
+    
+    # ---------- 缺陷 8：union 越界静默回绕 ----------
+    def test_union_widens_instead_of_wrapping(self):
+        """装不下的整数要提升到能装的成员，而不是被 ctypes 截断"""
+        from cypy_bridge.union import CUnion, cdef_union
+        
+        u = cdef_union("unsigned char", "float")
+        for value in (300, -1, 256, 999999):
+            u.value = value
+            self.assertEqual(u.value, value, "value=%d -> %r" % (value, u.value))
+        
+        v = CUnion(ctypes.c_byte, ctypes.c_double)
+        v.value = 200
+        self.assertEqual(v.value, 200)
+    
+    def test_union_rejects_value_that_no_member_can_hold(self):
+        """显式指定索引时不放宽：越界值直接 UnionTypeError"""
+        from cypy_bridge.union import UnionTypeError, cdef_union
+        
+        u = cdef_union("unsigned char", "float")
+        with self.assertRaises(UnionTypeError):
+            u.set_value(777, 0)
+        with self.assertRaises(UnionTypeError):
+            u.value = "not a number"
+    
+    def test_union_valid_values_still_map(self):
+        """合法用法保持不变：42->c_int、3.14->c_float（tests/test_bridge_library 既有钉）"""
+        from cypy_bridge.union import cdef_union
+        
+        u = cdef_union("int", "float")
+        u.value = 42
+        self.assertEqual(u.value, 42)
+        self.assertIs(u.active_type, ctypes.c_int)
+        u.value = 3.14
+        self.assertAlmostEqual(u.value, 3.14, places=5)
+        self.assertIs(u.active_type, ctypes.c_float)
+    
+    # ---------- 缺陷 9：types.to_ctypes ----------
+    def test_to_ctypes_rejects_unsupported_types(self):
+        """未知类型不能静默降级成 py_object"""
+        from cypy_bridge.core import TypeConversionError
+        from cypy_bridge.types import cast, cdef, declare, _type_mapper
+        
+        for name in ("int128", "uint128", "float16", "wchar_t", "long long *",
+                     "char[10]", "no_such_type"):
+            self.assertFalse(_type_mapper.is_builtin(name), name)
+            with self.assertRaises(TypeConversionError, msg=name):
+                _type_mapper.to_ctypes(name)
+            with self.assertRaises(TypeConversionError, msg=name):
+                declare(name, "x", 5)
+            with self.assertRaises(TypeConversionError, msg=name):
+                cdef(name)
+            with self.assertRaises(TypeConversionError, msg=name):
+                cast(name, 9.7)
+    
+    def test_to_ctypes_aliases_still_map(self):
+        """补齐的别名（无空格指针、ctypes 类型码）不能变成错误"""
+        from cypy_bridge.types import _type_mapper
+        
+        self.assertIs(_type_mapper.to_ctypes("void*"), ctypes.c_void_p)
+        self.assertIs(_type_mapper.to_ctypes("void *"), ctypes.c_void_p)
+        self.assertIs(_type_mapper.to_ctypes("double"), ctypes.c_double)
+        self.assertIs(_type_mapper.to_ctypes("l"), ctypes.c_long)
+        self.assertIs(_type_mapper.to_ctypes("int"), ctypes.c_int)
+        self.assertFalse(_type_mapper.is_builtin("int128"))
+    
+    def test_package_union_name_is_the_submodule(self):
+        """cypy_bridge.union 必须是子模块，不能被同名函数遮蔽"""
+        import types as pytypes
+        
+        import cypy_bridge
+        
+        self.assertIsInstance(cypy_bridge.union, pytypes.ModuleType)
+        self.assertTrue(callable(cypy_bridge.union.union))
+        self.assertTrue(callable(cypy_bridge.union.cdef_union))
+    
+    def test_ptr_type_name_and_base_type_resolve(self):
+        """ptr(obj, type_name=...) 走 to_ctypes，未知类型要报错而不是 py_object"""
+        from cypy_bridge.core import PointerError
+        from cypy_bridge.pointer import ptr
+        
+        holder = ctypes.c_int(9)
+        self.assertEqual(ptr(holder, "int").deref(), 9)
+        with self.assertRaises(PointerError):
+            ptr(holder, "int128")
 
 
 if __name__ == '__main__':

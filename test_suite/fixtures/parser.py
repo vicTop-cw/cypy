@@ -88,7 +88,9 @@ class ParserFixture:
         :return: 预处理后的代码
         """
         preprocessor = Preprocessor()
-        return preprocessor.preprocess(source)
+        # Preprocessor 暴露的是 process()（曾误写为 preprocess()，AttributeError 会让
+        # 这条夹具路径从未真正跑到预处理器，从而失去覆盖）
+        return preprocessor.process(source)
     
     def parse_with_errors(self, source: str):
         """

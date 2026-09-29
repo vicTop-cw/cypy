@@ -1,0 +1,266 @@
+{
+  "op": "cypy.generic.callsite",
+  "version": "1.0",
+  "definition": {
+    "signature": "f<A, B>(args) -> 代入后的返回类型；产物里的调用形如 f(args)",
+    "note": "SYNTAX/11「调用点的类型实参」规则 1-5：调用点尖括号只有类型实参这一种解释（`<checker>` 在定义侧且 v1 不支持，SYNTAX/33 P-1.8）；元数按被调方声明判定；产物必须擦除，既不得留下标形态也不得插入对类型名的零参调用。"
+  },
+  "preconditions": [
+    "被调方是带 generic_params 的 def / struct / class",
+    "类型实参是 `_parse_type()` 可解析的类型表达式"
+  ],
+  "laws": [
+    "SYNTAX/11 调用点的类型实参 规则 1",
+    "SYNTAX/11 调用点的类型实参 规则 2",
+    "SYNTAX/11 调用点的类型实参 规则 3",
+    "SYNTAX/11 调用点的类型实参 规则 4",
+    "SYNTAX/11 调用点的类型实参 规则 5"
+  ],
+  "tests": [
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> int:\n    n: int = identity<int>(42)\n    return n\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def pair<T, U>(first: T, second: U) -> tuple<T, U>:\n    return (first, second)\n\n\ndef f() -> int:\n    p: tuple<int, str> = pair<int, str>(42, \"a\")\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0,
+        "stage": "ok"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def f(xs: list<int>, ys: list<int>) -> int:\n    if len(xs) < len(ys):\n        return 1\n    return 0\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def pair<T, U>(first: T, second: U) -> tuple<T, U>:\n    return (first, second)\n\n\ndef f() -> int:\n    return pair<int>(42)\n"
+      },
+      "error": {
+        "contains": [
+          "Type argument count mismatch: 'pair' declares 2 type parameter(s), got 1"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def mk(a: int) -> int:\n    return a\n\n\ndef f() -> int:\n    return mk<int>(1)\n"
+      },
+      "error": {
+        "contains": [
+          "Type arguments on non-generic 'mk': it declares no type parameter, got 1"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> str:\n    s: str = identity<int>(\"Alice\")\n    return s\n"
+      },
+      "error": {
+        "contains": [
+          "Type mismatch: expected str, got int"
+        ],
+        "matches": "at \\d+:\\d+"
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def process<T: int | float>(value: T) -> T:\n    return value\n\n\ndef f() -> str:\n    return process<str>(\"hello\")\n"
+      },
+      "error": {
+        "contains": [
+          "Generic constraint violation"
+        ],
+        "min_count": 1
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> int:\n    n: int = identity<int>(42)\n    return n\n"
+      },
+      "expected": {
+        "contains": [
+          "n: int = identity(42)"
+        ],
+        "not_contains": [
+          "(int(), identity"
+        ],
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "struct Foo:\n    value: int\n\n\ndef identity<T>(x: T) -> T:\n    return x\n\n\ndef f():\n    v = Foo(value=1)\n    return identity<Foo>(v)\n"
+      },
+      "expected": {
+        "contains": [
+          "return identity(v)"
+        ],
+        "not_contains": [
+          "(Foo(),",
+          "identity[Foo]"
+        ],
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "def pair<T, U>(first: T, second: U) -> tuple<T, U>:\n    return (first, second)\n\n\ndef f() -> int:\n    p: tuple<int, str> = pair<int, str>(42, \"a\")\n    return 0\n"
+      },
+      "expected": {
+        "contains": [
+          "pair(42, 'a')"
+        ],
+        "not_contains": [
+          "(int(),",
+          "pair<int"
+        ],
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "struct Box<T>:\n    value: T\n\n\ndef f():\n    b = Box<int>(value=100)\n    return b.value\n"
+      },
+      "expected": {
+        "contains": [
+          "b = Box(value=100)"
+        ],
+        "not_contains": [
+          "(int(),",
+          "Box<int>"
+        ],
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> int:\n    n: int = identity<int>(identity<int>(42))\n    return n\n"
+      },
+      "expected": {
+        "contains": [
+          "identity(identity(42))"
+        ],
+        "not_contains": [
+          "(int(),",
+          "(identity,"
+        ],
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "codegen",
+        "src": "def pair<T, U>(first: T, second: U) -> tuple<T, U>:\n    return (first, second)\n\n\ndef f() -> int:\n    return pair<int>(42)\n"
+      },
+      "error": {
+        "stage": "typecheck",
+        "contains": [
+          "Type argument count mismatch"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "codegen_unchecked",
+        "src": "struct Foo:\n    value: int\n\n\ndef identity<T>(x: T) -> T:\n    return x\n\n\ndef f():\n    v = Foo(value=1)\n    return identity<Foo>(v)\n"
+      },
+      "expected": {
+        "not_contains": [
+          "(Foo(),",
+          "Foo()"
+        ],
+        "contains": [
+          "identity(v)"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> int:\n    return identity<>(1)\n"
+      },
+      "error": {
+        "stage": "parse",
+        "contains": [
+          "Unexpected token GT"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f() -> int:\n    return identity<int,>(1)\n"
+      },
+      "error": {
+        "stage": "parse",
+        "contains": [
+          "Unexpected token COMMA"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def mk(a: int) -> int:\n    return a\n\n\ndef f() -> int:\n    return mk<int, str>(1)\n"
+      },
+      "error": {
+        "contains": [
+          "Type arguments on non-generic 'mk': it declares no type parameter, got 2"
+        ]
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f(xs: list<int>) -> list<list<int>>:\n    return identity<list<list<int>>>(xs)\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f(d: dict[str, int]) -> dict[str, int]:\n    return identity<dict[str, int]>(d)\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    },
+    {
+      "input": {
+        "op": "typecheck",
+        "src": "def identity<T>(x: T) -> T:\n    return x\n\n\ndef f(v: int) -> int | float:\n    return identity<int | float>(v)\n"
+      },
+      "expected": {
+        "errors": 0
+      }
+    }
+  ],
+  "fingerprint": "fnv1a64:65bd56a87c83d42a"
+}
